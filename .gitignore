@@ -1,0 +1,14 @@
+# Logs & temp files
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Environment & node
+node_modules/
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
