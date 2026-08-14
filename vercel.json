@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "outputDirectory": ".",
+  "crons": [
+    {
+      "path": "/api/cron/fetch-videos",
+      "schedule": "0 0 * * *"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/videos/:id",
+      "destination": "/api/videos/[id]"
+    }
+  ]
+}

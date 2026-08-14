@@ -1,4 +1,4 @@
-/* Dhanavriksha Wealth - Advanced Investment Growth & SIP Calculator Engine */
+/* Muthaleetu Thisai - Advanced Investment Growth & SIP Calculator Engine */
 const { useState, useEffect, createContext, useContext, useRef } = React;
 
 const OFFICIAL_CHANNEL_URL = "https://www.youtube.com/@budgetpadmanaban_";
@@ -14,7 +14,7 @@ if (!localStorage.getItem("dhanavriksha_theme_initialized")) {
 // ==================== 1. DATA LAYER ====================
 const translations = {
   ta: {
-    siteName: "முதலீடு திசை",
+    siteName: "முதலீட்டு திசை",
     welcome: "வரவேற்கிறோம்",
     tagline: "மியூச்சுவல் ஃபண்ட் & பங்குச் சந்தை செய்திகள்",
     budgetPadmanaban: "பட்ஜெட் பத்மநாபன் ஃபைனான்ஷியல்",
@@ -34,6 +34,9 @@ const translations = {
     featuredNews: "சிறப்புச் செய்திகள்",
     trendingArticlesTitle: "டிரெண்டிங் செய்திகள்",
     latestVideos: "சமீபத்திய வீடியோக்கள்",
+    mutualFundNewsTitle: "மியூச்சுவல் ஃபண்ட் செய்திகள்",
+    stockMarketNewsTitle: "பங்குச் சந்தை செய்திகள்",
+    personalFinanceNewsTitle: "SIP & தனிநபர் நிதி செய்திகள்",
     mutualFundVideos: "மியூச்சுவல் ஃபண்ட் வீடியோக்கள்",
     stockMarketVideos: "பங்குச் சந்தை வீடியோக்கள்",
     sipVideos: "SIP & முதலீட்டு வீடியோக்கள்",
@@ -59,7 +62,7 @@ const translations = {
     newBadge: "புதியது",
     sipCalculatorTitle: "SIP முதலீட்டு கணக்கீட்டு கருவி",
     sipCalculatorDesc: "உங்கள் மாத வரவு வழி முதலீடு மூலம் 1 கோடி அல்லது உங்கள் இலக்கு தொகையை அடைய கூட்டு வட்டியின் வலிமையைக் கணக்கிடுங்கள்.",
-    monthlyInvestment: "மாதாந்திர SIP தொாகை (₹)",
+    monthlyInvestment: "மாதாந்திர SIP தொகை (₹)",
     expectedReturnRate: "எதிர்பார்க்கும் ஆண்டு வட்டி விகிதம் (%)",
     timePeriod: "முதலீட்டுக் காலம் (ஆண்டுகள்)",
     totalInvested: "மொத்த முதலீடு",
@@ -77,11 +80,11 @@ const translations = {
     relatedVideos: "தொடர்புடைய வீடியோக்கள்",
     relatedNews: "தொடர்புடைய செய்திகள்",
     footerDisclaimerTitle: "முக்கிய முதலீட்டு எச்சரிக்கை",
-    footerDisclaimerText: "மியூச்சுவல் ஃபண்ட் முதலீடுகள் சந்தை அபாயங்களுக்கு உட்பட்டவை. முதலீடு செய்வதற்கு முன் திட்ட ஆவணங்களை கவனமாகப் படிக்கவும். தனவிருக்ஷா மற்றும் பட்ஜெட் பத்மநாபன் வழங்கும் தகவல்கள் கல்வி நோக்கங்களுக்காக மட்டுமே.",
-    copyright: "© 2026 தனவிருக்ஷா வெல்த் மீடியா. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை."
+    footerDisclaimerText: "மியூச்சுவல் ஃபண்ட் முதலீடுகள் சந்தை அபாயங்களுக்கு உட்பட்டவை. முதலீடு செய்வதற்கு முன் திட்ட ஆவணங்களை கவனமாகப் படிக்கவும். முதலீட்டு திசை மற்றும் பட்ஜெட் பத்மநாபன் வழங்கும் தகவல்கள் கல்வி நோக்கங்களுக்காக மட்டுமே.",
+    copyright: "© 2026 முதலீட்டு திசை மீடியா. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை."
   },
   en: {
-    siteName: "Mudhaleedu Thesai",
+    siteName: "Muthaleetu Thisai",
     welcome: "Welcome",
     tagline: "Mutual Fund & Market News",
     budgetPadmanaban: "Budget Padmanaban Financial",
@@ -102,6 +105,9 @@ const translations = {
     featuredNews: "Featured News",
     trendingArticlesTitle: "Trending Articles",
     latestVideos: "Latest Videos",
+    mutualFundNewsTitle: "Mutual Funds — News",
+    stockMarketNewsTitle: "Stock Market — News",
+    personalFinanceNewsTitle: "SIP & Personal Finance — News",
     mutualFundVideos: "Mutual Fund Videos",
     stockMarketVideos: "Stock Market Videos",
     sipVideos: "SIP & Investment Videos",
@@ -145,8 +151,8 @@ const translations = {
     relatedVideos: "Related Videos",
     relatedNews: "Related News",
     footerDisclaimerTitle: "Regulatory Disclaimer",
-    footerDisclaimerText: "Mutual Fund investments are subject to market risks, read all scheme-related documents carefully before investing. Information provided by Dhanavriksha and Budget Padmanaban is for educational purposes only.",
-    copyright: "© 2026 Mudhaleedu Thesai Media. All rights reserved."
+    footerDisclaimerText: "Mutual Fund investments are subject to market risks, read all scheme-related documents carefully before investing. Information provided by Muthaleetu Thisai and Budget Padmanaban is for educational purposes only.",
+    copyright: "© 2026 Muthaleetu Thisai Media. All rights reserved."
   }
 };
 
@@ -444,7 +450,7 @@ const newsData = [
     category: "personal-finance",
     publishedAt: new Date(Date.now() - 8 * 3600 * 1000).toISOString(),
     readTimeMinutes: 4,
-    author: "Dhanavriksha Research Desk",
+    author: "Muthaleetu Thisai Research Desk",
     thumbnail: "https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&w=1200&q=80",
     isFeatured: true,
     isTrending: true,
@@ -515,19 +521,98 @@ function translateNewsArticle(article, language = "ta") {
   };
 }
 
-async function getLatestVideos(language = "ta", category = "all") {
-  await new Promise(resolve => setTimeout(resolve, 50));
+async function getLatestVideos(language = "ta", category = "all", sort = "newest") {
+  try {
+    const url = `/api/videos?limit=100&category=${encodeURIComponent(category)}&sort=${encodeURIComponent(sort)}`;
+    const res = await fetch(url);
+    if (res.ok) {
+      const json = await res.json();
+      if (json.status === 'success' && Array.isArray(json.data) && json.data.length > 0) {
+        return json.data.map(v => translateVideo({
+          ...v,
+          titleTamil: v.title_ta || v.titleTamil || v.title,
+          titleEnglish: v.title_en || v.titleEnglish || v.title,
+          descriptionTamil: v.description_ta || v.descriptionTamil || v.description,
+          descriptionEnglish: v.description_en || v.descriptionEnglish || v.description,
+          publishedAt: v.published_at || v.publishedAt
+        }, language));
+      }
+    }
+  } catch (e) {
+    console.warn('Using local video dataset fallback:', e);
+  }
+
   let list = [...videosData];
   if (category && category !== "all") {
     list = list.filter(v => v.category === category);
   }
+
+  if (sort === "oldest") {
+    list.sort((a, b) => new Date(a.publishedAt) - new Date(b.publishedAt));
+  } else {
+    list.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+  }
+
   return list.map(v => translateVideo(v, language));
 }
 
 async function getVideoById(id, language = "ta") {
-  await new Promise(resolve => setTimeout(resolve, 30));
-  const video = videosData.find(v => v.id === id || v.youtubeId === id);
-  return video ? translateVideo(video, language) : null;
+  if (!id) return null;
+
+  // 1. Try local memory / static list
+  let video = videosData.find(v => v.id === id || v.youtubeId === id || v.youtube_id === id);
+  if (video) {
+    const ytId = (video.youtubeId && video.youtubeId.length === 11) ? video.youtubeId : (video.id && video.id.length === 11 ? video.id : 'GizYMQfl9CY');
+    return translateVideo({ ...video, youtubeId: ytId }, language);
+  }
+
+  // 2. Try fetching from backend API
+  try {
+    const res = await fetch(`/api/videos/${encodeURIComponent(id)}`);
+    if (res.ok) {
+      const json = await res.json();
+      if (json.status === 'success' && json.data) {
+        const v = json.data;
+        const ytId = v.youtube_id || v.youtubeId || (v.id && v.id.length === 11 ? v.id : '_fvxhThYO70');
+        return translateVideo({
+          id: ytId,
+          dbId: v.id,
+          youtubeId: ytId,
+          titleTamil: v.title_ta || v.titleTamil || v.title,
+          titleEnglish: v.title_en || v.titleEnglish || v.title,
+          descriptionTamil: v.description_ta || v.descriptionTamil || v.description,
+          descriptionEnglish: v.description_en || v.descriptionEnglish || v.description,
+          thumbnail: v.thumbnail_url || v.thumbnail || `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`,
+          duration: v.duration || '10:00',
+          views: v.view_count || v.views || 18500,
+          publishedAt: v.published_at || v.publishedAt || new Date().toISOString(),
+          category: v.category || 'mutual-funds',
+          tags: v.tags || []
+        }, language);
+      }
+    }
+  } catch (e) {
+    console.warn('API fetch video detail fallback:', e);
+  }
+
+  // 3. Fallback: If id is a valid 11-char YouTube ID (or fallback to latest channel video)
+  const is11CharYt = typeof id === 'string' && id.length === 11 && !id.includes('-');
+  const safeYtId = is11CharYt ? id : '_fvxhThYO70';
+
+  return translateVideo({
+    id: safeYtId,
+    youtubeId: safeYtId,
+    titleTamil: 'முதலீட்டு காணொளி (Budget Padmanaban)',
+    titleEnglish: 'Investment Guide Video',
+    descriptionTamil: 'YouTube இல் Budget Padmanaban வழங்கும் நிதி வழிகாட்டுதல் காணொளி.',
+    descriptionEnglish: 'Financial investment guide by Budget Padmanaban.',
+    thumbnail: `https://img.youtube.com/vi/${safeYtId}/hqdefault.jpg`,
+    duration: '10:00',
+    views: 24500,
+    publishedAt: new Date().toISOString(),
+    category: 'mutual-funds',
+    tags: ['mutual-funds', 'personal-finance']
+  }, language);
 }
 
 async function getRelatedVideos(currentId, language = "ta") {
@@ -622,8 +707,461 @@ function ThemeProvider({ children }) {
 
 const useTheme = () => useContext(ThemeContext);
 
+const AuthContext = createContext();
+
+const DEFAULT_SUPABASE_URL = "https://etanokdvfyvkidpeovdi.supabase.co";
+const DEFAULT_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV0YW5va2R2Znl2a2lkcGVvdmRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY2ODUxNzUsImV4cCI6MjEwMjI2MTE3NX0.SLzp5gIZyZdB7nmDrfjvghFbAwKwAIWuf4Ys_HC4AaE";
+
+// Initialize Supabase Client reliably across all environments
+const getSupabaseClient = () => {
+  if (window.supabaseClient) return window.supabaseClient;
+  const url = window.SUPABASE_URL || localStorage.getItem("SUPABASE_URL") || DEFAULT_SUPABASE_URL;
+  const key = window.SUPABASE_ANON_KEY || localStorage.getItem("SUPABASE_ANON_KEY") || DEFAULT_SUPABASE_ANON_KEY;
+  if (url && key && window.supabase) {
+    window.supabaseClient = window.supabase.createClient(url, key);
+    return window.supabaseClient;
+  }
+  return null;
+};
+
+function AuthProvider({ children }) {
+  const [session, setSession] = useState(null);
+  const [user, setUser] = useState(null);
+  const [profile, setProfile] = useState(null);
+  const [role, setRole] = useState('user');
+  const [isAuthLoading, setIsAuthLoading] = useState(true);
+
+  const fetchUserProfile = async (userId, userEmail) => {
+    const client = getSupabaseClient();
+    if (!userId || !client) return null;
+    try {
+      const { data, error } = await client
+        .from('profiles')
+        .select('*')
+        .eq('id', userId)
+        .maybeSingle();
+
+      if (data) {
+        setProfile(data);
+        setRole(data.role || 'user');
+        return data;
+      } else {
+        const fallback = {
+          id: userId,
+          email: userEmail || '',
+          display_name: userEmail ? userEmail.split('@')[0] : 'User',
+          role: 'user'
+        };
+        setProfile(fallback);
+        setRole('user');
+        return fallback;
+      }
+    } catch (err) {
+      console.error('Failed to fetch user profile:', err);
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const initAuth = async () => {
+      const client = getSupabaseClient();
+      if (!client) {
+        if (isMounted) setIsAuthLoading(false);
+        return;
+      }
+
+      try {
+        const { data: { session: initialSession } } = await client.auth.getSession();
+        if (isMounted) {
+          if (initialSession) {
+            setSession(initialSession);
+            setUser(initialSession.user);
+            await fetchUserProfile(initialSession.user?.id, initialSession.user?.email);
+          } else {
+            setSession(null);
+            setUser(null);
+            setProfile(null);
+            setRole('user');
+          }
+        }
+      } catch (err) {
+        console.error('Error during initial session check:', err);
+      } finally {
+        if (isMounted) setIsAuthLoading(false);
+      }
+
+      const { data: { subscription } } = client.auth.onAuthStateChange(async (event, currentSession) => {
+        if (!isMounted) return;
+
+        console.log(`[Supabase Auth Event]: ${event}`);
+
+        if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || event === 'USER_UPDATED') {
+          setSession(currentSession);
+          setUser(currentSession?.user || null);
+          if (currentSession?.user) {
+            await fetchUserProfile(currentSession.user.id, currentSession.user.email);
+          }
+          if (event === 'SIGNED_IN' && (window.location.hash.includes('access_token=') || window.location.hash.includes('refresh_token='))) {
+            window.location.hash = '#/';
+          }
+        } else if (event === 'SIGNED_OUT') {
+          setSession(null);
+          setUser(null);
+          setProfile(null);
+          setRole('user');
+          if (window.location.hash !== '#/login') {
+            window.location.hash = '#/login';
+          }
+        }
+      });
+
+      return () => subscription.unsubscribe();
+    };
+
+    initAuth();
+
+    return () => { isMounted = false; };
+  }, []);
+
+  const handleSignOut = async () => {
+    const client = getSupabaseClient();
+    try {
+      if (client) {
+        await client.auth.signOut();
+      }
+    } catch (err) {
+      console.warn('Network error during Supabase signOut call, forcing local state reset:', err);
+    } finally {
+      setSession(null);
+      setUser(null);
+      setProfile(null);
+      setRole('user');
+      try {
+        sessionStorage.removeItem('dhanavriksha_current_tab_progress');
+      } catch (e) {}
+      window.location.hash = '#/login';
+    }
+  };
+
+  const signInWithPassword = async (email, password) => {
+    const client = getSupabaseClient();
+    if (!client) throw new Error('Supabase client not initialized');
+    const { data, error } = await client.auth.signInWithPassword({ email, password });
+    if (error) throw error;
+    if (data?.session) {
+      setSession(data.session);
+      setUser(data.session.user);
+      await fetchUserProfile(data.session.user?.id, data.session.user?.email);
+    }
+    return data;
+  };
+
+  const signUp = async (email, password, displayName) => {
+    const client = getSupabaseClient();
+    if (!client) throw new Error('Supabase client not initialized');
+    const { data, error } = await client.auth.signUp({
+      email,
+      password,
+      options: { data: { full_name: displayName } }
+    });
+    if (error) throw error;
+    return data;
+  };
+
+  const sendPasswordReset = async (email) => {
+    const client = getSupabaseClient();
+    if (!client) throw new Error('Supabase client not initialized');
+    const { data, error } = await client.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/#/reset-password`
+    });
+    if (error) throw error;
+    return data;
+  };
+
+  const signInWithGoogle = async () => {
+    const client = getSupabaseClient();
+    if (!client) throw new Error('Supabase client not initialized');
+    
+    const redirectUrl = window.location.origin + window.location.pathname;
+    
+    const { data, error } = await client.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: redirectUrl
+      }
+    });
+    
+    if (error) {
+      if (error.message && error.message.toLowerCase().includes('provider')) {
+        throw new Error('Google Sign-In is not enabled in your Supabase Dashboard. Go to Supabase Dashboard -> Authentication -> Providers -> Google to enable it.');
+      }
+      throw error;
+    }
+    return data;
+  };
+
+  const signInWithMagicLink = async (email) => {
+    const client = getSupabaseClient();
+    if (!client) throw new Error('Supabase client not initialized');
+    const { data, error } = await client.auth.signInWithOtp({
+      email,
+      options: { emailRedirectTo: window.location.origin }
+    });
+    if (error) throw error;
+    return data;
+  };
+
+  if (isAuthLoading) {
+    return (
+      <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-slate-950 text-white p-6 select-none">
+        <div className="relative flex items-center justify-center mb-6">
+          <div className="w-16 h-16 rounded-3xl bg-gradient-to-tr from-amber-600 via-amber-500 to-yellow-400 animate-spin opacity-80 blur-sm" />
+          <div className="absolute w-12 h-12 rounded-2xl bg-amber-500 flex items-center justify-center shadow-xl">
+            <span className="text-xl font-black text-slate-950">DV</span>
+          </div>
+        </div>
+        <h1 className="text-lg font-extrabold tracking-wide font-serif text-amber-400 mb-2">
+          முதலீட்டு திசை | Muthaleetu Thisai
+        </h1>
+        <p className="text-xs text-slate-400 font-medium animate-pulse">
+          Loading Auth Session...
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <AuthContext.Provider
+      value={{
+        session,
+        user,
+        profile,
+        role,
+        isAuthLoading,
+        signInWithPassword,
+        signUp,
+        signOut: handleSignOut,
+        sendPasswordReset,
+        signInWithGoogle,
+        signInWithMagicLink
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+}
+
+const useAuth = () => useContext(AuthContext);
+
+function ProfileMenu({ onNavigate }) {
+  const { user, profile, role, signOut } = useAuth();
+  const { t } = useLanguage();
+  const { theme, toggleTheme } = useTheme();
+  const [isOpen, setIsOpen] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const menuRef = useRef(null);
+
+  if (!user) return null;
+
+  const displayName = profile?.display_name || user.user_metadata?.full_name || user.email?.split('@')[0] || 'User';
+  const email = user.email || '';
+  const avatarUrl = profile?.avatar_url || user.user_metadata?.avatar_url;
+  const initials = displayName.slice(0, 2).toUpperCase();
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') setIsOpen(false);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  const handleLogoutClick = async () => {
+    if (isLoggingOut) return;
+    setIsLoggingOut(true);
+    try {
+      await signOut();
+      if (onNavigate) onNavigate('#/login');
+      else if (typeof window !== 'undefined') window.location.hash = '#/login';
+    } catch (e) {
+      console.error('Error signing out:', e);
+    } finally {
+      setIsLoggingOut(false);
+      setIsOpen(false);
+    }
+  };
+
+  const handleItemClick = (route) => {
+    setIsOpen(false);
+    if (onNavigate) onNavigate(route);
+  };
+
+  return (
+    <div className="relative inline-block text-left" ref={menuRef}>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
+        aria-label="User Profile Menu"
+        className="flex items-center gap-2 px-2.5 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800/90 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-amber-500"
+      >
+        {avatarUrl ? (
+          <img
+            src={avatarUrl}
+            alt={displayName}
+            className="w-7 h-7 rounded-full object-cover border border-amber-500/40 shadow-sm shrink-0"
+          />
+        ) : (
+          <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-600 to-amber-500 text-white font-extrabold text-[11px] flex items-center justify-center border border-amber-400/40 shadow-sm shrink-0">
+            {initials}
+          </div>
+        )}
+        <div className="flex flex-col text-left leading-none max-w-[110px] sm:max-w-[150px] md:max-w-[180px]">
+          <span className="text-xs font-black text-slate-900 dark:text-white truncate">
+            {displayName}
+          </span>
+          <span className="text-[10px] font-medium text-slate-500 dark:text-slate-400 truncate mt-0.5">
+            {email}
+          </span>
+        </div>
+        <svg className="w-3 h-3 text-slate-400 dark:text-slate-500 shrink-0 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+
+      {isOpen && (
+        <div className="absolute right-0 mt-2.5 w-64 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl z-50 overflow-hidden animate-fadeIn">
+          <div className="p-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-850/50">
+            <div className="flex items-center justify-between mb-1">
+              <p className="text-xs font-black text-slate-900 dark:text-white truncate max-w-[140px]">
+                {displayName}
+              </p>
+              <span className={`text-[9px] font-black uppercase px-2 py-0.5 rounded-full ${
+                role === 'admin'
+                  ? 'bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20'
+                  : 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20'
+              }`}>
+                {role}
+              </span>
+            </div>
+            <p className="text-[11px] font-medium text-slate-500 dark:text-slate-400 truncate">
+              {email}
+            </p>
+          </div>
+
+          <div className="py-2 space-y-0.5 px-2">
+            <button
+              onClick={() => handleItemClick('#/profile')}
+              className="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-700 dark:text-slate-300 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            >
+              <svg className="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+              <span>{t('myProfile') || 'எனது கணக்கு (Profile)'}</span>
+            </button>
+
+            <button
+              onClick={() => handleItemClick('#/history')}
+              className="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-700 dark:text-slate-300 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            >
+              <svg className="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <span>{t('watchHistory') || 'பார்த்த வரலாறுகள் (History)'}</span>
+            </button>
+
+            {role === 'admin' && (
+              <button
+                onClick={() => handleItemClick('#/admin')}
+                className="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-red-600 dark:text-red-400 rounded-xl hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors"
+              >
+                <svg className="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                <span>{t('adminConsole') || 'நிர்வாகக் குழு (Admin Console)'}</span>
+              </button>
+            )}
+
+            <button
+              onClick={toggleTheme}
+              className="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold text-slate-700 dark:text-slate-300 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            >
+              <div className="flex items-center gap-2.5">
+                {theme === 'dark' ? (
+                  <svg className="w-4 h-4 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                ) : (
+                  <svg className="w-4 h-4 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                )}
+                <span>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
+              </div>
+            </button>
+          </div>
+
+          <div className="p-2 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
+            <button
+              onClick={handleLogoutClick}
+              disabled={isLoggingOut}
+              className="w-full flex items-center justify-center gap-2 px-3 py-2 text-xs font-bold text-red-600 dark:text-red-400 rounded-xl bg-red-500/10 hover:bg-red-600 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition-all disabled:opacity-50"
+            >
+              {isLoggingOut ? (
+                <>
+                  <svg className="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  </svg>
+                  <span>{t('loggingOut') || 'வெளியேறுகிறது...'}</span>
+                </>
+              ) : (
+                <>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                  <span>{t('logout') || 'வெளியேறு (Log Out)'}</span>
+                </>
+              )}
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ProtectedRoute({ children, onNavigate }) {
+  const { session, isAuthLoading } = useAuth();
+  if (isAuthLoading) return null;
+  if (!session) {
+    if (typeof window !== 'undefined' && window.location.hash !== '#/login') {
+      window.location.hash = '#/login';
+    }
+    return null;
+  }
+  return children;
+}
+
+function AdminRoute({ children }) {
+  const { session, role, isAuthLoading } = useAuth();
+  if (isAuthLoading) return null;
+  if (!session) {
+    if (typeof window !== 'undefined' && window.location.hash !== '#/login') {
+      window.location.hash = '#/login';
+    }
+    return null;
+  }
+  if (role !== 'admin') {
+    if (typeof window !== 'undefined' && window.location.hash !== '#/') {
+      window.location.hash = '#/';
+    }
+    return null;
+  }
+  return children;
+}
+
 // ==================== 4. HOOKS ====================
-function useVideos(category = "all") {
+function useVideos(category = 'all', sort = 'newest') {
   const { language } = useLanguage();
   const [videos, setVideos] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -631,14 +1169,14 @@ function useVideos(category = "all") {
   useEffect(() => {
     let isMounted = true;
     setIsLoading(true);
-    getLatestVideos(language, category).then(data => {
+    getLatestVideos(language, category, sort).then(data => {
       if (isMounted) {
         setVideos(data);
         setIsLoading(false);
       }
     });
     return () => { isMounted = false; };
-  }, [language, category]);
+  }, [language, category, sort]);
 
   return { videos, isLoading };
 }
@@ -655,7 +1193,7 @@ function useDebounce(value, delay = 250) {
 function useWatchHistory() {
   const [history, setHistory] = useState(() => {
     try {
-      const stored = localStorage.getItem("dhanavriksha_watch_history");
+      const stored = localStorage.getItem('dhanavriksha_watch_history');
       return stored ? JSON.parse(stored) : [];
     } catch (e) { return []; }
   });
@@ -665,7 +1203,7 @@ function useWatchHistory() {
     setHistory(prev => {
       const filtered = prev.filter(item => item.id !== video.id);
       const updated = [{ ...video, watchedAt: new Date().toISOString() }, ...filtered].slice(0, 10);
-      localStorage.setItem("dhanavriksha_watch_history", JSON.stringify(updated));
+      localStorage.setItem('dhanavriksha_watch_history', JSON.stringify(updated));
       return updated;
     });
   };
@@ -720,9 +1258,14 @@ function ThemeToggle() {
   );
 }
 
-function Header({ onOpenSearch }) {
-  const { t } = useLanguage();
+function Header({ onOpenSearch, onNavigate }) {
+  const { t, language } = useLanguage();
+  const { user, profile, signOut } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+  const displayName = profile?.display_name || user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'User';
+  const email = user?.email || '';
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 30);
@@ -730,22 +1273,38 @@ function Header({ onOpenSearch }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleLogout = async () => {
+    if (isLoggingOut) return;
+    setIsLoggingOut(true);
+    try {
+      await signOut();
+      if (onNavigate) onNavigate('#/login');
+      else if (typeof window !== 'undefined') window.location.hash = '#/login';
+    } catch (err) {
+      console.error('Logout error:', err);
+    } finally {
+      setIsLoggingOut(false);
+    }
+  };
+
   return (
-    <header className={`sticky top-0 z-40 transition-all duration-300 border-b border-slate-200 dark:border-slate-800 backdrop-blur-glass ${isScrolled ? 'py-2.5 shadow-lg bg-white/90 dark:bg-slate-950/90' : 'py-4'}`}>
+    <header className={`sticky top-0 z-40 transition-all duration-300 border-b border-slate-200 dark:border-slate-800 backdrop-blur-glass ${
+      isScrolled ? 'py-2.5 shadow-lg bg-white/90 dark:bg-slate-950/90' : 'py-3.5'
+    }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
         
         {/* Left Side: Welcome Badge */}
-        <div className="hidden sm:flex items-center gap-2 min-w-[140px] md:min-w-[180px] shrink-0">
+        <div className="hidden sm:flex items-center gap-2 min-w-[140px] md:min-w-[170px] shrink-0">
           <span className="inline-flex items-center gap-2 px-3 py-1 text-xs font-bold rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/25 shadow-sm">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <span>👋 {t('welcome')}</span>
           </span>
         </div>
 
-        {/* Center: Brand Logo & Title (Mudhalidu Thesai / முதல�€�Ÿு தி�š�ˆ) */}
+        {/* Center: Brand Logo & Title */}
         <a href="#/" className="flex items-center gap-3 group mx-auto text-center sm:text-left">
-          <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-500 via-amber-600 to-amber-800 flex items-center justify-center text-white shadow-lg shadow-amber-500/25 group-hover:scale-105 transition-transform duration-300 border border-amber-400/40 shrink-0">
-            <svg className="w-6 h-6 text-white drop-shadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-br from-amber-500 via-amber-600 to-amber-800 flex items-center justify-center text-white shadow-lg shadow-amber-500/25 group-hover:scale-105 transition-transform duration-300 border border-amber-400/40 shrink-0">
+            <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white drop-shadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="12" r="9" className="opacity-35" strokeWidth="1.5" />
               <path d="M12 3v2M12 19v2M3 12h2M19 12h2" opacity="0.5" strokeWidth="1.5" />
               <path d="M16 8L8 16M16 8H10M16 8V14" stroke="#fef3c7" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -768,20 +1327,51 @@ function Header({ onOpenSearch }) {
           </div>
         </a>
 
-        {/* Right Side: Search + Language + Theme */}
-        <div className="flex items-center justify-end gap-2.5 sm:gap-3 min-w-[140px] md:min-w-[180px] shrink-0">
+        {/* Right Side: Search + Language + Theme + Login / User Card & Logout */}
+        <div className="flex items-center justify-end gap-2 sm:gap-2.5 shrink-0">
           <button
             onClick={onOpenSearch}
-            className="flex items-center gap-2.5 px-3.5 py-2 rounded-full bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all text-xs font-semibold border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md"
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all text-xs font-semibold border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md"
+            aria-label="Search"
           >
             <svg className="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
             <span className="hidden md:inline">{t('searchTitle')}</span>
-            <kbd className="hidden md:inline-block px-2 py-0.5 text-[10px] font-mono font-bold bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-md border border-slate-300 dark:border-slate-600">
-              âŒ˜K
-            </kbd>
           </button>
           <LanguageSwitcher />
           <ThemeToggle />
+
+          {user ? (
+            <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+              <ProfileMenu onNavigate={onNavigate || ((route) => { if (typeof window !== 'undefined') window.location.hash = route; })} />
+              <button
+                onClick={handleLogout}
+                disabled={isLoggingOut}
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-red-600 hover:bg-red-700 active:scale-95 text-white font-black text-xs shadow-md hover:shadow-red-600/30 transition-all shrink-0 disabled:opacity-50 border border-red-500/30"
+                title={language === 'ta' ? 'கணக்கிலிருந்து வெளியேறு' : 'Log out of website'}
+              >
+                {isLoggingOut ? (
+                  <svg className="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  </svg>
+                ) : (
+                  <span>🚪</span>
+                )}
+                <span>{language === 'ta' ? 'வெளியேறு' : 'Logout'}</span>
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => {
+                if (onNavigate) onNavigate('#/login');
+                else if (typeof window !== 'undefined') window.location.hash = '#/login';
+              }}
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-amber-600 hover:bg-amber-500 text-white font-extrabold text-xs shadow-md hover:scale-105 transition-all shrink-0"
+            >
+              <span>🔑</span>
+              <span>{language === 'ta' ? 'உள்நுழைக' : 'Sign In'}</span>
+            </button>
+          )}
         </div>
       </div>
     </header>
@@ -789,10 +1379,11 @@ function Header({ onOpenSearch }) {
 }
 
 function Navbar({ currentPath, onNavigate }) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const { user, signOut } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const navItems = [
+  const baseNavItems = [
     { id: 'home', hash: '#/', label: t('nav.home') },
     { id: 'videos', hash: '#/videos', label: t('nav.videos') },
     { id: 'news', hash: '#/news', label: t('nav.news') },
@@ -800,8 +1391,29 @@ function Navbar({ currentPath, onNavigate }) {
     { id: 'stocks', hash: '#/category/stocks', label: t('nav.stocks') },
     { id: 'personal-finance', hash: '#/category/personal-finance', label: t('nav.personalFinance') },
     { id: 'calculator', hash: '#/calculator', label: t('nav.calculator') },
-    { id: 'quiz', hash: '#/quiz', label: t('nav.quiz') }
+    { id: 'quiz', hash: '#/quiz', label: t('nav.quiz') || 'Quiz' }
   ];
+
+  const authNavItems = user ? [
+    { id: 'profile', hash: '#/profile', label: `👤 ${language === 'ta' ? 'சுயவிவரம்' : 'Profile'}` },
+    {
+      id: 'logout',
+      isAction: true,
+      action: async () => {
+        try {
+          await signOut();
+          onNavigate('#/login');
+        } catch (e) {
+          console.error(e);
+        }
+      },
+      label: `🚪 ${language === 'ta' ? 'வெளியேறு' : 'Sign Out'}`
+    }
+  ] : [
+    { id: 'login', hash: '#/login', label: `🔑 ${language === 'ta' ? 'உள்நுழைக' : 'Sign In'}` }
+  ];
+
+  const navItems = [...baseNavItems, ...authNavItems];
 
   return (
     <nav className="bg-slate-900 text-slate-100 border-b border-slate-800 shadow-xl relative z-30">
@@ -809,13 +1421,23 @@ function Navbar({ currentPath, onNavigate }) {
         <div className="hidden lg:flex items-center justify-between gap-2 py-1.5">
           <div className="flex items-center justify-between flex-1 gap-1 xl:gap-2">
             {navItems.map((item) => {
+              if (item.isAction) {
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => item.action && item.action()}
+                    className="relative px-3 py-2 text-xs font-extrabold transition-all rounded-lg whitespace-nowrap text-red-400 hover:text-white hover:bg-red-900/40 border border-red-500/20"
+                  >
+                    {item.label}
+                  </button>
+                );
+              }
               const isActive = currentPath === item.hash || (item.hash === '#/' && currentPath === '');
               return (
                 <button
                   key={item.id}
                   onClick={() => onNavigate(item.hash)}
                   className={`relative px-3 py-2 text-xs font-extrabold transition-all rounded-lg whitespace-nowrap ${isActive ? 'bg-amber-500/15 text-amber-400 shadow-sm border border-amber-500/30' : 'text-slate-300 hover:text-white hover:bg-slate-800/80'}`}
-
                 >
                   {item.label}
                   {isActive && <span className="absolute bottom-0 left-2.5 right-2.5 h-0.5 bg-amber-500 rounded-full" />}
@@ -823,16 +1445,6 @@ function Navbar({ currentPath, onNavigate }) {
               );
             })}
           </div>
-
-          <a
-            href={OFFICIAL_CHANNEL_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="text-xs font-black text-white bg-red-600 hover:bg-red-700 inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg shadow-md shadow-red-600/30 transition-all hover:scale-105 shrink-0 ml-3 border border-red-500/30"
-          >
-            <span className="text-amber-300">▶</span>
-            <span>Official YouTube</span>
-          </a>
         </div>
 
         <div className="lg:hidden flex items-center justify-between h-12">
@@ -854,22 +1466,25 @@ function Navbar({ currentPath, onNavigate }) {
           {navItems.map((item) => (
             <button
               key={item.id}
-              onClick={() => { onNavigate(item.hash); setMobileOpen(false); }}
+              onClick={() => {
+                if (item.isAction) {
+                  if (item.action) item.action();
+                } else {
+                  onNavigate(item.hash);
+                }
+                setMobileOpen(false);
+              }}
               className={`block w-full text-left px-3.5 py-2.5 rounded-lg text-sm font-bold transition-colors ${
-                currentPath === item.hash ? 'bg-amber-500/10 text-amber-400 border-l-4 border-amber-500' : 'text-slate-300 hover:bg-slate-800'
+                item.isAction
+                  ? 'text-red-400 hover:bg-red-950/40'
+                  : currentPath === item.hash
+                    ? 'bg-amber-500/10 text-amber-400 border-l-4 border-amber-500'
+                    : 'text-slate-300 hover:bg-slate-800'
               }`}
             >
               {item.label}
             </button>
           ))}
-          <a
-            href={OFFICIAL_CHANNEL_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="block w-full text-center px-4 py-2.5 rounded-lg text-sm font-extrabold text-white bg-red-600 mt-3"
-          >
-            ðŸ”´ Visit {OFFICIAL_CHANNEL_HANDLE}
-          </a>
         </div>
       )}
     </nav>
@@ -878,50 +1493,58 @@ function Navbar({ currentPath, onNavigate }) {
 
 function TrendingTicker() {
   const { t, language } = useLanguage();
+  const isTamil = language === 'ta';
 
-  const tickerHeadlines = language === 'ta' ? [
-    "@budgetpadmanaban_ புதிய வ�€�Ÿிய�‹: மிய�‚�š்�šுவல் �ƒபண்�Ÿ் �š�†ய்ய வ�‡ண்�Ÿியவ�ˆ & �š�†ய்ய�•்�•�‚�Ÿாதவ�ˆ!",
-    "NIFTY 50 புதிய �‰�š்�šமான 24,850 புள்ளி�•ள�ˆத் த�Š�Ÿ்�Ÿது!",
-    "�†ர்பிஐ வ�Ÿ்�Ÿி வி�•ிதத்தில் மாற்றமில்ல�ˆ - ஹ�‹ம் ல�‹ன் �‡�Žம்ஐ �šும�ˆ �…தி�•ரி�•்�•ாது!",
-    "SIP ம�‚லம் â‚¹1 �•�‹�Ÿி நிதி �‡ல�•்�•�ˆ �…�Ÿ�ˆவது �Žப்ப�Ÿி? புதிய �•ண�•்�•�€�Ÿ்�Ÿு �•ருவிய�ˆப் பாரு�™்�•ள்!"
+  const tickerHeadlines = isTamil ? [
+    "@budgetpadmanaban_ புதிய வீடியோ: மியூச்சுவல் ஃபண்ட் செய்ய வேண்டியவை & செய்யக்கூடாதவை!",
+    "NIFTY 50 புதிய உச்சமான 24,850 புள்ளிகளைத் தொட்டது!",
+    "ஆர்பிஐ வட்டி விகிதத்தில் மாற்றமில்லை - ஹோம் லோன் இஎம்ஐ சுமை அதிகரிக்காது!",
+    "SIP மூலம் ₹1 கோடி நிதி இலக்கை அடைவது எப்படி? புதிய கணக்கீட்டுக் கருவியைப் பாருங்கள்!"
   ] : [
     "@budgetpadmanaban_ New Video: Mutual Fund Do's & Don'ts Guide!",
     "NIFTY 50 touches record high of 24,850 points!",
     "RBI keeps Repo Rate unchanged at 6.50% - Fixed Deposit & EMI outlook steady!",
-    "How to reach â‚¹1 Crore through disciplined SIPs? Try our interactive calculator!"
+    "How to reach ₹1 Crore through disciplined SIPs? Try our interactive calculator!"
   ];
+
+  const renderTickerTrack = (keyPrefix) => (
+    <div key={keyPrefix} className="flex items-center gap-8 shrink-0 pr-8">
+      <div className="flex items-center gap-3 border-r border-slate-800 pr-8">
+        <span className="text-amber-400 font-extrabold uppercase text-[10px] tracking-wider">
+          {t('marketTitle')}:
+        </span>
+        {marketSnapshotData.map((item, idx) => (
+          <div key={`${keyPrefix}-mkt-${idx}`} className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md font-mono text-[11px] font-bold ${item.isUp ? 'market-up' : 'market-down'}`}>
+            <span>{item.symbol}</span>
+            <span className="text-slate-200">{item.value}</span>
+            <span className="text-[10px]">{item.isUp ? '▲' : '▼'} {item.percent}</span>
+          </div>
+        ))}
+      </div>
+
+      <div className="flex items-center gap-8 font-medium">
+        {tickerHeadlines.map((headline, idx) => (
+          <span key={`${keyPrefix}-hl-${idx}`} className="hover:text-amber-400 cursor-pointer transition-colors flex items-center gap-2 text-slate-300 whitespace-nowrap">
+            <span className="text-amber-500 font-black">•</span>
+            {headline}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
 
   return (
     <div className="bg-slate-950 text-slate-100 border-b border-slate-800 text-xs py-2.5 overflow-hidden select-none shadow-sm">
       <div className="max-w-7xl mx-auto px-4 flex items-center gap-3.5">
-        <div className="flex items-center gap-2 shrink-0 bg-red-600 text-white font-black px-3 py-1 rounded-md text-[10px] uppercase tracking-wider shadow-md">
+        <div className="flex items-center gap-2 shrink-0 bg-red-600 text-white font-black px-3 py-1 rounded-md text-[10px] uppercase tracking-wider shadow-md z-10">
           <span className="w-2 h-2 rounded-full bg-white animate-ping" />
           {t('tickerLabel')}
         </div>
 
         <div className="overflow-hidden relative w-full flex items-center">
-          <div className="animate-marquee flex items-center gap-8 whitespace-nowrap">
-            <div className="flex items-center gap-3 border-r border-slate-800 pr-8">
-              <span className="text-amber-400 font-extrabold uppercase text-[10px] tracking-wider">
-                {t('marketTitle')}:
-              </span>
-              {marketSnapshotData.map((item, idx) => (
-                <div key={idx} className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md font-mono text-[11px] font-bold ${item.isUp ? 'market-up' : 'market-down'}`}>
-                  <span>{item.symbol}</span>
-                  <span className="text-slate-200">{item.value}</span>
-                  <span className="text-[10px]">{item.isUp ? 'â–²' : 'â–¼'} {item.percent}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="flex items-center gap-8 font-medium">
-              {tickerHeadlines.map((headline, idx) => (
-                <span key={idx} className="hover:text-amber-400 cursor-pointer transition-colors flex items-center gap-2 text-slate-300">
-                  <span className="text-amber-500 font-black">â€¢</span>
-                  {headline}
-                </span>
-              ))}
-            </div>
+          <div className="animate-marquee flex items-center whitespace-nowrap">
+            {renderTickerTrack('track-1')}
+            {renderTickerTrack('track-2')}
           </div>
         </div>
       </div>
@@ -1126,7 +1749,7 @@ function VideoCard({ video, onSelect, onShowToast }) {
             className="px-2.5 py-1 rounded-md bg-red-600 text-white text-[9px] font-black uppercase tracking-wider shadow-md hover:bg-red-700 transition-colors"
             title="Watch on YouTube Channel"
           >
-            {OFFICIAL_CHANNEL_HANDLE} â†—
+            {OFFICIAL_CHANNEL_HANDLE} ↗
           </a>
         </div>
       </div>
@@ -1171,12 +1794,45 @@ function HeroSection({ news = newsData, onNavigate }) {
   const featuredStories = news && news.length > 0 ? news : newsData;
   const trendingStories = newsData.slice(0, 5);
 
-  // Duplicate for seamless loop
-  const marqueeItems = [...featuredStories, ...featuredStories];
-
   const getHeadline = (item) => {
     return language === 'ta' ? item.titleTamil : (item.titleEnglish || item.titleTamil);
   };
+
+  const renderFeaturedTrack = (keyPrefix) => (
+    <div key={keyPrefix} className="flex items-stretch gap-0 shrink-0 h-full">
+      {featuredStories.map((item, idx) => (
+        <div
+          key={`${keyPrefix}-${item.id}-${idx}`}
+          onClick={() => onNavigate && onNavigate(`#/news/${item.slug}`)}
+          className="group relative flex-shrink-0 w-[240px] sm:w-[280px] h-full cursor-pointer overflow-hidden"
+        >
+          <img
+            src={item.thumbnail}
+            alt={getHeadline(item)}
+            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 p-3 space-y-1.5 z-10">
+            <div className="flex items-center gap-2">
+              <span className="px-2.5 py-0.5 text-[9px] font-black uppercase tracking-wider rounded-full bg-amber-500 text-slate-950 shadow">
+                {(item.category || 'finance').replace('-', ' ')}
+              </span>
+              <span className="text-[9px] font-mono text-slate-300 bg-slate-900/70 px-2 py-0.5 rounded-full">
+                {new Date(item.publishedAt).toLocaleDateString()}
+              </span>
+            </div>
+            <h3 className="text-sm sm:text-base font-black text-white font-serif leading-snug line-clamp-2 group-hover:text-amber-400 transition-colors drop-shadow-md">
+              {getHeadline(item)}
+            </h3>
+            {item.titleEnglish && language === 'ta' && (
+              <p className="text-[11px] text-amber-300/80 font-medium line-clamp-1">{item.titleEnglish}</p>
+            )}
+          </div>
+          <div className="absolute top-0 right-0 w-px h-full bg-slate-800/60" />
+        </div>
+      ))}
+    </div>
+  );
 
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 space-y-3">
@@ -1184,7 +1840,7 @@ function HeroSection({ news = newsData, onNavigate }) {
         <div className="flex items-center gap-2">
           <span className="w-2.5 h-2.5 rounded-full bg-red-600 animate-ping" />
           <h2 className="text-xs font-black tracking-widest uppercase text-amber-600 dark:text-amber-400 font-serif">
-            {t('featuredNews') || '�šிறப்பு�š் �š�†ய்தி�•ள்'}
+            {t('featuredNews') || 'சிறப்புச் செய்திகள்'}
           </h2>
         </div>
         <div className="text-[11px] text-slate-500 font-semibold flex items-center gap-2 font-mono">
@@ -1198,42 +1854,13 @@ function HeroSection({ news = newsData, onNavigate }) {
         <div className="lg:col-span-7 relative rounded-3xl overflow-hidden bg-slate-950 lg:h-[260px] border border-slate-200 dark:border-slate-800 shadow-xl select-none group/marquee">
           <div className="absolute top-4 left-4 z-20 flex items-center gap-2 bg-red-600 text-white font-black px-3 py-1.5 rounded-xl text-[10px] tracking-wider uppercase shadow-lg">
             <span className="w-2 h-2 rounded-full bg-white animate-ping" />
-            <span>{t('tickerLabel') || 'மு�•்�•ிய �š�†ய்தி�•ள்'}</span>
+            <span>{t('tickerLabel') || 'முக்கிய செய்திகள்'}</span>
           </div>
 
           <div className="h-full overflow-hidden flex items-stretch">
-            <div className="animate-featured-marquee group-hover/marquee:paused flex items-stretch gap-0 h-full">
-              {marqueeItems.map((item, idx) => (
-                <div
-                  key={`feat-${item.id}-${idx}`}
-                  onClick={() => onNavigate && onNavigate(`#/news/${item.slug}`)}
-                  className="group relative flex-shrink-0 w-[240px] sm:w-[280px] h-full cursor-pointer overflow-hidden"
-                >
-                  <img
-                    src={item.thumbnail}
-                    alt={getHeadline(item)}
-                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-3 space-y-1.5 z-10">
-                    <div className="flex items-center gap-2">
-                      <span className="px-2.5 py-0.5 text-[9px] font-black uppercase tracking-wider rounded-full bg-amber-500 text-slate-950 shadow">
-                        {(item.category || 'finance').replace('-', ' ')}
-                      </span>
-                      <span className="text-[9px] font-mono text-slate-300 bg-slate-900/70 px-2 py-0.5 rounded-full">
-                        {new Date(item.publishedAt).toLocaleDateString()}
-                      </span>
-                    </div>
-                    <h3 className="text-sm sm:text-base font-black text-white font-serif leading-snug line-clamp-2 group-hover:text-amber-400 transition-colors drop-shadow-md">
-                      {getHeadline(item)}
-                    </h3>
-                    {item.titleEnglish && language === 'ta' && (
-                      <p className="text-[11px] text-amber-300/80 font-medium line-clamp-1">{item.titleEnglish}</p>
-                    )}
-                  </div>
-                  <div className="absolute top-0 right-0 w-px h-full bg-slate-800/60" />
-                </div>
-              ))}
+            <div className="animate-featured-marquee flex items-stretch whitespace-nowrap h-full">
+              {renderFeaturedTrack('ftrack-1')}
+              {renderFeaturedTrack('ftrack-2')}
             </div>
           </div>
         </div>
@@ -1244,7 +1871,7 @@ function HeroSection({ news = newsData, onNavigate }) {
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
               <h3 className="text-sm font-black uppercase tracking-wider text-slate-900 dark:text-white font-serif">
-                {t('trendingArticlesTitle') || '�Ÿிர�†ண்�Ÿி�™் �š�†ய்தி�•ள்'}
+                {t('trendingArticlesTitle') || 'டிரெண்டிங் செய்திகள்'}
               </h3>
             </div>
             <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full">
@@ -1270,7 +1897,7 @@ function HeroSection({ news = newsData, onNavigate }) {
                         {article.category.replace('-', ' ')}
                       </span>
                       <span className="text-[9px] text-slate-400 font-mono">
-                        â€¢ {new Date(article.publishedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        • {new Date(article.publishedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </span>
                     </div>
                     <h4 className="text-xs font-bold text-slate-900 dark:text-white line-clamp-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors font-serif leading-snug">
@@ -1600,39 +2227,39 @@ function SipCalculator() {
   const calculatorCards = [
     {
       id: 'sip',
-      titleTamil: 'SIP Calculator',
+      titleTamil: 'SIP கணக்கிடுவான்',
       titleEnglish: 'SIP Calculator',
-      subtitleTamil: 'மாதாந்திர SIP �•ண�•்�•�€�Ÿு',
+      subtitleTamil: 'மாதாந்திர முறையான முதலீடு',
       subtitleEnglish: 'Monthly Systematic Investment',
-      icon: 'ðŸ“Š',
-      badge: 'POPULAR'
+      icon: '📊',
+      badge: isTamil ? 'பிரபலம்' : 'POPULAR'
     },
     {
       id: 'lumpsum',
-      titleTamil: 'Lump Sum Calculator',
+      titleTamil: 'ஒரே முறை முதலீடு',
       titleEnglish: 'Lump Sum Calculator',
-      subtitleTamil: '�’ர�‡ முற�ˆ முதல�€�Ÿு',
+      subtitleTamil: 'ஒரே முறை முதலீட்டு வளர்ச்சி',
       subtitleEnglish: 'One-Time Investment Growth',
-      icon: 'ðŸ’°',
-      badge: 'SIMPLE'
+      icon: '💰',
+      badge: isTamil ? 'எளிது' : 'SIMPLE'
     },
     {
       id: 'stepup',
-      titleTamil: 'Investment Returns Calculator',
+      titleTamil: 'முதலீட்டு வருவாய் உயர்வு',
       titleEnglish: 'Returns Calculator',
-      subtitleTamil: '�†ண்�Ÿு �‰யர்வு +10% முதல�€�Ÿு',
+      subtitleTamil: 'ஆண்டு முதலீட்டு உயர்வு (+10%)',
       subtitleEnglish: 'Step-Up Annual Incremental Growth',
-      icon: 'ðŸš€',
-      badge: 'HIGH GROWTH'
+      icon: '🚀',
+      badge: isTamil ? 'அதிவேக வளர்ச்சி' : 'HIGH GROWTH'
     },
     {
       id: 'compound',
-      titleTamil: 'Compound Interest Calculator',
+      titleTamil: 'கூட்டு வட்டி கணக்கீடு',
       titleEnglish: 'Compound Interest',
-      subtitleTamil: '�•�‚�Ÿ்�Ÿு வ�Ÿ்�Ÿி வளர்�š்�šி',
+      subtitleTamil: 'கூட்டு வட்டியின் அபார வளர்ச்சி',
       subtitleEnglish: 'Power of Compounding Growth',
-      icon: 'âš¡',
-      badge: 'WEALTH'
+      icon: '⚡',
+      badge: isTamil ? 'செல்வ வளர்ச்சி' : 'WEALTH'
     }
   ];
 
@@ -1640,15 +2267,15 @@ function SipCalculator() {
     <section id="financial-calculators" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       <div className="text-center space-y-2 max-w-2xl mx-auto">
         <span className="px-3.5 py-1 text-[10px] font-black uppercase tracking-widest rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
-          FINANCIAL TOOLS
+          {isTamil ? 'நிதி கணக்கீட்டுக் கருவிகள்' : 'FINANCIAL TOOLS'}
         </span>
         <h2 className="text-2xl sm:text-4xl font-black font-serif text-slate-900 dark:text-white">
-          {t('financialCalculators') || (isTamil ? "நிதி �•ண�•்�•�€�Ÿ்�Ÿு�•் �•ருவி�•ள்" : "Financial Calculators")}
+          {isTamil ? 'நிதி கணக்கீட்டுக் கருவிகள்' : 'Financial Calculators'}
         </h2>
         <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
-          {t('financialCalculatorsDesc') || (isTamil 
-            ? "SIP, �’ர�‡ முற�ˆ முதல�€�Ÿு, முதல�€�Ÿ்�Ÿு வருவாய் மற்றும் �•�‚�Ÿ்�Ÿு வ�Ÿ்�Ÿி �†�•ியவற்ற�ˆ�•் �•ண�•்�•ி�Ÿ �‰தவும் நிதி�š் �šாதன�™்�•ள்." 
-            : "Plan your long-term wealth creation with accurate returns, step-ups, and inflation adjustments.")}
+          {isTamil 
+            ? 'SIP, ஒரே முறை முதலீடு, முதலீட்டு வருவாய் மற்றும் கூட்டு வட்டி ஆகியவற்றைக் கணக்கிட உதவும் சாதனங்கள்.' 
+            : 'Essential financial tools to plan SIPs, Lump Sum investments, returns, and compound interest growth.'}
         </p>
       </div>
 
@@ -1667,7 +2294,7 @@ function SipCalculator() {
             >
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-3xl">{card.icon}</span>
+                  <span className="text-2xl">{card.icon}</span>
                   <span className={`text-[9px] font-black tracking-wider uppercase px-2 py-0.5 rounded-full ${
                     isActive ? 'bg-amber-500 text-slate-950 font-bold' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
                   }`}>
@@ -1684,9 +2311,9 @@ function SipCalculator() {
 
               <div className="mt-4 pt-3 border-t border-slate-200/20 dark:border-slate-800 flex items-center justify-between text-xs font-bold">
                 <span className={isActive ? 'text-amber-400' : 'text-amber-600 dark:text-amber-400'}>
-                  {isActive ? 'Active Calculator' : 'Use Calculator'}
+                  {isActive ? (isTamil ? 'செயலில் உள்ள கணக்கீடு' : 'Active Calculator') : (isTamil ? 'பயன்படுத்துக' : 'Use Calculator')}
                 </span>
-                <span>â†’</span>
+                <span>→</span>
               </div>
             </div>
           );
@@ -1697,16 +2324,16 @@ function SipCalculator() {
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-800 pb-6">
           <div className="space-y-1">
             <h3 className="text-xl sm:text-2xl font-black font-serif text-white flex items-center gap-2">
-              <span>âš¡</span>
+              <span className="text-amber-400">⚡</span>
               <span>
-                {calcMode === 'sip' && (isTamil ? "SIP முதல�€�Ÿ்�Ÿு �•ண�•்�•ி�Ÿுவான்" : "SIP Returns Calculator")}
-                {calcMode === 'lumpsum' && (isTamil ? "�’ர�‡ முற�ˆ (Lump Sum) முதல�€�Ÿ்�Ÿு �•ண�•்�•ி�Ÿுவான்" : "Lump Sum Returns Calculator")}
-                {calcMode === 'stepup' && (isTamil ? "முதல�€�Ÿ்�Ÿு �‰யர்வு (Step-Up SIP) �•ண�•்�•ி�Ÿுவான்" : "Step-Up SIP Calculator")}
-                {calcMode === 'compound' && (isTamil ? "�•�‚�Ÿ்�Ÿு வ�Ÿ்�Ÿி (Compound Interest) �•ண�•்�•ி�Ÿுவான்" : "Compound Interest Calculator")}
+                {calcMode === 'sip' && (isTamil ? 'SIP முதலீட்டுக் கணக்கீடு' : 'SIP Returns Calculator')}
+                {calcMode === 'lumpsum' && (isTamil ? 'ஒரே முறை (Lump Sum) முதலீட்டுக் கணக்கீடு' : 'Lump Sum Returns Calculator')}
+                {calcMode === 'stepup' && (isTamil ? 'முதலீட்டு உயர்வு (Step-Up SIP) கணக்கீடு' : 'Step-Up SIP Calculator')}
+                {calcMode === 'compound' && (isTamil ? 'கூட்டு வட்டி (Compound Interest) கணக்கீடு' : 'Compound Interest Calculator')}
               </span>
             </h3>
             <p className="text-xs text-slate-400">
-              {isTamil ? "�‰�™்�•ளின் ந�€ண்�Ÿ �•ால முதல�€�Ÿ்�Ÿு �‡ல�•்�•�ˆ �…�Ÿ�ˆய துல்லியமான �•ணிப்பு" : "Interactive asset compounding and inflation-adjusted growth projections"}
+              {isTamil ? 'உங்கள் நீண்ட கால முதலீட்டு இலக்கை அடைய துல்லியமான கூட்டு வட்டி கணிப்பு' : 'Interactive asset compounding and inflation-adjusted growth projections'}
             </p>
           </div>
 
@@ -1725,7 +2352,7 @@ function SipCalculator() {
                 calcMode === 'lumpsum' ? 'bg-amber-600 text-white shadow-md' : 'text-slate-300 hover:text-white'
               }`}
             >
-              Lump Sum
+              {isTamil ? 'ஒரே முறை' : 'Lump Sum'}
             </button>
             <button
               onClick={() => setCalcMode('stepup')}
@@ -1741,16 +2368,16 @@ function SipCalculator() {
                 calcMode === 'compound' ? 'bg-amber-600 text-white shadow-md' : 'text-slate-300 hover:text-white'
               }`}
             >
-              Compound Interest
+              {isTamil ? 'கூட்டு வட்டி' : 'Compound Interest'}
             </button>
           </div>
         </div>
 
         <div className="flex flex-wrap items-center gap-2 text-xs">
-          <span className="text-slate-400 font-bold uppercase text-[10px]">Quick Goals:</span>
-          <button onClick={() => applyPresetGoal(5000, 12, 15)} className="px-3 py-1 rounded-full bg-slate-800 hover:bg-amber-600 text-slate-200 hover:text-white transition-colors font-bold">â‚¹1 Crore Goal (â‚¹5k/mo)</button>
-          <button onClick={() => applyPresetGoal(10000, 14, 10)} className="px-3 py-1 rounded-full bg-slate-800 hover:bg-amber-600 text-slate-200 hover:text-white transition-colors font-bold">â‚¹50 Lakh Goal (â‚¹10k/mo)</button>
-          <button onClick={() => applyPresetGoal(25000, 12, 5)} className="px-3 py-1 rounded-full bg-slate-800 hover:bg-amber-600 text-slate-200 hover:text-white transition-colors font-bold">â‚¹20 Lakh Short Term</button>
+          <span className="text-slate-400 font-bold uppercase text-[10px]">{isTamil ? 'விரைவு இலக்குகள்:' : 'Quick Goals:'}</span>
+          <button onClick={() => applyPresetGoal(5000, 12, 15)} className="px-3 py-1 rounded-full bg-slate-800 hover:bg-amber-600 text-slate-200 hover:text-white transition-colors font-bold">{isTamil ? '₹1 கோடி இலக்கு (₹5k/மாதம்)' : '₹1 Crore Goal (₹5k/mo)'}</button>
+          <button onClick={() => applyPresetGoal(10000, 14, 10)} className="px-3 py-1 rounded-full bg-slate-800 hover:bg-amber-600 text-slate-200 hover:text-white transition-colors font-bold">{isTamil ? '₹50 லட்சம் இலக்கு (₹10k/மாதம்)' : '₹50 Lakh Goal (₹10k/mo)'}</button>
+          <button onClick={() => applyPresetGoal(25000, 12, 5)} className="px-3 py-1 rounded-full bg-slate-800 hover:bg-amber-600 text-slate-200 hover:text-white transition-colors font-bold">{isTamil ? '₹20 லட்சம் குறுகிய கால இலக்கு' : '₹20 Lakh Short Term'}</button>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
@@ -1758,7 +2385,9 @@ function SipCalculator() {
             <div className="space-y-2.5">
               <div className="flex justify-between items-center text-xs font-bold">
                 <label className="text-slate-300">
-                  {calcMode === 'lumpsum' || calcMode === 'compound' ? (isTamil ? 'முதல�€�Ÿ்�Ÿுத் த�Š�•�ˆ (â‚¹)' : 'Initial Investment (â‚¹)') : t('monthlyInvestment')}
+                  {calcMode === 'lumpsum' || calcMode === 'compound' 
+                    ? (isTamil ? 'தொடக்க முதலீட்டுத் தொகை (₹)' : 'Initial Investment (₹)') 
+                    : (isTamil ? 'மாதாந்திர SIP தொகை (₹)' : 'Monthly SIP Amount (₹)')}
                 </label>
                 <span className="text-amber-400 font-mono text-sm font-black">{formatCurrency(monthlyInvest)}</span>
               </div>
@@ -1776,8 +2405,8 @@ function SipCalculator() {
             {calcMode === 'stepup' && (
               <div className="space-y-2.5">
                 <div className="flex justify-between items-center text-xs font-bold">
-                  <label className="text-slate-300">Annual Step-Up Increase (%)</label>
-                  <span className="text-amber-400 font-mono text-sm font-black">+{stepUpPercent}% / Year</span>
+                  <label className="text-slate-300">{isTamil ? 'ஆண்டு முதலீட்டு உயர்வு (%)' : 'Annual Step-Up Increase (%)'}</label>
+                  <span className="text-amber-400 font-mono text-sm font-black">+{stepUpPercent}% / {isTamil ? 'ஆண்டுக்கு' : 'Year'}</span>
                 </div>
                 <input
                   type="range"
@@ -1793,8 +2422,8 @@ function SipCalculator() {
 
             <div className="space-y-2.5">
               <div className="flex justify-between items-center text-xs font-bold">
-                <label className="text-slate-300">{t('expectedReturnRate')}</label>
-                <span className="text-amber-400 font-mono text-sm font-black">{returnRate}% / Year</span>
+                <label className="text-slate-300">{isTamil ? 'எதிர்பார்க்கும் ஆண்டு வட்டி விகிதம் (%)' : 'Expected Annual Return Rate (%)'}</label>
+                <span className="text-amber-400 font-mono text-sm font-black">{returnRate}% / {isTamil ? 'ஆண்டுக்கு' : 'Year'}</span>
               </div>
               <input
                 type="range"
@@ -1809,8 +2438,8 @@ function SipCalculator() {
 
             <div className="space-y-2.5">
               <div className="flex justify-between items-center text-xs font-bold">
-                <label className="text-slate-300">{t('timePeriod')}</label>
-                <span className="text-amber-400 font-mono text-sm font-black">{timeYears} Years</span>
+                <label className="text-slate-300">{isTamil ? 'முதலீட்டுக் காலம் (ஆண்டுகள்)' : 'Time Horizon (Years)'}</label>
+                <span className="text-amber-400 font-mono text-sm font-black">{timeYears} {isTamil ? 'ஆண்டுகள்' : 'Years'}</span>
               </div>
               <input
                 type="range"
@@ -1825,7 +2454,7 @@ function SipCalculator() {
 
             <div className="space-y-2.5 pt-2 border-t border-slate-700/50">
               <div className="flex justify-between items-center text-xs font-bold">
-                <label className="text-slate-400">Expected Inflation Rate (%)</label>
+                <label className="text-slate-400">{isTamil ? 'எதிர்பார்க்கப்படும் பணவீக்கம் (%)' : 'Expected Inflation Rate (%)'}</label>
                 <span className="text-slate-300 font-mono text-xs">{inflationRate}%</span>
               </div>
               <input
@@ -1843,24 +2472,26 @@ function SipCalculator() {
           <div className="space-y-6 bg-slate-950 p-6 sm:p-8 rounded-3xl border border-slate-800 shadow-inner flex flex-col justify-between h-full">
             <div className="space-y-5">
               <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-                <span className="text-xs font-extrabold uppercase tracking-widest text-slate-400">Total Invested</span>
+                <span className="text-xs font-extrabold uppercase tracking-widest text-slate-400">{isTamil ? 'மொத்த முதலீடு' : 'Total Invested'}</span>
                 <span className="text-lg font-black font-mono text-white">{formatCurrency(totalInvested)}</span>
               </div>
 
               <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-                <span className="text-xs font-extrabold uppercase tracking-widest text-slate-400">Interest Gain</span>
+                <span className="text-xs font-extrabold uppercase tracking-widest text-slate-400">{isTamil ? 'மதிப்பிடப்பட்ட வட்டி லாபம்' : 'Estimated Interest Gain'}</span>
                 <span className="text-lg font-black font-mono text-emerald-400">+{formatCurrency(estimatedGain)}</span>
               </div>
 
               <div className="bg-amber-500/10 border border-amber-500/30 p-5 rounded-2xl space-y-1">
-                <span className="text-[10px] font-black uppercase tracking-widest text-amber-400">Total Future Wealth</span>
+                <span className="text-[10px] font-black uppercase tracking-widest text-amber-400">{isTamil ? 'மொத்த வருங்கால செல்வம் மதிப்பு' : 'Total Future Wealth'}</span>
                 <div className="text-2xl sm:text-3xl font-black font-mono text-amber-400">{formatCurrency(futureValue)}</div>
-                <div className="text-[11px] text-slate-300 font-medium">Wealth multiplier: <strong className="text-white">{wealthMultiplier}x</strong> original capital</div>
+                <div className="text-[11px] text-slate-300 font-medium">
+                  {isTamil ? `செல்வப் பெருக்கம்: அசல் முதலீட்டைப் போல ${wealthMultiplier} மடங்கு` : `Wealth multiplier: ${wealthMultiplier}x original capital`}
+                </div>
               </div>
 
-              <div className="p-3 bg-slate-900 rounded-xl border border-slate-800 text-[11px] text-slate-400 space-y-0.5">
+              <div className="p-3.5 bg-slate-900 rounded-xl border border-slate-800 text-[11px] text-slate-400 space-y-0.5">
                 <div className="flex justify-between font-bold">
-                  <span>Real Purchasing Power (Inflation-Adjusted @ {inflationRate}%):</span>
+                  <span>{isTamil ? `உண்மையான வாங்கும் திறன் (பணவீக்கம் @ ${inflationRate}%):` : `Real Purchasing Power (Inflation-Adjusted @ ${inflationRate}%):`}</span>
                   <span className="text-white font-mono">{formatCurrency(realPurchasingPower)}</span>
                 </div>
               </div>
@@ -2024,7 +2655,7 @@ function Footer({ onNavigate, onShowToast }) {
               <div className="w-10 h-10 rounded-2xl bg-amber-500 text-slate-950 font-black flex items-center justify-center text-xl shadow-lg">தன</div>
               <span className="text-2xl font-black text-white font-serif">{t('siteName')}</span>
               <a href={OFFICIAL_CHANNEL_URL} target="_blank" rel="noreferrer" className="text-xs font-bold text-red-500 hover:underline">
-                {OFFICIAL_CHANNEL_HANDLE} â†—
+                {OFFICIAL_CHANNEL_HANDLE} ↗
               </a>
             </div>
             <p className="text-xs text-slate-400 max-w-md font-medium">{t('newsLetterDesc')}</p>
@@ -2069,8 +2700,9 @@ function Footer({ onNavigate, onShowToast }) {
 // ==================== 6. PAGES ====================
 function Home({ onNavigate, onShowToast }) {
   const { t, language } = useLanguage();
-  const { videos, isLoading } = useVideos('all');
   const [activeCategory, setActiveCategory] = useState('all');
+  const [sort, setSort] = useState('newest');
+  const { videos, isLoading } = useVideos(activeCategory, sort);
 
   const translatedNews = newsData.map(item => translateNewsArticle(item, language));
 
@@ -2078,9 +2710,10 @@ function Home({ onNavigate, onShowToast }) {
   const stockNews = translatedNews.filter(n => n.category === 'stocks');
   const personalFinanceNews = translatedNews.filter(n => n.category === 'personal-finance' || n.category === 'investment');
 
-  const mutualFundVideos = videos.filter(v => v.category === 'mutual-funds');
-  const stockVideos = videos.filter(v => v.category === 'stocks');
-  const sipVideos = videos.filter(v => v.category === 'personal-finance' || v.category === 'education');
+  const safeVideos = Array.isArray(videos) ? videos : [];
+  const mutualFundVideos = safeVideos.filter(v => v.category === 'mutual-funds');
+  const stockVideos = safeVideos.filter(v => v.category === 'stocks');
+  const sipVideos = safeVideos.filter(v => v.category === 'sip' || v.category === 'personal-finance');
 
   return (
     <div className="space-y-8 pb-16 animate-fadeIn">
@@ -2093,6 +2726,8 @@ function Home({ onNavigate, onShowToast }) {
         isLoading={isLoading}
         activeCategory={activeCategory}
         onCategoryChange={setActiveCategory}
+        onSortChange={setSort}
+        currentSort={sort}
         onSelectVideo={(v) => onNavigate(`#/videos/${v.id}`)}
         onShowToast={onShowToast}
       />
@@ -2107,14 +2742,14 @@ function Home({ onNavigate, onShowToast }) {
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
               <h3 className="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white font-serif">
-                {t('nav.mutualFunds')} â€” {t('nav.news')}
+                {t('mutualFundNewsTitle')}
               </h3>
             </div>
             <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400">
               MUTUAL FUNDS
             </span>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
             {mutualFundNews.map(article => (
               <NewsCard
                 key={article.id}
@@ -2133,14 +2768,14 @@ function Home({ onNavigate, onShowToast }) {
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
               <h3 className="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white font-serif">
-                {t('nav.stocks')} â€” {t('nav.news')}
+                {t('stockMarketNewsTitle')}
               </h3>
             </div>
             <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400">
               STOCKS
             </span>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
             {stockNews.map(article => (
               <NewsCard
                 key={article.id}
@@ -2159,14 +2794,14 @@ function Home({ onNavigate, onShowToast }) {
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
               <h3 className="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white font-serif">
-                SIP & {t('nav.personalFinance')} â€” {t('nav.news')}
+                {t('personalFinanceNewsTitle')}
               </h3>
             </div>
             <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400">
               INVESTMENTS
             </span>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
             {personalFinanceNews.map(article => (
               <NewsCard
                 key={article.id}
@@ -2180,7 +2815,7 @@ function Home({ onNavigate, onShowToast }) {
 
       {/* 7. MORE VIDEO SECTIONS */}
       <VideoSection
-        title={t('mutualFundVideos') || 'மிய�‚�š்�šுவல் �ƒபண்�Ÿ் வ�€�Ÿிய�‹�•்�•ள்'}
+        title={t('mutualFundVideos')}
         subtitle="Budget Padmanaban Mutual Fund Guides & Reviews"
         videos={mutualFundVideos.length > 0 ? mutualFundVideos : videos.slice(0, 5)}
         onSelectVideo={(v) => onNavigate(`#/videos/${v.id}`)}
@@ -2188,7 +2823,7 @@ function Home({ onNavigate, onShowToast }) {
       />
 
       <VideoSection
-        title={t('stockMarketVideos') || 'ப�™்�•ு�š் �šந்த�ˆ வ�€�Ÿிய�‹�•்�•ள்'}
+        title={t('stockMarketVideos')}
         subtitle="Stock Market Analysis & Investment Strategies"
         videos={stockVideos.length > 0 ? stockVideos : videos.slice(1, 5)}
         onSelectVideo={(v) => onNavigate(`#/videos/${v.id}`)}
@@ -2196,7 +2831,7 @@ function Home({ onNavigate, onShowToast }) {
       />
 
       <VideoSection
-        title={t('sipVideos') || 'SIP & முதல�€�Ÿ்�Ÿு வ�€�Ÿிய�‹�•்�•ள்'}
+        title={t('sipVideos')}
         subtitle="Financial Education & Wealth Building Tips"
         videos={sipVideos.length > 0 ? sipVideos : videos.slice(2, 5)}
         onSelectVideo={(v) => onNavigate(`#/videos/${v.id}`)}
@@ -2219,7 +2854,7 @@ function VideosPage({ onNavigate, onShowToast }) {
       <div className="max-w-7xl mx-auto px-4 mb-6">
         <h1 className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white font-serif">{t('nav.videos')} Feed</h1>
         <a href={OFFICIAL_CHANNEL_URL} target="_blank" rel="noreferrer" className="text-xs font-bold text-red-600 dark:text-red-400 hover:underline mt-1 inline-block">
-          Official Channel: {OFFICIAL_CHANNEL_HANDLE} â†—
+          Official Channel: {OFFICIAL_CHANNEL_HANDLE} ↗
         </a>
       </div>
 
@@ -2276,6 +2911,9 @@ function VideoDetailsPage({ videoId, onNavigate, onShowToast }) {
   if (!video) return <div className="py-16 text-center font-bold">Video Not Found</div>;
 
   const formattedDate = video.publishedAt ? new Intl.DateTimeFormat(language === 'ta' ? 'ta-IN' : 'en-IN', { month: 'long', day: 'numeric', year: 'numeric' }).format(new Date(video.publishedAt)) : '';
+  const actualYtId = (video.youtubeId && video.youtubeId.length === 11 && !video.youtubeId.includes('-')) 
+    ? video.youtubeId 
+    : ((video.id && video.id.length === 11 && !video.id.includes('-')) ? video.id : 'GizYMQfl9CY');
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fadeIn">
@@ -2283,7 +2921,7 @@ function VideoDetailsPage({ videoId, onNavigate, onShowToast }) {
         <div className="lg:col-span-8 space-y-6">
           <div ref={playerRef} className="relative aspect-video rounded-3xl overflow-hidden bg-slate-950 shadow-2xl border border-slate-200 dark:border-slate-800">
             <iframe
-              src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}?autoplay=1&rel=0`}
+              src={`https://www.youtube-nocookie.com/embed/${actualYtId}?autoplay=1&rel=0`}
               title={video.title}
               className="w-full h-full border-0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -2296,7 +2934,7 @@ function VideoDetailsPage({ videoId, onNavigate, onShowToast }) {
               <div className="flex items-center gap-2">
                 <span className="px-3 py-1 text-xs font-black uppercase rounded-full bg-amber-500/20 text-amber-700 dark:text-amber-400">{video.category}</span>
                 <a href={video.youtubeUrl || OFFICIAL_CHANNEL_URL} target="_blank" rel="noreferrer" className="text-xs font-black text-red-600 dark:text-red-500 hover:underline">
-                  {OFFICIAL_CHANNEL_HANDLE} â†—
+                  {OFFICIAL_CHANNEL_HANDLE} ↗
                 </a>
               </div>
               <button onClick={handleShare} className="px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-bold flex items-center gap-2 border border-slate-200 dark:border-slate-700 hover:bg-slate-200">{t('share')}</button>
@@ -2305,9 +2943,9 @@ function VideoDetailsPage({ videoId, onNavigate, onShowToast }) {
             <h1 className="text-xl sm:text-3xl font-black text-slate-900 dark:text-white font-serif">{video.title}</h1>
             <div className="flex items-center gap-4 text-xs text-slate-500 dark:text-slate-400 border-t border-b border-slate-100 dark:border-slate-800 py-3.5 font-bold">
               <span>{(video.views || 18500).toLocaleString()} {t('views')}</span>
-              <span>â€¢</span>
+              <span>•</span>
               <span>{t('publishedAt')}: {formattedDate}</span>
-              <span>â€¢</span>
+              <span>•</span>
               <span className="font-mono text-amber-700 dark:text-amber-400">⏱ {video.duration || (video.isShort ? 'Short' : '10:00')}</span>
             </div>
             <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-medium">{video.description}</p>
@@ -2338,7 +2976,7 @@ function NewsPage({ onNavigate }) {
       <div>
         <h1 className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white font-serif">{t('nav.news')} Hub</h1>
         <a href={OFFICIAL_CHANNEL_URL} target="_blank" rel="noreferrer" className="text-xs font-bold text-red-600 dark:text-red-400 hover:underline mt-1 inline-block">
-          Official Channel: {OFFICIAL_CHANNEL_HANDLE} â†—
+          Official Channel: {OFFICIAL_CHANNEL_HANDLE} ↗
         </a>
       </div>
 
@@ -2384,6 +3022,450 @@ function CategoryPage({ categoryId, onNavigate, onShowToast }) {
   );
 }
 
+// ==================== AUTH UI PAGE ====================
+function AuthPage({ initialMode = 'login', onNavigate }) {
+  const { language } = useLanguage();
+  const isTamil = language === 'ta';
+  const { signInWithPassword, signInWithGoogle, signInWithMagicLink, signUp, sendPasswordReset } = useAuth();
+
+  const [mode, setMode] = useState(initialMode);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [displayName, setDisplayName] = useState('');
+  const [agreeTerms, setAgreeTerms] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setIsLoading(true);
+    try {
+      await signInWithPassword(email, password);
+      onNavigate('#/');
+    } catch (err) {
+      setError(err.message || (isTamil ? 'உள்நுழைவு தோல்வியடைந்தது.' : 'Login failed. Check credentials.'));
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSignupSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    if (password !== confirmPassword) {
+      setError(isTamil ? 'கடவுச்சொற்கள் பொருந்தவில்லை' : 'Passwords do not match');
+      return;
+    }
+    if (!agreeTerms) {
+      setError(isTamil ? 'விதிமுறைகளை ஏற்க வேண்டும்' : 'You must agree to the Terms & Privacy Policy');
+      return;
+    }
+    setIsLoading(true);
+    try {
+      await signUp(email, password, displayName);
+      setSuccess(isTamil ? 'சரிபார்ப்பு மின்னஞ்சல் அனுப்பப்பட்டது!' : 'Check your email to verify your account');
+    } catch (err) {
+      setError(err.message || 'Signup failed');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleGoogleAuth = async () => {
+    setIsLoading(true);
+    try {
+      await signInWithGoogle();
+      onNavigate('#/');
+    } catch (err) {
+      setError(err.message || 'Google Auth failed');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleMagicLinkSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setIsLoading(true);
+    try {
+      await signInWithMagicLink(email);
+      setSuccess(isTamil ? 'மேஜிக் லிங்க் அனுப்பப்பட்டது' : 'Magic sign-in link sent to your email');
+    } catch (err) {
+      setError(err.message || 'Failed to send magic link');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleForgotSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setIsLoading(true);
+    try {
+      await sendPasswordReset(email);
+      setSuccess(isTamil ? 'மீட்டமைப்பு இணைப்பு அனுப்பப்பட்டது' : 'Password reset link sent to your email');
+    } catch (err) {
+      setError(err.message || 'Failed to send reset link');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="max-w-4xl mx-auto my-8 px-4 animate-fadeIn">
+      <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-12">
+        
+        {/* Left Branded Panel */}
+        <div className="hidden md:flex md:col-span-5 bg-gradient-to-br from-slate-950 via-slate-900 to-amber-950 p-8 text-white flex-col justify-between relative overflow-hidden">
+          <div className="relative z-10 space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-2xl bg-amber-500 text-slate-950 font-black flex items-center justify-center text-xl shadow-lg">தன</div>
+              <h1 className="text-xl font-black font-serif text-white">Muthaleetu Thisai</h1>
+            </div>
+            <h3 className="text-2xl font-black font-serif text-amber-400 pt-4 leading-snug">
+              {isTamil ? 'முதலீடுகள் & மியூச்சுவல் ஃபண்ட் வழிகாட்டி' : 'Master Mutual Funds & Wealth Creation'}
+            </h3>
+            <p className="text-xs text-slate-300 leading-relaxed">
+              {isTamil ? 'பட்ஜெட் பத்மநாபன் CFP வழங்கும் நம்பகமான நிதி தகவல்கள்.' : 'Certified financial insights by Certified Financial Planner Padmanaban B.'}
+            </p>
+          </div>
+          <div className="text-xs font-bold text-slate-400">@budgetpadmanaban_ Official</div>
+        </div>
+
+        {/* Right Form Card Panel */}
+        <div className="md:col-span-7 p-6 sm:p-10 flex flex-col justify-center bg-white dark:bg-slate-900">
+          <div className="space-y-1 mb-5">
+            <h2 className="text-2xl font-black text-slate-900 dark:text-white font-serif">
+              {mode === 'signup' ? (isTamil ? 'கணக்கை உருவாக்குங்கள்' : 'Create an Account') :
+               mode === 'forgot' ? (isTamil ? 'கடவுச்சொல்லை மீட்டெடுக்க' : 'Reset Password') :
+               mode === 'magic-link' ? (isTamil ? 'மேஜிக் உள்நுழைவு' : 'Passwordless Magic Link') :
+               (isTamil ? 'மீண்டும் வருக!' : 'Welcome back')}
+            </h2>
+            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+              {isTamil ? 'உங்கள் நிதி கணக்கில் உள்நுழையவும்' : 'Access your personalized investment dashboard.'}
+            </p>
+          </div>
+
+          {error && (
+            <div className="p-3 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-600 text-xs font-bold mb-4">
+              ⚠️ {error}
+            </div>
+          )}
+
+          {success && (
+            <div className="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 text-xs font-bold mb-4">
+              ✓ {success}
+            </div>
+          )}
+
+          {mode === 'login' && (
+            <form onSubmit={handleLoginSubmit} className="space-y-4">
+              <button
+                type="button"
+                onClick={handleGoogleAuth}
+                className="w-full h-12 flex items-center justify-center gap-3 px-4 rounded-2xl bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 font-bold text-xs sm:text-sm border border-slate-300 dark:border-slate-700 shadow-sm hover:shadow-md transition-all active:scale-[0.98]"
+              >
+                <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24">
+                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" />
+                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
+                </svg>
+                <span>{isTamil ? 'கூகிள் மூலம் தொடரவும்' : 'Continue with Google'}</span>
+              </button>
+
+              <div className="space-y-1">
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">{isTamil ? 'மின்னஞ்சல்' : 'Email'}</label>
+                <input type="email" value={email} onChange={e => setEmail(e.target.value)} required className="w-full h-11 px-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-900 dark:text-white" />
+              </div>
+              <div className="space-y-1">
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">{isTamil ? 'கடவுச்சொல்' : 'Password'}</label>
+                <input type="password" value={password} onChange={e => setPassword(e.target.value)} required className="w-full h-11 px-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-900 dark:text-white" />
+              </div>
+              <div className="flex justify-between text-xs font-bold">
+                <button type="button" onClick={() => setMode('forgot')} className="text-amber-600 hover:underline">{isTamil ? 'கடவுச்சொல்லை மறந்ததா?' : 'Forgot password?'}</button>
+                <button type="button" onClick={() => setMode('magic-link')} className="text-slate-500 hover:underline">{isTamil ? 'மேஜிக் லிங்க்' : 'Email magic link'}</button>
+              </div>
+              <button type="submit" disabled={isLoading} className="w-full h-12 rounded-2xl bg-amber-600 hover:bg-amber-500 text-white font-extrabold text-xs shadow-lg">{isLoading ? 'Signing in...' : (isTamil ? 'உள்நுழைக' : 'Sign In')}</button>
+              <div className="text-center pt-2 text-xs font-bold">
+                {isTamil ? 'கணக்கு இல்லையா?' : "Don't have an account?"} <button type="button" onClick={() => setMode('signup')} className="text-amber-600 hover:underline">{isTamil ? 'பதிவு செய்க' : 'Sign up'}</button>
+              </div>
+            </form>
+          )}
+
+          {mode === 'signup' && (
+            <form onSubmit={handleSignupSubmit} className="space-y-3.5">
+              <button
+                type="button"
+                onClick={handleGoogleAuth}
+                className="w-full h-12 flex items-center justify-center gap-3 px-4 rounded-2xl bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 font-bold text-xs sm:text-sm border border-slate-300 dark:border-slate-700 shadow-sm hover:shadow-md transition-all active:scale-[0.98]"
+              >
+                <span>{isTamil ? 'கூகிள் மூலம் பதிவு செய்க' : 'Sign up with Google'}</span>
+              </button>
+              <div className="space-y-1">
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">{isTamil ? 'முழு பெயர்' : 'Full Name'}</label>
+                <input type="text" value={displayName} onChange={e => setDisplayName(e.target.value)} required className="w-full h-11 px-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-900 dark:text-white" />
+              </div>
+              <div className="space-y-1">
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">{isTamil ? 'மின்னஞ்சல்' : 'Email'}</label>
+                <input type="email" value={email} onChange={e => setEmail(e.target.value)} required className="w-full h-11 px-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-900 dark:text-white" />
+              </div>
+              <div className="space-y-1">
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">{isTamil ? 'கடவுச்சொல்' : 'Password'}</label>
+                <input type="password" value={password} onChange={e => setPassword(e.target.value)} required className="w-full h-11 px-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-900 dark:text-white" />
+              </div>
+              <div className="space-y-1">
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">{isTamil ? 'கடவுச்சொல்லை உறுதிப்படுத்து' : 'Confirm Password'}</label>
+                <input type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} required className="w-full h-11 px-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-900 dark:text-white" />
+              </div>
+              <div className="flex items-center gap-2 pt-1 text-xs font-bold">
+                <input type="checkbox" checked={agreeTerms} onChange={e => setAgreeTerms(e.target.checked)} required className="w-4 h-4 accent-amber-600" />
+                <span>{isTamil ? 'விதிமுறைகளை ஏற்கிறேன்' : 'I agree to Terms & Privacy Policy'}</span>
+              </div>
+              <button type="submit" disabled={isLoading} className="w-full h-12 rounded-2xl bg-amber-600 hover:bg-amber-500 text-white font-extrabold text-xs shadow-lg">{isLoading ? 'Creating...' : (isTamil ? 'கணக்கு உருவாக்கு' : 'Create Account')}</button>
+              <div className="text-center pt-2 text-xs font-bold">
+                {isTamil ? 'ஏற்கனவே கணக்கு உள்ளதா?' : 'Already have an account?'} <button type="button" onClick={() => setMode('login')} className="text-amber-600 hover:underline">{isTamil ? 'உள்நுழைக' : 'Sign in'}</button>
+              </div>
+            </form>
+          )}
+
+          {mode === 'forgot' && (
+            <form onSubmit={handleForgotSubmit} className="space-y-4">
+              <div className="space-y-1">
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">{isTamil ? 'மின்னஞ்சல்' : 'Email'}</label>
+                <input type="email" value={email} onChange={e => setEmail(e.target.value)} required className="w-full h-11 px-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-900 dark:text-white" />
+              </div>
+              <button type="submit" disabled={isLoading} className="w-full h-12 rounded-2xl bg-amber-600 text-white font-extrabold text-xs">{isLoading ? 'Sending...' : (isTamil ? 'மீட்டமைப்பு இணைப்பு அனுப்புக' : 'Send Reset Link')}</button>
+              <button type="button" onClick={() => setMode('login')} className="w-full text-center text-xs font-bold text-slate-500 hover:underline">← {isTamil ? 'திரும்பு' : 'Back to login'}</button>
+            </form>
+          )}
+
+          {mode === 'magic-link' && (
+            <form onSubmit={handleMagicLinkSubmit} className="space-y-4">
+              <div className="space-y-1">
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">{isTamil ? 'மின்னஞ்சல்' : 'Email'}</label>
+                <input type="email" value={email} onChange={e => setEmail(e.target.value)} required className="w-full h-11 px-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-900 dark:text-white" />
+              </div>
+              <button type="submit" disabled={isLoading} className="w-full h-12 rounded-2xl bg-amber-600 text-white font-extrabold text-xs">{isLoading ? 'Sending...' : (isTamil ? 'மேஜிக் லிங்க் அனுப்புக 🪄' : 'Send Magic Link 🪄')}</button>
+              <button type="button" onClick={() => setMode('login')} className="w-full text-center text-xs font-bold text-slate-500 hover:underline">← {isTamil ? 'திரும்பு' : 'Back to login'}</button>
+            </form>
+          )}
+
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ==================== USER PROFILE & ADMIN PAGES ====================
+function ProfilePage({ onNavigate, onShowToast }) {
+  const { user, profile, role, signOut } = useAuth();
+  const { language } = useLanguage();
+  const isTamil = language === 'ta';
+
+  if (!user) return null;
+
+  const displayName = profile?.display_name || user.user_metadata?.full_name || user.email?.split('@')[0] || 'User';
+  const email = user.email || '';
+  const avatarUrl = profile?.avatar_url || user.user_metadata?.avatar_url;
+  const initials = displayName.slice(0, 2).toUpperCase();
+
+  return (
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10 space-y-8 animate-fadeIn">
+      <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-8 shadow-xl relative overflow-hidden">
+        <div className="flex flex-col sm:flex-row items-center gap-6">
+          {avatarUrl ? (
+            <img src={avatarUrl} alt={displayName} className="w-24 h-24 rounded-full object-cover border-4 border-amber-500 shadow-xl" />
+          ) : (
+            <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-amber-600 to-amber-400 text-slate-950 font-black text-3xl flex items-center justify-center border-4 border-amber-400 shadow-xl">
+              {initials}
+            </div>
+          )}
+
+          <div className="text-center sm:text-left space-y-2 flex-1">
+            <div className="flex items-center justify-center sm:justify-start gap-3">
+              <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white font-serif">{displayName}</h1>
+              <span className={`text-xs font-extrabold uppercase px-3 py-1 rounded-full ${
+                role === 'admin' ? 'bg-red-500/10 text-red-600 border border-red-500/30' : 'bg-amber-500/10 text-amber-600 border border-amber-500/30'
+              }`}>
+                {role}
+              </span>
+            </div>
+            <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">{email}</p>
+            <p className="text-[11px] text-slate-400 font-mono">User ID: {user.id || 'N/A'}</p>
+          </div>
+
+          <button
+            onClick={() => { signOut(); if (onShowToast) onShowToast(isTamil ? 'வெளியேறப்பட்டது' : 'Signed out successfully'); }}
+            className="px-5 py-2.5 rounded-full bg-red-500/10 hover:bg-red-600 text-red-600 hover:text-white dark:hover:text-white font-extrabold text-xs transition-all border border-red-500/20 shadow-sm"
+          >
+            {isTamil ? 'வெளியேறு (Log Out)' : 'Log Out'}
+          </button>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-md space-y-2">
+          <div className="text-amber-500 text-2xl font-black">📺</div>
+          <h3 className="text-sm font-bold text-slate-900 dark:text-white">{isTamil ? 'பார்த்த வரலாறுகள்' : 'Watch History'}</h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400">{isTamil ? 'சமீபத்திய வீடியோக்கள்' : 'Track videos you recently watched'}</p>
+          <button onClick={() => onNavigate('#/history')} className="text-xs font-extrabold text-amber-600 hover:underline pt-2 inline-block">
+            {isTamil ? 'வரலாறு பார்க்க →' : 'View History →'}
+          </button>
+        </div>
+
+        <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-md space-y-2">
+          <div className="text-amber-500 text-2xl font-black">🛡️</div>
+          <h3 className="text-sm font-bold text-slate-900 dark:text-white">{isTamil ? 'பாதுகாப்பு & கணக்கு' : 'Security & Account'}</h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400">{isTamil ? 'கடவுச்சொல் &Supabase Auth' : 'Protected via Supabase Auth'}</p>
+          <button onClick={() => onNavigate('#/forgot-password')} className="text-xs font-extrabold text-amber-600 hover:underline pt-2 inline-block">
+            {isTamil ? 'கடவுச்சொல் மாற்று →' : 'Change Password →'}
+          </button>
+        </div>
+
+        <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-md space-y-2">
+          <div className="text-amber-500 text-2xl font-black">🌐</div>
+          <h3 className="text-sm font-bold text-slate-900 dark:text-white">{isTamil ? 'விருப்பங்கள்' : 'Device Preferences'}</h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400">{isTamil ? 'தமிழ் / English & தீம்' : 'Bilingual Language & Theme'}</p>
+          <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 pt-2 inline-block">✓ Active</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function WatchHistoryPage({ onNavigate, onShowToast }) {
+  const { language } = useLanguage();
+  const isTamil = language === 'ta';
+  const { history } = useWatchHistory();
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 animate-fadeIn">
+      <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-5">
+        <div>
+          <h1 className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white font-serif">
+            {isTamil ? 'பார்த்த வரலாறுகள்' : 'Watch History'}
+          </h1>
+          <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">
+            {isTamil ? 'நீங்கள் சமீபத்தில் பார்த்த வீடியோக்கள்' : 'Your recently viewed financial & investment videos'}
+          </p>
+        </div>
+      </div>
+
+      {history && history.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {history.map(video => (
+            <VideoCard key={video.id} video={video} onSelect={(v) => onNavigate(`#/videos/${v.id}`)} onShowToast={onShowToast} />
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-8 space-y-4">
+          <div className="text-4xl">🎬</div>
+          <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+            {isTamil ? 'வரலாறுகள் ஏதும் இல்லை' : 'No Watch History Yet'}
+          </h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400">
+            {isTamil ? 'வீடியோக்களைப் பார்த்து கற்றுக் கொள்ளத் தொடங்குங்கள்' : 'Start watching videos to track your investment learning progress.'}
+          </p>
+          <button onClick={() => onNavigate('#/videos')} className="px-6 py-3 rounded-full bg-amber-600 text-white font-extrabold text-xs shadow-lg hover:bg-amber-500 transition-all">
+            {isTamil ? 'வீடியோக்களைக் காண்க' : 'Browse Videos'}
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function AdminConsolePage({ onNavigate, onShowToast }) {
+  const { user, role } = useAuth();
+  const { language } = useLanguage();
+  const isTamil = language === 'ta';
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [syncStatus, setSyncStatus] = useState('');
+
+  if (role !== 'admin') return null;
+
+  const triggerFullSync = async () => {
+    setIsSyncing(true);
+    setSyncStatus('Initiating full YouTube channel ingestion...');
+    try {
+      const res = await fetch('/api/cron/fetch-videos?fullSync=true', {
+        headers: { 'Authorization': 'Bearer super_secret_cron_bearer_token_123' }
+      });
+      const data = await res.json();
+      setSyncStatus(`Sync result: Ingested ${data.ingested || 0} videos. ${data.message || ''}`);
+      if (onShowToast) onShowToast(isTamil ? 'சேனல் புதுப்பிக்கப்பட்டது!' : 'Channel ingestion complete!');
+    } catch (err) {
+      setSyncStatus(`Sync error: ${err.message}`);
+    } finally {
+      setIsSyncing(false);
+    }
+  };
+
+  return (
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-8 animate-fadeIn">
+      <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-5">
+        <div>
+          <span className="px-3 py-1 text-[10px] font-black uppercase tracking-wider rounded-full bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20">
+            ADMIN CONSOLE
+          </span>
+          <h1 className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white font-serif mt-2">
+            {isTamil ? 'நிர்வாகக் குழு (Admin Console)' : 'System & Content Administration'}
+          </h1>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-md space-y-2">
+          <div className="text-xs font-bold text-slate-400 uppercase">YouTube Channel</div>
+          <div className="text-xl font-black text-slate-900 dark:text-white">@budgetpadmanaban_</div>
+          <div className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold">✓ Ingestion Engine Active</div>
+        </div>
+
+        <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-md space-y-2">
+          <div className="text-xs font-bold text-slate-400 uppercase">Database Region</div>
+          <div className="text-xl font-black text-slate-900 dark:text-white">Supabase AP-South-1</div>
+          <div className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold">✓ Connection Pooler (6543)</div>
+        </div>
+
+        <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-md space-y-2">
+          <div className="text-xs font-bold text-slate-400 uppercase">Vercel Serverless</div>
+          <div className="text-xl font-black text-slate-900 dark:text-white">operation1-rho</div>
+          <div className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold">✓ Production Live</div>
+        </div>
+      </div>
+
+      <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-8 shadow-xl space-y-4">
+        <h3 className="text-lg font-black text-slate-900 dark:text-white font-serif">
+          {isTamil ? 'சேனல் வீடியோக்களைப் பெறுக' : 'Channel Content Ingestion Control'}
+        </h3>
+        <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+          Trigger full sync to fetch all historical video uploads from YouTube Data API v3, auto-translate titles & descriptions, and persist to Supabase PostgreSQL.
+        </p>
+
+        <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
+          <button
+            onClick={triggerFullSync}
+            disabled={isSyncing}
+            className="px-6 py-3 rounded-2xl bg-gradient-to-r from-red-600 to-amber-600 text-white font-extrabold text-xs shadow-lg hover:scale-105 transition-all disabled:opacity-50"
+          >
+            {isSyncing ? 'Syncing Channel Videos...' : '🔄 Run Full YouTube Sync'}
+          </button>
+        </div>
+
+        {syncStatus && (
+          <div className="p-4 rounded-2xl bg-slate-900 text-slate-200 font-mono text-xs border border-slate-800">
+            {syncStatus}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 // ==================== 7. ROOT APP ====================
 function App() {
   const [currentHash, setCurrentHash] = useState(() => window.location.hash || '#/');
@@ -2392,7 +3474,11 @@ function App() {
 
   useEffect(() => {
     const handleHashChange = () => {
-      setCurrentHash(window.location.hash || '#/');
+      const h = window.location.hash || '#/';
+      if (h.includes('access_token=') || h.includes('refresh_token=')) {
+        return;
+      }
+      setCurrentHash(h);
       window.scrollTo(0, 0);
     };
     window.addEventListener('hashchange', handleHashChange);
@@ -2405,38 +3491,118 @@ function App() {
   };
 
   const renderRoute = () => {
+    // Un-gated public auth pages
+    if (currentHash === '#/login') return <AuthPage initialMode="login" onNavigate={navigate} />;
+    if (currentHash === '#/signup') return <AuthPage initialMode="signup" onNavigate={navigate} />;
+    if (currentHash === '#/forgot-password') return <AuthPage initialMode="forgot" onNavigate={navigate} />;
+    if (currentHash === '#/reset-password') return <AuthPage initialMode="magic-link" onNavigate={navigate} />;
+
+    // Protected user & admin pages
+    if (currentHash === '#/profile') {
+      return (
+        <ProtectedRoute onNavigate={navigate}>
+          <ProfilePage onNavigate={navigate} onShowToast={setToastMessage} />
+        </ProtectedRoute>
+      );
+    }
+
+    if (currentHash === '#/history') {
+      return (
+        <ProtectedRoute onNavigate={navigate}>
+          <WatchHistoryPage onNavigate={navigate} onShowToast={setToastMessage} />
+        </ProtectedRoute>
+      );
+    }
+
+    if (currentHash === '#/admin') {
+      return (
+        <AdminRoute>
+          <AdminConsolePage onNavigate={navigate} onShowToast={setToastMessage} />
+        </AdminRoute>
+      );
+    }
+
     if (currentHash.startsWith('#/videos/')) {
       const videoId = currentHash.replace('#/videos/', '');
-      return <VideoDetailsPage videoId={videoId} onNavigate={navigate} onShowToast={setToastMessage} />;
+      return (
+        <ProtectedRoute onNavigate={navigate}>
+          <VideoDetailsPage videoId={videoId} onNavigate={navigate} onShowToast={setToastMessage} />
+        </ProtectedRoute>
+      );
     }
-    if (currentHash === '#/videos') return <VideosPage onNavigate={navigate} onShowToast={setToastMessage} />;
+
+    if (currentHash === '#/videos') {
+      return (
+        <ProtectedRoute onNavigate={navigate}>
+          <VideosPage onNavigate={navigate} onShowToast={setToastMessage} />
+        </ProtectedRoute>
+      );
+    }
+
     if (currentHash.startsWith('#/news/')) {
       const slug = currentHash.replace('#/news/', '');
-      return <NewsDetailsPage slug={slug} onNavigate={navigate} />;
+      return (
+        <ProtectedRoute onNavigate={navigate}>
+          <NewsDetailsPage slug={slug} onNavigate={navigate} />
+        </ProtectedRoute>
+      );
     }
-    if (currentHash === '#/news') return <NewsPage onNavigate={navigate} />;
+
+    if (currentHash === '#/news') {
+      return (
+        <ProtectedRoute onNavigate={navigate}>
+          <NewsPage onNavigate={navigate} />
+        </ProtectedRoute>
+      );
+    }
+
     if (currentHash.startsWith('#/category/')) {
       const categoryId = currentHash.replace('#/category/', '');
-      return <CategoryPage categoryId={categoryId} onNavigate={navigate} onShowToast={setToastMessage} />;
+      return (
+        <ProtectedRoute onNavigate={navigate}>
+          <CategoryPage categoryId={categoryId} onNavigate={navigate} onShowToast={setToastMessage} />
+        </ProtectedRoute>
+      );
     }
-    if (currentHash === '#/calculator') return <div className="py-8"><SipCalculator /></div>;
-    if (currentHash === '#/quiz') return <div className="py-8"><RiskQuizWidget /></div>;
 
-    return <Home onNavigate={navigate} onShowToast={setToastMessage} />;
+    if (currentHash === '#/calculator') {
+      return (
+        <ProtectedRoute onNavigate={navigate}>
+          <div className="py-8"><SipCalculator /></div>
+        </ProtectedRoute>
+      );
+    }
+
+    if (currentHash === '#/quiz') {
+      return (
+        <ProtectedRoute onNavigate={navigate}>
+          <div className="py-8"><RiskQuizWidget /></div>
+        </ProtectedRoute>
+      );
+    }
+
+    // Default Home route (protected)
+    return (
+      <ProtectedRoute onNavigate={navigate}>
+        <Home onNavigate={navigate} onShowToast={setToastMessage} />
+      </ProtectedRoute>
+    );
   };
 
   return (
     <ThemeProvider>
       <LanguageProvider>
-        <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans">
-          <Header onOpenSearch={() => setIsSearchOpen(true)} />
-          <Navbar currentPath={currentHash} onNavigate={navigate} />
-          <TrendingTicker />
-          <main className="flex-1">{renderRoute()}</main>
-          <Footer onNavigate={navigate} onShowToast={setToastMessage} />
-          <CommandPalette isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} onNavigate={navigate} />
-          <Toast message={toastMessage} onClose={() => setToastMessage('')} />
-        </div>
+        <AuthProvider>
+          <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans">
+            <Header onOpenSearch={() => setIsSearchOpen(true)} onNavigate={navigate} />
+            <Navbar currentPath={currentHash} onNavigate={navigate} />
+            <TrendingTicker />
+            <main className="flex-1">{renderRoute()}</main>
+            <Footer onNavigate={navigate} onShowToast={setToastMessage} />
+            <CommandPalette isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} onNavigate={navigate} />
+            <Toast message={toastMessage} onClose={() => setToastMessage('')} />
+          </div>
+        </AuthProvider>
       </LanguageProvider>
     </ThemeProvider>
   );

@@ -1,5 +1,5 @@
 /**
- * Dhanavriksha Automatic Bilingual Translation Service & Cache Layer
+ * Muthaleetu Thisai Automatic Bilingual Translation Service & Cache Layer
  * Automatically manages Tamil <-> English translations while preserving brand names,
  * proper nouns, stock symbols (NIFTY, SENSEX, SIP), and financial abbreviations.
  */
@@ -27,7 +27,7 @@ function saveTranslationCache(cache) {
 
 // Terms that MUST NOT be translated
 const PROTECTED_TERMS = [
-  "Dhanavriksha",
+  "Muthaleetu Thisai",
   "Budget Padmanaban",
   "NIFTY",
   "NIFTY 50",

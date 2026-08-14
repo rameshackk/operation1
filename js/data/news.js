@@ -101,7 +101,7 @@ export const newsData = [
     category: "personal-finance",
     publishedAt: new Date(Date.now() - 8 * 3600 * 1000).toISOString(),
     readTimeMinutes: 4,
-    author: "Dhanavriksha Research Desk",
+    author: "Muthaleetu Thisai Research Desk",
     thumbnail: "https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&w=1200&q=80",
     isFeatured: true,
     isTrending: true,

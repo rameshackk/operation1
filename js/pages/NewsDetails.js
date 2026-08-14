@@ -37,7 +37,7 @@ export function NewsDetails({ slug, onNavigate }) {
       "datePublished": article.publishedAt,
       "author": {
         "@type": "Organization",
-        "name": "Dhanavriksha Wealth"
+        "name": "Muthaleetu Thisai"
       }
     });
     document.head.appendChild(script);

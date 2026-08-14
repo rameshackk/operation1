@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ta" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>தனவிருக்ஷா | Dhanavriksha Wealth - Mutual Fund & Investment News</title>
+  <title>முதலீட்டு திசை | Muthaleetu Thisai - Mutual Fund & Investment News</title>
   
   <meta name="description" content="பட்ஜெட் பத்மநாபன் ஃபைனான்ஷியல் - மியூச்சுவல் ஃபண்ட், பங்குச் சந்தை, தனிநபர் நிதி மற்றும் முதலீட்டு வழிகாட்டி." />
   
@@ -36,6 +36,13 @@
   <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
 
+  <!-- Supabase JS Client SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    window.SUPABASE_URL = "https://etanokdvfyvkidpeovdi.supabase.co";
+    window.SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV0YW5va2R2Znl2a2lkcGVvdmRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY2ODUxNzUsImV4cCI6MjEwMjI2MTE3NX0.SLzp5gIZyZdB7nmDrfjvghFbAwKwAIWuf4Ys_HC4AaE";
+  </script>
+
   <!-- Babel standalone for browser JSX compilation -->
   <script src="https://unpkg.com/@babel/standalone@7.23.6/babel.min.js"></script>
 </head>
@@ -43,8 +50,8 @@
 
   <div id="root"></div>
 
-  <!-- Main Application Bundle -->
-  <script type="text/babel" src="js/bundle.js"></script>
+  <!-- Main Application Bundle (Pre-compiled production JS) -->
+  <script src="js/bundle.compiled.js?v=1.1.2"></script>
 
 </body>
 </html>

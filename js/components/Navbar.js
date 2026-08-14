@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'https://esm.sh/react@18.2.0';
 import { useLanguage } from '../context/LanguageContext.js';
+import { useAuth } from '../context/AuthContext.js';
 
 export function Navbar({ currentPath, onNavigate }) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const { user, signOut } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  // Close drawer on Escape key
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape' && mobileOpen) {
@@ -16,19 +17,44 @@ export function Navbar({ currentPath, onNavigate }) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [mobileOpen]);
 
-  const navItems = [
+  const baseNavItems = [
     { id: 'home', hash: '#/', label: t('nav.home') },
     { id: 'videos', hash: '#/videos', label: t('nav.videos') },
     { id: 'news', hash: '#/news', label: t('nav.news') },
     { id: 'mutual-funds', hash: '#/category/mutual-funds', label: t('nav.mutualFunds') },
     { id: 'stocks', hash: '#/category/stocks', label: t('nav.stocks') },
     { id: 'personal-finance', hash: '#/category/personal-finance', label: t('nav.personalFinance') },
-    { id: 'education', hash: '#/category/education', label: t('nav.education') },
-    { id: 'calculator', hash: '#/calculator', label: t('nav.calculator') }
+    { id: 'calculator', hash: '#/calculator', label: t('nav.calculator') },
+    { id: 'quiz', hash: '#/quiz', label: t('nav.quiz') || 'Quiz' }
   ];
 
-  const handleLinkClick = (hash) => {
-    onNavigate(hash);
+  const authNavItems = user ? [
+    { id: 'profile', hash: '#/profile', label: `👤 ${language === 'ta' ? 'சுயவிவரம்' : 'Profile'}` },
+    {
+      id: 'logout',
+      isAction: true,
+      action: async () => {
+        try {
+          await signOut();
+          onNavigate('#/login');
+        } catch (e) {
+          console.error(e);
+        }
+      },
+      label: `🚪 ${language === 'ta' ? 'வெளியேறு' : 'Sign Out'}`
+    }
+  ] : [
+    { id: 'login', hash: '#/login', label: `🔑 ${language === 'ta' ? 'உள்நுழைக' : 'Sign In'}` }
+  ];
+
+  const navItems = [...baseNavItems, ...authNavItems];
+
+  const handleLinkClick = (item) => {
+    if (item.isAction && item.action) {
+      item.action();
+    } else {
+      onNavigate(item.hash);
+    }
     setMobileOpen(false);
   };
 
@@ -40,14 +66,25 @@ export function Navbar({ currentPath, onNavigate }) {
         <div className="hidden lg:flex items-center justify-between h-12 overflow-x-auto no-scrollbar">
           <div className="flex items-center gap-1">
             {navItems.map((item) => {
+              if (item.isAction) {
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => handleLinkClick(item)}
+                    className="relative px-3 py-1.5 text-xs sm:text-sm font-semibold transition-colors rounded-md whitespace-nowrap text-red-400 hover:text-white hover:bg-red-900/40 border border-red-500/20"
+                  >
+                    {item.label}
+                  </button>
+                );
+              }
               const isActive = currentPath === item.hash || (item.hash === '#/' && currentPath === '');
               return (
                 <button
                   key={item.id}
-                  onClick={() => handleLinkClick(item.hash)}
+                  onClick={() => handleLinkClick(item)}
                   className={`relative px-3 py-1.5 text-xs sm:text-sm font-medium transition-colors rounded-md whitespace-nowrap ${
                     isActive
-                      ? 'text-amber-400 font-semibold'
+                      ? 'text-amber-400 font-semibold bg-amber-500/10'
                       : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
                   }`}
                 >
@@ -86,7 +123,7 @@ export function Navbar({ currentPath, onNavigate }) {
 
       </div>
 
-      {/* Mobile Focus-Trapped Drawer */}
+      {/* Mobile Drawer */}
       {mobileOpen && (
         <div className="lg:hidden bg-slate-900 border-t border-slate-800 px-4 pt-2 pb-4 space-y-1 animate-fadeIn">
           {navItems.map((item) => {
@@ -94,11 +131,13 @@ export function Navbar({ currentPath, onNavigate }) {
             return (
               <button
                 key={item.id}
-                onClick={() => handleLinkClick(item.hash)}
+                onClick={() => handleLinkClick(item)}
                 className={`block w-full text-left px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  isActive
-                    ? 'bg-amber-500/10 text-amber-400 font-semibold border-l-2 border-amber-500'
-                    : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+                  item.isAction
+                    ? 'text-red-400 hover:bg-red-950/40'
+                    : isActive
+                      ? 'bg-amber-500/10 text-amber-400 font-semibold border-l-2 border-amber-500'
+                      : 'text-slate-300 hover:bg-slate-800'
                 }`}
               >
                 {item.label}

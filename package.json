@@ -1,0 +1,24 @@
+{
+  "name": "muthaleetu-thisai",
+  "version": "1.0.0",
+  "description": "Bilingual Mutual Fund & Investment Platform with Automated YouTube Ingestion, Translation, Supabase Auth & Vercel Serverless",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "build": "node build-bundle.js",
+    "backfill": "node scripts/backfillChannel.js",
+    "backfill:titles": "node scripts/backfillChannel.js --titles-only"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "framer-motion": "^11.3.0",
+    "lucide-react": "^0.420.0",
+    "pg": "^8.12.0"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

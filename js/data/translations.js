@@ -1,6 +1,6 @@
 ﻿export const translations = {
   ta: {
-    siteName: "தனவிருக்ஷா வெல்த்",
+    siteName: "முதலீட்டு திசை",
     tagline: "மியூச்சுவல் ஃபண்ட் & பங்குச் சந்தை செய்திகள்",
     budgetPadmanaban: "பட்ஜெட் பத்மநாபன் ஃபைனான்ஷியல்",
     nav: {
@@ -62,11 +62,11 @@
     relatedVideos: "தொடர்புடைய வீடியோக்கள்",
     relatedNews: "தொடர்புடைய செய்திகள்",
     footerDisclaimerTitle: "முக்கிய முதலீட்டு எச்சரிக்கை",
-    footerDisclaimerText: "மியூச்சுவல் ஃபண்ட் முதலீடுகள் சந்தை அபாயங்களுக்கு உட்பட்டவை. முதலீடு செய்வதற்கு முன் திட்ட ஆவணங்களை கவனமாகப் படிக்கவும். தனவிருக்ஷா மற்றும் பட்ஜெட் பத்மநாபன் வழங்கும் தகவல்கள் கல்வி நோக்கங்களுக்காக மட்டுமே.",
-    copyright: "© 2026 தனவிருக்ஷா வெல்த் மீடியா. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை."
+    footerDisclaimerText: "மியூச்சுவல் ஃபண்ட் முதலீடுகள் சந்தை அபாயங்களுக்கு உட்பட்டவை. முதலீடு செய்வதற்கு முன் திட்ட ஆவணங்களை கவனமாகப் படிக்கவும். முதலீட்டு திசை மற்றும் பட்ஜெட் பத்மநாபன் வழங்கும் தகவல்கள் கல்வி நோக்கங்களுக்காக மட்டுமே.",
+    copyright: "© 2026 முதலீட்டு திசை மீடியா. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை."
   },
   en: {
-    siteName: "Mudhaleedu Thesai",
+    siteName: "Muthaleetu Thisai",
     welcome: "Welcome",
     tagline: "Mutual Fund & Market News",
     budgetPadmanaban: "Budget Padmanaban Financial",
@@ -130,7 +130,7 @@
     relatedVideos: "Related Videos",
     relatedNews: "Related News",
     footerDisclaimerTitle: "Regulatory Disclaimer",
-    footerDisclaimerText: "Mutual Fund investments are subject to market risks, read all scheme-related documents carefully before investing. Information provided by Dhanavriksha and Budget Padmanaban is for educational purposes only.",
-    copyright: "© 2026 Dhanavriksha Wealth Media. All rights reserved."
+    footerDisclaimerText: "Mutual Fund investments are subject to market risks, read all scheme-related documents carefully before investing. Information provided by Muthaleetu Thisai and Budget Padmanaban is for educational purposes only.",
+    copyright: "© 2026 Muthaleetu Thisai Media. All rights reserved."
   }
 };

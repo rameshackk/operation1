@@ -125,7 +125,7 @@ export function Home({ onNavigate }) {
 
       {/* 7. MORE VIDEO SECTIONS */}
       <VideoSection
-        title={t('mutualFundVideos') || 'மியூச்சுவல் ஃபண்ட் வீடியோக்கள்'}
+        title={t('mutualFundVideos')}
         subtitle="Budget Padmanaban Mutual Fund Guides"
         videos={mutualFundVideos.length > 0 ? mutualFundVideos : videos.slice(0, 5)}
         onSelectVideo={(v) => onNavigate(`#/videos/${v.id}`)}
@@ -133,7 +133,7 @@ export function Home({ onNavigate }) {
       />
 
       <VideoSection
-        title={t('stockMarketVideos') || 'பங்குச் சந்தை வீடியோக்கள்'}
+        title={t('stockMarketVideos')}
         subtitle="Stock Market Analysis & Strategies"
         videos={stockVideos.length > 0 ? stockVideos : videos.slice(1, 5)}
         onSelectVideo={(v) => onNavigate(`#/videos/${v.id}`)}
@@ -141,7 +141,7 @@ export function Home({ onNavigate }) {
       />
 
       <VideoSection
-        title={t('sipVideos') || 'SIP & முதலீட்டு வீடியோக்கள்'}
+        title={t('sipVideos')}
         subtitle="Financial Education & Wealth Building Tips"
         videos={sipVideos.length > 0 ? sipVideos : videos.slice(2, 5)}
         onSelectVideo={(v) => onNavigate(`#/videos/${v.id}`)}

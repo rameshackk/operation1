@@ -55,7 +55,7 @@ export function VideoDetails({ videoId, onNavigate, onShowToast }) {
   const handleShare = async () => {
     const shareData = {
       title: video?.title || 'Financial Update',
-      text: video?.description || 'Check out this video on Dhanavriksha',
+      text: video?.description || 'Check out this video on Muthaleetu Thisai',
       url: window.location.href
     };
     if (navigator.share) {

@@ -1,5 +1,5 @@
 # Simple PowerShell Static File Server for Dhanavriksha Web Application
-$port = 8080
+$port = 3000
 $path = $PSScriptRoot
 $listener = New-Object System.Net.HttpListener
 $listener.Prefixes.Add("http://localhost:$port/")
