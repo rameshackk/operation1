@@ -1,16 +1,25 @@
 {
   "short_name": "Muthaleetu Thisai",
-  "name": "Muthaleetu Thisai & Investment News",
-  "description": "Bilingual Mutual Fund & Investment News Website for Budget Padmanaban Financial",
-  "start_url": "./index.html",
+  "name": "முதலீட்டு திசை | Muthaleetu Thisai - Mutual Fund & Investment News",
+  "description": "Bilingual Mutual Fund & Investment Platform with Automated Ingestion and Financial Calculators",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
-  "theme_color": "#0b0f19",
-  "background_color": "#0b0f19",
+  "orientation": "portrait-primary",
+  "theme_color": "#d97706",
+  "background_color": "#090d16",
   "icons": [
     {
-      "src": "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=192&h=192&fit=crop",
-      "sizes": "192x192",
-      "type": "image/png"
+      "src": "favicon.svg",
+      "sizes": "48x48 72x72 96x96 128x128 192x192 256x256 384x384 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "favicon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
     }
   ]
 }
