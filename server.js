@@ -26,18 +26,53 @@ const MIME_TYPES = {
   '.ttf': 'font/ttf'
 };
 
-const server = http.createServer((req, res) => {
-  // Normalize URL
-  let reqPath = decodeURI(req.url.split('?')[0]);
-  if (reqPath === '/' || reqPath === '') {
-    reqPath = '/index.html';
+const server = http.createServer(async (req, res) => {
+  // Parse URL & Query
+  const urlObj = new URL(req.url, `http://${req.headers.host || 'localhost:3000'}`);
+  const reqPath = decodeURI(urlObj.pathname);
+
+  // 1. API Route Handling (emulate Vercel Serverless Functions)
+  if (reqPath.startsWith('/api/')) {
+    // Helper to polyfill res.status().json() like Express/Vercel
+    res.status = (code) => {
+      res.statusCode = code;
+      return res;
+    };
+    res.json = (data) => {
+      res.setHeader('Content-Type', 'application/json; charset=utf-8');
+      res.end(JSON.stringify(data));
+      return res;
+    };
+    req.query = Object.fromEntries(urlObj.searchParams.entries());
+
+    try {
+      if (reqPath === '/api/videos/trending-preview' || reqPath === '/api/videos/trending-preview.js') {
+        const mod = await import(`./api/videos/trending-preview.js?t=${Date.now()}`);
+        return mod.default(req, res);
+      }
+
+      if (reqPath === '/api/videos' || reqPath === '/api/videos/index.js') {
+        const mod = await import(`./api/videos/index.js?t=${Date.now()}`);
+        return mod.default(req, res);
+      }
+
+      const matchId = reqPath.match(/^\/api\/videos\/([^/?#]+)$/);
+      if (matchId && matchId[1] !== 'trending-preview') {
+        req.query.id = matchId[1];
+        const mod = await import(`./api/videos/[id].js?t=${Date.now()}`);
+        return mod.default(req, res);
+      }
+    } catch (apiErr) {
+      console.error('API execution error:', apiErr);
+      return res.status(500).json({ status: 'error', message: apiErr.message });
+    }
   }
 
-  // Prevent path traversal
-  const safePath = path.normalize(reqPath).replace(/^(\.\.[\/\\])+/, '');
+  // 2. Static File Serving
+  let filePathTarget = reqPath === '/' || reqPath === '' ? '/index.html' : reqPath;
+  const safePath = path.normalize(filePathTarget).replace(/^(\.\.[\/\\])+/, '');
   let filePath = path.join(PUBLIC_DIR, safePath);
 
-  // Check if file exists
   fs.stat(filePath, (err, stats) => {
     if (err || !stats.isFile()) {
       res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });

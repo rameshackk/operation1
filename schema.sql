@@ -93,15 +93,38 @@ CREATE TRIGGER on_auth_user_created
 
 -- 6. ROW-LEVEL SECURITY (RLS) POLICIES
 
+-- 6. PUBLIC HOMEPAGE PREVIEW VIEW (Non-sensitive metadata only)
+CREATE OR REPLACE VIEW public.trending_preview AS
+SELECT 
+    id,
+    youtube_id,
+    title_ta,
+    title_en,
+    thumbnail_url,
+    duration,
+    duration_seconds,
+    published_at,
+    view_count,
+    category,
+    trending
+FROM public.videos;
+
+-- Grant select to anon (public) and authenticated roles
+GRANT SELECT ON public.trending_preview TO anon, authenticated;
+
+-- 7. ROW-LEVEL SECURITY (RLS) POLICIES
+
 -- Enable RLS on all tables
 ALTER TABLE public.videos ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.watch_history ENABLE ROW LEVEL SECURITY;
 
 -- VIDEOS POLICIES:
--- Public read access to videos
-CREATE POLICY "Public videos read access" ON public.videos
-    FOR SELECT USING (true);
+-- Authenticated users have full read access to videos
+DROP POLICY IF EXISTS "Public videos read access" ON public.videos;
+DROP POLICY IF EXISTS "Authenticated videos read access" ON public.videos;
+CREATE POLICY "Authenticated videos read access" ON public.videos
+    FOR SELECT TO authenticated USING (true);
 
 -- Service role full access to videos (handled automatically by Supabase service key)
 

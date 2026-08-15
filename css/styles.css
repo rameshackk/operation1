@@ -28,6 +28,11 @@
   --line-height-heading: 1.25;
   --line-height-tight: 1.15;
 
+  /* Design Tokens for Cards & Elevation */
+  --radius-card: 1.25rem; /* 20px */
+  --shadow-card: 0 4px 12px -2px rgba(15, 23, 42, 0.08), 0 2px 6px -2px rgba(15, 23, 42, 0.04);
+  --shadow-card-hover: 0 20px 30px -6px rgba(15, 23, 42, 0.14), 0 10px 14px -5px rgba(15, 23, 42, 0.08);
+
   /* Colors - Light Mode */
   --bg-main: #f8fafc;
   --bg-card: #ffffff;
@@ -44,6 +49,9 @@
 }
 
 [data-theme="dark"] {
+  --radius-card: 1.25rem;
+  --shadow-card: 0 4px 14px -2px rgba(0, 0, 0, 0.5), 0 2px 6px -2px rgba(0, 0, 0, 0.3);
+  --shadow-card-hover: 0 20px 32px -6px rgba(0, 0, 0, 0.7), 0 0 18px 2px rgba(217, 119, 6, 0.2);
   --bg-main: #020617;
   --bg-card: #0f172a;
   --bg-card-hover: #1e293b;
@@ -276,3 +284,112 @@ body {
 .grid-stretch-cards > * {
   height: 100%;
 }
+
+/* ==========================================================================
+   Continuous Auto-Scrolling Trending Articles & Videos Carousel
+   Motion Pattern: Squarespace Template Showcase Infinite Seamless Drift
+   ========================================================================== */
+
+@keyframes trendingDrift {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.trending-carousel-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Elegant edge fade masks so cards seamlessly peek and drift in/out */
+.trending-carousel-wrapper::before,
+.trending-carousel-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 4rem;
+  z-index: 20;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.trending-carousel-wrapper::before {
+  left: 0;
+  background: linear-gradient(to right, var(--bg-main) 0%, rgba(248, 250, 252, 0.6) 40%, transparent 100%);
+}
+
+.trending-carousel-wrapper::after {
+  right: 0;
+  background: linear-gradient(to left, var(--bg-main) 0%, rgba(248, 250, 252, 0.6) 40%, transparent 100%);
+}
+
+[data-theme="dark"] .trending-carousel-wrapper::before {
+  background: linear-gradient(to right, #020617 0%, rgba(2, 6, 23, 0.7) 40%, transparent 100%);
+}
+
+[data-theme="dark"] .trending-carousel-wrapper::after {
+  background: linear-gradient(to left, #020617 0%, rgba(2, 6, 23, 0.7) 40%, transparent 100%);
+}
+
+@media (max-width: 640px) {
+  .trending-carousel-wrapper::before,
+  .trending-carousel-wrapper::after {
+    width: 1.5rem;
+  }
+}
+
+/* The continuous moving track */
+.animate-trending-carousel {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: trendingDrift 36s linear infinite;
+  touch-action: pan-x;
+}
+
+/* Pause on hover, keyboard focus within, or when active */
+.animate-trending-carousel:hover,
+.animate-trending-carousel:focus-within,
+.trending-carousel-paused .animate-trending-carousel {
+  animation-play-state: paused !important;
+}
+
+/* Individual card in carousel */
+.trending-carousel-card {
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease, border-color 0.3s ease;
+}
+
+.trending-carousel-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+/* Reduced Motion Fallback: static native smooth horizontal scrollbar */
+@media (prefers-reduced-motion: reduce) {
+  .animate-trending-carousel {
+    animation: none !important;
+    transform: none !important;
+    width: auto !important;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.75rem;
+  }
+
+  .trending-carousel-wrapper::before,
+  .trending-carousel-wrapper::after {
+    display: none;
+  }
+
+  .trending-carousel-card {
+    scroll-snap-align: start;
+  }
+}
+

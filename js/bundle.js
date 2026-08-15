@@ -521,10 +521,43 @@ function translateNewsArticle(article, language = "ta") {
   };
 }
 
+async function getTrendingPreviewVideos(language = "ta") {
+  try {
+    const res = await fetch('/api/videos/trending-preview?limit=8');
+    if (res.ok) {
+      const json = await res.json();
+      if (json.status === 'success' && Array.isArray(json.data) && json.data.length > 0) {
+        return json.data.map(v => translateVideo({
+          ...v,
+          titleTamil: v.title_ta || v.titleTamil || v.title,
+          titleEnglish: v.title_en || v.titleEnglish || v.title,
+          publishedAt: v.published_at || v.publishedAt
+        }, language));
+      }
+    }
+  } catch (e) {
+    console.warn('Public trending preview API fallback:', e);
+  }
+
+  // Fallback to top 8 items from static preview catalog
+  return videosData.slice(0, 8).map(v => translateVideo(v, language));
+}
+
 async function getLatestVideos(language = "ta", category = "all", sort = "newest") {
   try {
+    let headers = {};
+    if (typeof window !== 'undefined' && window.supabase) {
+      try {
+        const sessionRes = await window.supabase.auth.getSession();
+        const token = sessionRes?.data?.session?.access_token;
+        if (token) {
+          headers['Authorization'] = `Bearer ${token}`;
+        }
+      } catch (e) {}
+    }
+
     const url = `/api/videos?limit=100&category=${encodeURIComponent(category)}&sort=${encodeURIComponent(sort)}`;
-    const res = await fetch(url);
+    const res = await fetch(url, { headers });
     if (res.ok) {
       const json = await res.json();
       if (json.status === 'success' && Array.isArray(json.data) && json.data.length > 0) {
@@ -1132,28 +1165,66 @@ function ProfileMenu({ onNavigate }) {
 
 function ProtectedRoute({ children, onNavigate }) {
   const { session, isAuthLoading } = useAuth();
-  if (isAuthLoading) return null;
+  if (isAuthLoading) {
+    return (
+      <div className="min-h-[50vh] flex items-center justify-center">
+        <div className="w-10 h-10 border-4 border-amber-500/20 border-t-amber-500 rounded-full animate-spin" />
+      </div>
+    );
+  }
   if (!session) {
-    if (typeof window !== 'undefined' && window.location.hash !== '#/login') {
-      window.location.hash = '#/login';
+    if (typeof window !== 'undefined') {
+      const current = window.location.hash || '#/';
+      if (current !== '#/login' && current !== '#/signup' && current !== '#/register' && current !== '#/forgot-password' && current !== '#/reset-password') {
+        try {
+          sessionStorage.setItem('auth_redirect_from', current);
+        } catch (e) {}
+      }
+      if (window.location.hash !== '#/login') {
+        if (onNavigate) {
+          onNavigate('#/login');
+        } else {
+          window.location.hash = '#/login';
+        }
+      }
     }
     return null;
   }
   return children;
 }
 
-function AdminRoute({ children }) {
+function AdminRoute({ children, onNavigate }) {
   const { session, role, isAuthLoading } = useAuth();
-  if (isAuthLoading) return null;
+  if (isAuthLoading) {
+    return (
+      <div className="min-h-[50vh] flex items-center justify-center">
+        <div className="w-10 h-10 border-4 border-amber-500/20 border-t-amber-500 rounded-full animate-spin" />
+      </div>
+    );
+  }
   if (!session) {
-    if (typeof window !== 'undefined' && window.location.hash !== '#/login') {
-      window.location.hash = '#/login';
+    if (typeof window !== 'undefined') {
+      const current = window.location.hash || '#/';
+      try {
+        sessionStorage.setItem('auth_redirect_from', current);
+      } catch (e) {}
+      if (window.location.hash !== '#/login') {
+        if (onNavigate) {
+          onNavigate('#/login');
+        } else {
+          window.location.hash = '#/login';
+        }
+      }
     }
     return null;
   }
   if (role !== 'admin') {
     if (typeof window !== 'undefined' && window.location.hash !== '#/') {
-      window.location.hash = '#/';
+      if (onNavigate) {
+        onNavigate('#/');
+      } else {
+        window.location.hash = '#/';
+      }
     }
     return null;
   }
@@ -1161,6 +1232,26 @@ function AdminRoute({ children }) {
 }
 
 // ==================== 4. HOOKS ====================
+function useTrendingPreview() {
+  const { language } = useLanguage();
+  const [previewVideos, setPreviewVideos] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    let isMounted = true;
+    setIsLoading(true);
+    getTrendingPreviewVideos(language).then(data => {
+      if (isMounted) {
+        setPreviewVideos(data);
+        setIsLoading(false);
+      }
+    });
+    return () => { isMounted = false; };
+  }, [language]);
+
+  return { previewVideos, isLoading };
+}
+
 function useVideos(category = 'all', sort = 'newest') {
   const { language } = useLanguage();
   const [videos, setVideos] = useState([]);
@@ -1923,84 +2014,225 @@ function HeroSection({ news = newsData, onNavigate }) {
 
 function TrendingArticlesSection({ onNavigate }) {
   const { t, language } = useLanguage();
-  const trendingArticles = newsData.slice(0, 2);
+  const [isTouchPaused, setIsTouchPaused] = React.useState(false);
+  const touchTimeoutRef = React.useRef(null);
 
-  const getSummary = (item) => {
-    return language === 'ta' ? item.summaryTamil : (item.summaryEnglish || item.summaryTamil);
-  };
+  // Compile prioritized list of trending articles and videos
+  const trendingNews = (typeof newsData !== 'undefined' ? newsData : [])
+    .filter(n => n.isTrending !== false)
+    .slice(0, 4)
+    .map(n => ({
+      id: n.id,
+      slug: n.slug,
+      type: 'article',
+      titleTamil: n.titleTamil,
+      titleEnglish: n.titleEnglish,
+      title: n.titleTamil || n.titleEnglish,
+      summaryTamil: n.summaryTamil,
+      summaryEnglish: n.summaryEnglish,
+      thumbnail: n.thumbnail,
+      category: n.category || 'mutual-funds',
+      publishedAt: n.publishedAt,
+      readTimeMinutes: n.readTimeMinutes || 4,
+      rank: n.rank
+    }));
+
+  const trendingVids = (typeof videosData !== 'undefined' ? videosData : [])
+    .filter(v => v.trending !== false)
+    .sort((a, b) => (b.views || 0) - (a.views || 0))
+    .slice(0, 4)
+    .map(v => ({
+      id: v.id,
+      type: 'video',
+      titleTamil: v.titleTamil,
+      titleEnglish: v.titleEnglish,
+      title: v.titleTamil || v.titleEnglish || v.title,
+      summaryTamil: v.descriptionTamil,
+      summaryEnglish: v.descriptionEnglish,
+      thumbnail: v.thumbnail,
+      category: v.category || 'personal-finance',
+      publishedAt: v.publishedAt,
+      duration: v.duration || '10:00',
+      views: v.views || 25000,
+      rank: null
+    }));
+
+  // Interleave articles and videos for a rich, dynamic showcase
+  const combinedTrending = [];
+  const maxLen = Math.max(trendingNews.length, trendingVids.length);
+  for (let i = 0; i < maxLen; i++) {
+    if (i < trendingNews.length) combinedTrending.push(trendingNews[i]);
+    if (i < trendingVids.length) combinedTrending.push(trendingVids[i]);
+  }
+
+  const trendingItems = combinedTrending.length > 0 ? combinedTrending : trendingNews;
+
+  // Infinite sequence: render the list twice in sequence for a seamless 0% to -50% CSS loop
+  const sequence = [...trendingItems, ...trendingItems];
 
   const getHeadline = (item) => {
-    return language === 'ta' ? item.titleTamil : (item.titleEnglish || item.titleTamil);
+    return language === 'ta' ? (item.titleTamil || item.title) : (item.titleEnglish || item.title || item.titleTamil);
+  };
+
+  const getSummary = (item) => {
+    return language === 'ta' ? (item.summaryTamil || item.summary) : (item.summaryEnglish || item.summary || item.summaryTamil);
+  };
+
+  const handleCardClick = (item) => {
+    if (!onNavigate) return;
+    if (item.type === 'video') {
+      onNavigate(`#/videos/${item.id}`);
+    } else {
+      onNavigate(`#/news/${item.slug}`);
+    }
+  };
+
+  const handleKeyDown = (e, item) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleCardClick(item);
+    }
+  };
+
+  const handleTouchStart = () => {
+    if (touchTimeoutRef.current) clearTimeout(touchTimeoutRef.current);
+    setIsTouchPaused(true);
+  };
+
+  const handleTouchEnd = () => {
+    if (touchTimeoutRef.current) clearTimeout(touchTimeoutRef.current);
+    touchTimeoutRef.current = setTimeout(() => {
+      setIsTouchPaused(false);
+    }, 1800);
   };
 
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-3">
-      <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2.5">
-        <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-          <h2 className="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white font-serif">
-            {t('trendingArticlesTitle')}
-          </h2>
+    <section
+      className="py-6 space-y-4 select-none overflow-hidden"
+      aria-label={t('trendingArticlesTitle') || 'Trending Articles & Videos'}
+    >
+      {/* Header Container */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+          <div className="flex items-center gap-3">
+            <span className="relative flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-amber-500" />
+            </span>
+            <div>
+              <h2 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white font-serif tracking-tight flex items-center gap-2">
+                <span>{t('trendingArticlesTitle') || 'டிரெண்டிங் செய்திகள் & வழிகாட்டிகள்'}</span>
+              </h2>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <span className="hidden sm:inline-block text-[11px] font-semibold text-slate-400 dark:text-slate-500 font-mono">
+              ⚡ LIVE DRIFT • HOVER TO PAUSE
+            </span>
+            <span className="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+              🔥 Trending
+            </span>
+          </div>
         </div>
-        <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2.5 py-0.5 rounded-full border border-amber-500/20">
-          🔥 Trending
-        </span>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
-        {trendingArticles.map((article, idx) => {
-          const rankStr = (idx + 1).toString().padStart(2, '0');
-          const title = getHeadline(article);
-          const summary = getSummary(article);
-          return (
-            <article
-              key={article.id}
-              onClick={() => onNavigate && onNavigate(`#/news/${article.slug}`)}
-              className="group relative bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-lg hover:border-amber-400/50 dark:hover:border-amber-500/40 transition-all duration-300 cursor-pointer flex flex-col sm:flex-row h-auto sm:h-44"
-            >
-              {/* Compact Thumbnail (Left on sm+, top on mobile) */}
-              <div className="relative w-full sm:w-5/12 h-36 sm:h-full overflow-hidden bg-slate-950 shrink-0">
-                <img
-                  src={article.thumbnail}
-                  alt={title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent sm:bg-gradient-to-r sm:from-transparent sm:to-slate-950/40" />
-                <span className="absolute top-2.5 left-2.5 w-7 h-7 flex items-center justify-center rounded-full bg-amber-500 text-slate-950 font-black text-xs font-serif shadow-md">
-                  {rankStr}
-                </span>
-                <span className="absolute top-2.5 right-2.5 px-2 py-0.5 text-[9px] font-black uppercase tracking-wider rounded-full bg-slate-950/80 text-amber-400 backdrop-blur-sm border border-amber-500/20">
-                  {(article.category || 'finance').replace('-', ' ')}
-                </span>
-              </div>
+      {/* Infinite Horizontal Drifting Carousel Track */}
+      <div className={`trending-carousel-wrapper ${isTouchPaused ? 'trending-carousel-paused' : ''}`}>
+        <div
+          className="animate-trending-carousel py-3 px-4 flex items-stretch gap-5 sm:gap-6"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+          onTouchCancel={handleTouchEnd}
+        >
+          {sequence.map((item, idx) => {
+            const isVideo = item.type === 'video';
+            const headline = getHeadline(item);
+            const summary = getSummary(item);
+            const rankStr = item.rank || `0${(idx % trendingItems.length) + 1}`;
 
-              {/* Content (Right on sm+) */}
-              <div className="p-3.5 sm:p-4 flex flex-col justify-between flex-1 min-w-0">
-                <div className="space-y-1.5">
-                  <h3 className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-white line-clamp-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors font-serif leading-snug">
-                    {title}
-                  </h3>
-                  {summary && (
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed font-medium">
-                      {summary}
-                    </p>
+            const formattedDate = new Intl.DateTimeFormat(
+              language === 'ta' ? 'ta-IN' : 'en-IN',
+              { month: 'short', day: 'numeric' }
+            ).format(new Date(item.publishedAt || Date.now()));
+
+            return (
+              <article
+                key={`${item.id}-copy-${idx}`}
+                tabIndex={0}
+                role="link"
+                aria-label={`${item.type === 'video' ? 'Video' : 'Article'}: ${headline}`}
+                onClick={() => handleCardClick(item)}
+                onKeyDown={(e) => handleKeyDown(e, item)}
+                className="trending-carousel-card group relative w-[280px] sm:w-[330px] md:w-[360px] lg:w-[380px] shrink-0 bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800/90 overflow-hidden flex flex-col justify-between cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-950"
+              >
+                {/* Card Thumbnail Container (16:9 Aspect Ratio) */}
+                <div className="relative aspect-[16/9] w-full overflow-hidden bg-slate-950">
+                  <img
+                    src={item.thumbnail}
+                    alt={headline}
+                    loading="lazy"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
+
+                  {/* Top-Left Category Badge */}
+                  <span className="absolute top-3 left-3 px-2.5 py-0.5 text-[9px] sm:text-[10px] font-black uppercase tracking-wider rounded-lg bg-slate-950/85 text-amber-400 backdrop-blur-md border border-white/10 shadow-sm">
+                    {(item.category || 'FINANCE').replace('-', ' ')}
+                  </span>
+
+                  {/* Top-Right Rank or Type Indicator */}
+                  <span className="absolute top-3 right-3 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider rounded-lg bg-amber-500 text-slate-950 shadow-md">
+                    {isVideo ? '▶ VIDEO' : `🔥 #${rankStr}`}
+                  </span>
+
+                  {/* Video Play Overlay */}
+                  {isVideo && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-11 h-11 rounded-full bg-amber-600/90 text-white flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-amber-500 transition-all">
+                        <svg className="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </div>
+                    </div>
                   )}
+
+                  {/* Bottom Duration or Read Time Pill */}
+                  <div className="absolute bottom-2.5 right-3 px-2 py-0.5 rounded bg-slate-950/85 text-slate-200 text-[10px] font-mono font-bold backdrop-blur-sm border border-white/10">
+                    {isVideo ? item.duration : `⏱ ${item.readTimeMinutes} ${t('minRead') || 'min'}`}
+                  </div>
                 </div>
 
-                <div className="pt-2.5 flex items-center justify-between border-t border-slate-100 dark:border-slate-800 text-[10px] text-slate-400 font-medium">
-                  <span className="flex items-center gap-1 font-mono">
-                    <span>📅</span>
-                    <span>{new Date(article.publishedAt).toLocaleDateString()}</span>
-                  </span>
-                  <span className="font-bold text-amber-600 dark:text-amber-400 group-hover:translate-x-0.5 transition-transform inline-flex items-center gap-1">
-                    <span>{t('readArticle')}</span>
-                    <span>→</span>
-                  </span>
+                {/* Card Meta Content */}
+                <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between gap-3">
+                  <div className="space-y-2">
+                    <h3 className="text-sm sm:text-[15px] font-bold text-slate-900 dark:text-white line-clamp-2 font-serif group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors leading-snug">
+                      {headline}
+                    </h3>
+                    {summary && (
+                      <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 font-sans leading-relaxed">
+                        {summary}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Footer Meta Row */}
+                  <div className="flex items-center justify-between text-[11px] text-slate-400 dark:text-slate-500 border-t border-slate-100 dark:border-slate-800/80 pt-3 font-medium">
+                    <span className="flex items-center gap-1 font-mono">
+                      <span>📅</span>
+                      <span>{formattedDate}</span>
+                    </span>
+
+                    <span className="font-bold text-amber-600 dark:text-amber-400 group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+                      <span>{isVideo ? (new Intl.NumberFormat(language === 'ta' ? 'ta-IN' : 'en-IN').format(item.views) + ' ' + (t('views') || 'views')) : (t('readArticle') || 'Read')}</span>
+                      <span>→</span>
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </article>
-          );
-        })}
+              </article>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
@@ -2503,6 +2735,42 @@ function SipCalculator() {
   );
 }
 
+
+function NewsCard({ article, onSelect }) {
+  const { t } = useLanguage();
+  if (!article) return null;
+
+  const formattedDate = new Intl.DateTimeFormat(
+    article.activeLang === 'ta' ? 'ta-IN' : 'en-IN',
+    { month: 'short', day: 'numeric', year: 'numeric' }
+  ).format(new Date(article.publishedAt));
+
+  return (
+    <article
+      onClick={() => onSelect(article)}
+      className="group bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm card-hover-glow cursor-pointer flex flex-col justify-between h-full"
+    >
+      <div className="relative aspect-[16/9] overflow-hidden bg-slate-950">
+        <img src={article.thumbnail} alt={article.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+        <span className="absolute top-3 left-3 px-2.5 py-0.5 text-[10px] font-extrabold uppercase rounded-md bg-slate-950/85 text-amber-400 backdrop-blur-md">{article.category}</span>
+        <span className="absolute top-3 right-3 px-2 py-0.5 text-[9px] font-black uppercase rounded-md bg-red-600 text-white">{OFFICIAL_CHANNEL_HANDLE}</span>
+      </div>
+
+      <div className="p-5 space-y-3.5 flex-1 flex flex-col justify-between">
+        <div className="space-y-2">
+          <h3 className="text-base font-extrabold text-slate-900 dark:text-white line-clamp-2 group-hover:text-amber-600 transition-colors font-serif leading-snug">{article.title}</h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed font-medium">{article.summary}</p>
+        </div>
+
+        <div className="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 border-t border-slate-100 dark:border-slate-800 pt-3 font-semibold">
+          <span>{formattedDate}</span>
+          <span className="font-mono text-amber-700 dark:text-amber-400">⏱ {article.readTimeMinutes} {t('minRead')}</span>
+        </div>
+      </div>
+    </article>
+  );
+}
+
 function RiskQuizWidget() {
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState({});
@@ -2584,261 +2852,130 @@ function RiskQuizWidget() {
   );
 }
 
-function NewsCard({ article, onSelect }) {
-  const { t } = useLanguage();
-  if (!article) return null;
+function SignInCtaBanner({ onNavigate }) {
+  const { language } = useLanguage();
+  const { session } = useAuth();
+  const isTamil = language === 'ta';
 
-  const formattedDate = new Intl.DateTimeFormat(
-    article.activeLang === 'ta' ? 'ta-IN' : 'en-IN',
-    { month: 'short', day: 'numeric', year: 'numeric' }
-  ).format(new Date(article.publishedAt));
-
-  return (
-    <article
-      onClick={() => onSelect(article)}
-      className="group bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm card-hover-glow cursor-pointer flex flex-col justify-between h-full"
-    >
-      <div className="relative aspect-[16/9] overflow-hidden bg-slate-950">
-        <img src={article.thumbnail} alt={article.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-        <span className="absolute top-3 left-3 px-2.5 py-0.5 text-[10px] font-extrabold uppercase rounded-md bg-slate-950/85 text-amber-400 backdrop-blur-md">{article.category}</span>
-        <span className="absolute top-3 right-3 px-2 py-0.5 text-[9px] font-black uppercase rounded-md bg-red-600 text-white">{OFFICIAL_CHANNEL_HANDLE}</span>
-      </div>
-
-      <div className="p-5 space-y-3.5 flex-1 flex flex-col justify-between">
-        <div className="space-y-2">
-          <h3 className="text-base font-extrabold text-slate-900 dark:text-white line-clamp-2 group-hover:text-amber-600 transition-colors font-serif leading-snug">{article.title}</h3>
-          <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed font-medium">{article.summary}</p>
-        </div>
-
-        <div className="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 border-t border-slate-100 dark:border-slate-800 pt-3 font-semibold">
-          <span>{formattedDate}</span>
-          <span className="font-mono text-amber-700 dark:text-amber-400">⏱ {article.readTimeMinutes} {t('minRead')}</span>
+  if (session) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-6 animate-fadeIn">
+        <div className="flex items-center justify-between p-4 sm:p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 dark:text-emerald-300 shadow-sm">
+          <div className="flex items-center gap-3">
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+            <p className="text-xs sm:text-sm font-bold font-sans">
+              {isTamil 
+                ? 'உறுப்பினர் கணக்கு செயலில் உள்ளது — முழு வீடியோ தொகுப்பு மற்றும் ஆராய்ச்சியை நீங்கள் அணுகலாம்.' 
+                : 'Member Account Active — Full investment library and insights unlocked.'}
+            </p>
+          </div>
+          <button
+            onClick={() => onNavigate && onNavigate('#/videos')}
+            className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs transition-colors shadow-sm shrink-0"
+          >
+            {isTamil ? 'அனைத்து வீடியோக்கள் →' : 'Browse All Videos →'}
+          </button>
         </div>
       </div>
-    </article>
-  );
-}
-
-function Toast({ message, onClose }) {
-  useEffect(() => {
-    if (!message) return;
-    const timer = setTimeout(() => onClose(), 3000);
-    return () => clearTimeout(timer);
-  }, [message, onClose]);
-
-  if (!message) return null;
-  return (
-    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-5 py-3 rounded-2xl bg-slate-900 text-white text-xs font-bold shadow-2xl border border-amber-500/40 flex items-center gap-2.5 animate-fadeIn">
-      <span className="text-amber-400 text-base">âœ“</span>
-      <span>{message}</span>
-    </div>
-  );
-}
-
-function Footer({ onNavigate, onShowToast }) {
-  const { t } = useLanguage();
-  const [email, setEmail] = useState('');
-
-  const handleSubscribe = (e) => {
-    e.preventDefault();
-    if (!email || !email.includes('@')) return;
-    onShowToast(t('subscribedToast'));
-    setEmail('');
-  };
+    );
+  }
 
   return (
-    <footer className="bg-slate-900 text-slate-300 border-t border-slate-800 pt-14 pb-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-12 border-b border-slate-800">
-          <div className="lg:col-span-6 space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-amber-500 text-slate-950 font-black flex items-center justify-center text-xl shadow-lg">தன</div>
-              <span className="text-2xl font-black text-white font-serif">{t('siteName')}</span>
-              <a href={OFFICIAL_CHANNEL_URL} target="_blank" rel="noreferrer" className="text-xs font-bold text-red-500 hover:underline">
-                {OFFICIAL_CHANNEL_HANDLE} ↗
-              </a>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-6 animate-fadeIn">
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-slate-900 to-amber-950/80 border border-amber-500/30 dark:border-amber-500/20 p-6 sm:p-8 shadow-2xl text-white">
+        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-amber-500/15 blur-3xl pointer-events-none" />
+
+        <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className="space-y-2 max-w-2xl">
+            <div className="flex items-center gap-2">
+              <span className="px-2.5 py-0.5 rounded-full bg-amber-500 text-slate-950 font-black text-[10px] tracking-wider uppercase shadow">
+                🔒 {isTamil ? 'உறுப்பினர் அணுகல்' : 'MEMBER ACCESS'}
+              </span>
+              <span className="text-[11px] font-mono text-amber-300/80 font-bold">
+                {isTamil ? 'இலவச கணக்கு' : 'FREE ACCOUNT'}
+              </span>
             </div>
-            <p className="text-xs text-slate-400 max-w-md font-medium">{t('newsLetterDesc')}</p>
 
-            <form onSubmit={handleSubscribe} className="flex gap-2 max-w-md">
-              <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="your.email@example.com" required className="flex-1 bg-slate-800 border border-slate-700 rounded-2xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500" />
-              <button type="submit" className="px-5 py-2.5 rounded-2xl bg-amber-600 text-white font-black text-xs hover:bg-amber-500 transition-colors shadow-md">{t('subscribe')}</button>
-            </form>
+            <h3 className="text-lg sm:text-2xl font-black font-serif text-white leading-snug">
+              {isTamil
+                ? 'முழு வீடியோ தொகுப்பு மற்றும் ஆராய்ச்சியைப் பார்க்க உள்நுழையவும்'
+                : 'Sign in to watch the full library & in-depth research'}
+            </h3>
+
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans">
+              {isTamil
+                ? 'இலவசமாக பதிவு செய்து பட்ஜெட் பத்மநாபனின் அனைத்து பிரத்தியேக நிதி வழிகாட்டிகள், மியூச்சுவல் ஃபண்ட் பகுப்பாய்வுகள் மற்றும் கண்காணிப்பு வரலாற்றை உடனே அணுகவும்.'
+                : 'Register free to unlock the entire video archive, detailed mutual fund analysis, stock market strategies, and personalized watch history.'}
+            </p>
           </div>
 
-          <div className="lg:col-span-3 space-y-3">
-            <h4 className="text-xs font-black uppercase text-amber-400 tracking-wider">{t('nav.mutualFunds')} & {t('nav.stocks')}</h4>
-            <ul className="space-y-2 text-xs font-semibold text-slate-400">
-              <li><button onClick={() => onNavigate('#/category/mutual-funds')} className="hover:text-white">{t('nav.mutualFunds')}</button></li>
-              <li><button onClick={() => onNavigate('#/category/stocks')} className="hover:text-white">{t('nav.stocks')}</button></li>
-              <li><button onClick={() => onNavigate('#/category/personal-finance')} className="hover:text-white">{t('nav.personalFinance')}</button></li>
-            </ul>
-          </div>
-
-          <div className="lg:col-span-3 space-y-3">
-            <h4 className="text-xs font-black uppercase text-amber-400 tracking-wider">Official Channel</h4>
-            <ul className="space-y-2 text-xs font-semibold text-slate-400">
-              <li><a href={OFFICIAL_CHANNEL_URL} target="_blank" rel="noreferrer" className="hover:text-red-400">ðŸ”´ YouTube: {OFFICIAL_CHANNEL_HANDLE}</a></li>
-              <li><button onClick={() => onNavigate('#/calculator')} className="hover:text-white">{t('sipCalculatorTitle')}</button></li>
-              <li><button onClick={() => onNavigate('#/quiz')} className="hover:text-white">Mutual Fund Quiz</button></li>
-              <li><button onClick={() => onNavigate('#/videos')} className="hover:text-white">Video Catalog</button></li>
-            </ul>
+          <div className="flex items-center gap-3 w-full md:w-auto shrink-0">
+            <button
+              onClick={() => onNavigate && onNavigate('#/login')}
+              className="flex-1 md:flex-none px-6 py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs sm:text-sm shadow-lg hover:shadow-amber-500/25 transition-all transform hover:-translate-y-0.5 active:translate-y-0 text-center"
+            >
+              {isTamil ? 'உள்நுழைக' : 'Sign In'}
+            </button>
+            <button
+              onClick={() => onNavigate && onNavigate('#/signup')}
+              className="flex-1 md:flex-none px-6 py-3 rounded-2xl bg-slate-800/90 hover:bg-slate-700 text-white font-extrabold text-xs sm:text-sm border border-slate-700 hover:border-amber-500/40 transition-all text-center"
+            >
+              {isTamil ? 'இலவச பதிவு' : 'Register Free'}
+            </button>
           </div>
         </div>
-
-        <div className="space-y-2 text-[11px] text-slate-500 leading-relaxed">
-          <h5 className="font-black text-slate-400 uppercase text-[10px] tracking-wider">{t('footerDisclaimerTitle')}</h5>
-          <p>{t('footerDisclaimerText')}</p>
-        </div>
-
-        <div className="pt-4 text-center text-xs text-slate-500 font-bold">{t('copyright')}</div>
       </div>
-    </footer>
+    </div>
   );
 }
 
 // ==================== 6. PAGES ====================
 function Home({ onNavigate, onShowToast }) {
   const { t, language } = useLanguage();
-  const [activeCategory, setActiveCategory] = useState('all');
-  const [sort, setSort] = useState('newest');
-  const { videos, isLoading } = useVideos(activeCategory, sort);
+  const { previewVideos, isLoading } = useTrendingPreview();
 
   const translatedNews = newsData.map(item => translateNewsArticle(item, language));
-
-  const mutualFundNews = translatedNews.filter(n => n.category === 'mutual-funds');
-  const stockNews = translatedNews.filter(n => n.category === 'stocks');
-  const personalFinanceNews = translatedNews.filter(n => n.category === 'personal-finance' || n.category === 'investment');
-
-  const safeVideos = Array.isArray(videos) ? videos : [];
-  const mutualFundVideos = safeVideos.filter(v => v.category === 'mutual-funds');
-  const stockVideos = safeVideos.filter(v => v.category === 'stocks');
-  const sipVideos = safeVideos.filter(v => v.category === 'sip' || v.category === 'personal-finance');
 
   return (
     <div className="space-y-8 pb-16 animate-fadeIn">
       {/* 1. FEATURED NEWS SLIDER (LEFT) + TRENDING ARTICLES (RIGHT) */}
       <HeroSection news={translatedNews} onNavigate={onNavigate} />
 
-      {/* 2. LATEST VIDEOS */}
-      <VideoGrid
-        videos={videos}
-        isLoading={isLoading}
-        activeCategory={activeCategory}
-        onCategoryChange={setActiveCategory}
-        onSortChange={setSort}
-        currentSort={sort}
-        onSelectVideo={(v) => onNavigate(`#/videos/${v.id}`)}
-        onShowToast={onShowToast}
-      />
+      {/* 2. CONTINUOUS BREAKING NEWS TICKER */}
+      <BreakingNewsTicker onNavigate={onNavigate} />
 
-      {/* 3. TRENDING ARTICLES */}
+      {/* 3. CONTINUOUS AUTO-SCROLLING TRENDING SHOWCASE CAROUSEL */}
       <TrendingArticlesSection onNavigate={onNavigate} />
 
-      {/* 4. MUTUAL FUND NEWS */}
-      {mutualFundNews.length > 0 && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-              <h3 className="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white font-serif">
-                {t('mutualFundNewsTitle')}
-              </h3>
-            </div>
-            <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400">
-              MUTUAL FUNDS
-            </span>
+      {/* 4. PUBLIC PREVIEW GRID OF TRENDING VIDEOS (6-8 Items) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-4">
+        <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+          <div className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+            <h3 className="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white font-serif">
+              {t('latestVideos') || 'சமீபத்திய வீடியோக்கள்'}
+            </h3>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-            {mutualFundNews.map(article => (
-              <NewsCard
-                key={article.id}
-                article={article}
-                onSelect={() => onNavigate(`#/news/${article.slug}`)}
-              />
-            ))}
-          </div>
-        </section>
-      )}
+          <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+            PREVIEW SHOWCASE
+          </span>
+        </div>
 
-      {/* 5. STOCK MARKET NEWS */}
-      {stockNews.length > 0 && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-              <h3 className="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white font-serif">
-                {t('stockMarketNewsTitle')}
-              </h3>
-            </div>
-            <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400">
-              STOCKS
-            </span>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-            {stockNews.map(article => (
-              <NewsCard
-                key={article.id}
-                article={article}
-                onSelect={() => onNavigate(`#/news/${article.slug}`)}
-              />
-            ))}
-          </div>
-        </section>
-      )}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 items-stretch">
+          {previewVideos.slice(0, 8).map(video => (
+            <VideoCard
+              key={video.id}
+              video={video}
+              onSelect={() => onNavigate && onNavigate(`#/videos/${video.id}`)}
+            />
+          ))}
+        </div>
+      </section>
 
-      {/* 6. SIP / INVESTMENT NEWS */}
-      {personalFinanceNews.length > 0 && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-              <h3 className="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white font-serif">
-                {t('personalFinanceNewsTitle')}
-              </h3>
-            </div>
-            <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400">
-              INVESTMENTS
-            </span>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-            {personalFinanceNews.map(article => (
-              <NewsCard
-                key={article.id}
-                article={article}
-                onSelect={() => onNavigate(`#/news/${article.slug}`)}
-              />
-            ))}
-          </div>
-        </section>
-      )}
+      {/* 5. SIGN IN / REGISTER CALL TO ACTION BANNER */}
+      <SignInCtaBanner onNavigate={onNavigate} />
 
-      {/* 7. MORE VIDEO SECTIONS */}
-      <VideoSection
-        title={t('mutualFundVideos')}
-        subtitle="Budget Padmanaban Mutual Fund Guides & Reviews"
-        videos={mutualFundVideos.length > 0 ? mutualFundVideos : videos.slice(0, 5)}
-        onSelectVideo={(v) => onNavigate(`#/videos/${v.id}`)}
-        categoryBadge="MUTUAL FUNDS"
-      />
-
-      <VideoSection
-        title={t('stockMarketVideos')}
-        subtitle="Stock Market Analysis & Investment Strategies"
-        videos={stockVideos.length > 0 ? stockVideos : videos.slice(1, 5)}
-        onSelectVideo={(v) => onNavigate(`#/videos/${v.id}`)}
-        categoryBadge="STOCKS"
-      />
-
-      <VideoSection
-        title={t('sipVideos')}
-        subtitle="Financial Education & Wealth Building Tips"
-        videos={sipVideos.length > 0 ? sipVideos : videos.slice(2, 5)}
-        onSelectVideo={(v) => onNavigate(`#/videos/${v.id}`)}
-        categoryBadge="SIP & INVESTMENTS"
-      />
-
-      {/* 8. FINANCIAL CALCULATORS (BOTTOM) */}
+      {/* 6. FINANCIAL CALCULATOR */}
       <SipCalculator />
     </div>
   );
@@ -3038,13 +3175,24 @@ function AuthPage({ initialMode = 'login', onNavigate }) {
   const [success, setSuccess] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  const getPostLoginTarget = () => {
+    try {
+      const saved = sessionStorage.getItem('auth_redirect_from');
+      if (saved && saved !== '#/login' && saved !== '#/signup' && saved !== '#/register' && saved !== '#/forgot-password' && saved !== '#/reset-password') {
+        sessionStorage.removeItem('auth_redirect_from');
+        return saved;
+      }
+    } catch (e) {}
+    return '#/';
+  };
+
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setIsLoading(true);
     try {
       await signInWithPassword(email, password);
-      onNavigate('#/');
+      onNavigate(getPostLoginTarget());
     } catch (err) {
       setError(err.message || (isTamil ? 'உள்நுழைவு தோல்வியடைந்தது.' : 'Login failed. Check credentials.'));
     } finally {
@@ -3078,7 +3226,7 @@ function AuthPage({ initialMode = 'login', onNavigate }) {
     setIsLoading(true);
     try {
       await signInWithGoogle();
-      onNavigate('#/');
+      onNavigate(getPostLoginTarget());
     } catch (err) {
       setError(err.message || 'Google Auth failed');
     } finally {

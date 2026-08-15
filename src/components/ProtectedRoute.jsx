@@ -7,8 +7,20 @@ export function ProtectedRoute({ children, onNavigate }) {
   if (isAuthLoading) return null;
 
   if (!session) {
-    if (typeof window !== 'undefined' && window.location.hash !== '#/login') {
-      window.location.hash = '#/login';
+    if (typeof window !== 'undefined') {
+      const current = window.location.hash || '#/';
+      if (current !== '#/login' && current !== '#/signup' && current !== '#/register') {
+        try {
+          sessionStorage.setItem('auth_redirect_from', current);
+        } catch (e) {}
+      }
+      if (window.location.hash !== '#/login') {
+        if (onNavigate) {
+          onNavigate('#/login');
+        } else {
+          window.location.hash = '#/login';
+        }
+      }
     }
     return null;
   }

@@ -1,6 +1,26 @@
 import { videosData } from '../data/videos.js';
 import { translateVideo } from '../utils/translations.js';
 
+export async function getTrendingPreviewVideos(language = "ta") {
+  try {
+    const res = await fetch('/api/videos/trending-preview?limit=8');
+    if (res.ok) {
+      const json = await res.json();
+      if (json.status === 'success' && Array.isArray(json.data) && json.data.length > 0) {
+        return json.data.map(v => translateVideo({
+          ...v,
+          titleTamil: v.title_ta || v.titleTamil || v.title,
+          titleEnglish: v.title_en || v.titleEnglish || v.title,
+          publishedAt: v.published_at || v.publishedAt
+        }, language));
+      }
+    }
+  } catch (e) {
+    console.warn('Trending preview API fetch failed, fallback to local:', e);
+  }
+  return videosData.slice(0, 8).map(v => translateVideo(v, language));
+}
+
 export async function getVideos(language = "ta", category = "all", sort = "newest") {
   let list = [...videosData];
 

@@ -1,8 +1,19 @@
 import { listVideos } from '../../lib/db.js';
+import { verifyUserRequest } from '../../lib/auth-server.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  // Enforce server-side authentication for full videos library
+  const auth = await verifyUserRequest(req);
+  if (!auth.authorized) {
+    return res.status(auth.status || 401).json({
+      error: 'Authentication required',
+      message: 'You must be signed in to access the full video catalog. Use /api/videos/trending-preview for public homepage preview.',
+      requiresAuth: true
+    });
   }
 
   try {

@@ -1,8 +1,19 @@
 import { getVideoByYoutubeId } from '../../lib/db.js';
+import { verifyUserRequest } from '../../lib/auth-server.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  // Enforce server-side authentication for video detail and insights
+  const auth = await verifyUserRequest(req);
+  if (!auth.authorized) {
+    return res.status(auth.status || 401).json({
+      error: 'Authentication required',
+      message: 'Sign in to access video details, summaries, and full financial analysis.',
+      requiresAuth: true
+    });
   }
 
   const { id } = req.query;
