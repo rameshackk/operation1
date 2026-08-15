@@ -394,10 +394,10 @@ body {
 }
 
 /* ==========================================================================
-   Breaking News Ticker Animation Styles
+   Featured News Ticker (Image + Content) Animation Styles
    ========================================================================== */
 
-@keyframes breakingTickerDrift {
+@keyframes featuredMarqueeDrift {
   0% {
     transform: translateX(0%);
   }
@@ -406,36 +406,43 @@ body {
   }
 }
 
-@keyframes breakingPulse {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.85;
-    transform: scale(0.98);
-  }
-}
-
-.breaking-ticker-wrapper {
+.featured-marquee-wrapper {
   position: relative;
   width: 100%;
   overflow: hidden;
 }
 
-.animate-breaking-ticker {
+.featured-marquee-wrapper::before,
+.featured-marquee-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 3.5rem;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.featured-marquee-wrapper::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(2, 6, 23, 0.95) 0%, transparent 100%);
+}
+
+.featured-marquee-wrapper::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(2, 6, 23, 0.95) 0%, transparent 100%);
+}
+
+.animate-featured-marquee {
   display: flex;
   width: max-content;
   will-change: transform;
-  animation: breakingTickerDrift 28s linear infinite;
+  animation: featuredMarqueeDrift 34s linear infinite;
 }
 
-.breaking-ticker-wrapper:hover .animate-breaking-ticker {
+.featured-marquee-wrapper:hover .animate-featured-marquee {
   animation-play-state: paused;
 }
 
-.breaking-badge-pulse {
-  animation: breakingPulse 2s ease-in-out infinite;
-}
 
 
