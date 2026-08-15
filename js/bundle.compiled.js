@@ -1100,6 +1100,70 @@ function AuthProvider({
   }, children);
 }
 const useAuth = () => useContext(AuthContext);
+function useBookmarks() {
+  const [bookmarks, setBookmarks] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('dv_bookmarks') || '[]');
+    } catch {
+      return [];
+    }
+  });
+  const toggleBookmark = item => {
+    if (!item || !item.id) return;
+    setBookmarks(prev => {
+      const exists = prev.some(b => b.id === item.id);
+      const next = exists ? prev.filter(b => b.id !== item.id) : [item, ...prev];
+      try {
+        localStorage.setItem('dv_bookmarks', JSON.stringify(next));
+      } catch (e) {
+        console.warn('Could not save bookmark:', e);
+      }
+      return next;
+    });
+  };
+  const isSaved = id => bookmarks.some(b => b.id === id);
+  return {
+    bookmarks,
+    toggleBookmark,
+    isSaved
+  };
+}
+function useWatchHistory() {
+  const [history, setHistory] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('dv_watch_history') || '[]');
+    } catch {
+      return [];
+    }
+  });
+  const addToHistory = video => {
+    if (!video || !video.id) return;
+    setHistory(prev => {
+      const filtered = prev.filter(v => v.id !== video.id);
+      const next = [{
+        ...video,
+        viewedAt: new Date().toISOString()
+      }, ...filtered].slice(0, 50);
+      try {
+        localStorage.setItem('dv_watch_history', JSON.stringify(next));
+      } catch (e) {
+        console.warn('Could not save history:', e);
+      }
+      return next;
+    });
+  };
+  const clearHistory = () => {
+    setHistory([]);
+    try {
+      localStorage.removeItem('dv_watch_history');
+    } catch {}
+  };
+  return {
+    history,
+    addToHistory,
+    clearHistory
+  };
+}
 function ProfileMenu({
   onNavigate
 }) {
@@ -1434,32 +1498,6 @@ function useDebounce(value, delay = 250) {
     return () => clearTimeout(handler);
   }, [value, delay]);
   return debouncedValue;
-}
-function useWatchHistory() {
-  const [history, setHistory] = useState(() => {
-    try {
-      const stored = localStorage.getItem('dhanavriksha_watch_history');
-      return stored ? JSON.parse(stored) : [];
-    } catch (e) {
-      return [];
-    }
-  });
-  const addToHistory = video => {
-    if (!video || !video.id) return;
-    setHistory(prev => {
-      const filtered = prev.filter(item => item.id !== video.id);
-      const updated = [{
-        ...video,
-        watchedAt: new Date().toISOString()
-      }, ...filtered].slice(0, 10);
-      localStorage.setItem('dhanavriksha_watch_history', JSON.stringify(updated));
-      return updated;
-    });
-  };
-  return {
-    history,
-    addToHistory
-  };
 }
 
 // ==================== 5. COMPONENTS ====================
