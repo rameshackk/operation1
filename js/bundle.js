@@ -1883,27 +1883,26 @@ function HeroSection({ news = newsData, onNavigate }) {
   const { t, language } = useLanguage();
 
   const featuredStories = news && news.length > 0 ? news : newsData;
-  const trendingStories = newsData.slice(0, 5);
 
   const getHeadline = (item) => {
     return language === 'ta' ? item.titleTamil : (item.titleEnglish || item.titleTamil);
   };
 
   const renderFeaturedTrack = (keyPrefix) => (
-    <div key={keyPrefix} className="flex items-stretch gap-0 shrink-0 h-full">
+    <div key={keyPrefix} className="flex items-stretch gap-4 shrink-0 h-full">
       {featuredStories.map((item, idx) => (
         <div
           key={`${keyPrefix}-${item.id}-${idx}`}
           onClick={() => onNavigate && onNavigate(`#/news/${item.slug}`)}
-          className="group relative flex-shrink-0 w-[240px] sm:w-[280px] h-full cursor-pointer overflow-hidden"
+          className="group relative flex-shrink-0 w-[280px] sm:w-[320px] md:w-[360px] h-[220px] sm:h-[250px] rounded-3xl cursor-pointer overflow-hidden border border-slate-200 dark:border-slate-800 shadow-lg select-none"
         >
           <img
             src={item.thumbnail}
             alt={getHeadline(item)}
             className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent" />
-          <div className="absolute bottom-0 left-0 right-0 p-3 space-y-1.5 z-10">
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5 space-y-1.5 z-10">
             <div className="flex items-center gap-2">
               <span className="px-2.5 py-0.5 text-[9px] font-black uppercase tracking-wider rounded-full bg-amber-500 text-slate-950 shadow">
                 {(item.category || 'finance').replace('-', ' ')}
@@ -1919,7 +1918,6 @@ function HeroSection({ news = newsData, onNavigate }) {
               <p className="text-[11px] text-amber-300/80 font-medium line-clamp-1">{item.titleEnglish}</p>
             )}
           </div>
-          <div className="absolute top-0 right-0 w-px h-full bg-slate-800/60" />
         </div>
       ))}
     </div>
@@ -1940,71 +1938,11 @@ function HeroSection({ news = newsData, onNavigate }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
-        {/* LEFT: CONTINUOUS MARQUEE FEATURED NEWS */}
-        <div className="lg:col-span-7 relative rounded-3xl overflow-hidden bg-slate-950 lg:h-[260px] border border-slate-200 dark:border-slate-800 shadow-xl select-none group/marquee">
-          <div className="absolute top-4 left-4 z-20 flex items-center gap-2 bg-red-600 text-white font-black px-3 py-1.5 rounded-xl text-[10px] tracking-wider uppercase shadow-lg">
-            <span className="w-2 h-2 rounded-full bg-white animate-ping" />
-            <span>{t('tickerLabel') || 'முக்கிய செய்திகள்'}</span>
-          </div>
-
-          <div className="h-full overflow-hidden flex items-stretch">
-            <div className="animate-featured-marquee flex items-stretch whitespace-nowrap h-full">
-              {renderFeaturedTrack('ftrack-1')}
-              {renderFeaturedTrack('ftrack-2')}
-            </div>
-          </div>
-        </div>
-
-        {/* RIGHT: TRENDING ARTICLES */}
-        <div className="lg:col-span-5 flex flex-col justify-between bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-5 shadow-xl">
-          <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3 mb-2">
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-              <h3 className="text-sm font-black uppercase tracking-wider text-slate-900 dark:text-white font-serif">
-                {t('trendingArticlesTitle') || 'டிரெண்டிங் செய்திகள்'}
-              </h3>
-            </div>
-            <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full">
-              🔥 Trending
-            </span>
-          </div>
-          <div className="space-y-3 flex-1 flex flex-col justify-around">
-            {trendingStories.slice(0, 2).map((article, idx) => {
-              const rankStr = article.rank || `0${idx + 1}`;
-              const title = getHeadline(article);
-              return (
-                <div
-                  key={article.id}
-                  onClick={() => onNavigate && onNavigate(`#/news/${article.slug}`)}
-                  className="group flex items-start gap-3 p-2 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-all cursor-pointer border border-transparent hover:border-slate-200 dark:hover:border-slate-700/50"
-                >
-                  <span className="text-xl font-black text-amber-600 dark:text-amber-400 font-serif w-7 shrink-0 text-center leading-none mt-1">
-                    {rankStr}
-                  </span>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-[9px] font-black uppercase text-amber-600 dark:text-amber-400 tracking-wider">
-                        {article.category.replace('-', ' ')}
-                      </span>
-                      <span className="text-[9px] text-slate-400 font-mono">
-                        • {new Date(article.publishedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                      </span>
-                    </div>
-                    <h4 className="text-xs font-bold text-slate-900 dark:text-white line-clamp-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors font-serif leading-snug">
-                      {title}
-                    </h4>
-                  </div>
-                  {article.thumbnail && (
-                    <img
-                      src={article.thumbnail}
-                      alt=""
-                      className="w-12 h-12 rounded-xl object-cover shrink-0 border border-slate-200 dark:border-slate-700"
-                    />
-                  )}
-                </div>
-              );
-            })}
+      <div className="relative rounded-3xl overflow-hidden bg-slate-950 p-3 sm:p-4 border border-slate-200 dark:border-slate-800 shadow-xl select-none group/marquee">
+        <div className="overflow-hidden flex items-stretch">
+          <div className="animate-featured-marquee flex items-stretch gap-4 whitespace-nowrap">
+            {renderFeaturedTrack('ftrack-1')}
+            {renderFeaturedTrack('ftrack-2')}
           </div>
         </div>
       </div>
