@@ -2826,8 +2826,111 @@ function SignInCtaBanner({
     className: "flex-1 md:flex-none px-6 py-3 rounded-2xl bg-slate-800/90 hover:bg-slate-700 text-white font-extrabold text-xs sm:text-sm border border-slate-700 hover:border-amber-500/40 transition-all text-center"
   }, isTamil ? 'இலவச பதிவு' : 'Register Free')))));
 }
+function Toast({
+  message,
+  onClose
+}) {
+  useEffect(() => {
+    if (!message) return;
+    const timer = setTimeout(() => {
+      onClose();
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [message, onClose]);
+  if (!message) return null;
+  return /*#__PURE__*/React.createElement("div", {
+    className: "fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-2xl bg-slate-900 text-white text-xs font-bold shadow-2xl border border-amber-500/40 flex items-center gap-2 animate-bounce"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "text-amber-400"
+  }, "\u2713"), /*#__PURE__*/React.createElement("span", null, message));
+}
+function Footer({
+  onNavigate,
+  onShowToast
+}) {
+  const {
+    t
+  } = useLanguage();
+  const [email, setEmail] = useState('');
+  const handleSubscribe = e => {
+    e.preventDefault();
+    if (!email || !email.includes('@')) return;
+    if (onShowToast) onShowToast(t('subscribedToast') || 'Subscribed successfully!');
+    setEmail('');
+  };
+  return /*#__PURE__*/React.createElement("footer", {
+    className: "bg-slate-950 text-slate-300 border-t border-slate-800 pt-12 pb-8"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 pb-12 border-b border-slate-800"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "lg:col-span-6 space-y-4"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center gap-3"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "w-9 h-9 rounded-xl bg-amber-500 text-slate-950 font-bold flex items-center justify-center text-lg shadow-lg"
+  }, "\u0BA4\u0BA9"), /*#__PURE__*/React.createElement("span", {
+    className: "text-xl font-extrabold text-white font-serif"
+  }, t('siteName'))), /*#__PURE__*/React.createElement("p", {
+    className: "text-xs text-slate-400 max-w-md leading-relaxed"
+  }, t('newsLetterDesc')), /*#__PURE__*/React.createElement("form", {
+    onSubmit: handleSubscribe,
+    className: "flex gap-2 max-w-md"
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "email",
+    value: email,
+    onChange: e => setEmail(e.target.value),
+    placeholder: "your.email@example.com",
+    required: true,
+    className: "flex-1 bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
+  }), /*#__PURE__*/React.createElement("button", {
+    type: "submit",
+    className: "px-4 py-2 rounded-xl bg-amber-600 text-white font-bold text-xs hover:bg-amber-500 transition-colors shadow-md shrink-0"
+  }, t('subscribe')))), /*#__PURE__*/React.createElement("div", {
+    className: "lg:col-span-3 space-y-3"
+  }, /*#__PURE__*/React.createElement("h4", {
+    className: "text-xs font-extrabold uppercase tracking-wider text-amber-400"
+  }, t('nav.mutualFunds'), " & ", t('nav.stocks')), /*#__PURE__*/React.createElement("ul", {
+    className: "space-y-2 text-xs font-medium text-slate-400"
+  }, /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("button", {
+    onClick: () => onNavigate && onNavigate('#/category/mutual-funds'),
+    className: "hover:text-white transition-colors"
+  }, t('nav.mutualFunds'))), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("button", {
+    onClick: () => onNavigate && onNavigate('#/category/stocks'),
+    className: "hover:text-white transition-colors"
+  }, t('nav.stocks'))), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("button", {
+    onClick: () => onNavigate && onNavigate('#/category/personal-finance'),
+    className: "hover:text-white transition-colors"
+  }, t('nav.personalFinance'))), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("button", {
+    onClick: () => onNavigate && onNavigate('#/category/education'),
+    className: "hover:text-white transition-colors"
+  }, t('nav.education'))))), /*#__PURE__*/React.createElement("div", {
+    className: "lg:col-span-3 space-y-3"
+  }, /*#__PURE__*/React.createElement("h4", {
+    className: "text-xs font-extrabold uppercase tracking-wider text-amber-400"
+  }, "Financial Utilities"), /*#__PURE__*/React.createElement("ul", {
+    className: "space-y-2 text-xs font-medium text-slate-400"
+  }, /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("button", {
+    onClick: () => onNavigate && onNavigate('#/calculator'),
+    className: "hover:text-white transition-colors"
+  }, t('sipCalculatorTitle'))), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("button", {
+    onClick: () => onNavigate && onNavigate('#/videos'),
+    className: "hover:text-white transition-colors"
+  }, "YouTube Video Feed")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("button", {
+    onClick: () => onNavigate && onNavigate('#/news'),
+    className: "hover:text-white transition-colors"
+  }, "Financial News Hub"))))), /*#__PURE__*/React.createElement("div", {
+    className: "space-y-2 text-[11px] text-slate-500 leading-relaxed max-w-5xl"
+  }, /*#__PURE__*/React.createElement("h5", {
+    className: "font-bold text-slate-400 uppercase tracking-wider text-[10px]"
+  }, t('footerDisclaimerTitle')), /*#__PURE__*/React.createElement("p", null, t('footerDisclaimerText'))), /*#__PURE__*/React.createElement("div", {
+    className: "pt-4 text-center text-xs text-slate-600 font-medium"
+  }, t('copyright'))));
+}
 
 // ==================== 6. PAGES ====================
+const BreakingNewsTicker = TrendingTicker;
 function Home({
   onNavigate,
   onShowToast
@@ -2845,8 +2948,6 @@ function Home({
     className: "space-y-8 pb-16 animate-fadeIn"
   }, /*#__PURE__*/React.createElement(HeroSection, {
     news: translatedNews,
-    onNavigate: onNavigate
-  }), /*#__PURE__*/React.createElement(BreakingNewsTicker, {
     onNavigate: onNavigate
   }), /*#__PURE__*/React.createElement(TrendingArticlesSection, {
     onNavigate: onNavigate

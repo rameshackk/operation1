@@ -2867,7 +2867,122 @@ function SignInCtaBanner({ onNavigate }) {
   );
 }
 
+function Toast({ message, onClose }) {
+  useEffect(() => {
+    if (!message) return;
+    const timer = setTimeout(() => {
+      onClose();
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [message, onClose]);
+
+  if (!message) return null;
+
+  return (
+    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-2xl bg-slate-900 text-white text-xs font-bold shadow-2xl border border-amber-500/40 flex items-center gap-2 animate-bounce">
+      <span className="text-amber-400">✓</span>
+      <span>{message}</span>
+    </div>
+  );
+}
+
+function Footer({ onNavigate, onShowToast }) {
+  const { t } = useLanguage();
+  const [email, setEmail] = useState('');
+
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+    if (!email || !email.includes('@')) return;
+    if (onShowToast) onShowToast(t('subscribedToast') || 'Subscribed successfully!');
+    setEmail('');
+  };
+
+  return (
+    <footer className="bg-slate-950 text-slate-300 border-t border-slate-800 pt-12 pb-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        {/* Top Grid: Newsletter + Quick Links */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 pb-12 border-b border-slate-800">
+          {/* Brand & Newsletter */}
+          <div className="lg:col-span-6 space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-amber-500 text-slate-950 font-bold flex items-center justify-center text-lg shadow-lg">
+                தன
+              </div>
+              <span className="text-xl font-extrabold text-white font-serif">
+                {t('siteName')}
+              </span>
+            </div>
+            
+            <p className="text-xs text-slate-400 max-w-md leading-relaxed">
+              {t('newsLetterDesc')}
+            </p>
+
+            <form onSubmit={handleSubscribe} className="flex gap-2 max-w-md">
+              <input
+                type="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                placeholder="your.email@example.com"
+                required
+                className="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
+              />
+              <button
+                type="submit"
+                className="px-4 py-2 rounded-xl bg-amber-600 text-white font-bold text-xs hover:bg-amber-500 transition-colors shadow-md shrink-0"
+              >
+                {t('subscribe')}
+              </button>
+            </form>
+          </div>
+
+          {/* Sitemap Links */}
+          <div className="lg:col-span-3 space-y-3">
+            <h4 className="text-xs font-extrabold uppercase tracking-wider text-amber-400">
+              {t('nav.mutualFunds')} & {t('nav.stocks')}
+            </h4>
+            <ul className="space-y-2 text-xs font-medium text-slate-400">
+              <li><button onClick={() => onNavigate && onNavigate('#/category/mutual-funds')} className="hover:text-white transition-colors">{t('nav.mutualFunds')}</button></li>
+              <li><button onClick={() => onNavigate && onNavigate('#/category/stocks')} className="hover:text-white transition-colors">{t('nav.stocks')}</button></li>
+              <li><button onClick={() => onNavigate && onNavigate('#/category/personal-finance')} className="hover:text-white transition-colors">{t('nav.personalFinance')}</button></li>
+              <li><button onClick={() => onNavigate && onNavigate('#/category/education')} className="hover:text-white transition-colors">{t('nav.education')}</button></li>
+            </ul>
+          </div>
+
+          {/* Financial Tools */}
+          <div className="lg:col-span-3 space-y-3">
+            <h4 className="text-xs font-extrabold uppercase tracking-wider text-amber-400">
+              Financial Utilities
+            </h4>
+            <ul className="space-y-2 text-xs font-medium text-slate-400">
+              <li><button onClick={() => onNavigate && onNavigate('#/calculator')} className="hover:text-white transition-colors">{t('sipCalculatorTitle')}</button></li>
+              <li><button onClick={() => onNavigate && onNavigate('#/videos')} className="hover:text-white transition-colors">YouTube Video Feed</button></li>
+              <li><button onClick={() => onNavigate && onNavigate('#/news')} className="hover:text-white transition-colors">Financial News Hub</button></li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Regulatory Disclaimer */}
+        <div className="space-y-2 text-[11px] text-slate-500 leading-relaxed max-w-5xl">
+          <h5 className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">
+            {t('footerDisclaimerTitle')}
+          </h5>
+          <p>
+            {t('footerDisclaimerText')}
+          </p>
+        </div>
+
+        {/* Copyright */}
+        <div className="pt-4 text-center text-xs text-slate-600 font-medium">
+          {t('copyright')}
+        </div>
+      </div>
+    </footer>
+  );
+}
+
 // ==================== 6. PAGES ====================
+const BreakingNewsTicker = TrendingTicker;
+
 function Home({ onNavigate, onShowToast }) {
   const { t, language } = useLanguage();
   const { previewVideos, isLoading } = useTrendingPreview();
@@ -2876,16 +2991,13 @@ function Home({ onNavigate, onShowToast }) {
 
   return (
     <div className="space-y-8 pb-16 animate-fadeIn">
-      {/* 1. FEATURED NEWS SLIDER (LEFT) + TRENDING ARTICLES (RIGHT) */}
+      {/* 1. FEATURED NEWS SLIDER SPOTLIGHT */}
       <HeroSection news={translatedNews} onNavigate={onNavigate} />
 
-      {/* 2. CONTINUOUS BREAKING NEWS TICKER */}
-      <BreakingNewsTicker onNavigate={onNavigate} />
-
-      {/* 3. CONTINUOUS AUTO-SCROLLING TRENDING SHOWCASE CAROUSEL */}
+      {/* 2. CONTINUOUS AUTO-SCROLLING TRENDING SHOWCASE CAROUSEL */}
       <TrendingArticlesSection onNavigate={onNavigate} />
 
-      {/* 4. PUBLIC PREVIEW GRID OF TRENDING VIDEOS (6-8 Items) */}
+      {/* 3. PUBLIC PREVIEW GRID OF TRENDING VIDEOS (6-8 Items) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-4">
         <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
           <div className="flex items-center gap-2">
@@ -2910,10 +3022,10 @@ function Home({ onNavigate, onShowToast }) {
         </div>
       </section>
 
-      {/* 5. SIGN IN / REGISTER CALL TO ACTION BANNER */}
+      {/* 4. SIGN IN / REGISTER CALL TO ACTION BANNER */}
       <SignInCtaBanner onNavigate={onNavigate} />
 
-      {/* 6. FINANCIAL CALCULATOR */}
+      {/* 5. FINANCIAL CALCULATOR */}
       <SipCalculator />
     </div>
   );
