@@ -3679,7 +3679,8 @@ function AdminConsolePage({
   }, syncStatus)));
 }
 
-// ==================== 7. ROOT APP ====================
+// ==================== 8. ROOT APP ====================
+
 function App() {
   const [currentHash, setCurrentHash] = useState(() => window.location.hash || '#/');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -3701,12 +3702,20 @@ function App() {
     setCurrentHash(hash);
   };
   const renderRoute = () => {
-    // Un-gated public auth pages
+    // 1. PUBLIC LANDING PAGE (Fully visible without login)
+    if (currentHash === '#/' || currentHash === '' || currentHash === '#') {
+      return /*#__PURE__*/React.createElement(Home, {
+        onNavigate: navigate,
+        onShowToast: setToastMessage
+      });
+    }
+
+    // 2. PUBLIC AUTHENTICATION ROUTES
     if (currentHash === '#/login') return /*#__PURE__*/React.createElement(AuthPage, {
       initialMode: "login",
       onNavigate: navigate
     });
-    if (currentHash === '#/signup') return /*#__PURE__*/React.createElement(AuthPage, {
+    if (currentHash === '#/signup' || currentHash === '#/register') return /*#__PURE__*/React.createElement(AuthPage, {
       initialMode: "signup",
       onNavigate: navigate
     });
@@ -3719,7 +3728,7 @@ function App() {
       onNavigate: navigate
     });
 
-    // Protected user & admin pages
+    // 3. PROTECTED ROUTES (Requires authentication when user explores more)
     if (currentHash === '#/profile') {
       return /*#__PURE__*/React.createElement(ProtectedRoute, {
         onNavigate: navigate
@@ -3728,7 +3737,7 @@ function App() {
         onShowToast: setToastMessage
       }));
     }
-    if (currentHash === '#/history') {
+    if (currentHash === '#/history' || currentHash === '#/watch-history') {
       return /*#__PURE__*/React.createElement(ProtectedRoute, {
         onNavigate: navigate
       }, /*#__PURE__*/React.createElement(WatchHistoryPage, {
@@ -3737,7 +3746,9 @@ function App() {
       }));
     }
     if (currentHash === '#/admin') {
-      return /*#__PURE__*/React.createElement(AdminRoute, null, /*#__PURE__*/React.createElement(AdminConsolePage, {
+      return /*#__PURE__*/React.createElement(AdminRoute, {
+        onNavigate: navigate
+      }, /*#__PURE__*/React.createElement(AdminConsolePage, {
         onNavigate: navigate,
         onShowToast: setToastMessage
       }));
@@ -3801,13 +3812,11 @@ function App() {
       }, /*#__PURE__*/React.createElement(RiskQuizWidget, null)));
     }
 
-    // Default Home route (protected)
-    return /*#__PURE__*/React.createElement(ProtectedRoute, {
-      onNavigate: navigate
-    }, /*#__PURE__*/React.createElement(Home, {
+    // Default Fallback: Public Landing Page
+    return /*#__PURE__*/React.createElement(Home, {
       onNavigate: navigate,
       onShowToast: setToastMessage
-    }));
+    });
   };
   return /*#__PURE__*/React.createElement(ThemeProvider, null, /*#__PURE__*/React.createElement(LanguageProvider, null, /*#__PURE__*/React.createElement(AuthProvider, null, /*#__PURE__*/React.createElement("div", {
     className: "min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans"

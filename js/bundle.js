@@ -3595,7 +3595,8 @@ function AdminConsolePage({ onNavigate, onShowToast }) {
   );
 }
 
-// ==================== 7. ROOT APP ====================
+// ==================== 8. ROOT APP ====================
+
 function App() {
   const [currentHash, setCurrentHash] = useState(() => window.location.hash || '#/');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -3620,13 +3621,18 @@ function App() {
   };
 
   const renderRoute = () => {
-    // Un-gated public auth pages
+    // 1. PUBLIC LANDING PAGE (Fully visible without login)
+    if (currentHash === '#/' || currentHash === '' || currentHash === '#') {
+      return <Home onNavigate={navigate} onShowToast={setToastMessage} />;
+    }
+
+    // 2. PUBLIC AUTHENTICATION ROUTES
     if (currentHash === '#/login') return <AuthPage initialMode="login" onNavigate={navigate} />;
-    if (currentHash === '#/signup') return <AuthPage initialMode="signup" onNavigate={navigate} />;
+    if (currentHash === '#/signup' || currentHash === '#/register') return <AuthPage initialMode="signup" onNavigate={navigate} />;
     if (currentHash === '#/forgot-password') return <AuthPage initialMode="forgot" onNavigate={navigate} />;
     if (currentHash === '#/reset-password') return <AuthPage initialMode="magic-link" onNavigate={navigate} />;
 
-    // Protected user & admin pages
+    // 3. PROTECTED ROUTES (Requires authentication when user explores more)
     if (currentHash === '#/profile') {
       return (
         <ProtectedRoute onNavigate={navigate}>
@@ -3635,7 +3641,7 @@ function App() {
       );
     }
 
-    if (currentHash === '#/history') {
+    if (currentHash === '#/history' || currentHash === '#/watch-history') {
       return (
         <ProtectedRoute onNavigate={navigate}>
           <WatchHistoryPage onNavigate={navigate} onShowToast={setToastMessage} />
@@ -3645,7 +3651,7 @@ function App() {
 
     if (currentHash === '#/admin') {
       return (
-        <AdminRoute>
+        <AdminRoute onNavigate={navigate}>
           <AdminConsolePage onNavigate={navigate} onShowToast={setToastMessage} />
         </AdminRoute>
       );
@@ -3710,12 +3716,8 @@ function App() {
       );
     }
 
-    // Default Home route (protected)
-    return (
-      <ProtectedRoute onNavigate={navigate}>
-        <Home onNavigate={navigate} onShowToast={setToastMessage} />
-      </ProtectedRoute>
-    );
+    // Default Fallback: Public Landing Page
+    return <Home onNavigate={navigate} onShowToast={setToastMessage} />;
   };
 
   return (
