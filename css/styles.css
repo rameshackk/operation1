@@ -452,6 +452,44 @@ body {
   animation-play-state: paused;
 }
 
+/* ==========================================================================
+   YouTube Feed & Smart Search UI Utilities
+   ========================================================================== */
 
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 
+.yt-chip-active {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.35);
+}
 
+.yt-card-thumb:hover .yt-play-overlay {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.yt-play-overlay {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(217, 119, 6, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(217, 119, 6, 0);
+  }
+}
+
+.avatar-pulse {
+  animation: pulseGlow 3s infinite;
+}
