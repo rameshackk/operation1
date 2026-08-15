@@ -34,16 +34,10 @@ export function Home({ onNavigate }) {
 
   return (
     <div className="space-y-8 pb-16 animate-fadeIn">
-      {/* 1. FEATURED NEWS SLIDER (LEFT 7 COLS) + TRENDING ARTICLES (RIGHT 5 COLS) */}
+      {/* 1. FEATURED NEWS TICKER ON LEFT + LATEST ARTICLES ON RIGHT */}
       <HeroSection news={translatedNews} onNavigate={onNavigate} />
 
-      {/* 2. CONTINUOUS BREAKING NEWS TICKER */}
-      <BreakingNewsTicker onNavigate={onNavigate} />
-
-      {/* 3. CONTINUOUSLY AUTO-SCROLLING TRENDING SHOWCASE CAROUSEL */}
-      <TrendingArticlesSection onNavigate={onNavigate} />
-
-      {/* 4. PUBLIC PREVIEW GRID OF TRENDING VIDEOS (6-8 ITEMS) */}
+      {/* 2. PUBLIC PREVIEW GRID OF LATEST VIDEOS (BEFORE TRENDING ARTICLES) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-4">
         <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
           <div className="flex items-center gap-2">
@@ -68,10 +62,13 @@ export function Home({ onNavigate }) {
         </div>
       </section>
 
-      {/* 5. CALL TO ACTION FOR PUBLIC VISITORS */}
+      {/* 3. TRENDING ARTICLES SECTION */}
+      <TrendingArticlesSection onNavigate={onNavigate} />
+
+      {/* 4. SIGN IN / REGISTER CALL TO ACTION BANNER */}
       <SignInCtaBanner onNavigate={onNavigate} />
 
-      {/* 6. FINANCIAL CALCULATOR */}
+      {/* 5. FINANCIAL CALCULATOR */}
       <SipCalculator />
     </div>
   );

@@ -1973,7 +1973,7 @@ function HeroSection({
   };
   const renderFeaturedTrack = keyPrefix => /*#__PURE__*/React.createElement("div", {
     key: keyPrefix,
-    className: "flex items-stretch gap-0 shrink-0"
+    className: "flex items-stretch gap-0 shrink-0 h-full"
   }, featuredStories.map((item, idx) => {
     const headline = getHeadline(item);
     const summary = getSummary(item);
@@ -1984,52 +1984,52 @@ function HeroSection({
     return /*#__PURE__*/React.createElement("article", {
       key: `${keyPrefix}-${item.id}-${idx}`,
       onClick: () => onNavigate && onNavigate(`#/news/${item.slug}`),
-      className: "group relative w-[220px] sm:w-[250px] md:w-[270px] shrink-0 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-850 transition-all cursor-pointer overflow-hidden flex flex-col justify-between select-none"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "relative aspect-[16/10] w-full overflow-hidden bg-slate-950"
+      className: "group relative w-[250px] sm:w-[280px] md:w-[310px] h-[300px] sm:h-[330px] shrink-0 border-r border-white/10 overflow-hidden flex flex-col justify-end p-4 sm:p-5 select-none cursor-pointer bg-slate-950"
     }, /*#__PURE__*/React.createElement("img", {
       src: item.thumbnail,
       alt: headline,
       loading: "lazy",
-      className: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90"
+      className: "absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80"
     }), /*#__PURE__*/React.createElement("div", {
-      className: "absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent"
-    }), /*#__PURE__*/React.createElement("span", {
-      className: "absolute top-2.5 left-2.5 px-2 py-0.5 text-[8px] sm:text-[9px] font-black uppercase tracking-wider rounded bg-amber-500 text-slate-950 shadow-sm"
+      className: "absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/65 to-transparent pointer-events-none"
+    }), /*#__PURE__*/React.createElement("div", {
+      className: "absolute top-3 left-3 right-3 flex items-center justify-between z-10"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "px-2.5 py-0.5 text-[9px] font-black uppercase tracking-wider rounded-md bg-amber-500 text-slate-950 shadow-md"
     }, (item.category || 'FINANCE').replace('-', ' ')), /*#__PURE__*/React.createElement("span", {
-      className: "absolute bottom-2 right-2 px-1.5 py-0.5 rounded bg-slate-950/85 text-slate-200 text-[9px] font-mono font-bold backdrop-blur-sm border border-white/10"
-    }, formattedDate)), /*#__PURE__*/React.createElement("div", {
-      className: "p-3 sm:p-3.5 flex-1 flex flex-col justify-between gap-2"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "space-y-1"
+      className: "px-2 py-0.5 rounded-md bg-slate-950/85 text-slate-200 text-[9px] font-mono font-bold backdrop-blur-sm border border-white/15"
+    }, "\uD83D\uDCC5 ", formattedDate)), /*#__PURE__*/React.createElement("div", {
+      className: "relative z-10 space-y-2"
     }, /*#__PURE__*/React.createElement("h3", {
-      className: "text-xs sm:text-sm font-bold text-slate-900 dark:text-white line-clamp-2 font-serif group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors leading-snug"
+      className: "text-sm sm:text-base font-black text-white leading-snug font-serif group-hover:text-amber-400 transition-colors drop-shadow-md line-clamp-2"
     }, headline), summary && /*#__PURE__*/React.createElement("p", {
-      className: "text-[11px] text-slate-500 dark:text-slate-400 line-clamp-1 font-sans leading-relaxed"
-    }, summary)), /*#__PURE__*/React.createElement("div", {
-      className: "flex items-center justify-between text-[11px] text-amber-600 dark:text-amber-400 font-bold border-t border-slate-100 dark:border-slate-800/80 pt-2"
-    }, /*#__PURE__*/React.createElement("span", null, t('readArticle') || 'Read'), /*#__PURE__*/React.createElement("span", {
-      className: "group-hover:translate-x-1 transition-transform"
-    }, "\u2192"))));
+      className: "text-xs text-slate-300/95 line-clamp-2 font-sans leading-relaxed drop-shadow"
+    }, summary), /*#__PURE__*/React.createElement("div", {
+      className: "pt-1 flex items-center justify-between text-xs text-amber-400 font-extrabold"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "flex items-center gap-1"
+    }, /*#__PURE__*/React.createElement("span", null, t('readArticle') || 'Read Article'), /*#__PURE__*/React.createElement("span", {
+      className: "group-hover:translate-x-1.5 transition-transform"
+    }, "\u2192")))));
   }));
   return /*#__PURE__*/React.createElement("section", {
     className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-4"
   }, /*#__PURE__*/React.createElement("div", {
     className: "grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "lg:col-span-7 flex flex-col justify-between bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden p-4 sm:p-5"
+    className: "lg:col-span-7 flex flex-col justify-between bg-slate-950 rounded-3xl border border-slate-800 shadow-2xl overflow-hidden p-4 sm:p-5 text-white"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3 mb-3"
+    className: "flex items-center justify-between border-b border-slate-800 pb-3 mb-3"
   }, /*#__PURE__*/React.createElement("div", {
     className: "flex items-center gap-2"
   }, /*#__PURE__*/React.createElement("span", {
     className: "w-2.5 h-2.5 rounded-full bg-red-600 animate-ping"
   }), /*#__PURE__*/React.createElement("h2", {
-    className: "text-xs sm:text-sm font-black tracking-wider uppercase text-slate-900 dark:text-white font-serif flex items-center gap-1.5"
+    className: "text-xs sm:text-sm font-black tracking-wider uppercase text-white font-serif flex items-center gap-1.5"
   }, /*#__PURE__*/React.createElement("span", null, t('featuredNews') || 'சிறப்புச் செய்திகள்'))), /*#__PURE__*/React.createElement("span", {
-    className: "text-[10px] font-mono text-slate-400 dark:text-slate-500 font-semibold"
+    className: "text-[10px] font-mono text-amber-400/90 font-bold bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20"
   }, "\u26A1 LIVE NEWS TICKER")), /*#__PURE__*/React.createElement("div", {
-    className: "featured-marquee-wrapper overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 my-auto"
+    className: "featured-marquee-wrapper overflow-hidden rounded-2xl border border-slate-800 bg-slate-950 my-auto"
   }, /*#__PURE__*/React.createElement("div", {
     className: "animate-featured-marquee flex items-stretch gap-0 whitespace-normal"
   }, renderFeaturedTrack('ftrack-1'), renderFeaturedTrack('ftrack-2')))), /*#__PURE__*/React.createElement("div", {
@@ -2891,8 +2891,6 @@ function Home({
   }, /*#__PURE__*/React.createElement(HeroSection, {
     news: translatedNews,
     onNavigate: onNavigate
-  }), /*#__PURE__*/React.createElement(TrendingArticlesSection, {
-    onNavigate: onNavigate
   }), /*#__PURE__*/React.createElement("section", {
     className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-4"
   }, /*#__PURE__*/React.createElement("div", {
@@ -2911,7 +2909,9 @@ function Home({
     key: video.id,
     video: video,
     onSelect: () => onNavigate && onNavigate(`#/videos/${video.id}`)
-  })))), /*#__PURE__*/React.createElement(SignInCtaBanner, {
+  })))), /*#__PURE__*/React.createElement(TrendingArticlesSection, {
+    onNavigate: onNavigate
+  }), /*#__PURE__*/React.createElement(SignInCtaBanner, {
     onNavigate: onNavigate
   }), /*#__PURE__*/React.createElement(SipCalculator, null));
 }

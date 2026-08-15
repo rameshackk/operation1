@@ -1895,7 +1895,7 @@ function HeroSection({ news = newsData, onNavigate }) {
   };
 
   const renderFeaturedTrack = (keyPrefix) => (
-    <div key={keyPrefix} className="flex items-stretch gap-0 shrink-0">
+    <div key={keyPrefix} className="flex items-stretch gap-0 shrink-0 h-full">
       {featuredStories.map((item, idx) => {
         const headline = getHeadline(item);
         const summary = getSummary(item);
@@ -1908,46 +1908,45 @@ function HeroSection({ news = newsData, onNavigate }) {
           <article
             key={`${keyPrefix}-${item.id}-${idx}`}
             onClick={() => onNavigate && onNavigate(`#/news/${item.slug}`)}
-            className="group relative w-[220px] sm:w-[250px] md:w-[270px] shrink-0 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-850 transition-all cursor-pointer overflow-hidden flex flex-col justify-between select-none"
+            className="group relative w-[250px] sm:w-[280px] md:w-[310px] h-[300px] sm:h-[330px] shrink-0 border-r border-white/10 overflow-hidden flex flex-col justify-end p-4 sm:p-5 select-none cursor-pointer bg-slate-950"
           >
-            {/* Image / Thumbnail Container */}
-            <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950">
-              <img
-                src={item.thumbnail}
-                alt={headline}
-                loading="lazy"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
+            {/* 1. Full-size background image filling the entire card */}
+            <img
+              src={item.thumbnail}
+              alt={headline}
+              loading="lazy"
+              className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80"
+            />
+            {/* 2. Full-size gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/65 to-transparent pointer-events-none" />
 
-              {/* Category Badge */}
-              <span className="absolute top-2.5 left-2.5 px-2 py-0.5 text-[8px] sm:text-[9px] font-black uppercase tracking-wider rounded bg-amber-500 text-slate-950 shadow-sm">
+            {/* 3. Top Badges overlaid directly on image */}
+            <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10">
+              <span className="px-2.5 py-0.5 text-[9px] font-black uppercase tracking-wider rounded-md bg-amber-500 text-slate-950 shadow-md">
                 {(item.category || 'FINANCE').replace('-', ' ')}
               </span>
-
-              {/* Date Badge */}
-              <span className="absolute bottom-2 right-2 px-1.5 py-0.5 rounded bg-slate-950/85 text-slate-200 text-[9px] font-mono font-bold backdrop-blur-sm border border-white/10">
-                {formattedDate}
+              <span className="px-2 py-0.5 rounded-md bg-slate-950/85 text-slate-200 text-[9px] font-mono font-bold backdrop-blur-sm border border-white/15">
+                📅 {formattedDate}
               </span>
             </div>
 
-            {/* Content / Text Description */}
-            <div className="p-3 sm:p-3.5 flex-1 flex flex-col justify-between gap-2">
-              <div className="space-y-1">
-                <h3 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white line-clamp-2 font-serif group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors leading-snug">
-                  {headline}
-                </h3>
-                {summary && (
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-1 font-sans leading-relaxed">
-                    {summary}
-                  </p>
-                )}
-              </div>
+            {/* 4. Text Content Overwritten directly onto the same image */}
+            <div className="relative z-10 space-y-2">
+              <h3 className="text-sm sm:text-base font-black text-white leading-snug font-serif group-hover:text-amber-400 transition-colors drop-shadow-md line-clamp-2">
+                {headline}
+              </h3>
 
-              {/* Footer CTA Line */}
-              <div className="flex items-center justify-between text-[11px] text-amber-600 dark:text-amber-400 font-bold border-t border-slate-100 dark:border-slate-800/80 pt-2">
-                <span>{t('readArticle') || 'Read'}</span>
-                <span className="group-hover:translate-x-1 transition-transform">→</span>
+              {summary && (
+                <p className="text-xs text-slate-300/95 line-clamp-2 font-sans leading-relaxed drop-shadow">
+                  {summary}
+                </p>
+              )}
+
+              <div className="pt-1 flex items-center justify-between text-xs text-amber-400 font-extrabold">
+                <span className="flex items-center gap-1">
+                  <span>{t('readArticle') || 'Read Article'}</span>
+                  <span className="group-hover:translate-x-1.5 transition-transform">→</span>
+                </span>
               </div>
             </div>
           </article>
@@ -1959,23 +1958,23 @@ function HeroSection({ news = newsData, onNavigate }) {
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-4">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
-        {/* LEFT COLUMN (7 COLS): SEAMLESS FEATURED NEWS TICKER */}
-        <div className="lg:col-span-7 flex flex-col justify-between bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden p-4 sm:p-5">
+        {/* LEFT COLUMN (7 COLS): FULL-IMAGE FEATURED NEWS TICKER */}
+        <div className="lg:col-span-7 flex flex-col justify-between bg-slate-950 rounded-3xl border border-slate-800 shadow-2xl overflow-hidden p-4 sm:p-5 text-white">
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3 mb-3">
+          <div className="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-red-600 animate-ping" />
-              <h2 className="text-xs sm:text-sm font-black tracking-wider uppercase text-slate-900 dark:text-white font-serif flex items-center gap-1.5">
+              <h2 className="text-xs sm:text-sm font-black tracking-wider uppercase text-white font-serif flex items-center gap-1.5">
                 <span>{t('featuredNews') || 'சிறப்புச் செய்திகள்'}</span>
               </h2>
             </div>
-            <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500 font-semibold">
+            <span className="text-[10px] font-mono text-amber-400/90 font-bold bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
               ⚡ LIVE NEWS TICKER
             </span>
           </div>
 
-          {/* Seamless Auto-Scrolling News Ticker (Zero Gaps between cards) */}
-          <div className="featured-marquee-wrapper overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 my-auto">
+          {/* Seamless Full-Image Auto-Scrolling News Ticker (No Gaps, No White BG) */}
+          <div className="featured-marquee-wrapper overflow-hidden rounded-2xl border border-slate-800 bg-slate-950 my-auto">
             <div className="animate-featured-marquee flex items-stretch gap-0 whitespace-normal">
               {renderFeaturedTrack('ftrack-1')}
               {renderFeaturedTrack('ftrack-2')}
@@ -2923,13 +2922,10 @@ function Home({ onNavigate, onShowToast }) {
 
   return (
     <div className="space-y-8 pb-16 animate-fadeIn">
-      {/* 1. FEATURED NEWS SLIDER SPOTLIGHT */}
+      {/* 1. FEATURED NEWS TICKER ON LEFT + LATEST ARTICLES ON RIGHT */}
       <HeroSection news={translatedNews} onNavigate={onNavigate} />
 
-      {/* 2. CONTINUOUS AUTO-SCROLLING TRENDING SHOWCASE CAROUSEL */}
-      <TrendingArticlesSection onNavigate={onNavigate} />
-
-      {/* 3. PUBLIC PREVIEW GRID OF TRENDING VIDEOS (6-8 Items) */}
+      {/* 2. PUBLIC PREVIEW GRID OF LATEST VIDEOS (BEFORE TRENDING ARTICLES) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-4">
         <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
           <div className="flex items-center gap-2">
@@ -2953,6 +2949,9 @@ function Home({ onNavigate, onShowToast }) {
           ))}
         </div>
       </section>
+
+      {/* 3. TRENDING ARTICLES SECTION */}
+      <TrendingArticlesSection onNavigate={onNavigate} />
 
       {/* 4. SIGN IN / REGISTER CALL TO ACTION BANNER */}
       <SignInCtaBanner onNavigate={onNavigate} />
