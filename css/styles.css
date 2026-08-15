@@ -393,3 +393,49 @@ body {
   }
 }
 
+/* ==========================================================================
+   Breaking News Ticker Animation Styles
+   ========================================================================== */
+
+@keyframes breakingTickerDrift {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes breakingPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(0.98);
+  }
+}
+
+.breaking-ticker-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.animate-breaking-ticker {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: breakingTickerDrift 28s linear infinite;
+}
+
+.breaking-ticker-wrapper:hover .animate-breaking-ticker {
+  animation-play-state: paused;
+}
+
+.breaking-badge-pulse {
+  animation: breakingPulse 2s ease-in-out infinite;
+}
+
+

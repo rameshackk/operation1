@@ -1964,10 +1964,36 @@ function HeroSection({
   } = useLanguage();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const isTamil = language === 'ta';
   const featuredStories = news && news.length > 0 ? news : newsData;
   const activeFeatured = featuredStories.slice(0, 5);
   const trendingStories = newsData.slice(0, 5);
   const activeStory = activeFeatured[currentIndex] || activeFeatured[0] || newsData[0];
+  const breakingNewsHeadlines = isTamil ? [{
+    title: "ஆர்பிஐ ரெப்போ வட்டி விகிதத்தில் மாற்றமில்லை — நிலையான சேமிப்பு & ஹோம் லோன் முதலீட்டாளர்களுக்கு நல்ல செய்தி!",
+    slug: "rbi-monetary-policy-repo-rate-fixed-deposits"
+  }, {
+    title: "நிஃப்டி 50 புதிய உச்சமான 24,850 புள்ளிகளை எட்டியது — மியூச்சுவல் ஃபண்ட் எஸ்ஐபி முதலீடு அதிகரிப்பு!",
+    slug: "nifty-record-high-market-rally-sip-growth"
+  }, {
+    title: "செபி புதிய முதலீட்டாளர் பாதுகாப்பு வழிகாட்டு நெறிமுறைகள் வெளியீடு!",
+    slug: "sebi-new-guidelines-retail-investors"
+  }, {
+    title: "தங்கத்தின் விலை புதிய உச்சம் — மியூச்சுவல் ஃபண்ட் கோல்ட் இடிஎஃப் முதலீடு செய்வது எப்படி?",
+    slug: "gold-rate-all-time-high-investment-strategy"
+  }] : [{
+    title: "RBI keeps Repo Rate steady at 6.50% — Fixed Deposits & Home Loan borrowers benefit from steady rates!",
+    slug: "rbi-monetary-policy-repo-rate-fixed-deposits"
+  }, {
+    title: "NIFTY 50 touches record high of 24,850 — SIP monthly inflows cross record ₹21,000 Crores!",
+    slug: "nifty-record-high-market-rally-sip-growth"
+  }, {
+    title: "SEBI introduces enhanced transparency framework for Mutual Fund Index schemes!",
+    slug: "sebi-new-guidelines-retail-investors"
+  }, {
+    title: "Gold prices breach key resistance — How to balance your portfolio with Sovereign Gold Bonds & ETFs!",
+    slug: "gold-rate-all-time-high-investment-strategy"
+  }];
   useEffect(() => {
     if (isPaused || activeFeatured.length <= 1) return;
     const interval = setInterval(() => {
@@ -1989,14 +2015,36 @@ function HeroSection({
   const getSummary = item => {
     return language === 'ta' ? item.summaryTamil : item.summaryEnglish || item.summaryTamil;
   };
+  const renderBreakingTrack = keyPrefix => /*#__PURE__*/React.createElement("div", {
+    key: keyPrefix,
+    className: "flex items-center gap-8 shrink-0 pr-8"
+  }, breakingNewsHeadlines.map((item, idx) => /*#__PURE__*/React.createElement("span", {
+    key: `${keyPrefix}-bn-${idx}`,
+    onClick: () => onNavigate && onNavigate(`#/news/${item.slug}`),
+    className: "hover:text-amber-400 cursor-pointer transition-colors flex items-center gap-2.5 text-xs font-semibold text-slate-200 whitespace-nowrap"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0"
+  }), /*#__PURE__*/React.createElement("span", null, item.title))));
   return /*#__PURE__*/React.createElement("section", {
     className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-4"
   }, /*#__PURE__*/React.createElement("div", {
+    className: "relative overflow-hidden rounded-2xl bg-gradient-to-r from-red-950/90 via-slate-900 to-slate-950 border border-red-500/40 p-2 sm:p-2.5 shadow-xl select-none flex items-center gap-3"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center gap-2 shrink-0 bg-red-600 text-white font-black px-3 py-1 rounded-xl text-[10px] sm:text-xs uppercase tracking-wider shadow-lg z-10 breaking-badge-pulse"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "w-2 h-2 rounded-full bg-white animate-ping"
+  }), /*#__PURE__*/React.createElement("span", null, isTamil ? 'பிரேக்கிங் நியூஸ்' : 'BREAKING NEWS')), /*#__PURE__*/React.createElement("div", {
+    className: "breaking-ticker-wrapper overflow-hidden relative w-full flex items-center"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "animate-breaking-ticker flex items-center whitespace-nowrap"
+  }, renderBreakingTrack('btrack-1'), renderBreakingTrack('btrack-2'))), /*#__PURE__*/React.createElement("div", {
+    className: "hidden md:flex items-center gap-1 shrink-0 text-[10px] font-mono text-red-400 font-bold bg-red-950/80 px-2 py-0.5 rounded-lg border border-red-500/30"
+  }, /*#__PURE__*/React.createElement("span", null, "\u25CF LIVE"))), /*#__PURE__*/React.createElement("div", {
     className: "flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3"
   }, /*#__PURE__*/React.createElement("div", {
     className: "flex items-center gap-2"
   }, /*#__PURE__*/React.createElement("span", {
-    className: "w-2.5 h-2.5 rounded-full bg-red-600 animate-ping"
+    className: "w-2.5 h-2.5 rounded-full bg-amber-500 animate-ping"
   }), /*#__PURE__*/React.createElement("h2", {
     className: "text-xs font-black tracking-widest uppercase text-amber-600 dark:text-amber-400 font-serif"
   }, t('featuredNews') || 'சிறப்புச் செய்திகள்')), /*#__PURE__*/React.createElement("div", {
