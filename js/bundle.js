@@ -29062,6 +29062,10 @@ function VideoFanWall({
 /**
  * CINEMA INTERACTIVE UI SYSTEM (OPTION 4: COMPACT SLEEK SUITE)
  */
+
+/**
+ * CINEMA INTERACTIVE UI SYSTEM (OPTION 4: COMPACT SLEEK SUITE)
+ */
 function CinemaVideoCard({
   video,
   index = 0,
@@ -29713,16 +29717,16 @@ function HomeCinemaShowcase({ onNavigate, onShowToast, language = 'ta' }) {
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
             <span className="px-2 py-0.5 text-[9px] font-black uppercase tracking-wider rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
-              CINEMA VIDEO SUITE
+              {isTamil ? 'சிறப்புக் காணொளிகள்' : 'FEATURED VIDEOS'}
             </span>
           </div>
           <h2 className="text-lg sm:text-2xl font-black text-slate-900 dark:text-white font-serif tracking-tight">
-            {isTamil ? 'பிரத்யேக வீடியோ அலசல் மற்றும் வழிகாட்டி' : 'Cinema Video Masterclasses'}
+            {isTamil ? 'சிறப்புக் காணொளிகள் & வழிகாட்டிகள்' : 'Featured Videos'}
           </h2>
           <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
             {isTamil
-              ? 'பட்ஜெட் பத்மநாபன் CFP® வழங்கும் 3D இன்டராக்டிவ் மியூச்சுவல் ஃபண்ட் & பங்குச் சந்தை ஆய்வுகள்'
-              : 'Interactive 3D masterclasses with real-time frame scrubbing, certified by Padmanaban B. CFP®'}
+              ? 'பட்ஜெட் பத்மநாபன் CFP® வழங்கும் மியூச்சுவல் ஃபண்ட் மற்றும் நிதி முதலீட்டு வழிகாட்டுதல்கள்'
+              : 'Curated financial guidance, mutual fund analysis & wealth strategies by Padmanaban B. CFP®'}
           </p>
         </div>
 
