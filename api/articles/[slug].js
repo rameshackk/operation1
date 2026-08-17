@@ -6,16 +6,6 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // Enforce server-side authentication
-  const auth = await verifyUserRequest(req);
-  if (!auth.authorized) {
-    return res.status(auth.status || 401).json({
-      error: 'Authentication required',
-      message: 'You must be signed in to read articles.',
-      requiresAuth: true
-    });
-  }
-
   const { slug } = req.query || {};
   if (!slug) {
     return res.status(400).json({ error: 'Article slug is required' });
