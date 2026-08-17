@@ -520,11 +520,11 @@ function CinemaTheaterModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-slate-950/90 backdrop-blur-2xl animate-fadeIn overflow-y-auto"
+      className="modal-backdrop-unified p-2 sm:p-4 md:p-6 overflow-y-auto"
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-5xl bg-slate-900 border border-slate-700/80 rounded-2xl sm:rounded-3xl shadow-2xl shadow-slate-950 overflow-hidden flex flex-col my-auto max-h-[94vh]"
+        className="modal-card-unified relative w-full max-w-5xl bg-slate-900 border border-slate-700/80 rounded-2xl sm:rounded-3xl shadow-2xl shadow-slate-950 overflow-hidden flex flex-col my-auto max-h-[94vh]"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-800 bg-slate-950/80 backdrop-blur-md">

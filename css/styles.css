@@ -33,6 +33,20 @@
   --shadow-card: 0 4px 12px -2px rgba(15, 23, 42, 0.08), 0 2px 6px -2px rgba(15, 23, 42, 0.04);
   --shadow-card-hover: 0 20px 30px -6px rgba(15, 23, 42, 0.14), 0 10px 14px -5px rgba(15, 23, 42, 0.08);
 
+  /* Global Motion Tokens */
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-overshoot: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-interactive: 200ms;
+  --duration-layout: 350ms;
+  
+  /* Centralized Z-Index Hierarchy */
+  --z-bg: 0;
+  --z-content: 10;
+  --z-dropdown: 250;
+  --z-header: 200;
+  --z-modal: 1000;
+  --z-scroll-bar: 10000;
+
   /* Colors - Light Mode (Ivory Silk & Sovereign Gold) */
   --bg-main: #f8fafc;
   --bg-card: #ffffff;
@@ -614,4 +628,134 @@ body::after {
 
 .avatar-pulse {
   animation: pulseGlow 3s infinite;
+}
+
+/* ==========================================================================
+   UNIFIED MOTION, SCROLL & POPUP SYSTEM (GLOBAL ASSEMBLY LAYER)
+   ========================================================================== */
+
+/* 1. Global Scroll Progress Bar */
+#scroll-progress-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 50%, #10b981 100%);
+  z-index: var(--z-scroll-bar, 10000);
+  pointer-events: none;
+  transition: width 80ms ease-out;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
+}
+
+/* 2. Unified Modal & Overlay Animations */
+@keyframes modalBackdropFadeIn {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(12px);
+  }
+}
+
+@keyframes modalScaleOvershoot {
+  0% {
+    opacity: 0;
+    transform: scale(0.92) translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes dropdownScaleIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.92) translateY(-6px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-backdrop-unified {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.8);
+  backdrop-filter: blur(12px);
+  z-index: var(--z-modal, 1000);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: modalBackdropFadeIn 250ms var(--ease-default) forwards;
+}
+
+.modal-card-unified {
+  transform-origin: center center;
+  animation: modalScaleOvershoot 320ms var(--ease-overshoot) forwards;
+  will-change: transform, opacity;
+}
+
+.dropdown-anchored-unified {
+  transform-origin: top right;
+  animation: dropdownScaleIn 200ms var(--ease-overshoot) forwards;
+  z-index: var(--z-dropdown, 250);
+}
+
+/* 3. Staggered Scroll-Reveal System for Grids */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 350ms var(--ease-default), transform 350ms var(--ease-default);
+  will-change: opacity, transform;
+}
+
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 4. Compressed Header on Scroll */
+.header-compressed {
+  padding-top: 0.375rem !important;
+  padding-bottom: 0.375rem !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(16px) !important;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.08) !important;
+}
+
+[data-theme="dark"] .header-compressed {
+  background: rgba(2, 6, 23, 0.92) !important;
+  box-shadow: 0 4px 25px -2px rgba(0, 0, 0, 0.7) !important;
+}
+
+/* 5. Gated Reduced Motion Fallback */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .scroll-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .modal-card-unified,
+  .dropdown-anchored-unified {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  #scroll-progress-indicator {
+    display: none !important;
+  }
 }
