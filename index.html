@@ -76,12 +76,133 @@
   <!-- Babel standalone for browser JSX compilation -->
   <script src="https://unpkg.com/@babel/standalone@7.23.6/babel.min.js"></script>
 </head>
-<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased relative">
 
-  <div id="root"></div>
+  <!-- Subtle Financial Matrix Grid Background -->
+  <div class="wealth-bg-grid"></div>
+
+  <!-- High-Performance Animated Money & Mutual Fund Growth Canvas -->
+  <canvas id="wealth-growth-canvas" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:0;"></canvas>
+
+  <script>
+    (function() {
+      const canvas = document.getElementById('wealth-growth-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d', { alpha: true });
+      let width = (canvas.width = window.innerWidth);
+      let height = (canvas.height = window.innerHeight);
+
+      window.addEventListener('resize', function() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      });
+
+      const tokens = ['₹', '%', 'SIP', 'CAGR', 'NAV', '+14.8%', '₹1 Cr', 'GROWTH', 'ALPHA', 'BULL', '+18.5%', '₹50L', '₹25L'];
+      const count = Math.min(30, Math.floor(width / 45));
+      const particles = [];
+
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          text: tokens[Math.floor(Math.random() * tokens.length)],
+          speedY: 0.22 + Math.random() * 0.4,
+          speedX: (Math.random() - 0.5) * 0.2,
+          size: 11 + Math.random() * 8,
+          baseAlpha: 0.12 + Math.random() * 0.2,
+          phase: Math.random() * Math.PI * 2,
+          isGold: Math.random() > 0.45
+        });
+      }
+
+      let time = 0;
+      function animate() {
+        time += 0.012;
+        ctx.clearRect(0, 0, width, height);
+
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        const goldStroke = isDark ? 'rgba(245, 158, 11, 0.2)' : 'rgba(217, 119, 6, 0.14)';
+        const emeraldStroke = isDark ? 'rgba(16, 185, 129, 0.17)' : 'rgba(5, 150, 105, 0.12)';
+        const textGold = isDark ? 'rgba(251, 191, 36, ' : 'rgba(180, 83, 9, ';
+        const textEmerald = isDark ? 'rgba(52, 211, 153, ' : 'rgba(4, 120, 87, ';
+
+        // 1. Compounding Curve 1 (Primary Gold Fund Yield)
+        ctx.beginPath();
+        ctx.lineWidth = isDark ? 2.5 : 2;
+        ctx.strokeStyle = goldStroke;
+        const startY1 = height * 0.88;
+        ctx.moveTo(0, startY1);
+        for (let x = 0; x <= width; x += 15) {
+          const progress = x / width;
+          const expRise = Math.pow(progress, 2.1) * (height * 0.62);
+          const wave = Math.sin(progress * 4 + time) * 16 + Math.cos(progress * 2 - time * 0.8) * 10;
+          ctx.lineTo(x, startY1 - expRise + wave);
+        }
+        ctx.stroke();
+
+        // 2. Compounding Curve 2 (Secondary Emerald Index Yield)
+        ctx.beginPath();
+        ctx.lineWidth = isDark ? 2 : 1.5;
+        ctx.strokeStyle = emeraldStroke;
+        const startY2 = height * 0.94;
+        ctx.moveTo(0, startY2);
+        for (let x = 0; x <= width; x += 15) {
+          const progress = x / width;
+          const expRise = Math.pow(progress, 1.85) * (height * 0.52);
+          const wave = Math.cos(progress * 3.5 + time * 0.9) * 14 + Math.sin(progress * 2.2 + time) * 8;
+          ctx.lineTo(x, startY2 - expRise + wave);
+        }
+        ctx.stroke();
+
+        // 3. Pulse Dot on Primary Compounding Curve
+        const pulseProgress1 = (time * 0.12) % 1;
+        const pulseX1 = pulseProgress1 * width;
+        const pulseExpRise1 = Math.pow(pulseProgress1, 2.1) * (height * 0.62);
+        const pulseWave1 = Math.sin(pulseProgress1 * 4 + time) * 16 + Math.cos(pulseProgress1 * 2 - time * 0.8) * 10;
+        ctx.fillStyle = isDark ? 'rgba(251, 191, 36, 0.75)' : 'rgba(217, 119, 6, 0.65)';
+        ctx.beginPath();
+        ctx.arc(pulseX1, startY1 - pulseExpRise1 + pulseWave1, 4.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        // 4. Pulse Dot on Secondary Index Curve
+        const pulseProgress2 = ((time * 0.12) + 0.5) % 1;
+        const pulseX2 = pulseProgress2 * width;
+        const pulseExpRise2 = Math.pow(pulseProgress2, 1.85) * (height * 0.52);
+        const pulseWave2 = Math.cos(pulseProgress2 * 3.5 + time * 0.9) * 14 + Math.sin(pulseProgress2 * 2.2 + time) * 8;
+        ctx.fillStyle = isDark ? 'rgba(52, 211, 153, 0.7)' : 'rgba(5, 150, 105, 0.6)';
+        ctx.beginPath();
+        ctx.arc(pulseX2, startY2 - pulseExpRise2 + pulseWave2, 4, 0, Math.PI * 2);
+        ctx.fill();
+
+        // 5. Floating Money & Mutual Fund Growth Particles
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          p.y -= p.speedY;
+          p.x += Math.sin(time + p.phase) * 0.35 + p.speedX;
+
+          if (p.y < -30) {
+            p.y = height + 20;
+            p.x = Math.random() * width;
+          }
+          if (p.x < -40) p.x = width + 30;
+          if (p.x > width + 40) p.x = -30;
+
+          const alphaPulse = p.baseAlpha * (0.85 + Math.sin(time * 2 + p.phase) * 0.15);
+          ctx.font = '800 ' + p.size + 'px "Inter", "Noto Sans Tamil", sans-serif';
+          ctx.fillStyle = p.isGold ? (textGold + alphaPulse + ')') : (textEmerald + alphaPulse + ')');
+          ctx.fillText(p.text, p.x, p.y);
+        }
+
+        requestAnimationFrame(animate);
+      }
+      requestAnimationFrame(animate);
+    })();
+  </script>
+
+  <div id="root" class="relative z-10"></div>
 
   <!-- Main Application Bundle (Pre-compiled production JS) -->
-  <script src="js/bundle.compiled.js?v=2.9.0"></script>
+  <script src="js/bundle.compiled.js?v=2.9.1"></script>
 
 </body>
 </html>
