@@ -90,8 +90,8 @@ export function HomeCinemaShowcase({ onNavigate, onShowToast, language = 'ta' })
         })}
       </div>
 
-      {/* Compact Responsive Grid: 2 cols mobile, 3 sm, 4 md, 5 lg, 6 xl */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
+      {/* 5-Column Level Responsive Grid (2 mobile, 3 sm, 4 md, 5 lg/xl) */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5 sm:gap-4">
         {showcaseVideos.map((video, idx) => (
           <CinemaVideoCard
             key={`home-cinema-${video.id || idx}`}
