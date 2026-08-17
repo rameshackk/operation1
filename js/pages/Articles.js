@@ -62,28 +62,33 @@ export function Articles({ onNavigate, onShowToast }) {
   };
 
   return (
-    <div className="min-h-screen pb-20 space-y-8 animate-fadeIn">
-      {/* HERO HEADER */}
+    <div className="min-h-screen pb-20 space-y-8 animate-fadeIn select-none">
+      {/* 1. EDITORIAL MAGAZINE HERO */}
       <div className="bg-slate-950 text-white border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
           <div className="max-w-3xl space-y-3">
-            <span className="px-3 py-1 text-[10px] font-black uppercase tracking-wider rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30">
-              {isTamil ? 'செய்திக் கட்டுரைகள்' : 'EDITORIAL & ARTICLES'}
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="px-3 py-1 text-[10px] font-black uppercase tracking-wider rounded-full bg-amber-500 text-slate-950 shadow-sm">
+                {isTamil ? 'சிறப்புக் கட்டுரைகள்' : 'EDITORIAL & RESEARCH'}
+              </span>
+              <span className="px-2.5 py-0.5 text-[10px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-full font-bold">
+                CFP Verified
+              </span>
+            </div>
             <h1 className="text-3xl sm:text-5xl font-black font-serif text-white tracking-tight leading-tight">
-              {isTamil ? 'முதலீட்டு ஆய்வுக் கட்டுரைகள்' : 'In-Depth Investment Articles'}
+              {isTamil ? 'முதலீட்டு ஆய்வுக் கட்டுரைகள்' : 'Investment Insights & Editorial'}
             </h1>
             <p className="text-sm sm:text-base text-slate-300 font-medium leading-relaxed">
               {isTamil
                 ? 'பட்ஜெட் பத்மநாபன் CFP® மற்றும் நிபுணர்களின் பிரத்யேக மியூச்சுவல் ஃபண்ட், பங்குச் சந்தை மற்றும் தனிநபர் நிதி ஆழமான ஆய்வுக் கட்டுரைகள்.'
-                : 'Exclusive original investment insights, mutual fund analyses, tax-saving strategies, and financial guidance written directly by Certified Financial Planner Padmanaban B.'}
+                : 'Exclusive original investment insights, mutual fund analyses, tax-saving strategies, and financial blueprints written directly by Certified Financial Planner Padmanaban B.'}
             </p>
           </div>
         </div>
       </div>
 
-      {/* CATEGORY FILTER BAR */}
-      <div className="sticky top-16 z-30 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm py-3">
+      {/* 2. CATEGORY BAR */}
+      <div className="sticky top-16 z-30 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 shadow-sm py-3.5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
             {categories.map(cat => {
@@ -92,10 +97,10 @@ export function Articles({ onNavigate, onShowToast }) {
                 <button
                   key={cat.id}
                   onClick={() => setActiveCategory(cat.id)}
-                  className={`px-4 py-2 rounded-full text-xs font-extrabold whitespace-nowrap transition-all duration-200 shrink-0 ${
+                  className={`btn-magnetic px-4 py-2 rounded-full text-xs font-black whitespace-nowrap transition-all duration-200 shrink-0 ${
                     isActive
-                      ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-950 shadow-md scale-105'
-                      : 'bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200/60 dark:border-slate-800'
+                      ? 'bg-amber-500 text-slate-950 shadow-md scale-105'
+                      : 'bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800'
                   }`}
                 >
                   {isTamil ? cat.labelTa : cat.labelEn}
@@ -106,11 +111,13 @@ export function Articles({ onNavigate, onShowToast }) {
         </div>
       </div>
 
-      {/* SEARCH & CONTROLS */}
+      {/* 3. SEARCH & CONTROLS BAR */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
           <div className="relative flex-1">
-            <svg className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+            <svg className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
             <input
               type="text"
               value={searchQuery}
@@ -119,11 +126,8 @@ export function Articles({ onNavigate, onShowToast }) {
               className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white placeholder-slate-400 text-xs sm:text-sm font-medium focus:outline-none focus:border-amber-500"
             />
             {searchQuery && (
-              <button
-                onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
-              >
-                
+              <button onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 hover:text-slate-200">
+                ✕
               </button>
             )}
           </div>
@@ -143,7 +147,7 @@ export function Articles({ onNavigate, onShowToast }) {
         </div>
       </div>
 
-      {/* ARTICLES GRID */}
+      {/* 4. ARTICLES EDITORIAL GRID */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {isLoading ? (
           <div className="py-20 text-center space-y-3">
@@ -156,14 +160,11 @@ export function Articles({ onNavigate, onShowToast }) {
           </div>
         ) : articles.length === 0 ? (
           <div className="py-20 text-center space-y-3 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-8">
-            <div className="text-4xl"></div>
             <h3 className="text-lg font-bold text-slate-900 dark:text-white">
               {isTamil ? 'கட்டுரைகள் எதுவும் கிடைக்கவில்லை' : 'No Articles Found'}
             </h3>
             <p className="text-xs text-slate-500 max-w-sm mx-auto">
-              {isTamil
-                ? 'உங்கள் தேடல் வார்த்தையை மாற்றவும் அல்லது அனைத்து பிரிவுகளையும் பார்வையிடவும்.'
-                : 'Try adjusting your search criteria or explore other categories.'}
+              {isTamil ? 'உங்கள் தேடல் வார்த்தையை மாற்றவும் அல்லது அனைத்து பிரிவுகளையும் பார்வையிடவும்.' : 'Try adjusting your search criteria or explore other categories.'}
             </p>
           </div>
         ) : (
@@ -179,7 +180,7 @@ export function Articles({ onNavigate, onShowToast }) {
                 <article
                   key={article.id}
                   onClick={() => handleArticleClick(article.slug)}
-                  className="group bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:shadow-xl hover:border-amber-500/40 transition-all duration-300 cursor-pointer flex flex-col justify-between"
+                  className="btn-magnetic group bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-200/80 dark:border-slate-800/80 shadow-md hover:shadow-2xl hover:border-amber-500/40 transition-all duration-300 cursor-pointer flex flex-col justify-between"
                 >
                   <div className="space-y-4">
                     <div className="relative aspect-[16/9] overflow-hidden bg-slate-950">
@@ -190,15 +191,15 @@ export function Articles({ onNavigate, onShowToast }) {
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         onError={(e) => { e.target.src = '/favicon.svg'; }}
                       />
-                      <span className="absolute top-3 left-3 px-2.5 py-0.5 text-[10px] font-extrabold uppercase rounded-md bg-slate-950/85 text-amber-400 backdrop-blur-md">
+                      <span className="absolute top-3 left-3 px-2.5 py-0.5 text-[10px] font-black uppercase rounded-md bg-slate-950/85 text-amber-400 backdrop-blur-md border border-white/10">
                         {(article.category || 'FINANCE').replace('-', ' ')}
                       </span>
-                      <span className="absolute top-3 right-3 px-2 py-0.5 text-[9px] font-black uppercase rounded-md bg-amber-600 text-white">
-                         ORIGINAL
+                      <span className="absolute top-3 right-3 px-2.5 py-0.5 text-[9px] font-black uppercase rounded-md bg-amber-500 text-slate-950">
+                        ORIGINAL
                       </span>
                     </div>
 
-                    <div className="p-5 space-y-3">
+                    <div className="p-5 space-y-2.5">
                       <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors line-clamp-2 font-serif leading-snug">
                         {title}
                       </h3>
@@ -212,15 +213,15 @@ export function Articles({ onNavigate, onShowToast }) {
 
                   <div className="px-5 pb-5 pt-2 flex items-center justify-between border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-500 dark:text-slate-400 font-semibold">
                     <div className="flex items-center gap-2">
-                      <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-amber-500 to-red-600 text-white font-black text-[9px] flex items-center justify-center">
+                      <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-amber-500 to-amber-700 text-slate-950 font-black text-[9px] flex items-center justify-center">
                         BP
                       </div>
-                      <span>{article.authorName || 'Budget Padmanaban'}</span>
+                      <span className="truncate max-w-[120px]">{article.authorName || 'Budget Padmanaban'}</span>
                     </div>
                     <div className="flex items-center gap-3">
                       <span>{formattedDate}</span>
                       <span className="font-mono text-amber-600 dark:text-amber-400 font-bold">
-                        {article.readTimeMinutes} {isTamil ? 'நிமிடம்' : 'min'}
+                        {article.readTimeMinutes || 4} {isTamil ? 'நிமிடம்' : 'min'}
                       </span>
                     </div>
                   </div>
