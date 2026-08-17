@@ -95,17 +95,8 @@ export function VideosPage({ onNavigate, onShowToast }) {
   return (
     <div className="min-h-screen pb-24 space-y-10 animate-fadeIn text-slate-900 dark:text-white">
       
-      {/* 1. LUXURY CINEMA SPOTLIGHT HERO */}
+      {/* 1. BRANDLYFT LIVING FAN ARC SHOWCASE (CONTINUOUS MULTI-FRAME CYCLING WITH SOFT BLUR/CROSSFADE) */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
-        <CinemaSpotlightHero
-          spotlightVideos={spotlightVideos}
-          onWatchVideo={(video) => setSelectedVideo(video)}
-          language={language}
-        />
-      </div>
-
-      {/* 2. LIVING FAN ARC WALL (CONTINUOUS ANIMATING 9:16 CARDS SHOWCASE) */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <VideoFanWall
           videos={videosData}
           language={language}
@@ -113,7 +104,7 @@ export function VideosPage({ onNavigate, onShowToast }) {
           titleTamil="பிரத்யேக நேரலை வீடியோ கேலரி"
           titleEnglish="Living Video Arc Showcase"
           subtitleTamil="பட்ஜெட் பத்மநாபனின் பிரத்யேக நிதி, மியூச்சுவல் ஃபண்ட் மற்றும் முதலீட்டு வீடியோ அலசல்கள்"
-          subtitleEnglish="Continuous desynchronized animated fan arc with multi-frame previews and instant expandable inspection"
+          subtitleEnglish="Continuous interactive video gallery featuring original insights and financial masterclasses with multi-frame live previews"
         />
       </div>
 
