@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useRef } from 'https://esm.sh/react@18.2.0';
 
 /**
- * Advanced Interactive Living Video Card
- * Features 3D perspective tilt, interactive horizontal mouse scrubbing,
- * specular light sweep glare, and continuous desynchronized background animation.
+ * Advanced Interactive Living Video Card (Option 4: Complete Suite)
+ * - 3D Perspective Tilt with spring recovery
+ * - Interactive Horizontal Mouse Scrubbing
+ * - Specular Light Glare Sweep
+ * - Cursor-Tracking Spotlight Dynamic Border Glow
+ * - Continuous Desynchronized Background Crossfade
+ * - Magnetic Micro-Hover Effects
  */
 export function CinemaVideoCard({
   video,
@@ -19,7 +23,7 @@ export function CinemaVideoCard({
   const [isCrossfading, setIsCrossfading] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
-  // 3D Tilt & Specular Light States
+  // 3D Tilt, Glare, & Spotlight States
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [glare, setGlare] = useState({ x: 50, y: 50, opacity: 0 });
   const [scrubPercent, setScrubPercent] = useState(null);
@@ -82,7 +86,7 @@ export function CinemaVideoCard({
     };
   }, [frames, activeFrameIndex, isHovered, prefersReducedMotion, index]);
 
-  // Handle 3D Tilt & Mouse Scrubbing
+  // Handle 3D Tilt, Spotlight Border, & Mouse Scrubbing
   const handleMouseMove = (e) => {
     if (prefersReducedMotion || !cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
@@ -91,13 +95,17 @@ export function CinemaVideoCard({
     const pctX = Math.max(0, Math.min(1, x / rect.width));
     const pctY = Math.max(0, Math.min(1, y / rect.height));
 
-    // Calculate 3D tilt angles (max ±8 deg)
+    // Calculate 3D tilt angles (max ±7 deg)
     const tiltY = (pctX - 0.5) * 12;
     const tiltX = (0.5 - pctY) * 12;
 
     setTilt({ x: tiltX, y: tiltY });
     setGlare({ x: pctX * 100, y: pctY * 100, opacity: 0.35 });
     setScrubPercent(pctX);
+
+    // Update CSS custom properties for dynamic spotlight border
+    cardRef.current.style.setProperty('--mouse-x', `${(pctX * 100).toFixed(1)}%`);
+    cardRef.current.style.setProperty('--mouse-y', `${(pctY * 100).toFixed(1)}%`);
 
     // Map horizontal position to video frame
     if (frames.length > 0) {
@@ -159,10 +167,18 @@ export function CinemaVideoCard({
       className="group relative select-none cursor-pointer rounded-2xl sm:rounded-3xl overflow-hidden
         w-full aspect-[9/16]
         bg-slate-900 border border-slate-800/90 hover:border-amber-500/60
-        shadow-xl shadow-slate-950/60 hover:shadow-2xl hover:shadow-amber-500/25
+        shadow-xl shadow-slate-950/70 hover:shadow-2xl hover:shadow-amber-500/25
         outline-none focus-visible:ring-2 focus-visible:ring-amber-500 shrink-0"
     >
-      {/* 1. BACKGROUND THUMBNAILS / PREVIEW FRAMES */}
+      {/* 1. CURSOR SPOTLIGHT BORDER GLOW */}
+      <div
+        className="absolute inset-0 pointer-events-none rounded-2xl sm:rounded-3xl z-10 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+        style={{
+          boxShadow: `inset 0 0 0 1.5px rgba(245, 158, 11, 0.45)`
+        }}
+      />
+
+      {/* 2. BACKGROUND THUMBNAILS / PREVIEW FRAMES */}
       <div className="absolute inset-0 w-full h-full overflow-hidden bg-slate-950">
         {currentFrame && (
           <img
@@ -187,15 +203,15 @@ export function CinemaVideoCard({
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-slate-950/40 opacity-85 group-hover:opacity-95 transition-opacity" />
       </div>
 
-      {/* 2. SPECULAR LIGHT SWEEP GLARE EFFECT */}
+      {/* 3. SPECULAR LIGHT SWEEP GLARE EFFECT */}
       <div
-        className="absolute inset-0 pointer-events-none transition-opacity duration-300 z-10"
+        className="absolute inset-0 pointer-events-none transition-opacity duration-300 z-15"
         style={{
           background: `radial-gradient(circle 220px at ${glare.x}% ${glare.y}%, rgba(255, 255, 255, ${glare.opacity}), transparent 80%)`
         }}
       />
 
-      {/* 3. TOP BADGES */}
+      {/* 4. TOP BADGES */}
       <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-20 pointer-events-none">
         <span className="px-2.5 py-1 text-[9px] font-black uppercase tracking-wider rounded-full bg-slate-950/85 backdrop-blur-md text-amber-400 border border-amber-400/25 shadow-sm">
           {category}
@@ -205,7 +221,7 @@ export function CinemaVideoCard({
         </span>
       </div>
 
-      {/* 4. CENTER GLOWING PLAY ICON ON HOVER */}
+      {/* 5. CENTER GLOWING PLAY ICON */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
         <div className="w-12 h-12 rounded-full bg-slate-950/85 backdrop-blur-md border border-white/20 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transform scale-75 group-hover:scale-100 transition-all duration-300 shadow-2xl group-hover:border-amber-500/60">
           <svg className="w-5 h-5 text-amber-400 fill-current ml-0.5" viewBox="0 0 24 24">
@@ -214,9 +230,9 @@ export function CinemaVideoCard({
         </div>
       </div>
 
-      {/* 5. INTERACTIVE SCRUB PROGRESS INDICATOR */}
+      {/* 6. INTERACTIVE SCRUB PROGRESS INDICATOR */}
       {scrubPercent !== null && frames.length > 1 && (
-        <div className="absolute top-12 left-3 right-3 z-20 pointer-events-none flex items-center gap-1 bg-slate-950/60 backdrop-blur-md p-1 rounded-full border border-white/10">
+        <div className="absolute top-12 left-3 right-3 z-20 pointer-events-none flex items-center gap-1 bg-slate-950/70 backdrop-blur-md p-1 rounded-full border border-white/10">
           {frames.map((_, fIdx) => {
             const isActive = fIdx === activeFrameIndex;
             return (
@@ -231,7 +247,7 @@ export function CinemaVideoCard({
         </div>
       )}
 
-      {/* 6. BOTTOM INFO PANEL */}
+      {/* 7. BOTTOM INFO PANEL WITH MAGNETIC WATCH CTA */}
       <div className="absolute bottom-0 inset-x-0 p-4 pt-12 bg-gradient-to-t from-slate-950 via-slate-950/95 to-transparent z-20 flex flex-col justify-end gap-2">
         <h3 className="text-xs sm:text-sm font-bold text-white font-serif line-clamp-2 leading-snug group-hover:text-amber-400 transition-colors">
           {title}
@@ -241,7 +257,7 @@ export function CinemaVideoCard({
           <span className="text-[10px] text-slate-400 font-medium truncate max-w-[130px]">
             {video.channelName || 'Budget Padmanaban'}
           </span>
-          <span className="text-[10px] font-bold text-amber-400 group-hover:underline shrink-0 flex items-center gap-0.5">
+          <span className="text-[10px] font-bold text-amber-400 group-hover:underline shrink-0 flex items-center gap-0.5 btn-magnetic">
             <span>{isTamil ? 'பார்க்க' : 'Watch'}</span>
             <span>→</span>
           </span>

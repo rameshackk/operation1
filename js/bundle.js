@@ -29088,6 +29088,10 @@ function Home({ onNavigate, onShowToast }) {
 /**
  * CINEMA INTERACTIVE UI SYSTEM (3D TILT + MOUSE SCRUBBING + SPECULAR GLARE)
  */
+
+/**
+ * CINEMA INTERACTIVE UI SYSTEM (OPTION 4: COMPLETE SUITE)
+ */
 function CinemaVideoCard({
   video,
   index = 0,
@@ -29177,6 +29181,9 @@ function CinemaVideoCard({
     setGlare({ x: pctX * 100, y: pctY * 100, opacity: 0.35 });
     setScrubPercent(pctX);
 
+    cardRef.current.style.setProperty('--mouse-x', `${(pctX * 100).toFixed(1)}%`);
+    cardRef.current.style.setProperty('--mouse-y', `${(pctY * 100).toFixed(1)}%`);
+
     if (frames.length > 0) {
       const targetFrame = Math.min(Math.floor(pctX * frames.length), frames.length - 1);
       setActiveFrameIndex(targetFrame);
@@ -29236,9 +29243,16 @@ function CinemaVideoCard({
       className="group relative select-none cursor-pointer rounded-2xl sm:rounded-3xl overflow-hidden
         w-full aspect-[9/16]
         bg-slate-900 border border-slate-800/90 hover:border-amber-500/60
-        shadow-xl shadow-slate-950/60 hover:shadow-2xl hover:shadow-amber-500/25
+        shadow-xl shadow-slate-950/70 hover:shadow-2xl hover:shadow-amber-500/25
         outline-none focus-visible:ring-2 focus-visible:ring-amber-500 shrink-0"
     >
+      <div
+        className="absolute inset-0 pointer-events-none rounded-2xl sm:rounded-3xl z-10 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+        style={{
+          boxShadow: 'inset 0 0 0 1.5px rgba(245, 158, 11, 0.45)'
+        }}
+      />
+
       <div className="absolute inset-0 w-full h-full overflow-hidden bg-slate-950">
         {currentFrame && (
           <img
@@ -29262,7 +29276,7 @@ function CinemaVideoCard({
       </div>
 
       <div
-        className="absolute inset-0 pointer-events-none transition-opacity duration-300 z-10"
+        className="absolute inset-0 pointer-events-none transition-opacity duration-300 z-15"
         style={{
           background: `radial-gradient(circle 220px at ${glare.x}% ${glare.y}%, rgba(255, 255, 255, ${glare.opacity}), transparent 80%)`
         }}
@@ -29286,7 +29300,7 @@ function CinemaVideoCard({
       </div>
 
       {scrubPercent !== null && frames.length > 1 && (
-        <div className="absolute top-12 left-3 right-3 z-20 pointer-events-none flex items-center gap-1 bg-slate-950/60 backdrop-blur-md p-1 rounded-full border border-white/10">
+        <div className="absolute top-12 left-3 right-3 z-20 pointer-events-none flex items-center gap-1 bg-slate-950/70 backdrop-blur-md p-1 rounded-full border border-white/10">
           {frames.map((_, fIdx) => {
             const isActive = fIdx === activeFrameIndex;
             return (
@@ -29310,7 +29324,7 @@ function CinemaVideoCard({
           <span className="text-[10px] text-slate-400 font-medium truncate max-w-[130px]">
             {video.channelName || 'Budget Padmanaban'}
           </span>
-          <span className="text-[10px] font-bold text-amber-400 group-hover:underline shrink-0 flex items-center gap-0.5">
+          <span className="text-[10px] font-bold text-amber-400 group-hover:underline shrink-0 flex items-center gap-0.5 btn-magnetic">
             <span>{isTamil ? 'பார்க்க' : 'Watch'}</span>
             <span>→</span>
           </span>
@@ -29389,7 +29403,7 @@ function CinemaSpotlightHero({
           <div className="flex items-center gap-4 pt-2 flex-wrap">
             <button
               onClick={() => onWatchVideo && onWatchVideo(currentVideo)}
-              className="px-6 sm:px-8 py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-400 hover:to-amber-600 text-slate-950 font-black text-xs sm:text-sm shadow-xl shadow-amber-500/20 hover:scale-105 active:scale-95 transition-all flex items-center gap-2"
+              className="btn-magnetic px-6 sm:px-8 py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-400 hover:to-amber-600 text-slate-950 font-black text-xs sm:text-sm shadow-xl shadow-amber-500/20 active:scale-95 transition-all flex items-center gap-2"
             >
               <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                 <polygon points="5 3 19 12 5 21 5 3" />
@@ -29501,14 +29515,14 @@ function CinemaVideoRail({
           <button
             onClick={() => handleScroll('left')}
             aria-label="Scroll left"
-            className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-slate-100 dark:bg-slate-800/90 hover:bg-amber-600 dark:hover:bg-amber-600 hover:text-white text-slate-700 dark:text-slate-300 flex items-center justify-center transition-all shadow-sm active:scale-95 border border-slate-200 dark:border-slate-700"
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-slate-100 dark:bg-slate-800/90 hover:bg-amber-600 dark:hover:bg-amber-600 hover:text-white text-slate-700 dark:text-slate-300 flex items-center justify-center transition-all shadow-sm active:scale-95 border border-slate-200 dark:border-slate-700 btn-magnetic"
           >
             ←
           </button>
           <button
             onClick={() => handleScroll('right')}
             aria-label="Scroll right"
-            className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-slate-100 dark:bg-slate-800/90 hover:bg-amber-600 dark:hover:bg-amber-600 hover:text-white text-slate-700 dark:text-slate-300 flex items-center justify-center transition-all shadow-sm active:scale-95 border border-slate-200 dark:border-slate-700"
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-slate-100 dark:bg-slate-800/90 hover:bg-amber-600 dark:hover:bg-amber-600 hover:text-white text-slate-700 dark:text-slate-300 flex items-center justify-center transition-all shadow-sm active:scale-95 border border-slate-200 dark:border-slate-700 btn-magnetic"
           >
             →
           </button>
@@ -29624,7 +29638,7 @@ function CinemaTheaterModal({
             <button
               onClick={handleShare}
               title="Share"
-              className="px-3 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-bold transition-colors border border-slate-700"
+              className="px-3 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-bold transition-colors border border-slate-700 btn-magnetic"
             >
               {isTamil ? 'பகிர்க' : 'Share'}
             </button>
@@ -29632,7 +29646,7 @@ function CinemaTheaterModal({
             <button
               onClick={onClose}
               aria-label="Close"
-              className="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition-colors text-sm font-bold border border-slate-700"
+              className="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition-colors text-sm font-bold border border-slate-700 btn-magnetic"
             >
               ✕
             </button>
@@ -29735,7 +29749,7 @@ function CinemaTheaterModal({
                       role="button"
                       tabIndex={0}
                       onClick={() => onSelectRelated && onSelectRelated(rel)}
-                      className="group flex items-center gap-3 p-2.5 rounded-xl bg-slate-950 hover:bg-slate-800/80 border border-slate-800 transition-all cursor-pointer"
+                      className="group flex items-center gap-3 p-2.5 rounded-xl bg-slate-950 hover:bg-slate-800/80 border border-slate-800 transition-all cursor-pointer btn-magnetic"
                     >
                       <div className="relative w-20 aspect-[16/10] rounded-lg overflow-hidden shrink-0 bg-slate-950">
                         <img
@@ -29882,7 +29896,7 @@ function VideosPage({ onNavigate, onShowToast }) {
                     setActiveCategory(cat.id);
                     setVisibleGridCount(24);
                   }}
-                  className={`px-4 py-2 rounded-full text-xs font-black whitespace-nowrap transition-all duration-200 shrink-0 ${
+                  className={`btn-magnetic px-4 py-2 rounded-full text-xs font-black whitespace-nowrap transition-all duration-200 shrink-0 ${
                     isActive
                       ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20 scale-105'
                       : 'bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800'
@@ -29933,7 +29947,7 @@ function VideosPage({ onNavigate, onShowToast }) {
               <div className="inline-flex p-0.5 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
                 <button
                   onClick={() => setViewMode('rails')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                  className={`btn-magnetic px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                     viewMode === 'rails' && !isFiltering
                       ? 'bg-amber-500 text-slate-950 font-black shadow'
                       : 'text-slate-500 dark:text-slate-400 hover:text-white'
@@ -29943,7 +29957,7 @@ function VideosPage({ onNavigate, onShowToast }) {
                 </button>
                 <button
                   onClick={() => setViewMode('grid')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                  className={`btn-magnetic px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                     viewMode === 'grid' || isFiltering
                       ? 'bg-amber-500 text-slate-950 font-black shadow'
                       : 'text-slate-500 dark:text-slate-400 hover:text-white'
@@ -29986,7 +30000,7 @@ function VideosPage({ onNavigate, onShowToast }) {
               <div className="text-center pt-8">
                 <button
                   onClick={() => setVisibleGridCount(prev => Math.min(prev + 24, filteredVideos.length))}
-                  className="px-8 py-3.5 rounded-2xl bg-slate-900 dark:bg-slate-800 hover:bg-amber-600 text-white font-extrabold text-xs sm:text-sm border border-slate-700 shadow-xl transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+                  className="btn-magnetic px-8 py-3.5 rounded-2xl bg-slate-900 dark:bg-slate-800 hover:bg-amber-600 text-white font-extrabold text-xs sm:text-sm border border-slate-700 shadow-xl transition-all"
                 >
                   {isTamil ? 'மேலும் வீடியோக்களைக் காட்டு' : 'Load More Masterclasses'} ({ilteredVideos.length - visibleGridCount} {isTamil ? 'மீதமுள்ளன' : 'remaining'})
                 </button>

@@ -131,6 +131,45 @@ body::after {
   will-change: transform;
 }
 
+/* Luxury Spotlight Border Glow */
+.spotlight-border-wrapper {
+  position: relative;
+  border-radius: 1.5rem;
+  padding: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  transition: background 0.25s ease;
+}
+
+.spotlight-border-wrapper:hover {
+  background: radial-gradient(260px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(245, 158, 11, 0.55), rgba(255, 255, 255, 0.08) 70%);
+}
+
+/* Magnetic Button Hover & Micro-Interactions */
+.btn-magnetic {
+  position: relative;
+  transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.25s ease, background-color 0.2s ease;
+  will-change: transform;
+}
+
+.btn-magnetic:hover {
+  transform: translateY(-2px) scale(1.025);
+  box-shadow: 0 12px 24px -6px rgba(217, 119, 6, 0.25);
+}
+
+.btn-magnetic:active {
+  transform: translateY(0) scale(0.975);
+}
+
+/* Shimmer Light Bar */
+@keyframes shimmerSweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+.animate-shimmer {
+  animation: shimmerSweep 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
 /* Tabular figures for numbers, timers, prices, and metrics */
 .tabular-nums,
 .font-mono,
