@@ -89,15 +89,7 @@
 }
 
 html, body, #root {
-  background: transparent !important;
-  background-color: transparent !important;
-}
-
-[data-theme="dark"] html,
-[data-theme="dark"] body,
-[data-theme="dark"] #root {
-  background: transparent !important;
-  background-color: transparent !important;
+  transition: background 0.5s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 * {
@@ -107,10 +99,10 @@ html, body, #root {
 body {
   font-family: var(--font-sans);
   line-height: var(--line-height-body);
-  background: transparent !important;
-  background-color: transparent !important;
+  background: linear-gradient(135deg, #eef2f6 0%, #e0e7ff 25%, #fef3c7 50%, #d1fae5 75%, #f1f5f9 100%);
+  background-attachment: fixed;
   color: var(--text-primary);
-  transition: color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: background 0.5s cubic-bezier(0.16, 1, 0.3, 1), color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   overflow-x: hidden;
   margin: 0;
   position: relative;
@@ -118,8 +110,8 @@ body {
 }
 
 [data-theme="dark"] body {
-  background: transparent !important;
-  background-color: transparent !important;
+  background: linear-gradient(135deg, #020617 0%, #061914 25%, #181203 50%, #031422 75%, #050914 100%) !important;
+  background-attachment: fixed;
 }
 
 /* Dynamic Mixed Chromatic Financial Mesh Atmosphere */
@@ -135,13 +127,9 @@ body {
   position: absolute;
   border-radius: 50%;
   filter: blur(100px);
-  opacity: 0.55;
+  opacity: 0.65;
   will-change: transform;
-}
-
-[data-theme="dark"] .mesh-blob {
-  opacity: 0.45;
-  filter: blur(120px);
+  transition: background 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
 }
 
 .mesh-blob-gold {
@@ -178,6 +166,28 @@ body {
   height: 48vw;
   background: radial-gradient(circle, rgba(139, 92, 246, 0.6) 0%, rgba(109, 40, 217, 0.3) 45%, transparent 70%);
   animation: floatMeshAmethyst 26s ease-in-out infinite alternate;
+}
+
+/* Dark Mixed Chromatic Mesh Shifts on Dark Mode Toggle */
+[data-theme="dark"] .mesh-blob {
+  opacity: 0.55;
+  filter: blur(120px);
+}
+
+[data-theme="dark"] .mesh-blob-gold {
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.45) 0%, rgba(217, 119, 6, 0.18) 45%, transparent 70%);
+}
+
+[data-theme="dark"] .mesh-blob-emerald {
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.4) 0%, rgba(5, 150, 105, 0.15) 45%, transparent 70%);
+}
+
+[data-theme="dark"] .mesh-blob-sapphire {
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.4) 0%, rgba(2, 132, 199, 0.15) 45%, transparent 70%);
+}
+
+[data-theme="dark"] .mesh-blob-amethyst {
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.38) 0%, rgba(109, 40, 217, 0.14) 45%, transparent 70%);
 }
 
 @keyframes floatMeshGold {
