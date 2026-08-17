@@ -260,7 +260,7 @@ export function ArticleEditor({ articleId, onNavigate, onShowToast }) {
       }
 
       if (onShowToast) {
-        onShowToast(publishNow ? (isTamil ? 'கட்டுரை உடனடியாக வெளியிடப்பட்டது! 🎉' : 'Article published live! 🎉') : (isTamil ? 'வரைவு சேமிக்கப்பட்டது.' : 'Article draft saved.'));
+        onShowToast(publishNow ? (isTamil ? 'கட்டுரை உடனடியாக வெளியிடப்பட்டது! ' : 'Article published live! ') : (isTamil ? 'வரைவு சேமிக்கப்பட்டது.' : 'Article draft saved.'));
       }
 
       if (publishNow && data.data?.slug) {
@@ -319,7 +319,7 @@ export function ArticleEditor({ articleId, onNavigate, onShowToast }) {
             disabled={isLoading}
             className="px-5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs transition-all shadow-sm disabled:opacity-50"
           >
-            💾 {isTamil ? 'வரைவாகச் சேமி (Draft)' : 'Save Draft'}
+            {isTamil ? 'வரைவாகச் சேமி' : 'Save Draft'}
           </button>
           <button
             type="button"
@@ -327,7 +327,7 @@ export function ArticleEditor({ articleId, onNavigate, onShowToast }) {
             disabled={isLoading}
             className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs shadow-lg hover:scale-105 transition-all disabled:opacity-50 flex items-center gap-1.5"
           >
-            <span>🚀</span>
+            <span></span>
             <span>{isTamil ? 'உடனே வெளியிடு (Publish Live)' : 'Publish Live'}</span>
           </button>
         </div>
@@ -336,7 +336,7 @@ export function ArticleEditor({ articleId, onNavigate, onShowToast }) {
       {/* Error Alert */}
       {error && (
         <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-600 text-xs font-bold flex items-center gap-2">
-          <span>⚠️</span>
+          <span></span>
           <span>{error}</span>
         </div>
       )}
@@ -409,10 +409,10 @@ export function ArticleEditor({ articleId, onNavigate, onShowToast }) {
               onChange={e => setCategory(e.target.value)}
               className="w-full px-4 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
             >
-              <option value="mutual-fund">💰 Mutual Funds</option>
-              <option value="stock-market">📈 Stock Market</option>
-              <option value="personal-finance">💡 Personal Finance</option>
-              <option value="financial-education">🎓 Financial Education</option>
+              <option value="mutual-fund">Mutual Funds</option>
+              <option value="stock-market">Stock Market</option>
+              <option value="personal-finance">Personal Finance</option>
+              <option value="financial-education">Financial Education</option>
             </select>
           </div>
 
@@ -479,7 +479,7 @@ export function ArticleEditor({ articleId, onNavigate, onShowToast }) {
                 onClick={() => setCoverImageUrl('')}
                 className="absolute top-2 right-2 px-2 py-1 rounded-lg bg-red-600 text-white font-bold text-[10px] shadow"
               >
-                ✕ Remove
+                Remove
               </button>
             </div>
           )}
@@ -489,7 +489,7 @@ export function ArticleEditor({ articleId, onNavigate, onShowToast }) {
         <div className="p-4 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-900 to-amber-950 border border-amber-500/30 text-white flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="space-y-0.5">
             <div className="flex items-center gap-2">
-              <span className="text-amber-400 text-base font-black">⚡</span>
+              <span className="text-amber-400 text-base font-black"></span>
               <span className="text-xs font-black uppercase tracking-wider text-amber-300">
                 {isTamil ? 'தானியங்கி ஆங்கில மொழிபெயர்ப்பு' : 'AI & Rule-Protected Auto Translation'}
               </span>
@@ -507,7 +507,7 @@ export function ArticleEditor({ articleId, onNavigate, onShowToast }) {
             disabled={isTranslating}
             className="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs shadow-lg transition-all hover:scale-105 disabled:opacity-50 shrink-0"
           >
-            {isTranslating ? 'Translating...' : (isTamil ? '🔄 ஆங்கிலத்தில் மொழிபெயர்க்க' : '🔄 Auto-Translate to English')}
+            {isTranslating ? 'Translating...' : (isTamil ? 'ஆங்கிலத்தில் மொழிபெயர்க்க' : 'Translate to English')}
           </button>
         </div>
 
@@ -553,7 +553,7 @@ export function ArticleEditor({ articleId, onNavigate, onShowToast }) {
                     : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
                 }`}
               >
-                🇮🇳 தமிழ் உள்ளடக்கம் (Tamil Body) *
+                தமிழ் உள்ளடக்கம் (Tamil Body) *
               </button>
               <button
                 type="button"
@@ -564,7 +564,7 @@ export function ArticleEditor({ articleId, onNavigate, onShowToast }) {
                     : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
                 }`}
               >
-                🌐 English Body (Reviewed)
+                English Body (Reviewed)
               </button>
             </div>
 
@@ -617,7 +617,7 @@ export function ArticleEditor({ articleId, onNavigate, onShowToast }) {
             disabled={isLoading}
             className="px-6 py-3 rounded-2xl bg-slate-900 dark:bg-slate-800 text-white font-bold text-xs shadow hover:bg-slate-800 transition-all disabled:opacity-50"
           >
-            💾 {isTamil ? 'வரைவாகச் சேமி (Save Draft)' : 'Save Draft'}
+            {isTamil ? 'வரைவாகச் சேமி' : 'Save Draft'}
           </button>
           <button
             type="button"
@@ -625,7 +625,7 @@ export function ArticleEditor({ articleId, onNavigate, onShowToast }) {
             disabled={isLoading}
             className="px-8 py-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs sm:text-sm shadow-xl hover:scale-105 transition-all disabled:opacity-50 flex items-center gap-2"
           >
-            <span>🚀</span>
+            <span></span>
             <span>{isTamil ? 'உடனே வெளியிடு (Publish Live)' : 'Publish Live'}</span>
           </button>
         </div>

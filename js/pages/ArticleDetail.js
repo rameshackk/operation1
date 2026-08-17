@@ -132,7 +132,7 @@ export function ArticleDetail({ slug, onNavigate, onShowToast }) {
   if (error || !article) {
     return (
       <div className="max-w-2xl mx-auto my-16 p-8 text-center bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-4 shadow-xl">
-        <div className="text-4xl">📄</div>
+        <div className="text-4xl"></div>
         <h2 className="text-xl font-bold text-slate-900 dark:text-white">
           {error || (isTamil ? 'கட்டுரை கிடைக்கவில்லை' : 'Article Not Found')}
         </h2>
@@ -202,16 +202,16 @@ export function ArticleDetail({ slug, onNavigate, onShowToast }) {
               <div>
                 <div className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
                   <span>{article.authorName || 'Budget Padmanaban'}</span>
-                  <span className="text-blue-500 font-bold" title="Verified Creator">✓</span>
+                  <span className="text-blue-500 font-bold" title="Verified Creator"></span>
                 </div>
                 <div className="text-[11px] text-slate-400">CFP® Certified Financial Planner</div>
               </div>
             </div>
 
             <div className="flex items-center gap-4 text-xs font-semibold">
-              <span>📅 {formattedDate}</span>
+              <span>{formattedDate}</span>
               <span className="font-mono text-amber-600 dark:text-amber-400 font-bold">
-                ⏱ {article.readTimeMinutes} {isTamil ? 'நிமிடம் வாசிக்க' : 'min read'}
+                {article.readTimeMinutes} {isTamil ? 'நிமிடம் வாசிக்க' : 'min read'}
               </span>
             </div>
           </div>
@@ -275,7 +275,7 @@ export function ArticleDetail({ slug, onNavigate, onShowToast }) {
               onClick={() => handleShare('copy')}
               className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs shadow transition-colors"
             >
-              🔗 {isTamil ? 'நகலெடு' : 'Copy'}
+              {isTamil ? 'நகலெடு' : 'Copy'}
             </button>
           </div>
         </div>

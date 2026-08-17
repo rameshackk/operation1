@@ -63,7 +63,7 @@ export function AdminDashboard() {
           onClick={fetchDashboardData}
           className="px-4 py-2 rounded-2xl bg-amber-600 text-white text-xs font-extrabold shadow-md hover:bg-amber-500 transition-colors self-start sm:self-auto"
         >
-          🔄 Refresh Metrics
+           Refresh Metrics
         </button>
       </div>
 

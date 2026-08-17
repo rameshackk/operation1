@@ -48,7 +48,7 @@ export function ForgotPasswordForm({ onBackToLogin }) {
     return (
       <div className="py-6 text-center space-y-4 animate-fadeIn">
         <div className="w-14 h-14 mx-auto rounded-full bg-amber-500/10 text-amber-500 flex items-center justify-center text-2xl font-bold">
-          ✉️
+          
         </div>
         <h3 className="text-xl font-black text-slate-900 dark:text-white font-serif">
           {isTamil ? 'மீட்டமைப்பு இணைப்பு அனுப்பப்பட்டது' : 'Reset link is on its way'}
@@ -73,7 +73,7 @@ export function ForgotPasswordForm({ onBackToLogin }) {
       {serverError && (
         <div className="p-3.5 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-600 dark:text-red-400 text-xs font-bold flex items-center justify-between" role="alert">
           <span>{serverError}</span>
-          <button onClick={() => setServerError('')} className="font-black text-xs">✕</button>
+          <button onClick={() => setServerError('')} className="font-black text-xs"></button>
         </div>
       )}
 

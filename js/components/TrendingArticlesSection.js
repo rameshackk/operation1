@@ -35,7 +35,7 @@ export function TrendingArticlesSection({ onNavigate }) {
           </h2>
         </div>
         <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2.5 py-0.5 rounded-full">
-          🔥 Trending
+          Trending
         </span>
       </div>
 

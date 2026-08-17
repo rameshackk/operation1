@@ -106,7 +106,7 @@ export function SignupForm({ onAuthSuccess }) {
     return (
       <div className="py-8 text-center space-y-4 animate-fadeIn">
         <div className="w-16 h-16 mx-auto rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center text-3xl font-bold shadow-lg">
-          ✓
+          
         </div>
         <h3 className="text-xl font-black text-slate-900 dark:text-white font-serif">
           {isTamil ? 'சரிபார்ப்பு மின்னஞ்சல் அனுப்பப்பட்டது!' : 'Check your email to verify your account'}
@@ -137,10 +137,10 @@ export function SignupForm({ onAuthSuccess }) {
       {serverError && (
         <div className="p-3.5 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-600 dark:text-red-400 text-xs font-bold flex items-center justify-between animate-fadeIn" role="alert">
           <div className="flex items-center gap-2">
-            <span>⚠️</span>
+            <span></span>
             <span>{serverError}</span>
           </div>
-          <button onClick={() => setServerError('')} className="p-1 hover:opacity-75 font-black text-xs" aria-label="Dismiss error">✕</button>
+          <button onClick={() => setServerError('')} className="p-1 hover:opacity-75 font-black text-xs" aria-label="Dismiss error"></button>
         </div>
       )}
 

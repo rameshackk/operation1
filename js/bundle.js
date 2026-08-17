@@ -180,9 +180,9 @@ const videosData = [
     "titleTamil": "School Fees கட்டமுடியலயா? | Budget Padmanaban",
     "titleEnglish": "School Fees கட்டமுடியலயா? | Budget Padmanaban",
     "title": "School Fees கட்டமுடியலயா? | Budget Padmanaban",
-    "descriptionTamil": "School Fees கட்டமுடியலயா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Ins",
-    "descriptionEnglish": "School Fees கட்டமுடியலயா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Ins",
-    "description": "School Fees கட்டமுடியலயா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Ins",
+    "descriptionTamil": "School Fees கட்டமுடியலயா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Ins",
+    "descriptionEnglish": "School Fees கட்டமுடியலயா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Ins",
+    "description": "School Fees கட்டமுடியலயா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Ins",
     "category": "mutual-funds",
     "publishedAt": "2026-08-15T05:00:16Z",
     "duration": "01:00",
@@ -209,9 +209,9 @@ const videosData = [
     "titleTamil": "5 Years மட்டும் Invest பண்ணினா?",
     "titleEnglish": "5 Years மட்டும் Invest பண்ணினா?",
     "title": "5 Years மட்டும் Invest பண்ணினா?",
-    "descriptionTamil": "5 Years மட்டும் Invest பண்ணினா?\n\n#FinancialPlanning #RetirementPlanning #SIP #StepUpSIP #MutualFunds\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\n",
-    "descriptionEnglish": "5 Years மட்டும் Invest பண்ணினா?\n\n#FinancialPlanning #RetirementPlanning #SIP #StepUpSIP #MutualFunds\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\n",
-    "description": "5 Years மட்டும் Invest பண்ணினா?\n\n#FinancialPlanning #RetirementPlanning #SIP #StepUpSIP #MutualFunds\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\n",
+    "descriptionTamil": "5 Years மட்டும் Invest பண்ணினா?\n\n#FinancialPlanning #RetirementPlanning #SIP #StepUpSIP #MutualFunds\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\n",
+    "descriptionEnglish": "5 Years மட்டும் Invest பண்ணினா?\n\n#FinancialPlanning #RetirementPlanning #SIP #StepUpSIP #MutualFunds\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\n",
+    "description": "5 Years மட்டும் Invest பண்ணினா?\n\n#FinancialPlanning #RetirementPlanning #SIP #StepUpSIP #MutualFunds\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\n",
     "category": "mutual-funds",
     "publishedAt": "2026-08-13T05:30:22Z",
     "duration": "09:13",
@@ -238,9 +238,9 @@ const videosData = [
     "titleTamil": "FIRE Isn't Only For The Rich!",
     "titleEnglish": "FIRE Isn't Only For The Rich!",
     "title": "FIRE Isn't Only For The Rich!",
-    "descriptionTamil": "FIRE Isn't Only For The Rich!\n\n#FinancialPlanning #FIRE #FinancialIndependence #EarlyRetirement #SIP\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\n",
-    "descriptionEnglish": "FIRE Isn't Only For The Rich!\n\n#FinancialPlanning #FIRE #FinancialIndependence #EarlyRetirement #SIP\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\n",
-    "description": "FIRE Isn't Only For The Rich!\n\n#FinancialPlanning #FIRE #FinancialIndependence #EarlyRetirement #SIP\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\n",
+    "descriptionTamil": "FIRE Isn't Only For The Rich!\n\n#FinancialPlanning #FIRE #FinancialIndependence #EarlyRetirement #SIP\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\n",
+    "descriptionEnglish": "FIRE Isn't Only For The Rich!\n\n#FinancialPlanning #FIRE #FinancialIndependence #EarlyRetirement #SIP\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\n",
+    "description": "FIRE Isn't Only For The Rich!\n\n#FinancialPlanning #FIRE #FinancialIndependence #EarlyRetirement #SIP\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\n",
     "category": "mutual-funds",
     "publishedAt": "2026-08-10T05:30:22Z",
     "duration": "12:26",
@@ -267,9 +267,9 @@ const videosData = [
     "titleTamil": "Mutual Funds கத்துப்பது Easy! | Budget Padmanaban",
     "titleEnglish": "Mutual Funds கத்துப்பது Easy! | Budget Padmanaban",
     "title": "Mutual Funds கத்துப்பது Easy! | Budget Padmanaban",
-    "descriptionTamil": "Mutual Funds கத்துப்பது Easy! | Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n\ud83d",
-    "descriptionEnglish": "Mutual Funds கத்துப்பது Easy! | Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n\ud83d",
-    "description": "Mutual Funds கத்துப்பது Easy! | Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n\ud83d",
+    "descriptionTamil": "Mutual Funds கத்துப்பது Easy! | Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n\ud83d",
+    "descriptionEnglish": "Mutual Funds கத்துப்பது Easy! | Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n\ud83d",
+    "description": "Mutual Funds கத்துப்பது Easy! | Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n\ud83d",
     "category": "mutual-funds",
     "publishedAt": "2026-08-09T05:00:32Z",
     "duration": "15:39",
@@ -296,9 +296,9 @@ const videosData = [
     "titleTamil": "Market-ன் ஏற்ற இரக்கத்தை புரிஞ்சிக்கிட்டால் Profit! | Budget Padmanaban",
     "titleEnglish": "Market-ன் ஏற்ற இரக்கத்தை புரிஞ்சிக்கிட்டால் Profit! | Budget Padmanaban",
     "title": "Market-ன் ஏற்ற இரக்கத்தை புரிஞ்சிக்கிட்டால் Profit! | Budget Padmanaban",
-    "descriptionTamil": "Market-ன் ஏற்ற இரக்கத்தை புரிஞ்சிக்கிட்டால் Profit! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/4",
-    "descriptionEnglish": "Market-ன் ஏற்ற இரக்கத்தை புரிஞ்சிக்கிட்டால் Profit! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/4",
-    "description": "Market-ன் ஏற்ற இரக்கத்தை புரிஞ்சிக்கிட்டால் Profit! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/4",
+    "descriptionTamil": "Market-ன் ஏற்ற இரக்கத்தை புரிஞ்சிக்கிட்டால் Profit! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/4",
+    "descriptionEnglish": "Market-ன் ஏற்ற இரக்கத்தை புரிஞ்சிக்கிட்டால் Profit! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/4",
+    "description": "Market-ன் ஏற்ற இரக்கத்தை புரிஞ்சிக்கிட்டால் Profit! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/4",
     "category": "mutual-funds",
     "publishedAt": "2026-08-08T04:30:01Z",
     "duration": "18:52",
@@ -325,9 +325,9 @@ const videosData = [
     "titleTamil": "25 வயதில் இந்த Rule தெரியுமா?",
     "titleEnglish": "25 வயதில் இந்த Rule தெரியுமா?",
     "title": "25 வயதில் இந்த Rule தெரியுமா?",
-    "descriptionTamil": "25 வயதில் இந்த Rule தெரியுமா?\n\n#RetirementPlanning #SIP #StepUpSIP #MutualFunds\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://",
-    "descriptionEnglish": "25 வயதில் இந்த Rule தெரியுமா?\n\n#RetirementPlanning #SIP #StepUpSIP #MutualFunds\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://",
-    "description": "25 வயதில் இந்த Rule தெரியுமா?\n\n#RetirementPlanning #SIP #StepUpSIP #MutualFunds\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://",
+    "descriptionTamil": "25 வயதில் இந்த Rule தெரியுமா?\n\n#RetirementPlanning #SIP #StepUpSIP #MutualFunds\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://",
+    "descriptionEnglish": "25 வயதில் இந்த Rule தெரியுமா?\n\n#RetirementPlanning #SIP #StepUpSIP #MutualFunds\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://",
+    "description": "25 வயதில் இந்த Rule தெரியுமா?\n\n#RetirementPlanning #SIP #StepUpSIP #MutualFunds\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://",
     "category": "mutual-funds",
     "publishedAt": "2026-08-07T05:30:00Z",
     "duration": "21:05",
@@ -354,9 +354,9 @@ const videosData = [
     "titleTamil": "Gold இனிமேல் Returns குடுக்காது! | Budget Padmanaban",
     "titleEnglish": "Gold இனிமேல் Returns குடுக்காது! | Budget Padmanaban",
     "title": "Gold இனிமேல் Returns குடுக்காது! | Budget Padmanaban",
-    "descriptionTamil": "Gold இனிமேல் Returns குடுக்காது! | Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵",
-    "descriptionEnglish": "Gold இனிமேல் Returns குடுக்காது! | Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵",
-    "description": "Gold இனிமேல் Returns குடுக்காது! | Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵",
+    "descriptionTamil": "Gold இனிமேல் Returns குடுக்காது! | Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵",
+    "descriptionEnglish": "Gold இனிமேல் Returns குடுக்காது! | Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵",
+    "description": "Gold இனிமேல் Returns குடுக்காது! | Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵",
     "category": "mutual-funds",
     "publishedAt": "2026-08-05T13:51:54Z",
     "duration": "01:00",
@@ -383,9 +383,9 @@ const videosData = [
     "titleTamil": "தங்கம் விலையேற காரணம் இதுதான்! | Budget Padmanaban",
     "titleEnglish": "தங்கம் விலையேற காரணம் இதுதான்! | Budget Padmanaban",
     "title": "தங்கம் விலையேற காரணம் இதுதான்! | Budget Padmanaban",
-    "descriptionTamil": "தங்கம் விலையேற காரணம் இதுதான்! | Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n",
-    "descriptionEnglish": "தங்கம் விலையேற காரணம் இதுதான்! | Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n",
-    "description": "தங்கம் விலையேற காரணம் இதுதான்! | Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n",
+    "descriptionTamil": "தங்கம் விலையேற காரணம் இதுதான்! | Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n",
+    "descriptionEnglish": "தங்கம் விலையேற காரணம் இதுதான்! | Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n",
+    "description": "தங்கம் விலையேற காரணம் இதுதான்! | Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n",
     "category": "mutual-funds",
     "publishedAt": "2026-08-04T14:30:25Z",
     "duration": "09:31",
@@ -412,9 +412,9 @@ const videosData = [
     "titleTamil": "Gold or Mutual Fund - எது நிம்மதி கொடுக்கும்? | Budget Padmanaban",
     "titleEnglish": "Gold or Mutual Fund - எது நிம்மதி கொடுக்கும்? | Budget Padmanaban",
     "title": "Gold or Mutual Fund - எது நிம்மதி கொடுக்கும்? | Budget Padmanaban",
-    "descriptionTamil": "Gold or Mutual Fund - எது நிம்மதி கொடுக்கும்? | Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P",
-    "descriptionEnglish": "Gold or Mutual Fund - எது நிம்மதி கொடுக்கும்? | Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P",
-    "description": "Gold or Mutual Fund - எது நிம்மதி கொடுக்கும்? | Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P",
+    "descriptionTamil": "Gold or Mutual Fund - எது நிம்மதி கொடுக்கும்? | Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P",
+    "descriptionEnglish": "Gold or Mutual Fund - எது நிம்மதி கொடுக்கும்? | Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P",
+    "description": "Gold or Mutual Fund - எது நிம்மதி கொடுக்கும்? | Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P",
     "category": "mutual-funds",
     "publishedAt": "2026-08-04T12:16:49Z",
     "duration": "12:44",
@@ -441,9 +441,9 @@ const videosData = [
     "titleTamil": "Government School VS Private School - Parents Must Know!| Budget Padmanaban",
     "titleEnglish": "Government School VS Private School - Parents Must Know!| Budget Padmanaban",
     "title": "Government School VS Private School - Parents Must Know!| Budget Padmanaban",
-    "descriptionTamil": "Government School VS Private School - Parents Must Know!| Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit",
-    "descriptionEnglish": "Government School VS Private School - Parents Must Know!| Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit",
-    "description": "Government School VS Private School - Parents Must Know!| Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit",
+    "descriptionTamil": "Government School VS Private School - Parents Must Know!| Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit",
+    "descriptionEnglish": "Government School VS Private School - Parents Must Know!| Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit",
+    "description": "Government School VS Private School - Parents Must Know!| Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit",
     "category": "mutual-funds",
     "publishedAt": "2026-08-04T05:30:04Z",
     "duration": "15:57",
@@ -467,12 +467,12 @@ const videosData = [
     "channelHandle": "@budgetpadmanaban_",
     "channelUrl": "https://www.youtube.com/@budgetpadmanaban_",
     "channelName": "Budget Padmanaban",
-    "titleTamil": "Mutual Fund பயத்தை போக்க ஒரே வழி இதுதான்! 💰| Budget Padmanaban",
-    "titleEnglish": "Mutual Fund பயத்தை போக்க ஒரே வழி இதுதான்! 💰| Budget Padmanaban",
-    "title": "Mutual Fund பயத்தை போக்க ஒரே வழி இதுதான்! 💰| Budget Padmanaban",
-    "descriptionTamil": "Mutual Fund பயத்தை போக்க ஒரே வழி இதுதான்! 💰| Budget Padmanaban \n\nஇந்த வீடியோவில் Gold மற்றும் Mutual Fund-ல் எது சிறந்த முதலீடு என்பதை தரவுகளுடனும், நடைமுறை உதாரணங்களுடனும் விளக்குகிறோம். Gold Allocation, Fixed Deposit, Stock Market சரிவு, Gold Pric",
-    "descriptionEnglish": "Mutual Fund பயத்தை போக்க ஒரே வழி இதுதான்! 💰| Budget Padmanaban \n\nஇந்த வீடியோவில் Gold மற்றும் Mutual Fund-ல் எது சிறந்த முதலீடு என்பதை தரவுகளுடனும், நடைமுறை உதாரணங்களுடனும் விளக்குகிறோம். Gold Allocation, Fixed Deposit, Stock Market சரிவு, Gold Pric",
-    "description": "Mutual Fund பயத்தை போக்க ஒரே வழி இதுதான்! 💰| Budget Padmanaban \n\nஇந்த வீடியோவில் Gold மற்றும் Mutual Fund-ல் எது சிறந்த முதலீடு என்பதை தரவுகளுடனும், நடைமுறை உதாரணங்களுடனும் விளக்குகிறோம். Gold Allocation, Fixed Deposit, Stock Market சரிவு, Gold Pric",
+    "titleTamil": "Mutual Fund பயத்தை போக்க ஒரே வழி இதுதான்! | Budget Padmanaban",
+    "titleEnglish": "Mutual Fund பயத்தை போக்க ஒரே வழி இதுதான்! | Budget Padmanaban",
+    "title": "Mutual Fund பயத்தை போக்க ஒரே வழி இதுதான்! | Budget Padmanaban",
+    "descriptionTamil": "Mutual Fund பயத்தை போக்க ஒரே வழி இதுதான்! | Budget Padmanaban \n\nஇந்த வீடியோவில் Gold மற்றும் Mutual Fund-ல் எது சிறந்த முதலீடு என்பதை தரவுகளுடனும், நடைமுறை உதாரணங்களுடனும் விளக்குகிறோம். Gold Allocation, Fixed Deposit, Stock Market சரிவு, Gold Pric",
+    "descriptionEnglish": "Mutual Fund பயத்தை போக்க ஒரே வழி இதுதான்! | Budget Padmanaban \n\nஇந்த வீடியோவில் Gold மற்றும் Mutual Fund-ல் எது சிறந்த முதலீடு என்பதை தரவுகளுடனும், நடைமுறை உதாரணங்களுடனும் விளக்குகிறோம். Gold Allocation, Fixed Deposit, Stock Market சரிவு, Gold Pric",
+    "description": "Mutual Fund பயத்தை போக்க ஒரே வழி இதுதான்! | Budget Padmanaban \n\nஇந்த வீடியோவில் Gold மற்றும் Mutual Fund-ல் எது சிறந்த முதலீடு என்பதை தரவுகளுடனும், நடைமுறை உதாரணங்களுடனும் விளக்குகிறோம். Gold Allocation, Fixed Deposit, Stock Market சரிவு, Gold Pric",
     "category": "mutual-funds",
     "publishedAt": "2026-08-03T11:59:30Z",
     "duration": "18:10",
@@ -499,9 +499,9 @@ const videosData = [
     "titleTamil": "The Power Of Starting Early",
     "titleEnglish": "The Power Of Starting Early",
     "title": "The Power Of Starting Early",
-    "descriptionTamil": "The Power Of Starting Early\n\n#FinancialPlanning #Compounding #SIP #MutualFunds\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://",
-    "descriptionEnglish": "The Power Of Starting Early\n\n#FinancialPlanning #Compounding #SIP #MutualFunds\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://",
-    "description": "The Power Of Starting Early\n\n#FinancialPlanning #Compounding #SIP #MutualFunds\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://",
+    "descriptionTamil": "The Power Of Starting Early\n\n#FinancialPlanning #Compounding #SIP #MutualFunds\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://",
+    "descriptionEnglish": "The Power Of Starting Early\n\n#FinancialPlanning #Compounding #SIP #MutualFunds\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://",
+    "description": "The Power Of Starting Early\n\n#FinancialPlanning #Compounding #SIP #MutualFunds\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://",
     "category": "mutual-funds",
     "publishedAt": "2026-08-03T05:30:37Z",
     "duration": "21:23",
@@ -528,9 +528,9 @@ const videosData = [
     "titleTamil": "Government School-ல குழந்தைகளை சேர்ப்பது சரியான Financial Plan-ஆ? | Budget Padmanaban",
     "titleEnglish": "Government School-ல குழந்தைகளை சேர்ப்பது சரியான Financial Plan-ஆ? | Budget Padmanaban",
     "title": "Government School-ல குழந்தைகளை சேர்ப்பது சரியான Financial Plan-ஆ? | Budget Padmanaban",
-    "descriptionTamil": "Government School-ல குழந்தைகளை சேர்ப்பது சரியான Financial Plan-ஆ? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: ht",
-    "descriptionEnglish": "Government School-ல குழந்தைகளை சேர்ப்பது சரியான Financial Plan-ஆ? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: ht",
-    "description": "Government School-ல குழந்தைகளை சேர்ப்பது சரியான Financial Plan-ஆ? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: ht",
+    "descriptionTamil": "Government School-ல குழந்தைகளை சேர்ப்பது சரியான Financial Plan-ஆ? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: ht",
+    "descriptionEnglish": "Government School-ல குழந்தைகளை சேர்ப்பது சரியான Financial Plan-ஆ? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: ht",
+    "description": "Government School-ல குழந்தைகளை சேர்ப்பது சரியான Financial Plan-ஆ? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: ht",
     "category": "mutual-funds",
     "publishedAt": "2026-08-02T05:15:23Z",
     "duration": "01:00",
@@ -557,9 +557,9 @@ const videosData = [
     "titleTamil": "Early Investing Matters",
     "titleEnglish": "Early Investing Matters",
     "title": "Early Investing Matters",
-    "descriptionTamil": "Early Investing Matters\n\n#FinancialPlanning #PersonalFinance #SIP #StepUpSIP #MutualFunds\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form",
-    "descriptionEnglish": "Early Investing Matters\n\n#FinancialPlanning #PersonalFinance #SIP #StepUpSIP #MutualFunds\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form",
-    "description": "Early Investing Matters\n\n#FinancialPlanning #PersonalFinance #SIP #StepUpSIP #MutualFunds\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form",
+    "descriptionTamil": "Early Investing Matters\n\n#FinancialPlanning #PersonalFinance #SIP #StepUpSIP #MutualFunds\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form",
+    "descriptionEnglish": "Early Investing Matters\n\n#FinancialPlanning #PersonalFinance #SIP #StepUpSIP #MutualFunds\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form",
+    "description": "Early Investing Matters\n\n#FinancialPlanning #PersonalFinance #SIP #StepUpSIP #MutualFunds\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form",
     "category": "shorts",
     "publishedAt": "2026-08-01T05:30:13Z",
     "duration": "09:49",
@@ -586,9 +586,9 @@ const videosData = [
     "titleTamil": "Part Time Job-ல சம்பாதித்து வருமானத்தை உயர்த்தலாம்! | Budget Padmanaban",
     "titleEnglish": "Part Time Job-ல சம்பாதித்து வருமானத்தை உயர்த்தலாம்! | Budget Padmanaban",
     "title": "Part Time Job-ல சம்பாதித்து வருமானத்தை உயர்த்தலாம்! | Budget Padmanaban",
-    "descriptionTamil": "Part Time Job-ல சம்பாதித்து வருமானத்தை உயர்த்தலாம்! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/4",
-    "descriptionEnglish": "Part Time Job-ல சம்பாதித்து வருமானத்தை உயர்த்தலாம்! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/4",
-    "description": "Part Time Job-ல சம்பாதித்து வருமானத்தை உயர்த்தலாம்! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/4",
+    "descriptionTamil": "Part Time Job-ல சம்பாதித்து வருமானத்தை உயர்த்தலாம்! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/4",
+    "descriptionEnglish": "Part Time Job-ல சம்பாதித்து வருமானத்தை உயர்த்தலாம்! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/4",
+    "description": "Part Time Job-ல சம்பாதித்து வருமானத்தை உயர்த்தலாம்! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/4",
     "category": "mutual-funds",
     "publishedAt": "2026-07-30T11:30:30Z",
     "duration": "12:02",
@@ -615,9 +615,9 @@ const videosData = [
     "titleTamil": "குழந்தை பிறந்த உடனே சேமிப்பை தொடங்கணுமா? | Budget Padmanaban",
     "titleEnglish": "குழந்தை பிறந்த உடனே சேமிப்பை தொடங்கணுமா? | Budget Padmanaban",
     "title": "குழந்தை பிறந்த உடனே சேமிப்பை தொடங்கணுமா? | Budget Padmanaban",
-    "descriptionTamil": "குழந்தை பிறந்த உடனே சேமிப்பை தொடங்கணுமா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSoc",
-    "descriptionEnglish": "குழந்தை பிறந்த உடனே சேமிப்பை தொடங்கணுமா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSoc",
-    "description": "குழந்தை பிறந்த உடனே சேமிப்பை தொடங்கணுமா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSoc",
+    "descriptionTamil": "குழந்தை பிறந்த உடனே சேமிப்பை தொடங்கணுமா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSoc",
+    "descriptionEnglish": "குழந்தை பிறந்த உடனே சேமிப்பை தொடங்கணுமா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSoc",
+    "description": "குழந்தை பிறந்த உடனே சேமிப்பை தொடங்கணுமா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSoc",
     "category": "mutual-funds",
     "publishedAt": "2026-07-29T13:15:01Z",
     "duration": "15:15",
@@ -641,12 +641,12 @@ const videosData = [
     "channelHandle": "@budgetpadmanaban_",
     "channelUrl": "https://www.youtube.com/@budgetpadmanaban_",
     "channelName": "Budget Padmanaban",
-    "titleTamil": "₹30,000 Budget-ல Family-க்கு Complete Financial Plan!💰 | Budget Padmanaban",
-    "titleEnglish": "₹30,000 Budget-ல Family-க்கு Complete Financial Plan!💰 | Budget Padmanaban",
-    "title": "₹30,000 Budget-ல Family-க்கு Complete Financial Plan!💰 | Budget Padmanaban",
-    "descriptionTamil": "₹30,000 Budget-ல Family-க்கு Complete Financial Plan!💰 | Budget Padmanaban\n\nஇந்த வீடியோவில் ஒரு குடும்பத்தின் Financial Planning எப்படி இருக்க வேண்டும் என்பதை நடைமுறை உதாரணங்களுடன் விளக்குகிறோம். குழந்தையின் எதிர்கால Education, Education Loan, Sip F",
-    "descriptionEnglish": "₹30,000 Budget-ல Family-க்கு Complete Financial Plan!💰 | Budget Padmanaban\n\nஇந்த வீடியோவில் ஒரு குடும்பத்தின் Financial Planning எப்படி இருக்க வேண்டும் என்பதை நடைமுறை உதாரணங்களுடன் விளக்குகிறோம். குழந்தையின் எதிர்கால Education, Education Loan, Sip F",
-    "description": "₹30,000 Budget-ல Family-க்கு Complete Financial Plan!💰 | Budget Padmanaban\n\nஇந்த வீடியோவில் ஒரு குடும்பத்தின் Financial Planning எப்படி இருக்க வேண்டும் என்பதை நடைமுறை உதாரணங்களுடன் விளக்குகிறோம். குழந்தையின் எதிர்கால Education, Education Loan, Sip F",
+    "titleTamil": "₹30,000 Budget-ல Family-க்கு Complete Financial Plan!| Budget Padmanaban",
+    "titleEnglish": "₹30,000 Budget-ல Family-க்கு Complete Financial Plan!| Budget Padmanaban",
+    "title": "₹30,000 Budget-ல Family-க்கு Complete Financial Plan!| Budget Padmanaban",
+    "descriptionTamil": "₹30,000 Budget-ல Family-க்கு Complete Financial Plan!| Budget Padmanaban\n\nஇந்த வீடியோவில் ஒரு குடும்பத்தின் Financial Planning எப்படி இருக்க வேண்டும் என்பதை நடைமுறை உதாரணங்களுடன் விளக்குகிறோம். குழந்தையின் எதிர்கால Education, Education Loan, Sip F",
+    "descriptionEnglish": "₹30,000 Budget-ல Family-க்கு Complete Financial Plan!| Budget Padmanaban\n\nஇந்த வீடியோவில் ஒரு குடும்பத்தின் Financial Planning எப்படி இருக்க வேண்டும் என்பதை நடைமுறை உதாரணங்களுடன் விளக்குகிறோம். குழந்தையின் எதிர்கால Education, Education Loan, Sip F",
+    "description": "₹30,000 Budget-ல Family-க்கு Complete Financial Plan!| Budget Padmanaban\n\nஇந்த வீடியோவில் ஒரு குடும்பத்தின் Financial Planning எப்படி இருக்க வேண்டும் என்பதை நடைமுறை உதாரணங்களுடன் விளக்குகிறோம். குழந்தையின் எதிர்கால Education, Education Loan, Sip F",
     "category": "mutual-funds",
     "publishedAt": "2026-07-29T11:30:02Z",
     "duration": "18:28",
@@ -702,9 +702,9 @@ const videosData = [
     "titleTamil": "Mutual Fund-ல் இந்த Charge தெரியுமா?",
     "titleEnglish": "Mutual Fund-ல் இந்த Charge தெரியுமா?",
     "title": "Mutual Fund-ல் இந்த Charge தெரியுமா?",
-    "descriptionTamil": "Mutual Fund-ல் இந்த Charge தெரியுமா?\n\n#MutualFunds #ExpenseRatio #FinancialEducation #InvestmentPlanning #PersonalFinance\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n78",
-    "descriptionEnglish": "Mutual Fund-ல் இந்த Charge தெரியுமா?\n\n#MutualFunds #ExpenseRatio #FinancialEducation #InvestmentPlanning #PersonalFinance\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n78",
-    "description": "Mutual Fund-ல் இந்த Charge தெரியுமா?\n\n#MutualFunds #ExpenseRatio #FinancialEducation #InvestmentPlanning #PersonalFinance\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n78",
+    "descriptionTamil": "Mutual Fund-ல் இந்த Charge தெரியுமா?\n\n#MutualFunds #ExpenseRatio #FinancialEducation #InvestmentPlanning #PersonalFinance\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n78",
+    "descriptionEnglish": "Mutual Fund-ல் இந்த Charge தெரியுமா?\n\n#MutualFunds #ExpenseRatio #FinancialEducation #InvestmentPlanning #PersonalFinance\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n78",
+    "description": "Mutual Fund-ல் இந்த Charge தெரியுமா?\n\n#MutualFunds #ExpenseRatio #FinancialEducation #InvestmentPlanning #PersonalFinance\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n78",
     "category": "mutual-funds",
     "publishedAt": "2026-07-26T07:34:27Z",
     "duration": "01:00",
@@ -731,9 +731,9 @@ const videosData = [
     "titleTamil": "STEP-UP SIP VS LUMPSUM எந்த Investment Best? | Budget Padmanaban",
     "titleEnglish": "STEP-UP SIP VS LUMPSUM எந்த Investment Best? | Budget Padmanaban",
     "title": "STEP-UP SIP VS LUMPSUM எந்த Investment Best? | Budget Padmanaban",
-    "descriptionTamil": "STEP-UP SIP VS LUMPSUM எந்த Investment Best? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n",
-    "descriptionEnglish": "STEP-UP SIP VS LUMPSUM எந்த Investment Best? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n",
-    "description": "STEP-UP SIP VS LUMPSUM எந்த Investment Best? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n",
+    "descriptionTamil": "STEP-UP SIP VS LUMPSUM எந்த Investment Best? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n",
+    "descriptionEnglish": "STEP-UP SIP VS LUMPSUM எந்த Investment Best? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n",
+    "description": "STEP-UP SIP VS LUMPSUM எந்த Investment Best? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n",
     "category": "mutual-funds",
     "publishedAt": "2026-07-25T05:00:18Z",
     "duration": "09:07",
@@ -760,9 +760,9 @@ const videosData = [
     "titleTamil": "பயத்துல INVEST பண்ணா நல்ல RETURNS வராதா? | Budget Padmanaban",
     "titleEnglish": "பயத்துல INVEST பண்ணா நல்ல RETURNS வராதா? | Budget Padmanaban",
     "title": "பயத்துல INVEST பண்ணா நல்ல RETURNS வராதா? | Budget Padmanaban",
-    "descriptionTamil": "பயத்துல INVEST பண்ணா நல்ல RETURNS வராதா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSoc",
-    "descriptionEnglish": "பயத்துல INVEST பண்ணா நல்ல RETURNS வராதா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSoc",
-    "description": "பயத்துல INVEST பண்ணா நல்ல RETURNS வராதா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSoc",
+    "descriptionTamil": "பயத்துல INVEST பண்ணா நல்ல RETURNS வராதா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSoc",
+    "descriptionEnglish": "பயத்துல INVEST பண்ணா நல்ல RETURNS வராதா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSoc",
+    "description": "பயத்துல INVEST பண்ணா நல்ல RETURNS வராதா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSoc",
     "category": "mutual-funds",
     "publishedAt": "2026-07-23T12:32:21Z",
     "duration": "12:20",
@@ -789,9 +789,9 @@ const videosData = [
     "titleTamil": "US Dollar-க்கு Equal Gold-ஆ? | Budget Padmanaban",
     "titleEnglish": "US Dollar-க்கு Equal Gold-ஆ? | Budget Padmanaban",
     "title": "US Dollar-க்கு Equal Gold-ஆ? | Budget Padmanaban",
-    "descriptionTamil": "US Dollar-க்கு Equal Gold-ஆ? | Budget Padmanaban\n\n#Dollar #Gold #SIP #Investment #PersonalFinance #BudgetPadmanabanPadmanaban\n\n B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782409139",
-    "descriptionEnglish": "US Dollar-க்கு Equal Gold-ஆ? | Budget Padmanaban\n\n#Dollar #Gold #SIP #Investment #PersonalFinance #BudgetPadmanabanPadmanaban\n\n B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782409139",
-    "description": "US Dollar-க்கு Equal Gold-ஆ? | Budget Padmanaban\n\n#Dollar #Gold #SIP #Investment #PersonalFinance #BudgetPadmanabanPadmanaban\n\n B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782409139",
+    "descriptionTamil": "US Dollar-க்கு Equal Gold-ஆ? | Budget Padmanaban\n\n#Dollar #Gold #SIP #Investment #PersonalFinance #BudgetPadmanabanPadmanaban\n\n B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782409139",
+    "descriptionEnglish": "US Dollar-க்கு Equal Gold-ஆ? | Budget Padmanaban\n\n#Dollar #Gold #SIP #Investment #PersonalFinance #BudgetPadmanabanPadmanaban\n\n B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782409139",
+    "description": "US Dollar-க்கு Equal Gold-ஆ? | Budget Padmanaban\n\n#Dollar #Gold #SIP #Investment #PersonalFinance #BudgetPadmanabanPadmanaban\n\n B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782409139",
     "category": "mutual-funds",
     "publishedAt": "2026-07-19T14:06:21Z",
     "duration": "15:33",
@@ -815,12 +815,12 @@ const videosData = [
     "channelHandle": "@budgetpadmanaban_",
     "channelUrl": "https://www.youtube.com/@budgetpadmanaban_",
     "channelName": "Budget Padmanaban",
-    "titleTamil": "SIP vs TOP-UP SIP - எதுல அதிக PROFIT கிடைக்கும்? 💹 | Budget Padmanaban",
-    "titleEnglish": "SIP vs TOP-UP SIP - எதுல அதிக PROFIT கிடைக்கும்? 💹 | Budget Padmanaban",
-    "title": "SIP vs TOP-UP SIP - எதுல அதிக PROFIT கிடைக்கும்? 💹 | Budget Padmanaban",
-    "descriptionTamil": "SIP vs TOP-UP SIP - எதுல அதிக PROFIT கிடைக்கும்? 💹 | Budget Padmanaban\n\nஇந்த வீடியோவில் ₹5,000 இருந்தால் அதை எப்படி புத்திசாலித்தனமாக INVEST செய்வது என்பதை எளிமையாக விளக்குகிறோம். GOLD, SIP, TOP-UP SIP, MUTUAL FUNDS, ASSET ALLOCATION போன்ற முக்கியமா",
-    "descriptionEnglish": "SIP vs TOP-UP SIP - எதுல அதிக PROFIT கிடைக்கும்? 💹 | Budget Padmanaban\n\nஇந்த வீடியோவில் ₹5,000 இருந்தால் அதை எப்படி புத்திசாலித்தனமாக INVEST செய்வது என்பதை எளிமையாக விளக்குகிறோம். GOLD, SIP, TOP-UP SIP, MUTUAL FUNDS, ASSET ALLOCATION போன்ற முக்கியமா",
-    "description": "SIP vs TOP-UP SIP - எதுல அதிக PROFIT கிடைக்கும்? 💹 | Budget Padmanaban\n\nஇந்த வீடியோவில் ₹5,000 இருந்தால் அதை எப்படி புத்திசாலித்தனமாக INVEST செய்வது என்பதை எளிமையாக விளக்குகிறோம். GOLD, SIP, TOP-UP SIP, MUTUAL FUNDS, ASSET ALLOCATION போன்ற முக்கியமா",
+    "titleTamil": "SIP vs TOP-UP SIP - எதுல அதிக PROFIT கிடைக்கும்? | Budget Padmanaban",
+    "titleEnglish": "SIP vs TOP-UP SIP - எதுல அதிக PROFIT கிடைக்கும்? | Budget Padmanaban",
+    "title": "SIP vs TOP-UP SIP - எதுல அதிக PROFIT கிடைக்கும்? | Budget Padmanaban",
+    "descriptionTamil": "SIP vs TOP-UP SIP - எதுல அதிக PROFIT கிடைக்கும்? | Budget Padmanaban\n\nஇந்த வீடியோவில் ₹5,000 இருந்தால் அதை எப்படி புத்திசாலித்தனமாக INVEST செய்வது என்பதை எளிமையாக விளக்குகிறோம். GOLD, SIP, TOP-UP SIP, MUTUAL FUNDS, ASSET ALLOCATION போன்ற முக்கியமா",
+    "descriptionEnglish": "SIP vs TOP-UP SIP - எதுல அதிக PROFIT கிடைக்கும்? | Budget Padmanaban\n\nஇந்த வீடியோவில் ₹5,000 இருந்தால் அதை எப்படி புத்திசாலித்தனமாக INVEST செய்வது என்பதை எளிமையாக விளக்குகிறோம். GOLD, SIP, TOP-UP SIP, MUTUAL FUNDS, ASSET ALLOCATION போன்ற முக்கியமா",
+    "description": "SIP vs TOP-UP SIP - எதுல அதிக PROFIT கிடைக்கும்? | Budget Padmanaban\n\nஇந்த வீடியோவில் ₹5,000 இருந்தால் அதை எப்படி புத்திசாலித்தனமாக INVEST செய்வது என்பதை எளிமையாக விளக்குகிறோம். GOLD, SIP, TOP-UP SIP, MUTUAL FUNDS, ASSET ALLOCATION போன்ற முக்கியமா",
     "category": "mutual-funds",
     "publishedAt": "2026-07-18T12:47:29Z",
     "duration": "18:46",
@@ -847,9 +847,9 @@ const videosData = [
     "titleTamil": "A Simple Retirement Strategy",
     "titleEnglish": "A Simple Retirement Strategy",
     "title": "A Simple Retirement Strategy",
-    "descriptionTamil": "A Simple Retirement Strategy\n\n#FinancialPlanning #RetirementPlanning #PersonalFinance #InvestmentPlanning #MutualFunds\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n78240",
-    "descriptionEnglish": "A Simple Retirement Strategy\n\n#FinancialPlanning #RetirementPlanning #PersonalFinance #InvestmentPlanning #MutualFunds\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n78240",
-    "description": "A Simple Retirement Strategy\n\n#FinancialPlanning #RetirementPlanning #PersonalFinance #InvestmentPlanning #MutualFunds\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n78240",
+    "descriptionTamil": "A Simple Retirement Strategy\n\n#FinancialPlanning #RetirementPlanning #PersonalFinance #InvestmentPlanning #MutualFunds\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n78240",
+    "descriptionEnglish": "A Simple Retirement Strategy\n\n#FinancialPlanning #RetirementPlanning #PersonalFinance #InvestmentPlanning #MutualFunds\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n78240",
+    "description": "A Simple Retirement Strategy\n\n#FinancialPlanning #RetirementPlanning #PersonalFinance #InvestmentPlanning #MutualFunds\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n78240",
     "category": "mutual-funds",
     "publishedAt": "2026-07-16T05:30:26Z",
     "duration": "21:59",
@@ -876,9 +876,9 @@ const videosData = [
     "titleTamil": "Mutualfund-ஐ 1 வருடத்தில் விற்கலாமா? | Budget Padmanaban#",
     "titleEnglish": "Mutualfund-ஐ 1 வருடத்தில் விற்கலாமா? | Budget Padmanaban#",
     "title": "Mutualfund-ஐ 1 வருடத்தில் விற்கலாமா? | Budget Padmanaban#",
-    "descriptionTamil": "Mutualfund-ஐ 1 வருடத்தில் விற்கலாமா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials",
-    "descriptionEnglish": "Mutualfund-ஐ 1 வருடத்தில் விற்கலாமா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials",
-    "description": "Mutualfund-ஐ 1 வருடத்தில் விற்கலாமா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials",
+    "descriptionTamil": "Mutualfund-ஐ 1 வருடத்தில் விற்கலாமா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials",
+    "descriptionEnglish": "Mutualfund-ஐ 1 வருடத்தில் விற்கலாமா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials",
+    "description": "Mutualfund-ஐ 1 வருடத்தில் விற்கலாமா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials",
     "category": "mutual-funds",
     "publishedAt": "2026-07-14T13:30:25Z",
     "duration": "01:00",
@@ -905,9 +905,9 @@ const videosData = [
     "titleTamil": "Raymond Owner-ன் வாழ்க்கை பாடம்",
     "titleEnglish": "Raymond Owner-ன் வாழ்க்கை பாடம்",
     "title": "Raymond Owner-ன் வாழ்க்கை பாடம்",
-    "descriptionTamil": "Raymond Owner-ன் வாழ்க்கை பாடம்\n\n#Raymond #Business #SIP #Wealth #SuccessStory\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://",
-    "descriptionEnglish": "Raymond Owner-ன் வாழ்க்கை பாடம்\n\n#Raymond #Business #SIP #Wealth #SuccessStory\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://",
-    "description": "Raymond Owner-ன் வாழ்க்கை பாடம்\n\n#Raymond #Business #SIP #Wealth #SuccessStory\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://",
+    "descriptionTamil": "Raymond Owner-ன் வாழ்க்கை பாடம்\n\n#Raymond #Business #SIP #Wealth #SuccessStory\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://",
+    "descriptionEnglish": "Raymond Owner-ன் வாழ்க்கை பாடம்\n\n#Raymond #Business #SIP #Wealth #SuccessStory\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://",
+    "description": "Raymond Owner-ன் வாழ்க்கை பாடம்\n\n#Raymond #Business #SIP #Wealth #SuccessStory\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://",
     "category": "mutual-funds",
     "publishedAt": "2026-07-14T05:30:20Z",
     "duration": "09:25",
@@ -934,9 +934,9 @@ const videosData = [
     "titleTamil": "Gold VS Mutualfund, Urgent-க்கு பணம் எடுக்கமுடியுமா? | Budget Padmanaban",
     "titleEnglish": "Gold VS Mutualfund, Urgent-க்கு பணம் எடுக்கமுடியுமா? | Budget Padmanaban",
     "title": "Gold VS Mutualfund, Urgent-க்கு பணம் எடுக்கமுடியுமா? | Budget Padmanaban",
-    "descriptionTamil": "Gold VS Mutualfund, Urgent-க்கு பணம் எடுக்கமுடியுமா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/",
-    "descriptionEnglish": "Gold VS Mutualfund, Urgent-க்கு பணம் எடுக்கமுடியுமா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/",
-    "description": "Gold VS Mutualfund, Urgent-க்கு பணம் எடுக்கமுடியுமா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/",
+    "descriptionTamil": "Gold VS Mutualfund, Urgent-க்கு பணம் எடுக்கமுடியுமா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/",
+    "descriptionEnglish": "Gold VS Mutualfund, Urgent-க்கு பணம் எடுக்கமுடியுமா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/",
+    "description": "Gold VS Mutualfund, Urgent-க்கு பணம் எடுக்கமுடியுமா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/",
     "category": "mutual-funds",
     "publishedAt": "2026-07-13T14:06:58Z",
     "duration": "12:38",
@@ -963,9 +963,9 @@ const videosData = [
     "titleTamil": "Mutual Fund முதலீடு Safe-ஆ? | Budget Padmanaban",
     "titleEnglish": "Mutual Fund முதலீடு Safe-ஆ? | Budget Padmanaban",
     "title": "Mutual Fund முதலீடு Safe-ஆ? | Budget Padmanaban",
-    "descriptionTamil": "Mutual Fund முதலீடு Safe-ஆ? | Budget Padmanaban\n\n#ShareMarket #StockMarket #Mutualfund #SIP #Investment #InvestmentTips #BudgetPadmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵",
-    "descriptionEnglish": "Mutual Fund முதலீடு Safe-ஆ? | Budget Padmanaban\n\n#ShareMarket #StockMarket #Mutualfund #SIP #Investment #InvestmentTips #BudgetPadmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵",
-    "description": "Mutual Fund முதலீடு Safe-ஆ? | Budget Padmanaban\n\n#ShareMarket #StockMarket #Mutualfund #SIP #Investment #InvestmentTips #BudgetPadmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵",
+    "descriptionTamil": "Mutual Fund முதலீடு Safe-ஆ? | Budget Padmanaban\n\n#ShareMarket #StockMarket #Mutualfund #SIP #Investment #InvestmentTips #BudgetPadmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵",
+    "descriptionEnglish": "Mutual Fund முதலீடு Safe-ஆ? | Budget Padmanaban\n\n#ShareMarket #StockMarket #Mutualfund #SIP #Investment #InvestmentTips #BudgetPadmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵",
+    "description": "Mutual Fund முதலீடு Safe-ஆ? | Budget Padmanaban\n\n#ShareMarket #StockMarket #Mutualfund #SIP #Investment #InvestmentTips #BudgetPadmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵",
     "category": "mutual-funds",
     "publishedAt": "2026-07-12T11:30:26Z",
     "duration": "15:51",
@@ -1047,12 +1047,12 @@ const videosData = [
     "channelHandle": "@budgetpadmanaban_",
     "channelUrl": "https://www.youtube.com/@budgetpadmanaban_",
     "channelName": "Budget Padmanaban",
-    "titleTamil": "Mutualfund இப்படிதான் Work ஆகுதா?😲 இதை தெரிஞ்சிக்கிட்டா லாபம்தான்!💸| Budget Padmanaban",
-    "titleEnglish": "Mutualfund இப்படிதான் Work ஆகுதா?😲 இதை தெரிஞ்சிக்கிட்டா லாபம்தான்!💸| Budget Padmanaban",
-    "title": "Mutualfund இப்படிதான் Work ஆகுதா?😲 இதை தெரிஞ்சிக்கிட்டா லாபம்தான்!💸| Budget Padmanaban",
-    "descriptionTamil": "Mutualfund இப்படிதான் Work ஆகுதா?😲 இதை தெரிஞ்சிக்கிட்டா லாபம்தான்!💸| Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form:",
-    "descriptionEnglish": "Mutualfund இப்படிதான் Work ஆகுதா?😲 இதை தெரிஞ்சிக்கிட்டா லாபம்தான்!💸| Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form:",
-    "description": "Mutualfund இப்படிதான் Work ஆகுதா?😲 இதை தெரிஞ்சிக்கிட்டா லாபம்தான்!💸| Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form:",
+    "titleTamil": "Mutualfund இப்படிதான் Work ஆகுதா? இதை தெரிஞ்சிக்கிட்டா லாபம்தான்!| Budget Padmanaban",
+    "titleEnglish": "Mutualfund இப்படிதான் Work ஆகுதா? இதை தெரிஞ்சிக்கிட்டா லாபம்தான்!| Budget Padmanaban",
+    "title": "Mutualfund இப்படிதான் Work ஆகுதா? இதை தெரிஞ்சிக்கிட்டா லாபம்தான்!| Budget Padmanaban",
+    "descriptionTamil": "Mutualfund இப்படிதான் Work ஆகுதா? இதை தெரிஞ்சிக்கிட்டா லாபம்தான்!| Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form:",
+    "descriptionEnglish": "Mutualfund இப்படிதான் Work ஆகுதா? இதை தெரிஞ்சிக்கிட்டா லாபம்தான்!| Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form:",
+    "description": "Mutualfund இப்படிதான் Work ஆகுதா? இதை தெரிஞ்சிக்கிட்டா லாபம்தான்!| Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form:",
     "category": "mutual-funds",
     "publishedAt": "2026-07-11T12:30:31Z",
     "duration": "01:00",
@@ -1079,9 +1079,9 @@ const videosData = [
     "titleTamil": "Tax மட்டும் பார்த்தா போதுமா?",
     "titleEnglish": "Tax மட்டும் பார்த்தா போதுமா?",
     "title": "Tax மட்டும் பார்த்தா போதுமா?",
-    "descriptionTamil": "Tax மட்டும் பார்த்தா போதுமா?\n\n#FinancialEducation #PersonalFinance #InvestmentPlanning #MutualFunds #FixedDeposit\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n",
-    "descriptionEnglish": "Tax மட்டும் பார்த்தா போதுமா?\n\n#FinancialEducation #PersonalFinance #InvestmentPlanning #MutualFunds #FixedDeposit\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n",
-    "description": "Tax மட்டும் பார்த்தா போதுமா?\n\n#FinancialEducation #PersonalFinance #InvestmentPlanning #MutualFunds #FixedDeposit\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n",
+    "descriptionTamil": "Tax மட்டும் பார்த்தா போதுமா?\n\n#FinancialEducation #PersonalFinance #InvestmentPlanning #MutualFunds #FixedDeposit\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n",
+    "descriptionEnglish": "Tax மட்டும் பார்த்தா போதுமா?\n\n#FinancialEducation #PersonalFinance #InvestmentPlanning #MutualFunds #FixedDeposit\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n",
+    "description": "Tax மட்டும் பார்த்தா போதுமா?\n\n#FinancialEducation #PersonalFinance #InvestmentPlanning #MutualFunds #FixedDeposit\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n",
     "category": "mutual-funds",
     "publishedAt": "2026-07-10T05:30:28Z",
     "duration": "09:43",
@@ -1137,9 +1137,9 @@ const videosData = [
     "titleTamil": "Insurance Features தெரியாம Policy எடுக்காதீங்க..! | Padmanaban",
     "titleEnglish": "Insurance Features தெரியாம Policy எடுக்காதீங்க..! | Padmanaban",
     "title": "Insurance Features தெரியாம Policy எடுக்காதீங்க..! | Padmanaban",
-    "descriptionTamil": "Insurance Features தெரியாம Policy எடுக்காதீங்க..! | Padmanaban\n\n#Insurance #InsuranceBenefits #HealthPolicy #Padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824",
-    "descriptionEnglish": "Insurance Features தெரியாம Policy எடுக்காதீங்க..! | Padmanaban\n\n#Insurance #InsuranceBenefits #HealthPolicy #Padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824",
-    "description": "Insurance Features தெரியாம Policy எடுக்காதீங்க..! | Padmanaban\n\n#Insurance #InsuranceBenefits #HealthPolicy #Padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824",
+    "descriptionTamil": "Insurance Features தெரியாம Policy எடுக்காதீங்க..! | Padmanaban\n\n#Insurance #InsuranceBenefits #HealthPolicy #Padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824",
+    "descriptionEnglish": "Insurance Features தெரியாம Policy எடுக்காதீங்க..! | Padmanaban\n\n#Insurance #InsuranceBenefits #HealthPolicy #Padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824",
+    "description": "Insurance Features தெரியாம Policy எடுக்காதீங்க..! | Padmanaban\n\n#Insurance #InsuranceBenefits #HealthPolicy #Padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824",
     "category": "mutual-funds",
     "publishedAt": "2026-07-08T05:30:14Z",
     "duration": "15:09",
@@ -1166,9 +1166,9 @@ const videosData = [
     "titleTamil": "Low Premium பார்த்து ஏமாந்துடாதீங்க! | Padmanaban",
     "titleEnglish": "Low Premium பார்த்து ஏமாந்துடாதீங்க! | Padmanaban",
     "title": "Low Premium பார்த்து ஏமாந்துடாதீங்க! | Padmanaban",
-    "descriptionTamil": "Low Premium பார்த்து ஏமாந்துடாதீங்க! | Padmanaban\n\n#HealthInsurance #Premium #Coverage #Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nCon",
-    "descriptionEnglish": "Low Premium பார்த்து ஏமாந்துடாதீங்க! | Padmanaban\n\n#HealthInsurance #Premium #Coverage #Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nCon",
-    "description": "Low Premium பார்த்து ஏமாந்துடாதீங்க! | Padmanaban\n\n#HealthInsurance #Premium #Coverage #Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nCon",
+    "descriptionTamil": "Low Premium பார்த்து ஏமாந்துடாதீங்க! | Padmanaban\n\n#HealthInsurance #Premium #Coverage #Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nCon",
+    "descriptionEnglish": "Low Premium பார்த்து ஏமாந்துடாதீங்க! | Padmanaban\n\n#HealthInsurance #Premium #Coverage #Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nCon",
+    "description": "Low Premium பார்த்து ஏமாந்துடாதீங்க! | Padmanaban\n\n#HealthInsurance #Premium #Coverage #Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nCon",
     "category": "mutual-funds",
     "publishedAt": "2026-07-05T13:51:18Z",
     "duration": "18:22",
@@ -1195,9 +1195,9 @@ const videosData = [
     "titleTamil": "Life Insurance-ல் Loss-ஐ தவிர்ப்பது எப்படி? | Padmanaban",
     "titleEnglish": "Life Insurance-ல் Loss-ஐ தவிர்ப்பது எப்படி? | Padmanaban",
     "title": "Life Insurance-ல் Loss-ஐ தவிர்ப்பது எப்படி? | Padmanaban",
-    "descriptionTamil": "Life Insurance-ல் Loss-ஐ தவிர்ப்பது எப்படி? | Padmanaban\n\n#LifeInsurance #Loss #FinancialPlanning #Padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n782",
-    "descriptionEnglish": "Life Insurance-ல் Loss-ஐ தவிர்ப்பது எப்படி? | Padmanaban\n\n#LifeInsurance #Loss #FinancialPlanning #Padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n782",
-    "description": "Life Insurance-ல் Loss-ஐ தவிர்ப்பது எப்படி? | Padmanaban\n\n#LifeInsurance #Loss #FinancialPlanning #Padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n782",
+    "descriptionTamil": "Life Insurance-ல் Loss-ஐ தவிர்ப்பது எப்படி? | Padmanaban\n\n#LifeInsurance #Loss #FinancialPlanning #Padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n782",
+    "descriptionEnglish": "Life Insurance-ல் Loss-ஐ தவிர்ப்பது எப்படி? | Padmanaban\n\n#LifeInsurance #Loss #FinancialPlanning #Padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n782",
+    "description": "Life Insurance-ல் Loss-ஐ தவிர்ப்பது எப்படி? | Padmanaban\n\n#LifeInsurance #Loss #FinancialPlanning #Padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n782",
     "category": "mutual-funds",
     "publishedAt": "2026-07-04T05:30:22Z",
     "duration": "21:35",
@@ -1224,9 +1224,9 @@ const videosData = [
     "titleTamil": "காப்பீடு ≠ முதலீடு | இந்த தவறை செய்யாதீர்கள்! | Padmanaban",
     "titleEnglish": "காப்பீடு ≠ முதலீடு | இந்த தவறை செய்யாதீர்கள்! | Padmanaban",
     "title": "காப்பீடு ≠ முதலீடு | இந்த தவறை செய்யாதீர்கள்! | Padmanaban",
-    "descriptionTamil": "காப்பீடு ≠ முதலீடு | இந்த தவறை செய்யாதீர்கள்! | Padmanaban\n\n#Insurance #Investment #LifeInsurance #Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824",
-    "descriptionEnglish": "காப்பீடு ≠ முதலீடு | இந்த தவறை செய்யாதீர்கள்! | Padmanaban\n\n#Insurance #Investment #LifeInsurance #Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824",
-    "description": "காப்பீடு ≠ முதலீடு | இந்த தவறை செய்யாதீர்கள்! | Padmanaban\n\n#Insurance #Investment #LifeInsurance #Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824",
+    "descriptionTamil": "காப்பீடு ≠ முதலீடு | இந்த தவறை செய்யாதீர்கள்! | Padmanaban\n\n#Insurance #Investment #LifeInsurance #Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824",
+    "descriptionEnglish": "காப்பீடு ≠ முதலீடு | இந்த தவறை செய்யாதீர்கள்! | Padmanaban\n\n#Insurance #Investment #LifeInsurance #Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824",
+    "description": "காப்பீடு ≠ முதலீடு | இந்த தவறை செய்யாதீர்கள்! | Padmanaban\n\n#Insurance #Investment #LifeInsurance #Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824",
     "category": "mutual-funds",
     "publishedAt": "2026-07-03T05:30:28Z",
     "duration": "01:00",
@@ -1253,9 +1253,9 @@ const videosData = [
     "titleTamil": "Company Policy இருக்கா? Top-up மட்டும் போதும்! | Budget Padmanaban",
     "titleEnglish": "Company Policy இருக்கா? Top-up மட்டும் போதும்! | Budget Padmanaban",
     "title": "Company Policy இருக்கா? Top-up மட்டும் போதும்! | Budget Padmanaban",
-    "descriptionTamil": "Company Policy இருக்கா? Top-up மட்டும் போதும்! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P",
-    "descriptionEnglish": "Company Policy இருக்கா? Top-up மட்டும் போதும்! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P",
-    "description": "Company Policy இருக்கா? Top-up மட்டும் போதும்! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P",
+    "descriptionTamil": "Company Policy இருக்கா? Top-up மட்டும் போதும்! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P",
+    "descriptionEnglish": "Company Policy இருக்கா? Top-up மட்டும் போதும்! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P",
+    "description": "Company Policy இருக்கா? Top-up மட்டும் போதும்! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P",
     "category": "shorts",
     "publishedAt": "2026-07-01T06:00:09Z",
     "duration": "09:01",
@@ -1282,9 +1282,9 @@ const videosData = [
     "titleTamil": "Mutual Fund ஒரு Scam-ஆ? உண்மையை தெரிந்து கொள்ளும் நேரம் இது!",
     "titleEnglish": "Mutual Fund ஒரு Scam-ஆ? உண்மையை தெரிந்து கொள்ளும் நேரம் இது!",
     "title": "Mutual Fund ஒரு Scam-ஆ? உண்மையை தெரிந்து கொள்ளும் நேரம் இது!",
-    "descriptionTamil": "Mutual Fund ஒரு Scam-ஆ? உண்மையை தெரிந்து கொள்ளும் நேரம் இது!\n\n#MutualFunds #SIP #Investment #Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394",
-    "descriptionEnglish": "Mutual Fund ஒரு Scam-ஆ? உண்மையை தெரிந்து கொள்ளும் நேரம் இது!\n\n#MutualFunds #SIP #Investment #Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394",
-    "description": "Mutual Fund ஒரு Scam-ஆ? உண்மையை தெரிந்து கொள்ளும் நேரம் இது!\n\n#MutualFunds #SIP #Investment #Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394",
+    "descriptionTamil": "Mutual Fund ஒரு Scam-ஆ? உண்மையை தெரிந்து கொள்ளும் நேரம் இது!\n\n#MutualFunds #SIP #Investment #Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394",
+    "descriptionEnglish": "Mutual Fund ஒரு Scam-ஆ? உண்மையை தெரிந்து கொள்ளும் நேரம் இது!\n\n#MutualFunds #SIP #Investment #Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394",
+    "description": "Mutual Fund ஒரு Scam-ஆ? உண்மையை தெரிந்து கொள்ளும் நேரம் இது!\n\n#MutualFunds #SIP #Investment #Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394",
     "category": "mutual-funds",
     "publishedAt": "2026-07-01T05:30:00Z",
     "duration": "12:14",
@@ -1311,9 +1311,9 @@ const videosData = [
     "titleTamil": "Term Insurance போட்டா லாபமா..? | Budget Padmanaban",
     "titleEnglish": "Term Insurance போட்டா லாபமா..? | Budget Padmanaban",
     "title": "Term Insurance போட்டா லாபமா..? | Budget Padmanaban",
-    "descriptionTamil": "Term Insurance போட்டா லாபமா..? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n\ud83d",
-    "descriptionEnglish": "Term Insurance போட்டா லாபமா..? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n\ud83d",
-    "description": "Term Insurance போட்டா லாபமா..? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n\ud83d",
+    "descriptionTamil": "Term Insurance போட்டா லாபமா..? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n\ud83d",
+    "descriptionEnglish": "Term Insurance போட்டா லாபமா..? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n\ud83d",
+    "description": "Term Insurance போட்டா லாபமா..? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n\ud83d",
     "category": "shorts",
     "publishedAt": "2026-06-30T10:53:55Z",
     "duration": "15:27",
@@ -1340,9 +1340,9 @@ const videosData = [
     "titleTamil": "Insurance + SIP : Wealth Formula! | Budget Padmanaban",
     "titleEnglish": "Insurance + SIP : Wealth Formula! | Budget Padmanaban",
     "title": "Insurance + SIP : Wealth Formula! | Budget Padmanaban",
-    "descriptionTamil": "Insurance + SIP : Wealth Formula! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵",
-    "descriptionEnglish": "Insurance + SIP : Wealth Formula! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵",
-    "description": "Insurance + SIP : Wealth Formula! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵",
+    "descriptionTamil": "Insurance + SIP : Wealth Formula! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵",
+    "descriptionEnglish": "Insurance + SIP : Wealth Formula! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵",
+    "description": "Insurance + SIP : Wealth Formula! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵",
     "category": "shorts",
     "publishedAt": "2026-06-30T05:45:22Z",
     "duration": "18:40",
@@ -1398,9 +1398,9 @@ const videosData = [
     "titleTamil": "Insurance - லாபமா? நஷ்டமா? | Budget Padmanaban",
     "titleEnglish": "Insurance - லாபமா? நஷ்டமா? | Budget Padmanaban",
     "title": "Insurance - லாபமா? நஷ்டமா? | Budget Padmanaban",
-    "descriptionTamil": "Insurance - லாபமா? நஷ்டமா? | Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 I",
-    "descriptionEnglish": "Insurance - லாபமா? நஷ்டமா? | Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 I",
-    "description": "Insurance - லாபமா? நஷ்டமா? | Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 I",
+    "descriptionTamil": "Insurance - லாபமா? நஷ்டமா? | Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n I",
+    "descriptionEnglish": "Insurance - லாபமா? நஷ்டமா? | Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n I",
+    "description": "Insurance - லாபமா? நஷ்டமா? | Budget Padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n I",
     "category": "shorts",
     "publishedAt": "2026-06-29T13:30:32Z",
     "duration": "01:00",
@@ -1427,9 +1427,9 @@ const videosData = [
     "titleTamil": "Insurance Features தெரியாம Policy எடுக்காதீங்க.. | Budget Padmanaban",
     "titleEnglish": "Insurance Features தெரியாம Policy எடுக்காதீங்க.. | Budget Padmanaban",
     "title": "Insurance Features தெரியாம Policy எடுக்காதீங்க.. | Budget Padmanaban",
-    "descriptionTamil": "Insurance Features தெரியாம Policy எடுக்காதீங்க.. | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do",
-    "descriptionEnglish": "Insurance Features தெரியாம Policy எடுக்காதீங்க.. | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do",
-    "description": "Insurance Features தெரியாம Policy எடுக்காதீங்க.. | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do",
+    "descriptionTamil": "Insurance Features தெரியாம Policy எடுக்காதீங்க.. | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do",
+    "descriptionEnglish": "Insurance Features தெரியாம Policy எடுக்காதீங்க.. | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do",
+    "description": "Insurance Features தெரியாம Policy எடுக்காதீங்க.. | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do",
     "category": "shorts",
     "publishedAt": "2026-06-28T10:15:25Z",
     "duration": "09:19",
@@ -1456,9 +1456,9 @@ const videosData = [
     "titleTamil": "Low Premium பார்த்து ஏமாந்துடாதீங்க! | Budget Padmanaban",
     "titleEnglish": "Low Premium பார்த்து ஏமாந்துடாதீங்க! | Budget Padmanaban",
     "title": "Low Premium பார்த்து ஏமாந்துடாதீங்க! | Budget Padmanaban",
-    "descriptionTamil": "Low Premium பார்த்து ஏமாந்துடாதீங்க! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials",
-    "descriptionEnglish": "Low Premium பார்த்து ஏமாந்துடாதீங்க! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials",
-    "description": "Low Premium பார்த்து ஏமாந்துடாதீங்க! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials",
+    "descriptionTamil": "Low Premium பார்த்து ஏமாந்துடாதீங்க! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials",
+    "descriptionEnglish": "Low Premium பார்த்து ஏமாந்துடாதீங்க! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials",
+    "description": "Low Premium பார்த்து ஏமாந்துடாதீங்க! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials",
     "category": "shorts",
     "publishedAt": "2026-06-28T06:30:15Z",
     "duration": "12:32",
@@ -1514,9 +1514,9 @@ const videosData = [
     "titleTamil": "Life Insurance-ல் Loss-ஐ தவிர்ப்பது எப்படி? | Budget Padmanaban",
     "titleEnglish": "Life Insurance-ல் Loss-ஐ தவிர்ப்பது எப்படி? | Budget Padmanaban",
     "title": "Life Insurance-ல் Loss-ஐ தவிர்ப்பது எப்படி? | Budget Padmanaban",
-    "descriptionTamil": "Life Insurance-ல் Loss-ஐ தவிர்ப்பது எப்படி? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\n",
-    "descriptionEnglish": "Life Insurance-ல் Loss-ஐ தவிர்ப்பது எப்படி? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\n",
-    "description": "Life Insurance-ல் Loss-ஐ தவிர்ப்பது எப்படி? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\n",
+    "descriptionTamil": "Life Insurance-ல் Loss-ஐ தவிர்ப்பது எப்படி? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\n",
+    "descriptionEnglish": "Life Insurance-ல் Loss-ஐ தவிர்ப்பது எப்படி? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\n",
+    "description": "Life Insurance-ல் Loss-ஐ தவிர்ப்பது எப்படி? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\n",
     "category": "shorts",
     "publishedAt": "2026-06-27T12:00:18Z",
     "duration": "18:58",
@@ -1543,9 +1543,9 @@ const videosData = [
     "titleTamil": "Insurance & Investment : வித்தியாசம் என்ன? | Budget Padmanaban",
     "titleEnglish": "Insurance & Investment : வித்தியாசம் என்ன? | Budget Padmanaban",
     "title": "Insurance & Investment : வித்தியாசம் என்ன? | Budget Padmanaban",
-    "descriptionTamil": "Insurance & Investment : வித்தியாசம் என்ன? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nS",
-    "descriptionEnglish": "Insurance & Investment : வித்தியாசம் என்ன? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nS",
-    "description": "Insurance & Investment : வித்தியாசம் என்ன? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nS",
+    "descriptionTamil": "Insurance & Investment : வித்தியாசம் என்ன? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nS",
+    "descriptionEnglish": "Insurance & Investment : வித்தியாசம் என்ன? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nS",
+    "description": "Insurance & Investment : வித்தியாசம் என்ன? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nS",
     "category": "shorts",
     "publishedAt": "2026-06-27T07:01:08Z",
     "duration": "21:11",
@@ -1659,9 +1659,9 @@ const videosData = [
     "titleTamil": "Job கிடைச்சதும் Savings start பண்ணுங்க.. | Budget Padmanaban",
     "titleEnglish": "Job கிடைச்சதும் Savings start பண்ணுங்க.. | Budget Padmanaban",
     "title": "Job கிடைச்சதும் Savings start பண்ணுங்க.. | Budget Padmanaban",
-    "descriptionTamil": "Job கிடைச்சதும் Savings start பண்ணுங்க.. | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSoc",
-    "descriptionEnglish": "Job கிடைச்சதும் Savings start பண்ணுங்க.. | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSoc",
-    "description": "Job கிடைச்சதும் Savings start பண்ணுங்க.. | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSoc",
+    "descriptionTamil": "Job கிடைச்சதும் Savings start பண்ணுங்க.. | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSoc",
+    "descriptionEnglish": "Job கிடைச்சதும் Savings start பண்ணுங்க.. | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSoc",
+    "description": "Job கிடைச்சதும் Savings start பண்ணுங்க.. | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSoc",
     "category": "shorts",
     "publishedAt": "2026-06-18T12:27:02Z",
     "duration": "15:03",
@@ -1688,9 +1688,9 @@ const videosData = [
     "titleTamil": "ரூ.20,000 சேமிச்சா 2 கோடி லாபம்! | Budget Padmanaban",
     "titleEnglish": "ரூ.20,000 சேமிச்சா 2 கோடி லாபம்! | Budget Padmanaban",
     "title": "ரூ.20,000 சேமிச்சா 2 கோடி லாபம்! | Budget Padmanaban",
-    "descriptionTamil": "ரூ.20,000 சேமிச்சா 2 கோடி லாபம்! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎",
-    "descriptionEnglish": "ரூ.20,000 சேமிச்சா 2 கோடி லாபம்! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎",
-    "description": "ரூ.20,000 சேமிச்சா 2 கோடி லாபம்! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎",
+    "descriptionTamil": "ரூ.20,000 சேமிச்சா 2 கோடி லாபம்! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎",
+    "descriptionEnglish": "ரூ.20,000 சேமிச்சா 2 கோடி லாபம்! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎",
+    "description": "ரூ.20,000 சேமிச்சா 2 கோடி லாபம்! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎",
     "category": "shorts",
     "publishedAt": "2026-06-16T11:30:29Z",
     "duration": "18:16",
@@ -1717,9 +1717,9 @@ const videosData = [
     "titleTamil": "Gold , Real Estate , FD இதைவிட Mutual Fund சிறந்ததா? | Budget Padmanaban",
     "titleEnglish": "Gold , Real Estate , FD இதைவிட Mutual Fund சிறந்ததா? | Budget Padmanaban",
     "title": "Gold , Real Estate , FD இதைவிட Mutual Fund சிறந்ததா? | Budget Padmanaban",
-    "descriptionTamil": "Gold , Real Estate , FD இதைவிட Mutual Fund சிறந்ததா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/",
-    "descriptionEnglish": "Gold , Real Estate , FD இதைவிட Mutual Fund சிறந்ததா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/",
-    "description": "Gold , Real Estate , FD இதைவிட Mutual Fund சிறந்ததா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/",
+    "descriptionTamil": "Gold , Real Estate , FD இதைவிட Mutual Fund சிறந்ததா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/",
+    "descriptionEnglish": "Gold , Real Estate , FD இதைவிட Mutual Fund சிறந்ததா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/",
+    "description": "Gold , Real Estate , FD இதைவிட Mutual Fund சிறந்ததா? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/",
     "category": "shorts",
     "publishedAt": "2026-06-15T13:30:35Z",
     "duration": "21:29",
@@ -1746,9 +1746,9 @@ const videosData = [
     "titleTamil": "Gold-அ asset-ஆ தான் வெச்சிக்க முடியும்! | Budget Padmanaban",
     "titleEnglish": "Gold-அ asset-ஆ தான் வெச்சிக்க முடியும்! | Budget Padmanaban",
     "title": "Gold-அ asset-ஆ தான் வெச்சிக்க முடியும்! | Budget Padmanaban",
-    "descriptionTamil": "Gold-அ asset-ஆ தான் வெச்சிக்க முடியும்! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSoci",
-    "descriptionEnglish": "Gold-அ asset-ஆ தான் வெச்சிக்க முடியும்! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSoci",
-    "description": "Gold-அ asset-ஆ தான் வெச்சிக்க முடியும்! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSoci",
+    "descriptionTamil": "Gold-அ asset-ஆ தான் வெச்சிக்க முடியும்! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSoci",
+    "descriptionEnglish": "Gold-அ asset-ஆ தான் வெச்சிக்க முடியும்! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSoci",
+    "description": "Gold-அ asset-ஆ தான் வெச்சிக்க முடியும்! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSoci",
     "category": "shorts",
     "publishedAt": "2026-06-15T06:59:29Z",
     "duration": "01:00",
@@ -1775,9 +1775,9 @@ const videosData = [
     "titleTamil": "Inflation முன்னாடி Fixed Deposit Weak-ஆ? | Budget Padmanaban",
     "titleEnglish": "Inflation முன்னாடி Fixed Deposit Weak-ஆ? | Budget Padmanaban",
     "title": "Inflation முன்னாடி Fixed Deposit Weak-ஆ? | Budget Padmanaban",
-    "descriptionTamil": "Inflation முன்னாடி Fixed Deposit Weak-ஆ? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSoc",
-    "descriptionEnglish": "Inflation முன்னாடி Fixed Deposit Weak-ஆ? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSoc",
-    "description": "Inflation முன்னாடி Fixed Deposit Weak-ஆ? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSoc",
+    "descriptionTamil": "Inflation முன்னாடி Fixed Deposit Weak-ஆ? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSoc",
+    "descriptionEnglish": "Inflation முன்னாடி Fixed Deposit Weak-ஆ? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSoc",
+    "description": "Inflation முன்னாடி Fixed Deposit Weak-ஆ? | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSoc",
     "category": "shorts",
     "publishedAt": "2026-06-12T14:30:12Z",
     "duration": "09:55",
@@ -1804,9 +1804,9 @@ const videosData = [
     "titleTamil": "100 years-க்கு super Retirement Plan! | Budget Padmanaban",
     "titleEnglish": "100 years-க்கு super Retirement Plan! | Budget Padmanaban",
     "title": "100 years-க்கு super Retirement Plan! | Budget Padmanaban",
-    "descriptionTamil": "100 years-க்கு super Retirement Plan! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocial",
-    "descriptionEnglish": "100 years-க்கு super Retirement Plan! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocial",
-    "description": "100 years-க்கு super Retirement Plan! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocial",
+    "descriptionTamil": "100 years-க்கு super Retirement Plan! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocial",
+    "descriptionEnglish": "100 years-க்கு super Retirement Plan! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocial",
+    "description": "100 years-க்கு super Retirement Plan! | Budget Padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocial",
     "category": "shorts",
     "publishedAt": "2026-06-12T12:47:06Z",
     "duration": "12:08",
@@ -1833,9 +1833,9 @@ const videosData = [
     "titleTamil": "25000 சம்பளம் வருஷத்துல இவ்ளோ ஆகுமா?? | Padmanaban",
     "titleEnglish": "25000 சம்பளம் வருஷத்துல இவ்ளோ ஆகுமா?? | Padmanaban",
     "title": "25000 சம்பளம் வருஷத்துல இவ்ளோ ஆகுமா?? | Padmanaban",
-    "descriptionTamil": "25000 சம்பளம் வருஷத்துல இவ்ளோ ஆகுமா?? | Padmanaban\n\n#salary #retirement #inflation #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContac",
-    "descriptionEnglish": "25000 சம்பளம் வருஷத்துல இவ்ளோ ஆகுமா?? | Padmanaban\n\n#salary #retirement #inflation #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContac",
-    "description": "25000 சம்பளம் வருஷத்துல இவ்ளோ ஆகுமா?? | Padmanaban\n\n#salary #retirement #inflation #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContac",
+    "descriptionTamil": "25000 சம்பளம் வருஷத்துல இவ்ளோ ஆகுமா?? | Padmanaban\n\n#salary #retirement #inflation #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContac",
+    "descriptionEnglish": "25000 சம்பளம் வருஷத்துல இவ்ளோ ஆகுமா?? | Padmanaban\n\n#salary #retirement #inflation #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContac",
+    "description": "25000 சம்பளம் வருஷத்துல இவ்ளோ ஆகுமா?? | Padmanaban\n\n#salary #retirement #inflation #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContac",
     "category": "mutual-funds",
     "publishedAt": "2026-06-11T16:28:49Z",
     "duration": "15:21",
@@ -1862,9 +1862,9 @@ const videosData = [
     "titleTamil": "Genz Early Retirement-க்கு இப்படி Plan பண்ணுங்க! | Padmanaban",
     "titleEnglish": "Genz Early Retirement-க்கு இப்படி Plan பண்ணுங்க! | Padmanaban",
     "title": "Genz Early Retirement-க்கு இப்படி Plan பண்ணுங்க! | Padmanaban",
-    "descriptionTamil": "Genz Early Retirement-க்கு இப்படி Plan பண்ணுங்க! | Padmanaban\n\n#earlyretirement #fire #genz #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394",
-    "descriptionEnglish": "Genz Early Retirement-க்கு இப்படி Plan பண்ணுங்க! | Padmanaban\n\n#earlyretirement #fire #genz #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394",
-    "description": "Genz Early Retirement-க்கு இப்படி Plan பண்ணுங்க! | Padmanaban\n\n#earlyretirement #fire #genz #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394",
+    "descriptionTamil": "Genz Early Retirement-க்கு இப்படி Plan பண்ணுங்க! | Padmanaban\n\n#earlyretirement #fire #genz #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394",
+    "descriptionEnglish": "Genz Early Retirement-க்கு இப்படி Plan பண்ணுங்க! | Padmanaban\n\n#earlyretirement #fire #genz #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394",
+    "description": "Genz Early Retirement-க்கு இப்படி Plan பண்ணுங்க! | Padmanaban\n\n#earlyretirement #fire #genz #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394",
     "category": "mutual-funds",
     "publishedAt": "2026-06-10T15:58:58Z",
     "duration": "18:34",
@@ -1891,9 +1891,9 @@ const videosData = [
     "titleTamil": "70 வயதானவர்கள் கார் வாங்குவது நல்ல முடிவா? | Padmanaban",
     "titleEnglish": "70 வயதானவர்கள் கார் வாங்குவது நல்ல முடிவா? | Padmanaban",
     "title": "70 வயதானவர்கள் கார் வாங்குவது நல்ல முடிவா? | Padmanaban",
-    "descriptionTamil": "70 வயதானவர்கள் கார் வாங்குவது நல்ல முடிவா? | Padmanaban\n\n#seniorcitizen #buyingcar #peerpressure #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78240",
-    "descriptionEnglish": "70 வயதானவர்கள் கார் வாங்குவது நல்ல முடிவா? | Padmanaban\n\n#seniorcitizen #buyingcar #peerpressure #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78240",
-    "description": "70 வயதானவர்கள் கார் வாங்குவது நல்ல முடிவா? | Padmanaban\n\n#seniorcitizen #buyingcar #peerpressure #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78240",
+    "descriptionTamil": "70 வயதானவர்கள் கார் வாங்குவது நல்ல முடிவா? | Padmanaban\n\n#seniorcitizen #buyingcar #peerpressure #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78240",
+    "descriptionEnglish": "70 வயதானவர்கள் கார் வாங்குவது நல்ல முடிவா? | Padmanaban\n\n#seniorcitizen #buyingcar #peerpressure #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78240",
+    "description": "70 வயதானவர்கள் கார் வாங்குவது நல்ல முடிவா? | Padmanaban\n\n#seniorcitizen #buyingcar #peerpressure #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78240",
     "category": "mutual-funds",
     "publishedAt": "2026-06-08T14:37:11Z",
     "duration": "21:47",
@@ -1920,9 +1920,9 @@ const videosData = [
     "titleTamil": "ஓய்வு காலத்திற்குத் தேவையான பணத்தை கணக்கிடுவது எப்படி? (230x Rule Explained) | Budget Padmanaban",
     "titleEnglish": "ஓய்வு காலத்திற்குத் தேவையான பணத்தை கணக்கிடுவது எப்படி? (230x Rule Explained) | Budget Padmanaban",
     "title": "ஓய்வு காலத்திற்குத் தேவையான பணத்தை கணக்கிடுவது எப்படி? (230x Rule Explained) | Budget Padmanaban",
-    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
     "category": "mutual-funds",
     "publishedAt": "2026-06-08T12:30:12Z",
     "duration": "01:00",
@@ -1978,9 +1978,9 @@ const videosData = [
     "titleTamil": "70 வயதில் car வாங்கலாமா ? | Budget Padmanaban",
     "titleEnglish": "70 வயதில் car வாங்கலாமா ? | Budget Padmanaban",
     "title": "70 வயதில் car வாங்கலாமா ? | Budget Padmanaban",
-    "descriptionTamil": "70 வயதில் car வாங்கலாமா ? | Budget Padmanaban \n\n#buyingcar #investing #fixeddeposit #smartinvesting #finance #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n782400",
-    "descriptionEnglish": "70 வயதில் car வாங்கலாமா ? | Budget Padmanaban \n\n#buyingcar #investing #fixeddeposit #smartinvesting #finance #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n782400",
-    "description": "70 வயதில் car வாங்கலாமா ? | Budget Padmanaban \n\n#buyingcar #investing #fixeddeposit #smartinvesting #finance #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n782400",
+    "descriptionTamil": "70 வயதில் car வாங்கலாமா ? | Budget Padmanaban \n\n#buyingcar #investing #fixeddeposit #smartinvesting #finance #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n782400",
+    "descriptionEnglish": "70 வயதில் car வாங்கலாமா ? | Budget Padmanaban \n\n#buyingcar #investing #fixeddeposit #smartinvesting #finance #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n782400",
+    "description": "70 வயதில் car வாங்கலாமா ? | Budget Padmanaban \n\n#buyingcar #investing #fixeddeposit #smartinvesting #finance #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n782400",
     "category": "shorts",
     "publishedAt": "2026-06-06T14:04:32Z",
     "duration": "12:26",
@@ -2007,9 +2007,9 @@ const videosData = [
     "titleTamil": "FD Stability + MF Growth = Smart Investing | Budget Padmanaban",
     "titleEnglish": "FD Stability + MF Growth = Smart Investing | Budget Padmanaban",
     "title": "FD Stability + MF Growth = Smart Investing | Budget Padmanaban",
-    "descriptionTamil": "FD Stability + MF Growth = Smart Investing | Budget Padmanaban\n\n#investing #fixeddeposit #smartinvesting #finance #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7",
-    "descriptionEnglish": "FD Stability + MF Growth = Smart Investing | Budget Padmanaban\n\n#investing #fixeddeposit #smartinvesting #finance #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7",
-    "description": "FD Stability + MF Growth = Smart Investing | Budget Padmanaban\n\n#investing #fixeddeposit #smartinvesting #finance #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7",
+    "descriptionTamil": "FD Stability + MF Growth = Smart Investing | Budget Padmanaban\n\n#investing #fixeddeposit #smartinvesting #finance #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7",
+    "descriptionEnglish": "FD Stability + MF Growth = Smart Investing | Budget Padmanaban\n\n#investing #fixeddeposit #smartinvesting #finance #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7",
+    "description": "FD Stability + MF Growth = Smart Investing | Budget Padmanaban\n\n#investing #fixeddeposit #smartinvesting #finance #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7",
     "category": "shorts",
     "publishedAt": "2026-06-05T12:09:59Z",
     "duration": "15:39",
@@ -2152,9 +2152,9 @@ const videosData = [
     "titleTamil": "Autism குழந்தைக்கான Smart Savings Plan | Padmanaban",
     "titleEnglish": "Autism குழந்தைக்கான Smart Savings Plan | Padmanaban",
     "title": "Autism குழந்தைக்கான Smart Savings Plan | Padmanaban",
-    "descriptionTamil": "Autism குழந்தைக்கான Smart Savings Plan | Padmanaban\n\n#autism #kidseducation #savings #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nConta",
-    "descriptionEnglish": "Autism குழந்தைக்கான Smart Savings Plan | Padmanaban\n\n#autism #kidseducation #savings #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nConta",
-    "description": "Autism குழந்தைக்கான Smart Savings Plan | Padmanaban\n\n#autism #kidseducation #savings #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nConta",
+    "descriptionTamil": "Autism குழந்தைக்கான Smart Savings Plan | Padmanaban\n\n#autism #kidseducation #savings #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nConta",
+    "descriptionEnglish": "Autism குழந்தைக்கான Smart Savings Plan | Padmanaban\n\n#autism #kidseducation #savings #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nConta",
+    "description": "Autism குழந்தைக்கான Smart Savings Plan | Padmanaban\n\n#autism #kidseducation #savings #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nConta",
     "category": "mutual-funds",
     "publishedAt": "2026-06-02T04:30:02Z",
     "duration": "12:44",
@@ -2181,9 +2181,9 @@ const videosData = [
     "titleTamil": "Chef’s Secret Ingredient: வாரம் ₹1,000 SIP மூலம் ஆயுள் ஓய்வூதியம் | Padmamaban",
     "titleEnglish": "Chef’s Secret Ingredient: வாரம் ₹1,000 SIP மூலம் ஆயுள் ஓய்வூதியம் | Padmamaban",
     "title": "Chef’s Secret Ingredient: வாரம் ₹1,000 SIP மூலம் ஆயுள் ஓய்வூதியம் | Padmamaban",
-    "descriptionTamil": "Chef’s Secret Ingredient: வாரம் ₹1,000 SIP மூலம் ஆயுள் ஓய்வூதியம் | Padmamaban\n\n#sip #investment #mutualfunds #pension\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782409",
-    "descriptionEnglish": "Chef’s Secret Ingredient: வாரம் ₹1,000 SIP மூலம் ஆயுள் ஓய்வூதியம் | Padmamaban\n\n#sip #investment #mutualfunds #pension\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782409",
-    "description": "Chef’s Secret Ingredient: வாரம் ₹1,000 SIP மூலம் ஆயுள் ஓய்வூதியம் | Padmamaban\n\n#sip #investment #mutualfunds #pension\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782409",
+    "descriptionTamil": "Chef’s Secret Ingredient: வாரம் ₹1,000 SIP மூலம் ஆயுள் ஓய்வூதியம் | Padmamaban\n\n#sip #investment #mutualfunds #pension\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782409",
+    "descriptionEnglish": "Chef’s Secret Ingredient: வாரம் ₹1,000 SIP மூலம் ஆயுள் ஓய்வூதியம் | Padmamaban\n\n#sip #investment #mutualfunds #pension\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782409",
+    "description": "Chef’s Secret Ingredient: வாரம் ₹1,000 SIP மூலம் ஆயுள் ஓய்வூதியம் | Padmamaban\n\n#sip #investment #mutualfunds #pension\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782409",
     "category": "mutual-funds",
     "publishedAt": "2026-05-31T15:01:41Z",
     "duration": "15:57",
@@ -2239,9 +2239,9 @@ const videosData = [
     "titleTamil": "Piggy Banks Are Past, Mutual Funds Are Future | Padmanaban",
     "titleEnglish": "Piggy Banks Are Past, Mutual Funds Are Future | Padmanaban",
     "title": "Piggy Banks Are Past, Mutual Funds Are Future | Padmanaban",
-    "descriptionTamil": "Piggy Banks Are Past, Mutual Funds Are Future | Padmanaban\n\n#piggybank #savings #mutualfunds #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n782409139",
-    "descriptionEnglish": "Piggy Banks Are Past, Mutual Funds Are Future | Padmanaban\n\n#piggybank #savings #mutualfunds #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n782409139",
-    "description": "Piggy Banks Are Past, Mutual Funds Are Future | Padmanaban\n\n#piggybank #savings #mutualfunds #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n782409139",
+    "descriptionTamil": "Piggy Banks Are Past, Mutual Funds Are Future | Padmanaban\n\n#piggybank #savings #mutualfunds #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n782409139",
+    "descriptionEnglish": "Piggy Banks Are Past, Mutual Funds Are Future | Padmanaban\n\n#piggybank #savings #mutualfunds #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n782409139",
+    "description": "Piggy Banks Are Past, Mutual Funds Are Future | Padmanaban\n\n#piggybank #savings #mutualfunds #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n782409139",
     "category": "mutual-funds",
     "publishedAt": "2026-05-29T15:14:57Z",
     "duration": "21:23",
@@ -2268,9 +2268,9 @@ const videosData = [
     "titleTamil": "CM Vijay-ன் ₹2500 Scheme-ல Wealth உருவாக்கலாமா? | Padmanaban",
     "titleEnglish": "CM Vijay-ன் ₹2500 Scheme-ல Wealth உருவாக்கலாமா? | Padmanaban",
     "title": "CM Vijay-ன் ₹2500 Scheme-ல Wealth உருவாக்கலாமா? | Padmanaban",
-    "descriptionTamil": "CM Vijay-ன் ₹2500 Scheme-ல Wealth உருவாக்கலாமா? | Padmanaban\n\n#cmvijay #investment #mutualfunds #wealthcreation\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78",
-    "descriptionEnglish": "CM Vijay-ன் ₹2500 Scheme-ல Wealth உருவாக்கலாமா? | Padmanaban\n\n#cmvijay #investment #mutualfunds #wealthcreation\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78",
-    "description": "CM Vijay-ன் ₹2500 Scheme-ல Wealth உருவாக்கலாமா? | Padmanaban\n\n#cmvijay #investment #mutualfunds #wealthcreation\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78",
+    "descriptionTamil": "CM Vijay-ன் ₹2500 Scheme-ல Wealth உருவாக்கலாமா? | Padmanaban\n\n#cmvijay #investment #mutualfunds #wealthcreation\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78",
+    "descriptionEnglish": "CM Vijay-ன் ₹2500 Scheme-ல Wealth உருவாக்கலாமா? | Padmanaban\n\n#cmvijay #investment #mutualfunds #wealthcreation\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78",
+    "description": "CM Vijay-ன் ₹2500 Scheme-ல Wealth உருவாக்கலாமா? | Padmanaban\n\n#cmvijay #investment #mutualfunds #wealthcreation\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78",
     "category": "mutual-funds",
     "publishedAt": "2026-05-28T15:21:44Z",
     "duration": "01:00",
@@ -2297,9 +2297,9 @@ const videosData = [
     "titleTamil": "70 வயசுல மாசம் செலவுக்கு பணம் வேணுமா ? இதுல Invest பண்ணுங்க.. | Padmanaban",
     "titleEnglish": "70 வயசுல மாசம் செலவுக்கு பணம் வேணுமா ? இதுல Invest பண்ணுங்க.. | Padmanaban",
     "title": "70 வயசுல மாசம் செலவுக்கு பணம் வேணுமா ? இதுல Invest பண்ணுங்க.. | Padmanaban",
-    "descriptionTamil": "70 வயசுல மாசம் செலவுக்கு பணம் வேணுமா ? இதுல Invest பண்ணுங்க.. | Padmanaban\n\n#investment #mutualfunds #expenses #retirement #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7",
-    "descriptionEnglish": "70 வயசுல மாசம் செலவுக்கு பணம் வேணுமா ? இதுல Invest பண்ணுங்க.. | Padmanaban\n\n#investment #mutualfunds #expenses #retirement #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7",
-    "description": "70 வயசுல மாசம் செலவுக்கு பணம் வேணுமா ? இதுல Invest பண்ணுங்க.. | Padmanaban\n\n#investment #mutualfunds #expenses #retirement #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7",
+    "descriptionTamil": "70 வயசுல மாசம் செலவுக்கு பணம் வேணுமா ? இதுல Invest பண்ணுங்க.. | Padmanaban\n\n#investment #mutualfunds #expenses #retirement #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7",
+    "descriptionEnglish": "70 வயசுல மாசம் செலவுக்கு பணம் வேணுமா ? இதுல Invest பண்ணுங்க.. | Padmanaban\n\n#investment #mutualfunds #expenses #retirement #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7",
+    "description": "70 வயசுல மாசம் செலவுக்கு பணம் வேணுமா ? இதுல Invest பண்ணுங்க.. | Padmanaban\n\n#investment #mutualfunds #expenses #retirement #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7",
     "category": "mutual-funds",
     "publishedAt": "2026-05-27T13:37:50Z",
     "duration": "09:49",
@@ -2326,9 +2326,9 @@ const videosData = [
     "titleTamil": "கடன் வாங்கி முதலீடு செய்யலாமா? | Padmanaban",
     "titleEnglish": "கடன் வாங்கி முதலீடு செய்யலாமா? | Padmanaban",
     "title": "கடன் வாங்கி முதலீடு செய்யலாமா? | Padmanaban",
-    "descriptionTamil": "கடன் வாங்கி முதலீடு செய்யலாமா? | Padmanaban\n\n#loantrap #investment #financialplanning #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nCon",
-    "descriptionEnglish": "கடன் வாங்கி முதலீடு செய்யலாமா? | Padmanaban\n\n#loantrap #investment #financialplanning #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nCon",
-    "description": "கடன் வாங்கி முதலீடு செய்யலாமா? | Padmanaban\n\n#loantrap #investment #financialplanning #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nCon",
+    "descriptionTamil": "கடன் வாங்கி முதலீடு செய்யலாமா? | Padmanaban\n\n#loantrap #investment #financialplanning #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nCon",
+    "descriptionEnglish": "கடன் வாங்கி முதலீடு செய்யலாமா? | Padmanaban\n\n#loantrap #investment #financialplanning #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nCon",
+    "description": "கடன் வாங்கி முதலீடு செய்யலாமா? | Padmanaban\n\n#loantrap #investment #financialplanning #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nCon",
     "category": "mutual-funds",
     "publishedAt": "2026-05-27T12:26:13Z",
     "duration": "12:02",
@@ -2355,9 +2355,9 @@ const videosData = [
     "titleTamil": "Physical assets to Financial assets மாத்துறது Profit-ஆ ? | Padmanaban",
     "titleEnglish": "Physical assets to Financial assets மாத்துறது Profit-ஆ ? | Padmanaban",
     "title": "Physical assets to Financial assets மாத்துறது Profit-ஆ ? | Padmanaban",
-    "descriptionTamil": "Physical assets to Financial assets மாத்துறது Profit-ஆ ? | Padmanaban\n\n#physicalassets #financialassets #profit\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78",
-    "descriptionEnglish": "Physical assets to Financial assets மாத்துறது Profit-ஆ ? | Padmanaban\n\n#physicalassets #financialassets #profit\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78",
-    "description": "Physical assets to Financial assets மாத்துறது Profit-ஆ ? | Padmanaban\n\n#physicalassets #financialassets #profit\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78",
+    "descriptionTamil": "Physical assets to Financial assets மாத்துறது Profit-ஆ ? | Padmanaban\n\n#physicalassets #financialassets #profit\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78",
+    "descriptionEnglish": "Physical assets to Financial assets மாத்துறது Profit-ஆ ? | Padmanaban\n\n#physicalassets #financialassets #profit\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78",
+    "description": "Physical assets to Financial assets மாத்துறது Profit-ஆ ? | Padmanaban\n\n#physicalassets #financialassets #profit\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78",
     "category": "mutual-funds",
     "publishedAt": "2026-05-26T15:44:40Z",
     "duration": "15:15",
@@ -2384,9 +2384,9 @@ const videosData = [
     "titleTamil": "எல்லாமே Fixed Deposit-ல போடணும்னு அவசியம் இல்ல... | Padmanaban",
     "titleEnglish": "எல்லாமே Fixed Deposit-ல போடணும்னு அவசியம் இல்ல... | Padmanaban",
     "title": "எல்லாமே Fixed Deposit-ல போடணும்னு அவசியம் இல்ல... | Padmanaban",
-    "descriptionTamil": "எல்லாமே Fixed Deposit-ல போடணும்னு அவசியம் இல்ல... | Padmanaban\n\n#fixeddeposit #investment #dailyexpenses #savingsaccount #vigneshshivan\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n",
-    "descriptionEnglish": "எல்லாமே Fixed Deposit-ல போடணும்னு அவசியம் இல்ல... | Padmanaban\n\n#fixeddeposit #investment #dailyexpenses #savingsaccount #vigneshshivan\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n",
-    "description": "எல்லாமே Fixed Deposit-ல போடணும்னு அவசியம் இல்ல... | Padmanaban\n\n#fixeddeposit #investment #dailyexpenses #savingsaccount #vigneshshivan\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n",
+    "descriptionTamil": "எல்லாமே Fixed Deposit-ல போடணும்னு அவசியம் இல்ல... | Padmanaban\n\n#fixeddeposit #investment #dailyexpenses #savingsaccount #vigneshshivan\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n",
+    "descriptionEnglish": "எல்லாமே Fixed Deposit-ல போடணும்னு அவசியம் இல்ல... | Padmanaban\n\n#fixeddeposit #investment #dailyexpenses #savingsaccount #vigneshshivan\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n",
+    "description": "எல்லாமே Fixed Deposit-ல போடணும்னு அவசியம் இல்ல... | Padmanaban\n\n#fixeddeposit #investment #dailyexpenses #savingsaccount #vigneshshivan\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n",
     "category": "mutual-funds",
     "publishedAt": "2026-05-25T15:59:34Z",
     "duration": "18:28",
@@ -2413,9 +2413,9 @@ const videosData = [
     "titleTamil": "FIRE-ஓட முக்கியமான Base-ஏ இதுதான்..! | Padmanaban",
     "titleEnglish": "FIRE-ஓட முக்கியமான Base-ஏ இதுதான்..! | Padmanaban",
     "title": "FIRE-ஓட முக்கியமான Base-ஏ இதுதான்..! | Padmanaban",
-    "descriptionTamil": "FIRE-ஓட முக்கியமான Base-ஏ இதுதான்..! | Padmanaban\n\n#fire #retireearly #retirement #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78240913",
-    "descriptionEnglish": "FIRE-ஓட முக்கியமான Base-ஏ இதுதான்..! | Padmanaban\n\n#fire #retireearly #retirement #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78240913",
-    "description": "FIRE-ஓட முக்கியமான Base-ஏ இதுதான்..! | Padmanaban\n\n#fire #retireearly #retirement #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78240913",
+    "descriptionTamil": "FIRE-ஓட முக்கியமான Base-ஏ இதுதான்..! | Padmanaban\n\n#fire #retireearly #retirement #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78240913",
+    "descriptionEnglish": "FIRE-ஓட முக்கியமான Base-ஏ இதுதான்..! | Padmanaban\n\n#fire #retireearly #retirement #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78240913",
+    "description": "FIRE-ஓட முக்கியமான Base-ஏ இதுதான்..! | Padmanaban\n\n#fire #retireearly #retirement #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78240913",
     "category": "mutual-funds",
     "publishedAt": "2026-05-24T12:14:20Z",
     "duration": "21:41",
@@ -2442,9 +2442,9 @@ const videosData = [
     "titleTamil": "21 கோடியில 30% Tax-க்கே போய்டும்.. | Padmanaban",
     "titleEnglish": "21 கோடியில 30% Tax-க்கே போய்டும்.. | Padmanaban",
     "title": "21 கோடியில 30% Tax-க்கே போய்டும்.. | Padmanaban",
-    "descriptionTamil": "21 கோடியில 30% Tax-க்கே போய்டும்.. | Padmanaban\n\n#investments #vigneshshivan #fixeddeposit #tax #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n782409",
-    "descriptionEnglish": "21 கோடியில 30% Tax-க்கே போய்டும்.. | Padmanaban\n\n#investments #vigneshshivan #fixeddeposit #tax #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n782409",
-    "description": "21 கோடியில 30% Tax-க்கே போய்டும்.. | Padmanaban\n\n#investments #vigneshshivan #fixeddeposit #tax #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n782409",
+    "descriptionTamil": "21 கோடியில 30% Tax-க்கே போய்டும்.. | Padmanaban\n\n#investments #vigneshshivan #fixeddeposit #tax #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n782409",
+    "descriptionEnglish": "21 கோடியில 30% Tax-க்கே போய்டும்.. | Padmanaban\n\n#investments #vigneshshivan #fixeddeposit #tax #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n782409",
+    "description": "21 கோடியில 30% Tax-க்கே போய்டும்.. | Padmanaban\n\n#investments #vigneshshivan #fixeddeposit #tax #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n782409",
     "category": "mutual-funds",
     "publishedAt": "2026-05-23T14:55:42Z",
     "duration": "01:00",
@@ -2500,9 +2500,9 @@ const videosData = [
     "titleTamil": "Early Retirement-க்கு இவ்ளோ போதுமா ? | Padmanaban",
     "titleEnglish": "Early Retirement-க்கு இவ்ளோ போதுமா ? | Padmanaban",
     "title": "Early Retirement-க்கு இவ்ளோ போதுமா ? | Padmanaban",
-    "descriptionTamil": "Early Retirement-க்கு இவ்ளோ போதுமா ? | Padmanaban\n\n#earlyretirement #investment #retireearly #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n",
-    "descriptionEnglish": "Early Retirement-க்கு இவ்ளோ போதுமா ? | Padmanaban\n\n#earlyretirement #investment #retireearly #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n",
-    "description": "Early Retirement-க்கு இவ்ளோ போதுமா ? | Padmanaban\n\n#earlyretirement #investment #retireearly #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n",
+    "descriptionTamil": "Early Retirement-க்கு இவ்ளோ போதுமா ? | Padmanaban\n\n#earlyretirement #investment #retireearly #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n",
+    "descriptionEnglish": "Early Retirement-க்கு இவ்ளோ போதுமா ? | Padmanaban\n\n#earlyretirement #investment #retireearly #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n",
+    "description": "Early Retirement-க்கு இவ்ளோ போதுமா ? | Padmanaban\n\n#earlyretirement #investment #retireearly #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n",
     "category": "mutual-funds",
     "publishedAt": "2026-05-22T14:57:02Z",
     "duration": "12:20",
@@ -2529,9 +2529,9 @@ const videosData = [
     "titleTamil": "ஆட்டோ டிரைவரின் Wealth Journey ! | Padmanaban",
     "titleEnglish": "ஆட்டோ டிரைவரின் Wealth Journey ! | Padmanaban",
     "title": "ஆட்டோ டிரைவரின் Wealth Journey ! | Padmanaban",
-    "descriptionTamil": "ஆட்டோ டிரைவரின் Wealth Journey ! | Padmanaban\n\n#autodriver #wealthcreation #investment #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78",
-    "descriptionEnglish": "ஆட்டோ டிரைவரின் Wealth Journey ! | Padmanaban\n\n#autodriver #wealthcreation #investment #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78",
-    "description": "ஆட்டோ டிரைவரின் Wealth Journey ! | Padmanaban\n\n#autodriver #wealthcreation #investment #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78",
+    "descriptionTamil": "ஆட்டோ டிரைவரின் Wealth Journey ! | Padmanaban\n\n#autodriver #wealthcreation #investment #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78",
+    "descriptionEnglish": "ஆட்டோ டிரைவரின் Wealth Journey ! | Padmanaban\n\n#autodriver #wealthcreation #investment #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78",
+    "description": "ஆட்டோ டிரைவரின் Wealth Journey ! | Padmanaban\n\n#autodriver #wealthcreation #investment #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78",
     "category": "mutual-funds",
     "publishedAt": "2026-05-20T04:30:31Z",
     "duration": "15:33",
@@ -2558,9 +2558,9 @@ const videosData = [
     "titleTamil": "Retirementக்கு இவ்ளோ சேர்க்க முடியுமா? | Padmanaban",
     "titleEnglish": "Retirementக்கு இவ்ளோ சேர்க்க முடியுமா? | Padmanaban",
     "title": "Retirementக்கு இவ்ளோ சேர்க்க முடியுமா? | Padmanaban",
-    "descriptionTamil": "Retirementக்கு இவ்ளோ சேர்க்க முடியுமா? | Padmanaban\n\n#retirement #investment #mutualfunds #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n782",
-    "descriptionEnglish": "Retirementக்கு இவ்ளோ சேர்க்க முடியுமா? | Padmanaban\n\n#retirement #investment #mutualfunds #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n782",
-    "description": "Retirementக்கு இவ்ளோ சேர்க்க முடியுமா? | Padmanaban\n\n#retirement #investment #mutualfunds #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n782",
+    "descriptionTamil": "Retirementக்கு இவ்ளோ சேர்க்க முடியுமா? | Padmanaban\n\n#retirement #investment #mutualfunds #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n782",
+    "descriptionEnglish": "Retirementக்கு இவ்ளோ சேர்க்க முடியுமா? | Padmanaban\n\n#retirement #investment #mutualfunds #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n782",
+    "description": "Retirementக்கு இவ்ளோ சேர்க்க முடியுமா? | Padmanaban\n\n#retirement #investment #mutualfunds #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n782",
     "category": "mutual-funds",
     "publishedAt": "2026-05-18T14:43:36Z",
     "duration": "18:46",
@@ -2587,9 +2587,9 @@ const videosData = [
     "titleTamil": "Early Investment ஏன் முக்கியம்? | Padmanaban",
     "titleEnglish": "Early Investment ஏன் முக்கியம்? | Padmanaban",
     "title": "Early Investment ஏன் முக்கியம்? | Padmanaban",
-    "descriptionTamil": "Early Investment ஏன் முக்கியம்? | Padmanaban\n\n#earlyinvesting #delayinvestment #mutualfunds #investing #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393",
-    "descriptionEnglish": "Early Investment ஏன் முக்கியம்? | Padmanaban\n\n#earlyinvesting #delayinvestment #mutualfunds #investing #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393",
-    "description": "Early Investment ஏன் முக்கியம்? | Padmanaban\n\n#earlyinvesting #delayinvestment #mutualfunds #investing #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393",
+    "descriptionTamil": "Early Investment ஏன் முக்கியம்? | Padmanaban\n\n#earlyinvesting #delayinvestment #mutualfunds #investing #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393",
+    "descriptionEnglish": "Early Investment ஏன் முக்கியம்? | Padmanaban\n\n#earlyinvesting #delayinvestment #mutualfunds #investing #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393",
+    "description": "Early Investment ஏன் முக்கியம்? | Padmanaban\n\n#earlyinvesting #delayinvestment #mutualfunds #investing #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393",
     "category": "mutual-funds",
     "publishedAt": "2026-05-16T17:01:47Z",
     "duration": "21:59",
@@ -2616,9 +2616,9 @@ const videosData = [
     "titleTamil": "35 ஆண்டுகள் பொறுமை → கோடீஸ்வரன் | Padmanaban",
     "titleEnglish": "35 ஆண்டுகள் பொறுமை → கோடீஸ்வரன் | Padmanaban",
     "title": "35 ஆண்டுகள் பொறுமை → கோடீஸ்வரன் | Padmanaban",
-    "descriptionTamil": "35 ஆண்டுகள் பொறுமை → கோடீஸ்வரன் | Padmanaban\n\n#investment #returns #savings #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nC",
-    "descriptionEnglish": "35 ஆண்டுகள் பொறுமை → கோடீஸ்வரன் | Padmanaban\n\n#investment #returns #savings #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nC",
-    "description": "35 ஆண்டுகள் பொறுமை → கோடீஸ்வரன் | Padmanaban\n\n#investment #returns #savings #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nC",
+    "descriptionTamil": "35 ஆண்டுகள் பொறுமை → கோடீஸ்வரன் | Padmanaban\n\n#investment #returns #savings #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nC",
+    "descriptionEnglish": "35 ஆண்டுகள் பொறுமை → கோடீஸ்வரன் | Padmanaban\n\n#investment #returns #savings #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nC",
+    "description": "35 ஆண்டுகள் பொறுமை → கோடீஸ்வரன் | Padmanaban\n\n#investment #returns #savings #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nC",
     "category": "mutual-funds",
     "publishedAt": "2026-05-15T04:30:06Z",
     "duration": "01:00",
@@ -2645,9 +2645,9 @@ const videosData = [
     "titleTamil": "சிறிய தொடக்கம், பெரிய முடிவு | Padmanaban",
     "titleEnglish": "சிறிய தொடக்கம், பெரிய முடிவு | Padmanaban",
     "title": "சிறிய தொடக்கம், பெரிய முடிவு | Padmanaban",
-    "descriptionTamil": "சிறிய தொடக்கம், பெரிய முடிவு | Padmanaban\n\n#investment #returns #mutualfunds #sip #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact ",
-    "descriptionEnglish": "சிறிய தொடக்கம், பெரிய முடிவு | Padmanaban\n\n#investment #returns #mutualfunds #sip #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact ",
-    "description": "சிறிய தொடக்கம், பெரிய முடிவு | Padmanaban\n\n#investment #returns #mutualfunds #sip #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact ",
+    "descriptionTamil": "சிறிய தொடக்கம், பெரிய முடிவு | Padmanaban\n\n#investment #returns #mutualfunds #sip #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact ",
+    "descriptionEnglish": "சிறிய தொடக்கம், பெரிய முடிவு | Padmanaban\n\n#investment #returns #mutualfunds #sip #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact ",
+    "description": "சிறிய தொடக்கம், பெரிய முடிவு | Padmanaban\n\n#investment #returns #mutualfunds #sip #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact ",
     "category": "mutual-funds",
     "publishedAt": "2026-05-14T04:30:06Z",
     "duration": "09:25",
@@ -2703,9 +2703,9 @@ const videosData = [
     "titleTamil": "Thalapathy Vijay’s Financial Legacy: Built to Last | Padmanaban",
     "titleEnglish": "Thalapathy Vijay’s Financial Legacy: Built to Last | Padmanaban",
     "title": "Thalapathy Vijay’s Financial Legacy: Built to Last | Padmanaban",
-    "descriptionTamil": "Thalapathy Vijay’s Financial Legacy: Built to Last | Padmanaban\n\n#cmvijay #tvkvijay #investments #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782",
-    "descriptionEnglish": "Thalapathy Vijay’s Financial Legacy: Built to Last | Padmanaban\n\n#cmvijay #tvkvijay #investments #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782",
-    "description": "Thalapathy Vijay’s Financial Legacy: Built to Last | Padmanaban\n\n#cmvijay #tvkvijay #investments #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782",
+    "descriptionTamil": "Thalapathy Vijay’s Financial Legacy: Built to Last | Padmanaban\n\n#cmvijay #tvkvijay #investments #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782",
+    "descriptionEnglish": "Thalapathy Vijay’s Financial Legacy: Built to Last | Padmanaban\n\n#cmvijay #tvkvijay #investments #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782",
+    "description": "Thalapathy Vijay’s Financial Legacy: Built to Last | Padmanaban\n\n#cmvijay #tvkvijay #investments #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782",
     "category": "mutual-funds",
     "publishedAt": "2026-05-11T16:03:40Z",
     "duration": "15:51",
@@ -2732,9 +2732,9 @@ const videosData = [
     "titleTamil": "அம்மாவின் சிரிப்பு தான் உங்கள் முதலீட்டின் வெற்றி | Padmanaban",
     "titleEnglish": "அம்மாவின் சிரிப்பு தான் உங்கள் முதலீட்டின் வெற்றி | Padmanaban",
     "title": "அம்மாவின் சிரிப்பு தான் உங்கள் முதலீட்டின் வெற்றி | Padmanaban",
-    "descriptionTamil": "அம்மாவின் சிரிப்பு தான் உங்கள் முதலீட்டின் வெற்றி | Padmanaban\n\n#mothersday #investment #mutualfunds #returns #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n78",
-    "descriptionEnglish": "அம்மாவின் சிரிப்பு தான் உங்கள் முதலீட்டின் வெற்றி | Padmanaban\n\n#mothersday #investment #mutualfunds #returns #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n78",
-    "description": "அம்மாவின் சிரிப்பு தான் உங்கள் முதலீட்டின் வெற்றி | Padmanaban\n\n#mothersday #investment #mutualfunds #returns #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n78",
+    "descriptionTamil": "அம்மாவின் சிரிப்பு தான் உங்கள் முதலீட்டின் வெற்றி | Padmanaban\n\n#mothersday #investment #mutualfunds #returns #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n78",
+    "descriptionEnglish": "அம்மாவின் சிரிப்பு தான் உங்கள் முதலீட்டின் வெற்றி | Padmanaban\n\n#mothersday #investment #mutualfunds #returns #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n78",
+    "description": "அம்மாவின் சிரிப்பு தான் உங்கள் முதலீட்டின் வெற்றி | Padmanaban\n\n#mothersday #investment #mutualfunds #returns #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n78",
     "category": "mutual-funds",
     "publishedAt": "2026-05-10T15:32:58Z",
     "duration": "18:04",
@@ -2761,9 +2761,9 @@ const videosData = [
     "titleTamil": "சிறிய தொடக்கம், பெரிய முடிவு: 25 கோடி | Budget Padmanaban",
     "titleEnglish": "சிறிய தொடக்கம், பெரிய முடிவு: 25 கோடி | Budget Padmanaban",
     "title": "சிறிய தொடக்கம், பெரிய முடிவு: 25 கோடி | Budget Padmanaban",
-    "descriptionTamil": "சிறிய தொடக்கம், பெரிய முடிவு: 25 கோடி | Budget Padmanaban\n\n#investment #warrenbuffett #fixeddeposit #mutualfunds #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n78",
-    "descriptionEnglish": "சிறிய தொடக்கம், பெரிய முடிவு: 25 கோடி | Budget Padmanaban\n\n#investment #warrenbuffett #fixeddeposit #mutualfunds #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n78",
-    "description": "சிறிய தொடக்கம், பெரிய முடிவு: 25 கோடி | Budget Padmanaban\n\n#investment #warrenbuffett #fixeddeposit #mutualfunds #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n78",
+    "descriptionTamil": "சிறிய தொடக்கம், பெரிய முடிவு: 25 கோடி | Budget Padmanaban\n\n#investment #warrenbuffett #fixeddeposit #mutualfunds #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n78",
+    "descriptionEnglish": "சிறிய தொடக்கம், பெரிய முடிவு: 25 கோடி | Budget Padmanaban\n\n#investment #warrenbuffett #fixeddeposit #mutualfunds #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n78",
+    "description": "சிறிய தொடக்கம், பெரிய முடிவு: 25 கோடி | Budget Padmanaban\n\n#investment #warrenbuffett #fixeddeposit #mutualfunds #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n78",
     "category": "shorts",
     "publishedAt": "2026-05-09T12:45:03Z",
     "duration": "21:17",
@@ -2790,9 +2790,9 @@ const videosData = [
     "titleTamil": "32 வயசு கடந்தும், முதலீடு தொடங்கலையா? | Budget Padmanaban",
     "titleEnglish": "32 வயசு கடந்தும், முதலீடு தொடங்கலையா? | Budget Padmanaban",
     "title": "32 வயசு கடந்தும், முதலீடு தொடங்கலையா? | Budget Padmanaban",
-    "descriptionTamil": "32 வயசு கடந்தும், முதலீடு தொடங்கலையா? | Budget Padmanaban\n\n#baasha #investment #savingsplan #finance #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782",
-    "descriptionEnglish": "32 வயசு கடந்தும், முதலீடு தொடங்கலையா? | Budget Padmanaban\n\n#baasha #investment #savingsplan #finance #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782",
-    "description": "32 வயசு கடந்தும், முதலீடு தொடங்கலையா? | Budget Padmanaban\n\n#baasha #investment #savingsplan #finance #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782",
+    "descriptionTamil": "32 வயசு கடந்தும், முதலீடு தொடங்கலையா? | Budget Padmanaban\n\n#baasha #investment #savingsplan #finance #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782",
+    "descriptionEnglish": "32 வயசு கடந்தும், முதலீடு தொடங்கலையா? | Budget Padmanaban\n\n#baasha #investment #savingsplan #finance #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782",
+    "description": "32 வயசு கடந்தும், முதலீடு தொடங்கலையா? | Budget Padmanaban\n\n#baasha #investment #savingsplan #finance #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782",
     "category": "shorts",
     "publishedAt": "2026-05-08T13:00:20Z",
     "duration": "01:00",
@@ -2848,9 +2848,9 @@ const videosData = [
     "titleTamil": "Active Fund va Index Fund - எது Best?? | Padmanaban",
     "titleEnglish": "Active Fund va Index Fund - எது Best?? | Padmanaban",
     "title": "Active Fund va Index Fund - எது Best?? | Padmanaban",
-    "descriptionTamil": "Active Fund va Index Fund - எது Best?? | Padmanaban\n\n#activefunds #indexfunds #investments #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78",
-    "descriptionEnglish": "Active Fund va Index Fund - எது Best?? | Padmanaban\n\n#activefunds #indexfunds #investments #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78",
-    "description": "Active Fund va Index Fund - எது Best?? | Padmanaban\n\n#activefunds #indexfunds #investments #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78",
+    "descriptionTamil": "Active Fund va Index Fund - எது Best?? | Padmanaban\n\n#activefunds #indexfunds #investments #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78",
+    "descriptionEnglish": "Active Fund va Index Fund - எது Best?? | Padmanaban\n\n#activefunds #indexfunds #investments #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78",
+    "description": "Active Fund va Index Fund - எது Best?? | Padmanaban\n\n#activefunds #indexfunds #investments #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78",
     "category": "mutual-funds",
     "publishedAt": "2026-05-08T04:30:07Z",
     "duration": "12:56",
@@ -2877,9 +2877,9 @@ const videosData = [
     "titleTamil": "இன்று சிறிய கார் → நாளை கனவு கார்! | Budget Padmanaban",
     "titleEnglish": "இன்று சிறிய கார் → நாளை கனவு கார்! | Budget Padmanaban",
     "title": "இன்று சிறிய கார் → நாளை கனவு கார்! | Budget Padmanaban",
-    "descriptionTamil": "இன்று சிறிய கார் → நாளை கனவு கார்! | Budget Padmanaban\n\n#newcar #carloan #emi #smallcar #padmanaban #sip #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n",
-    "descriptionEnglish": "இன்று சிறிய கார் → நாளை கனவு கார்! | Budget Padmanaban\n\n#newcar #carloan #emi #smallcar #padmanaban #sip #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n",
-    "description": "இன்று சிறிய கார் → நாளை கனவு கார்! | Budget Padmanaban\n\n#newcar #carloan #emi #smallcar #padmanaban #sip #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n",
+    "descriptionTamil": "இன்று சிறிய கார் → நாளை கனவு கார்! | Budget Padmanaban\n\n#newcar #carloan #emi #smallcar #padmanaban #sip #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n",
+    "descriptionEnglish": "இன்று சிறிய கார் → நாளை கனவு கார்! | Budget Padmanaban\n\n#newcar #carloan #emi #smallcar #padmanaban #sip #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n",
+    "description": "இன்று சிறிய கார் → நாளை கனவு கார்! | Budget Padmanaban\n\n#newcar #carloan #emi #smallcar #padmanaban #sip #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n",
     "category": "shorts",
     "publishedAt": "2026-05-06T13:01:18Z",
     "duration": "15:09",
@@ -2906,9 +2906,9 @@ const videosData = [
     "titleTamil": "சிறிய SIP தொடக்கம் → 17 கோடி வரை செல்வம் | Budget Padmanaban",
     "titleEnglish": "சிறிய SIP தொடக்கம் → 17 கோடி வரை செல்வம் | Budget Padmanaban",
     "title": "சிறிய SIP தொடக்கம் → 17 கோடி வரை செல்வம் | Budget Padmanaban",
-    "descriptionTamil": "சிறிய SIP தொடக்கம் → 17 கோடி வரை செல்வம் | Budget Padmanaban\n\n#sip #mutualfunds #investment #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7",
-    "descriptionEnglish": "சிறிய SIP தொடக்கம் → 17 கோடி வரை செல்வம் | Budget Padmanaban\n\n#sip #mutualfunds #investment #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7",
-    "description": "சிறிய SIP தொடக்கம் → 17 கோடி வரை செல்வம் | Budget Padmanaban\n\n#sip #mutualfunds #investment #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7",
+    "descriptionTamil": "சிறிய SIP தொடக்கம் → 17 கோடி வரை செல்வம் | Budget Padmanaban\n\n#sip #mutualfunds #investment #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7",
+    "descriptionEnglish": "சிறிய SIP தொடக்கம் → 17 கோடி வரை செல்வம் | Budget Padmanaban\n\n#sip #mutualfunds #investment #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7",
+    "description": "சிறிய SIP தொடக்கம் → 17 கோடி வரை செல்வம் | Budget Padmanaban\n\n#sip #mutualfunds #investment #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7",
     "category": "shorts",
     "publishedAt": "2026-05-06T10:11:09Z",
     "duration": "18:22",
@@ -2935,9 +2935,9 @@ const videosData = [
     "titleTamil": "FD is Safe, Not Smart – FD பாதுகாப்பு தரும், வளர்ச்சி அல்ல! | Padmanaban",
     "titleEnglish": "FD is Safe, Not Smart – FD பாதுகாப்பு தரும், வளர்ச்சி அல்ல! | Padmanaban",
     "title": "FD is Safe, Not Smart – FD பாதுகாப்பு தரும், வளர்ச்சி அல்ல! | Padmanaban",
-    "descriptionTamil": "FD is Safe, Not Smart” – “FD பாதுகாப்பு தரும், வளர்ச்சி அல்ல! | Padmanaban\n\n#fd #investment #vigneshshivan #safety #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n78240020",
-    "descriptionEnglish": "FD is Safe, Not Smart” – “FD பாதுகாப்பு தரும், வளர்ச்சி அல்ல! | Padmanaban\n\n#fd #investment #vigneshshivan #safety #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n78240020",
-    "description": "FD is Safe, Not Smart” – “FD பாதுகாப்பு தரும், வளர்ச்சி அல்ல! | Padmanaban\n\n#fd #investment #vigneshshivan #safety #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n78240020",
+    "descriptionTamil": "FD is Safe, Not Smart” – “FD பாதுகாப்பு தரும், வளர்ச்சி அல்ல! | Padmanaban\n\n#fd #investment #vigneshshivan #safety #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n78240020",
+    "descriptionEnglish": "FD is Safe, Not Smart” – “FD பாதுகாப்பு தரும், வளர்ச்சி அல்ல! | Padmanaban\n\n#fd #investment #vigneshshivan #safety #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n78240020",
+    "description": "FD is Safe, Not Smart” – “FD பாதுகாப்பு தரும், வளர்ச்சி அல்ல! | Padmanaban\n\n#fd #investment #vigneshshivan #safety #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n78240020",
     "category": "mutual-funds",
     "publishedAt": "2026-05-04T16:41:52Z",
     "duration": "21:35",
@@ -3022,9 +3022,9 @@ const videosData = [
     "titleTamil": "AI வந்ததால Advantage -ஆ Disadvantage -ஆ ? | Budget Padmanaban",
     "titleEnglish": "AI வந்ததால Advantage -ஆ Disadvantage -ஆ ? | Budget Padmanaban",
     "title": "AI வந்ததால Advantage -ஆ Disadvantage -ஆ ? | Budget Padmanaban",
-    "descriptionTamil": "AI வந்ததால Advantage -ஆ Disadvantage -ஆ ? | Budget Padmanaban\n\n#artificialintelligence #itjobs #jobsecurity #aijobs #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎",
-    "descriptionEnglish": "AI வந்ததால Advantage -ஆ Disadvantage -ஆ ? | Budget Padmanaban\n\n#artificialintelligence #itjobs #jobsecurity #aijobs #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎",
-    "description": "AI வந்ததால Advantage -ஆ Disadvantage -ஆ ? | Budget Padmanaban\n\n#artificialintelligence #itjobs #jobsecurity #aijobs #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎",
+    "descriptionTamil": "AI வந்ததால Advantage -ஆ Disadvantage -ஆ ? | Budget Padmanaban\n\n#artificialintelligence #itjobs #jobsecurity #aijobs #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎",
+    "descriptionEnglish": "AI வந்ததால Advantage -ஆ Disadvantage -ஆ ? | Budget Padmanaban\n\n#artificialintelligence #itjobs #jobsecurity #aijobs #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎",
+    "description": "AI வந்ததால Advantage -ஆ Disadvantage -ஆ ? | Budget Padmanaban\n\n#artificialintelligence #itjobs #jobsecurity #aijobs #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎",
     "category": "shorts",
     "publishedAt": "2026-04-29T13:15:13Z",
     "duration": "12:14",
@@ -3109,9 +3109,9 @@ const videosData = [
     "titleTamil": "உங்க வாழ்க்கையவே மாற்றுகிற Single Rule ! | Budget Padmanaban",
     "titleEnglish": "உங்க வாழ்க்கையவே மாற்றுகிற Single Rule ! | Budget Padmanaban",
     "title": "உங்க வாழ்க்கையவே மாற்றுகிற Single Rule ! | Budget Padmanaban",
-    "descriptionTamil": "உங்க வாழ்க்கையவே மாற்றுகிற Single Rule ! | Budget Padmanaban\n\n#singlerule #investment #savings #education #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n782400202",
-    "descriptionEnglish": "உங்க வாழ்க்கையவே மாற்றுகிற Single Rule ! | Budget Padmanaban\n\n#singlerule #investment #savings #education #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n782400202",
-    "description": "உங்க வாழ்க்கையவே மாற்றுகிற Single Rule ! | Budget Padmanaban\n\n#singlerule #investment #savings #education #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n782400202",
+    "descriptionTamil": "உங்க வாழ்க்கையவே மாற்றுகிற Single Rule ! | Budget Padmanaban\n\n#singlerule #investment #savings #education #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n782400202",
+    "descriptionEnglish": "உங்க வாழ்க்கையவே மாற்றுகிற Single Rule ! | Budget Padmanaban\n\n#singlerule #investment #savings #education #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n782400202",
+    "description": "உங்க வாழ்க்கையவே மாற்றுகிற Single Rule ! | Budget Padmanaban\n\n#singlerule #investment #savings #education #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n782400202",
     "category": "shorts",
     "publishedAt": "2026-04-25T13:15:00Z",
     "duration": "21:53",
@@ -3196,9 +3196,9 @@ const videosData = [
     "titleTamil": "Car Appreciating Asset-ஏ இல்ல ... | Budget Padmanaban",
     "titleEnglish": "Car Appreciating Asset-ஏ இல்ல ... | Budget Padmanaban",
     "title": "Car Appreciating Asset-ஏ இல்ல ... | Budget Padmanaban",
-    "descriptionTamil": "Car Appreciating Asset-ஏ இல்ல ... | Budget Padmanaban\n\n#buyingcars #newcar #expensivecars #automobile #carloan #emi #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎",
-    "descriptionEnglish": "Car Appreciating Asset-ஏ இல்ல ... | Budget Padmanaban\n\n#buyingcars #newcar #expensivecars #automobile #carloan #emi #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎",
-    "description": "Car Appreciating Asset-ஏ இல்ல ... | Budget Padmanaban\n\n#buyingcars #newcar #expensivecars #automobile #carloan #emi #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎",
+    "descriptionTamil": "Car Appreciating Asset-ஏ இல்ல ... | Budget Padmanaban\n\n#buyingcars #newcar #expensivecars #automobile #carloan #emi #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎",
+    "descriptionEnglish": "Car Appreciating Asset-ஏ இல்ல ... | Budget Padmanaban\n\n#buyingcars #newcar #expensivecars #automobile #carloan #emi #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎",
+    "description": "Car Appreciating Asset-ஏ இல்ல ... | Budget Padmanaban\n\n#buyingcars #newcar #expensivecars #automobile #carloan #emi #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎",
     "category": "shorts",
     "publishedAt": "2026-04-20T11:12:16Z",
     "duration": "12:32",
@@ -3225,9 +3225,9 @@ const videosData = [
     "titleTamil": "உங்க Dream Car-அ Loan-ல வாங்கலாமா ? | Budget Padmanaban",
     "titleEnglish": "உங்க Dream Car-அ Loan-ல வாங்கலாமா ? | Budget Padmanaban",
     "title": "உங்க Dream Car-அ Loan-ல வாங்கலாமா ? | Budget Padmanaban",
-    "descriptionTamil": "உங்க Dream Car-அ Loan-ல வாங்கலாமா ? | Budget Padmanaban\n\n#carloan #buyingcars #newcar #middleclass #emi #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n",
-    "descriptionEnglish": "உங்க Dream Car-அ Loan-ல வாங்கலாமா ? | Budget Padmanaban\n\n#carloan #buyingcars #newcar #middleclass #emi #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n",
-    "description": "உங்க Dream Car-அ Loan-ல வாங்கலாமா ? | Budget Padmanaban\n\n#carloan #buyingcars #newcar #middleclass #emi #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n",
+    "descriptionTamil": "உங்க Dream Car-அ Loan-ல வாங்கலாமா ? | Budget Padmanaban\n\n#carloan #buyingcars #newcar #middleclass #emi #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n",
+    "descriptionEnglish": "உங்க Dream Car-அ Loan-ல வாங்கலாமா ? | Budget Padmanaban\n\n#carloan #buyingcars #newcar #middleclass #emi #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n",
+    "description": "உங்க Dream Car-அ Loan-ல வாங்கலாமா ? | Budget Padmanaban\n\n#carloan #buyingcars #newcar #middleclass #emi #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n",
     "category": "shorts",
     "publishedAt": "2026-04-18T10:35:17Z",
     "duration": "15:45",
@@ -3254,9 +3254,9 @@ const videosData = [
     "titleTamil": "10 Lakhs or 20 Lakhs Car .. எது Best Choice ? | Budget Padmanaban",
     "titleEnglish": "10 Lakhs or 20 Lakhs Car .. எது Best Choice ? | Budget Padmanaban",
     "title": "10 Lakhs or 20 Lakhs Car .. எது Best Choice ? | Budget Padmanaban",
-    "descriptionTamil": "10 Lakhs or 20 Lakhs Car .. எது Best Choice ? | Budget Padmanaban\n\n#car #middleclass #highendcars #emi #carloan #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n782",
-    "descriptionEnglish": "10 Lakhs or 20 Lakhs Car .. எது Best Choice ? | Budget Padmanaban\n\n#car #middleclass #highendcars #emi #carloan #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n782",
-    "description": "10 Lakhs or 20 Lakhs Car .. எது Best Choice ? | Budget Padmanaban\n\n#car #middleclass #highendcars #emi #carloan #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n782",
+    "descriptionTamil": "10 Lakhs or 20 Lakhs Car .. எது Best Choice ? | Budget Padmanaban\n\n#car #middleclass #highendcars #emi #carloan #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n782",
+    "descriptionEnglish": "10 Lakhs or 20 Lakhs Car .. எது Best Choice ? | Budget Padmanaban\n\n#car #middleclass #highendcars #emi #carloan #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n782",
+    "description": "10 Lakhs or 20 Lakhs Car .. எது Best Choice ? | Budget Padmanaban\n\n#car #middleclass #highendcars #emi #carloan #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n782",
     "category": "shorts",
     "publishedAt": "2026-04-17T12:11:32Z",
     "duration": "18:58",
@@ -3283,9 +3283,9 @@ const videosData = [
     "titleTamil": "25000/- சம்பளம்.. இந்த Investment-அ எப்படி பண்ணலாம் .. | Budget Padmanaban",
     "titleEnglish": "25000/- சம்பளம்.. இந்த Investment-அ எப்படி பண்ணலாம் .. | Budget Padmanaban",
     "title": "25000/- சம்பளம்.. இந்த Investment-அ எப்படி பண்ணலாம் .. | Budget Padmanaban",
-    "descriptionTamil": "25000/- சம்பளம்.. இந்த Investment-அ எப்படி பண்ணலாம் .. | Budget Padmanaban\n\n#salary #investing #savingsplan #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002",
-    "descriptionEnglish": "25000/- சம்பளம்.. இந்த Investment-அ எப்படி பண்ணலாம் .. | Budget Padmanaban\n\n#salary #investing #savingsplan #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002",
-    "description": "25000/- சம்பளம்.. இந்த Investment-அ எப்படி பண்ணலாம் .. | Budget Padmanaban\n\n#salary #investing #savingsplan #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002",
+    "descriptionTamil": "25000/- சம்பளம்.. இந்த Investment-அ எப்படி பண்ணலாம் .. | Budget Padmanaban\n\n#salary #investing #savingsplan #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002",
+    "descriptionEnglish": "25000/- சம்பளம்.. இந்த Investment-அ எப்படி பண்ணலாம் .. | Budget Padmanaban\n\n#salary #investing #savingsplan #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002",
+    "description": "25000/- சம்பளம்.. இந்த Investment-அ எப்படி பண்ணலாம் .. | Budget Padmanaban\n\n#salary #investing #savingsplan #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002",
     "category": "shorts",
     "publishedAt": "2026-04-16T12:01:25Z",
     "duration": "21:11",
@@ -3312,9 +3312,9 @@ const videosData = [
     "titleTamil": "One Single Rule .. Lifetime Settlement !! | Budget Padmanaban",
     "titleEnglish": "One Single Rule .. Lifetime Settlement !! | Budget Padmanaban",
     "title": "One Single Rule .. Lifetime Settlement !! | Budget Padmanaban",
-    "descriptionTamil": "One Single Rule .. Lifetime Settlement !! | Budget Padmanaban\n\n#onerule #lifesavings #investment #planning #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n78240020",
-    "descriptionEnglish": "One Single Rule .. Lifetime Settlement !! | Budget Padmanaban\n\n#onerule #lifesavings #investment #planning #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n78240020",
-    "description": "One Single Rule .. Lifetime Settlement !! | Budget Padmanaban\n\n#onerule #lifesavings #investment #planning #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n78240020",
+    "descriptionTamil": "One Single Rule .. Lifetime Settlement !! | Budget Padmanaban\n\n#onerule #lifesavings #investment #planning #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n78240020",
+    "descriptionEnglish": "One Single Rule .. Lifetime Settlement !! | Budget Padmanaban\n\n#onerule #lifesavings #investment #planning #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n78240020",
+    "description": "One Single Rule .. Lifetime Settlement !! | Budget Padmanaban\n\n#onerule #lifesavings #investment #planning #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n78240020",
     "category": "shorts",
     "publishedAt": "2026-04-15T06:21:04Z",
     "duration": "01:00",
@@ -3341,9 +3341,9 @@ const videosData = [
     "titleTamil": "Car வாங்குறதுக்கு முன்னாடி இதை யோசிங்க ..! | Budget padmanaban",
     "titleEnglish": "Car வாங்குறதுக்கு முன்னாடி இதை யோசிங்க ..! | Budget padmanaban",
     "title": "Car வாங்குறதுக்கு முன்னாடி இதை யோசிங்க ..! | Budget padmanaban",
-    "descriptionTamil": "Car வாங்குறதுக்கு முன்னாடி இதை யோசிங்க ..! | Budget padmanaban\n\n#buyingcar #middleclass #emi #carloan #expensivecars #salary #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵",
-    "descriptionEnglish": "Car வாங்குறதுக்கு முன்னாடி இதை யோசிங்க ..! | Budget padmanaban\n\n#buyingcar #middleclass #emi #carloan #expensivecars #salary #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵",
-    "description": "Car வாங்குறதுக்கு முன்னாடி இதை யோசிங்க ..! | Budget padmanaban\n\n#buyingcar #middleclass #emi #carloan #expensivecars #salary #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵",
+    "descriptionTamil": "Car வாங்குறதுக்கு முன்னாடி இதை யோசிங்க ..! | Budget padmanaban\n\n#buyingcar #middleclass #emi #carloan #expensivecars #salary #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵",
+    "descriptionEnglish": "Car வாங்குறதுக்கு முன்னாடி இதை யோசிங்க ..! | Budget padmanaban\n\n#buyingcar #middleclass #emi #carloan #expensivecars #salary #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵",
+    "description": "Car வாங்குறதுக்கு முன்னாடி இதை யோசிங்க ..! | Budget padmanaban\n\n#buyingcar #middleclass #emi #carloan #expensivecars #salary #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵",
     "category": "mutual-funds",
     "publishedAt": "2026-04-13T13:38:23Z",
     "duration": "09:37",
@@ -3399,9 +3399,9 @@ const videosData = [
     "titleTamil": "Market-க்கு தேவை Performance ..! | Budget Padmanaban",
     "titleEnglish": "Market-க்கு தேவை Performance ..! | Budget Padmanaban",
     "title": "Market-க்கு தேவை Performance ..! | Budget Padmanaban",
-    "descriptionTamil": "Market-க்கு தேவை Performance ..! | Budget Padmanaban\n\n#sharemarket #personalgrowth #financialplanning #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n78",
-    "descriptionEnglish": "Market-க்கு தேவை Performance ..! | Budget Padmanaban\n\n#sharemarket #personalgrowth #financialplanning #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n78",
-    "description": "Market-க்கு தேவை Performance ..! | Budget Padmanaban\n\n#sharemarket #personalgrowth #financialplanning #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n78",
+    "descriptionTamil": "Market-க்கு தேவை Performance ..! | Budget Padmanaban\n\n#sharemarket #personalgrowth #financialplanning #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n78",
+    "descriptionEnglish": "Market-க்கு தேவை Performance ..! | Budget Padmanaban\n\n#sharemarket #personalgrowth #financialplanning #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n78",
+    "description": "Market-க்கு தேவை Performance ..! | Budget Padmanaban\n\n#sharemarket #personalgrowth #financialplanning #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n78",
     "category": "shorts",
     "publishedAt": "2026-04-11T11:22:57Z",
     "duration": "15:03",
@@ -3457,9 +3457,9 @@ const videosData = [
     "titleTamil": "அடுத்த 3 வருஷத்துக்கு Gold & Silver பெரிய Investment இல்ல ..| Budget Padmanaban",
     "titleEnglish": "அடுத்த 3 வருஷத்துக்கு Gold & Silver பெரிய Investment இல்ல ..| Budget Padmanaban",
     "title": "அடுத்த 3 வருஷத்துக்கு Gold & Silver பெரிய Investment இல்ல ..| Budget Padmanaban",
-    "descriptionTamil": "அடுத்த 3 வருஷத்துக்கு Gold & Silver பெரிய Investment இல்ல ..| Budget Padmanaban\n\n#gold #investing #silver #savingsplan #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞",
-    "descriptionEnglish": "அடுத்த 3 வருஷத்துக்கு Gold & Silver பெரிய Investment இல்ல ..| Budget Padmanaban\n\n#gold #investing #silver #savingsplan #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞",
-    "description": "அடுத்த 3 வருஷத்துக்கு Gold & Silver பெரிய Investment இல்ல ..| Budget Padmanaban\n\n#gold #investing #silver #savingsplan #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞",
+    "descriptionTamil": "அடுத்த 3 வருஷத்துக்கு Gold & Silver பெரிய Investment இல்ல ..| Budget Padmanaban\n\n#gold #investing #silver #savingsplan #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact ",
+    "descriptionEnglish": "அடுத்த 3 வருஷத்துக்கு Gold & Silver பெரிய Investment இல்ல ..| Budget Padmanaban\n\n#gold #investing #silver #savingsplan #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact ",
+    "description": "அடுத்த 3 வருஷத்துக்கு Gold & Silver பெரிய Investment இல்ல ..| Budget Padmanaban\n\n#gold #investing #silver #savingsplan #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact ",
     "category": "shorts",
     "publishedAt": "2026-04-08T11:57:16Z",
     "duration": "21:29",
@@ -3486,9 +3486,9 @@ const videosData = [
     "titleTamil": "Gold-அ வித்துட்டு Market-ல Invest பண்ணலாமா ? | Padmanaban",
     "titleEnglish": "Gold-அ வித்துட்டு Market-ல Invest பண்ணலாமா ? | Padmanaban",
     "title": "Gold-அ வித்துட்டு Market-ல Invest பண்ணலாமா ? | Padmanaban",
-    "descriptionTamil": "Gold-அ வித்துட்டு Market-ல Invest பண்ணலாமா ? | Padmanaban\n\n#gold #market #investment #goldetf #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78240913",
-    "descriptionEnglish": "Gold-அ வித்துட்டு Market-ல Invest பண்ணலாமா ? | Padmanaban\n\n#gold #market #investment #goldetf #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78240913",
-    "description": "Gold-அ வித்துட்டு Market-ல Invest பண்ணலாமா ? | Padmanaban\n\n#gold #market #investment #goldetf #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78240913",
+    "descriptionTamil": "Gold-அ வித்துட்டு Market-ல Invest பண்ணலாமா ? | Padmanaban\n\n#gold #market #investment #goldetf #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78240913",
+    "descriptionEnglish": "Gold-அ வித்துட்டு Market-ல Invest பண்ணலாமா ? | Padmanaban\n\n#gold #market #investment #goldetf #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78240913",
+    "description": "Gold-அ வித்துட்டு Market-ல Invest பண்ணலாமா ? | Padmanaban\n\n#gold #market #investment #goldetf #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78240913",
     "category": "mutual-funds",
     "publishedAt": "2026-04-07T15:50:52Z",
     "duration": "01:00",
@@ -3515,9 +3515,9 @@ const videosData = [
     "titleTamil": "Average -ஆ Gold வச்சிருக்கவங்க 10%-20% தான்! | Padmanaban",
     "titleEnglish": "Average -ஆ Gold வச்சிருக்கவங்க 10%-20% தான்! | Padmanaban",
     "title": "Average -ஆ Gold வச்சிருக்கவங்க 10%-20% தான்! | Padmanaban",
-    "descriptionTamil": "Average -ஆ Gold வச்சிருக்கவங்க 10%-20% தான்! | Padmanaban\n\n#gold #goldmutualfunds #digitalgold #physicalgold #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782",
-    "descriptionEnglish": "Average -ஆ Gold வச்சிருக்கவங்க 10%-20% தான்! | Padmanaban\n\n#gold #goldmutualfunds #digitalgold #physicalgold #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782",
-    "description": "Average -ஆ Gold வச்சிருக்கவங்க 10%-20% தான்! | Padmanaban\n\n#gold #goldmutualfunds #digitalgold #physicalgold #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782",
+    "descriptionTamil": "Average -ஆ Gold வச்சிருக்கவங்க 10%-20% தான்! | Padmanaban\n\n#gold #goldmutualfunds #digitalgold #physicalgold #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782",
+    "descriptionEnglish": "Average -ஆ Gold வச்சிருக்கவங்க 10%-20% தான்! | Padmanaban\n\n#gold #goldmutualfunds #digitalgold #physicalgold #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782",
+    "description": "Average -ஆ Gold வச்சிருக்கவங்க 10%-20% தான்! | Padmanaban\n\n#gold #goldmutualfunds #digitalgold #physicalgold #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782",
     "category": "mutual-funds",
     "publishedAt": "2026-04-06T14:03:40Z",
     "duration": "09:55",
@@ -3544,9 +3544,9 @@ const videosData = [
     "titleTamil": "இப்போ Gold வாங்குனா லாபமா ? நஷ்டமா ? | Budget Padmanaban",
     "titleEnglish": "இப்போ Gold வாங்குனா லாபமா ? நஷ்டமா ? | Budget Padmanaban",
     "title": "இப்போ Gold வாங்குனா லாபமா ? நஷ்டமா ? | Budget Padmanaban",
-    "descriptionTamil": "இப்போ Gold வாங்குனா லாபமா ? நஷ்டமா ? | Budget Padmanaban\n\n#gold #silver #investing #goldpricedown #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782409",
-    "descriptionEnglish": "இப்போ Gold வாங்குனா லாபமா ? நஷ்டமா ? | Budget Padmanaban\n\n#gold #silver #investing #goldpricedown #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782409",
-    "description": "இப்போ Gold வாங்குனா லாபமா ? நஷ்டமா ? | Budget Padmanaban\n\n#gold #silver #investing #goldpricedown #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782409",
+    "descriptionTamil": "இப்போ Gold வாங்குனா லாபமா ? நஷ்டமா ? | Budget Padmanaban\n\n#gold #silver #investing #goldpricedown #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782409",
+    "descriptionEnglish": "இப்போ Gold வாங்குனா லாபமா ? நஷ்டமா ? | Budget Padmanaban\n\n#gold #silver #investing #goldpricedown #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782409",
+    "description": "இப்போ Gold வாங்குனா லாபமா ? நஷ்டமா ? | Budget Padmanaban\n\n#gold #silver #investing #goldpricedown #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782409",
     "category": "shorts",
     "publishedAt": "2026-04-04T11:40:35Z",
     "duration": "12:08",
@@ -3573,9 +3573,9 @@ const videosData = [
     "titleTamil": "Gold & Silver Downfall | Budget padmanaban",
     "titleEnglish": "Gold & Silver Downfall | Budget padmanaban",
     "title": "Gold & Silver Downfall | Budget padmanaban",
-    "descriptionTamil": "Gold & Silver Downfall | Budget padmanaban\n\n#gold #silver #goldpricedown #downfall #marketfall #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782409139",
-    "descriptionEnglish": "Gold & Silver Downfall | Budget padmanaban\n\n#gold #silver #goldpricedown #downfall #marketfall #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782409139",
-    "description": "Gold & Silver Downfall | Budget padmanaban\n\n#gold #silver #goldpricedown #downfall #marketfall #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782409139",
+    "descriptionTamil": "Gold & Silver Downfall | Budget padmanaban\n\n#gold #silver #goldpricedown #downfall #marketfall #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782409139",
+    "descriptionEnglish": "Gold & Silver Downfall | Budget padmanaban\n\n#gold #silver #goldpricedown #downfall #marketfall #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782409139",
+    "description": "Gold & Silver Downfall | Budget padmanaban\n\n#gold #silver #goldpricedown #downfall #marketfall #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782409139",
     "category": "shorts",
     "publishedAt": "2026-04-03T12:43:35Z",
     "duration": "15:21",
@@ -3602,9 +3602,9 @@ const videosData = [
     "titleTamil": "17%–35% வீழ்ச்சி: தங்கம், வெள்ளி வாங்கும் தருணமா? | Budget Padmanaban",
     "titleEnglish": "17%–35% வீழ்ச்சி: தங்கம், வெள்ளி வாங்கும் தருணமா? | Budget Padmanaban",
     "title": "17%–35% வீழ்ச்சி: தங்கம், வெள்ளி வாங்கும் தருணமா? | Budget Padmanaban",
-    "descriptionTamil": "17%–35% வீழ்ச்சி: தங்கம், வெள்ளி வாங்கும் தருணமா? | Budget Padmanaban\n\n#gold #silver #rise #goldfall #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782",
-    "descriptionEnglish": "17%–35% வீழ்ச்சி: தங்கம், வெள்ளி வாங்கும் தருணமா? | Budget Padmanaban\n\n#gold #silver #rise #goldfall #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782",
-    "description": "17%–35% வீழ்ச்சி: தங்கம், வெள்ளி வாங்கும் தருணமா? | Budget Padmanaban\n\n#gold #silver #rise #goldfall #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782",
+    "descriptionTamil": "17%–35% வீழ்ச்சி: தங்கம், வெள்ளி வாங்கும் தருணமா? | Budget Padmanaban\n\n#gold #silver #rise #goldfall #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782",
+    "descriptionEnglish": "17%–35% வீழ்ச்சி: தங்கம், வெள்ளி வாங்கும் தருணமா? | Budget Padmanaban\n\n#gold #silver #rise #goldfall #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782",
+    "description": "17%–35% வீழ்ச்சி: தங்கம், வெள்ளி வாங்கும் தருணமா? | Budget Padmanaban\n\n#gold #silver #rise #goldfall #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782",
     "category": "shorts",
     "publishedAt": "2026-04-01T12:05:40Z",
     "duration": "18:34",
@@ -3660,9 +3660,9 @@ const videosData = [
     "titleTamil": "₹200 சேமிப்பு = கோடி மதிப்பு Pension!!! | Budget Padmanaban",
     "titleEnglish": "₹200 சேமிப்பு = கோடி மதிப்பு Pension!!! | Budget Padmanaban",
     "title": "₹200 சேமிப்பு = கோடி மதிப்பு Pension!!! | Budget Padmanaban",
-    "descriptionTamil": "₹200 சேமிப்பு = கோடி மதிப்பு Pension!!! | Budget Padmanaban\n\n#pension #savingsplan #investment #investmenttips #budgetpadmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵",
-    "descriptionEnglish": "₹200 சேமிப்பு = கோடி மதிப்பு Pension!!! | Budget Padmanaban\n\n#pension #savingsplan #investment #investmenttips #budgetpadmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵",
-    "description": "₹200 சேமிப்பு = கோடி மதிப்பு Pension!!! | Budget Padmanaban\n\n#pension #savingsplan #investment #investmenttips #budgetpadmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵",
+    "descriptionTamil": "₹200 சேமிப்பு = கோடி மதிப்பு Pension!!! | Budget Padmanaban\n\n#pension #savingsplan #investment #investmenttips #budgetpadmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵",
+    "descriptionEnglish": "₹200 சேமிப்பு = கோடி மதிப்பு Pension!!! | Budget Padmanaban\n\n#pension #savingsplan #investment #investmenttips #budgetpadmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵",
+    "description": "₹200 சேமிப்பு = கோடி மதிப்பு Pension!!! | Budget Padmanaban\n\n#pension #savingsplan #investment #investmenttips #budgetpadmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵",
     "category": "shorts",
     "publishedAt": "2026-03-31T13:36:34Z",
     "duration": "01:00",
@@ -3689,9 +3689,9 @@ const videosData = [
     "titleTamil": "மாசம் 10000 Invest பண்ணாலே போதுமா? | Padmanaban",
     "titleEnglish": "மாசம் 10000 Invest பண்ணாலே போதுமா? | Padmanaban",
     "title": "மாசம் 10000 Invest பண்ணாலே போதுமா? | Padmanaban",
-    "descriptionTamil": "மாசம் 10000 Invest பண்ணாலே போதுமா? | Padmanaban\n\n#investments #middleclass #returns #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78240",
-    "descriptionEnglish": "மாசம் 10000 Invest பண்ணாலே போதுமா? | Padmanaban\n\n#investments #middleclass #returns #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78240",
-    "description": "மாசம் 10000 Invest பண்ணாலே போதுமா? | Padmanaban\n\n#investments #middleclass #returns #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78240",
+    "descriptionTamil": "மாசம் 10000 Invest பண்ணாலே போதுமா? | Padmanaban\n\n#investments #middleclass #returns #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78240",
+    "descriptionEnglish": "மாசம் 10000 Invest பண்ணாலே போதுமா? | Padmanaban\n\n#investments #middleclass #returns #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78240",
+    "description": "மாசம் 10000 Invest பண்ணாலே போதுமா? | Padmanaban\n\n#investments #middleclass #returns #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78240",
     "category": "mutual-funds",
     "publishedAt": "2026-03-30T15:28:06Z",
     "duration": "09:13",
@@ -3718,9 +3718,9 @@ const videosData = [
     "titleTamil": "சிறிய முதலீடு, பெரிய கனவு – கோடீஸ்வரர் பாதை | Budget Padmanaban",
     "titleEnglish": "சிறிய முதலீடு, பெரிய கனவு – கோடீஸ்வரர் பாதை | Budget Padmanaban",
     "title": "சிறிய முதலீடு, பெரிய கனவு – கோடீஸ்வரர் பாதை | Budget Padmanaban",
-    "descriptionTamil": "சிறிய முதலீடு, பெரிய கனவு – கோடீஸ்வரர் பாதை | Budget Padmanaban\n\n#investor #returns #smallcap #mutualfunds #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n78240020",
-    "descriptionEnglish": "சிறிய முதலீடு, பெரிய கனவு – கோடீஸ்வரர் பாதை | Budget Padmanaban\n\n#investor #returns #smallcap #mutualfunds #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n78240020",
-    "description": "சிறிய முதலீடு, பெரிய கனவு – கோடீஸ்வரர் பாதை | Budget Padmanaban\n\n#investor #returns #smallcap #mutualfunds #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n78240020",
+    "descriptionTamil": "சிறிய முதலீடு, பெரிய கனவு – கோடீஸ்வரர் பாதை | Budget Padmanaban\n\n#investor #returns #smallcap #mutualfunds #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n78240020",
+    "descriptionEnglish": "சிறிய முதலீடு, பெரிய கனவு – கோடீஸ்வரர் பாதை | Budget Padmanaban\n\n#investor #returns #smallcap #mutualfunds #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n78240020",
+    "description": "சிறிய முதலீடு, பெரிய கனவு – கோடீஸ்வரர் பாதை | Budget Padmanaban\n\n#investor #returns #smallcap #mutualfunds #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n78240020",
     "category": "shorts",
     "publishedAt": "2026-03-28T10:29:20Z",
     "duration": "12:26",
@@ -3747,9 +3747,9 @@ const videosData = [
     "titleTamil": "பணவீக்கம்: உங்க முதலீட்டின் மறைமுக எதிரி | Budget Padmanaban",
     "titleEnglish": "பணவீக்கம்: உங்க முதலீட்டின் மறைமுக எதிரி | Budget Padmanaban",
     "title": "பணவீக்கம்: உங்க முதலீட்டின் மறைமுக எதிரி | Budget Padmanaban",
-    "descriptionTamil": "பணவீக்கம்: உங்க முதலீட்டின் மறைமுக எதிரி | Budget Padmanaban\n\n#inflation #investment #salary #income #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782",
-    "descriptionEnglish": "பணவீக்கம்: உங்க முதலீட்டின் மறைமுக எதிரி | Budget Padmanaban\n\n#inflation #investment #salary #income #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782",
-    "description": "பணவீக்கம்: உங்க முதலீட்டின் மறைமுக எதிரி | Budget Padmanaban\n\n#inflation #investment #salary #income #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782",
+    "descriptionTamil": "பணவீக்கம்: உங்க முதலீட்டின் மறைமுக எதிரி | Budget Padmanaban\n\n#inflation #investment #salary #income #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782",
+    "descriptionEnglish": "பணவீக்கம்: உங்க முதலீட்டின் மறைமுக எதிரி | Budget Padmanaban\n\n#inflation #investment #salary #income #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782",
+    "description": "பணவீக்கம்: உங்க முதலீட்டின் மறைமுக எதிரி | Budget Padmanaban\n\n#inflation #investment #salary #income #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782",
     "category": "shorts",
     "publishedAt": "2026-03-27T10:06:15Z",
     "duration": "15:39",
@@ -3805,9 +3805,9 @@ const videosData = [
     "titleTamil": "உங்களுக்கு 143 தெரியுமா? | Budget Padmanaban",
     "titleEnglish": "உங்களுக்கு 143 தெரியுமா? | Budget Padmanaban",
     "title": "உங்களுக்கு 143 தெரியுமா? | Budget Padmanaban",
-    "descriptionTamil": "உங்களுக்கு 143 தெரியுமா? | Budget Padmanaban\n\n#rules #rule143 #investment #monthlyinvestment #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n",
-    "descriptionEnglish": "உங்களுக்கு 143 தெரியுமா? | Budget Padmanaban\n\n#rules #rule143 #investment #monthlyinvestment #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n",
-    "description": "உங்களுக்கு 143 தெரியுமா? | Budget Padmanaban\n\n#rules #rule143 #investment #monthlyinvestment #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n",
+    "descriptionTamil": "உங்களுக்கு 143 தெரியுமா? | Budget Padmanaban\n\n#rules #rule143 #investment #monthlyinvestment #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n",
+    "descriptionEnglish": "உங்களுக்கு 143 தெரியுமா? | Budget Padmanaban\n\n#rules #rule143 #investment #monthlyinvestment #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n",
+    "description": "உங்களுக்கு 143 தெரியுமா? | Budget Padmanaban\n\n#rules #rule143 #investment #monthlyinvestment #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n",
     "category": "shorts",
     "publishedAt": "2026-03-25T10:42:06Z",
     "duration": "21:05",
@@ -3863,9 +3863,9 @@ const videosData = [
     "titleTamil": "Mutual Fund Investment-ஐ அடமானம் வைத்து Loan எடுப்பது எப்படி? | Padmanaban",
     "titleEnglish": "Mutual Fund Investment-ஐ அடமானம் வைத்து Loan எடுப்பது எப்படி? | Padmanaban",
     "title": "Mutual Fund Investment-ஐ அடமானம் வைத்து Loan எடுப்பது எப்படி? | Padmanaban",
-    "descriptionTamil": "Mutual Fund Investment-ஐ அடமானம் வைத்து Loan எடுப்பது எப்படி? | Padmanaban\n\n#goldloan #mutualfunds #investments #mutualfundloan #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞",
-    "descriptionEnglish": "Mutual Fund Investment-ஐ அடமானம் வைத்து Loan எடுப்பது எப்படி? | Padmanaban\n\n#goldloan #mutualfunds #investments #mutualfundloan #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞",
-    "description": "Mutual Fund Investment-ஐ அடமானம் வைத்து Loan எடுப்பது எப்படி? | Padmanaban\n\n#goldloan #mutualfunds #investments #mutualfundloan #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞",
+    "descriptionTamil": "Mutual Fund Investment-ஐ அடமானம் வைத்து Loan எடுப்பது எப்படி? | Padmanaban\n\n#goldloan #mutualfunds #investments #mutualfundloan #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact ",
+    "descriptionEnglish": "Mutual Fund Investment-ஐ அடமானம் வைத்து Loan எடுப்பது எப்படி? | Padmanaban\n\n#goldloan #mutualfunds #investments #mutualfundloan #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact ",
+    "description": "Mutual Fund Investment-ஐ அடமானம் வைத்து Loan எடுப்பது எப்படி? | Padmanaban\n\n#goldloan #mutualfunds #investments #mutualfundloan #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact ",
     "category": "mutual-funds",
     "publishedAt": "2026-03-21T14:02:05Z",
     "duration": "09:31",
@@ -3979,9 +3979,9 @@ const videosData = [
     "titleTamil": "“Tea or Treasure? Future-ல Choice உங்களுடையது” | Padmanaban",
     "titleEnglish": "“Tea or Treasure? Future-ல Choice உங்களுடையது” | Padmanaban",
     "title": "“Tea or Treasure? Future-ல Choice உங்களுடையது” | Padmanaban",
-    "descriptionTamil": "“Tea or Treasure? Future-ல Choice உங்களுடையது” | Padmanaban\n\n#tea #savings #planning #expenses #budgetpadmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782",
-    "descriptionEnglish": "“Tea or Treasure? Future-ல Choice உங்களுடையது” | Padmanaban\n\n#tea #savings #planning #expenses #budgetpadmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782",
-    "description": "“Tea or Treasure? Future-ல Choice உங்களுடையது” | Padmanaban\n\n#tea #savings #planning #expenses #budgetpadmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782",
+    "descriptionTamil": "“Tea or Treasure? Future-ல Choice உங்களுடையது” | Padmanaban\n\n#tea #savings #planning #expenses #budgetpadmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782",
+    "descriptionEnglish": "“Tea or Treasure? Future-ல Choice உங்களுடையது” | Padmanaban\n\n#tea #savings #planning #expenses #budgetpadmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782",
+    "description": "“Tea or Treasure? Future-ல Choice உங்களுடையது” | Padmanaban\n\n#tea #savings #planning #expenses #budgetpadmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782",
     "category": "shorts",
     "publishedAt": "2026-03-16T10:29:01Z",
     "duration": "21:23",
@@ -4008,9 +4008,9 @@ const videosData = [
     "titleTamil": "IT Market Fall விளைவு என்ன ? | Padmanaban",
     "titleEnglish": "IT Market Fall விளைவு என்ன ? | Padmanaban",
     "title": "IT Market Fall விளைவு என்ன ? | Padmanaban",
-    "descriptionTamil": "IT Market Fall விளைவு என்ன ? | Padmanaban\n\n#itmarketcrash #itjobs #itsector #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nConta",
-    "descriptionEnglish": "IT Market Fall விளைவு என்ன ? | Padmanaban\n\n#itmarketcrash #itjobs #itsector #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nConta",
-    "description": "IT Market Fall விளைவு என்ன ? | Padmanaban\n\n#itmarketcrash #itjobs #itsector #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nConta",
+    "descriptionTamil": "IT Market Fall விளைவு என்ன ? | Padmanaban\n\n#itmarketcrash #itjobs #itsector #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nConta",
+    "descriptionEnglish": "IT Market Fall விளைவு என்ன ? | Padmanaban\n\n#itmarketcrash #itjobs #itsector #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nConta",
+    "description": "IT Market Fall விளைவு என்ன ? | Padmanaban\n\n#itmarketcrash #itjobs #itsector #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nConta",
     "category": "shorts",
     "publishedAt": "2026-03-14T10:30:00Z",
     "duration": "01:00",
@@ -4037,9 +4037,9 @@ const videosData = [
     "titleTamil": "IT Jobs-ஐ AI replace பண்ணுமா ? | Budget Padmanaban",
     "titleEnglish": "IT Jobs-ஐ AI replace பண்ணுமா ? | Budget Padmanaban",
     "title": "IT Jobs-ஐ AI replace பண்ணுமா ? | Budget Padmanaban",
-    "descriptionTamil": "IT Jobs-ஐ AI replace பண்ணுமா ? | Budget Padmanaban\n\n#itjobs #artificialintelligence #itemployees #aiworks #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n782400202",
-    "descriptionEnglish": "IT Jobs-ஐ AI replace பண்ணுமா ? | Budget Padmanaban\n\n#itjobs #artificialintelligence #itemployees #aiworks #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n782400202",
-    "description": "IT Jobs-ஐ AI replace பண்ணுமா ? | Budget Padmanaban\n\n#itjobs #artificialintelligence #itemployees #aiworks #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n782400202",
+    "descriptionTamil": "IT Jobs-ஐ AI replace பண்ணுமா ? | Budget Padmanaban\n\n#itjobs #artificialintelligence #itemployees #aiworks #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n782400202",
+    "descriptionEnglish": "IT Jobs-ஐ AI replace பண்ணுமா ? | Budget Padmanaban\n\n#itjobs #artificialintelligence #itemployees #aiworks #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n782400202",
+    "description": "IT Jobs-ஐ AI replace பண்ணுமா ? | Budget Padmanaban\n\n#itjobs #artificialintelligence #itemployees #aiworks #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n782400202",
     "category": "shorts",
     "publishedAt": "2026-03-13T11:50:56Z",
     "duration": "09:49",
@@ -4066,9 +4066,9 @@ const videosData = [
     "titleTamil": "SIP pause பண்ணலாமா ? | Padmanaban",
     "titleEnglish": "SIP pause பண்ணலாமா ? | Padmanaban",
     "title": "SIP pause பண்ணலாமா ? | Padmanaban",
-    "descriptionTamil": "SIP pause பண்ணலாமா ? | Padmanaban\n\n#sip #sippause #future #couplesip #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form",
-    "descriptionEnglish": "SIP pause பண்ணலாமா ? | Padmanaban\n\n#sip #sippause #future #couplesip #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form",
-    "description": "SIP pause பண்ணலாமா ? | Padmanaban\n\n#sip #sippause #future #couplesip #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form",
+    "descriptionTamil": "SIP pause பண்ணலாமா ? | Padmanaban\n\n#sip #sippause #future #couplesip #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form",
+    "descriptionEnglish": "SIP pause பண்ணலாமா ? | Padmanaban\n\n#sip #sippause #future #couplesip #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form",
+    "description": "SIP pause பண்ணலாமா ? | Padmanaban\n\n#sip #sippause #future #couplesip #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form",
     "category": "shorts",
     "publishedAt": "2026-03-12T11:45:52Z",
     "duration": "12:02",
@@ -4095,9 +4095,9 @@ const videosData = [
     "titleTamil": "Market Low-ல SIP ஆரமிக்கலாமா ? | Budget Padmanaban",
     "titleEnglish": "Market Low-ல SIP ஆரமிக்கலாமா ? | Budget Padmanaban",
     "title": "Market Low-ல SIP ஆரமிக்கலாமா ? | Budget Padmanaban",
-    "descriptionTamil": "Market Low-ல SIP ஆரமிக்கலாமா ? | Budget Padmanaban\n\n#sip #coupleinvestment #marketfall #investment #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n78240",
-    "descriptionEnglish": "Market Low-ல SIP ஆரமிக்கலாமா ? | Budget Padmanaban\n\n#sip #coupleinvestment #marketfall #investment #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n78240",
-    "description": "Market Low-ல SIP ஆரமிக்கலாமா ? | Budget Padmanaban\n\n#sip #coupleinvestment #marketfall #investment #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n78240",
+    "descriptionTamil": "Market Low-ல SIP ஆரமிக்கலாமா ? | Budget Padmanaban\n\n#sip #coupleinvestment #marketfall #investment #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n78240",
+    "descriptionEnglish": "Market Low-ல SIP ஆரமிக்கலாமா ? | Budget Padmanaban\n\n#sip #coupleinvestment #marketfall #investment #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n78240",
+    "description": "Market Low-ல SIP ஆரமிக்கலாமா ? | Budget Padmanaban\n\n#sip #coupleinvestment #marketfall #investment #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n78240",
     "category": "shorts",
     "publishedAt": "2026-03-10T10:30:39Z",
     "duration": "15:15",
@@ -4124,9 +4124,9 @@ const videosData = [
     "titleTamil": "Couple SIP Strategy ! | Padmanaban",
     "titleEnglish": "Couple SIP Strategy ! | Padmanaban",
     "title": "Couple SIP Strategy ! | Padmanaban",
-    "descriptionTamil": "Couple SIP Strategy ! | Padmanaban\n\n#couplesip #sip #investment #coupleinvestment #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n",
-    "descriptionEnglish": "Couple SIP Strategy ! | Padmanaban\n\n#couplesip #sip #investment #coupleinvestment #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n",
-    "description": "Couple SIP Strategy ! | Padmanaban\n\n#couplesip #sip #investment #coupleinvestment #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n",
+    "descriptionTamil": "Couple SIP Strategy ! | Padmanaban\n\n#couplesip #sip #investment #coupleinvestment #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n",
+    "descriptionEnglish": "Couple SIP Strategy ! | Padmanaban\n\n#couplesip #sip #investment #coupleinvestment #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n",
+    "description": "Couple SIP Strategy ! | Padmanaban\n\n#couplesip #sip #investment #coupleinvestment #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n",
     "category": "shorts",
     "publishedAt": "2026-03-09T12:30:24Z",
     "duration": "18:28",
@@ -4182,9 +4182,9 @@ const videosData = [
     "titleTamil": "Right To INR - The Language of Money | Padmanaban",
     "titleEnglish": "Right To INR - The Language of Money | Padmanaban",
     "title": "Right To INR - The Language of Money | Padmanaban",
-    "descriptionTamil": "Right To INR - The Language of Money | Padmanaban\n\n#education #awareness #financeprogram #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nC",
-    "descriptionEnglish": "Right To INR - The Language of Money | Padmanaban\n\n#education #awareness #financeprogram #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nC",
-    "description": "Right To INR - The Language of Money | Padmanaban\n\n#education #awareness #financeprogram #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nC",
+    "descriptionTamil": "Right To INR - The Language of Money | Padmanaban\n\n#education #awareness #financeprogram #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nC",
+    "descriptionEnglish": "Right To INR - The Language of Money | Padmanaban\n\n#education #awareness #financeprogram #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nC",
+    "description": "Right To INR - The Language of Money | Padmanaban\n\n#education #awareness #financeprogram #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nC",
     "category": "mutual-funds",
     "publishedAt": "2026-03-08T07:45:53Z",
     "duration": "01:00",
@@ -4211,9 +4211,9 @@ const videosData = [
     "titleTamil": "13% return சாத்தியமா ? | Budget Padmanaban",
     "titleEnglish": "13% return சாத்தியமா ? | Budget Padmanaban",
     "title": "13% return சாத்தியமா ? | Budget Padmanaban",
-    "descriptionTamil": "13% return சாத்தியமா ? | Budget Padmanaban\n\n#returns #funds #investment #budgetpadmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nCon",
-    "descriptionEnglish": "13% return சாத்தியமா ? | Budget Padmanaban\n\n#returns #funds #investment #budgetpadmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nCon",
-    "description": "13% return சாத்தியமா ? | Budget Padmanaban\n\n#returns #funds #investment #budgetpadmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nCon",
+    "descriptionTamil": "13% return சாத்தியமா ? | Budget Padmanaban\n\n#returns #funds #investment #budgetpadmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nCon",
+    "descriptionEnglish": "13% return சாத்தியமா ? | Budget Padmanaban\n\n#returns #funds #investment #budgetpadmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nCon",
+    "description": "13% return சாத்தியமா ? | Budget Padmanaban\n\n#returns #funds #investment #budgetpadmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nCon",
     "category": "shorts",
     "publishedAt": "2026-03-06T12:38:20Z",
     "duration": "09:07",
@@ -4269,9 +4269,9 @@ const videosData = [
     "titleTamil": "5 ஆயிரம் 5 வருஷம் ! மாசம் இவ்ளோ Pension ! | Padmanaban",
     "titleEnglish": "5 ஆயிரம் 5 வருஷம் ! மாசம் இவ்ளோ Pension ! | Padmanaban",
     "title": "5 ஆயிரம் 5 வருஷம் ! மாசம் இவ்ளோ Pension ! | Padmanaban",
-    "descriptionTamil": "5 ஆயிரம் 5 வருஷம் ! மாசம் இவ்ளோ Pension ! | Padmanaban\n\n#sip #investment #pension #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091",
-    "descriptionEnglish": "5 ஆயிரம் 5 வருஷம் ! மாசம் இவ்ளோ Pension ! | Padmanaban\n\n#sip #investment #pension #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091",
-    "description": "5 ஆயிரம் 5 வருஷம் ! மாசம் இவ்ளோ Pension ! | Padmanaban\n\n#sip #investment #pension #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091",
+    "descriptionTamil": "5 ஆயிரம் 5 வருஷம் ! மாசம் இவ்ளோ Pension ! | Padmanaban\n\n#sip #investment #pension #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091",
+    "descriptionEnglish": "5 ஆயிரம் 5 வருஷம் ! மாசம் இவ்ளோ Pension ! | Padmanaban\n\n#sip #investment #pension #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091",
+    "description": "5 ஆயிரம் 5 வருஷம் ! மாசம் இவ்ளோ Pension ! | Padmanaban\n\n#sip #investment #pension #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091",
     "category": "mutual-funds",
     "publishedAt": "2026-03-03T14:40:09Z",
     "duration": "15:33",
@@ -4298,9 +4298,9 @@ const videosData = [
     "titleTamil": "Couple SIP பண்ணுங்க! 4.4 கோடி கிடைக்கும்!! | Padmanaban",
     "titleEnglish": "Couple SIP பண்ணுங்க! 4.4 கோடி கிடைக்கும்!! | Padmanaban",
     "title": "Couple SIP பண்ணுங்க! 4.4 கோடி கிடைக்கும்!! | Padmanaban",
-    "descriptionTamil": "Couple SIP பண்ணுங்க! 4.4 கோடி கிடைக்கும்!! | Padmanaban\n\n#coupleinvestment #sip #investment #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n782409139",
-    "descriptionEnglish": "Couple SIP பண்ணுங்க! 4.4 கோடி கிடைக்கும்!! | Padmanaban\n\n#coupleinvestment #sip #investment #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n782409139",
-    "description": "Couple SIP பண்ணுங்க! 4.4 கோடி கிடைக்கும்!! | Padmanaban\n\n#coupleinvestment #sip #investment #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n782409139",
+    "descriptionTamil": "Couple SIP பண்ணுங்க! 4.4 கோடி கிடைக்கும்!! | Padmanaban\n\n#coupleinvestment #sip #investment #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n782409139",
+    "descriptionEnglish": "Couple SIP பண்ணுங்க! 4.4 கோடி கிடைக்கும்!! | Padmanaban\n\n#coupleinvestment #sip #investment #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n782409139",
+    "description": "Couple SIP பண்ணுங்க! 4.4 கோடி கிடைக்கும்!! | Padmanaban\n\n#coupleinvestment #sip #investment #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n782409139",
     "category": "mutual-funds",
     "publishedAt": "2026-03-03T10:30:03Z",
     "duration": "18:46",
@@ -4327,9 +4327,9 @@ const videosData = [
     "titleTamil": "10,000 ரூபாய் மாதம் Invest பண்ணி 30,000 ரூபாய் எடுத்துக்கலாமா? | Padmanaban",
     "titleEnglish": "10,000 ரூபாய் மாதம் Invest பண்ணி 30,000 ரூபாய் எடுத்துக்கலாமா? | Padmanaban",
     "title": "10,000 ரூபாய் மாதம் Invest பண்ணி 30,000 ரூபாய் எடுத்துக்கலாமா? | Padmanaban",
-    "descriptionTamil": "10,000 ரூபாய் மாதம் Invest பண்ணி 30,000 ரூபாய் எடுத்துக்கலாமா? | Padmanaban\n\n#swp #sip #investment #finance #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002",
-    "descriptionEnglish": "10,000 ரூபாய் மாதம் Invest பண்ணி 30,000 ரூபாய் எடுத்துக்கலாமா? | Padmanaban\n\n#swp #sip #investment #finance #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002",
-    "description": "10,000 ரூபாய் மாதம் Invest பண்ணி 30,000 ரூபாய் எடுத்துக்கலாமா? | Padmanaban\n\n#swp #sip #investment #finance #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002",
+    "descriptionTamil": "10,000 ரூபாய் மாதம் Invest பண்ணி 30,000 ரூபாய் எடுத்துக்கலாமா? | Padmanaban\n\n#swp #sip #investment #finance #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002",
+    "descriptionEnglish": "10,000 ரூபாய் மாதம் Invest பண்ணி 30,000 ரூபாய் எடுத்துக்கலாமா? | Padmanaban\n\n#swp #sip #investment #finance #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002",
+    "description": "10,000 ரூபாய் மாதம் Invest பண்ணி 30,000 ரூபாய் எடுத்துக்கலாமா? | Padmanaban\n\n#swp #sip #investment #finance #padmanaban #shorts \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002",
     "category": "shorts",
     "publishedAt": "2026-03-02T14:00:59Z",
     "duration": "21:59",
@@ -4356,9 +4356,9 @@ const videosData = [
     "titleTamil": "Regular Cash Flow வேணுமா? இதுதான் Best Method! | Padmababan",
     "titleEnglish": "Regular Cash Flow வேணுமா? இதுதான் Best Method! | Padmababan",
     "title": "Regular Cash Flow வேணுமா? இதுதான் Best Method! | Padmababan",
-    "descriptionTamil": "Regular Cash Flow வேணுமா? இதுதான் Best Method! | Padmababan\n\n#cashflow #swp #mutualfunds #inflation #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78",
-    "descriptionEnglish": "Regular Cash Flow வேணுமா? இதுதான் Best Method! | Padmababan\n\n#cashflow #swp #mutualfunds #inflation #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78",
-    "description": "Regular Cash Flow வேணுமா? இதுதான் Best Method! | Padmababan\n\n#cashflow #swp #mutualfunds #inflation #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78",
+    "descriptionTamil": "Regular Cash Flow வேணுமா? இதுதான் Best Method! | Padmababan\n\n#cashflow #swp #mutualfunds #inflation #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78",
+    "descriptionEnglish": "Regular Cash Flow வேணுமா? இதுதான் Best Method! | Padmababan\n\n#cashflow #swp #mutualfunds #inflation #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78",
+    "description": "Regular Cash Flow வேணுமா? இதுதான் Best Method! | Padmababan\n\n#cashflow #swp #mutualfunds #inflation #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78",
     "category": "mutual-funds",
     "publishedAt": "2026-02-28T15:49:25Z",
     "duration": "01:00",
@@ -4414,9 +4414,9 @@ const videosData = [
     "titleTamil": "5 வருடம் முதலீடு செய்து கோடீஸ்வரர் ஆகலாம்? | Padmanaban",
     "titleEnglish": "5 வருடம் முதலீடு செய்து கோடீஸ்வரர் ஆகலாம்? | Padmanaban",
     "title": "5 வருடம் முதலீடு செய்து கோடீஸ்வரர் ஆகலாம்? | Padmanaban",
-    "descriptionTamil": "5 வருடம் முதலீடு செய்து கோடீஸ்வரர் ஆகலாம்? | Padmanaban\n\n#sip #investment #mutualfunds #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nCo",
-    "descriptionEnglish": "5 வருடம் முதலீடு செய்து கோடீஸ்வரர் ஆகலாம்? | Padmanaban\n\n#sip #investment #mutualfunds #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nCo",
-    "description": "5 வருடம் முதலீடு செய்து கோடீஸ்வரர் ஆகலாம்? | Padmanaban\n\n#sip #investment #mutualfunds #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nCo",
+    "descriptionTamil": "5 வருடம் முதலீடு செய்து கோடீஸ்வரர் ஆகலாம்? | Padmanaban\n\n#sip #investment #mutualfunds #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nCo",
+    "descriptionEnglish": "5 வருடம் முதலீடு செய்து கோடீஸ்வரர் ஆகலாம்? | Padmanaban\n\n#sip #investment #mutualfunds #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nCo",
+    "description": "5 வருடம் முதலீடு செய்து கோடீஸ்வரர் ஆகலாம்? | Padmanaban\n\n#sip #investment #mutualfunds #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nCo",
     "category": "mutual-funds",
     "publishedAt": "2026-02-25T12:03:16Z",
     "duration": "12:38",
@@ -4443,9 +4443,9 @@ const videosData = [
     "titleTamil": "கடன் வாங்கிறதுக்கு முன்னாடி இத கண்டிப்பா தெரிஞ்சிக்கோங்க ! | Padmanaban",
     "titleEnglish": "கடன் வாங்கிறதுக்கு முன்னாடி இத கண்டிப்பா தெரிஞ்சிக்கோங்க ! | Padmanaban",
     "title": "கடன் வாங்கிறதுக்கு முன்னாடி இத கண்டிப்பா தெரிஞ்சிக்கோங்க ! | Padmanaban",
-    "descriptionTamil": "கடன் வாங்கிறதுக்கு முன்னாடி இத கண்டிப்பா தெரிஞ்சிக்கோங்க ! | Padmanaban\n\n#debt #homeloan #higherstudies #carloan #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n",
-    "descriptionEnglish": "கடன் வாங்கிறதுக்கு முன்னாடி இத கண்டிப்பா தெரிஞ்சிக்கோங்க ! | Padmanaban\n\n#debt #homeloan #higherstudies #carloan #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n",
-    "description": "கடன் வாங்கிறதுக்கு முன்னாடி இத கண்டிப்பா தெரிஞ்சிக்கோங்க ! | Padmanaban\n\n#debt #homeloan #higherstudies #carloan #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n",
+    "descriptionTamil": "கடன் வாங்கிறதுக்கு முன்னாடி இத கண்டிப்பா தெரிஞ்சிக்கோங்க ! | Padmanaban\n\n#debt #homeloan #higherstudies #carloan #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n",
+    "descriptionEnglish": "கடன் வாங்கிறதுக்கு முன்னாடி இத கண்டிப்பா தெரிஞ்சிக்கோங்க ! | Padmanaban\n\n#debt #homeloan #higherstudies #carloan #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n",
+    "description": "கடன் வாங்கிறதுக்கு முன்னாடி இத கண்டிப்பா தெரிஞ்சிக்கோங்க ! | Padmanaban\n\n#debt #homeloan #higherstudies #carloan #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n",
     "category": "mutual-funds",
     "publishedAt": "2026-02-24T15:06:25Z",
     "duration": "15:51",
@@ -4501,9 +4501,9 @@ const videosData = [
     "titleTamil": "தங்கம், வெள்ளியை Better Avoid பண்ணிடுங்க! | Padmanaban",
     "titleEnglish": "தங்கம், வெள்ளியை Better Avoid பண்ணிடுங்க! | Padmanaban",
     "title": "தங்கம், வெள்ளியை Better Avoid பண்ணிடுங்க! | Padmanaban",
-    "descriptionTamil": "தங்கம், வெள்ளியை Better Avoid பண்ணிடுங்க! | Padmanaban\n\n#goldinvestment #mutualfunds #silver #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n782409139",
-    "descriptionEnglish": "தங்கம், வெள்ளியை Better Avoid பண்ணிடுங்க! | Padmanaban\n\n#goldinvestment #mutualfunds #silver #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n782409139",
-    "description": "தங்கம், வெள்ளியை Better Avoid பண்ணிடுங்க! | Padmanaban\n\n#goldinvestment #mutualfunds #silver #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n782409139",
+    "descriptionTamil": "தங்கம், வெள்ளியை Better Avoid பண்ணிடுங்க! | Padmanaban\n\n#goldinvestment #mutualfunds #silver #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n782409139",
+    "descriptionEnglish": "தங்கம், வெள்ளியை Better Avoid பண்ணிடுங்க! | Padmanaban\n\n#goldinvestment #mutualfunds #silver #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n782409139",
+    "description": "தங்கம், வெள்ளியை Better Avoid பண்ணிடுங்க! | Padmanaban\n\n#goldinvestment #mutualfunds #silver #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n782409139",
     "category": "mutual-funds",
     "publishedAt": "2026-02-21T12:43:07Z",
     "duration": "21:17",
@@ -4530,9 +4530,9 @@ const videosData = [
     "titleTamil": "Abroad-ல வேலை பாக்குறீங்களா? இந்த Video உங்களுக்குத்தான்! | Padmanaban",
     "titleEnglish": "Abroad-ல வேலை பாக்குறீங்களா? இந்த Video உங்களுக்குத்தான்! | Padmanaban",
     "title": "Abroad-ல வேலை பாக்குறீங்களா? இந்த Video உங்களுக்குத்தான்! | Padmanaban",
-    "descriptionTamil": "Abroad-ல வேலை பாக்குறீங்களா? இந்த Video உங்களுக்குத்தான்! | Padmanaban\n\n#abroad #age50 #swp #retirement #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782409139",
-    "descriptionEnglish": "Abroad-ல வேலை பாக்குறீங்களா? இந்த Video உங்களுக்குத்தான்! | Padmanaban\n\n#abroad #age50 #swp #retirement #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782409139",
-    "description": "Abroad-ல வேலை பாக்குறீங்களா? இந்த Video உங்களுக்குத்தான்! | Padmanaban\n\n#abroad #age50 #swp #retirement #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782409139",
+    "descriptionTamil": "Abroad-ல வேலை பாக்குறீங்களா? இந்த Video உங்களுக்குத்தான்! | Padmanaban\n\n#abroad #age50 #swp #retirement #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782409139",
+    "descriptionEnglish": "Abroad-ல வேலை பாக்குறீங்களா? இந்த Video உங்களுக்குத்தான்! | Padmanaban\n\n#abroad #age50 #swp #retirement #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782409139",
+    "description": "Abroad-ல வேலை பாக்குறீங்களா? இந்த Video உங்களுக்குத்தான்! | Padmanaban\n\n#abroad #age50 #swp #retirement #investment\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782409139",
     "category": "mutual-funds",
     "publishedAt": "2026-02-20T16:33:18Z",
     "duration": "01:00",
@@ -4559,9 +4559,9 @@ const videosData = [
     "titleTamil": "Gold, Silver மறுபடியும் ஏறுமா இல்ல இறங்குமா? | Padmanaban",
     "titleEnglish": "Gold, Silver மறுபடியும் ஏறுமா இல்ல இறங்குமா? | Padmanaban",
     "title": "Gold, Silver மறுபடியும் ஏறுமா இல்ல இறங்குமா? | Padmanaban",
-    "descriptionTamil": "Gold, Silver மறுபடியும் ஏறுமா இல்ல இறங்குமா? | Padmanaban\n\n#gold #silver #investment #marketcorrection #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782409139",
-    "descriptionEnglish": "Gold, Silver மறுபடியும் ஏறுமா இல்ல இறங்குமா? | Padmanaban\n\n#gold #silver #investment #marketcorrection #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782409139",
-    "description": "Gold, Silver மறுபடியும் ஏறுமா இல்ல இறங்குமா? | Padmanaban\n\n#gold #silver #investment #marketcorrection #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782409139",
+    "descriptionTamil": "Gold, Silver மறுபடியும் ஏறுமா இல்ல இறங்குமா? | Padmanaban\n\n#gold #silver #investment #marketcorrection #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782409139",
+    "descriptionEnglish": "Gold, Silver மறுபடியும் ஏறுமா இல்ல இறங்குமா? | Padmanaban\n\n#gold #silver #investment #marketcorrection #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782409139",
+    "description": "Gold, Silver மறுபடியும் ஏறுமா இல்ல இறங்குமா? | Padmanaban\n\n#gold #silver #investment #marketcorrection #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782409139",
     "category": "mutual-funds",
     "publishedAt": "2026-02-19T14:03:56Z",
     "duration": "09:43",
@@ -4588,9 +4588,9 @@ const videosData = [
     "titleTamil": "இந்த மாதிரி Invest பண்ணாலே போதும்! எந்த கவலையும் வேண்டாம்! | Padmanaban",
     "titleEnglish": "இந்த மாதிரி Invest பண்ணாலே போதும்! எந்த கவலையும் வேண்டாம்! | Padmanaban",
     "title": "இந்த மாதிரி Invest பண்ணாலே போதும்! எந்த கவலையும் வேண்டாம்! | Padmanaban",
-    "descriptionTamil": "இந்த மாதிரி Invest பண்ணாலே போதும்! எந்த கவலையும் வேண்டாம்! | Padmanaban\n\n#investment #mutualfunds #retirement #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n78",
-    "descriptionEnglish": "இந்த மாதிரி Invest பண்ணாலே போதும்! எந்த கவலையும் வேண்டாம்! | Padmanaban\n\n#investment #mutualfunds #retirement #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n78",
-    "description": "இந்த மாதிரி Invest பண்ணாலே போதும்! எந்த கவலையும் வேண்டாம்! | Padmanaban\n\n#investment #mutualfunds #retirement #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n78",
+    "descriptionTamil": "இந்த மாதிரி Invest பண்ணாலே போதும்! எந்த கவலையும் வேண்டாம்! | Padmanaban\n\n#investment #mutualfunds #retirement #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n78",
+    "descriptionEnglish": "இந்த மாதிரி Invest பண்ணாலே போதும்! எந்த கவலையும் வேண்டாம்! | Padmanaban\n\n#investment #mutualfunds #retirement #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n78",
+    "description": "இந்த மாதிரி Invest பண்ணாலே போதும்! எந்த கவலையும் வேண்டாம்! | Padmanaban\n\n#investment #mutualfunds #retirement #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n78",
     "category": "mutual-funds",
     "publishedAt": "2026-02-18T12:06:17Z",
     "duration": "12:56",
@@ -4617,9 +4617,9 @@ const videosData = [
     "titleTamil": "Simple Strategy To Create Wealth | Padmanaban",
     "titleEnglish": "Simple Strategy To Create Wealth | Padmanaban",
     "title": "Simple Strategy To Create Wealth | Padmanaban",
-    "descriptionTamil": "Simple Strategy To Create Wealth | Padmanaban\n\n#investment #wealth #mutualfunds #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nC",
-    "descriptionEnglish": "Simple Strategy To Create Wealth | Padmanaban\n\n#investment #wealth #mutualfunds #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nC",
-    "description": "Simple Strategy To Create Wealth | Padmanaban\n\n#investment #wealth #mutualfunds #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nC",
+    "descriptionTamil": "Simple Strategy To Create Wealth | Padmanaban\n\n#investment #wealth #mutualfunds #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nC",
+    "descriptionEnglish": "Simple Strategy To Create Wealth | Padmanaban\n\n#investment #wealth #mutualfunds #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nC",
+    "description": "Simple Strategy To Create Wealth | Padmanaban\n\n#investment #wealth #mutualfunds #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nC",
     "category": "mutual-funds",
     "publishedAt": "2026-02-18T12:03:17Z",
     "duration": "15:09",
@@ -4675,9 +4675,9 @@ const videosData = [
     "titleTamil": "Car வாங்க போகிறீர்களா? இந்த Video உங்களுக்குத்தான்! | Padmanaban",
     "titleEnglish": "Car வாங்க போகிறீர்களா? இந்த Video உங்களுக்குத்தான்! | Padmanaban",
     "title": "Car வாங்க போகிறீர்களா? இந்த Video உங்களுக்குத்தான்! | Padmanaban",
-    "descriptionTamil": "Car வாங்க போகிறீர்களா? இந்த Video உங்களுக்குத்தான்! | Padmanaban\n\n#buyingcar #sip #mutualfunds #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782409",
-    "descriptionEnglish": "Car வாங்க போகிறீர்களா? இந்த Video உங்களுக்குத்தான்! | Padmanaban\n\n#buyingcar #sip #mutualfunds #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782409",
-    "description": "Car வாங்க போகிறீர்களா? இந்த Video உங்களுக்குத்தான்! | Padmanaban\n\n#buyingcar #sip #mutualfunds #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782409",
+    "descriptionTamil": "Car வாங்க போகிறீர்களா? இந்த Video உங்களுக்குத்தான்! | Padmanaban\n\n#buyingcar #sip #mutualfunds #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782409",
+    "descriptionEnglish": "Car வாங்க போகிறீர்களா? இந்த Video உங்களுக்குத்தான்! | Padmanaban\n\n#buyingcar #sip #mutualfunds #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782409",
+    "description": "Car வாங்க போகிறீர்களா? இந்த Video உங்களுக்குத்தான்! | Padmanaban\n\n#buyingcar #sip #mutualfunds #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782409",
     "category": "mutual-funds",
     "publishedAt": "2026-02-16T14:13:20Z",
     "duration": "21:35",
@@ -4704,9 +4704,9 @@ const videosData = [
     "titleTamil": "பள்ளி கட்டணம் Tension இல்லாமல்—Mutual Fund போதும் | Padmanaban",
     "titleEnglish": "பள்ளி கட்டணம் Tension இல்லாமல்—Mutual Fund போதும் | Padmanaban",
     "title": "பள்ளி கட்டணம் Tension இல்லாமல்—Mutual Fund போதும் | Padmanaban",
-    "descriptionTamil": "பள்ளி கட்டணம் Tension இல்லாமல்—Mutual Fund போதும் | Padmanaban\n\n#schoolfees #mutualfunds #investment #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n",
-    "descriptionEnglish": "பள்ளி கட்டணம் Tension இல்லாமல்—Mutual Fund போதும் | Padmanaban\n\n#schoolfees #mutualfunds #investment #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n",
-    "description": "பள்ளி கட்டணம் Tension இல்லாமல்—Mutual Fund போதும் | Padmanaban\n\n#schoolfees #mutualfunds #investment #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n",
+    "descriptionTamil": "பள்ளி கட்டணம் Tension இல்லாமல்—Mutual Fund போதும் | Padmanaban\n\n#schoolfees #mutualfunds #investment #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n",
+    "descriptionEnglish": "பள்ளி கட்டணம் Tension இல்லாமல்—Mutual Fund போதும் | Padmanaban\n\n#schoolfees #mutualfunds #investment #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n",
+    "description": "பள்ளி கட்டணம் Tension இல்லாமல்—Mutual Fund போதும் | Padmanaban\n\n#schoolfees #mutualfunds #investment #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n",
     "category": "mutual-funds",
     "publishedAt": "2026-02-16T13:37:03Z",
     "duration": "01:00",
@@ -4733,9 +4733,9 @@ const videosData = [
     "titleTamil": "10–20–30 Rule தெரியுமா? | Padmanaban",
     "titleEnglish": "10–20–30 Rule தெரியுமா? | Padmanaban",
     "title": "10–20–30 Rule தெரியுமா? | Padmanaban",
-    "descriptionTamil": "10–20–30 Rule தெரியுமா? | Padmanaban\n\n#investment #mutualfunds #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: http",
-    "descriptionEnglish": "10–20–30 Rule தெரியுமா? | Padmanaban\n\n#investment #mutualfunds #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: http",
-    "description": "10–20–30 Rule தெரியுமா? | Padmanaban\n\n#investment #mutualfunds #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: http",
+    "descriptionTamil": "10–20–30 Rule தெரியுமா? | Padmanaban\n\n#investment #mutualfunds #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: http",
+    "descriptionEnglish": "10–20–30 Rule தெரியுமா? | Padmanaban\n\n#investment #mutualfunds #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: http",
+    "description": "10–20–30 Rule தெரியுமா? | Padmanaban\n\n#investment #mutualfunds #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: http",
     "category": "mutual-funds",
     "publishedAt": "2026-02-14T15:33:47Z",
     "duration": "09:01",
@@ -4762,9 +4762,9 @@ const videosData = [
     "titleTamil": "உங்க சம்பளத்துக்கான EMI Calculation! | Padmanaban",
     "titleEnglish": "உங்க சம்பளத்துக்கான EMI Calculation! | Padmanaban",
     "title": "உங்க சம்பளத்துக்கான EMI Calculation! | Padmanaban",
-    "descriptionTamil": "உங்க சம்பளத்துக்கான EMI Calculation! | Padmanaban\n\n#emi #salary #homeloan #debttrap #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContac",
-    "descriptionEnglish": "உங்க சம்பளத்துக்கான EMI Calculation! | Padmanaban\n\n#emi #salary #homeloan #debttrap #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContac",
-    "description": "உங்க சம்பளத்துக்கான EMI Calculation! | Padmanaban\n\n#emi #salary #homeloan #debttrap #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContac",
+    "descriptionTamil": "உங்க சம்பளத்துக்கான EMI Calculation! | Padmanaban\n\n#emi #salary #homeloan #debttrap #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContac",
+    "descriptionEnglish": "உங்க சம்பளத்துக்கான EMI Calculation! | Padmanaban\n\n#emi #salary #homeloan #debttrap #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContac",
+    "description": "உங்க சம்பளத்துக்கான EMI Calculation! | Padmanaban\n\n#emi #salary #homeloan #debttrap #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContac",
     "category": "mutual-funds",
     "publishedAt": "2026-02-13T14:16:23Z",
     "duration": "12:14",
@@ -4791,9 +4791,9 @@ const videosData = [
     "titleTamil": "உங்க பணத்தை Claim பண்ணிட்டிங்களா? | Padmanaban",
     "titleEnglish": "உங்க பணத்தை Claim பண்ணிட்டிங்களா? | Padmanaban",
     "title": "உங்க பணத்தை Claim பண்ணிட்டிங்களா? | Padmanaban",
-    "descriptionTamil": "உங்க பணத்தை Claim பண்ணிட்டிங்களா? | Padmanaban\n\n#unclaimedamount #udgam #pancard #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact F",
-    "descriptionEnglish": "உங்க பணத்தை Claim பண்ணிட்டிங்களா? | Padmanaban\n\n#unclaimedamount #udgam #pancard #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact F",
-    "description": "உங்க பணத்தை Claim பண்ணிட்டிங்களா? | Padmanaban\n\n#unclaimedamount #udgam #pancard #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact F",
+    "descriptionTamil": "உங்க பணத்தை Claim பண்ணிட்டிங்களா? | Padmanaban\n\n#unclaimedamount #udgam #pancard #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact F",
+    "descriptionEnglish": "உங்க பணத்தை Claim பண்ணிட்டிங்களா? | Padmanaban\n\n#unclaimedamount #udgam #pancard #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact F",
+    "description": "உங்க பணத்தை Claim பண்ணிட்டிங்களா? | Padmanaban\n\n#unclaimedamount #udgam #pancard #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact F",
     "category": "mutual-funds",
     "publishedAt": "2026-02-12T13:41:11Z",
     "duration": "15:27",
@@ -4820,9 +4820,9 @@ const videosData = [
     "titleTamil": "Middle Class மாட்டிக்காதீங்க ! Gold & Silver இப்போ வாங்கலாமா ! | Padmanaban",
     "titleEnglish": "Middle Class மாட்டிக்காதீங்க ! Gold & Silver இப்போ வாங்கலாமா ! | Padmanaban",
     "title": "Middle Class மாட்டிக்காதீங்க ! Gold & Silver இப்போ வாங்கலாமா ! | Padmanaban",
-    "descriptionTamil": "Middle Class மாட்டிக்காதீங்க ! Gold & Silver இப்போ வாங்கலாமா ! | Padmanaban\n\n#middleclass #gold #silver #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n78240913",
-    "descriptionEnglish": "Middle Class மாட்டிக்காதீங்க ! Gold & Silver இப்போ வாங்கலாமா ! | Padmanaban\n\n#middleclass #gold #silver #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n78240913",
-    "description": "Middle Class மாட்டிக்காதீங்க ! Gold & Silver இப்போ வாங்கலாமா ! | Padmanaban\n\n#middleclass #gold #silver #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n78240913",
+    "descriptionTamil": "Middle Class மாட்டிக்காதீங்க ! Gold & Silver இப்போ வாங்கலாமா ! | Padmanaban\n\n#middleclass #gold #silver #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n78240913",
+    "descriptionEnglish": "Middle Class மாட்டிக்காதீங்க ! Gold & Silver இப்போ வாங்கலாமா ! | Padmanaban\n\n#middleclass #gold #silver #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n78240913",
+    "description": "Middle Class மாட்டிக்காதீங்க ! Gold & Silver இப்போ வாங்கலாமா ! | Padmanaban\n\n#middleclass #gold #silver #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n78240913",
     "category": "mutual-funds",
     "publishedAt": "2026-02-12T13:35:30Z",
     "duration": "18:40",
@@ -4878,9 +4878,9 @@ const videosData = [
     "titleTamil": "Couple investment plan ! மாசம் 2 லட்சம் Pension திட்டம் | Padmanaban",
     "titleEnglish": "Couple investment plan ! மாசம் 2 லட்சம் Pension திட்டம் | Padmanaban",
     "title": "Couple investment plan ! மாசம் 2 லட்சம் Pension திட்டம் | Padmanaban",
-    "descriptionTamil": "Couple investment plan ! மாசம் 2 லட்சம் Pension திட்டம் | Padmanaban\n\n#investment #pension #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n782409139",
-    "descriptionEnglish": "Couple investment plan ! மாசம் 2 லட்சம் Pension திட்டம் | Padmanaban\n\n#investment #pension #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n782409139",
-    "description": "Couple investment plan ! மாசம் 2 லட்சம் Pension திட்டம் | Padmanaban\n\n#investment #pension #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n782409139",
+    "descriptionTamil": "Couple investment plan ! மாசம் 2 லட்சம் Pension திட்டம் | Padmanaban\n\n#investment #pension #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n782409139",
+    "descriptionEnglish": "Couple investment plan ! மாசம் 2 லட்சம் Pension திட்டம் | Padmanaban\n\n#investment #pension #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n782409139",
+    "description": "Couple investment plan ! மாசம் 2 லட்சம் Pension திட்டம் | Padmanaban\n\n#investment #pension #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n782409139",
     "category": "mutual-funds",
     "publishedAt": "2026-02-10T13:22:45Z",
     "duration": "01:00",
@@ -4907,9 +4907,9 @@ const videosData = [
     "titleTamil": "Lump Sum Investment-ல என்ன Benefit | Padmanaban",
     "titleEnglish": "Lump Sum Investment-ல என்ன Benefit | Padmanaban",
     "title": "Lump Sum Investment-ல என்ன Benefit | Padmanaban",
-    "descriptionTamil": "Lump Sum Investment-ல என்ன Benefit | Padmanaban\n\n#lumpsum #sip #investment #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContac",
-    "descriptionEnglish": "Lump Sum Investment-ல என்ன Benefit | Padmanaban\n\n#lumpsum #sip #investment #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContac",
-    "description": "Lump Sum Investment-ல என்ன Benefit | Padmanaban\n\n#lumpsum #sip #investment #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContac",
+    "descriptionTamil": "Lump Sum Investment-ல என்ன Benefit | Padmanaban\n\n#lumpsum #sip #investment #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContac",
+    "descriptionEnglish": "Lump Sum Investment-ல என்ன Benefit | Padmanaban\n\n#lumpsum #sip #investment #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContac",
+    "description": "Lump Sum Investment-ல என்ன Benefit | Padmanaban\n\n#lumpsum #sip #investment #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContac",
     "category": "mutual-funds",
     "publishedAt": "2026-02-09T13:39:58Z",
     "duration": "09:19",
@@ -4936,9 +4936,9 @@ const videosData = [
     "titleTamil": "Mutual Fund மட்டும் தான் ஒரே வழியா? | Padmanaban",
     "titleEnglish": "Mutual Fund மட்டும் தான் ஒரே வழியா? | Padmanaban",
     "title": "Mutual Fund மட்டும் தான் ஒரே வழியா? | Padmanaban",
-    "descriptionTamil": "Mutual Fund மட்டும் தான் ஒரே வழியா? | Padmanaban\n\n#mutualfunds #realestate #corpus #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091",
-    "descriptionEnglish": "Mutual Fund மட்டும் தான் ஒரே வழியா? | Padmanaban\n\n#mutualfunds #realestate #corpus #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091",
-    "description": "Mutual Fund மட்டும் தான் ஒரே வழியா? | Padmanaban\n\n#mutualfunds #realestate #corpus #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091",
+    "descriptionTamil": "Mutual Fund மட்டும் தான் ஒரே வழியா? | Padmanaban\n\n#mutualfunds #realestate #corpus #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091",
+    "descriptionEnglish": "Mutual Fund மட்டும் தான் ஒரே வழியா? | Padmanaban\n\n#mutualfunds #realestate #corpus #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091",
+    "description": "Mutual Fund மட்டும் தான் ஒரே வழியா? | Padmanaban\n\n#mutualfunds #realestate #corpus #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091",
     "category": "mutual-funds",
     "publishedAt": "2026-02-07T11:56:47Z",
     "duration": "12:32",
@@ -4965,9 +4965,9 @@ const videosData = [
     "titleTamil": "Savings or Earnings — எது அதிகப்படுத்தணும்? | Padmanaban",
     "titleEnglish": "Savings or Earnings — எது அதிகப்படுத்தணும்? | Padmanaban",
     "title": "Savings or Earnings — எது அதிகப்படுத்தணும்? | Padmanaban",
-    "descriptionTamil": "Savings or Earnings — எது அதிகப்படுத்தணும்? | Padmanaban\n\n#savings #earning #extraincome #investing #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78",
-    "descriptionEnglish": "Savings or Earnings — எது அதிகப்படுத்தணும்? | Padmanaban\n\n#savings #earning #extraincome #investing #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78",
-    "description": "Savings or Earnings — எது அதிகப்படுத்தணும்? | Padmanaban\n\n#savings #earning #extraincome #investing #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78",
+    "descriptionTamil": "Savings or Earnings — எது அதிகப்படுத்தணும்? | Padmanaban\n\n#savings #earning #extraincome #investing #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78",
+    "descriptionEnglish": "Savings or Earnings — எது அதிகப்படுத்தணும்? | Padmanaban\n\n#savings #earning #extraincome #investing #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78",
+    "description": "Savings or Earnings — எது அதிகப்படுத்தணும்? | Padmanaban\n\n#savings #earning #extraincome #investing #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78",
     "category": "mutual-funds",
     "publishedAt": "2026-02-06T13:46:05Z",
     "duration": "15:45",
@@ -4994,9 +4994,9 @@ const videosData = [
     "titleTamil": "குழந்தைகளுக்கு இத கண்டிப்பா சொல்லி தரணும்!! | Padmanaban",
     "titleEnglish": "குழந்தைகளுக்கு இத கண்டிப்பா சொல்லி தரணும்!! | Padmanaban",
     "title": "குழந்தைகளுக்கு இத கண்டிப்பா சொல்லி தரணும்!! | Padmanaban",
-    "descriptionTamil": "குழந்தைகளுக்கு இத கண்டிப்பா சொல்லி தரணும்!! | Padmanaban\n\n#investment #childrensavings #childhabits #parenting #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n78",
-    "descriptionEnglish": "குழந்தைகளுக்கு இத கண்டிப்பா சொல்லி தரணும்!! | Padmanaban\n\n#investment #childrensavings #childhabits #parenting #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n78",
-    "description": "குழந்தைகளுக்கு இத கண்டிப்பா சொல்லி தரணும்!! | Padmanaban\n\n#investment #childrensavings #childhabits #parenting #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n78",
+    "descriptionTamil": "குழந்தைகளுக்கு இத கண்டிப்பா சொல்லி தரணும்!! | Padmanaban\n\n#investment #childrensavings #childhabits #parenting #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n78",
+    "descriptionEnglish": "குழந்தைகளுக்கு இத கண்டிப்பா சொல்லி தரணும்!! | Padmanaban\n\n#investment #childrensavings #childhabits #parenting #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n78",
+    "description": "குழந்தைகளுக்கு இத கண்டிப்பா சொல்லி தரணும்!! | Padmanaban\n\n#investment #childrensavings #childhabits #parenting #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n78",
     "category": "mutual-funds",
     "publishedAt": "2026-02-05T12:28:27Z",
     "duration": "18:58",
@@ -5023,9 +5023,9 @@ const videosData = [
     "titleTamil": "50 வயது வரைக்கும் சேமிக்கலையா? இந்த Strategy போதும்! | Padmanaban",
     "titleEnglish": "50 வயது வரைக்கும் சேமிக்கலையா? இந்த Strategy போதும்! | Padmanaban",
     "title": "50 வயது வரைக்கும் சேமிக்கலையா? இந்த Strategy போதும்! | Padmanaban",
-    "descriptionTamil": "50 வயது வரைக்கும் சேமிக்கலையா? இந்த Strategy போதும்! | Padmanaban\n\n#age50 #investment #strategy #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824",
-    "descriptionEnglish": "50 வயது வரைக்கும் சேமிக்கலையா? இந்த Strategy போதும்! | Padmanaban\n\n#age50 #investment #strategy #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824",
-    "description": "50 வயது வரைக்கும் சேமிக்கலையா? இந்த Strategy போதும்! | Padmanaban\n\n#age50 #investment #strategy #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824",
+    "descriptionTamil": "50 வயது வரைக்கும் சேமிக்கலையா? இந்த Strategy போதும்! | Padmanaban\n\n#age50 #investment #strategy #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824",
+    "descriptionEnglish": "50 வயது வரைக்கும் சேமிக்கலையா? இந்த Strategy போதும்! | Padmanaban\n\n#age50 #investment #strategy #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824",
+    "description": "50 வயது வரைக்கும் சேமிக்கலையா? இந்த Strategy போதும்! | Padmanaban\n\n#age50 #investment #strategy #mutualfunds #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824",
     "category": "mutual-funds",
     "publishedAt": "2026-02-03T13:23:14Z",
     "duration": "21:11",
@@ -5081,9 +5081,9 @@ const videosData = [
     "titleTamil": "செல்வமகள் திட்டம் Inflation-அ Beat பண்ணுமா ? | Padmanaban",
     "titleEnglish": "செல்வமகள் திட்டம் Inflation-அ Beat பண்ணுமா ? | Padmanaban",
     "title": "செல்வமகள் திட்டம் Inflation-அ Beat பண்ணுமா ? | Padmanaban",
-    "descriptionTamil": "செல்வமகள் திட்டம் Inflation-அ Beat பண்ணுமா ? | Padmanaban\n\n#childrenmutualfund #sukanyasamriddhiyojana #inflation #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵",
-    "descriptionEnglish": "செல்வமகள் திட்டம் Inflation-அ Beat பண்ணுமா ? | Padmanaban\n\n#childrenmutualfund #sukanyasamriddhiyojana #inflation #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵",
-    "description": "செல்வமகள் திட்டம் Inflation-அ Beat பண்ணுமா ? | Padmanaban\n\n#childrenmutualfund #sukanyasamriddhiyojana #inflation #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵",
+    "descriptionTamil": "செல்வமகள் திட்டம் Inflation-அ Beat பண்ணுமா ? | Padmanaban\n\n#childrenmutualfund #sukanyasamriddhiyojana #inflation #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵",
+    "descriptionEnglish": "செல்வமகள் திட்டம் Inflation-அ Beat பண்ணுமா ? | Padmanaban\n\n#childrenmutualfund #sukanyasamriddhiyojana #inflation #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵",
+    "description": "செல்வமகள் திட்டம் Inflation-அ Beat பண்ணுமா ? | Padmanaban\n\n#childrenmutualfund #sukanyasamriddhiyojana #inflation #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵",
     "category": "mutual-funds",
     "publishedAt": "2026-01-31T12:13:23Z",
     "duration": "09:37",
@@ -5110,9 +5110,9 @@ const videosData = [
     "titleTamil": "Rule 15:30 தெரியுமா? | Padmanaban",
     "titleEnglish": "Rule 15:30 தெரியுமா? | Padmanaban",
     "title": "Rule 15:30 தெரியுமா? | Padmanaban",
-    "descriptionTamil": "Rule 15:30 தெரியுமா? | Padmanaban\n\n#sip #mutualfunds #investment #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: ht",
-    "descriptionEnglish": "Rule 15:30 தெரியுமா? | Padmanaban\n\n#sip #mutualfunds #investment #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: ht",
-    "description": "Rule 15:30 தெரியுமா? | Padmanaban\n\n#sip #mutualfunds #investment #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: ht",
+    "descriptionTamil": "Rule 15:30 தெரியுமா? | Padmanaban\n\n#sip #mutualfunds #investment #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: ht",
+    "descriptionEnglish": "Rule 15:30 தெரியுமா? | Padmanaban\n\n#sip #mutualfunds #investment #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: ht",
+    "description": "Rule 15:30 தெரியுமா? | Padmanaban\n\n#sip #mutualfunds #investment #returns #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: ht",
     "category": "mutual-funds",
     "publishedAt": "2026-01-30T13:56:03Z",
     "duration": "12:50",
@@ -5139,9 +5139,9 @@ const videosData = [
     "titleTamil": "Chota SIP தெரியுமா ? சீக்கிரம் Start பண்ணுங்க! | Padmanaban",
     "titleEnglish": "Chota SIP தெரியுமா ? சீக்கிரம் Start பண்ணுங்க! | Padmanaban",
     "title": "Chota SIP தெரியுமா ? சீக்கிரம் Start பண்ணுங்க! | Padmanaban",
-    "descriptionTamil": "Chota SIP தெரியுமா ? சீக்கிரம் Start பண்ணுங்க! | Padmanaban\n\n#chotasip #sip #mutualfunds #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7",
-    "descriptionEnglish": "Chota SIP தெரியுமா ? சீக்கிரம் Start பண்ணுங்க! | Padmanaban\n\n#chotasip #sip #mutualfunds #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7",
-    "description": "Chota SIP தெரியுமா ? சீக்கிரம் Start பண்ணுங்க! | Padmanaban\n\n#chotasip #sip #mutualfunds #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7",
+    "descriptionTamil": "Chota SIP தெரியுமா ? சீக்கிரம் Start பண்ணுங்க! | Padmanaban\n\n#chotasip #sip #mutualfunds #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7",
+    "descriptionEnglish": "Chota SIP தெரியுமா ? சீக்கிரம் Start பண்ணுங்க! | Padmanaban\n\n#chotasip #sip #mutualfunds #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7",
+    "description": "Chota SIP தெரியுமா ? சீக்கிரம் Start பண்ணுங்க! | Padmanaban\n\n#chotasip #sip #mutualfunds #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7",
     "category": "mutual-funds",
     "publishedAt": "2026-01-29T13:51:52Z",
     "duration": "15:03",
@@ -5168,9 +5168,9 @@ const videosData = [
     "titleTamil": "100 கோடி சேர்ப்பதற்கான Simple Strategy இதுதான் ! | Padmanaban",
     "titleEnglish": "100 கோடி சேர்ப்பதற்கான Simple Strategy இதுதான் ! | Padmanaban",
     "title": "100 கோடி சேர்ப்பதற்கான Simple Strategy இதுதான் ! | Padmanaban",
-    "descriptionTamil": "100 கோடி சேர்ப்பதற்கான Simple Strategy இதுதான் ! | Padmanaban\n\n#crorepati #investment #strategy #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78240",
-    "descriptionEnglish": "100 கோடி சேர்ப்பதற்கான Simple Strategy இதுதான் ! | Padmanaban\n\n#crorepati #investment #strategy #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78240",
-    "description": "100 கோடி சேர்ப்பதற்கான Simple Strategy இதுதான் ! | Padmanaban\n\n#crorepati #investment #strategy #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78240",
+    "descriptionTamil": "100 கோடி சேர்ப்பதற்கான Simple Strategy இதுதான் ! | Padmanaban\n\n#crorepati #investment #strategy #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78240",
+    "descriptionEnglish": "100 கோடி சேர்ப்பதற்கான Simple Strategy இதுதான் ! | Padmanaban\n\n#crorepati #investment #strategy #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78240",
+    "description": "100 கோடி சேர்ப்பதற்கான Simple Strategy இதுதான் ! | Padmanaban\n\n#crorepati #investment #strategy #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78240",
     "category": "mutual-funds",
     "publishedAt": "2026-01-29T13:24:41Z",
     "duration": "18:16",
@@ -5197,9 +5197,9 @@ const videosData = [
     "titleTamil": "13% Possible -ஆ? இந்த Data பாருங்க!!! | Padmanaban",
     "titleEnglish": "13% Possible -ஆ? இந்த Data பாருங்க!!! | Padmanaban",
     "title": "13% Possible -ஆ? இந்த Data பாருங்க!!! | Padmanaban",
-    "descriptionTamil": "13% Possible -ஆ? இந்த Data பாருங்க!!! | Padmanaban\n\n#investment #mutualfunds #returns #midcap #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78240913",
-    "descriptionEnglish": "13% Possible -ஆ? இந்த Data பாருங்க!!! | Padmanaban\n\n#investment #mutualfunds #returns #midcap #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78240913",
-    "description": "13% Possible -ஆ? இந்த Data பாருங்க!!! | Padmanaban\n\n#investment #mutualfunds #returns #midcap #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78240913",
+    "descriptionTamil": "13% Possible -ஆ? இந்த Data பாருங்க!!! | Padmanaban\n\n#investment #mutualfunds #returns #midcap #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78240913",
+    "descriptionEnglish": "13% Possible -ஆ? இந்த Data பாருங்க!!! | Padmanaban\n\n#investment #mutualfunds #returns #midcap #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78240913",
+    "description": "13% Possible -ஆ? இந்த Data பாருங்க!!! | Padmanaban\n\n#investment #mutualfunds #returns #midcap #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78240913",
     "category": "mutual-funds",
     "publishedAt": "2026-01-27T13:30:53Z",
     "duration": "21:29",
@@ -5226,9 +5226,9 @@ const videosData = [
     "titleTamil": "வருஷம் ஒரு முறை முதலீடு செய்தாலே போதும்; மாசம் பென்ஷன் கிடைக்கும்!!! | Padmanaban",
     "titleEnglish": "வருஷம் ஒரு முறை முதலீடு செய்தாலே போதும்; மாசம் பென்ஷன் கிடைக்கும்!!! | Padmanaban",
     "title": "வருஷம் ஒரு முறை முதலீடு செய்தாலே போதும்; மாசம் பென்ஷன் கிடைக்கும்!!! | Padmanaban",
-    "descriptionTamil": "வருஷம் ஒரு முறை முதலீடு செய்தாலே போதும்; மாசம் பென்ஷன் கிடைக்கும்!!! | Padmanaban\n\n#sip #mutualfunds #pension #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n78",
-    "descriptionEnglish": "வருஷம் ஒரு முறை முதலீடு செய்தாலே போதும்; மாசம் பென்ஷன் கிடைக்கும்!!! | Padmanaban\n\n#sip #mutualfunds #pension #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n78",
-    "description": "வருஷம் ஒரு முறை முதலீடு செய்தாலே போதும்; மாசம் பென்ஷன் கிடைக்கும்!!! | Padmanaban\n\n#sip #mutualfunds #pension #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n78",
+    "descriptionTamil": "வருஷம் ஒரு முறை முதலீடு செய்தாலே போதும்; மாசம் பென்ஷன் கிடைக்கும்!!! | Padmanaban\n\n#sip #mutualfunds #pension #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n78",
+    "descriptionEnglish": "வருஷம் ஒரு முறை முதலீடு செய்தாலே போதும்; மாசம் பென்ஷன் கிடைக்கும்!!! | Padmanaban\n\n#sip #mutualfunds #pension #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n78",
+    "description": "வருஷம் ஒரு முறை முதலீடு செய்தாலே போதும்; மாசம் பென்ஷன் கிடைக்கும்!!! | Padmanaban\n\n#sip #mutualfunds #pension #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n78",
     "category": "mutual-funds",
     "publishedAt": "2026-01-26T13:40:24Z",
     "duration": "01:00",
@@ -5255,9 +5255,9 @@ const videosData = [
     "titleTamil": "உங்க குழந்தை எதிர்காலத்துக்காக இப்படி Invest பண்ணுங்க ! | Padmanaban",
     "titleEnglish": "உங்க குழந்தை எதிர்காலத்துக்காக இப்படி Invest பண்ணுங்க ! | Padmanaban",
     "title": "உங்க குழந்தை எதிர்காலத்துக்காக இப்படி Invest பண்ணுங்க ! | Padmanaban",
-    "descriptionTamil": "உங்க குழந்தை எதிர்காலத்துக்காக இப்படி Invest பண்ணுங்க ! | Padmanaban\n\n#childeducation #mutualfunds #investment #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n",
-    "descriptionEnglish": "உங்க குழந்தை எதிர்காலத்துக்காக இப்படி Invest பண்ணுங்க ! | Padmanaban\n\n#childeducation #mutualfunds #investment #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n",
-    "description": "உங்க குழந்தை எதிர்காலத்துக்காக இப்படி Invest பண்ணுங்க ! | Padmanaban\n\n#childeducation #mutualfunds #investment #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n",
+    "descriptionTamil": "உங்க குழந்தை எதிர்காலத்துக்காக இப்படி Invest பண்ணுங்க ! | Padmanaban\n\n#childeducation #mutualfunds #investment #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n",
+    "descriptionEnglish": "உங்க குழந்தை எதிர்காலத்துக்காக இப்படி Invest பண்ணுங்க ! | Padmanaban\n\n#childeducation #mutualfunds #investment #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n",
+    "description": "உங்க குழந்தை எதிர்காலத்துக்காக இப்படி Invest பண்ணுங்க ! | Padmanaban\n\n#childeducation #mutualfunds #investment #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n",
     "category": "mutual-funds",
     "publishedAt": "2026-01-26T13:06:15Z",
     "duration": "09:55",
@@ -5284,9 +5284,9 @@ const videosData = [
     "titleTamil": "Couple-ஆ இப்படி முதலீடு பண்ணா.. மாசம் Pension கிடைக்கும்!!! | Padmanaban",
     "titleEnglish": "Couple-ஆ இப்படி முதலீடு பண்ணா.. மாசம் Pension கிடைக்கும்!!! | Padmanaban",
     "title": "Couple-ஆ இப்படி முதலீடு பண்ணா.. மாசம் Pension கிடைக்கும்!!! | Padmanaban",
-    "descriptionTamil": "Couple-ஆ இப்படி முதலீடு பண்ணா.. மாசம் Pension கிடைக்கும்!!! | Padmanaban\n\n#couplesip #sip #mutualfunds #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n782400202",
-    "descriptionEnglish": "Couple-ஆ இப்படி முதலீடு பண்ணா.. மாசம் Pension கிடைக்கும்!!! | Padmanaban\n\n#couplesip #sip #mutualfunds #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n782400202",
-    "description": "Couple-ஆ இப்படி முதலீடு பண்ணா.. மாசம் Pension கிடைக்கும்!!! | Padmanaban\n\n#couplesip #sip #mutualfunds #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n782400202",
+    "descriptionTamil": "Couple-ஆ இப்படி முதலீடு பண்ணா.. மாசம் Pension கிடைக்கும்!!! | Padmanaban\n\n#couplesip #sip #mutualfunds #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n782400202",
+    "descriptionEnglish": "Couple-ஆ இப்படி முதலீடு பண்ணா.. மாசம் Pension கிடைக்கும்!!! | Padmanaban\n\n#couplesip #sip #mutualfunds #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n782400202",
+    "description": "Couple-ஆ இப்படி முதலீடு பண்ணா.. மாசம் Pension கிடைக்கும்!!! | Padmanaban\n\n#couplesip #sip #mutualfunds #investment #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n782400202",
     "category": "mutual-funds",
     "publishedAt": "2026-01-24T13:34:08Z",
     "duration": "12:08",
@@ -5342,9 +5342,9 @@ const videosData = [
     "titleTamil": "50 வயதாகியும் சேமிப்பு இல்லையா? இப்படி பண்ணுங்க! | Padmanaban",
     "titleEnglish": "50 வயதாகியும் சேமிப்பு இல்லையா? இப்படி பண்ணுங்க! | Padmanaban",
     "title": "50 வயதாகியும் சேமிப்பு இல்லையா? இப்படி பண்ணுங்க! | Padmanaban",
-    "descriptionTamil": "50 வயதாகியும் சேமிப்பு இல்லையா? இப்படி பண்ணுங்க! | Padmanaban\n\n#investment #pension #mutualfunds #savings\n#padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782409",
-    "descriptionEnglish": "50 வயதாகியும் சேமிப்பு இல்லையா? இப்படி பண்ணுங்க! | Padmanaban\n\n#investment #pension #mutualfunds #savings\n#padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782409",
-    "description": "50 வயதாகியும் சேமிப்பு இல்லையா? இப்படி பண்ணுங்க! | Padmanaban\n\n#investment #pension #mutualfunds #savings\n#padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782409",
+    "descriptionTamil": "50 வயதாகியும் சேமிப்பு இல்லையா? இப்படி பண்ணுங்க! | Padmanaban\n\n#investment #pension #mutualfunds #savings\n#padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782409",
+    "descriptionEnglish": "50 வயதாகியும் சேமிப்பு இல்லையா? இப்படி பண்ணுங்க! | Padmanaban\n\n#investment #pension #mutualfunds #savings\n#padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782409",
+    "description": "50 வயதாகியும் சேமிப்பு இல்லையா? இப்படி பண்ணுங்க! | Padmanaban\n\n#investment #pension #mutualfunds #savings\n#padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782409",
     "category": "mutual-funds",
     "publishedAt": "2026-01-23T13:28:43Z",
     "duration": "18:34",
@@ -5371,9 +5371,9 @@ const videosData = [
     "titleTamil": "மாசம் 250 சேமிச்சாலே போதும் ! 35 வருஷத்துல கோடீஸ்வரர் ஆகிடலாம் ! | Padmanaban",
     "titleEnglish": "மாசம் 250 சேமிச்சாலே போதும் ! 35 வருஷத்துல கோடீஸ்வரர் ஆகிடலாம் ! | Padmanaban",
     "title": "மாசம் 250 சேமிச்சாலே போதும் ! 35 வருஷத்துல கோடீஸ்வரர் ஆகிடலாம் ! | Padmanaban",
-    "descriptionTamil": "மாசம் 250 சேமிச்சாலே போதும் ! 35 வருஷத்துல கோடீஸ்வரர் ஆகிடலாம் ! | Padmanaban\n\n#chottasip #sip #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029",
-    "descriptionEnglish": "மாசம் 250 சேமிச்சாலே போதும் ! 35 வருஷத்துல கோடீஸ்வரர் ஆகிடலாம் ! | Padmanaban\n\n#chottasip #sip #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029",
-    "description": "மாசம் 250 சேமிச்சாலே போதும் ! 35 வருஷத்துல கோடீஸ்வரர் ஆகிடலாம் ! | Padmanaban\n\n#chottasip #sip #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029",
+    "descriptionTamil": "மாசம் 250 சேமிச்சாலே போதும் ! 35 வருஷத்துல கோடீஸ்வரர் ஆகிடலாம் ! | Padmanaban\n\n#chottasip #sip #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029",
+    "descriptionEnglish": "மாசம் 250 சேமிச்சாலே போதும் ! 35 வருஷத்துல கோடீஸ்வரர் ஆகிடலாம் ! | Padmanaban\n\n#chottasip #sip #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029",
+    "description": "மாசம் 250 சேமிச்சாலே போதும் ! 35 வருஷத்துல கோடீஸ்வரர் ஆகிடலாம் ! | Padmanaban\n\n#chottasip #sip #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029",
     "category": "mutual-funds",
     "publishedAt": "2026-01-22T16:41:55Z",
     "duration": "21:47",
@@ -5458,9 +5458,9 @@ const videosData = [
     "titleTamil": "Pocket Money மூலமா இவ்ளோ கிடைக்குமா? | Padmanaban",
     "titleEnglish": "Pocket Money மூலமா இவ்ளோ கிடைக்குமா? | Padmanaban",
     "title": "Pocket Money மூலமா இவ்ளோ கிடைக்குமா? | Padmanaban",
-    "descriptionTamil": "Pocket Money மூலமா இவ்ளோ கிடைக்குமா? | Padmanaban\n\n#pocketmoney #investments #mutualfunds #returns #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78",
-    "descriptionEnglish": "Pocket Money மூலமா இவ்ளோ கிடைக்குமா? | Padmanaban\n\n#pocketmoney #investments #mutualfunds #returns #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78",
-    "description": "Pocket Money மூலமா இவ்ளோ கிடைக்குமா? | Padmanaban\n\n#pocketmoney #investments #mutualfunds #returns #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78",
+    "descriptionTamil": "Pocket Money மூலமா இவ்ளோ கிடைக்குமா? | Padmanaban\n\n#pocketmoney #investments #mutualfunds #returns #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78",
+    "descriptionEnglish": "Pocket Money மூலமா இவ்ளோ கிடைக்குமா? | Padmanaban\n\n#pocketmoney #investments #mutualfunds #returns #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78",
+    "description": "Pocket Money மூலமா இவ்ளோ கிடைக்குமா? | Padmanaban\n\n#pocketmoney #investments #mutualfunds #returns #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78",
     "category": "mutual-funds",
     "publishedAt": "2026-01-19T12:08:20Z",
     "duration": "12:26",
@@ -5487,9 +5487,9 @@ const videosData = [
     "titleTamil": "Market-ல Fall இருக்கும் ஆனா இத கவனிங்க! | Padmanaban",
     "titleEnglish": "Market-ல Fall இருக்கும் ஆனா இத கவனிங்க! | Padmanaban",
     "title": "Market-ல Fall இருக்கும் ஆனா இத கவனிங்க! | Padmanaban",
-    "descriptionTamil": "Market-ல Fall இருக்கும் ஆனா இத கவனிங்க! | Padmanaban\n\n#marketcorrection #investment #corpus #covid #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78",
-    "descriptionEnglish": "Market-ல Fall இருக்கும் ஆனா இத கவனிங்க! | Padmanaban\n\n#marketcorrection #investment #corpus #covid #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78",
-    "description": "Market-ல Fall இருக்கும் ஆனா இத கவனிங்க! | Padmanaban\n\n#marketcorrection #investment #corpus #covid #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78",
+    "descriptionTamil": "Market-ல Fall இருக்கும் ஆனா இத கவனிங்க! | Padmanaban\n\n#marketcorrection #investment #corpus #covid #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78",
+    "descriptionEnglish": "Market-ல Fall இருக்கும் ஆனா இத கவனிங்க! | Padmanaban\n\n#marketcorrection #investment #corpus #covid #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78",
+    "description": "Market-ல Fall இருக்கும் ஆனா இத கவனிங்க! | Padmanaban\n\n#marketcorrection #investment #corpus #covid #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78",
     "category": "mutual-funds",
     "publishedAt": "2026-01-17T14:17:40Z",
     "duration": "15:39",
@@ -5516,9 +5516,9 @@ const videosData = [
     "titleTamil": "Medical Emergency & Job Loss என்ன பண்றது ? | Padmanaban",
     "titleEnglish": "Medical Emergency & Job Loss என்ன பண்றது ? | Padmanaban",
     "title": "Medical Emergency & Job Loss என்ன பண்றது ? | Padmanaban",
-    "descriptionTamil": "Medical Emergency & Job Loss என்ன பண்றது ? | Padmanaban\n\n#medicalemergency #healthinsurance #emergencyfund #jobloss #mediclaimpolicy \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n78",
-    "descriptionEnglish": "Medical Emergency & Job Loss என்ன பண்றது ? | Padmanaban\n\n#medicalemergency #healthinsurance #emergencyfund #jobloss #mediclaimpolicy \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n78",
-    "description": "Medical Emergency & Job Loss என்ன பண்றது ? | Padmanaban\n\n#medicalemergency #healthinsurance #emergencyfund #jobloss #mediclaimpolicy \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n78",
+    "descriptionTamil": "Medical Emergency & Job Loss என்ன பண்றது ? | Padmanaban\n\n#medicalemergency #healthinsurance #emergencyfund #jobloss #mediclaimpolicy \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n78",
+    "descriptionEnglish": "Medical Emergency & Job Loss என்ன பண்றது ? | Padmanaban\n\n#medicalemergency #healthinsurance #emergencyfund #jobloss #mediclaimpolicy \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n78",
+    "description": "Medical Emergency & Job Loss என்ன பண்றது ? | Padmanaban\n\n#medicalemergency #healthinsurance #emergencyfund #jobloss #mediclaimpolicy \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n78",
     "category": "mutual-funds",
     "publishedAt": "2026-01-16T12:21:24Z",
     "duration": "18:52",
@@ -5545,9 +5545,9 @@ const videosData = [
     "titleTamil": "Realistic-ஆ Parents இத Follow பண்றாங்களா? | Padmanaban",
     "titleEnglish": "Realistic-ஆ Parents இத Follow பண்றாங்களா? | Padmanaban",
     "title": "Realistic-ஆ Parents இத Follow பண்றாங்களா? | Padmanaban",
-    "descriptionTamil": "Realistic-ஆ Parents இத Follow பண்றாங்களா? | Padmanaban\n\n#parents #investments #mutualfunddistributor #spendings #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7",
-    "descriptionEnglish": "Realistic-ஆ Parents இத Follow பண்றாங்களா? | Padmanaban\n\n#parents #investments #mutualfunddistributor #spendings #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7",
-    "description": "Realistic-ஆ Parents இத Follow பண்றாங்களா? | Padmanaban\n\n#parents #investments #mutualfunddistributor #spendings #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7",
+    "descriptionTamil": "Realistic-ஆ Parents இத Follow பண்றாங்களா? | Padmanaban\n\n#parents #investments #mutualfunddistributor #spendings #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7",
+    "descriptionEnglish": "Realistic-ஆ Parents இத Follow பண்றாங்களா? | Padmanaban\n\n#parents #investments #mutualfunddistributor #spendings #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7",
+    "description": "Realistic-ஆ Parents இத Follow பண்றாங்களா? | Padmanaban\n\n#parents #investments #mutualfunddistributor #spendings #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7",
     "category": "mutual-funds",
     "publishedAt": "2026-01-14T14:15:49Z",
     "duration": "21:05",
@@ -5574,9 +5574,9 @@ const videosData = [
     "titleTamil": "Market Negative-ல இருக்கப்போ Withdraw பண்ணலாமா? | Padmanaban",
     "titleEnglish": "Market Negative-ல இருக்கப்போ Withdraw பண்ணலாமா? | Padmanaban",
     "title": "Market Negative-ல இருக்கப்போ Withdraw பண்ணலாமா? | Padmanaban",
-    "descriptionTamil": "Market Negative-ல இருக்கப்போ Withdraw பண்ணலாமா? | Padmanaban\n\n#marketfall #withdraw #investment #returns #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091",
-    "descriptionEnglish": "Market Negative-ல இருக்கப்போ Withdraw பண்ணலாமா? | Padmanaban\n\n#marketfall #withdraw #investment #returns #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091",
-    "description": "Market Negative-ல இருக்கப்போ Withdraw பண்ணலாமா? | Padmanaban\n\n#marketfall #withdraw #investment #returns #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091",
+    "descriptionTamil": "Market Negative-ல இருக்கப்போ Withdraw பண்ணலாமா? | Padmanaban\n\n#marketfall #withdraw #investment #returns #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091",
+    "descriptionEnglish": "Market Negative-ல இருக்கப்போ Withdraw பண்ணலாமா? | Padmanaban\n\n#marketfall #withdraw #investment #returns #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091",
+    "description": "Market Negative-ல இருக்கப்போ Withdraw பண்ணலாமா? | Padmanaban\n\n#marketfall #withdraw #investment #returns #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091",
     "category": "mutual-funds",
     "publishedAt": "2026-01-13T12:48:21Z",
     "duration": "01:00",
@@ -5603,9 +5603,9 @@ const videosData = [
     "titleTamil": "தங்கம் ஏறுது… ஆனா நமக்கு லாபமா? | Padmanaban",
     "titleEnglish": "தங்கம் ஏறுது… ஆனா நமக்கு லாபமா? | Padmanaban",
     "title": "தங்கம் ஏறுது… ஆனா நமக்கு லாபமா? | Padmanaban",
-    "descriptionTamil": "தங்கம் ஏறுது… ஆனா நமக்கு லாபமா? | Padmanaban\n\n#gold #goldinvestment #goldprice #investors #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n",
-    "descriptionEnglish": "தங்கம் ஏறுது… ஆனா நமக்கு லாபமா? | Padmanaban\n\n#gold #goldinvestment #goldprice #investors #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n",
-    "description": "தங்கம் ஏறுது… ஆனா நமக்கு லாபமா? | Padmanaban\n\n#gold #goldinvestment #goldprice #investors #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n",
+    "descriptionTamil": "தங்கம் ஏறுது… ஆனா நமக்கு லாபமா? | Padmanaban\n\n#gold #goldinvestment #goldprice #investors #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n",
+    "descriptionEnglish": "தங்கம் ஏறுது… ஆனா நமக்கு லாபமா? | Padmanaban\n\n#gold #goldinvestment #goldprice #investors #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n",
+    "description": "தங்கம் ஏறுது… ஆனா நமக்கு லாபமா? | Padmanaban\n\n#gold #goldinvestment #goldprice #investors #padmanaban\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n",
     "category": "mutual-funds",
     "publishedAt": "2026-01-10T12:16:04Z",
     "duration": "09:31",
@@ -5632,9 +5632,9 @@ const videosData = [
     "titleTamil": "Pocket Money to 29  கோடி ! 3.40 லட்சம் Pension திட்டம் ! | Padmanaban",
     "titleEnglish": "Pocket Money to 29  கோடி ! 3.40 லட்சம் Pension திட்டம் ! | Padmanaban",
     "title": "Pocket Money to 29  கோடி ! 3.40 லட்சம் Pension திட்டம் ! | Padmanaban",
-    "descriptionTamil": "Pocket Money to 29  கோடி ! 3.40 லட்சம் Pension திட்டம் ! | Padmanaban\n\n#pocketmoney #pension #investment #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782409",
-    "descriptionEnglish": "Pocket Money to 29  கோடி ! 3.40 லட்சம் Pension திட்டம் ! | Padmanaban\n\n#pocketmoney #pension #investment #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782409",
-    "description": "Pocket Money to 29  கோடி ! 3.40 லட்சம் Pension திட்டம் ! | Padmanaban\n\n#pocketmoney #pension #investment #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782409",
+    "descriptionTamil": "Pocket Money to 29  கோடி ! 3.40 லட்சம் Pension திட்டம் ! | Padmanaban\n\n#pocketmoney #pension #investment #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782409",
+    "descriptionEnglish": "Pocket Money to 29  கோடி ! 3.40 லட்சம் Pension திட்டம் ! | Padmanaban\n\n#pocketmoney #pension #investment #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782409",
+    "description": "Pocket Money to 29  கோடி ! 3.40 லட்சம் Pension திட்டம் ! | Padmanaban\n\n#pocketmoney #pension #investment #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782409",
     "category": "mutual-funds",
     "publishedAt": "2026-01-10T11:50:57Z",
     "duration": "12:44",
@@ -5661,9 +5661,9 @@ const videosData = [
     "titleTamil": "2026 Market இப்படித்தான் இருக்கும்! | Padmanaban",
     "titleEnglish": "2026 Market இப்படித்தான் இருக்கும்! | Padmanaban",
     "title": "2026 Market இப்படித்தான் இருக்கும்! | Padmanaban",
-    "descriptionTamil": "2026 Market இப்படித்தான் இருக்கும்! | Padmanaban\n\n#2026 #equitymarket #investment #returns #padmanaban \nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n",
-    "descriptionEnglish": "2026 Market இப்படித்தான் இருக்கும்! | Padmanaban\n\n#2026 #equitymarket #investment #returns #padmanaban \nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n",
-    "description": "2026 Market இப்படித்தான் இருக்கும்! | Padmanaban\n\n#2026 #equitymarket #investment #returns #padmanaban \nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n",
+    "descriptionTamil": "2026 Market இப்படித்தான் இருக்கும்! | Padmanaban\n\n#2026 #equitymarket #investment #returns #padmanaban \nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n",
+    "descriptionEnglish": "2026 Market இப்படித்தான் இருக்கும்! | Padmanaban\n\n#2026 #equitymarket #investment #returns #padmanaban \nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n",
+    "description": "2026 Market இப்படித்தான் இருக்கும்! | Padmanaban\n\n#2026 #equitymarket #investment #returns #padmanaban \nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n",
     "category": "mutual-funds",
     "publishedAt": "2026-01-09T13:13:16Z",
     "duration": "15:57",
@@ -5690,9 +5690,9 @@ const videosData = [
     "titleTamil": "தங்கத்தில் Invest பண்ண போறீங்களா? இந்த Video உங்களுக்குத்தான்! Padmanaban",
     "titleEnglish": "தங்கத்தில் Invest பண்ண போறீங்களா? இந்த Video உங்களுக்குத்தான்! Padmanaban",
     "title": "தங்கத்தில் Invest பண்ண போறீங்களா? இந்த Video உங்களுக்குத்தான்! Padmanaban",
-    "descriptionTamil": "தங்கத்தில் Invest பண்ண போறீங்களா? இந்த Video உங்களுக்குத்தான்! Padmanaban\n\n#gold #silver #goldinvestment #returns #smallcap\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n",
-    "descriptionEnglish": "தங்கத்தில் Invest பண்ண போறீங்களா? இந்த Video உங்களுக்குத்தான்! Padmanaban\n\n#gold #silver #goldinvestment #returns #smallcap\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n",
-    "description": "தங்கத்தில் Invest பண்ண போறீங்களா? இந்த Video உங்களுக்குத்தான்! Padmanaban\n\n#gold #silver #goldinvestment #returns #smallcap\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n",
+    "descriptionTamil": "தங்கத்தில் Invest பண்ண போறீங்களா? இந்த Video உங்களுக்குத்தான்! Padmanaban\n\n#gold #silver #goldinvestment #returns #smallcap\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n",
+    "descriptionEnglish": "தங்கத்தில் Invest பண்ண போறீங்களா? இந்த Video உங்களுக்குத்தான்! Padmanaban\n\n#gold #silver #goldinvestment #returns #smallcap\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n",
+    "description": "தங்கத்தில் Invest பண்ண போறீங்களா? இந்த Video உங்களுக்குத்தான்! Padmanaban\n\n#gold #silver #goldinvestment #returns #smallcap\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n",
     "category": "mutual-funds",
     "publishedAt": "2026-01-08T12:17:47Z",
     "duration": "18:10",
@@ -5719,9 +5719,9 @@ const videosData = [
     "titleTamil": "மாசம் ₹1000 சேர்த்தாலே போதும் ! 1,00,000 Pension திட்டம் ! | Padmanaban",
     "titleEnglish": "மாசம் ₹1000 சேர்த்தாலே போதும் ! 1,00,000 Pension திட்டம் ! | Padmanaban",
     "title": "மாசம் ₹1000 சேர்த்தாலே போதும் ! 1,00,000 Pension திட்டம் ! | Padmanaban",
-    "descriptionTamil": "மாசம் ₹1000 சேர்த்தாலே போதும் ! 1,00,000 Pension திட்டம் ! | Padmanaban\n\n#pension #investment #mutualfunds #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824",
-    "descriptionEnglish": "மாசம் ₹1000 சேர்த்தாலே போதும் ! 1,00,000 Pension திட்டம் ! | Padmanaban\n\n#pension #investment #mutualfunds #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824",
-    "description": "மாசம் ₹1000 சேர்த்தாலே போதும் ! 1,00,000 Pension திட்டம் ! | Padmanaban\n\n#pension #investment #mutualfunds #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824",
+    "descriptionTamil": "மாசம் ₹1000 சேர்த்தாலே போதும் ! 1,00,000 Pension திட்டம் ! | Padmanaban\n\n#pension #investment #mutualfunds #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824",
+    "descriptionEnglish": "மாசம் ₹1000 சேர்த்தாலே போதும் ! 1,00,000 Pension திட்டம் ! | Padmanaban\n\n#pension #investment #mutualfunds #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824",
+    "description": "மாசம் ₹1000 சேர்த்தாலே போதும் ! 1,00,000 Pension திட்டம் ! | Padmanaban\n\n#pension #investment #mutualfunds #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824",
     "category": "mutual-funds",
     "publishedAt": "2026-01-08T11:31:02Z",
     "duration": "21:23",
@@ -5777,9 +5777,9 @@ const videosData = [
     "titleTamil": "40 வயதில் சேமிப்பு இல்லையா ? 1,00,000 Pension திட்டம்!!! | Budget Padmanaban",
     "titleEnglish": "40 வயதில் சேமிப்பு இல்லையா ? 1,00,000 Pension திட்டம்!!! | Budget Padmanaban",
     "title": "40 வயதில் சேமிப்பு இல்லையா ? 1,00,000 Pension திட்டம்!!! | Budget Padmanaban",
-    "descriptionTamil": "40 வயதில் சேமிப்பு இல்லையா ? 1,00,000 Pension திட்டம்!!! | Budget Padmanaban\n\n#savings #investment #pension #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824",
-    "descriptionEnglish": "40 வயதில் சேமிப்பு இல்லையா ? 1,00,000 Pension திட்டம்!!! | Budget Padmanaban\n\n#savings #investment #pension #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824",
-    "description": "40 வயதில் சேமிப்பு இல்லையா ? 1,00,000 Pension திட்டம்!!! | Budget Padmanaban\n\n#savings #investment #pension #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824",
+    "descriptionTamil": "40 வயதில் சேமிப்பு இல்லையா ? 1,00,000 Pension திட்டம்!!! | Budget Padmanaban\n\n#savings #investment #pension #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824",
+    "descriptionEnglish": "40 வயதில் சேமிப்பு இல்லையா ? 1,00,000 Pension திட்டம்!!! | Budget Padmanaban\n\n#savings #investment #pension #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824",
+    "description": "40 வயதில் சேமிப்பு இல்லையா ? 1,00,000 Pension திட்டம்!!! | Budget Padmanaban\n\n#savings #investment #pension #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824",
     "category": "mutual-funds",
     "publishedAt": "2026-01-06T11:41:27Z",
     "duration": "09:49",
@@ -5806,9 +5806,9 @@ const videosData = [
     "titleTamil": "Future Value-ல கிடைக்கணும்னா இப்படி Invest பண்ணுங்க! | Padmanaban",
     "titleEnglish": "Future Value-ல கிடைக்கணும்னா இப்படி Invest பண்ணுங்க! | Padmanaban",
     "title": "Future Value-ல கிடைக்கணும்னா இப்படி Invest பண்ணுங்க! | Padmanaban",
-    "descriptionTamil": "Future Value-ல கிடைக்கணும்னா இப்படி Invest பண்ணுங்க! | Padmanaban\n\n#futurevalue #investment #mutualfunds #inflation #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002",
-    "descriptionEnglish": "Future Value-ல கிடைக்கணும்னா இப்படி Invest பண்ணுங்க! | Padmanaban\n\n#futurevalue #investment #mutualfunds #inflation #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002",
-    "description": "Future Value-ல கிடைக்கணும்னா இப்படி Invest பண்ணுங்க! | Padmanaban\n\n#futurevalue #investment #mutualfunds #inflation #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002",
+    "descriptionTamil": "Future Value-ல கிடைக்கணும்னா இப்படி Invest பண்ணுங்க! | Padmanaban\n\n#futurevalue #investment #mutualfunds #inflation #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002",
+    "descriptionEnglish": "Future Value-ல கிடைக்கணும்னா இப்படி Invest பண்ணுங்க! | Padmanaban\n\n#futurevalue #investment #mutualfunds #inflation #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002",
+    "description": "Future Value-ல கிடைக்கணும்னா இப்படி Invest பண்ணுங்க! | Padmanaban\n\n#futurevalue #investment #mutualfunds #inflation #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002",
     "category": "mutual-funds",
     "publishedAt": "2026-01-05T16:28:16Z",
     "duration": "12:02",
@@ -5835,9 +5835,9 @@ const videosData = [
     "titleTamil": "வருஷம் 1 லட்சம் எடுக்கலாம் |  Kids Education Plan | Budget Padmanaban x VJ Keshav",
     "titleEnglish": "வருஷம் 1 லட்சம் எடுக்கலாம் |  Kids Education Plan | Budget Padmanaban x VJ Keshav",
     "title": "வருஷம் 1 லட்சம் எடுக்கலாம் |  Kids Education Plan | Budget Padmanaban x VJ Keshav",
-    "descriptionTamil": "வருஷம் 1 லட்சம் எடுக்கலாம் |  Kids Education Plan | Budget Padmanaban x VJ Keshav\n\n#investment #kidseducation #schoolfees #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n",
-    "descriptionEnglish": "வருஷம் 1 லட்சம் எடுக்கலாம் |  Kids Education Plan | Budget Padmanaban x VJ Keshav\n\n#investment #kidseducation #schoolfees #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n",
-    "description": "வருஷம் 1 லட்சம் எடுக்கலாம் |  Kids Education Plan | Budget Padmanaban x VJ Keshav\n\n#investment #kidseducation #schoolfees #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n",
+    "descriptionTamil": "வருஷம் 1 லட்சம் எடுக்கலாம் |  Kids Education Plan | Budget Padmanaban x VJ Keshav\n\n#investment #kidseducation #schoolfees #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n",
+    "descriptionEnglish": "வருஷம் 1 லட்சம் எடுக்கலாம் |  Kids Education Plan | Budget Padmanaban x VJ Keshav\n\n#investment #kidseducation #schoolfees #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n",
+    "description": "வருஷம் 1 லட்சம் எடுக்கலாம் |  Kids Education Plan | Budget Padmanaban x VJ Keshav\n\n#investment #kidseducation #schoolfees #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n",
     "category": "mutual-funds",
     "publishedAt": "2026-01-04T07:26:18Z",
     "duration": "15:15",
@@ -5864,9 +5864,9 @@ const videosData = [
     "titleTamil": "சின்ன Delay னால நிறைய Loss ஆகலாம் | Padmanaban",
     "titleEnglish": "சின்ன Delay னால நிறைய Loss ஆகலாம் | Padmanaban",
     "title": "சின்ன Delay னால நிறைய Loss ஆகலாம் | Padmanaban",
-    "descriptionTamil": "சின்ன Delay னால நிறைய Loss ஆகலாம் | Padmanaban\n\n#investment #delayinvestment #compounding #topup #strangerthings\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n",
-    "descriptionEnglish": "சின்ன Delay னால நிறைய Loss ஆகலாம் | Padmanaban\n\n#investment #delayinvestment #compounding #topup #strangerthings\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n",
-    "description": "சின்ன Delay னால நிறைய Loss ஆகலாம் | Padmanaban\n\n#investment #delayinvestment #compounding #topup #strangerthings\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n",
+    "descriptionTamil": "சின்ன Delay னால நிறைய Loss ஆகலாம் | Padmanaban\n\n#investment #delayinvestment #compounding #topup #strangerthings\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n",
+    "descriptionEnglish": "சின்ன Delay னால நிறைய Loss ஆகலாம் | Padmanaban\n\n#investment #delayinvestment #compounding #topup #strangerthings\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n",
+    "description": "சின்ன Delay னால நிறைய Loss ஆகலாம் | Padmanaban\n\n#investment #delayinvestment #compounding #topup #strangerthings\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n",
     "category": "mutual-funds",
     "publishedAt": "2026-01-03T14:39:26Z",
     "duration": "18:28",
@@ -5893,9 +5893,9 @@ const videosData = [
     "titleTamil": "Pocket Money சேர்த்தாலே இவ்ளோ கிடைக்குமா ! இந்த Strategy Use பண்ணுங்க! | Padmanaban",
     "titleEnglish": "Pocket Money சேர்த்தாலே இவ்ளோ கிடைக்குமா ! இந்த Strategy Use பண்ணுங்க! | Padmanaban",
     "title": "Pocket Money சேர்த்தாலே இவ்ளோ கிடைக்குமா ! இந்த Strategy Use பண்ணுங்க! | Padmanaban",
-    "descriptionTamil": "Pocket Money சேர்த்தாலே இவ்ளோ கிடைக்குமா ! இந்த Strategy Use பண்ணுங்க! | Padmanaban\n\n#pocketmoney #investment #topup #returns #pension\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n",
-    "descriptionEnglish": "Pocket Money சேர்த்தாலே இவ்ளோ கிடைக்குமா ! இந்த Strategy Use பண்ணுங்க! | Padmanaban\n\n#pocketmoney #investment #topup #returns #pension\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n",
-    "description": "Pocket Money சேர்த்தாலே இவ்ளோ கிடைக்குமா ! இந்த Strategy Use பண்ணுங்க! | Padmanaban\n\n#pocketmoney #investment #topup #returns #pension\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n",
+    "descriptionTamil": "Pocket Money சேர்த்தாலே இவ்ளோ கிடைக்குமா ! இந்த Strategy Use பண்ணுங்க! | Padmanaban\n\n#pocketmoney #investment #topup #returns #pension\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n",
+    "descriptionEnglish": "Pocket Money சேர்த்தாலே இவ்ளோ கிடைக்குமா ! இந்த Strategy Use பண்ணுங்க! | Padmanaban\n\n#pocketmoney #investment #topup #returns #pension\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n",
+    "description": "Pocket Money சேர்த்தாலே இவ்ளோ கிடைக்குமா ! இந்த Strategy Use பண்ணுங்க! | Padmanaban\n\n#pocketmoney #investment #topup #returns #pension\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n",
     "category": "mutual-funds",
     "publishedAt": "2026-01-02T14:40:36Z",
     "duration": "21:41",
@@ -5922,9 +5922,9 @@ const videosData = [
     "titleTamil": "2026 Investment Strategy | Gold vs Equity | Budget Padmanaban x Vj Keshav",
     "titleEnglish": "2026 Investment Strategy | Gold vs Equity | Budget Padmanaban x Vj Keshav",
     "title": "2026 Investment Strategy | Gold vs Equity | Budget Padmanaban x Vj Keshav",
-    "descriptionTamil": "2026 Investment Strategy | Gold vs Equity | Budget Padmanaban x Vj Keshav\n\n#2026 #investmentstrategy #gold #equity #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002",
-    "descriptionEnglish": "2026 Investment Strategy | Gold vs Equity | Budget Padmanaban x Vj Keshav\n\n#2026 #investmentstrategy #gold #equity #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002",
-    "description": "2026 Investment Strategy | Gold vs Equity | Budget Padmanaban x Vj Keshav\n\n#2026 #investmentstrategy #gold #equity #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002",
+    "descriptionTamil": "2026 Investment Strategy | Gold vs Equity | Budget Padmanaban x Vj Keshav\n\n#2026 #investmentstrategy #gold #equity #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002",
+    "descriptionEnglish": "2026 Investment Strategy | Gold vs Equity | Budget Padmanaban x Vj Keshav\n\n#2026 #investmentstrategy #gold #equity #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002",
+    "description": "2026 Investment Strategy | Gold vs Equity | Budget Padmanaban x Vj Keshav\n\n#2026 #investmentstrategy #gold #equity #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002",
     "category": "mutual-funds",
     "publishedAt": "2026-01-01T09:32:00Z",
     "duration": "01:00",
@@ -5951,9 +5951,9 @@ const videosData = [
     "titleTamil": "How to Make This Amount | Padmanaban",
     "titleEnglish": "How to Make This Amount | Padmanaban",
     "title": "How to Make This Amount | Padmanaban",
-    "descriptionTamil": "How to Make This Amount | Padmanaban\n\n#investment #mutualfunds #returns #topup #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact For",
-    "descriptionEnglish": "How to Make This Amount | Padmanaban\n\n#investment #mutualfunds #returns #topup #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact For",
-    "description": "How to Make This Amount | Padmanaban\n\n#investment #mutualfunds #returns #topup #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact For",
+    "descriptionTamil": "How to Make This Amount | Padmanaban\n\n#investment #mutualfunds #returns #topup #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact For",
+    "descriptionEnglish": "How to Make This Amount | Padmanaban\n\n#investment #mutualfunds #returns #topup #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact For",
+    "description": "How to Make This Amount | Padmanaban\n\n#investment #mutualfunds #returns #topup #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact For",
     "category": "mutual-funds",
     "publishedAt": "2025-12-31T14:48:05Z",
     "duration": "09:07",
@@ -5980,9 +5980,9 @@ const videosData = [
     "titleTamil": "2026-ல பணத்தை பற்றி கவலை இல்லாம இருக்க இந்த Rules Follow பண்ணுங்க!!! | Padmanaban",
     "titleEnglish": "2026-ல பணத்தை பற்றி கவலை இல்லாம இருக்க இந்த Rules Follow பண்ணுங்க!!! | Padmanaban",
     "title": "2026-ல பணத்தை பற்றி கவலை இல்லாம இருக்க இந்த Rules Follow பண்ணுங்க!!! | Padmanaban",
-    "descriptionTamil": "2026-ல பணத்தை பற்றி கவலை இல்லாம இருக்க இந்த Rules Follow பண்ணுங்க!!! | Padmanaban\n\n#2026 #investment #smallcap #goldinvestment #homeloan\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵",
-    "descriptionEnglish": "2026-ல பணத்தை பற்றி கவலை இல்லாம இருக்க இந்த Rules Follow பண்ணுங்க!!! | Padmanaban\n\n#2026 #investment #smallcap #goldinvestment #homeloan\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵",
-    "description": "2026-ல பணத்தை பற்றி கவலை இல்லாம இருக்க இந்த Rules Follow பண்ணுங்க!!! | Padmanaban\n\n#2026 #investment #smallcap #goldinvestment #homeloan\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵",
+    "descriptionTamil": "2026-ல பணத்தை பற்றி கவலை இல்லாம இருக்க இந்த Rules Follow பண்ணுங்க!!! | Padmanaban\n\n#2026 #investment #smallcap #goldinvestment #homeloan\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵",
+    "descriptionEnglish": "2026-ல பணத்தை பற்றி கவலை இல்லாம இருக்க இந்த Rules Follow பண்ணுங்க!!! | Padmanaban\n\n#2026 #investment #smallcap #goldinvestment #homeloan\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵",
+    "description": "2026-ல பணத்தை பற்றி கவலை இல்லாம இருக்க இந்த Rules Follow பண்ணுங்க!!! | Padmanaban\n\n#2026 #investment #smallcap #goldinvestment #homeloan\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵",
     "category": "mutual-funds",
     "publishedAt": "2025-12-30T14:36:11Z",
     "duration": "12:20",
@@ -6038,9 +6038,9 @@ const videosData = [
     "titleTamil": "வருஷா வருஷம் Foreign Tour போகணுமா? இதை Follow பண்ணுங்க!!! | Padmanaban",
     "titleEnglish": "வருஷா வருஷம் Foreign Tour போகணுமா? இதை Follow பண்ணுங்க!!! | Padmanaban",
     "title": "வருஷா வருஷம் Foreign Tour போகணுமா? இதை Follow பண்ணுங்க!!! | Padmanaban",
-    "descriptionTamil": "வருஷா வருஷம் Foreign Tour போகணுமா? இதை Follow பண்ணுங்க!!! | Padmanaban\n\n#foreigntrip #investment #mutualfunds #returns #retirement\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824",
-    "descriptionEnglish": "வருஷா வருஷம் Foreign Tour போகணுமா? இதை Follow பண்ணுங்க!!! | Padmanaban\n\n#foreigntrip #investment #mutualfunds #returns #retirement\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824",
-    "description": "வருஷா வருஷம் Foreign Tour போகணுமா? இதை Follow பண்ணுங்க!!! | Padmanaban\n\n#foreigntrip #investment #mutualfunds #returns #retirement\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824",
+    "descriptionTamil": "வருஷா வருஷம் Foreign Tour போகணுமா? இதை Follow பண்ணுங்க!!! | Padmanaban\n\n#foreigntrip #investment #mutualfunds #returns #retirement\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824",
+    "descriptionEnglish": "வருஷா வருஷம் Foreign Tour போகணுமா? இதை Follow பண்ணுங்க!!! | Padmanaban\n\n#foreigntrip #investment #mutualfunds #returns #retirement\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824",
+    "description": "வருஷா வருஷம் Foreign Tour போகணுமா? இதை Follow பண்ணுங்க!!! | Padmanaban\n\n#foreigntrip #investment #mutualfunds #returns #retirement\n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824",
     "category": "mutual-funds",
     "publishedAt": "2025-12-27T14:03:35Z",
     "duration": "18:46",
@@ -6096,9 +6096,9 @@ const videosData = [
     "titleTamil": "Daily 200 சேமிச்சா போதும்? இப்படி பண்ணா மாசம் Pension கிடைக்கும் | Padmanaban",
     "titleEnglish": "Daily 200 சேமிச்சா போதும்? இப்படி பண்ணா மாசம் Pension கிடைக்கும் | Padmanaban",
     "title": "Daily 200 சேமிச்சா போதும்? இப்படி பண்ணா மாசம் Pension கிடைக்கும் | Padmanaban",
-    "descriptionTamil": "Daily 200 சேமிச்சா போதும்? இப்படி பண்ணா மாசம் Pension கிடைக்கும் | Padmanaban\n\n#investment #pension #inflation #retirement #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7",
-    "descriptionEnglish": "Daily 200 சேமிச்சா போதும்? இப்படி பண்ணா மாசம் Pension கிடைக்கும் | Padmanaban\n\n#investment #pension #inflation #retirement #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7",
-    "description": "Daily 200 சேமிச்சா போதும்? இப்படி பண்ணா மாசம் Pension கிடைக்கும் | Padmanaban\n\n#investment #pension #inflation #retirement #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7",
+    "descriptionTamil": "Daily 200 சேமிச்சா போதும்? இப்படி பண்ணா மாசம் Pension கிடைக்கும் | Padmanaban\n\n#investment #pension #inflation #retirement #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7",
+    "descriptionEnglish": "Daily 200 சேமிச்சா போதும்? இப்படி பண்ணா மாசம் Pension கிடைக்கும் | Padmanaban\n\n#investment #pension #inflation #retirement #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7",
+    "description": "Daily 200 சேமிச்சா போதும்? இப்படி பண்ணா மாசம் Pension கிடைக்கும் | Padmanaban\n\n#investment #pension #inflation #retirement #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7",
     "category": "mutual-funds",
     "publishedAt": "2025-12-24T14:22:58Z",
     "duration": "01:00",
@@ -6154,9 +6154,9 @@ const videosData = [
     "titleTamil": "தங்கம் வாங்கி தரலைனா நல்ல Husband இல்லையா? | Padmanaban",
     "titleEnglish": "தங்கம் வாங்கி தரலைனா நல்ல Husband இல்லையா? | Padmanaban",
     "title": "தங்கம் வாங்கி தரலைனா நல்ல Husband இல்லையா? | Padmanaban",
-    "descriptionTamil": "தங்கம் வாங்கி தரலைனா நல்ல Husband இல்லையா? | Padmanaban\n\n#neeyanaana #buyinggold #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact F",
-    "descriptionEnglish": "தங்கம் வாங்கி தரலைனா நல்ல Husband இல்லையா? | Padmanaban\n\n#neeyanaana #buyinggold #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact F",
-    "description": "தங்கம் வாங்கி தரலைனா நல்ல Husband இல்லையா? | Padmanaban\n\n#neeyanaana #buyinggold #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact F",
+    "descriptionTamil": "தங்கம் வாங்கி தரலைனா நல்ல Husband இல்லையா? | Padmanaban\n\n#neeyanaana #buyinggold #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact F",
+    "descriptionEnglish": "தங்கம் வாங்கி தரலைனா நல்ல Husband இல்லையா? | Padmanaban\n\n#neeyanaana #buyinggold #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact F",
+    "description": "தங்கம் வாங்கி தரலைனா நல்ல Husband இல்லையா? | Padmanaban\n\n#neeyanaana #buyinggold #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact F",
     "category": "mutual-funds",
     "publishedAt": "2025-12-22T15:35:15Z",
     "duration": "12:38",
@@ -6183,9 +6183,9 @@ const videosData = [
     "titleTamil": "பாஷா படத்தில சொன்ன Strategy-ல Invest பண்ணா உங்களுக்கு இவ்ளோ கிடைக்குமா? | Padmanaban",
     "titleEnglish": "பாஷா படத்தில சொன்ன Strategy-ல Invest பண்ணா உங்களுக்கு இவ்ளோ கிடைக்குமா? | Padmanaban",
     "title": "பாஷா படத்தில சொன்ன Strategy-ல Invest பண்ணா உங்களுக்கு இவ்ளோ கிடைக்குமா? | Padmanaban",
-    "descriptionTamil": "பாஷா படத்தில சொன்ன Strategy-ல Invest பண்ணா உங்களுக்கு இவ்ளோ கிடைக்குமா? | Padmanaban\n\n#investment #rajinikanth #mutualfunds #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵",
-    "descriptionEnglish": "பாஷா படத்தில சொன்ன Strategy-ல Invest பண்ணா உங்களுக்கு இவ்ளோ கிடைக்குமா? | Padmanaban\n\n#investment #rajinikanth #mutualfunds #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵",
-    "description": "பாஷா படத்தில சொன்ன Strategy-ல Invest பண்ணா உங்களுக்கு இவ்ளோ கிடைக்குமா? | Padmanaban\n\n#investment #rajinikanth #mutualfunds #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵",
+    "descriptionTamil": "பாஷா படத்தில சொன்ன Strategy-ல Invest பண்ணா உங்களுக்கு இவ்ளோ கிடைக்குமா? | Padmanaban\n\n#investment #rajinikanth #mutualfunds #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵",
+    "descriptionEnglish": "பாஷா படத்தில சொன்ன Strategy-ல Invest பண்ணா உங்களுக்கு இவ்ளோ கிடைக்குமா? | Padmanaban\n\n#investment #rajinikanth #mutualfunds #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵",
+    "description": "பாஷா படத்தில சொன்ன Strategy-ல Invest பண்ணா உங்களுக்கு இவ்ளோ கிடைக்குமா? | Padmanaban\n\n#investment #rajinikanth #mutualfunds #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵",
     "category": "mutual-funds",
     "publishedAt": "2025-12-20T12:50:09Z",
     "duration": "15:51",
@@ -6212,9 +6212,9 @@ const videosData = [
     "titleTamil": "சீக்கிரம் Retire ஆகணுமா ? இப்படி பண்ணுங்க ! | Padmanaban",
     "titleEnglish": "சீக்கிரம் Retire ஆகணுமா ? இப்படி பண்ணுங்க ! | Padmanaban",
     "title": "சீக்கிரம் Retire ஆகணுமா ? இப்படி பண்ணுங்க ! | Padmanaban",
-    "descriptionTamil": "சீக்கிரம் Retire ஆகணுமா ? இப்படி பண்ணுங்க ! | Padmanaban\n\n#retirement #investment #mutualfunds\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact",
-    "descriptionEnglish": "சீக்கிரம் Retire ஆகணுமா ? இப்படி பண்ணுங்க ! | Padmanaban\n\n#retirement #investment #mutualfunds\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact",
-    "description": "சீக்கிரம் Retire ஆகணுமா ? இப்படி பண்ணுங்க ! | Padmanaban\n\n#retirement #investment #mutualfunds\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact",
+    "descriptionTamil": "சீக்கிரம் Retire ஆகணுமா ? இப்படி பண்ணுங்க ! | Padmanaban\n\n#retirement #investment #mutualfunds\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact",
+    "descriptionEnglish": "சீக்கிரம் Retire ஆகணுமா ? இப்படி பண்ணுங்க ! | Padmanaban\n\n#retirement #investment #mutualfunds\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact",
+    "description": "சீக்கிரம் Retire ஆகணுமா ? இப்படி பண்ணுங்க ! | Padmanaban\n\n#retirement #investment #mutualfunds\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact",
     "category": "mutual-funds",
     "publishedAt": "2025-12-18T12:39:53Z",
     "duration": "18:04",
@@ -6241,9 +6241,9 @@ const videosData = [
     "titleTamil": "Rule 13:26:39 தெரியுமா ? | Padmanaban",
     "titleEnglish": "Rule 13:26:39 தெரியுமா ? | Padmanaban",
     "title": "Rule 13:26:39 தெரியுமா ? | Padmanaban",
-    "descriptionTamil": "Rule 13:26:39 தெரியுமா ? | Padmanaban\n\n#investment #maturityvalue #topup\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/",
-    "descriptionEnglish": "Rule 13:26:39 தெரியுமா ? | Padmanaban\n\n#investment #maturityvalue #topup\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/",
-    "description": "Rule 13:26:39 தெரியுமா ? | Padmanaban\n\n#investment #maturityvalue #topup\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/",
+    "descriptionTamil": "Rule 13:26:39 தெரியுமா ? | Padmanaban\n\n#investment #maturityvalue #topup\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/",
+    "descriptionEnglish": "Rule 13:26:39 தெரியுமா ? | Padmanaban\n\n#investment #maturityvalue #topup\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/",
+    "description": "Rule 13:26:39 தெரியுமா ? | Padmanaban\n\n#investment #maturityvalue #topup\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/",
     "category": "mutual-funds",
     "publishedAt": "2025-12-16T15:43:12Z",
     "duration": "21:17",
@@ -6270,9 +6270,9 @@ const videosData = [
     "titleTamil": "Mutual Fund-ல இந்த Return கிடைக்குமா? | Padmanaban",
     "titleEnglish": "Mutual Fund-ல இந்த Return கிடைக்குமா? | Padmanaban",
     "title": "Mutual Fund-ல இந்த Return கிடைக்குமா? | Padmanaban",
-    "descriptionTamil": "Mutual Fund-ல இந்த Return கிடைக்குமா? | Padmanaban\n\n#mutualfunds #sip #data\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.",
-    "descriptionEnglish": "Mutual Fund-ல இந்த Return கிடைக்குமா? | Padmanaban\n\n#mutualfunds #sip #data\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.",
-    "description": "Mutual Fund-ல இந்த Return கிடைக்குமா? | Padmanaban\n\n#mutualfunds #sip #data\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.",
+    "descriptionTamil": "Mutual Fund-ல இந்த Return கிடைக்குமா? | Padmanaban\n\n#mutualfunds #sip #data\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.",
+    "descriptionEnglish": "Mutual Fund-ல இந்த Return கிடைக்குமா? | Padmanaban\n\n#mutualfunds #sip #data\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.",
+    "description": "Mutual Fund-ல இந்த Return கிடைக்குமா? | Padmanaban\n\n#mutualfunds #sip #data\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.",
     "category": "mutual-funds",
     "publishedAt": "2025-12-15T14:38:07Z",
     "duration": "01:00",
@@ -6299,9 +6299,9 @@ const videosData = [
     "titleTamil": "House wife இப்படி Invest பண்ணா.. பணம் கிடைக்குமா? | Padmanaban",
     "titleEnglish": "House wife இப்படி Invest பண்ணா.. பணம் கிடைக்குமா? | Padmanaban",
     "title": "House wife இப்படி Invest பண்ணா.. பணம் கிடைக்குமா? | Padmanaban",
-    "descriptionTamil": "House wife இப்படி Invest பண்ணா.. பணம் கிடைக்குமா? | Padmanaban\n\n#housewife #investment #returns #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78240",
-    "descriptionEnglish": "House wife இப்படி Invest பண்ணா.. பணம் கிடைக்குமா? | Padmanaban\n\n#housewife #investment #returns #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78240",
-    "description": "House wife இப்படி Invest பண்ணா.. பணம் கிடைக்குமா? | Padmanaban\n\n#housewife #investment #returns #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78240",
+    "descriptionTamil": "House wife இப்படி Invest பண்ணா.. பணம் கிடைக்குமா? | Padmanaban\n\n#housewife #investment #returns #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78240",
+    "descriptionEnglish": "House wife இப்படி Invest பண்ணா.. பணம் கிடைக்குமா? | Padmanaban\n\n#housewife #investment #returns #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78240",
+    "description": "House wife இப்படி Invest பண்ணா.. பணம் கிடைக்குமா? | Padmanaban\n\n#housewife #investment #returns #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78240",
     "category": "mutual-funds",
     "publishedAt": "2025-12-13T16:42:46Z",
     "duration": "09:43",
@@ -6328,9 +6328,9 @@ const videosData = [
     "titleTamil": "Age 50-ல் எதுவும் Save பண்ணலையா? இப்படி பண்ணுங்க… | Padmanaban",
     "titleEnglish": "Age 50-ல் எதுவும் Save பண்ணலையா? இப்படி பண்ணுங்க… | Padmanaban",
     "title": "Age 50-ல் எதுவும் Save பண்ணலையா? இப்படி பண்ணுங்க… | Padmanaban",
-    "descriptionTamil": "Age 50-ல் எதுவும் Save பண்ணலையா? இப்படி பண்ணுங்க… | Padmanaban\n\n#investment #mutualfunds #returns \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nCon",
-    "descriptionEnglish": "Age 50-ல் எதுவும் Save பண்ணலையா? இப்படி பண்ணுங்க… | Padmanaban\n\n#investment #mutualfunds #returns \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nCon",
-    "description": "Age 50-ல் எதுவும் Save பண்ணலையா? இப்படி பண்ணுங்க… | Padmanaban\n\n#investment #mutualfunds #returns \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nCon",
+    "descriptionTamil": "Age 50-ல் எதுவும் Save பண்ணலையா? இப்படி பண்ணுங்க… | Padmanaban\n\n#investment #mutualfunds #returns \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nCon",
+    "descriptionEnglish": "Age 50-ல் எதுவும் Save பண்ணலையா? இப்படி பண்ணுங்க… | Padmanaban\n\n#investment #mutualfunds #returns \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nCon",
+    "description": "Age 50-ல் எதுவும் Save பண்ணலையா? இப்படி பண்ணுங்க… | Padmanaban\n\n#investment #mutualfunds #returns \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nCon",
     "category": "mutual-funds",
     "publishedAt": "2025-12-12T14:49:57Z",
     "duration": "12:56",
@@ -6357,9 +6357,9 @@ const videosData = [
     "titleTamil": "இனி School Fees பற்றிய கவலைவே வேண்டாம்! இந்த Strategy use பண்ணுங்க! | Padmanaban",
     "titleEnglish": "இனி School Fees பற்றிய கவலைவே வேண்டாம்! இந்த Strategy use பண்ணுங்க! | Padmanaban",
     "title": "இனி School Fees பற்றிய கவலைவே வேண்டாம்! இந்த Strategy use பண்ணுங்க! | Padmanaban",
-    "descriptionTamil": "இனி School Fees பற்றிய கவலைவே வேண்டாம்! இந்த Strategy use பண்ணுங்க! | Padmanaban\n\n#schoolfees #kidseducation #investment #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n78",
-    "descriptionEnglish": "இனி School Fees பற்றிய கவலைவே வேண்டாம்! இந்த Strategy use பண்ணுங்க! | Padmanaban\n\n#schoolfees #kidseducation #investment #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n78",
-    "description": "இனி School Fees பற்றிய கவலைவே வேண்டாம்! இந்த Strategy use பண்ணுங்க! | Padmanaban\n\n#schoolfees #kidseducation #investment #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n78",
+    "descriptionTamil": "இனி School Fees பற்றிய கவலைவே வேண்டாம்! இந்த Strategy use பண்ணுங்க! | Padmanaban\n\n#schoolfees #kidseducation #investment #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n78",
+    "descriptionEnglish": "இனி School Fees பற்றிய கவலைவே வேண்டாம்! இந்த Strategy use பண்ணுங்க! | Padmanaban\n\n#schoolfees #kidseducation #investment #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n78",
+    "description": "இனி School Fees பற்றிய கவலைவே வேண்டாம்! இந்த Strategy use பண்ணுங்க! | Padmanaban\n\n#schoolfees #kidseducation #investment #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n78",
     "category": "mutual-funds",
     "publishedAt": "2025-12-12T04:30:16Z",
     "duration": "15:09",
@@ -6386,9 +6386,9 @@ const videosData = [
     "titleTamil": "One Time Investment-ல உங்களுக்கு இவ்ளோ கிடைக்குமா? | Padmanaban",
     "titleEnglish": "One Time Investment-ல உங்களுக்கு இவ்ளோ கிடைக்குமா? | Padmanaban",
     "title": "One Time Investment-ல உங்களுக்கு இவ்ளோ கிடைக்குமா? | Padmanaban",
-    "descriptionTamil": "One Time Investment-ல உங்களுக்கு இவ்ளோ கிடைக்குமா? | Padmanaban\n\n#investment #onetimeinvestment #mutualfunds \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824",
-    "descriptionEnglish": "One Time Investment-ல உங்களுக்கு இவ்ளோ கிடைக்குமா? | Padmanaban\n\n#investment #onetimeinvestment #mutualfunds \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824",
-    "description": "One Time Investment-ல உங்களுக்கு இவ்ளோ கிடைக்குமா? | Padmanaban\n\n#investment #onetimeinvestment #mutualfunds \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824",
+    "descriptionTamil": "One Time Investment-ல உங்களுக்கு இவ்ளோ கிடைக்குமா? | Padmanaban\n\n#investment #onetimeinvestment #mutualfunds \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824",
+    "descriptionEnglish": "One Time Investment-ல உங்களுக்கு இவ்ளோ கிடைக்குமா? | Padmanaban\n\n#investment #onetimeinvestment #mutualfunds \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824",
+    "description": "One Time Investment-ல உங்களுக்கு இவ்ளோ கிடைக்குமா? | Padmanaban\n\n#investment #onetimeinvestment #mutualfunds \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824",
     "category": "mutual-funds",
     "publishedAt": "2025-12-09T13:23:10Z",
     "duration": "18:22",
@@ -6415,9 +6415,9 @@ const videosData = [
     "titleTamil": "10 வயசு பையனால் கூட Wealthy ஆக முடியும்! | Padmanaban",
     "titleEnglish": "10 வயசு பையனால் கூட Wealthy ஆக முடியும்! | Padmanaban",
     "title": "10 வயசு பையனால் கூட Wealthy ஆக முடியும்! | Padmanaban",
-    "descriptionTamil": "10 வயசு பையனால் கூட Wealthy ஆக முடியும்! | Padmanaban\n\n#investment #pocketmoney #returns #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\n",
-    "descriptionEnglish": "10 வயசு பையனால் கூட Wealthy ஆக முடியும்! | Padmanaban\n\n#investment #pocketmoney #returns #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\n",
-    "description": "10 வயசு பையனால் கூட Wealthy ஆக முடியும்! | Padmanaban\n\n#investment #pocketmoney #returns #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\n",
+    "descriptionTamil": "10 வயசு பையனால் கூட Wealthy ஆக முடியும்! | Padmanaban\n\n#investment #pocketmoney #returns #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\n",
+    "descriptionEnglish": "10 வயசு பையனால் கூட Wealthy ஆக முடியும்! | Padmanaban\n\n#investment #pocketmoney #returns #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\n",
+    "description": "10 வயசு பையனால் கூட Wealthy ஆக முடியும்! | Padmanaban\n\n#investment #pocketmoney #returns #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\n",
     "category": "mutual-funds",
     "publishedAt": "2025-12-08T13:45:33Z",
     "duration": "21:35",
@@ -6444,9 +6444,9 @@ const videosData = [
     "titleTamil": "NPS or Retirement Fund!! இந்த Video பாத்துட்டு நீங்களே முடிவு பண்ணுங்க!! | Padmanaban",
     "titleEnglish": "NPS or Retirement Fund!! இந்த Video பாத்துட்டு நீங்களே முடிவு பண்ணுங்க!! | Padmanaban",
     "title": "NPS or Retirement Fund!! இந்த Video பாத்துட்டு நீங்களே முடிவு பண்ணுங்க!! | Padmanaban",
-    "descriptionTamil": "NPS or Retirement Fund!! இந்த Video பாத்துட்டு நீங்களே முடிவு பண்ணுங்க!! | Padmanaban\n\n#nps #retirement #mutualfunds #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n782400",
-    "descriptionEnglish": "NPS or Retirement Fund!! இந்த Video பாத்துட்டு நீங்களே முடிவு பண்ணுங்க!! | Padmanaban\n\n#nps #retirement #mutualfunds #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n782400",
-    "description": "NPS or Retirement Fund!! இந்த Video பாத்துட்டு நீங்களே முடிவு பண்ணுங்க!! | Padmanaban\n\n#nps #retirement #mutualfunds #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n782400",
+    "descriptionTamil": "NPS or Retirement Fund!! இந்த Video பாத்துட்டு நீங்களே முடிவு பண்ணுங்க!! | Padmanaban\n\n#nps #retirement #mutualfunds #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n782400",
+    "descriptionEnglish": "NPS or Retirement Fund!! இந்த Video பாத்துட்டு நீங்களே முடிவு பண்ணுங்க!! | Padmanaban\n\n#nps #retirement #mutualfunds #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n782400",
+    "description": "NPS or Retirement Fund!! இந்த Video பாத்துட்டு நீங்களே முடிவு பண்ணுங்க!! | Padmanaban\n\n#nps #retirement #mutualfunds #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n782400",
     "category": "mutual-funds",
     "publishedAt": "2025-12-05T15:21:41Z",
     "duration": "01:00",
@@ -6473,9 +6473,9 @@ const videosData = [
     "titleTamil": "Gift Money Waste பண்ணாம, இப்படி Invest பண்ணுங்க… | Padmanaban",
     "titleEnglish": "Gift Money Waste பண்ணாம, இப்படி Invest பண்ணுங்க… | Padmanaban",
     "title": "Gift Money Waste பண்ணாம, இப்படி Invest பண்ணுங்க… | Padmanaban",
-    "descriptionTamil": "Gift Money Waste பண்ணாம, இப்படி Invest பண்ணுங்க… | Padmanaban\n\n#childeducation #investment #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394",
-    "descriptionEnglish": "Gift Money Waste பண்ணாம, இப்படி Invest பண்ணுங்க… | Padmanaban\n\n#childeducation #investment #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394",
-    "description": "Gift Money Waste பண்ணாம, இப்படி Invest பண்ணுங்க… | Padmanaban\n\n#childeducation #investment #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394",
+    "descriptionTamil": "Gift Money Waste பண்ணாம, இப்படி Invest பண்ணுங்க… | Padmanaban\n\n#childeducation #investment #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394",
+    "descriptionEnglish": "Gift Money Waste பண்ணாம, இப்படி Invest பண்ணுங்க… | Padmanaban\n\n#childeducation #investment #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394",
+    "description": "Gift Money Waste பண்ணாம, இப்படி Invest பண்ணுங்க… | Padmanaban\n\n#childeducation #investment #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394",
     "category": "mutual-funds",
     "publishedAt": "2025-12-02T12:34:22Z",
     "duration": "09:01",
@@ -6502,9 +6502,9 @@ const videosData = [
     "titleTamil": "Age 45 ஆகியும் எதுவும் Save பண்ணலயா ? இப்படி பண்ணுங்க! | Padmanaban",
     "titleEnglish": "Age 45 ஆகியும் எதுவும் Save பண்ணலயா ? இப்படி பண்ணுங்க! | Padmanaban",
     "title": "Age 45 ஆகியும் எதுவும் Save பண்ணலயா ? இப்படி பண்ணுங்க! | Padmanaban",
-    "descriptionTamil": "Age 45 ஆகியும் எதுவும் Save பண்ணலயா ? இப்படி பண்ணுங்க! | Padmanaban\n\n#investment #mutualfunds #withdrawal #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782409",
-    "descriptionEnglish": "Age 45 ஆகியும் எதுவும் Save பண்ணலயா ? இப்படி பண்ணுங்க! | Padmanaban\n\n#investment #mutualfunds #withdrawal #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782409",
-    "description": "Age 45 ஆகியும் எதுவும் Save பண்ணலயா ? இப்படி பண்ணுங்க! | Padmanaban\n\n#investment #mutualfunds #withdrawal #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782409",
+    "descriptionTamil": "Age 45 ஆகியும் எதுவும் Save பண்ணலயா ? இப்படி பண்ணுங்க! | Padmanaban\n\n#investment #mutualfunds #withdrawal #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782409",
+    "descriptionEnglish": "Age 45 ஆகியும் எதுவும் Save பண்ணலயா ? இப்படி பண்ணுங்க! | Padmanaban\n\n#investment #mutualfunds #withdrawal #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782409",
+    "description": "Age 45 ஆகியும் எதுவும் Save பண்ணலயா ? இப்படி பண்ணுங்க! | Padmanaban\n\n#investment #mutualfunds #withdrawal #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782409",
     "category": "mutual-funds",
     "publishedAt": "2025-11-30T11:46:37Z",
     "duration": "12:14",
@@ -6531,9 +6531,9 @@ const videosData = [
     "titleTamil": "Mutual Fund Cap Categories!!! இனி குழப்பமே வேண்டாம் | Padmanaban",
     "titleEnglish": "Mutual Fund Cap Categories!!! இனி குழப்பமே வேண்டாம் | Padmanaban",
     "title": "Mutual Fund Cap Categories!!! இனி குழப்பமே வேண்டாம் | Padmanaban",
-    "descriptionTamil": "Mutual Fund Cap Categories!!! இனி குழப்பமே வேண்டாம் | Padmanaban\n\n#mutualfunds #largecap #investment #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n",
-    "descriptionEnglish": "Mutual Fund Cap Categories!!! இனி குழப்பமே வேண்டாம் | Padmanaban\n\n#mutualfunds #largecap #investment #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n",
-    "description": "Mutual Fund Cap Categories!!! இனி குழப்பமே வேண்டாம் | Padmanaban\n\n#mutualfunds #largecap #investment #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n",
+    "descriptionTamil": "Mutual Fund Cap Categories!!! இனி குழப்பமே வேண்டாம் | Padmanaban\n\n#mutualfunds #largecap #investment #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n",
+    "descriptionEnglish": "Mutual Fund Cap Categories!!! இனி குழப்பமே வேண்டாம் | Padmanaban\n\n#mutualfunds #largecap #investment #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n",
+    "description": "Mutual Fund Cap Categories!!! இனி குழப்பமே வேண்டாம் | Padmanaban\n\n#mutualfunds #largecap #investment #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n",
     "category": "mutual-funds",
     "publishedAt": "2025-11-28T14:51:03Z",
     "duration": "15:27",
@@ -6560,9 +6560,9 @@ const videosData = [
     "titleTamil": "15 வருஷம் HOME LOAN-க்கு! இப்படி பண்ணா உங்களுக்கு வீடும் பணமும் கிடைக்கும்!!",
     "titleEnglish": "15 வருஷம் HOME LOAN-க்கு! இப்படி பண்ணா உங்களுக்கு வீடும் பணமும் கிடைக்கும்!!",
     "title": "15 வருஷம் HOME LOAN-க்கு! இப்படி பண்ணா உங்களுக்கு வீடும் பணமும் கிடைக்கும்!!",
-    "descriptionTamil": "15 வருஷம் HOME LOAN-க்கு! இப்படி பண்ணா உங்களுக்கு வீடும் பணமும் கிடைக்கும்!!\n\n#homeloan #emi #investment \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78240913",
-    "descriptionEnglish": "15 வருஷம் HOME LOAN-க்கு! இப்படி பண்ணா உங்களுக்கு வீடும் பணமும் கிடைக்கும்!!\n\n#homeloan #emi #investment \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78240913",
-    "description": "15 வருஷம் HOME LOAN-க்கு! இப்படி பண்ணா உங்களுக்கு வீடும் பணமும் கிடைக்கும்!!\n\n#homeloan #emi #investment \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78240913",
+    "descriptionTamil": "15 வருஷம் HOME LOAN-க்கு! இப்படி பண்ணா உங்களுக்கு வீடும் பணமும் கிடைக்கும்!!\n\n#homeloan #emi #investment \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78240913",
+    "descriptionEnglish": "15 வருஷம் HOME LOAN-க்கு! இப்படி பண்ணா உங்களுக்கு வீடும் பணமும் கிடைக்கும்!!\n\n#homeloan #emi #investment \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78240913",
+    "description": "15 வருஷம் HOME LOAN-க்கு! இப்படி பண்ணா உங்களுக்கு வீடும் பணமும் கிடைக்கும்!!\n\n#homeloan #emi #investment \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78240913",
     "category": "mutual-funds",
     "publishedAt": "2025-11-26T15:23:59Z",
     "duration": "18:40",
@@ -6589,9 +6589,9 @@ const videosData = [
     "titleTamil": "மாசம் 6000 Invest பண்ணா மாசம் இவ்ளோ Pension கிடைக்குமா?",
     "titleEnglish": "மாசம் 6000 Invest பண்ணா மாசம் இவ்ளோ Pension கிடைக்குமா?",
     "title": "மாசம் 6000 Invest பண்ணா மாசம் இவ்ளோ Pension கிடைக்குமா?",
-    "descriptionTamil": "மாசம் 6000 Invest பண்ணா மாசம் இவ்ளோ Pension கிடைக்குமா?\n\n#investment #pension #retirement \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact For",
-    "descriptionEnglish": "மாசம் 6000 Invest பண்ணா மாசம் இவ்ளோ Pension கிடைக்குமா?\n\n#investment #pension #retirement \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact For",
-    "description": "மாசம் 6000 Invest பண்ணா மாசம் இவ்ளோ Pension கிடைக்குமா?\n\n#investment #pension #retirement \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact For",
+    "descriptionTamil": "மாசம் 6000 Invest பண்ணா மாசம் இவ்ளோ Pension கிடைக்குமா?\n\n#investment #pension #retirement \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact For",
+    "descriptionEnglish": "மாசம் 6000 Invest பண்ணா மாசம் இவ்ளோ Pension கிடைக்குமா?\n\n#investment #pension #retirement \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact For",
+    "description": "மாசம் 6000 Invest பண்ணா மாசம் இவ்ளோ Pension கிடைக்குமா?\n\n#investment #pension #retirement \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact For",
     "category": "mutual-funds",
     "publishedAt": "2025-11-25T14:48:53Z",
     "duration": "21:53",
@@ -6618,9 +6618,9 @@ const videosData = [
     "titleTamil": "உங்களுக்கு 23-30 வயசா? இப்படி பண்ணா மாசம் 1.5 லட்சம் கிடைக்கும்! | Padmanaban",
     "titleEnglish": "உங்களுக்கு 23-30 வயசா? இப்படி பண்ணா மாசம் 1.5 லட்சம் கிடைக்கும்! | Padmanaban",
     "title": "உங்களுக்கு 23-30 வயசா? இப்படி பண்ணா மாசம் 1.5 லட்சம் கிடைக்கும்! | Padmanaban",
-    "descriptionTamil": "உங்களுக்கு 23-30 வயசா? இப்படி பண்ணா மாசம் 1.5 லட்சம் கிடைக்கும்! | Padmanaban\n\n#investment #pension #retirement #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n",
-    "descriptionEnglish": "உங்களுக்கு 23-30 வயசா? இப்படி பண்ணா மாசம் 1.5 லட்சம் கிடைக்கும்! | Padmanaban\n\n#investment #pension #retirement #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n",
-    "description": "உங்களுக்கு 23-30 வயசா? இப்படி பண்ணா மாசம் 1.5 லட்சம் கிடைக்கும்! | Padmanaban\n\n#investment #pension #retirement #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n",
+    "descriptionTamil": "உங்களுக்கு 23-30 வயசா? இப்படி பண்ணா மாசம் 1.5 லட்சம் கிடைக்கும்! | Padmanaban\n\n#investment #pension #retirement #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n",
+    "descriptionEnglish": "உங்களுக்கு 23-30 வயசா? இப்படி பண்ணா மாசம் 1.5 லட்சம் கிடைக்கும்! | Padmanaban\n\n#investment #pension #retirement #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n",
+    "description": "உங்களுக்கு 23-30 வயசா? இப்படி பண்ணா மாசம் 1.5 லட்சம் கிடைக்கும்! | Padmanaban\n\n#investment #pension #retirement #padmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n",
     "category": "mutual-funds",
     "publishedAt": "2025-11-23T11:05:20Z",
     "duration": "01:00",
@@ -6647,9 +6647,9 @@ const videosData = [
     "titleTamil": "மாசம் ₹750 சேமிச்சா போதும் இவ்ளோ கிடைக்குமா?",
     "titleEnglish": "மாசம் ₹750 சேமிச்சா போதும் இவ்ளோ கிடைக்குமா?",
     "title": "மாசம் ₹750 சேமிச்சா போதும் இவ்ளோ கிடைக்குமா?",
-    "descriptionTamil": "மாசம் ₹750 சேமிச்சா போதும் இவ்ளோ கிடைக்குமா?\n\n#investment #mutualfunds #maturityvalue #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nCo",
-    "descriptionEnglish": "மாசம் ₹750 சேமிச்சா போதும் இவ்ளோ கிடைக்குமா?\n\n#investment #mutualfunds #maturityvalue #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nCo",
-    "description": "மாசம் ₹750 சேமிச்சா போதும் இவ்ளோ கிடைக்குமா?\n\n#investment #mutualfunds #maturityvalue #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nCo",
+    "descriptionTamil": "மாசம் ₹750 சேமிச்சா போதும் இவ்ளோ கிடைக்குமா?\n\n#investment #mutualfunds #maturityvalue #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nCo",
+    "descriptionEnglish": "மாசம் ₹750 சேமிச்சா போதும் இவ்ளோ கிடைக்குமா?\n\n#investment #mutualfunds #maturityvalue #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nCo",
+    "description": "மாசம் ₹750 சேமிச்சா போதும் இவ்ளோ கிடைக்குமா?\n\n#investment #mutualfunds #maturityvalue #padmanaban \n\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nCo",
     "category": "mutual-funds",
     "publishedAt": "2025-11-21T11:12:35Z",
     "duration": "09:19",
@@ -6676,9 +6676,9 @@ const videosData = [
     "titleTamil": "உங்க கனவு இல்லத்தை வாங்கணுமா!!! இந்த Strategy Use பண்ணுங்க! | Padmanaban",
     "titleEnglish": "உங்க கனவு இல்லத்தை வாங்கணுமா!!! இந்த Strategy Use பண்ணுங்க! | Padmanaban",
     "title": "உங்க கனவு இல்லத்தை வாங்கணுமா!!! இந்த Strategy Use பண்ணுங்க! | Padmanaban",
-    "descriptionTamil": "உங்க கனவு இல்லத்தை வாங்கணுமா!!! இந்த Strategy Use பண்ணுங்க! | Padmanaban\n\n#dreamhouse #buyinghouse #investment #homeloan #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n782",
-    "descriptionEnglish": "உங்க கனவு இல்லத்தை வாங்கணுமா!!! இந்த Strategy Use பண்ணுங்க! | Padmanaban\n\n#dreamhouse #buyinghouse #investment #homeloan #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n782",
-    "description": "உங்க கனவு இல்லத்தை வாங்கணுமா!!! இந்த Strategy Use பண்ணுங்க! | Padmanaban\n\n#dreamhouse #buyinghouse #investment #homeloan #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n782",
+    "descriptionTamil": "உங்க கனவு இல்லத்தை வாங்கணுமா!!! இந்த Strategy Use பண்ணுங்க! | Padmanaban\n\n#dreamhouse #buyinghouse #investment #homeloan #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n782",
+    "descriptionEnglish": "உங்க கனவு இல்லத்தை வாங்கணுமா!!! இந்த Strategy Use பண்ணுங்க! | Padmanaban\n\n#dreamhouse #buyinghouse #investment #homeloan #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n782",
+    "description": "உங்க கனவு இல்லத்தை வாங்கணுமா!!! இந்த Strategy Use பண்ணுங்க! | Padmanaban\n\n#dreamhouse #buyinghouse #investment #homeloan #padmanaban\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n782",
     "category": "mutual-funds",
     "publishedAt": "2025-11-19T13:02:41Z",
     "duration": "12:32",
@@ -6705,9 +6705,9 @@ const videosData = [
     "titleTamil": "Data இருக்கு - தினம் 50 ரூபாய் சேமித்தாலே போதும்!  #EducationalVideo",
     "titleEnglish": "Data இருக்கு - தினம் 50 ரூபாய் சேமித்தாலே போதும்!  #EducationalVideo",
     "title": "Data இருக்கு - தினம் 50 ரூபாய் சேமித்தாலே போதும்!  #EducationalVideo",
-    "descriptionTamil": "📸 InstagramPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/b",
-    "descriptionEnglish": "📸 InstagramPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/b",
-    "description": "📸 InstagramPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/b",
+    "descriptionTamil": " InstagramPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/b",
+    "descriptionEnglish": " InstagramPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/b",
+    "description": " InstagramPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/b",
     "category": "mutual-funds",
     "publishedAt": "2025-11-11T13:00:14Z",
     "duration": "15:45",
@@ -6734,9 +6734,9 @@ const videosData = [
     "titleTamil": "Large Cap Vs Small Cap Funds - எப்படி சரியா முதலீடு பண்றது? | #EducationalVideo",
     "titleEnglish": "Large Cap Vs Small Cap Funds - எப்படி சரியா முதலீடு பண்றது? | #EducationalVideo",
     "title": "Large Cap Vs Small Cap Funds - எப்படி சரியா முதலீடு பண்றது? | #EducationalVideo",
-    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
     "category": "mutual-funds",
     "publishedAt": "2025-11-03T14:23:06Z",
     "duration": "18:58",
@@ -6763,9 +6763,9 @@ const videosData = [
     "titleTamil": "10/20/30 RULE தெரியுமா? இதை Follow பண்ணா ரிட்டயர்மெண்டில் ஜாலியா இருக்கலாம்! | Padmanaban",
     "titleEnglish": "10/20/30 RULE தெரியுமா? இதை Follow பண்ணா ரிட்டயர்மெண்டில் ஜாலியா இருக்கலாம்! | Padmanaban",
     "title": "10/20/30 RULE தெரியுமா? இதை Follow பண்ணா ரிட்டயர்மெண்டில் ஜாலியா இருக்கலாம்! | Padmanaban",
-    "descriptionTamil": "10/20/30 RULE தெரியுமா? \nஇதை Follow பண்ணா ரிட்டயர்மெண்டில் ஜாலியா இருக்கலாம்!\n\n#mutualfunds #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n78",
-    "descriptionEnglish": "10/20/30 RULE தெரியுமா? \nஇதை Follow பண்ணா ரிட்டயர்மெண்டில் ஜாலியா இருக்கலாம்!\n\n#mutualfunds #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n78",
-    "description": "10/20/30 RULE தெரியுமா? \nஇதை Follow பண்ணா ரிட்டயர்மெண்டில் ஜாலியா இருக்கலாம்!\n\n#mutualfunds #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n78",
+    "descriptionTamil": "10/20/30 RULE தெரியுமா? \nஇதை Follow பண்ணா ரிட்டயர்மெண்டில் ஜாலியா இருக்கலாம்!\n\n#mutualfunds #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n78",
+    "descriptionEnglish": "10/20/30 RULE தெரியுமா? \nஇதை Follow பண்ணா ரிட்டயர்மெண்டில் ஜாலியா இருக்கலாம்!\n\n#mutualfunds #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n78",
+    "description": "10/20/30 RULE தெரியுமா? \nஇதை Follow பண்ணா ரிட்டயர்மெண்டில் ஜாலியா இருக்கலாம்!\n\n#mutualfunds #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n78",
     "category": "mutual-funds",
     "publishedAt": "2025-07-24T18:11:12Z",
     "duration": "21:11",
@@ -6789,12 +6789,12 @@ const videosData = [
     "channelHandle": "@budgetpadmanaban_",
     "channelUrl": "https://www.youtube.com/@budgetpadmanaban_",
     "channelName": "Budget Padmanaban",
-    "titleTamil": "Youngstersக்கு செம்ம Idea💡| 20,000 மாசம் 3 வருஷம் சேமிச்சாலே போதும்!! | Padmanaban",
-    "titleEnglish": "Youngstersக்கு செம்ம Idea💡| 20,000 மாசம் 3 வருஷம் சேமிச்சாலே போதும்!! | Padmanaban",
-    "title": "Youngstersக்கு செம்ம Idea💡| 20,000 மாசம் 3 வருஷம் சேமிச்சாலே போதும்!! | Padmanaban",
-    "descriptionTamil": "Youngstersக்கு செம்ம Idea💡| 20,000 மாசம் 3 வருஷம் சேமிச்சாலே போதும்!! | Padmanaban\n\n#investment #finance #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n",
-    "descriptionEnglish": "Youngstersக்கு செம்ம Idea💡| 20,000 மாசம் 3 வருஷம் சேமிச்சாலே போதும்!! | Padmanaban\n\n#investment #finance #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n",
-    "description": "Youngstersக்கு செம்ம Idea💡| 20,000 மாசம் 3 வருஷம் சேமிச்சாலே போதும்!! | Padmanaban\n\n#investment #finance #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n",
+    "titleTamil": "Youngstersக்கு செம்ம Idea| 20,000 மாசம் 3 வருஷம் சேமிச்சாலே போதும்!! | Padmanaban",
+    "titleEnglish": "Youngstersக்கு செம்ம Idea| 20,000 மாசம் 3 வருஷம் சேமிச்சாலே போதும்!! | Padmanaban",
+    "title": "Youngstersக்கு செம்ம Idea| 20,000 மாசம் 3 வருஷம் சேமிச்சாலே போதும்!! | Padmanaban",
+    "descriptionTamil": "Youngstersக்கு செம்ம Idea| 20,000 மாசம் 3 வருஷம் சேமிச்சாலே போதும்!! | Padmanaban\n\n#investment #finance #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n",
+    "descriptionEnglish": "Youngstersக்கு செம்ம Idea| 20,000 மாசம் 3 வருஷம் சேமிச்சாலே போதும்!! | Padmanaban\n\n#investment #finance #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n",
+    "description": "Youngstersக்கு செம்ம Idea| 20,000 மாசம் 3 வருஷம் சேமிச்சாலே போதும்!! | Padmanaban\n\n#investment #finance #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n",
     "category": "mutual-funds",
     "publishedAt": "2025-07-23T04:30:07Z",
     "duration": "01:00",
@@ -6821,9 +6821,9 @@ const videosData = [
     "titleTamil": "40 வயதில் சேமிப்பு இல்லையா? |  ₹75,000 Pension திட்டம் | 40 Year Investment Plan",
     "titleEnglish": "40 வயதில் சேமிப்பு இல்லையா? |  ₹75,000 Pension திட்டம் | 40 Year Investment Plan",
     "title": "40 வயதில் சேமிப்பு இல்லையா? |  ₹75,000 Pension திட்டம் | 40 Year Investment Plan",
-    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
     "category": "mutual-funds",
     "publishedAt": "2025-07-22T14:52:25Z",
     "duration": "09:37",
@@ -6850,9 +6850,9 @@ const videosData = [
     "titleTamil": "உங்க கல்யாண Budget-லிருந்து இவ்ளோ எடுத்து வைச்சா போதும்! | Padmanaban",
     "titleEnglish": "உங்க கல்யாண Budget-லிருந்து இவ்ளோ எடுத்து வைச்சா போதும்! | Padmanaban",
     "title": "உங்க கல்யாண Budget-லிருந்து இவ்ளோ எடுத்து வைச்சா போதும்! | Padmanaban",
-    "descriptionTamil": "உங்க கல்யாண Budget-லிருந்து இவ்ளோ எடுத்து வைச்சா போதும்! | Padmanaban\n\n#marriage #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78",
-    "descriptionEnglish": "உங்க கல்யாண Budget-லிருந்து இவ்ளோ எடுத்து வைச்சா போதும்! | Padmanaban\n\n#marriage #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78",
-    "description": "உங்க கல்யாண Budget-லிருந்து இவ்ளோ எடுத்து வைச்சா போதும்! | Padmanaban\n\n#marriage #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n78",
+    "descriptionTamil": "உங்க கல்யாண Budget-லிருந்து இவ்ளோ எடுத்து வைச்சா போதும்! | Padmanaban\n\n#marriage #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78",
+    "descriptionEnglish": "உங்க கல்யாண Budget-லிருந்து இவ்ளோ எடுத்து வைச்சா போதும்! | Padmanaban\n\n#marriage #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78",
+    "description": "உங்க கல்யாண Budget-லிருந்து இவ்ளோ எடுத்து வைச்சா போதும்! | Padmanaban\n\n#marriage #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n78",
     "category": "mutual-funds",
     "publishedAt": "2025-07-21T05:30:00Z",
     "duration": "12:50",
@@ -6879,9 +6879,9 @@ const videosData = [
     "titleTamil": "SWP பணத்தை போட்ட உடனே  எடுக்க முடியுமா!! இந்த வீடியோ உங்களுக்குதான்!! | Padmanaban",
     "titleEnglish": "SWP பணத்தை போட்ட உடனே  எடுக்க முடியுமா!! இந்த வீடியோ உங்களுக்குதான்!! | Padmanaban",
     "title": "SWP பணத்தை போட்ட உடனே  எடுக்க முடியுமா!! இந்த வீடியோ உங்களுக்குதான்!! | Padmanaban",
-    "descriptionTamil": "SWP பணத்தை போட்ட உடனே  எடுக்க முடியுமா!! இந்த வீடியோ உங்களுக்குதான்!! | Padmanaban\n\n#mutualfunds #swp #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824",
-    "descriptionEnglish": "SWP பணத்தை போட்ட உடனே  எடுக்க முடியுமா!! இந்த வீடியோ உங்களுக்குதான்!! | Padmanaban\n\n#mutualfunds #swp #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824",
-    "description": "SWP பணத்தை போட்ட உடனே  எடுக்க முடியுமா!! இந்த வீடியோ உங்களுக்குதான்!! | Padmanaban\n\n#mutualfunds #swp #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824",
+    "descriptionTamil": "SWP பணத்தை போட்ட உடனே  எடுக்க முடியுமா!! இந்த வீடியோ உங்களுக்குதான்!! | Padmanaban\n\n#mutualfunds #swp #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824",
+    "descriptionEnglish": "SWP பணத்தை போட்ட உடனே  எடுக்க முடியுமா!! இந்த வீடியோ உங்களுக்குதான்!! | Padmanaban\n\n#mutualfunds #swp #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824",
+    "description": "SWP பணத்தை போட்ட உடனே  எடுக்க முடியுமா!! இந்த வீடியோ உங்களுக்குதான்!! | Padmanaban\n\n#mutualfunds #swp #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824",
     "category": "mutual-funds",
     "publishedAt": "2025-07-19T05:30:39Z",
     "duration": "15:03",
@@ -6908,9 +6908,9 @@ const videosData = [
     "titleTamil": "Index Fund-ல முதலீடு பண்ணா நல்ல லாபம் கிடைக்குமா? What is Index Fund? Educational Video",
     "titleEnglish": "Index Fund-ல முதலீடு பண்ணா நல்ல லாபம் கிடைக்குமா? What is Index Fund? Educational Video",
     "title": "Index Fund-ல முதலீடு பண்ணா நல்ல லாபம் கிடைக்குமா? What is Index Fund? Educational Video",
-    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
     "category": "mutual-funds",
     "publishedAt": "2025-07-18T13:45:04Z",
     "duration": "18:16",
@@ -6937,9 +6937,9 @@ const videosData = [
     "titleTamil": "இன்று AUTO ஓட்டுநர் நாளைக்கு கோடீஸ்வரர்! இந்த Plan உங்க Future-ஐயே மாத்திடும்!!! | Padmanaban",
     "titleEnglish": "இன்று AUTO ஓட்டுநர் நாளைக்கு கோடீஸ்வரர்! இந்த Plan உங்க Future-ஐயே மாத்திடும்!!! | Padmanaban",
     "title": "இன்று AUTO ஓட்டுநர் நாளைக்கு கோடீஸ்வரர்! இந்த Plan உங்க Future-ஐயே மாத்திடும்!!! | Padmanaban",
-    "descriptionTamil": "இன்று AUTO ஓட்டுநர் நாளைக்கு கோடீஸ்வரர்! இந்த Plan உங்க Future-ஐயே மாத்திடும்!!! | Padmanaban\n\n#investment #pension #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7",
-    "descriptionEnglish": "இன்று AUTO ஓட்டுநர் நாளைக்கு கோடீஸ்வரர்! இந்த Plan உங்க Future-ஐயே மாத்திடும்!!! | Padmanaban\n\n#investment #pension #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7",
-    "description": "இன்று AUTO ஓட்டுநர் நாளைக்கு கோடீஸ்வரர்! இந்த Plan உங்க Future-ஐயே மாத்திடும்!!! | Padmanaban\n\n#investment #pension #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7",
+    "descriptionTamil": "இன்று AUTO ஓட்டுநர் நாளைக்கு கோடீஸ்வரர்! இந்த Plan உங்க Future-ஐயே மாத்திடும்!!! | Padmanaban\n\n#investment #pension #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7",
+    "descriptionEnglish": "இன்று AUTO ஓட்டுநர் நாளைக்கு கோடீஸ்வரர்! இந்த Plan உங்க Future-ஐயே மாத்திடும்!!! | Padmanaban\n\n#investment #pension #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7",
+    "description": "இன்று AUTO ஓட்டுநர் நாளைக்கு கோடீஸ்வரர்! இந்த Plan உங்க Future-ஐயே மாத்திடும்!!! | Padmanaban\n\n#investment #pension #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7",
     "category": "mutual-funds",
     "publishedAt": "2025-07-17T05:30:03Z",
     "duration": "21:29",
@@ -6966,9 +6966,9 @@ const videosData = [
     "titleTamil": "PPF ல முதலீடு பண்ணலாமா? PPF vs ELSS Mutual Fund Which is the Best Investment!",
     "titleEnglish": "PPF ல முதலீடு பண்ணலாமா? PPF vs ELSS Mutual Fund Which is the Best Investment!",
     "title": "PPF ல முதலீடு பண்ணலாமா? PPF vs ELSS Mutual Fund Which is the Best Investment!",
-    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
     "category": "mutual-funds",
     "publishedAt": "2025-07-15T12:30:28Z",
     "duration": "01:00",
@@ -6995,9 +6995,9 @@ const videosData = [
     "titleTamil": "SWP: இந்த Thumb rule FOLLOW பண்ணுங்க!!! 50 வருஷத்துக்கு கவலையில்லை! | Padmanaban",
     "titleEnglish": "SWP: இந்த Thumb rule FOLLOW பண்ணுங்க!!! 50 வருஷத்துக்கு கவலையில்லை! | Padmanaban",
     "title": "SWP: இந்த Thumb rule FOLLOW பண்ணுங்க!!! 50 வருஷத்துக்கு கவலையில்லை! | Padmanaban",
-    "descriptionTamil": "SWP: இந்த Thumb rule FOLLOW பண்ணுங்க!!! 50 வருஷத்துக்கு கவலையில்லை! | Padmanaban\n\n#swp #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091",
-    "descriptionEnglish": "SWP: இந்த Thumb rule FOLLOW பண்ணுங்க!!! 50 வருஷத்துக்கு கவலையில்லை! | Padmanaban\n\n#swp #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091",
-    "description": "SWP: இந்த Thumb rule FOLLOW பண்ணுங்க!!! 50 வருஷத்துக்கு கவலையில்லை! | Padmanaban\n\n#swp #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091",
+    "descriptionTamil": "SWP: இந்த Thumb rule FOLLOW பண்ணுங்க!!! 50 வருஷத்துக்கு கவலையில்லை! | Padmanaban\n\n#swp #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091",
+    "descriptionEnglish": "SWP: இந்த Thumb rule FOLLOW பண்ணுங்க!!! 50 வருஷத்துக்கு கவலையில்லை! | Padmanaban\n\n#swp #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091",
+    "description": "SWP: இந்த Thumb rule FOLLOW பண்ணுங்க!!! 50 வருஷத்துக்கு கவலையில்லை! | Padmanaban\n\n#swp #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091",
     "category": "mutual-funds",
     "publishedAt": "2025-07-15T05:30:12Z",
     "duration": "09:55",
@@ -7021,12 +7021,12 @@ const videosData = [
     "channelHandle": "@budgetpadmanaban_",
     "channelUrl": "https://www.youtube.com/@budgetpadmanaban_",
     "channelName": "Budget Padmanaban",
-    "titleTamil": "5 Lakhs ➡️ 1 Crore! இந்த calculation💡 உங்க எதிர்காலத்தையே மாத்திடும்! | Budget Padmanaban",
-    "titleEnglish": "5 Lakhs ➡️ 1 Crore! இந்த calculation💡 உங்க எதிர்காலத்தையே மாத்திடும்! | Budget Padmanaban",
-    "title": "5 Lakhs ➡️ 1 Crore! இந்த calculation💡 உங்க எதிர்காலத்தையே மாத்திடும்! | Budget Padmanaban",
-    "descriptionTamil": "5 Lakhs ➡️ 1 Crore! இந்த calculation💡 உங்க எதிர்காலத்தையே மாத்திடும்! | Budget Padmanaban\n\n#mutualfunds #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n",
-    "descriptionEnglish": "5 Lakhs ➡️ 1 Crore! இந்த calculation💡 உங்க எதிர்காலத்தையே மாத்திடும்! | Budget Padmanaban\n\n#mutualfunds #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n",
-    "description": "5 Lakhs ➡️ 1 Crore! இந்த calculation💡 உங்க எதிர்காலத்தையே மாத்திடும்! | Budget Padmanaban\n\n#mutualfunds #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n",
+    "titleTamil": "5 Lakhs  1 Crore! இந்த calculationஉங்க எதிர்காலத்தையே மாத்திடும்! | Budget Padmanaban",
+    "titleEnglish": "5 Lakhs  1 Crore! இந்த calculationஉங்க எதிர்காலத்தையே மாத்திடும்! | Budget Padmanaban",
+    "title": "5 Lakhs  1 Crore! இந்த calculationஉங்க எதிர்காலத்தையே மாத்திடும்! | Budget Padmanaban",
+    "descriptionTamil": "5 Lakhs  1 Crore! இந்த calculationஉங்க எதிர்காலத்தையே மாத்திடும்! | Budget Padmanaban\n\n#mutualfunds #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n",
+    "descriptionEnglish": "5 Lakhs  1 Crore! இந்த calculationஉங்க எதிர்காலத்தையே மாத்திடும்! | Budget Padmanaban\n\n#mutualfunds #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n",
+    "description": "5 Lakhs  1 Crore! இந்த calculationஉங்க எதிர்காலத்தையே மாத்திடும்! | Budget Padmanaban\n\n#mutualfunds #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n",
     "category": "mutual-funds",
     "publishedAt": "2025-07-13T05:30:30Z",
     "duration": "12:08",
@@ -7053,9 +7053,9 @@ const videosData = [
     "titleTamil": "செல்வமகள் சேமிப்பு திட்டம் நல்லதா? Children Education Funds",
     "titleEnglish": "செல்வமகள் சேமிப்பு திட்டம் நல்லதா? Children Education Funds",
     "title": "செல்வமகள் சேமிப்பு திட்டம் நல்லதா? Children Education Funds",
-    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
     "category": "mutual-funds",
     "publishedAt": "2025-07-11T21:55:17Z",
     "duration": "15:21",
@@ -7082,9 +7082,9 @@ const videosData = [
     "titleTamil": "இன்னுமா தங்கம் வாங்கிட்டு இருக்கீங்க? Vera level Investment ஒன்றை MISS பண்ணுறீங்க! | Padmanaban",
     "titleEnglish": "இன்னுமா தங்கம் வாங்கிட்டு இருக்கீங்க? Vera level Investment ஒன்றை MISS பண்ணுறீங்க! | Padmanaban",
     "title": "இன்னுமா தங்கம் வாங்கிட்டு இருக்கீங்க? Vera level Investment ஒன்றை MISS பண்ணுறீங்க! | Padmanaban",
-    "descriptionTamil": "இன்னுமா தங்கம் வாங்கிட்டு இருக்கீங்க? Vera level Investment ஒன்றை MISS பண்ணுறீங்க! | Padmanaban\n\n#gold #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n78",
-    "descriptionEnglish": "இன்னுமா தங்கம் வாங்கிட்டு இருக்கீங்க? Vera level Investment ஒன்றை MISS பண்ணுறீங்க! | Padmanaban\n\n#gold #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n78",
-    "description": "இன்னுமா தங்கம் வாங்கிட்டு இருக்கீங்க? Vera level Investment ஒன்றை MISS பண்ணுறீங்க! | Padmanaban\n\n#gold #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n78",
+    "descriptionTamil": "இன்னுமா தங்கம் வாங்கிட்டு இருக்கீங்க? Vera level Investment ஒன்றை MISS பண்ணுறீங்க! | Padmanaban\n\n#gold #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n78",
+    "descriptionEnglish": "இன்னுமா தங்கம் வாங்கிட்டு இருக்கீங்க? Vera level Investment ஒன்றை MISS பண்ணுறீங்க! | Padmanaban\n\n#gold #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n78",
+    "description": "இன்னுமா தங்கம் வாங்கிட்டு இருக்கீங்க? Vera level Investment ஒன்றை MISS பண்ணுறீங்க! | Padmanaban\n\n#gold #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n78",
     "category": "mutual-funds",
     "publishedAt": "2025-07-11T05:30:34Z",
     "duration": "18:34",
@@ -7111,9 +7111,9 @@ const videosData = [
     "titleTamil": "தினமும் ₹50 சேமிச்சலே போதும் | 30 வருடங்களில் கோடீஸ்வரர் ஆக முடியுமா?  | Educational Video by Expert",
     "titleEnglish": "தினமும் ₹50 சேமிச்சலே போதும் | 30 வருடங்களில் கோடீஸ்வரர் ஆக முடியுமா?  | Educational Video by Expert",
     "title": "தினமும் ₹50 சேமிச்சலே போதும் | 30 வருடங்களில் கோடீஸ்வரர் ஆக முடியுமா?  | Educational Video by Expert",
-    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
     "category": "mutual-funds",
     "publishedAt": "2025-07-09T13:13:35Z",
     "duration": "21:47",
@@ -7140,9 +7140,9 @@ const videosData = [
     "titleTamil": "இதை மட்டும் தெரிஞ்சுக்கிட்டா Market Fall பற்றி கவலை படவே வேண்டாம்! | Padmanaban",
     "titleEnglish": "இதை மட்டும் தெரிஞ்சுக்கிட்டா Market Fall பற்றி கவலை படவே வேண்டாம்! | Padmanaban",
     "title": "இதை மட்டும் தெரிஞ்சுக்கிட்டா Market Fall பற்றி கவலை படவே வேண்டாம்! | Padmanaban",
-    "descriptionTamil": "இதை மட்டும் தெரிஞ்சுக்கிட்டா Market Fall பற்றி கவலை படவே வேண்டாம்! | Padmanaban\n\n#marketfall #smallcap #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782",
-    "descriptionEnglish": "இதை மட்டும் தெரிஞ்சுக்கிட்டா Market Fall பற்றி கவலை படவே வேண்டாம்! | Padmanaban\n\n#marketfall #smallcap #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782",
-    "description": "இதை மட்டும் தெரிஞ்சுக்கிட்டா Market Fall பற்றி கவலை படவே வேண்டாம்! | Padmanaban\n\n#marketfall #smallcap #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n782",
+    "descriptionTamil": "இதை மட்டும் தெரிஞ்சுக்கிட்டா Market Fall பற்றி கவலை படவே வேண்டாம்! | Padmanaban\n\n#marketfall #smallcap #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782",
+    "descriptionEnglish": "இதை மட்டும் தெரிஞ்சுக்கிட்டா Market Fall பற்றி கவலை படவே வேண்டாம்! | Padmanaban\n\n#marketfall #smallcap #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782",
+    "description": "இதை மட்டும் தெரிஞ்சுக்கிட்டா Market Fall பற்றி கவலை படவே வேண்டாம்! | Padmanaban\n\n#marketfall #smallcap #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n782",
     "category": "mutual-funds",
     "publishedAt": "2025-07-09T04:30:05Z",
     "duration": "01:00",
@@ -7169,9 +7169,9 @@ const videosData = [
     "titleTamil": "மாசம் இப்படி சேமித்தாலே நீங்களும் கோடிஸ்வரன் ஆகலாம்..! | Padmanaban",
     "titleEnglish": "மாசம் இப்படி சேமித்தாலே நீங்களும் கோடிஸ்வரன் ஆகலாம்..! | Padmanaban",
     "title": "மாசம் இப்படி சேமித்தாலே நீங்களும் கோடிஸ்வரன் ஆகலாம்..! | Padmanaban",
-    "descriptionTamil": "மாசம் இப்படி சேமித்தாலே நீங்களும் கோடிஸ்வரன் ஆகலாம்..! | Padmanaban\n\n#investment #mutualfunds #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7",
-    "descriptionEnglish": "மாசம் இப்படி சேமித்தாலே நீங்களும் கோடிஸ்வரன் ஆகலாம்..! | Padmanaban\n\n#investment #mutualfunds #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7",
-    "description": "மாசம் இப்படி சேமித்தாலே நீங்களும் கோடிஸ்வரன் ஆகலாம்..! | Padmanaban\n\n#investment #mutualfunds #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7",
+    "descriptionTamil": "மாசம் இப்படி சேமித்தாலே நீங்களும் கோடிஸ்வரன் ஆகலாம்..! | Padmanaban\n\n#investment #mutualfunds #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7",
+    "descriptionEnglish": "மாசம் இப்படி சேமித்தாலே நீங்களும் கோடிஸ்வரன் ஆகலாம்..! | Padmanaban\n\n#investment #mutualfunds #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7",
+    "description": "மாசம் இப்படி சேமித்தாலே நீங்களும் கோடிஸ்வரன் ஆகலாம்..! | Padmanaban\n\n#investment #mutualfunds #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7",
     "category": "mutual-funds",
     "publishedAt": "2025-07-07T04:30:06Z",
     "duration": "09:13",
@@ -7198,9 +7198,9 @@ const videosData = [
     "titleTamil": "4 லட்சம் Pension கூடவே 47 கோடியும் வேணுமா? 5 வருஷம் முதலீடு செய்தால் போதும்.! | Padmanaban",
     "titleEnglish": "4 லட்சம் Pension கூடவே 47 கோடியும் வேணுமா? 5 வருஷம் முதலீடு செய்தால் போதும்.! | Padmanaban",
     "title": "4 லட்சம் Pension கூடவே 47 கோடியும் வேணுமா? 5 வருஷம் முதலீடு செய்தால் போதும்.! | Padmanaban",
-    "descriptionTamil": "4 லட்சம் Pension கூடவே 47 கோடியும் வேணுமா? 5 வருஷம் முதலீடு செய்தால் போதும்.! | Padmanaban\n\n#pension #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824",
-    "descriptionEnglish": "4 லட்சம் Pension கூடவே 47 கோடியும் வேணுமா? 5 வருஷம் முதலீடு செய்தால் போதும்.! | Padmanaban\n\n#pension #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824",
-    "description": "4 லட்சம் Pension கூடவே 47 கோடியும் வேணுமா? 5 வருஷம் முதலீடு செய்தால் போதும்.! | Padmanaban\n\n#pension #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824",
+    "descriptionTamil": "4 லட்சம் Pension கூடவே 47 கோடியும் வேணுமா? 5 வருஷம் முதலீடு செய்தால் போதும்.! | Padmanaban\n\n#pension #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824",
+    "descriptionEnglish": "4 லட்சம் Pension கூடவே 47 கோடியும் வேணுமா? 5 வருஷம் முதலீடு செய்தால் போதும்.! | Padmanaban\n\n#pension #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824",
+    "description": "4 லட்சம் Pension கூடவே 47 கோடியும் வேணுமா? 5 வருஷம் முதலீடு செய்தால் போதும்.! | Padmanaban\n\n#pension #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824",
     "category": "mutual-funds",
     "publishedAt": "2025-07-02T04:30:31Z",
     "duration": "12:26",
@@ -7227,9 +7227,9 @@ const videosData = [
     "titleTamil": "முதலீட்டுக்கு தங்கம் நல்லதா? Understanding Gold",
     "titleEnglish": "முதலீட்டுக்கு தங்கம் நல்லதா? Understanding Gold",
     "title": "முதலீட்டுக்கு தங்கம் நல்லதா? Understanding Gold",
-    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\nWhatsApp: +91 9884349173\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\nWhatsApp: +91 9884349173\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\nWhatsApp: +91 9884349173\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\nWhatsApp: +91 9884349173\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\nWhatsApp: +91 9884349173\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\nWhatsApp: +91 9884349173\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
     "category": "mutual-funds",
     "publishedAt": "2025-07-01T12:30:13Z",
     "duration": "15:39",
@@ -7256,9 +7256,9 @@ const videosData = [
     "titleTamil": "₹100 கோடி சொத்து சேர்க்கணுமா? One Time Invest பண்ணா போதும் | ₹2 லட்சம் போட்டா ₹100 கோடி கிடைக்குமா?",
     "titleEnglish": "₹100 கோடி சொத்து சேர்க்கணுமா? One Time Invest பண்ணா போதும் | ₹2 லட்சம் போட்டா ₹100 கோடி கிடைக்குமா?",
     "title": "₹100 கோடி சொத்து சேர்க்கணுமா? One Time Invest பண்ணா போதும் | ₹2 லட்சம் போட்டா ₹100 கோடி கிடைக்குமா?",
-    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
     "category": "mutual-funds",
     "publishedAt": "2025-07-01T11:31:06Z",
     "duration": "18:52",
@@ -7282,12 +7282,12 @@ const videosData = [
     "channelHandle": "@budgetpadmanaban_",
     "channelUrl": "https://www.youtube.com/@budgetpadmanaban_",
     "channelName": "Budget Padmanaban",
-    "titleTamil": "🤔Mutual Fund-ல 12% கண்டிப்பா வருமா?",
-    "titleEnglish": "🤔Mutual Fund-ல 12% கண்டிப்பா வருமா?",
-    "title": "🤔Mutual Fund-ல 12% கண்டிப்பா வருமா?",
-    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
+    "titleTamil": "Mutual Fund-ல 12% கண்டிப்பா வருமா?",
+    "titleEnglish": "Mutual Fund-ல 12% கண்டிப்பா வருமா?",
+    "title": "Mutual Fund-ல 12% கண்டிப்பா வருமா?",
+    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
     "category": "mutual-funds",
     "publishedAt": "2025-06-30T09:45:05Z",
     "duration": "21:05",
@@ -7314,9 +7314,9 @@ const videosData = [
     "titleTamil": "எவ்ளோ சம்பாதிச்சாலும் பத்தலயா? சரி செய்ய என்ன வழி?",
     "titleEnglish": "எவ்ளோ சம்பாதிச்சாலும் பத்தலயா? சரி செய்ய என்ன வழி?",
     "title": "எவ்ளோ சம்பாதிச்சாலும் பத்தலயா? சரி செய்ய என்ன வழி?",
-    "descriptionTamil": "#monthlybudgetplanning #financialtips #dhanush \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 I",
-    "descriptionEnglish": "#monthlybudgetplanning #financialtips #dhanush \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 I",
-    "description": "#monthlybudgetplanning #financialtips #dhanush \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 I",
+    "descriptionTamil": "#monthlybudgetplanning #financialtips #dhanush \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n I",
+    "descriptionEnglish": "#monthlybudgetplanning #financialtips #dhanush \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n I",
+    "description": "#monthlybudgetplanning #financialtips #dhanush \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n I",
     "category": "mutual-funds",
     "publishedAt": "2025-06-30T04:30:43Z",
     "duration": "01:00",
@@ -7340,12 +7340,12 @@ const videosData = [
     "channelHandle": "@budgetpadmanaban_",
     "channelUrl": "https://www.youtube.com/@budgetpadmanaban_",
     "channelName": "Budget Padmanaban",
-    "titleTamil": "😲இப்படித்தான் கிரெடிட் கார்டு Offer வருதா? How Credit Card Offer Works?",
-    "titleEnglish": "😲இப்படித்தான் கிரெடிட் கார்டு Offer வருதா? How Credit Card Offer Works?",
-    "title": "😲இப்படித்தான் கிரெடிட் கார்டு Offer வருதா? How Credit Card Offer Works?",
-    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
+    "titleTamil": "இப்படித்தான் கிரெடிட் கார்டு Offer வருதா? How Credit Card Offer Works?",
+    "titleEnglish": "இப்படித்தான் கிரெடிட் கார்டு Offer வருதா? How Credit Card Offer Works?",
+    "title": "இப்படித்தான் கிரெடிட் கார்டு Offer வருதா? How Credit Card Offer Works?",
+    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
     "category": "mutual-funds",
     "publishedAt": "2025-06-29T12:51:08Z",
     "duration": "09:31",
@@ -7372,9 +7372,9 @@ const videosData = [
     "titleTamil": "Trap-ல மாட்டிக்காதீங்க!! Credit Card Minimum Due Trap ல மாட்டிக்காதீங்க!!",
     "titleEnglish": "Trap-ல மாட்டிக்காதீங்க!! Credit Card Minimum Due Trap ல மாட்டிக்காதீங்க!!",
     "title": "Trap-ல மாட்டிக்காதீங்க!! Credit Card Minimum Due Trap ல மாட்டிக்காதீங்க!!",
-    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
     "category": "mutual-funds",
     "publishedAt": "2025-06-28T11:30:22Z",
     "duration": "12:44",
@@ -7401,9 +7401,9 @@ const videosData = [
     "titleTamil": "₹10 லட்சம் போட்டு ₹1.3 கோடி லாபமா? Monthly Regular Income Plan (SWP)",
     "titleEnglish": "₹10 லட்சம் போட்டு ₹1.3 கோடி லாபமா? Monthly Regular Income Plan (SWP)",
     "title": "₹10 லட்சம் போட்டு ₹1.3 கோடி லாபமா? Monthly Regular Income Plan (SWP)",
-    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
     "category": "mutual-funds",
     "publishedAt": "2025-06-27T12:53:27Z",
     "duration": "15:57",
@@ -7430,9 +7430,9 @@ const videosData = [
     "titleTamil": "Avoid These Inflation Calculation MISTAKES",
     "titleEnglish": "Avoid These Inflation Calculation MISTAKES",
     "title": "Avoid These Inflation Calculation MISTAKES",
-    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
     "category": "mutual-funds",
     "publishedAt": "2025-06-27T06:30:26Z",
     "duration": "18:10",
@@ -7459,9 +7459,9 @@ const videosData = [
     "titleTamil": "1000 பேரை கோடீஸ்வரர் ஆக்குறது என் லட்சியம்",
     "titleEnglish": "1000 பேரை கோடீஸ்வரர் ஆக்குறது என் லட்சியம்",
     "title": "1000 பேரை கோடீஸ்வரர் ஆக்குறது என் லட்சியம்",
-    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
     "category": "mutual-funds",
     "publishedAt": "2025-06-26T10:32:03Z",
     "duration": "21:23",
@@ -7488,9 +7488,9 @@ const videosData = [
     "titleTamil": "டெலிவரி ஓட்டி ₹3 கோடி சேக்கலாமா? 1 கோடி வீடு, ₹50L Child Education - Smart  Investment",
     "titleEnglish": "டெலிவரி ஓட்டி ₹3 கோடி சேக்கலாமா? 1 கோடி வீடு, ₹50L Child Education - Smart  Investment",
     "title": "டெலிவரி ஓட்டி ₹3 கோடி சேக்கலாமா? 1 கோடி வீடு, ₹50L Child Education - Smart  Investment",
-    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
     "category": "mutual-funds",
     "publishedAt": "2025-06-25T06:30:24Z",
     "duration": "01:00",
@@ -7517,9 +7517,9 @@ const videosData = [
     "titleTamil": "மாச மாசம் 15000 இந்த மாதிரி முதலீடு செய்தல் 100 கோடி கிடைக்கும்..! | Padmanaban",
     "titleEnglish": "மாச மாசம் 15000 இந்த மாதிரி முதலீடு செய்தல் 100 கோடி கிடைக்கும்..! | Padmanaban",
     "title": "மாச மாசம் 15000 இந்த மாதிரி முதலீடு செய்தல் 100 கோடி கிடைக்கும்..! | Padmanaban",
-    "descriptionTamil": "மாச மாசம் 15000 இந்த மாதிரி முதலீடு செய்தல் 100 கோடி கிடைக்கும்..! | Padmanaban\n\n#mutualfunds #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n",
-    "descriptionEnglish": "மாச மாசம் 15000 இந்த மாதிரி முதலீடு செய்தல் 100 கோடி கிடைக்கும்..! | Padmanaban\n\n#mutualfunds #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n",
-    "description": "மாச மாசம் 15000 இந்த மாதிரி முதலீடு செய்தல் 100 கோடி கிடைக்கும்..! | Padmanaban\n\n#mutualfunds #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n",
+    "descriptionTamil": "மாச மாசம் 15000 இந்த மாதிரி முதலீடு செய்தல் 100 கோடி கிடைக்கும்..! | Padmanaban\n\n#mutualfunds #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n",
+    "descriptionEnglish": "மாச மாசம் 15000 இந்த மாதிரி முதலீடு செய்தல் 100 கோடி கிடைக்கும்..! | Padmanaban\n\n#mutualfunds #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n",
+    "description": "மாச மாசம் 15000 இந்த மாதிரி முதலீடு செய்தல் 100 கோடி கிடைக்கும்..! | Padmanaban\n\n#mutualfunds #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n",
     "category": "mutual-funds",
     "publishedAt": "2025-06-25T04:30:11Z",
     "duration": "09:49",
@@ -7546,9 +7546,9 @@ const videosData = [
     "titleTamil": "₹50 லட்சம் Money + வீடு Free -ஆ கிடைக்கும் | Home Loan Strategy | 10 வருஷம் EMI Free",
     "titleEnglish": "₹50 லட்சம் Money + வீடு Free -ஆ கிடைக்கும் | Home Loan Strategy | 10 வருஷம் EMI Free",
     "title": "₹50 லட்சம் Money + வீடு Free -ஆ கிடைக்கும் | Home Loan Strategy | 10 வருஷம் EMI Free",
-    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
     "category": "mutual-funds",
     "publishedAt": "2025-06-20T13:27:46Z",
     "duration": "12:02",
@@ -7575,9 +7575,9 @@ const videosData = [
     "titleTamil": "SWP எப்போது Start செய்ய வேண்டும்? உடனே அல்லது சில வருடம் கழித்து...! | Padmanaban B",
     "titleEnglish": "SWP எப்போது Start செய்ய வேண்டும்? உடனே அல்லது சில வருடம் கழித்து...! | Padmanaban B",
     "title": "SWP எப்போது Start செய்ய வேண்டும்? உடனே அல்லது சில வருடம் கழித்து...! | Padmanaban B",
-    "descriptionTamil": "SWP எப்போது Start செய்ய வேண்டும்? உடனே அல்லது சில வருடம் கழித்து...! | Padmanaban B\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: http",
-    "descriptionEnglish": "SWP எப்போது Start செய்ய வேண்டும்? உடனே அல்லது சில வருடம் கழித்து...! | Padmanaban B\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: http",
-    "description": "SWP எப்போது Start செய்ய வேண்டும்? உடனே அல்லது சில வருடம் கழித்து...! | Padmanaban B\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: http",
+    "descriptionTamil": "SWP எப்போது Start செய்ய வேண்டும்? உடனே அல்லது சில வருடம் கழித்து...! | Padmanaban B\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: http",
+    "descriptionEnglish": "SWP எப்போது Start செய்ய வேண்டும்? உடனே அல்லது சில வருடம் கழித்து...! | Padmanaban B\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: http",
+    "description": "SWP எப்போது Start செய்ய வேண்டும்? உடனே அல்லது சில வருடம் கழித்து...! | Padmanaban B\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: http",
     "category": "mutual-funds",
     "publishedAt": "2025-06-20T10:30:47Z",
     "duration": "15:15",
@@ -7604,9 +7604,9 @@ const videosData = [
     "titleTamil": "மாசம் ₹30,000 Pension வேணுமா? Regular Income Plan (SWP) | மீதி 1 கோடி கிடைக்குமா?",
     "titleEnglish": "மாசம் ₹30,000 Pension வேணுமா? Regular Income Plan (SWP) | மீதி 1 கோடி கிடைக்குமா?",
     "title": "மாசம் ₹30,000 Pension வேணுமா? Regular Income Plan (SWP) | மீதி 1 கோடி கிடைக்குமா?",
-    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
     "category": "mutual-funds",
     "publishedAt": "2025-06-17T12:45:05Z",
     "duration": "18:28",
@@ -7633,9 +7633,9 @@ const videosData = [
     "titleTamil": "நீங்கள் மாதம் Rs. 250 முதலீடு செய்தாலே கோடீஸ்வரர் ஆகலாம்! | Padmanaban B",
     "titleEnglish": "நீங்கள் மாதம் Rs. 250 முதலீடு செய்தாலே கோடீஸ்வரர் ஆகலாம்! | Padmanaban B",
     "title": "நீங்கள் மாதம் Rs. 250 முதலீடு செய்தாலே கோடீஸ்வரர் ஆகலாம்! | Padmanaban B",
-    "descriptionTamil": "நீங்கள் மாதம் Rs. 250 முதலீடு செய்தாலே கோடீஸ்வரர் ஆகலாம்! | Padmanaban B\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/",
-    "descriptionEnglish": "நீங்கள் மாதம் Rs. 250 முதலீடு செய்தாலே கோடீஸ்வரர் ஆகலாம்! | Padmanaban B\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/",
-    "description": "நீங்கள் மாதம் Rs. 250 முதலீடு செய்தாலே கோடீஸ்வரர் ஆகலாம்! | Padmanaban B\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/",
+    "descriptionTamil": "நீங்கள் மாதம் Rs. 250 முதலீடு செய்தாலே கோடீஸ்வரர் ஆகலாம்! | Padmanaban B\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/",
+    "descriptionEnglish": "நீங்கள் மாதம் Rs. 250 முதலீடு செய்தாலே கோடீஸ்வரர் ஆகலாம்! | Padmanaban B\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/",
+    "description": "நீங்கள் மாதம் Rs. 250 முதலீடு செய்தாலே கோடீஸ்வரர் ஆகலாம்! | Padmanaban B\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/",
     "category": "mutual-funds",
     "publishedAt": "2025-06-16T15:16:04Z",
     "duration": "21:41",
@@ -7662,9 +7662,9 @@ const videosData = [
     "titleTamil": "1 லட்சம் One Time முதலீடு 4.13 கோடி கிடைச்சிருக்கு...! | Padmanaban B",
     "titleEnglish": "1 லட்சம் One Time முதலீடு 4.13 கோடி கிடைச்சிருக்கு...! | Padmanaban B",
     "title": "1 லட்சம் One Time முதலீடு 4.13 கோடி கிடைச்சிருக்கு...! | Padmanaban B",
-    "descriptionTamil": "Rs. 1 லட்சம் One Time முதலீடு 4.13 கோடி கிடைச்சிருக்கு...! | Padmanaban B\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly",
-    "descriptionEnglish": "Rs. 1 லட்சம் One Time முதலீடு 4.13 கோடி கிடைச்சிருக்கு...! | Padmanaban B\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly",
-    "description": "Rs. 1 லட்சம் One Time முதலீடு 4.13 கோடி கிடைச்சிருக்கு...! | Padmanaban B\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly",
+    "descriptionTamil": "Rs. 1 லட்சம் One Time முதலீடு 4.13 கோடி கிடைச்சிருக்கு...! | Padmanaban B\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly",
+    "descriptionEnglish": "Rs. 1 லட்சம் One Time முதலீடு 4.13 கோடி கிடைச்சிருக்கு...! | Padmanaban B\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly",
+    "description": "Rs. 1 லட்சம் One Time முதலீடு 4.13 கோடி கிடைச்சிருக்கு...! | Padmanaban B\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly",
     "category": "mutual-funds",
     "publishedAt": "2025-06-14T11:30:36Z",
     "duration": "01:00",
@@ -7691,9 +7691,9 @@ const videosData = [
     "titleTamil": "₹25 ரூபாய் போட்டா ₹29 கோடியா? | Children Investment Plan | 10 வயது ஆரம்பிக்கலாம்",
     "titleEnglish": "₹25 ரூபாய் போட்டா ₹29 கோடியா? | Children Investment Plan | 10 வயது ஆரம்பிக்கலாம்",
     "title": "₹25 ரூபாய் போட்டா ₹29 கோடியா? | Children Investment Plan | 10 வயது ஆரம்பிக்கலாம்",
-    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
     "category": "mutual-funds",
     "publishedAt": "2025-06-13T14:47:34Z",
     "duration": "09:07",
@@ -7720,9 +7720,9 @@ const videosData = [
     "titleTamil": "மாதம் Rs. 10,000 முதலீடு செய்தால் உங்களுடைய FOUR Important Life Goal Achieve பண்ணலாம்",
     "titleEnglish": "மாதம் Rs. 10,000 முதலீடு செய்தால் உங்களுடைய FOUR Important Life Goal Achieve பண்ணலாம்",
     "title": "மாதம் Rs. 10,000 முதலீடு செய்தால் உங்களுடைய FOUR Important Life Goal Achieve பண்ணலாம்",
-    "descriptionTamil": "மாதம் Rs. 10,000 முதலீடு செய்தால் உங்களுடைய FOUR Important Life Goal Achieve பண்ணலாம்\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: ht",
-    "descriptionEnglish": "மாதம் Rs. 10,000 முதலீடு செய்தால் உங்களுடைய FOUR Important Life Goal Achieve பண்ணலாம்\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: ht",
-    "description": "மாதம் Rs. 10,000 முதலீடு செய்தால் உங்களுடைய FOUR Important Life Goal Achieve பண்ணலாம்\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: ht",
+    "descriptionTamil": "மாதம் Rs. 10,000 முதலீடு செய்தால் உங்களுடைய FOUR Important Life Goal Achieve பண்ணலாம்\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: ht",
+    "descriptionEnglish": "மாதம் Rs. 10,000 முதலீடு செய்தால் உங்களுடைய FOUR Important Life Goal Achieve பண்ணலாம்\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: ht",
+    "description": "மாதம் Rs. 10,000 முதலீடு செய்தால் உங்களுடைய FOUR Important Life Goal Achieve பண்ணலாம்\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: ht",
     "category": "mutual-funds",
     "publishedAt": "2025-06-11T14:53:33Z",
     "duration": "12:20",
@@ -7749,9 +7749,9 @@ const videosData = [
     "titleTamil": "Credit Card ஒரு வரப்பிரசாதம் | நிறைய பணம் சேமிக்கலாம்! | 100 ரூபாய்க்கு 1 லட்சம் வட்டியா?",
     "titleEnglish": "Credit Card ஒரு வரப்பிரசாதம் | நிறைய பணம் சேமிக்கலாம்! | 100 ரூபாய்க்கு 1 லட்சம் வட்டியா?",
     "title": "Credit Card ஒரு வரப்பிரசாதம் | நிறைய பணம் சேமிக்கலாம்! | 100 ரூபாய்க்கு 1 லட்சம் வட்டியா?",
-    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
     "category": "mutual-funds",
     "publishedAt": "2025-06-10T13:34:55Z",
     "duration": "15:33",
@@ -7778,9 +7778,9 @@ const videosData = [
     "titleTamil": "Retirement பணத்தில் வீடு?  Mutual Fund-ல முதலீடு? Mutual Fund - மாசம் 20000 Pension கூடவே 3.5 கோடி",
     "titleEnglish": "Retirement பணத்தில் வீடு?  Mutual Fund-ல முதலீடு? Mutual Fund - மாசம் 20000 Pension கூடவே 3.5 கோடி",
     "title": "Retirement பணத்தில் வீடு?  Mutual Fund-ல முதலீடு? Mutual Fund - மாசம் 20000 Pension கூடவே 3.5 கோடி",
-    "descriptionTamil": "Retirement பணத்தில் வீடு?  Mutual Fund-ல முதலீடு? Mutual Fund - மாசம் 20000 Pension கூடவே 3.5 கோடி\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nCon",
-    "descriptionEnglish": "Retirement பணத்தில் வீடு?  Mutual Fund-ல முதலீடு? Mutual Fund - மாசம் 20000 Pension கூடவே 3.5 கோடி\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nCon",
-    "description": "Retirement பணத்தில் வீடு?  Mutual Fund-ல முதலீடு? Mutual Fund - மாசம் 20000 Pension கூடவே 3.5 கோடி\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nCon",
+    "descriptionTamil": "Retirement பணத்தில் வீடு?  Mutual Fund-ல முதலீடு? Mutual Fund - மாசம் 20000 Pension கூடவே 3.5 கோடி\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nCon",
+    "descriptionEnglish": "Retirement பணத்தில் வீடு?  Mutual Fund-ல முதலீடு? Mutual Fund - மாசம் 20000 Pension கூடவே 3.5 கோடி\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nCon",
+    "description": "Retirement பணத்தில் வீடு?  Mutual Fund-ல முதலீடு? Mutual Fund - மாசம் 20000 Pension கூடவே 3.5 கோடி\n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nCon",
     "category": "mutual-funds",
     "publishedAt": "2025-06-09T13:37:16Z",
     "duration": "18:46",
@@ -7807,9 +7807,9 @@ const videosData = [
     "titleTamil": "தங்கம் எப்போதெல்லாம் விலை ஏறும் ?",
     "titleEnglish": "தங்கம் எப்போதெல்லாம் விலை ஏறும் ?",
     "title": "தங்கம் எப்போதெல்லாம் விலை ஏறும் ?",
-    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmanaban_/\n✖️ Twitter:",
-    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmanaban_/\n✖️ Twitter:",
-    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmanaban_/\n✖️ Twitter:",
+    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmanaban_/\n Twitter:",
+    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmanaban_/\n Twitter:",
+    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmanaban_/\n Twitter:",
     "category": "mutual-funds",
     "publishedAt": "2025-06-09T09:30:02Z",
     "duration": "21:59",
@@ -7833,12 +7833,12 @@ const videosData = [
     "channelHandle": "@budgetpadmanaban_",
     "channelUrl": "https://www.youtube.com/@budgetpadmanaban_",
     "channelName": "Budget Padmanaban",
-    "titleTamil": "₹50 லட்ச ரூபா வீடு freeஆ வேணுமா? 😲 House Buying Plan",
-    "titleEnglish": "₹50 லட்ச ரூபா வீடு freeஆ வேணுமா? 😲 House Buying Plan",
-    "title": "₹50 லட்ச ரூபா வீடு freeஆ வேணுமா? 😲 House Buying Plan",
-    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadman",
-    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadman",
-    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact 📞 ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadman",
+    "titleTamil": "₹50 லட்ச ரூபா வீடு freeஆ வேணுமா?  House Buying Plan",
+    "titleEnglish": "₹50 லட்ச ரூபா வீடு freeஆ வேணுமா?  House Buying Plan",
+    "title": "₹50 லட்ச ரூபா வீடு freeஆ வேணுமா?  House Buying Plan",
+    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadman",
+    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadman",
+    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n7824002029\n7824091393\n7824091394\n\nContact Form: https://bit.ly/48Do8P6\n\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadman",
     "category": "mutual-funds",
     "publishedAt": "2025-06-06T12:45:04Z",
     "duration": "01:00",
@@ -7981,9 +7981,9 @@ const videosData = [
     "titleTamil": "Gold is the real money - தங்கம் தான் உண்மையான பணம்?",
     "titleEnglish": "Gold is the real money - தங்கம் தான் உண்மையான பணம்?",
     "title": "Gold is the real money - தங்கம் தான் உண்மையான பணம்?",
-    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\nWhatsApp: +91 9884349173\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\nWhatsApp: +91 9884349173\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\nWhatsApp: +91 9884349173\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\nWhatsApp: +91 9884349173\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\nWhatsApp: +91 9884349173\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\nWhatsApp: +91 9884349173\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
     "category": "mutual-funds",
     "publishedAt": "2025-05-31T13:31:11Z",
     "duration": "21:17",
@@ -8010,9 +8010,9 @@ const videosData = [
     "titleTamil": "₹5000 போட்டா 1 கோடி கிடைக்கும் | Children Saving Plan | குழந்தைகளோட Life இனி Safe",
     "titleEnglish": "₹5000 போட்டா 1 கோடி கிடைக்கும் | Children Saving Plan | குழந்தைகளோட Life இனி Safe",
     "title": "₹5000 போட்டா 1 கோடி கிடைக்கும் | Children Saving Plan | குழந்தைகளோட Life இனி Safe",
-    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\nWhatsApp: +91 9884349173\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\nWhatsApp: +91 9884349173\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\nWhatsApp: +91 9884349173\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\nWhatsApp: +91 9884349173\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\nWhatsApp: +91 9884349173\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\nWhatsApp: +91 9884349173\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
     "category": "mutual-funds",
     "publishedAt": "2025-05-30T13:38:55Z",
     "duration": "01:00",
@@ -8068,9 +8068,9 @@ const videosData = [
     "titleTamil": "தங்கம் 10,000 போகல -  Gold Price Prediction 2025 | Gold Investment Plan",
     "titleEnglish": "தங்கம் 10,000 போகல -  Gold Price Prediction 2025 | Gold Investment Plan",
     "title": "தங்கம் 10,000 போகல -  Gold Price Prediction 2025 | Gold Investment Plan",
-    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\nWhatsApp: +91 9884349173\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\nWhatsApp: +91 9884349173\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\nWhatsApp: +91 9884349173\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\nWhatsApp: +91 9884349173\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\nWhatsApp: +91 9884349173\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\nWhatsApp: +91 9884349173\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
     "category": "mutual-funds",
     "publishedAt": "2025-05-27T15:10:29Z",
     "duration": "12:56",
@@ -8152,12 +8152,12 @@ const videosData = [
     "channelHandle": "@budgetpadmanaban_",
     "channelUrl": "https://www.youtube.com/@budgetpadmanaban_",
     "channelName": "Budget Padmanaban",
-    "titleTamil": "😲இவ்வளவு நன்மைகள் இருக்கா? Importance of Insurance iin Tamil",
-    "titleEnglish": "😲இவ்வளவு நன்மைகள் இருக்கா? Importance of Insurance iin Tamil",
-    "title": "😲இவ்வளவு நன்மைகள் இருக்கா? Importance of Insurance iin Tamil",
-    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\nWhatsApp: +91 9884349173\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\nWhatsApp: +91 9884349173\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
-    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\nWhatsApp: +91 9884349173\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\n\nSocials: ⤵︎\n📸 Instagram: https://www.instagram.com/budgetpadmana",
+    "titleTamil": "இவ்வளவு நன்மைகள் இருக்கா? Importance of Insurance iin Tamil",
+    "titleEnglish": "இவ்வளவு நன்மைகள் இருக்கா? Importance of Insurance iin Tamil",
+    "title": "இவ்வளவு நன்மைகள் இருக்கா? Importance of Insurance iin Tamil",
+    "descriptionTamil": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\nWhatsApp: +91 9884349173\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "descriptionEnglish": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\nWhatsApp: +91 9884349173\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
+    "description": "Padmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd\nWhatsApp: +91 9884349173\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\n\nSocials: ⤵︎\n Instagram: https://www.instagram.com/budgetpadmana",
     "category": "mutual-funds",
     "publishedAt": "2025-05-25T11:54:06Z",
     "duration": "21:35",
@@ -9054,9 +9054,9 @@ const videosData = [
     "titleTamil": "வாடகை வீடு Vs சொந்த வீடு | Budget Padamanban",
     "titleEnglish": "வாடகை வீடு Vs சொந்த வீடு | Budget Padamanban",
     "title": "வாடகை வீடு Vs சொந்த வீடு | Budget Padamanban",
-    "descriptionTamil": "#budgetpadmanaban #investment #newhouse \n\nவாடகை வீடு Vs சொந்த வீடு | Budget Padamanban\n\nAre you planning to buy your first house? 🏠 Before making this life-changing decision, watch this video! Many first-time home buyers make emotional decisions tha",
-    "descriptionEnglish": "#budgetpadmanaban #investment #newhouse \n\nவாடகை வீடு Vs சொந்த வீடு | Budget Padamanban\n\nAre you planning to buy your first house? 🏠 Before making this life-changing decision, watch this video! Many first-time home buyers make emotional decisions tha",
-    "description": "#budgetpadmanaban #investment #newhouse \n\nவாடகை வீடு Vs சொந்த வீடு | Budget Padamanban\n\nAre you planning to buy your first house? 🏠 Before making this life-changing decision, watch this video! Many first-time home buyers make emotional decisions tha",
+    "descriptionTamil": "#budgetpadmanaban #investment #newhouse \n\nவாடகை வீடு Vs சொந்த வீடு | Budget Padamanban\n\nAre you planning to buy your first house?  Before making this life-changing decision, watch this video! Many first-time home buyers make emotional decisions tha",
+    "descriptionEnglish": "#budgetpadmanaban #investment #newhouse \n\nவாடகை வீடு Vs சொந்த வீடு | Budget Padamanban\n\nAre you planning to buy your first house?  Before making this life-changing decision, watch this video! Many first-time home buyers make emotional decisions tha",
+    "description": "#budgetpadmanaban #investment #newhouse \n\nவாடகை வீடு Vs சொந்த வீடு | Budget Padamanban\n\nAre you planning to buy your first house?  Before making this life-changing decision, watch this video! Many first-time home buyers make emotional decisions tha",
     "category": "mutual-funds",
     "publishedAt": "2025-04-25T15:37:28Z",
     "duration": "01:00",
@@ -9199,9 +9199,9 @@ const videosData = [
     "titleTamil": "வாடகை குடுக்குற பணத்தை சொந்த வீட்டுக்கு EMI கட்டலாம்!! | Budget Padamanban",
     "titleEnglish": "வாடகை குடுக்குற பணத்தை சொந்த வீட்டுக்கு EMI கட்டலாம்!! | Budget Padamanban",
     "title": "வாடகை குடுக்குற பணத்தை சொந்த வீட்டுக்கு EMI கட்டலாம்!! | Budget Padamanban",
-    "descriptionTamil": "#budgetpadmanaban #investment #newhouse \n\nவாடகை குடுக்குற பணத்தை சொந்த வீட்டுக்கு EMI கட்டலாம்!! | Budget Padamanban\n\nAre you planning to buy your first house? 🏠 Before making this life-changing decision, watch this video! Many first-time home buyer",
-    "descriptionEnglish": "#budgetpadmanaban #investment #newhouse \n\nவாடகை குடுக்குற பணத்தை சொந்த வீட்டுக்கு EMI கட்டலாம்!! | Budget Padamanban\n\nAre you planning to buy your first house? 🏠 Before making this life-changing decision, watch this video! Many first-time home buyer",
-    "description": "#budgetpadmanaban #investment #newhouse \n\nவாடகை குடுக்குற பணத்தை சொந்த வீட்டுக்கு EMI கட்டலாம்!! | Budget Padamanban\n\nAre you planning to buy your first house? 🏠 Before making this life-changing decision, watch this video! Many first-time home buyer",
+    "descriptionTamil": "#budgetpadmanaban #investment #newhouse \n\nவாடகை குடுக்குற பணத்தை சொந்த வீட்டுக்கு EMI கட்டலாம்!! | Budget Padamanban\n\nAre you planning to buy your first house?  Before making this life-changing decision, watch this video! Many first-time home buyer",
+    "descriptionEnglish": "#budgetpadmanaban #investment #newhouse \n\nவாடகை குடுக்குற பணத்தை சொந்த வீட்டுக்கு EMI கட்டலாம்!! | Budget Padamanban\n\nAre you planning to buy your first house?  Before making this life-changing decision, watch this video! Many first-time home buyer",
+    "description": "#budgetpadmanaban #investment #newhouse \n\nவாடகை குடுக்குற பணத்தை சொந்த வீட்டுக்கு EMI கட்டலாம்!! | Budget Padamanban\n\nAre you planning to buy your first house?  Before making this life-changing decision, watch this video! Many first-time home buyer",
     "category": "mutual-funds",
     "publishedAt": "2025-04-21T08:48:20Z",
     "duration": "21:23",
@@ -9576,9 +9576,9 @@ const videosData = [
     "titleTamil": "EMI-ல சொந்த வீடு வாங்குறது எந்த அளவுக்கு லாபம்? | Budget Padamanban",
     "titleEnglish": "EMI-ல சொந்த வீடு வாங்குறது எந்த அளவுக்கு லாபம்? | Budget Padamanban",
     "title": "EMI-ல சொந்த வீடு வாங்குறது எந்த அளவுக்கு லாபம்? | Budget Padamanban",
-    "descriptionTamil": "#budgetpadmanaban #investment #newhouse \n\nEMI-ல சொந்த வீடு வாங்குறது எந்த அளவுக்கு லாபம்? | Budget Padamanban\n\nAre you planning to buy your first house? 🏠 Before making this life-changing decision, watch this video! Many first-time home buyers make ",
-    "descriptionEnglish": "#budgetpadmanaban #investment #newhouse \n\nEMI-ல சொந்த வீடு வாங்குறது எந்த அளவுக்கு லாபம்? | Budget Padamanban\n\nAre you planning to buy your first house? 🏠 Before making this life-changing decision, watch this video! Many first-time home buyers make ",
-    "description": "#budgetpadmanaban #investment #newhouse \n\nEMI-ல சொந்த வீடு வாங்குறது எந்த அளவுக்கு லாபம்? | Budget Padamanban\n\nAre you planning to buy your first house? 🏠 Before making this life-changing decision, watch this video! Many first-time home buyers make ",
+    "descriptionTamil": "#budgetpadmanaban #investment #newhouse \n\nEMI-ல சொந்த வீடு வாங்குறது எந்த அளவுக்கு லாபம்? | Budget Padamanban\n\nAre you planning to buy your first house?  Before making this life-changing decision, watch this video! Many first-time home buyers make ",
+    "descriptionEnglish": "#budgetpadmanaban #investment #newhouse \n\nEMI-ல சொந்த வீடு வாங்குறது எந்த அளவுக்கு லாபம்? | Budget Padamanban\n\nAre you planning to buy your first house?  Before making this life-changing decision, watch this video! Many first-time home buyers make ",
+    "description": "#budgetpadmanaban #investment #newhouse \n\nEMI-ல சொந்த வீடு வாங்குறது எந்த அளவுக்கு லாபம்? | Budget Padamanban\n\nAre you planning to buy your first house?  Before making this life-changing decision, watch this video! Many first-time home buyers make ",
     "category": "mutual-funds",
     "publishedAt": "2025-04-09T12:28:59Z",
     "duration": "01:00",
@@ -9605,9 +9605,9 @@ const videosData = [
     "titleTamil": "சொந்த வீடு Goal-ல இருக்கீங்களா? இந்த Mistakes Avoid பண்ணுங்க! | Budget Padamanban",
     "titleEnglish": "சொந்த வீடு Goal-ல இருக்கீங்களா? இந்த Mistakes Avoid பண்ணுங்க! | Budget Padamanban",
     "title": "சொந்த வீடு Goal-ல இருக்கீங்களா? இந்த Mistakes Avoid பண்ணுங்க! | Budget Padamanban",
-    "descriptionTamil": "#budgetpadmanaban #investment #newhouse \n\nசொந்த வீடு Goal-ல இருக்கீங்களா? இந்த Mistakes Avoid பண்ணுங்க! | Budget Padamanban \n\nAre you planning to buy your first house? 🏠 Before making this life-changing decision, watch this video! Many first-time ho",
-    "descriptionEnglish": "#budgetpadmanaban #investment #newhouse \n\nசொந்த வீடு Goal-ல இருக்கீங்களா? இந்த Mistakes Avoid பண்ணுங்க! | Budget Padamanban \n\nAre you planning to buy your first house? 🏠 Before making this life-changing decision, watch this video! Many first-time ho",
-    "description": "#budgetpadmanaban #investment #newhouse \n\nசொந்த வீடு Goal-ல இருக்கீங்களா? இந்த Mistakes Avoid பண்ணுங்க! | Budget Padamanban \n\nAre you planning to buy your first house? 🏠 Before making this life-changing decision, watch this video! Many first-time ho",
+    "descriptionTamil": "#budgetpadmanaban #investment #newhouse \n\nசொந்த வீடு Goal-ல இருக்கீங்களா? இந்த Mistakes Avoid பண்ணுங்க! | Budget Padamanban \n\nAre you planning to buy your first house?  Before making this life-changing decision, watch this video! Many first-time ho",
+    "descriptionEnglish": "#budgetpadmanaban #investment #newhouse \n\nசொந்த வீடு Goal-ல இருக்கீங்களா? இந்த Mistakes Avoid பண்ணுங்க! | Budget Padamanban \n\nAre you planning to buy your first house?  Before making this life-changing decision, watch this video! Many first-time ho",
+    "description": "#budgetpadmanaban #investment #newhouse \n\nசொந்த வீடு Goal-ல இருக்கீங்களா? இந்த Mistakes Avoid பண்ணுங்க! | Budget Padamanban \n\nAre you planning to buy your first house?  Before making this life-changing decision, watch this video! Many first-time ho",
     "category": "mutual-funds",
     "publishedAt": "2025-04-08T15:22:48Z",
     "duration": "09:25",
@@ -9921,12 +9921,12 @@ const videosData = [
     "channelHandle": "@budgetpadmanaban_",
     "channelUrl": "https://www.youtube.com/@budgetpadmanaban_",
     "channelName": "Budget Padmanaban",
-    "titleTamil": "23 வயதில் மாசம் ₹2000 முதலீடு = 100 வயது வரை Pension + ₹25 கோடி! 😲🔥 | Budget Padmanaban",
-    "titleEnglish": "23 வயதில் மாசம் ₹2000 முதலீடு = 100 வயது வரை Pension + ₹25 கோடி! 😲🔥 | Budget Padmanaban",
-    "title": "23 வயதில் மாசம் ₹2000 முதலீடு = 100 வயது வரை Pension + ₹25 கோடி! 😲🔥 | Budget Padmanaban",
-    "descriptionTamil": "23 வயதில் மாசம் ₹2000 முதலீடு = 100 வயது வரை Pension + ₹25 கோடி! 😲🔥 | Budget Padmanaban\n\n#expenses #savings #budgetpadmanaban \n\nFollow me on social media for more updates:\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\nInstagram: ht",
-    "descriptionEnglish": "23 வயதில் மாசம் ₹2000 முதலீடு = 100 வயது வரை Pension + ₹25 கோடி! 😲🔥 | Budget Padmanaban\n\n#expenses #savings #budgetpadmanaban \n\nFollow me on social media for more updates:\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\nInstagram: ht",
-    "description": "23 வயதில் மாசம் ₹2000 முதலீடு = 100 வயது வரை Pension + ₹25 கோடி! 😲🔥 | Budget Padmanaban\n\n#expenses #savings #budgetpadmanaban \n\nFollow me on social media for more updates:\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\nInstagram: ht",
+    "titleTamil": "23 வயதில் மாசம் ₹2000 முதலீடு = 100 வயது வரை Pension + ₹25 கோடி! | Budget Padmanaban",
+    "titleEnglish": "23 வயதில் மாசம் ₹2000 முதலீடு = 100 வயது வரை Pension + ₹25 கோடி! | Budget Padmanaban",
+    "title": "23 வயதில் மாசம் ₹2000 முதலீடு = 100 வயது வரை Pension + ₹25 கோடி! | Budget Padmanaban",
+    "descriptionTamil": "23 வயதில் மாசம் ₹2000 முதலீடு = 100 வயது வரை Pension + ₹25 கோடி! | Budget Padmanaban\n\n#expenses #savings #budgetpadmanaban \n\nFollow me on social media for more updates:\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\nInstagram: ht",
+    "descriptionEnglish": "23 வயதில் மாசம் ₹2000 முதலீடு = 100 வயது வரை Pension + ₹25 கோடி! | Budget Padmanaban\n\n#expenses #savings #budgetpadmanaban \n\nFollow me on social media for more updates:\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\nInstagram: ht",
+    "description": "23 வயதில் மாசம் ₹2000 முதலீடு = 100 வயது வரை Pension + ₹25 கோடி! | Budget Padmanaban\n\n#expenses #savings #budgetpadmanaban \n\nFollow me on social media for more updates:\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\nInstagram: ht",
     "category": "mutual-funds",
     "publishedAt": "2025-03-29T14:51:42Z",
     "duration": "01:00",
@@ -10559,12 +10559,12 @@ const videosData = [
     "channelHandle": "@budgetpadmanaban_",
     "channelUrl": "https://www.youtube.com/@budgetpadmanaban_",
     "channelName": "Budget Padmanaban",
-    "titleTamil": "Mutual Fund-ல செய்ய வேண்டிய & செய்யக்கூடாத விஷயங்கள்! 🚀 | Budget Padmanaban x Keshav",
-    "titleEnglish": "Mutual Fund-ல செய்ய வேண்டிய & செய்யக்கூடாத விஷயங்கள்! 🚀 | Budget Padmanaban x Keshav",
-    "title": "Mutual Fund-ல செய்ய வேண்டிய & செய்யக்கூடாத விஷயங்கள்! 🚀 | Budget Padmanaban x Keshav",
-    "descriptionTamil": "#budgetpadmanaban #sip #smallcap \n\nMutual Fund-ல செய்ய வேண்டிய & செய்யக்கூடாத விஷயங்கள்! 🚀 | Budget Padmanaban x Keshav\n\nIn this video, we explore the **10-year SIP investment strategy**, the impact of **rising Small Cap Valuation**, and how to make",
-    "descriptionEnglish": "#budgetpadmanaban #sip #smallcap \n\nMutual Fund-ல செய்ய வேண்டிய & செய்யக்கூடாத விஷயங்கள்! 🚀 | Budget Padmanaban x Keshav\n\nIn this video, we explore the **10-year SIP investment strategy**, the impact of **rising Small Cap Valuation**, and how to make",
-    "description": "#budgetpadmanaban #sip #smallcap \n\nMutual Fund-ல செய்ய வேண்டிய & செய்யக்கூடாத விஷயங்கள்! 🚀 | Budget Padmanaban x Keshav\n\nIn this video, we explore the **10-year SIP investment strategy**, the impact of **rising Small Cap Valuation**, and how to make",
+    "titleTamil": "Mutual Fund-ல செய்ய வேண்டிய & செய்யக்கூடாத விஷயங்கள்! | Budget Padmanaban x Keshav",
+    "titleEnglish": "Mutual Fund-ல செய்ய வேண்டிய & செய்யக்கூடாத விஷயங்கள்! | Budget Padmanaban x Keshav",
+    "title": "Mutual Fund-ல செய்ய வேண்டிய & செய்யக்கூடாத விஷயங்கள்! | Budget Padmanaban x Keshav",
+    "descriptionTamil": "#budgetpadmanaban #sip #smallcap \n\nMutual Fund-ல செய்ய வேண்டிய & செய்யக்கூடாத விஷயங்கள்! | Budget Padmanaban x Keshav\n\nIn this video, we explore the **10-year SIP investment strategy**, the impact of **rising Small Cap Valuation**, and how to make",
+    "descriptionEnglish": "#budgetpadmanaban #sip #smallcap \n\nMutual Fund-ல செய்ய வேண்டிய & செய்யக்கூடாத விஷயங்கள்! | Budget Padmanaban x Keshav\n\nIn this video, we explore the **10-year SIP investment strategy**, the impact of **rising Small Cap Valuation**, and how to make",
+    "description": "#budgetpadmanaban #sip #smallcap \n\nMutual Fund-ல செய்ய வேண்டிய & செய்யக்கூடாத விஷயங்கள்! | Budget Padmanaban x Keshav\n\nIn this video, we explore the **10-year SIP investment strategy**, the impact of **rising Small Cap Valuation**, and how to make",
     "category": "mutual-funds",
     "publishedAt": "2025-03-05T12:30:57Z",
     "duration": "18:34",
@@ -24685,9 +24685,9 @@ const videosData = [
     "titleTamil": "Short Term-ல 1 கோடி சேர்க்கணுமா? இத Follow பண்ணுங்க.. | Padmanaban",
     "titleEnglish": "Short Term-ல 1 கோடி சேர்க்கணுமா? இத Follow பண்ணுங்க.. | Padmanaban",
     "title": "Short Term-ல 1 கோடி சேர்க்கணுமா? இத Follow பண்ணுங்க.. | Padmanaban",
-    "descriptionTamil": "ransform Rs.1,000 Monthly into 1 Crore! in 24 Years💰 Unleash the Power of Compounding - Start Early, Build Wealth! 🚀 Learn the Simple SIP Top Strategy for Financial Success!\n\n#Investing #WealthCreation #sip #investment #savings #mutualfunds #moneyp",
-    "descriptionEnglish": "ransform Rs.1,000 Monthly into 1 Crore! in 24 Years💰 Unleash the Power of Compounding - Start Early, Build Wealth! 🚀 Learn the Simple SIP Top Strategy for Financial Success!\n\n#Investing #WealthCreation #sip #investment #savings #mutualfunds #moneyp",
-    "description": "ransform Rs.1,000 Monthly into 1 Crore! in 24 Years💰 Unleash the Power of Compounding - Start Early, Build Wealth! 🚀 Learn the Simple SIP Top Strategy for Financial Success!\n\n#Investing #WealthCreation #sip #investment #savings #mutualfunds #moneyp",
+    "descriptionTamil": "ransform Rs.1,000 Monthly into 1 Crore! in 24 YearsUnleash the Power of Compounding - Start Early, Build Wealth! Learn the Simple SIP Top Strategy for Financial Success!\n\n#Investing #WealthCreation #sip #investment #savings #mutualfunds #moneyp",
+    "descriptionEnglish": "ransform Rs.1,000 Monthly into 1 Crore! in 24 YearsUnleash the Power of Compounding - Start Early, Build Wealth! Learn the Simple SIP Top Strategy for Financial Success!\n\n#Investing #WealthCreation #sip #investment #savings #mutualfunds #moneyp",
+    "description": "ransform Rs.1,000 Monthly into 1 Crore! in 24 YearsUnleash the Power of Compounding - Start Early, Build Wealth! Learn the Simple SIP Top Strategy for Financial Success!\n\n#Investing #WealthCreation #sip #investment #savings #mutualfunds #moneyp",
     "category": "shorts",
     "publishedAt": "2024-03-25T15:30:04Z",
     "duration": "21:05",
@@ -24888,9 +24888,9 @@ const videosData = [
     "titleTamil": "8-வது அதிசயம்! Power of Compounding | Padmanaban",
     "titleEnglish": "8-வது அதிசயம்! Power of Compounding | Padmanaban",
     "title": "8-வது அதிசயம்! Power of Compounding | Padmanaban",
-    "descriptionTamil": "Unlock the 8th Wonder! 💰 Einstein's Secret Revealed: The Power of Compounding Unleashed! 🚀 Watch how a single rice paddy doubles and conquers kingdoms! 💎 Your wealth's journey starts here. 💸\n\n#compounding #powerofcompounding #savings #investments",
-    "descriptionEnglish": "Unlock the 8th Wonder! 💰 Einstein's Secret Revealed: The Power of Compounding Unleashed! 🚀 Watch how a single rice paddy doubles and conquers kingdoms! 💎 Your wealth's journey starts here. 💸\n\n#compounding #powerofcompounding #savings #investments",
-    "description": "Unlock the 8th Wonder! 💰 Einstein's Secret Revealed: The Power of Compounding Unleashed! 🚀 Watch how a single rice paddy doubles and conquers kingdoms! 💎 Your wealth's journey starts here. 💸\n\n#compounding #powerofcompounding #savings #investments",
+    "descriptionTamil": "Unlock the 8th Wonder! Einstein's Secret Revealed: The Power of Compounding Unleashed! Watch how a single rice paddy doubles and conquers kingdoms! Your wealth's journey starts here. \n\n#compounding #powerofcompounding #savings #investments",
+    "descriptionEnglish": "Unlock the 8th Wonder! Einstein's Secret Revealed: The Power of Compounding Unleashed! Watch how a single rice paddy doubles and conquers kingdoms! Your wealth's journey starts here. \n\n#compounding #powerofcompounding #savings #investments",
+    "description": "Unlock the 8th Wonder! Einstein's Secret Revealed: The Power of Compounding Unleashed! Watch how a single rice paddy doubles and conquers kingdoms! Your wealth's journey starts here. \n\n#compounding #powerofcompounding #savings #investments",
     "category": "mutual-funds",
     "publishedAt": "2024-03-24T08:30:18Z",
     "duration": "01:00",
@@ -24946,9 +24946,9 @@ const videosData = [
     "titleTamil": "செல்வமகள் சேமிப்பு திட்டம் vs Mutual Funds | எது சிறந்த முதலீடு ? | Padmanaban",
     "titleEnglish": "செல்வமகள் சேமிப்பு திட்டம் vs Mutual Funds | எது சிறந்த முதலீடு ? | Padmanaban",
     "title": "செல்வமகள் சேமிப்பு திட்டம் vs Mutual Funds | எது சிறந்த முதலீடு ? | Padmanaban",
-    "descriptionTamil": "Unlock Financial Freedom! 💰 Explore Selvamagal for your girl's future with 8.4% interest OR skyrocket your returns with a dynamic mutual fund reaching up to 15%! 🚀 Maximize flexibility and seize opportunities for your child's bright tomorrow!\n\n#sel",
-    "descriptionEnglish": "Unlock Financial Freedom! 💰 Explore Selvamagal for your girl's future with 8.4% interest OR skyrocket your returns with a dynamic mutual fund reaching up to 15%! 🚀 Maximize flexibility and seize opportunities for your child's bright tomorrow!\n\n#sel",
-    "description": "Unlock Financial Freedom! 💰 Explore Selvamagal for your girl's future with 8.4% interest OR skyrocket your returns with a dynamic mutual fund reaching up to 15%! 🚀 Maximize flexibility and seize opportunities for your child's bright tomorrow!\n\n#sel",
+    "descriptionTamil": "Unlock Financial Freedom! Explore Selvamagal for your girl's future with 8.4% interest OR skyrocket your returns with a dynamic mutual fund reaching up to 15%! Maximize flexibility and seize opportunities for your child's bright tomorrow!\n\n#sel",
+    "descriptionEnglish": "Unlock Financial Freedom! Explore Selvamagal for your girl's future with 8.4% interest OR skyrocket your returns with a dynamic mutual fund reaching up to 15%! Maximize flexibility and seize opportunities for your child's bright tomorrow!\n\n#sel",
+    "description": "Unlock Financial Freedom! Explore Selvamagal for your girl's future with 8.4% interest OR skyrocket your returns with a dynamic mutual fund reaching up to 15%! Maximize flexibility and seize opportunities for your child's bright tomorrow!\n\n#sel",
     "category": "mutual-funds",
     "publishedAt": "2024-03-24T03:30:19Z",
     "duration": "12:02",
@@ -25584,9 +25584,9 @@ const videosData = [
     "titleTamil": "Turn Rs.1500 into 1 Crore in 30 Years? Proof Inside! | Budget Padmanaban",
     "titleEnglish": "Turn Rs.1500 into 1 Crore in 30 Years? Proof Inside! | Budget Padmanaban",
     "title": "Turn Rs.1500 into 1 Crore in 30 Years? Proof Inside! | Budget Padmanaban",
-    "descriptionTamil": "Turn Rs.1500 into 1 Crore in 30 Years? Proof Inside! 💰✨ 📈 Uncover the Power of Long-Term Investing! | Padmanaban\n\n#FinancialSuccess #InvestmentJourney #mutualfunds #mutualfundssahihai #mutualfund #investing #compounding \n\nDisclaimer: Please note th",
-    "descriptionEnglish": "Turn Rs.1500 into 1 Crore in 30 Years? Proof Inside! 💰✨ 📈 Uncover the Power of Long-Term Investing! | Padmanaban\n\n#FinancialSuccess #InvestmentJourney #mutualfunds #mutualfundssahihai #mutualfund #investing #compounding \n\nDisclaimer: Please note th",
-    "description": "Turn Rs.1500 into 1 Crore in 30 Years? Proof Inside! 💰✨ 📈 Uncover the Power of Long-Term Investing! | Padmanaban\n\n#FinancialSuccess #InvestmentJourney #mutualfunds #mutualfundssahihai #mutualfund #investing #compounding \n\nDisclaimer: Please note th",
+    "descriptionTamil": "Turn Rs.1500 into 1 Crore in 30 Years? Proof Inside! Uncover the Power of Long-Term Investing! | Padmanaban\n\n#FinancialSuccess #InvestmentJourney #mutualfunds #mutualfundssahihai #mutualfund #investing #compounding \n\nDisclaimer: Please note th",
+    "descriptionEnglish": "Turn Rs.1500 into 1 Crore in 30 Years? Proof Inside! Uncover the Power of Long-Term Investing! | Padmanaban\n\n#FinancialSuccess #InvestmentJourney #mutualfunds #mutualfundssahihai #mutualfund #investing #compounding \n\nDisclaimer: Please note th",
+    "description": "Turn Rs.1500 into 1 Crore in 30 Years? Proof Inside! Uncover the Power of Long-Term Investing! | Padmanaban\n\n#FinancialSuccess #InvestmentJourney #mutualfunds #mutualfundssahihai #mutualfund #investing #compounding \n\nDisclaimer: Please note th",
     "category": "mutual-funds",
     "publishedAt": "2024-01-17T12:30:24Z",
     "duration": "01:00",
@@ -25639,12 +25639,12 @@ const videosData = [
     "channelHandle": "@budgetpadmanaban_",
     "channelUrl": "https://www.youtube.com/@budgetpadmanaban_",
     "channelName": "Budget Padmanaban",
-    "titleTamil": "Luxury Wedding 💍 or Bright Future ? | Budget Padmanaban",
-    "titleEnglish": "Luxury Wedding 💍 or Bright Future ? | Budget Padmanaban",
-    "title": "Luxury Wedding 💍 or Bright Future ? | Budget Padmanaban",
-    "descriptionTamil": "Luxury Wedding 💍 or Bright Future 🌟? Invest 10 lakhs wisely, secure your child's education from school to graduation! 📚💰\n\n⚠️: 10 Lakhs will become 20 lakhs at the rate of 15%, no guarantee in MF. But possibilities are there.\n\n#wedding #photograph",
-    "descriptionEnglish": "Luxury Wedding 💍 or Bright Future 🌟? Invest 10 lakhs wisely, secure your child's education from school to graduation! 📚💰\n\n⚠️: 10 Lakhs will become 20 lakhs at the rate of 15%, no guarantee in MF. But possibilities are there.\n\n#wedding #photograph",
-    "description": "Luxury Wedding 💍 or Bright Future 🌟? Invest 10 lakhs wisely, secure your child's education from school to graduation! 📚💰\n\n⚠️: 10 Lakhs will become 20 lakhs at the rate of 15%, no guarantee in MF. But possibilities are there.\n\n#wedding #photograph",
+    "titleTamil": "Luxury Wedding or Bright Future ? | Budget Padmanaban",
+    "titleEnglish": "Luxury Wedding or Bright Future ? | Budget Padmanaban",
+    "title": "Luxury Wedding or Bright Future ? | Budget Padmanaban",
+    "descriptionTamil": "Luxury Wedding or Bright Future ? Invest 10 lakhs wisely, secure your child's education from school to graduation! \n\n: 10 Lakhs will become 20 lakhs at the rate of 15%, no guarantee in MF. But possibilities are there.\n\n#wedding #photograph",
+    "descriptionEnglish": "Luxury Wedding or Bright Future ? Invest 10 lakhs wisely, secure your child's education from school to graduation! \n\n: 10 Lakhs will become 20 lakhs at the rate of 15%, no guarantee in MF. But possibilities are there.\n\n#wedding #photograph",
+    "description": "Luxury Wedding or Bright Future ? Invest 10 lakhs wisely, secure your child's education from school to graduation! \n\n: 10 Lakhs will become 20 lakhs at the rate of 15%, no guarantee in MF. But possibilities are there.\n\n#wedding #photograph",
     "category": "mutual-funds",
     "publishedAt": "2024-01-16T12:30:34Z",
     "duration": "12:14",
@@ -25671,9 +25671,9 @@ const videosData = [
     "titleTamil": "Start Saving Before Spending! | 2024 | Budget Padmanaban",
     "titleEnglish": "Start Saving Before Spending! | 2024 | Budget Padmanaban",
     "title": "Start Saving Before Spending! | 2024 | Budget Padmanaban",
-    "descriptionTamil": "Switch It Up in 2024: Start Saving Before Spending! 💸✨ Make Savings Your First Move for a Wealthy Year Ahead!\n\n#newyear #newyear2024 #newyearresolution #finance #financialresolution #padmanaban #budgetpadmanaban \n\nDisclaimer: Please note that invest",
-    "descriptionEnglish": "Switch It Up in 2024: Start Saving Before Spending! 💸✨ Make Savings Your First Move for a Wealthy Year Ahead!\n\n#newyear #newyear2024 #newyearresolution #finance #financialresolution #padmanaban #budgetpadmanaban \n\nDisclaimer: Please note that invest",
-    "description": "Switch It Up in 2024: Start Saving Before Spending! 💸✨ Make Savings Your First Move for a Wealthy Year Ahead!\n\n#newyear #newyear2024 #newyearresolution #finance #financialresolution #padmanaban #budgetpadmanaban \n\nDisclaimer: Please note that invest",
+    "descriptionTamil": "Switch It Up in 2024: Start Saving Before Spending! Make Savings Your First Move for a Wealthy Year Ahead!\n\n#newyear #newyear2024 #newyearresolution #finance #financialresolution #padmanaban #budgetpadmanaban \n\nDisclaimer: Please note that invest",
+    "descriptionEnglish": "Switch It Up in 2024: Start Saving Before Spending! Make Savings Your First Move for a Wealthy Year Ahead!\n\n#newyear #newyear2024 #newyearresolution #finance #financialresolution #padmanaban #budgetpadmanaban \n\nDisclaimer: Please note that invest",
+    "description": "Switch It Up in 2024: Start Saving Before Spending! Make Savings Your First Move for a Wealthy Year Ahead!\n\n#newyear #newyear2024 #newyearresolution #finance #financialresolution #padmanaban #budgetpadmanaban \n\nDisclaimer: Please note that invest",
     "category": "mutual-funds",
     "publishedAt": "2024-01-16T09:30:06Z",
     "duration": "15:27",
@@ -25700,9 +25700,9 @@ const videosData = [
     "titleTamil": "Transform Rs.1,500 Monthly into 1 Crore! | Padmanaban",
     "titleEnglish": "Transform Rs.1,500 Monthly into 1 Crore! | Padmanaban",
     "title": "Transform Rs.1,500 Monthly into 1 Crore! | Padmanaban",
-    "descriptionTamil": "Transform Rs.1,500 Monthly into 1 Crore! 💰 Unleash the Power of Compounding - Start Early, Build Wealth! 🚀 Learn the Simple SIP Strategy for Financial Success!\n\n#Investing #WealthCreation #sip #investment #savings #mutualfunds #moneypechu #nanayamv",
-    "descriptionEnglish": "Transform Rs.1,500 Monthly into 1 Crore! 💰 Unleash the Power of Compounding - Start Early, Build Wealth! 🚀 Learn the Simple SIP Strategy for Financial Success!\n\n#Investing #WealthCreation #sip #investment #savings #mutualfunds #moneypechu #nanayamv",
-    "description": "Transform Rs.1,500 Monthly into 1 Crore! 💰 Unleash the Power of Compounding - Start Early, Build Wealth! 🚀 Learn the Simple SIP Strategy for Financial Success!\n\n#Investing #WealthCreation #sip #investment #savings #mutualfunds #moneypechu #nanayamv",
+    "descriptionTamil": "Transform Rs.1,500 Monthly into 1 Crore! Unleash the Power of Compounding - Start Early, Build Wealth! Learn the Simple SIP Strategy for Financial Success!\n\n#Investing #WealthCreation #sip #investment #savings #mutualfunds #moneypechu #nanayamv",
+    "descriptionEnglish": "Transform Rs.1,500 Monthly into 1 Crore! Unleash the Power of Compounding - Start Early, Build Wealth! Learn the Simple SIP Strategy for Financial Success!\n\n#Investing #WealthCreation #sip #investment #savings #mutualfunds #moneypechu #nanayamv",
+    "description": "Transform Rs.1,500 Monthly into 1 Crore! Unleash the Power of Compounding - Start Early, Build Wealth! Learn the Simple SIP Strategy for Financial Success!\n\n#Investing #WealthCreation #sip #investment #savings #mutualfunds #moneypechu #nanayamv",
     "category": "mutual-funds",
     "publishedAt": "2024-01-16T07:40:34Z",
     "duration": "18:40",
@@ -26882,7 +26882,7 @@ function Header({ onOpenSearch, onNavigate }) {
         <div className="hidden sm:flex items-center gap-2 min-w-[140px] md:min-w-[170px] shrink-0">
           <span className="inline-flex items-center gap-2 px-3 py-1 text-xs font-bold rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/25 shadow-sm">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span>👋 {t('welcome')}</span>
+            <span>{t('welcome')}</span>
           </span>
         </div>
 
@@ -26940,7 +26940,7 @@ function Header({ onOpenSearch, onNavigate }) {
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                   </svg>
                 ) : (
-                  <span>🚪</span>
+                  <span></span>
                 )}
                 <span>{language === 'ta' ? 'வெளியேறு' : 'Logout'}</span>
               </button>
@@ -26953,7 +26953,7 @@ function Header({ onOpenSearch, onNavigate }) {
               }}
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-amber-600 hover:bg-amber-500 text-white font-extrabold text-xs shadow-md hover:scale-105 transition-all shrink-0"
             >
-              <span>🔑</span>
+              <span></span>
               <span>{language === 'ta' ? 'உள்நுழைக' : 'Sign In'}</span>
             </button>
           )}
@@ -26979,12 +26979,12 @@ function Navbar({ currentPath, onNavigate }) {
   ];
 
   const authNavItems = user ? [
-    { id: 'profile', hash: '#/profile', label: `👤 ${language === 'ta' ? 'சுயவிவரம்' : 'Profile'}` },
+    { id: 'profile', hash: '#/profile', label: `${language === 'ta' ? 'சுயவிவரம்' : 'Profile'}` },
     ...(role === 'admin' ? [
-      { id: 'admin-articles', hash: '#/admin/articles', label: `✍️ ${language === 'ta' ? 'கட்டுரைகள் ஸ்டுடியோ' : 'Article Studio'}` }
+      { id: 'admin-articles', hash: '#/admin/articles', label: `${language === 'ta' ? 'கட்டுரைகள் ஸ்டுடியோ' : 'Article Studio'}` }
     ] : [])
   ] : [
-    { id: 'login', hash: '#/login', label: `🔑 ${language === 'ta' ? 'உள்நுழைக' : 'Sign In'}` }
+    { id: 'login', hash: '#/login', label: `${language === 'ta' ? 'உள்நுழைக' : 'Sign In'}` }
   ];
 
   const navItems = [...baseNavItems, ...authNavItems];
@@ -27250,7 +27250,7 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
                 filterType === 'video' ? 'bg-red-600 text-white' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800'
               }`}
             >
-              <span>📹 Videos</span>
+              <span> Videos</span>
               <span className="px-1.5 py-0.2 rounded-full bg-black/20 text-[10px]">{videoCount}</span>
             </button>
             <button
@@ -27259,7 +27259,7 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
                 filterType === 'article' ? 'bg-blue-600 text-white' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800'
               }`}
             >
-              <span>📰 Articles</span>
+              <span> Articles</span>
               <span className="px-1.5 py-0.2 rounded-full bg-black/20 text-[10px]">{articleCount}</span>
             </button>
           </div>
@@ -27490,7 +27490,7 @@ function HeroSection({ news = newsData, onNavigate }) {
                 {(item.category || 'FINANCE').replace('-', ' ')}
               </span>
               <span className="px-2 py-0.5 rounded-md bg-slate-950/85 text-slate-200 text-[9px] font-mono font-bold backdrop-blur-sm border border-white/15">
-                📅 {formattedDate}
+                {formattedDate}
               </span>
             </div>
 
@@ -27533,7 +27533,7 @@ function HeroSection({ news = newsData, onNavigate }) {
               </h2>
             </div>
             <span className="text-[10px] font-mono text-amber-400/90 font-bold bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
-              ⚡ LIVE NEWS TICKER
+              LIVE NEWS TICKER
             </span>
           </div>
 
@@ -27557,7 +27557,7 @@ function HeroSection({ news = newsData, onNavigate }) {
               </h3>
             </div>
             <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full">
-              🔥 Latest
+              Latest
             </span>
           </div>
 
@@ -27624,7 +27624,7 @@ function TrendingArticlesSection({ onNavigate }) {
           </h2>
         </div>
         <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2.5 py-0.5 rounded-full">
-          🔥 Trending
+          Trending
         </span>
       </div>
 
@@ -27896,7 +27896,7 @@ function SipCalculator() {
       titleEnglish: 'SIP Calculator',
       subtitleTamil: 'மாதாந்திர முறையான முதலீடு',
       subtitleEnglish: 'Monthly Systematic Investment',
-      icon: '📊',
+      icon: '',
       badge: isTamil ? 'பிரபலம்' : 'POPULAR'
     },
     {
@@ -27905,7 +27905,7 @@ function SipCalculator() {
       titleEnglish: 'Lump Sum Calculator',
       subtitleTamil: 'ஒரே முறை முதலீட்டு வளர்ச்சி',
       subtitleEnglish: 'One-Time Investment Growth',
-      icon: '💰',
+      icon: '',
       badge: isTamil ? 'எளிது' : 'SIMPLE'
     },
     {
@@ -27914,7 +27914,7 @@ function SipCalculator() {
       titleEnglish: 'Returns Calculator',
       subtitleTamil: 'ஆண்டு முதலீட்டு உயர்வு (+10%)',
       subtitleEnglish: 'Step-Up Annual Incremental Growth',
-      icon: '🚀',
+      icon: '',
       badge: isTamil ? 'அதிவேக வளர்ச்சி' : 'HIGH GROWTH'
     },
     {
@@ -27923,7 +27923,7 @@ function SipCalculator() {
       titleEnglish: 'Compound Interest',
       subtitleTamil: 'கூட்டு வட்டியின் அபார வளர்ச்சி',
       subtitleEnglish: 'Power of Compounding Growth',
-      icon: '⚡',
+      icon: '',
       badge: isTamil ? 'செல்வ வளர்ச்சி' : 'WEALTH'
     }
   ];
@@ -27989,7 +27989,7 @@ function SipCalculator() {
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-800 pb-6">
           <div className="space-y-1">
             <h3 className="text-xl sm:text-2xl font-black font-serif text-white flex items-center gap-2">
-              <span className="text-amber-400">⚡</span>
+              <span className="text-amber-400"></span>
               <span>
                 {calcMode === 'sip' && (isTamil ? 'SIP முதலீட்டுக் கணக்கீடு' : 'SIP Returns Calculator')}
                 {calcMode === 'lumpsum' && (isTamil ? 'ஒரே முறை (Lump Sum) முதலீட்டுக் கணக்கீடு' : 'Lump Sum Returns Calculator')}
@@ -28197,7 +28197,7 @@ function NewsCard({ article, onSelect }) {
 
         <div className="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 border-t border-slate-100 dark:border-slate-800 pt-3 font-semibold">
           <span>{formattedDate}</span>
-          <span className="font-mono text-amber-700 dark:text-amber-400">⏱ {article.readTimeMinutes} {t('minRead')}</span>
+          <span className="font-mono text-amber-700 dark:text-amber-400">{article.readTimeMinutes} {t('minRead')}</span>
         </div>
       </div>
     </article>
@@ -28322,7 +28322,7 @@ function SignInCtaBanner({ onNavigate }) {
           <div className="space-y-2 max-w-2xl">
             <div className="flex items-center gap-2">
               <span className="px-2.5 py-0.5 rounded-full bg-amber-500 text-slate-950 font-black text-[10px] tracking-wider uppercase shadow">
-                🔒 {isTamil ? 'உறுப்பினர் அணுகல்' : 'MEMBER ACCESS'}
+                {isTamil ? 'உறுப்பினர் அணுகல்' : 'MEMBER ACCESS'}
               </span>
               <span className="text-[11px] font-mono text-amber-300/80 font-bold">
                 {isTamil ? 'இலவச கணக்கு' : 'FREE ACCOUNT'}
@@ -28375,7 +28375,7 @@ function Toast({ message, onClose }) {
 
   return (
     <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-2xl bg-slate-900 text-white text-xs font-bold shadow-2xl border border-amber-500/40 flex items-center gap-2 animate-bounce">
-      <span className="text-amber-400">✓</span>
+      <span className="text-amber-400"></span>
       <span>{message}</span>
     </div>
   );
@@ -28589,7 +28589,7 @@ function YouTubeVideoFeedCard({ video, viewMode = 'grid', onSelect, onShowToast 
           )}
           {video.isShort && (
             <span className="absolute top-2 left-2 px-2 py-0.5 text-[9px] font-black rounded bg-red-600 text-white flex items-center gap-1 shadow">
-              ⚡ SHORT
+              SHORT
             </span>
           )}
           <div className="absolute inset-0 bg-amber-500/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -28622,7 +28622,7 @@ function YouTubeVideoFeedCard({ video, viewMode = 'grid', onSelect, onShowToast 
                 BP
               </div>
               <span className="font-bold text-slate-700 dark:text-slate-300">Budget Padmanaban</span>
-              <span className="text-blue-500">✓</span>
+              <span className="text-blue-500"></span>
               <span>•</span>
               <span>{formattedViews} {t('views')}</span>
               <span>•</span>
@@ -28677,12 +28677,12 @@ function YouTubeVideoFeedCard({ video, viewMode = 'grid', onSelect, onShowToast 
         )}
         {video.isShort && (
           <span className="absolute top-2 left-2 px-2 py-0.5 text-[9px] font-black rounded bg-red-600 text-white flex items-center gap-1 shadow">
-            ⚡ SHORT
+            SHORT
           </span>
         )}
         {video.trending && (
           <span className="absolute top-2 right-2 px-2 py-0.5 text-[9px] font-black rounded bg-amber-500 text-slate-950 flex items-center gap-1 shadow">
-            🔥 TRENDING
+            TRENDING
           </span>
         )}
         <div className="absolute inset-0 bg-slate-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -28704,7 +28704,7 @@ function YouTubeVideoFeedCard({ video, viewMode = 'grid', onSelect, onShowToast 
             </h3>
             <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 font-medium mt-1">
               <span>Budget Padmanaban</span>
-              <span className="text-blue-500 font-bold" title="Verified Creator">✓</span>
+              <span className="text-blue-500 font-bold" title="Verified Creator"></span>
             </div>
             <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mt-0.5">
               <span>{formattedViews} {t('views')}</span>
@@ -28751,15 +28751,15 @@ function VideosPage({ onNavigate, onShowToast }) {
 
   const categoriesList = [
     { id: 'all', labelTa: 'அனைத்து வீடியோக்கள் (882)', labelEn: 'All Videos (882)' },
-    { id: 'trending', labelTa: '🔥 ட்ரெண்டிங்', labelEn: '🔥 Trending' },
-    { id: 'mutual-funds', labelTa: '💰 மியூச்சுவல் ஃபண்ட் & SIP', labelEn: '💰 Mutual Funds & SIP' },
-    { id: 'stocks', labelTa: '📈 பங்குச் சந்தை (Stocks)', labelEn: '📈 Stock Market' },
-    { id: 'ipo', labelTa: '🚀 IPO அலசல்', labelEn: '🚀 IPO Analysis' },
+    { id: 'trending', labelTa: 'ட்ரெண்டிங்', labelEn: 'Trending' },
+    { id: 'mutual-funds', labelTa: 'மியூச்சுவல் ஃபண்ட் & SIP', labelEn: 'Mutual Funds & SIP' },
+    { id: 'stocks', labelTa: 'பங்குச் சந்தை (Stocks)', labelEn: 'Stock Market' },
+    { id: 'ipo', labelTa: 'IPO அலசல்', labelEn: 'IPO Analysis' },
     { id: 'gold-bonds', labelTa: '🪙 தங்கம் & SGB', labelEn: '🪙 Gold & SGB Bonds' },
-    { id: 'tax-saving', labelTa: '📑 வரி சேமிப்பு (Tax)', labelEn: '📑 Tax Planning' },
-    { id: 'retirement', labelTa: '🏖️ ஓய்வூதியம் (NPS / EPF)', labelEn: '🏖️ Retirement & NPS' },
-    { id: 'personal-finance', labelTa: '💡 தனிநபர் நிதி & சேமிப்பு', labelEn: '💡 Personal Finance' },
-    { id: 'shorts', labelTa: '⚡ Shorts (60s)', labelEn: '⚡ Shorts' }
+    { id: 'tax-saving', labelTa: ' வரி சேமிப்பு (Tax)', labelEn: ' Tax Planning' },
+    { id: 'retirement', labelTa: ' ஓய்வூதியம் (NPS / EPF)', labelEn: ' Retirement & NPS' },
+    { id: 'personal-finance', labelTa: 'தனிநபர் நிதி & சேமிப்பு', labelEn: 'Personal Finance' },
+    { id: 'shorts', labelTa: 'Shorts (60s)', labelEn: 'Shorts' }
   ];
 
   // Filter & Sort across the full 882 dataset
@@ -28823,7 +28823,7 @@ function VideosPage({ onNavigate, onShowToast }) {
                 </div>
               </div>
               <div className="absolute -bottom-1 -right-1 w-7 h-7 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-black shadow border-2 border-slate-950" title="Verified Channel">
-                ✓
+                
               </div>
             </div>
 
@@ -28921,7 +28921,7 @@ function VideosPage({ onNavigate, onShowToast }) {
                 onClick={() => setSearchQuery('')}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
               >
-                ✕
+                
               </button>
             )}
           </div>
@@ -28983,7 +28983,7 @@ function VideosPage({ onNavigate, onShowToast }) {
         {displayedVideos.length === 0 ? (
           <div className="py-20 text-center space-y-3 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800">
             <div className="w-16 h-16 rounded-full bg-amber-500/10 text-amber-600 flex items-center justify-center mx-auto text-2xl">
-              🔍
+              
             </div>
             <h3 className="text-lg font-bold text-slate-900 dark:text-white">
               {language === 'ta' ? 'வீடியோக்கள் எதுவும் கிடைக்கவில்லை' : 'No Videos Found'}
@@ -29122,7 +29122,7 @@ function VideoDetailsPage({ videoId, onNavigate, onShowToast }) {
               <span>•</span>
               <span>{t('publishedAt')}: {formattedDate}</span>
               <span>•</span>
-              <span className="font-mono text-amber-700 dark:text-amber-400">⏱ {video.duration || (video.isShort ? 'Short' : '10:00')}</span>
+              <span className="font-mono text-amber-700 dark:text-amber-400">{video.duration || (video.isShort ? 'Short' : '10:00')}</span>
             </div>
             <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-medium">{video.description}</p>
           </div>
@@ -29338,13 +29338,13 @@ function AuthPage({ initialMode = 'login', onNavigate }) {
 
           {error && (
             <div className="p-3 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-600 text-xs font-bold mb-4">
-              ⚠️ {error}
+              {error}
             </div>
           )}
 
           {success && (
             <div className="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 text-xs font-bold mb-4">
-              ✓ {success}
+              {success}
             </div>
           )}
 
@@ -29496,7 +29496,7 @@ function ProfilePage({ onNavigate, onShowToast }) {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-md space-y-2">
-          <div className="text-amber-500 text-2xl font-black">📺</div>
+          <div className="text-amber-500 text-2xl font-black"></div>
           <h3 className="text-sm font-bold text-slate-900 dark:text-white">{isTamil ? 'பார்த்த வரலாறுகள்' : 'Watch History'}</h3>
           <p className="text-xs text-slate-500 dark:text-slate-400">{isTamil ? 'சமீபத்திய வீடியோக்கள்' : 'Track videos you recently watched'}</p>
           <button onClick={() => onNavigate('#/history')} className="text-xs font-extrabold text-amber-600 hover:underline pt-2 inline-block">
@@ -29505,7 +29505,7 @@ function ProfilePage({ onNavigate, onShowToast }) {
         </div>
 
         <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-md space-y-2">
-          <div className="text-amber-500 text-2xl font-black">🛡️</div>
+          <div className="text-amber-500 text-2xl font-black"></div>
           <h3 className="text-sm font-bold text-slate-900 dark:text-white">{isTamil ? 'பாதுகாப்பு & கணக்கு' : 'Security & Account'}</h3>
           <p className="text-xs text-slate-500 dark:text-slate-400">{isTamil ? 'கடவுச்சொல் &Supabase Auth' : 'Protected via Supabase Auth'}</p>
           <button onClick={() => onNavigate('#/forgot-password')} className="text-xs font-extrabold text-amber-600 hover:underline pt-2 inline-block">
@@ -29514,10 +29514,10 @@ function ProfilePage({ onNavigate, onShowToast }) {
         </div>
 
         <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-md space-y-2">
-          <div className="text-amber-500 text-2xl font-black">🌐</div>
+          <div className="text-amber-500 text-2xl font-black"></div>
           <h3 className="text-sm font-bold text-slate-900 dark:text-white">{isTamil ? 'விருப்பங்கள்' : 'Device Preferences'}</h3>
           <p className="text-xs text-slate-500 dark:text-slate-400">{isTamil ? 'தமிழ் / English & தீம்' : 'Bilingual Language & Theme'}</p>
-          <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 pt-2 inline-block">✓ Active</span>
+          <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 pt-2 inline-block">Active</span>
         </div>
       </div>
     </div>
@@ -29550,7 +29550,7 @@ function WatchHistoryPage({ onNavigate, onShowToast }) {
         </div>
       ) : (
         <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-8 space-y-4">
-          <div className="text-4xl">🎬</div>
+          <div className="text-4xl"></div>
           <h3 className="text-lg font-bold text-slate-900 dark:text-white">
             {isTamil ? 'வரலாறுகள் ஏதும் இல்லை' : 'No Watch History Yet'}
           </h3>
@@ -29608,7 +29608,7 @@ function AdminConsolePage({ onNavigate, onShowToast }) {
           onClick={() => onNavigate('#/admin/articles')}
           className="px-6 py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs shadow-lg hover:scale-105 transition-all flex items-center gap-2 shrink-0"
         >
-          <span>✍️</span>
+          <span></span>
           <span>{isTamil ? 'கட்டுரைகள் ஸ்டுடியோ (Articles Studio)' : 'Open Articles Studio'}</span>
         </button>
       </div>
@@ -29617,19 +29617,19 @@ function AdminConsolePage({ onNavigate, onShowToast }) {
         <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-md space-y-2">
           <div className="text-xs font-bold text-slate-400 uppercase">YouTube Channel</div>
           <div className="text-xl font-black text-slate-900 dark:text-white">@budgetpadmanaban_</div>
-          <div className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold">✓ Ingestion Engine Active</div>
+          <div className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold">Ingestion Engine Active</div>
         </div>
 
         <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-md space-y-2">
           <div className="text-xs font-bold text-slate-400 uppercase">Database Region</div>
           <div className="text-xl font-black text-slate-900 dark:text-white">Supabase AP-South-1</div>
-          <div className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold">✓ Connection Pooler (6543)</div>
+          <div className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold">Connection Pooler (6543)</div>
         </div>
 
         <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-md space-y-2">
           <div className="text-xs font-bold text-slate-400 uppercase">Articles Storage</div>
           <div className="text-xl font-black text-slate-900 dark:text-white">Supabase Storage</div>
-          <div className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold">✓ article-covers bucket</div>
+          <div className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold">article-covers bucket</div>
         </div>
       </div>
 
@@ -29647,7 +29647,7 @@ function AdminConsolePage({ onNavigate, onShowToast }) {
             disabled={isSyncing}
             className="px-6 py-3 rounded-2xl bg-gradient-to-r from-red-600 to-amber-600 text-white font-extrabold text-xs shadow-lg hover:scale-105 transition-all disabled:opacity-50"
           >
-            {isSyncing ? 'Syncing Channel Videos...' : '🔄 Run Full YouTube Sync'}
+            {isSyncing ? 'Syncing Channel Videos...' : ' Run Full YouTube Sync'}
           </button>
         </div>
 
@@ -29739,10 +29739,10 @@ function RichTextEditor({
         <button type="button" onClick={() => execute('insertOrderedList')} title="Numbered List" className="px-2 py-1 font-bold rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300">1. List</button>
         <button type="button" onClick={() => handleFormatBlock('<blockquote>')} title="Quote Block" className="px-2 py-1 font-serif font-black rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300">“ Quote</button>
         <span className="w-px h-4 bg-slate-300 dark:bg-slate-700 mx-1" />
-        <button type="button" onClick={handleInsertLink} title="Insert Link" className="px-2 py-1 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-amber-600 dark:text-amber-400 font-bold">🔗 Link</button>
-        <button type="button" onClick={handleInsertImage} title="Insert Image" className="px-2 py-1 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold">🖼️ Image</button>
+        <button type="button" onClick={handleInsertLink} title="Insert Link" className="px-2 py-1 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-amber-600 dark:text-amber-400 font-bold">Link</button>
+        <button type="button" onClick={handleInsertImage} title="Insert Image" className="px-2 py-1 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold">Image</button>
         <span className="w-px h-4 bg-slate-300 dark:bg-slate-700 mx-1" />
-        <button type="button" onClick={() => execute('removeFormat')} title="Clear Formatting" className="px-2 py-1 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-500 text-[11px]">🧹 Clean</button>
+        <button type="button" onClick={() => execute('removeFormat')} title="Clear Formatting" className="px-2 py-1 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-500 text-[11px]">Clean</button>
       </div>
 
       <div
@@ -29757,7 +29757,7 @@ function RichTextEditor({
 
       <div className="flex items-center justify-between px-4 py-2 bg-slate-50/50 dark:bg-slate-950/40 border-t border-slate-100 dark:border-slate-800/80 text-[11px] text-slate-400 font-medium font-mono">
         <span>{isTamil ? `${wordCount} சொற்கள்` : `${wordCount} words`} • {charCount} chars</span>
-        <span>⏱ ~{Math.max(1, Math.ceil(wordCount / (isTamil ? 130 : 180)))} {isTamil ? 'நிமிடம் வாசிக்க' : 'min read'}</span>
+        <span>~{Math.max(1, Math.ceil(wordCount / (isTamil ? 130 : 180)))} {isTamil ? 'நிமிடம் வாசிக்க' : 'min read'}</span>
       </div>
     </div>
   );
@@ -29777,10 +29777,10 @@ function ArticlesPage({ onNavigate, onShowToast }) {
 
   const categories = [
     { id: 'all', labelTa: 'அனைத்து கட்டுரைகள்', labelEn: 'All Articles' },
-    { id: 'mutual-fund', labelTa: '💰 மியூச்சுவல் ஃபண்ட்', labelEn: '💰 Mutual Funds' },
-    { id: 'stock-market', labelTa: '📈 பங்குச் சந்தை', labelEn: '📈 Stock Market' },
-    { id: 'personal-finance', labelTa: '💡 தனிநபர் நிதி & SIP', labelEn: '💡 Personal Finance' },
-    { id: 'financial-education', labelTa: '🎓 நிதி அறிவு & வழிகாட்டி', labelEn: '🎓 Financial Education' }
+    { id: 'mutual-fund', labelTa: 'மியூச்சுவல் ஃபண்ட்', labelEn: 'Mutual Funds' },
+    { id: 'stock-market', labelTa: 'பங்குச் சந்தை', labelEn: 'Stock Market' },
+    { id: 'personal-finance', labelTa: 'தனிநபர் நிதி & SIP', labelEn: 'Personal Finance' },
+    { id: 'financial-education', labelTa: 'நிதி அறிவு & வழிகாட்டி', labelEn: 'Financial Education' }
   ];
 
   useEffect(() => {
@@ -29864,7 +29864,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
               className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white placeholder-slate-400 text-xs sm:text-sm font-medium focus:outline-none focus:border-amber-500"
             />
             {searchQuery && (
-              <button onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">✕</button>
+              <button onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"></button>
             )}
           </div>
 
@@ -29891,11 +29891,11 @@ function ArticlesPage({ onNavigate, onShowToast }) {
           </div>
         ) : error ? (
           <div className="p-8 text-center bg-red-500/10 rounded-3xl border border-red-500/30 text-red-600 text-xs font-bold max-w-lg mx-auto">
-            ⚠️ {error}
+            {error}
           </div>
         ) : articles.length === 0 ? (
           <div className="py-20 text-center space-y-3 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-8">
-            <div className="text-4xl">📰</div>
+            <div className="text-4xl"></div>
             <h3 className="text-lg font-bold text-slate-900 dark:text-white">
               {isTamil ? 'கட்டுரைகள் எதுவும் கிடைக்கவில்லை' : 'No Articles Found'}
             </h3>
@@ -29931,7 +29931,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                         {(article.category || 'FINANCE').replace('-', ' ')}
                       </span>
                       <span className="absolute top-3 right-3 px-2 py-0.5 text-[9px] font-black uppercase rounded-md bg-amber-600 text-white">
-                        ✍️ ORIGINAL
+                         ORIGINAL
                       </span>
                     </div>
 
@@ -29957,7 +29957,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                     <div className="flex items-center gap-3">
                       <span>{formattedDate}</span>
                       <span className="font-mono text-amber-600 dark:text-amber-400 font-bold">
-                        ⏱ {article.readTimeMinutes} {isTamil ? 'நிமிடம்' : 'min'}
+                        {article.readTimeMinutes} {isTamil ? 'நிமிடம்' : 'min'}
                       </span>
                     </div>
                   </div>
@@ -30089,7 +30089,7 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
   if (error || !article) {
     return (
       <div className="max-w-2xl mx-auto my-16 p-8 text-center bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-4 shadow-xl">
-        <div className="text-4xl">📄</div>
+        <div className="text-4xl"></div>
         <h2 className="text-xl font-bold text-slate-900 dark:text-white">
           {error || (isTamil ? 'கட்டுரை கிடைக்கவில்லை' : 'Article Not Found')}
         </h2>
@@ -30154,16 +30154,16 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
               <div>
                 <div className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
                   <span>{article.authorName || 'Budget Padmanaban'}</span>
-                  <span className="text-blue-500 font-bold" title="Verified Creator">✓</span>
+                  <span className="text-blue-500 font-bold" title="Verified Creator"></span>
                 </div>
                 <div className="text-[11px] text-slate-400">CFP® Certified Financial Planner</div>
               </div>
             </div>
 
             <div className="flex items-center gap-4 text-xs font-semibold">
-              <span>📅 {formattedDate}</span>
+              <span>{formattedDate}</span>
               <span className="font-mono text-amber-600 dark:text-amber-400 font-bold">
-                ⏱ {article.readTimeMinutes} {isTamil ? 'நிமிடம் வாசிக்க' : 'min read'}
+                {article.readTimeMinutes} {isTamil ? 'நிமிடம் வாசிக்க' : 'min read'}
               </span>
             </div>
           </div>
@@ -30209,7 +30209,7 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
               X / Twitter
             </button>
             <button onClick={() => handleShare('copy')} className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs shadow transition-colors">
-              🔗 {isTamil ? 'நகலெடு' : 'Copy'}
+              {isTamil ? 'நகலெடு' : 'Copy'}
             </button>
           </div>
         </div>
@@ -30349,7 +30349,7 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
           onClick={() => onNavigate('#/admin/articles/new')}
           className="px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs sm:text-sm shadow-xl hover:scale-105 transition-all flex items-center gap-2 shrink-0"
         >
-          <span>✍️</span>
+          <span></span>
           <span>{isTamil ? 'புதிய கட்டுரை எழுதுக' : '+ Write New Article'}</span>
         </button>
       </div>
@@ -30387,7 +30387,7 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
             placeholder={isTamil ? "கட்டுரைகளைத் தேடுக..." : "Search articles..."}
             className="w-full pl-4 pr-10 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
           />
-          {search && <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400">✕</button>}
+          {search && <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400"></button>}
         </div>
       </div>
 
@@ -30399,7 +30399,7 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
           </div>
         ) : articles.length === 0 ? (
           <div className="py-16 text-center space-y-3">
-            <div className="text-3xl">📝</div>
+            <div className="text-3xl"></div>
             <h3 className="text-base font-bold text-slate-900 dark:text-white">
               {isTamil ? 'கட்டுரைகள் எதுவும் இல்லை' : 'No Articles Found'}
             </h3>
@@ -30457,7 +30457,7 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                     </td>
 
                     <td className="px-6 py-4 font-mono text-slate-500 dark:text-slate-400">
-                      ⏱ {article.readTimeMinutes} min
+                      {article.readTimeMinutes} min
                     </td>
 
                     <td className="px-6 py-4">
@@ -30470,7 +30470,7 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                             : 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 hover:bg-amber-500/25'
                         }`}
                       >
-                        {article.status === 'published' ? '● Published' : '○ Draft'}
+                        {article.status === 'published' ? 'Published' : 'Draft'}
                       </button>
                     </td>
 
@@ -30486,7 +30486,7 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                             title="View live article"
                             className="p-2 rounded-xl text-slate-400 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                           >
-                            👁️
+                            View
                           </button>
                         )}
                         <button
@@ -30494,7 +30494,7 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                           title="Edit article"
                           className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-amber-600 hover:text-white text-slate-700 dark:text-slate-300 font-bold transition-all"
                         >
-                          ✏️ Edit
+                          Edit
                         </button>
                         <button
                           onClick={() => handleDelete(article.id, article.titleTamil)}
@@ -30502,7 +30502,7 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                           title="Delete article"
                           className="p-2 rounded-xl text-red-500 hover:bg-red-500/10 transition-colors disabled:opacity-50"
                         >
-                          🗑️
+                          
                         </button>
                       </div>
                     </td>
@@ -30758,7 +30758,7 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
       if (!res.ok) throw new Error(data.error || 'Failed to save article');
 
       if (onShowToast) {
-        onShowToast(publishNow ? (isTamil ? 'கட்டுரை உடனடியாக வெளியிடப்பட்டது! 🎉' : 'Article published live! 🎉') : (isTamil ? 'வரைவு சேமிக்கப்பட்டது.' : 'Article draft saved.'));
+        onShowToast(publishNow ? (isTamil ? 'கட்டுரை உடனடியாக வெளியிடப்பட்டது! ' : 'Article published live! ') : (isTamil ? 'வரைவு சேமிக்கப்பட்டது.' : 'Article draft saved.'));
       }
 
       if (publishNow && data.data?.slug) {
@@ -30824,7 +30824,7 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
               className="px-4 py-2.5 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 font-bold text-xs transition-all border border-red-500/30 flex items-center gap-1.5"
               title="Delete this article permanently"
             >
-              <span>🗑️</span>
+              <span></span>
               <span>{isTamil ? 'கட்டுரையை நீக்கு' : 'Delete Article'}</span>
             </button>
           )}
@@ -30834,7 +30834,7 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
             disabled={isLoading}
             className="px-5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs transition-all shadow-sm disabled:opacity-50"
           >
-            💾 {isTamil ? 'வரைவாகச் சேமி (Draft)' : 'Save Draft'}
+            {isTamil ? 'வரைவாகச் சேமி' : 'Save Draft'}
           </button>
           <button
             type="button"
@@ -30842,7 +30842,7 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
             disabled={isLoading}
             className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs shadow-lg hover:scale-105 transition-all disabled:opacity-50 flex items-center gap-1.5"
           >
-            <span>🚀</span>
+            <span></span>
             <span>{isTamil ? 'உடனே வெளியிடு (Publish Live)' : 'Publish Live'}</span>
           </button>
         </div>
@@ -30850,7 +30850,7 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
 
       {error && (
         <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-600 text-xs font-bold flex items-center gap-2">
-          <span>⚠️</span>
+          <span></span>
           <span>{error}</span>
         </div>
       )}
@@ -30918,10 +30918,10 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
               onChange={e => setCategory(e.target.value)}
               className="w-full px-4 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
             >
-              <option value="mutual-fund">💰 Mutual Funds</option>
-              <option value="stock-market">📈 Stock Market</option>
-              <option value="personal-finance">💡 Personal Finance</option>
-              <option value="financial-education">🎓 Financial Education</option>
+              <option value="mutual-fund">Mutual Funds</option>
+              <option value="stock-market">Stock Market</option>
+              <option value="personal-finance">Personal Finance</option>
+              <option value="financial-education">Financial Education</option>
             </select>
           </div>
 
@@ -30982,7 +30982,7 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
                 onClick={() => setCoverImageUrl('')}
                 className="absolute top-2 right-2 px-2 py-1 rounded-lg bg-red-600 text-white font-bold text-[10px] shadow"
               >
-                ✕ Remove
+                Remove
               </button>
             </div>
           )}
@@ -30991,7 +30991,7 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
         <div className="p-4 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-900 to-amber-950 border border-amber-500/30 text-white flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="space-y-0.5">
             <div className="flex items-center gap-2">
-              <span className="text-amber-400 text-base font-black">⚡</span>
+              <span className="text-amber-400 text-base font-black"></span>
               <span className="text-xs font-black uppercase tracking-wider text-amber-300">
                 {isTamil ? 'தானியங்கி ஆங்கில மொழிபெயர்ப்பு' : 'AI & Rule-Protected Auto Translation'}
               </span>
@@ -31007,7 +31007,7 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
             disabled={isTranslating}
             className="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs shadow-lg transition-all hover:scale-105 disabled:opacity-50 shrink-0"
           >
-            {isTranslating ? 'Translating...' : (isTamil ? '🔄 ஆங்கிலத்தில் மொழிபெயர்க்க' : '🔄 Auto-Translate to English')}
+            {isTranslating ? 'Translating...' : (isTamil ? 'ஆங்கிலத்தில் மொழிபெயர்க்க' : 'Translate to English')}
           </button>
         </div>
 
@@ -31047,14 +31047,14 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
                 onClick={() => setActiveTab('ta')}
                 className={`px-4 py-2 rounded-xl text-xs font-black transition-all ${activeTab === 'ta' ? 'bg-amber-500 text-slate-950 shadow-md' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`}
               >
-                🇮🇳 தமிழ் உள்ளடக்கம் (Tamil Body) *
+                தமிழ் உள்ளடக்கம் (Tamil Body) *
               </button>
               <button
                 type="button"
                 onClick={() => setActiveTab('en')}
                 className={`px-4 py-2 rounded-xl text-xs font-black transition-all ${activeTab === 'en' ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`}
               >
-                🌐 English Body (Reviewed)
+                English Body (Reviewed)
               </button>
             </div>
             <span className="text-[11px] font-bold text-slate-400 hidden sm:inline">Rich Text HTML Engine</span>
@@ -31099,7 +31099,7 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
                 className="px-5 py-3 rounded-2xl bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 font-bold text-xs transition-all border border-red-500/30 flex items-center gap-1.5"
                 title="Delete this article permanently"
               >
-                <span>🗑️</span>
+                <span></span>
                 <span>{isTamil ? 'கட்டுரையை நீக்கு (Delete Article)' : 'Delete Article'}</span>
               </button>
             )}
@@ -31119,7 +31119,7 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
               disabled={isLoading}
               className="px-6 py-3 rounded-2xl bg-slate-900 dark:bg-slate-800 text-white font-bold text-xs shadow hover:bg-slate-800 transition-all disabled:opacity-50"
             >
-              💾 {isTamil ? 'வரைவாகச் சேமி (Save Draft)' : 'Save Draft'}
+              {isTamil ? 'வரைவாகச் சேமி' : 'Save Draft'}
             </button>
             <button
               type="button"
@@ -31127,7 +31127,7 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
               disabled={isLoading}
               className="px-8 py-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs sm:text-sm shadow-xl hover:scale-105 transition-all disabled:opacity-50 flex items-center gap-2"
             >
-              <span>🚀</span>
+              <span></span>
               <span>{isTamil ? 'உடனே வெளியிடு (Publish Live)' : 'Publish Live'}</span>
             </button>
           </div>

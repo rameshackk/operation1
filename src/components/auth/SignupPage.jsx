@@ -91,14 +91,14 @@ export function SignupPage({ onToggleLogin, onSignupSuccess }) {
       {/* Alert Messages */}
       {error && (
         <div className="p-3.5 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-600 dark:text-red-400 text-xs font-bold flex items-center gap-2">
-          <span>⚠️</span>
+          <span></span>
           <span>{error}</span>
         </div>
       )}
 
       {successMessage && (
         <div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-xs font-bold flex items-center gap-2">
-          <span>✓</span>
+          <span></span>
           <span>{successMessage}</span>
         </div>
       )}
@@ -157,7 +157,7 @@ export function SignupPage({ onToggleLogin, onSignupSuccess }) {
               onClick={() => setShowPassword(!showPassword)}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-xs font-bold p-1"
             >
-              {showPassword ? '🙈' : '👁️'}
+              {showPassword ? '' : 'View'}
             </button>
           </div>
           <PasswordStrengthMeter password={password} />

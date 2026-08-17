@@ -16,10 +16,10 @@ export function Articles({ onNavigate, onShowToast }) {
 
   const categories = [
     { id: 'all', labelTa: 'அனைத்து கட்டுரைகள்', labelEn: 'All Articles' },
-    { id: 'mutual-fund', labelTa: '💰 மியூச்சுவல் ஃபண்ட்', labelEn: '💰 Mutual Funds' },
-    { id: 'stock-market', labelTa: '📈 பங்குச் சந்தை', labelEn: '📈 Stock Market' },
-    { id: 'personal-finance', labelTa: '💡 தனிநபர் நிதி & SIP', labelEn: '💡 Personal Finance' },
-    { id: 'financial-education', labelTa: '🎓 நிதி அறிவு & வழிகாட்டி', labelEn: '🎓 Financial Education' }
+    { id: 'mutual-fund', labelTa: 'மியூச்சுவல் ஃபண்ட்', labelEn: 'Mutual Funds' },
+    { id: 'stock-market', labelTa: 'பங்குச் சந்தை', labelEn: 'Stock Market' },
+    { id: 'personal-finance', labelTa: 'தனிநபர் நிதி & SIP', labelEn: 'Personal Finance' },
+    { id: 'financial-education', labelTa: 'நிதி அறிவு & வழிகாட்டி', labelEn: 'Financial Education' }
   ];
 
   useEffect(() => {
@@ -123,7 +123,7 @@ export function Articles({ onNavigate, onShowToast }) {
                 onClick={() => setSearchQuery('')}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
               >
-                ✕
+                
               </button>
             )}
           </div>
@@ -152,11 +152,11 @@ export function Articles({ onNavigate, onShowToast }) {
           </div>
         ) : error ? (
           <div className="p-8 text-center bg-red-500/10 rounded-3xl border border-red-500/30 text-red-600 text-xs font-bold max-w-lg mx-auto">
-            ⚠️ {error}
+            {error}
           </div>
         ) : articles.length === 0 ? (
           <div className="py-20 text-center space-y-3 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-8">
-            <div className="text-4xl">📰</div>
+            <div className="text-4xl"></div>
             <h3 className="text-lg font-bold text-slate-900 dark:text-white">
               {isTamil ? 'கட்டுரைகள் எதுவும் கிடைக்கவில்லை' : 'No Articles Found'}
             </h3>
@@ -194,7 +194,7 @@ export function Articles({ onNavigate, onShowToast }) {
                         {(article.category || 'FINANCE').replace('-', ' ')}
                       </span>
                       <span className="absolute top-3 right-3 px-2 py-0.5 text-[9px] font-black uppercase rounded-md bg-amber-600 text-white">
-                        ✍️ ORIGINAL
+                         ORIGINAL
                       </span>
                     </div>
 
@@ -220,7 +220,7 @@ export function Articles({ onNavigate, onShowToast }) {
                     <div className="flex items-center gap-3">
                       <span>{formattedDate}</span>
                       <span className="font-mono text-amber-600 dark:text-amber-400 font-bold">
-                        ⏱ {article.readTimeMinutes} {isTamil ? 'நிமிடம்' : 'min'}
+                        {article.readTimeMinutes} {isTamil ? 'நிமிடம்' : 'min'}
                       </span>
                     </div>
                   </div>

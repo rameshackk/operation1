@@ -28,12 +28,12 @@ export function Navbar({ currentPath, onNavigate }) {
   ];
 
   const authNavItems = user ? [
-    { id: 'profile', hash: '#/profile', label: `👤 ${language === 'ta' ? 'சுயவிவரம்' : 'Profile'}` },
+    { id: 'profile', hash: '#/profile', label: `${language === 'ta' ? 'சுயவிவரம்' : 'Profile'}` },
     ...(user?.role === 'admin' || user?.app_metadata?.role === 'admin' ? [
-      { id: 'admin-articles', hash: '#/admin/articles', label: `✍️ ${language === 'ta' ? 'கட்டுரைகள் ஸ்டுடியோ' : 'Article Studio'}` }
+      { id: 'admin-articles', hash: '#/admin/articles', label: `${language === 'ta' ? 'கட்டுரைகள் ஸ்டுடியோ' : 'Article Studio'}` }
     ] : [])
   ] : [
-    { id: 'login', hash: '#/login', label: `🔑 ${language === 'ta' ? 'உள்நுழைக' : 'Sign In'}` }
+    { id: 'login', hash: '#/login', label: `${language === 'ta' ? 'உள்நுழைக' : 'Sign In'}` }
   ];
 
   const navItems = [...baseNavItems, ...authNavItems];

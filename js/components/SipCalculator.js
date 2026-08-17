@@ -67,7 +67,7 @@ export function SipCalculator() {
       titleEnglish: 'SIP Calculator',
       subtitleTamil: 'மாதாந்திர முறையான முதலீடு',
       subtitleEnglish: 'Monthly Systematic Investment',
-      icon: '📊',
+      icon: '',
       badge: isTamil ? 'பிரபலம்' : 'POPULAR'
     },
     {
@@ -76,7 +76,7 @@ export function SipCalculator() {
       titleEnglish: 'Lump Sum Calculator',
       subtitleTamil: 'ஒரே முறை முதலீட்டு வளர்ச்சி',
       subtitleEnglish: 'One-Time Investment Growth',
-      icon: '💰',
+      icon: '',
       badge: isTamil ? 'எளிது' : 'SIMPLE'
     },
     {
@@ -85,7 +85,7 @@ export function SipCalculator() {
       titleEnglish: 'Returns Calculator',
       subtitleTamil: 'ஆண்டு முதலீட்டு உயர்வு (+10%)',
       subtitleEnglish: 'Step-Up Annual Incremental Growth',
-      icon: '🚀',
+      icon: '',
       badge: isTamil ? 'அதிவேக வளர்ச்சி' : 'HIGH GROWTH'
     },
     {
@@ -94,7 +94,7 @@ export function SipCalculator() {
       titleEnglish: 'Compound Interest',
       subtitleTamil: 'கூட்டு வட்டியின் அபார வளர்ச்சி',
       subtitleEnglish: 'Power of Compounding Growth',
-      icon: '⚡',
+      icon: '',
       badge: isTamil ? 'செல்வ வளர்ச்சி' : 'WEALTH'
     }
   ];
@@ -160,7 +160,7 @@ export function SipCalculator() {
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-800 pb-6">
           <div className="space-y-1">
             <h3 className="text-xl sm:text-2xl font-black font-serif text-white flex items-center gap-2">
-              <span className="text-amber-400">⚡</span>
+              <span className="text-amber-400"></span>
               <span>
                 {calcMode === 'sip' && (isTamil ? 'SIP முதலீட்டுக் கணக்கீடு' : 'SIP Returns Calculator')}
                 {calcMode === 'lumpsum' && (isTamil ? 'ஒரே முறை (Lump Sum) முதலீட்டுக் கணக்கீடு' : 'Lump Sum Returns Calculator')}

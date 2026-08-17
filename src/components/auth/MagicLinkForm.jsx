@@ -73,7 +73,7 @@ export function MagicLinkForm({ onBackToLogin }) {
       {serverError && (
         <div className="p-3.5 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-600 dark:text-red-400 text-xs font-bold flex items-center justify-between" role="alert">
           <span>{serverError}</span>
-          <button onClick={() => setServerError('')} className="font-black text-xs">✕</button>
+          <button onClick={() => setServerError('')} className="font-black text-xs"></button>
         </div>
       )}
 

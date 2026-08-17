@@ -49,7 +49,7 @@ export function Header({ onOpenSearch, onNavigate }) {
         <div className="hidden sm:flex items-center gap-2 min-w-[140px] md:min-w-[180px] shrink-0">
           <span className="inline-flex items-center gap-2 px-3 py-1 text-xs font-bold rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/25 shadow-sm">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span>👋 {t('welcome')}</span>
+            <span>{t('welcome')}</span>
           </span>
         </div>
 
@@ -109,7 +109,7 @@ export function Header({ onOpenSearch, onNavigate }) {
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                   </svg>
                 ) : (
-                  <span>🚪</span>
+                  <span></span>
                 )}
                 <span>{language === 'ta' ? 'வெளியேறு' : 'Logout'}</span>
               </button>
@@ -125,7 +125,7 @@ export function Header({ onOpenSearch, onNavigate }) {
               }}
               className="px-4 py-2 rounded-full bg-amber-600 hover:bg-amber-500 text-white font-extrabold text-xs shadow-md hover:scale-105 transition-all flex items-center gap-1.5 shrink-0"
             >
-              <span>🔑</span>
+              <span></span>
               <span>{language === 'ta' ? 'உள்நுழைக' : 'Sign In'}</span>
             </button>
           )}

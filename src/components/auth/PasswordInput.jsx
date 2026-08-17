@@ -48,7 +48,7 @@ export function PasswordInput({
           aria-label={toggleAriaLabel}
           className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-xs font-bold p-1 rounded.lg focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
         >
-          {showPassword ? '🙈' : '👁️'}
+          {showPassword ? '' : 'View'}
         </button>
       </div>
       {error && (

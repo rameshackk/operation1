@@ -85,10 +85,10 @@ export function LoginForm({ onSwitchMode, onAuthSuccess }) {
       {serverError && (
         <div className="p-3.5 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-600 dark:text-red-400 text-xs font-bold flex items-center justify-between animate-fadeIn" role="alert">
           <div className="flex items-center gap-2">
-            <span>⚠️</span>
+            <span></span>
             <span>{serverError}</span>
           </div>
-          <button onClick={() => setServerError('')} className="p-1 hover:opacity-75 font-black text-xs" aria-label="Dismiss error">✕</button>
+          <button onClick={() => setServerError('')} className="p-1 hover:opacity-75 font-black text-xs" aria-label="Dismiss error"></button>
         </div>
       )}
 

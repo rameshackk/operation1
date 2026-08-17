@@ -41,7 +41,7 @@ export function SignInCtaBanner({ onNavigate }) {
           <div className="space-y-2 max-w-2xl">
             <div className="flex items-center gap-2">
               <span className="px-2.5 py-0.5 rounded-full bg-amber-500 text-slate-950 font-black text-[10px] tracking-wider uppercase shadow">
-                🔒 {isTamil ? 'உறுப்பினர் அணுகல்' : 'MEMBER ACCESS'}
+                {isTamil ? 'உறுப்பினர் அணுகல்' : 'MEMBER ACCESS'}
               </span>
               <span className="text-[11px] font-mono text-amber-300/80 font-bold">
                 {isTamil ? 'இலவச கணக்கு' : 'FREE ACCOUNT'}

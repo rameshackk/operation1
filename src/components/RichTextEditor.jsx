@@ -170,7 +170,7 @@ export function RichTextEditor({
           title="Insert Link"
           className="px-2 py-1 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-amber-600 dark:text-amber-400 font-bold"
         >
-          🔗 Link
+          Link
         </button>
         <button
           type="button"
@@ -178,7 +178,7 @@ export function RichTextEditor({
           title="Insert Image"
           className="px-2 py-1 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold"
         >
-          🖼️ Image
+          Image
         </button>
 
         <span className="w-px h-4 bg-slate-300 dark:bg-slate-700 mx-1" />
@@ -190,7 +190,7 @@ export function RichTextEditor({
           title="Clear Formatting"
           className="px-2 py-1 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-500 text-[11px]"
         >
-          🧹 Clean
+          Clean
         </button>
       </div>
 
@@ -211,7 +211,7 @@ export function RichTextEditor({
           {isTamil ? `${wordCount} சொற்கள்` : `${wordCount} words`} • {charCount} chars
         </span>
         <span>
-          ⏱ ~{Math.max(1, Math.ceil(wordCount / (isTamil ? 130 : 180)))} {isTamil ? 'நிமிடம் வாசிக்க' : 'min read'}
+          ~{Math.max(1, Math.ceil(wordCount / (isTamil ? 130 : 180)))} {isTamil ? 'நிமிடம் வாசிக்க' : 'min read'}
         </span>
       </div>
     </div>

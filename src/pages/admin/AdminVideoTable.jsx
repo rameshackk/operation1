@@ -83,7 +83,7 @@ export function AdminVideoTable({ videos = [], onRefresh }) {
       {actionMessage && (
         <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-600 dark:text-amber-400 text-xs font-bold flex items-center justify-between">
           <span>{actionMessage}</span>
-          <button onClick={() => setActionMessage('')} className="text-xs font-black">✕</button>
+          <button onClick={() => setActionMessage('')} className="text-xs font-black"></button>
         </div>
       )}
 
@@ -126,11 +126,11 @@ export function AdminVideoTable({ videos = [], onRefresh }) {
                     <td className="py-3 px-4 whitespace-nowrap">
                       {isTranslated ? (
                         <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-black uppercase bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">
-                          <span>✓</span> Translated
+                          <span></span> Translated
                         </span>
                       ) : (
                         <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-black uppercase bg-amber-500/10 text-amber-600 border border-amber-500/20">
-                          <span>⏳</span> Pending Retry
+                          <span></span> Pending Retry
                         </span>
                       )}
                     </td>

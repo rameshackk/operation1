@@ -22,7 +22,7 @@ export function ProtectedRoute({ children, requireAdmin = false }) {
       <div className="py-8">
         <div className="max-w-md mx-auto mb-4 text-center px-4">
           <span className="px-3 py-1 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 text-xs font-extrabold border border-amber-500/20">
-            🔒 Authentication Required
+            Authentication Required
           </span>
         </div>
         <AuthCard initialMode="login" />
@@ -35,7 +35,7 @@ export function ProtectedRoute({ children, requireAdmin = false }) {
     return (
       <div className="max-w-md mx-auto my-16 p-8 rounded-3xl bg-white dark:bg-slate-900 border border-red-500/30 text-center space-y-4 shadow-xl">
         <div className="w-14 h-14 mx-auto rounded-full bg-red-500/10 text-red-500 flex items-center justify-center text-2xl font-bold">
-          ⛔
+          
         </div>
         <h3 className="text-xl font-black text-slate-900 dark:text-white font-serif">Access Denied</h3>
         <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">

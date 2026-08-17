@@ -126,7 +126,7 @@ export function AdminArticles({ onNavigate, onShowToast, onEditArticle }) {
           onClick={() => onNavigate ? onNavigate('#/admin/articles/new') : (window.location.hash = '#/admin/articles/new')}
           className="px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs sm:text-sm shadow-xl hover:scale-105 transition-all flex items-center gap-2 shrink-0"
         >
-          <span>✍️</span>
+          <span></span>
           <span>{isTamil ? 'புதிய கட்டுரை எழுதுக' : '+ Write New Article'}</span>
         </button>
       </div>
@@ -182,7 +182,7 @@ export function AdminArticles({ onNavigate, onShowToast, onEditArticle }) {
             className="w-full pl-4 pr-10 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
           />
           {search && (
-            <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400">✕</button>
+            <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400"></button>
           )}
         </div>
       </div>
@@ -196,7 +196,7 @@ export function AdminArticles({ onNavigate, onShowToast, onEditArticle }) {
           </div>
         ) : articles.length === 0 ? (
           <div className="py-16 text-center space-y-3">
-            <div className="text-3xl">📝</div>
+            <div className="text-3xl"></div>
             <h3 className="text-base font-bold text-slate-900 dark:text-white">
               {isTamil ? 'கட்டுரைகள் எதுவும் இல்லை' : 'No Articles Found'}
             </h3>
@@ -254,7 +254,7 @@ export function AdminArticles({ onNavigate, onShowToast, onEditArticle }) {
                     </td>
 
                     <td className="px-6 py-4 font-mono text-slate-500 dark:text-slate-400">
-                      ⏱ {article.readTimeMinutes} min
+                      {article.readTimeMinutes} min
                     </td>
 
                     <td className="px-6 py-4">
@@ -267,7 +267,7 @@ export function AdminArticles({ onNavigate, onShowToast, onEditArticle }) {
                             : 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 hover:bg-amber-500/25'
                         }`}
                       >
-                        {article.status === 'published' ? '● Published' : '○ Draft'}
+                        {article.status === 'published' ? 'Published' : 'Draft'}
                       </button>
                     </td>
 
@@ -283,7 +283,7 @@ export function AdminArticles({ onNavigate, onShowToast, onEditArticle }) {
                             title="View live article"
                             className="p-2 rounded-xl text-slate-400 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                           >
-                            👁️
+                            View
                           </button>
                         )}
                         <button
@@ -299,7 +299,7 @@ export function AdminArticles({ onNavigate, onShowToast, onEditArticle }) {
                           title="Edit article"
                           className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-amber-600 hover:text-white text-slate-700 dark:text-slate-300 font-bold transition-all"
                         >
-                          ✏️ Edit
+                          Edit
                         </button>
                         <button
                           onClick={() => handleDelete(article.id, article.titleTamil)}
@@ -307,7 +307,7 @@ export function AdminArticles({ onNavigate, onShowToast, onEditArticle }) {
                           title="Delete article"
                           className="p-2 rounded-xl text-red-500 hover:bg-red-500/10 transition-colors disabled:opacity-50"
                         >
-                          🗑️
+                          
                         </button>
                       </div>
                     </td>
