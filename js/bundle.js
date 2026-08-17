@@ -29076,6 +29076,10 @@ function Home({ onNavigate, onShowToast }) {
 /**
  * CINEMA INTERACTIVE UI SYSTEM (APPLE TV+ / NETFLIX STYLE)
  */
+
+/**
+ * CINEMA INTERACTIVE UI SYSTEM (APPLE TV+ / NETFLIX STYLE)
+ */
 function CinemaVideoCard({
   video,
   aspectRatio = '16/9',
@@ -29715,7 +29719,8 @@ function VideosPage({ onNavigate, onShowToast }) {
   const isFiltering = activeCategory !== 'all' || searchQuery.trim().length > 0;
 
   return (
-    <div className="min-h-screen pb-24 space-y-8 animate-fadeIn text-slate-900 dark:text-white">
+    <div className="min-h-screen pb-24 space-y-10 animate-fadeIn text-slate-900 dark:text-white">
+      {/* 1. LUXURY CINEMA SPOTLIGHT HERO */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
         <CinemaSpotlightHero
           spotlightVideos={spotlightVideos}
@@ -29724,6 +29729,20 @@ function VideosPage({ onNavigate, onShowToast }) {
         />
       </div>
 
+      {/* 2. LIVING FAN ARC WALL (CONTINUOUS ANIMATING 9:16 CARDS SHOWCASE) */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <VideoFanWall
+          videos={videosData}
+          language={language}
+          onNavigate={onNavigate}
+          titleTamil="பிரத்யேக நேரலை வீடியோ கேலரி"
+          titleEnglish="Living Video Arc Showcase"
+          subtitleTamil="பட்ஜெட் பத்மநாபனின் பிரத்யேக நிதி, மியூச்சுவல் ஃபண்ட் மற்றும் முதலீட்டு வீடியோ அலசல்கள்"
+          subtitleEnglish="Continuous desynchronized animated fan arc with multi-frame previews and instant expandable inspection"
+        />
+      </div>
+
+      {/* 3. STICKY CATEGORY & SEARCH CONTROLS BAR */}
       <div className="sticky top-16 z-30 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl border-y border-slate-200 dark:border-slate-800/80 shadow-md py-3.5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-3">
           <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
@@ -29811,6 +29830,7 @@ function VideosPage({ onNavigate, onShowToast }) {
         </div>
       </div>
 
+      {/* 4. MAIN CONTENT: CURATED CINEMATIC RAILS OR SEARCHABLE GRID */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         {(isFiltering || viewMode === 'grid') ? (
           <section className="space-y-4">
