@@ -3,7 +3,7 @@ import { CinemaVideoCard } from './CinemaVideoCard.js';
 
 /**
  * CinemaVideoRail Component
- * Netflix / Apple TV+ style interactive horizontal rail for categorized video tracks.
+ * Interactive horizontal kinetic rail displaying living wall 9:16 animated cards.
  */
 export function CinemaVideoRail({
   titleTamil,
@@ -12,7 +12,6 @@ export function CinemaVideoRail({
   subtitleEnglish,
   badgeText,
   videos = [],
-  aspectRatio = '16/9', // '16/9' or '9/16'
   onSelectVideo,
   language = 'ta',
   onShowToast
@@ -73,19 +72,19 @@ export function CinemaVideoRail({
         </div>
       </div>
 
-      {/* HORIZONTAL SCROLL CONTAINER */}
+      {/* HORIZONTAL SCROLL CONTAINER WITH LIVING 9:16 CARDS */}
       <div
         ref={scrollRef}
         className="flex items-stretch gap-4 sm:gap-5 overflow-x-auto no-scrollbar py-2 px-0.5 scroll-smooth"
       >
-        {videos.map((video) => (
+        {videos.map((video, idx) => (
           <div
             key={`rail-${video.id}`}
-            className={aspectRatio === '9/16' || video.isShort ? 'shrink-0' : 'w-[260px] sm:w-[300px] md:w-[320px] shrink-0'}
+            className="w-[175px] sm:w-[210px] md:w-[230px] shrink-0"
           >
             <CinemaVideoCard
               video={video}
-              aspectRatio={aspectRatio}
+              index={idx}
               onSelect={onSelectVideo}
               language={language}
               onShowToast={onShowToast}

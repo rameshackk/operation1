@@ -6,19 +6,24 @@ let bundleCode = fs.readFileSync(bundlePath, 'utf8');
 
 const cinemaComponents = `
 /**
- * CINEMA INTERACTIVE UI SYSTEM (APPLE TV+ / NETFLIX STYLE)
+ * CINEMA INTERACTIVE UI SYSTEM (LIVING WALL 9:16 CARDS FOR ALL VIDEOS)
  */
 function CinemaVideoCard({
   video,
-  aspectRatio = '16/9',
+  index = 0,
   onSelect,
   language = 'ta',
   onShowToast
 }) {
   const [isHovered, setIsHovered] = useState(false);
   const [activeFrameIndex, setActiveFrameIndex] = useState(0);
+  const [nextFrameIndex, setNextFrameIndex] = useState(null);
+  const [isCrossfading, setIsCrossfading] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
   const isTamil = language === 'ta';
   const timerRef = useRef(null);
+  const fadeTimeoutRef = useRef(null);
 
   const youtubeId = video?.youtubeId || '';
   const frames = [
@@ -29,20 +34,51 @@ function CinemaVideoCard({
   ].filter(Boolean);
 
   useEffect(() => {
-    if (!isHovered || frames.length <= 1) {
-      setActiveFrameIndex(0);
-      if (timerRef.current) clearInterval(timerRef.current);
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+      setPrefersReducedMotion(mediaQuery.matches);
+      const listener = (e) => setPrefersReducedMotion(e.matches);
+      if (mediaQuery.addEventListener) {
+        mediaQuery.addEventListener('change', listener);
+        return () => mediaQuery.removeEventListener('change', listener);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (prefersReducedMotion || !frames || frames.length <= 1 || isHovered) {
+      if (timerRef.current) clearTimeout(timerRef.current);
       return;
     }
 
-    timerRef.current = setInterval(() => {
-      setActiveFrameIndex((prev) => (prev + 1) % frames.length);
-    }, 1200);
+    const baseInterval = 3400;
+    const staggerOffset = (index * 550) % 2000;
+    const intervalTime = baseInterval + staggerOffset;
+
+    const scheduleNextCycle = () => {
+      timerRef.current = setTimeout(() => {
+        const nextIdx = (activeFrameIndex + 1) % frames.length;
+        setNextFrameIndex(nextIdx);
+        setIsCrossfading(true);
+
+        fadeTimeoutRef.current = setTimeout(() => {
+          setActiveFrameIndex(nextIdx);
+          setNextFrameIndex(null);
+          setIsCrossfading(false);
+        }, 650);
+      }, intervalTime);
+    };
+
+    scheduleNextCycle();
 
     return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
+      if (timerRef.current) clearTimeout(timerRef.current);
+      if (fadeTimeoutRef.current) clearTimeout(fadeTimeoutRef.current);
     };
-  }, [isHovered, frames.length]);
+  }, [frames, activeFrameIndex, isHovered, prefersReducedMotion, index]);
+
+  const currentFrame = frames && frames.length > 0 ? frames[activeFrameIndex] : '';
+  const nextFrame = nextFrameIndex !== null && frames && frames[nextFrameIndex] ? frames[nextFrameIndex] : null;
 
   const title = isTamil
     ? (video.titleTamil || video.title || 'வீடியோ பதிவு')
@@ -50,8 +86,6 @@ function CinemaVideoCard({
 
   const category = (video.category || 'FINANCE').replace('-', ' ').toUpperCase();
   const duration = video.duration || 'Video';
-
-  const isVertical = aspectRatio === '9/16' || video.isShort;
 
   return (
     <div
@@ -69,49 +103,61 @@ function CinemaVideoCard({
         }
       }}
       className={\`group relative select-none cursor-pointer rounded-2xl sm:rounded-3xl overflow-hidden
-        bg-slate-900 border border-slate-800/80 hover:border-amber-500/60
-        shadow-lg hover:shadow-2xl hover:shadow-amber-500/15
-        transition-all duration-300 transform hover:-translate-y-1.5 hover:scale-[1.02]
-        outline-none focus-visible:ring-2 focus-visible:ring-amber-500 shrink-0
-        \${isVertical ? 'w-[170px] sm:w-[210px] aspect-[9/16]' : 'w-full aspect-[16/10] sm:aspect-video'}\`}
+        w-full aspect-[9/16]
+        bg-slate-900 border border-slate-800/90 hover:border-amber-500/60
+        shadow-xl shadow-slate-950/60 hover:shadow-2xl hover:shadow-amber-500/20
+        transition-all duration-400 ease-out transform hover:-translate-y-2 hover:scale-[1.03]
+        outline-none focus-visible:ring-2 focus-visible:ring-amber-500 shrink-0\`}
     >
       <div className="absolute inset-0 w-full h-full overflow-hidden bg-slate-950">
-        <img
-          src={frames[activeFrameIndex] || video.thumbnail}
-          alt={title}
-          loading="lazy"
-          className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 opacity-90 group-hover:opacity-100"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-slate-950/20 group-hover:via-slate-950/50 transition-colors duration-300" />
+        {currentFrame && (
+          <img
+            src={currentFrame}
+            alt={title}
+            loading="lazy"
+            className={\`absolute inset-0 w-full h-full object-cover object-center transition-all duration-700
+              \${isCrossfading ? 'scale-105 opacity-40 blur-[1px]' : 'scale-100 opacity-90 blur-0'}
+              group-hover:scale-110 group-hover:opacity-100\`}
+          />
+        )}
+        {nextFrame && isCrossfading && (
+          <img
+            src={nextFrame}
+            alt={title}
+            loading="lazy"
+            className="absolute inset-0 w-full h-full object-cover object-center animate-fadeIn transition-all duration-700 opacity-95 scale-100"
+          />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-slate-950/40 opacity-85 group-hover:opacity-95 transition-opacity" />
       </div>
 
       <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10 pointer-events-none">
-        <span className="px-2.5 py-0.5 text-[9px] font-black uppercase tracking-wider rounded-full bg-slate-950/85 backdrop-blur-md text-amber-400 border border-amber-400/25 shadow-sm">
+        <span className="px-2.5 py-1 text-[9px] font-black uppercase tracking-wider rounded-full bg-slate-950/85 backdrop-blur-md text-amber-400 border border-amber-400/25 shadow-sm">
           {category}
         </span>
-        <span className="px-2 py-0.5 text-[9px] font-mono font-bold rounded-full bg-slate-950/85 backdrop-blur-md text-slate-200 border border-white/10 shadow-sm">
+        <span className="px-2.5 py-1 text-[9px] font-mono font-bold rounded-full bg-slate-950/85 backdrop-blur-md text-slate-200 border border-white/10 shadow-sm">
           {duration}
         </span>
       </div>
 
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-        <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-slate-950/80 backdrop-blur-md border border-white/20 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transform scale-75 group-hover:scale-100 transition-all duration-300 shadow-xl group-hover:border-amber-500/60">
+        <div className="w-12 h-12 rounded-full bg-slate-950/80 backdrop-blur-md border border-white/20 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transform scale-75 group-hover:scale-100 transition-all duration-300 shadow-2xl group-hover:border-amber-500/60">
           <svg className="w-5 h-5 text-amber-400 fill-current ml-0.5" viewBox="0 0 24 24">
             <polygon points="5 3 19 12 5 21 5 3" />
           </svg>
         </div>
       </div>
 
-      <div className="absolute bottom-0 inset-x-0 p-3.5 sm:p-4 pt-8 bg-gradient-to-t from-slate-950 via-slate-950/95 to-transparent z-10 flex flex-col justify-end gap-1.5">
+      <div className="absolute bottom-0 inset-x-0 p-4 pt-12 bg-gradient-to-t from-slate-950 via-slate-950/95 to-transparent z-10 flex flex-col justify-end gap-2">
         <h3 className="text-xs sm:text-sm font-bold text-white font-serif line-clamp-2 leading-snug group-hover:text-amber-400 transition-colors">
           {title}
         </h3>
 
-        <div className="flex items-center justify-between text-[10px] text-slate-400 font-medium pt-0.5">
-          <span className="truncate max-w-[140px] text-slate-300">
+        <div className="flex items-center justify-between pt-1 opacity-80 group-hover:opacity-100 transition-opacity">
+          <span className="text-[10px] text-slate-400 font-medium truncate max-w-[130px]">
             {video.channelName || 'Budget Padmanaban'}
           </span>
-          <span className="font-bold text-amber-400 group-hover:underline shrink-0">
+          <span className="text-[10px] font-bold text-amber-400 group-hover:underline shrink-0">
             {isTamil ? 'பார்க்க' : 'Watch'} →
           </span>
         </div>
@@ -257,7 +303,6 @@ function CinemaVideoRail({
   subtitleEnglish,
   badgeText,
   videos = [],
-  aspectRatio = '16/9',
   onSelectVideo,
   language = 'ta',
   onShowToast
@@ -320,14 +365,14 @@ function CinemaVideoRail({
         ref={scrollRef}
         className="flex items-stretch gap-4 sm:gap-5 overflow-x-auto no-scrollbar py-2 px-0.5 scroll-smooth"
       >
-        {videos.map((video) => (
+        {videos.map((video, idx) => (
           <div
             key={\`rail-\${video.id}\`}
-            className={aspectRatio === '9/16' || video.isShort ? 'shrink-0' : 'w-[260px] sm:w-[300px] md:w-[320px] shrink-0'}
+            className="w-[175px] sm:w-[210px] md:w-[230px] shrink-0"
           >
             <CinemaVideoCard
               video={video}
-              aspectRatio={aspectRatio}
+              index={idx}
               onSelect={onSelectVideo}
               language={language}
               onShowToast={onShowToast}
@@ -657,7 +702,7 @@ function VideosPage({ onNavigate, onShowToast }) {
         />
       </div>
 
-      {/* 2. LIVING FAN ARC WALL (CONTINUOUS ANIMATING 9:16 CARDS SHOWCASE) */}
+      {/* 2. LIVING FAN ARC WALL */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <VideoFanWall
           videos={videosData}
@@ -770,12 +815,12 @@ function VideosPage({ onNavigate, onShowToast }) {
               </span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6 items-stretch">
-              {filteredVideos.slice(0, visibleGridCount).map(video => (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3.5 sm:gap-5 items-stretch">
+              {filteredVideos.slice(0, visibleGridCount).map((video, idx) => (
                 <CinemaVideoCard
                   key={\`grid-\${video.id}\`}
                   video={video}
-                  aspectRatio={video.isShort ? '9/16' : '16/9'}
+                  index={idx}
                   onSelect={(v) => setSelectedVideo(v)}
                   language={language}
                   onShowToast={onShowToast}
@@ -803,7 +848,6 @@ function VideosPage({ onNavigate, onShowToast }) {
               subtitleEnglish="Handpicked high-impact wealth-building masterclasses and investment blueprints"
               badgeText="POPULAR"
               videos={railsData.masterclasses}
-              aspectRatio="16/9"
               onSelectVideo={(v) => setSelectedVideo(v)}
               language={language}
               onShowToast={onShowToast}
@@ -816,7 +860,6 @@ function VideosPage({ onNavigate, onShowToast }) {
               subtitleEnglish="Bite-sized high-yield financial wisdom and quick money rules"
               badgeText="SHORTS"
               videos={railsData.shorts}
-              aspectRatio="9/16"
               onSelectVideo={(v) => setSelectedVideo(v)}
               language={language}
               onShowToast={onShowToast}
@@ -829,7 +872,6 @@ function VideosPage({ onNavigate, onShowToast }) {
               subtitleEnglish="Comprehensive fund analysis, category reviews, and compounding strategies"
               badgeText="SIP"
               videos={railsData.mutualFunds}
-              aspectRatio="16/9"
               onSelectVideo={(v) => setSelectedVideo(v)}
               language={language}
               onShowToast={onShowToast}
@@ -842,7 +884,6 @@ function VideosPage({ onNavigate, onShowToast }) {
               subtitleEnglish="Deep-dive fundamentals, valuation checks, and smart equity strategies"
               badgeText="STOCKS"
               videos={railsData.stocks}
-              aspectRatio="16/9"
               onSelectVideo={(v) => setSelectedVideo(v)}
               language={language}
               onShowToast={onShowToast}
@@ -855,7 +896,6 @@ function VideosPage({ onNavigate, onShowToast }) {
               subtitleEnglish="NPS, EPF, Section 80C optimization, and retirement corpus calculators"
               badgeText="RETIREMENT"
               videos={railsData.taxRetirement}
-              aspectRatio="16/9"
               onSelectVideo={(v) => setSelectedVideo(v)}
               language={language}
               onShowToast={onShowToast}
@@ -868,7 +908,6 @@ function VideosPage({ onNavigate, onShowToast }) {
               subtitleEnglish="Budgeting frameworks, emergency reserves, and Sovereign Gold Bonds"
               badgeText="WEALTH"
               videos={railsData.personalFinance}
-              aspectRatio="16/9"
               onSelectVideo={(v) => setSelectedVideo(v)}
               language={language}
               onShowToast={onShowToast}
@@ -900,12 +939,6 @@ if (bundleCode.includes(startMarker) && bundleCode.includes(endMarker)) {
   const endIndex = bundleCode.indexOf(endMarker);
   bundleCode = bundleCode.substring(0, startIndex) + `${cinemaComponents}\n\n` + bundleCode.substring(endIndex);
   console.log('Replaced Cinema components and VideosPage in bundle.js');
-} else {
-  console.log('Start marker not found, checking VideoFanCard marker');
-  const fanMarker = 'function useCardCycle(';
-  if (bundleCode.includes(fanMarker) && bundleCode.includes(endMarker)) {
-    // Keep useCardCycle, VideoFanCard, VideoFanWall and replace VideosPage
-  }
 }
 
 fs.writeFileSync(bundlePath, bundleCode, 'utf8');
