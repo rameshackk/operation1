@@ -31897,7 +31897,7 @@ function App() {
     <ThemeProvider>
       <LanguageProvider>
         <AuthProvider>
-          <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans">
+          <div className="min-h-screen flex flex-col text-slate-900 dark:text-slate-100 font-sans">
             <Header onOpenSearch={() => setIsSearchOpen(true)} onNavigate={navigate} />
             <Navbar currentPath={currentHash} onNavigate={navigate} />
             <TrendingTicker />

@@ -87,7 +87,7 @@ export function App() {
   return (
     <ThemeProvider>
       <LanguageProvider>
-        <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300 font-sans selection:bg-amber-500 selection:text-white">
+        <div className="min-h-screen flex flex-col text-slate-900 dark:text-slate-100 transition-colors duration-300 font-sans selection:bg-amber-500 selection:text-white">
           
           {/* Header & Navigation */}
           <Header onOpenSearch={() => setIsSearchOpen(true)} />
