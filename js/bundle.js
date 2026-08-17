@@ -19,6 +19,7 @@ const translations = {
     budgetPadmanaban: "பட்ஜெட் பத்மநாபன் ஃபைனான்ஷியல்",
     nav: {
       home: "முகப்பு",
+      articles: "செய்திக் கட்டுரைகள்",
       videos: "வீடியோக்கள்",
       news: "செய்திகள்",
       mutualFunds: "மியூச்சுவல் ஃபண்ட்",
@@ -89,6 +90,7 @@ const translations = {
     budgetPadmanaban: "Budget Padmanaban Financial",
     nav: {
       home: "Home",
+      articles: "Articles",
       videos: "Videos",
       news: "News",
       mutualFunds: "Mutual Funds",
@@ -26963,15 +26965,15 @@ function Header({ onOpenSearch, onNavigate }) {
 
 function Navbar({ currentPath, onNavigate }) {
   const { t, language } = useLanguage();
-  const { user, signOut } = useAuth();
+  const { user, role, signOut } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const baseNavItems = [
     { id: 'home', hash: '#/', label: t('nav.home') },
+    { id: 'articles', hash: '#/articles', label: t('nav.articles') },
     { id: 'videos', hash: '#/videos', label: t('nav.videos') },
     { id: 'news', hash: '#/news', label: t('nav.news') },
     { id: 'mutual-funds', hash: '#/category/mutual-funds', label: t('nav.mutualFunds') },
-    { id: 'stocks', hash: '#/category/stocks', label: t('nav.stocks') },
     { id: 'personal-finance', hash: '#/category/personal-finance', label: t('nav.personalFinance') },
     { id: 'calculator', hash: '#/calculator', label: t('nav.calculator') },
     { id: 'quiz', hash: '#/quiz', label: t('nav.quiz') || 'Quiz' }
@@ -26979,6 +26981,9 @@ function Navbar({ currentPath, onNavigate }) {
 
   const authNavItems = user ? [
     { id: 'profile', hash: '#/profile', label: `👤 ${language === 'ta' ? 'சுயவிவரம்' : 'Profile'}` },
+    ...(role === 'admin' ? [
+      { id: 'admin-articles', hash: '#/admin/articles', label: `✍️ ${language === 'ta' ? 'கட்டுரைகள் ஸ்டுடியோ' : 'Article Studio'}` }
+    ] : []),
     {
       id: 'logout',
       isAction: true,
@@ -29603,7 +29608,7 @@ function AdminConsolePage({ onNavigate, onShowToast }) {
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-8 animate-fadeIn">
-      <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-5">
         <div>
           <span className="px-3 py-1 text-[10px] font-black uppercase tracking-wider rounded-full bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20">
             ADMIN CONSOLE
@@ -29612,6 +29617,14 @@ function AdminConsolePage({ onNavigate, onShowToast }) {
             {isTamil ? 'நிர்வாகக் குழு (Admin Console)' : 'System & Content Administration'}
           </h1>
         </div>
+
+        <button
+          onClick={() => onNavigate('#/admin/articles')}
+          className="px-6 py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs shadow-lg hover:scale-105 transition-all flex items-center gap-2 shrink-0"
+        >
+          <span>✍️</span>
+          <span>{isTamil ? 'கட்டுரைகள் ஸ்டுடியோ (Articles Studio)' : 'Open Articles Studio'}</span>
+        </button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -29628,9 +29641,9 @@ function AdminConsolePage({ onNavigate, onShowToast }) {
         </div>
 
         <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-md space-y-2">
-          <div className="text-xs font-bold text-slate-400 uppercase">Vercel Serverless</div>
-          <div className="text-xl font-black text-slate-900 dark:text-white">operation1-rho</div>
-          <div className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold">✓ Production Live</div>
+          <div className="text-xs font-bold text-slate-400 uppercase">Articles Storage</div>
+          <div className="text-xl font-black text-slate-900 dark:text-white">Supabase Storage</div>
+          <div className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold">✓ article-covers bucket</div>
         </div>
       </div>
 
@@ -29657,6 +29670,1430 @@ function AdminConsolePage({ onNavigate, onShowToast }) {
             {syncStatus}
           </div>
         )}
+      </div>
+    </div>
+  );
+}
+
+// ==================== 7. ARTICLES SYSTEM COMPONENTS ====================
+
+function RichTextEditor({
+  value = '',
+  onChange,
+  placeholder = 'Write your article content here...',
+  minHeight = '320px',
+  language = 'ta'
+}) {
+  const editorRef = useRef(null);
+  const [wordCount, setWordCount] = useState(0);
+  const [charCount, setCharCount] = useState(0);
+  const isTamil = language === 'ta';
+
+  useEffect(() => {
+    if (editorRef.current && editorRef.current.innerHTML !== value) {
+      if (document.activeElement !== editorRef.current) {
+        editorRef.current.innerHTML = value || '';
+        updateCounts(editorRef.current.innerText || '');
+      }
+    }
+  }, [value]);
+
+  const updateCounts = (text) => {
+    const clean = text.replace(/\s+/g, ' ').trim();
+    const chars = text.length;
+    const words = clean ? clean.split(/\s+/).length : 0;
+    setCharCount(chars);
+    setWordCount(words);
+  };
+
+  const handleInput = () => {
+    if (editorRef.current) {
+      const html = editorRef.current.innerHTML;
+      const text = editorRef.current.innerText || '';
+      updateCounts(text);
+      if (onChange) onChange(html);
+    }
+  };
+
+  const execute = (command, val = null) => {
+    if (editorRef.current) {
+      editorRef.current.focus();
+      document.execCommand(command, false, val);
+      handleInput();
+    }
+  };
+
+  const handleInsertLink = () => {
+    const url = prompt(isTamil ? 'இணைப்பு URL உள்ளிடவும் (https://...):' : 'Enter link URL (https://...):');
+    if (url) execute('createLink', url);
+  };
+
+  const handleInsertImage = () => {
+    const url = prompt(isTamil ? 'படத்தின் URL உள்ளிடவும் (https://...):' : 'Enter Image URL (https://...):');
+    if (url) execute('insertImage', url);
+  };
+
+  const handleFormatBlock = (tag) => {
+    execute('formatBlock', tag);
+  };
+
+  return (
+    <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-sm focus-within:border-amber-500 transition-colors">
+      <div className="flex flex-wrap items-center gap-1 p-2 bg-slate-50 dark:bg-slate-950/80 border-b border-slate-200 dark:border-slate-800 text-xs">
+        <button type="button" onClick={() => handleFormatBlock('<h2>')} title="Heading 2" className="px-2.5 py-1 font-bold rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300">H2</button>
+        <button type="button" onClick={() => handleFormatBlock('<h3>')} title="Heading 3" className="px-2.5 py-1 font-bold rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300">H3</button>
+        <button type="button" onClick={() => handleFormatBlock('<p>')} title="Paragraph" className="px-2.5 py-1 font-medium rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300">¶</button>
+        <span className="w-px h-4 bg-slate-300 dark:bg-slate-700 mx-1" />
+        <button type="button" onClick={() => execute('bold')} title="Bold (Ctrl+B)" className="w-7 h-7 font-black rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 flex items-center justify-center">B</button>
+        <button type="button" onClick={() => execute('italic')} title="Italic (Ctrl+I)" className="w-7 h-7 italic font-serif font-bold rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 flex items-center justify-center">I</button>
+        <button type="button" onClick={() => execute('underline')} title="Underline (Ctrl+U)" className="w-7 h-7 underline font-bold rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 flex items-center justify-center">U</button>
+        <button type="button" onClick={() => execute('strikeThrough')} title="Strikethrough" className="w-7 h-7 line-through font-bold rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 flex items-center justify-center">S</button>
+        <span className="w-px h-4 bg-slate-300 dark:bg-slate-700 mx-1" />
+        <button type="button" onClick={() => execute('insertUnorderedList')} title="Bullet List" className="px-2 py-1 font-bold rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300">• List</button>
+        <button type="button" onClick={() => execute('insertOrderedList')} title="Numbered List" className="px-2 py-1 font-bold rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300">1. List</button>
+        <button type="button" onClick={() => handleFormatBlock('<blockquote>')} title="Quote Block" className="px-2 py-1 font-serif font-black rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300">“ Quote</button>
+        <span className="w-px h-4 bg-slate-300 dark:bg-slate-700 mx-1" />
+        <button type="button" onClick={handleInsertLink} title="Insert Link" className="px-2 py-1 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-amber-600 dark:text-amber-400 font-bold">🔗 Link</button>
+        <button type="button" onClick={handleInsertImage} title="Insert Image" className="px-2 py-1 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold">🖼️ Image</button>
+        <span className="w-px h-4 bg-slate-300 dark:bg-slate-700 mx-1" />
+        <button type="button" onClick={() => execute('removeFormat')} title="Clear Formatting" className="px-2 py-1 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-500 text-[11px]">🧹 Clean</button>
+      </div>
+
+      <div
+        ref={editorRef}
+        contentEditable
+        onInput={handleInput}
+        onBlur={handleInput}
+        style={{ minHeight }}
+        data-placeholder={placeholder}
+        className="p-4 sm:p-6 outline-none prose prose-slate dark:prose-invert max-w-none text-sm leading-relaxed overflow-y-auto text-slate-900 dark:text-slate-100 selection:bg-amber-500 selection:text-white empty:before:content-[attr(data-placeholder)] empty:before:text-slate-400 empty:before:pointer-events-none"
+      />
+
+      <div className="flex items-center justify-between px-4 py-2 bg-slate-50/50 dark:bg-slate-950/40 border-t border-slate-100 dark:border-slate-800/80 text-[11px] text-slate-400 font-medium font-mono">
+        <span>{isTamil ? `${wordCount} சொற்கள்` : `${wordCount} words`} • {charCount} chars</span>
+        <span>⏱ ~{Math.max(1, Math.ceil(wordCount / (isTamil ? 130 : 180)))} {isTamil ? 'நிமிடம் வாசிக்க' : 'min read'}</span>
+      </div>
+    </div>
+  );
+}
+
+function ArticlesPage({ onNavigate, onShowToast }) {
+  const { language } = useLanguage();
+  const { session } = useAuth();
+  const isTamil = language === 'ta';
+
+  const [articles, setArticles] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [activeCategory, setActiveCategory] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState('newest');
+
+  const categories = [
+    { id: 'all', labelTa: 'அனைத்து கட்டுரைகள்', labelEn: 'All Articles' },
+    { id: 'mutual-fund', labelTa: '💰 மியூச்சுவல் ஃபண்ட்', labelEn: '💰 Mutual Funds' },
+    { id: 'stock-market', labelTa: '📈 பங்குச் சந்தை', labelEn: '📈 Stock Market' },
+    { id: 'personal-finance', labelTa: '💡 தனிநபர் நிதி & SIP', labelEn: '💡 Personal Finance' },
+    { id: 'financial-education', labelTa: '🎓 நிதி அறிவு & வழிகாட்டி', labelEn: '🎓 Financial Education' }
+  ];
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchArticles = async () => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const token = session?.access_token || '';
+        const res = await fetch(`/api/articles?category=${activeCategory}&search=${encodeURIComponent(searchQuery)}&sort=${sortBy}&limit=50`, {
+          headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+        });
+
+        if (!res.ok) throw new Error(`Failed to load articles (${res.status})`);
+        const data = await res.json();
+        if (isMounted) setArticles(data.data || []);
+      } catch (err) {
+        console.error('Error fetching articles:', err);
+        if (isMounted) setError(err.message);
+      } finally {
+        if (isMounted) setIsLoading(false);
+      }
+    };
+
+    fetchArticles();
+    return () => { isMounted = false; };
+  }, [session, activeCategory, searchQuery, sortBy]);
+
+  return (
+    <div className="min-h-screen pb-20 space-y-8 animate-fadeIn">
+      <div className="bg-slate-950 text-white border-b border-slate-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+          <div className="max-w-3xl space-y-3">
+            <span className="px-3 py-1 text-[10px] font-black uppercase tracking-wider rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30">
+              {isTamil ? 'செய்திக் கட்டுரைகள்' : 'EDITORIAL & ARTICLES'}
+            </span>
+            <h1 className="text-3xl sm:text-5xl font-black font-serif text-white tracking-tight leading-tight">
+              {isTamil ? 'முதலீட்டு ஆய்வுக் கட்டுரைகள்' : 'In-Depth Investment Articles'}
+            </h1>
+            <p className="text-sm sm:text-base text-slate-300 font-medium leading-relaxed">
+              {isTamil
+                ? 'பட்ஜெட் பத்மநாபன் CFP® மற்றும் நிபுணர்களின் பிரத்யேக மியூச்சுவல் ஃபண்ட், பங்குச் சந்தை மற்றும் தனிநபர் நிதி ஆழமான ஆய்வுக் கட்டுரைகள்.'
+                : 'Exclusive original investment insights, mutual fund analyses, tax-saving strategies, and financial guidance written directly by Certified Financial Planner Padmanaban B.'}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="sticky top-16 z-30 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm py-3">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+            {categories.map(cat => {
+              const isActive = activeCategory === cat.id;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setActiveCategory(cat.id)}
+                  className={`px-4 py-2 rounded-full text-xs font-extrabold whitespace-nowrap transition-all duration-200 shrink-0 ${
+                    isActive
+                      ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-950 shadow-md scale-105'
+                      : 'bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200/60 dark:border-slate-800'
+                  }`}
+                >
+                  {isTamil ? cat.labelTa : cat.labelEn}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+          <div className="relative flex-1">
+            <svg className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              placeholder={isTamil ? "கட்டுரைகளில் தேடுங்கள் (எ.கா: SIP, Nifty, Tax, Index)..." : "Search articles by title or keyword..."}
+              className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white placeholder-slate-400 text-xs sm:text-sm font-medium focus:outline-none focus:border-amber-500"
+            />
+            {searchQuery && (
+              <button onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">✕</button>
+            )}
+          </div>
+
+          <div className="flex items-center gap-2 shrink-0">
+            <span className="text-xs text-slate-500 font-bold hidden sm:inline">{isTamil ? 'வரிசைப்படுத்து:' : 'Sort by:'}</span>
+            <select
+              value={sortBy}
+              onChange={e => setSortBy(e.target.value)}
+              className="px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold focus:outline-none focus:border-amber-500"
+            >
+              <option value="newest">{isTamil ? 'சமீபத்தியவை' : 'Latest First'}</option>
+              <option value="read_time">{isTamil ? 'ஆழமான வாசிப்பு (நீளமானது)' : 'Longest Read Time'}</option>
+              <option value="oldest">{isTamil ? 'பழையவை' : 'Oldest First'}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {isLoading ? (
+          <div className="py-20 text-center space-y-3">
+            <div className="w-10 h-10 border-4 border-amber-500 border-t-transparent rounded-full animate-spin mx-auto" />
+            <p className="text-xs font-bold text-slate-500">{isTamil ? 'கட்டுரைகள் ஏற்றப்படுகின்றன...' : 'Loading published articles...'}</p>
+          </div>
+        ) : error ? (
+          <div className="p-8 text-center bg-red-500/10 rounded-3xl border border-red-500/30 text-red-600 text-xs font-bold max-w-lg mx-auto">
+            ⚠️ {error}
+          </div>
+        ) : articles.length === 0 ? (
+          <div className="py-20 text-center space-y-3 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-8">
+            <div className="text-4xl">📰</div>
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+              {isTamil ? 'கட்டுரைகள் எதுவும் கிடைக்கவில்லை' : 'No Articles Found'}
+            </h3>
+            <p className="text-xs text-slate-500 max-w-sm mx-auto">
+              {isTamil ? 'உங்கள் தேடல் வார்த்தையை மாற்றவும் அல்லது அனைத்து பிரிவுகளையும் பார்வையிடவும்.' : 'Try adjusting your search criteria or explore other categories.'}
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {articles.map((article) => {
+              const title = isTamil ? article.titleTamil : (article.titleEnglish || article.titleTamil);
+              const excerpt = isTamil ? article.excerptTamil : (article.excerptEnglish || article.excerptTamil);
+              const formattedDate = article.publishedAt
+                ? new Intl.DateTimeFormat(isTamil ? 'ta-IN' : 'en-IN', { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(article.publishedAt))
+                : '';
+
+              return (
+                <article
+                  key={article.id}
+                  onClick={() => onNavigate(`#/articles/${article.slug}`)}
+                  className="group bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:shadow-xl hover:border-amber-500/40 transition-all duration-300 cursor-pointer flex flex-col justify-between"
+                >
+                  <div className="space-y-4">
+                    <div className="relative aspect-[16/9] overflow-hidden bg-slate-950">
+                      <img
+                        src={article.coverImage || '/favicon.svg'}
+                        alt={title}
+                        loading="lazy"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        onError={(e) => { e.target.src = '/favicon.svg'; }}
+                      />
+                      <span className="absolute top-3 left-3 px-2.5 py-0.5 text-[10px] font-extrabold uppercase rounded-md bg-slate-950/85 text-amber-400 backdrop-blur-md">
+                        {(article.category || 'FINANCE').replace('-', ' ')}
+                      </span>
+                      <span className="absolute top-3 right-3 px-2 py-0.5 text-[9px] font-black uppercase rounded-md bg-amber-600 text-white">
+                        ✍️ ORIGINAL
+                      </span>
+                    </div>
+
+                    <div className="p-5 space-y-3">
+                      <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors line-clamp-2 font-serif leading-snug">
+                        {title}
+                      </h3>
+                      {excerpt && (
+                        <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed font-medium">
+                          {excerpt}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="px-5 pb-5 pt-2 flex items-center justify-between border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-500 dark:text-slate-400 font-semibold">
+                    <div className="flex items-center gap-2">
+                      <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-amber-500 to-red-600 text-white font-black text-[9px] flex items-center justify-center">
+                        BP
+                      </div>
+                      <span>{article.authorName || 'Budget Padmanaban'}</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span>{formattedDate}</span>
+                      <span className="font-mono text-amber-600 dark:text-amber-400 font-bold">
+                        ⏱ {article.readTimeMinutes} {isTamil ? 'நிமிடம்' : 'min'}
+                      </span>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
+  const { language } = useLanguage();
+  const { session } = useAuth();
+  const isTamil = language === 'ta';
+
+  const [article, setArticle] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight > 0) {
+        const progress = Math.min(100, Math.max(0, (window.scrollY / totalHeight) * 100));
+        setScrollProgress(progress);
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchArticle = async () => {
+      if (!slug) return;
+      setIsLoading(true);
+      setError(null);
+      try {
+        const token = session?.access_token || '';
+        const res = await fetch(`/api/articles/${encodeURIComponent(slug)}`, {
+          headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+        });
+
+        if (!res.ok) {
+          throw new Error(res.status === 404 ? (isTamil ? 'கட்டுரை கிடைக்கவில்லை' : 'Article not found') : 'Failed to load article');
+        }
+
+        const data = await res.json();
+        if (isMounted) setArticle(data.data);
+      } catch (err) {
+        console.error('Error loading article:', err);
+        if (isMounted) setError(err.message);
+      } finally {
+        if (isMounted) setIsLoading(false);
+      }
+    };
+
+    fetchArticle();
+    return () => { isMounted = false; };
+  }, [slug, session, isTamil]);
+
+  useEffect(() => {
+    if (!article) return;
+
+    const title = isTamil ? article.titleTamil : (article.titleEnglish || article.titleTamil);
+    const excerpt = isTamil ? article.excerptTamil : (article.excerptEnglish || article.excerptTamil);
+
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = `jsonld-article-${article.slug}`;
+    script.text = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'NewsArticle',
+      'headline': title,
+      'description': excerpt,
+      'image': [article.coverImage || `${window.location.origin}/favicon.svg`],
+      'datePublished': article.publishedAt,
+      'dateModified': article.updatedAt || article.publishedAt,
+      'author': [{
+        '@type': 'Person',
+        'name': article.authorName || 'Budget Padmanaban',
+        'jobTitle': 'Certified Financial Planner (CFP®)',
+        'url': 'https://www.youtube.com/@budgetpadmanaban_'
+      }],
+      'publisher': {
+        '@type': 'Organization',
+        'name': 'Muthaleetu Thisai',
+        'logo': { '@type': 'ImageObject', 'url': `${window.location.origin}/favicon.svg` }
+      },
+      'mainEntityOfPage': { '@type': 'WebPage', '@id': `${window.location.origin}/#/articles/${article.slug}` }
+    });
+
+    document.head.appendChild(script);
+    return () => {
+      const existing = document.getElementById(`jsonld-article-${article.slug}`);
+      if (existing) existing.remove();
+    };
+  }, [article, isTamil]);
+
+  const handleShare = (platform) => {
+    const url = window.location.href;
+    const title = article ? (isTamil ? article.titleTamil : article.titleEnglish) : 'Muthaleetu Thisai';
+
+    if (platform === 'copy') {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(url);
+        if (onShowToast) onShowToast(isTamil ? 'லிங்க் நகலெடுக்கப்பட்டது!' : 'Article link copied to clipboard!');
+      }
+    } else if (platform === 'whatsapp') {
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(`${title} - ${url}`)}`, '_blank');
+    } else if (platform === 'twitter') {
+      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`, '_blank');
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen py-24 text-center space-y-4">
+        <div className="w-12 h-12 border-4 border-amber-500 border-t-transparent rounded-full animate-spin mx-auto" />
+        <p className="text-sm font-bold text-slate-500">{isTamil ? 'கட்டுரை ஏற்றப்படுகிறது...' : 'Loading article...'}</p>
+      </div>
+    );
+  }
+
+  if (error || !article) {
+    return (
+      <div className="max-w-2xl mx-auto my-16 p-8 text-center bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-4 shadow-xl">
+        <div className="text-4xl">📄</div>
+        <h2 className="text-xl font-bold text-slate-900 dark:text-white">
+          {error || (isTamil ? 'கட்டுரை கிடைக்கவில்லை' : 'Article Not Found')}
+        </h2>
+        <p className="text-xs text-slate-500">
+          {isTamil ? 'இந்தக் கட்டுரை நீக்கப்பட்டிருக்கலாம் அல்லது வெளியிடப்படாமல் இருக்கலாம்.' : 'The article may have been removed or is currently unpublished.'}
+        </p>
+        <button
+          onClick={() => onNavigate('#/articles')}
+          className="px-6 py-2.5 rounded-full bg-amber-600 hover:bg-amber-500 text-white font-extrabold text-xs shadow-lg transition-all"
+        >
+          ← {isTamil ? 'கட்டுரைகள் பக்கத்திற்குத் திரும்பு' : 'Back to Articles'}
+        </button>
+      </div>
+    );
+  }
+
+  const title = isTamil ? article.titleTamil : (article.titleEnglish || article.titleTamil);
+  const excerpt = isTamil ? article.excerptTamil : (article.excerptEnglish || article.excerptTamil);
+  const body = isTamil ? article.bodyTamil : (article.bodyEnglish || article.bodyTamil);
+  const formattedDate = article.publishedAt
+    ? new Intl.DateTimeFormat(isTamil ? 'ta-IN' : 'en-IN', { month: 'long', day: 'numeric', year: 'numeric' }).format(new Date(article.publishedAt))
+    : '';
+
+  return (
+    <div className="min-h-screen pb-24 animate-fadeIn relative">
+      <div className="fixed top-0 left-0 right-0 h-1.5 bg-slate-200 dark:bg-slate-800 z-50">
+        <div
+          className="h-full bg-gradient-to-r from-amber-500 to-amber-600 transition-all duration-150"
+          style={{ width: `${scrollProgress}%` }}
+        />
+      </div>
+
+      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12 space-y-8">
+        <div className="flex items-center justify-between">
+          <button
+            onClick={() => onNavigate('#/articles')}
+            className="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
+          >
+            ← {isTamil ? 'அனைத்து கட்டுரைகள்' : 'All Articles'}
+          </button>
+          <span className="px-3 py-1 text-[10px] font-black uppercase tracking-wider rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/30">
+            {(article.category || 'FINANCE').replace('-', ' ')}
+          </span>
+        </div>
+
+        <div className="space-y-4">
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white font-serif leading-tight sm:leading-snug">
+            {title}
+          </h1>
+
+          {excerpt && (
+            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 font-medium leading-relaxed border-l-4 border-amber-500 pl-4 py-1 italic">
+              {excerpt}
+            </p>
+          )}
+
+          <div className="flex flex-wrap items-center justify-between gap-4 py-4 border-t border-b border-slate-200 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-500 to-red-600 text-white font-black text-xs flex items-center justify-center shadow">
+                BP
+              </div>
+              <div>
+                <div className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+                  <span>{article.authorName || 'Budget Padmanaban'}</span>
+                  <span className="text-blue-500 font-bold" title="Verified Creator">✓</span>
+                </div>
+                <div className="text-[11px] text-slate-400">CFP® Certified Financial Planner</div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-4 text-xs font-semibold">
+              <span>📅 {formattedDate}</span>
+              <span className="font-mono text-amber-600 dark:text-amber-400 font-bold">
+                ⏱ {article.readTimeMinutes} {isTamil ? 'நிமிடம் வாசிக்க' : 'min read'}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {article.coverImage && (
+          <div className="relative aspect-[16/9] rounded-3xl overflow-hidden shadow-2xl bg-slate-950 border border-slate-200 dark:border-slate-800">
+            <img src={article.coverImage} alt={title} className="w-full h-full object-cover" onError={(e) => { e.target.style.display = 'none'; }} />
+          </div>
+        )}
+
+        <div
+          className="prose prose-slate dark:prose-invert lg:prose-lg max-w-none text-slate-800 dark:text-slate-200 leading-relaxed font-normal text-base sm:text-lg selection:bg-amber-500 selection:text-white"
+          dangerouslySetInnerHTML={{ __html: body }}
+        />
+
+        {article.tags && article.tags.length > 0 && (
+          <div className="pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-wrap items-center gap-2">
+            <span className="text-xs font-bold text-slate-400">{isTamil ? 'குறிச்சொற்கள்:' : 'Tags:'}</span>
+            {article.tags.map((tag, idx) => (
+              <span key={idx} className="px-3 py-1 text-xs rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium">
+                #{tag}
+              </span>
+            ))}
+          </div>
+        )}
+
+        <div className="p-6 rounded-3xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+            <h4 className="text-sm font-black text-slate-900 dark:text-white font-serif">
+              {isTamil ? 'இந்தக் கட்டுரையைப் பகிருங்கள்' : 'Share this investment analysis'}
+            </h4>
+            <p className="text-xs text-slate-500">
+              {isTamil ? 'உங்கள் நண்பர்கள் மற்றும் குடும்பத்தினருடன் அறிவைப் பகிருங்கள்.' : 'Help friends and family take informed investment decisions.'}
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button onClick={() => handleShare('whatsapp')} className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow transition-colors flex items-center gap-1.5">
+              WhatsApp
+            </button>
+            <button onClick={() => handleShare('twitter')} className="px-4 py-2 rounded-xl bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 text-white font-bold text-xs shadow transition-colors flex items-center gap-1.5 border border-slate-700">
+              X / Twitter
+            </button>
+            <button onClick={() => handleShare('copy')} className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs shadow transition-colors">
+              🔗 {isTamil ? 'நகலெடு' : 'Copy'}
+            </button>
+          </div>
+        </div>
+
+        <div className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row items-center gap-6">
+          <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-amber-500 via-red-600 to-amber-400 p-1 shadow-lg shrink-0">
+            <div className="w-full h-full rounded-full bg-slate-900 flex items-center justify-center font-black text-xl text-white">BP</div>
+          </div>
+          <div className="space-y-2 text-center sm:text-left">
+            <div className="flex items-center justify-center sm:justify-start gap-2">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white">Budget Padmanaban (Padmanaban B)</h3>
+              <span className="px-2 py-0.5 text-[10px] font-black uppercase rounded bg-amber-500/10 text-amber-700 dark:text-amber-400">CFP®</span>
+            </div>
+            <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+              {isTamil
+                ? 'பட்ஜெட் பத்மநாபன் CFP® சான்றளிக்கப்பட்ட நிதி திட்டமிடுபவர். மியூச்சுவல் ஃபண்ட், ஓய்வூதியத் திட்டமிடல், வரி சேமிப்பு மற்றும் தனிநபர் நிதி மேலாண்மையில் 10+ ஆண்டுகளுக்கும் மேலான அனுபவம் கொண்டவர்.'
+                : 'Certified Financial Planner (CFP®) dedicated to simplifying Mutual Funds, Personal Finance, and Long-Term Wealth Creation for Tamil investors.'}
+            </p>
+          </div>
+        </div>
+      </article>
+    </div>
+  );
+}
+
+function AdminArticlesPage({ onNavigate, onShowToast }) {
+  const { language } = useLanguage();
+  const { session, role } = useAuth();
+  const isTamil = language === 'ta';
+
+  const [articles, setArticles] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [search, setSearch] = useState('');
+  const [deletingId, setDeletingId] = useState(null);
+
+  const fetchArticles = async () => {
+    setIsLoading(true);
+    try {
+      const token = session?.access_token || '';
+      const res = await fetch(`/api/admin/articles?status=${statusFilter}&search=${encodeURIComponent(search)}&limit=100`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const data = await res.json();
+      setArticles(data.data || []);
+    } catch (err) {
+      console.error('Failed to load admin articles:', err);
+      if (onShowToast) onShowToast(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (role === 'admin') {
+      fetchArticles();
+    }
+  }, [session, role, statusFilter, search]);
+
+  const handleDelete = async (id, title) => {
+    if (!window.confirm(isTamil ? `இந்தக் கட்டுரையை நிச்சயமாக நீக்க விரும்புகிறீர்களா?\n"${title}"` : `Are you sure you want to delete this article?\n"${title}"`)) {
+      return;
+    }
+
+    setDeletingId(id);
+    try {
+      const token = session?.access_token || '';
+      const res = await fetch(`/api/admin/articles/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+
+      if (!res.ok) throw new Error('Failed to delete article');
+      if (onShowToast) onShowToast(isTamil ? 'கட்டுரை நீக்கப்பட்டது' : 'Article deleted successfully');
+      setArticles(prev => prev.filter(a => a.id !== id));
+    } catch (err) {
+      if (onShowToast) onShowToast(`Error: ${err.message}`);
+    } finally {
+      setDeletingId(null);
+    }
+  };
+
+  const handleTogglePublish = async (article) => {
+    const newStatus = article.status === 'published' ? 'draft' : 'published';
+    try {
+      const token = session?.access_token || '';
+      const res = await fetch(`/api/admin/articles/${article.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ status: newStatus })
+      });
+
+      if (!res.ok) throw new Error('Failed to update status');
+      const data = await res.json();
+
+      setArticles(prev => prev.map(a => a.id === article.id ? data.data : a));
+      if (onShowToast) {
+        onShowToast(newStatus === 'published' ? (isTamil ? 'வெளியிடப்பட்டது!' : 'Published live!') : (isTamil ? 'வரைவாக மாற்றப்பட்டது' : 'Reverted to draft'));
+      }
+    } catch (err) {
+      if (onShowToast) onShowToast(err.message);
+    }
+  };
+
+  if (role !== 'admin') return null;
+
+  const publishedCount = articles.filter(a => a.status === 'published').length;
+  const draftCount = articles.filter(a => a.status === 'draft').length;
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 animate-fadeIn">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
+        <div>
+          <div className="flex items-center gap-2">
+            <span className="px-3 py-1 text-[10px] font-black uppercase tracking-wider rounded-full bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20">
+              ADMIN ARTICLE STUDIO
+            </span>
+            <button
+              onClick={() => onNavigate('#/admin')}
+              className="text-xs text-slate-500 hover:text-amber-600 dark:hover:text-amber-400 underline font-semibold"
+            >
+              ← YouTube Ingestion Console
+            </button>
+          </div>
+          <h1 className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white font-serif mt-2">
+            {isTamil ? 'கட்டுரைகள் மேலாண்மை' : 'Articles & Content Studio'}
+          </h1>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+            {isTamil ? 'அசல் கட்டுரைகளை எழுதுங்கள், திருத்துங்கள், மொழிபெயர்த்து உடனே வெளியிடுங்கள்.' : 'Create, rich-text edit, auto-translate, and publish original articles directly to Supabase.'}
+          </p>
+        </div>
+
+        <button
+          onClick={() => onNavigate('#/admin/articles/new')}
+          className="px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs sm:text-sm shadow-xl hover:scale-105 transition-all flex items-center gap-2 shrink-0"
+        >
+          <span>✍️</span>
+          <span>{isTamil ? 'புதிய கட்டுரை எழுதுக' : '+ Write New Article'}</span>
+        </button>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+          <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">{isTamil ? 'மொத்த கட்டுரைகள்' : 'Total Articles'}</span>
+          <div className="text-2xl font-black text-slate-900 dark:text-white font-mono">{articles.length}</div>
+        </div>
+
+        <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+          <span className="text-[10px] font-black uppercase tracking-wider text-emerald-600 dark:text-emerald-400">{isTamil ? 'வெளியிடப்பட்டவை' : 'Published Live'}</span>
+          <div className="text-2xl font-black text-emerald-600 dark:text-emerald-400 font-mono">{publishedCount}</div>
+        </div>
+
+        <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+          <span className="text-[10px] font-black uppercase tracking-wider text-amber-600 dark:text-amber-400">{isTamil ? 'வரைவுகள் (Drafts)' : 'Saved Drafts'}</span>
+          <div className="text-2xl font-black text-amber-600 dark:text-amber-400 font-mono">{draftCount}</div>
+        </div>
+      </div>
+
+      <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-2">
+          <span className="text-xs font-bold text-slate-500">{isTamil ? 'நிலை:' : 'Status:'}</span>
+          <button onClick={() => setStatusFilter('all')} className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${statusFilter === 'all' ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-950' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`}>All ({articles.length})</button>
+          <button onClick={() => setStatusFilter('published')} className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${statusFilter === 'published' ? 'bg-emerald-600 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`}>Published</button>
+          <button onClick={() => setStatusFilter('draft')} className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${statusFilter === 'draft' ? 'bg-amber-600 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`}>Drafts</button>
+        </div>
+
+        <div className="relative flex-1 max-w-sm">
+          <input
+            type="text"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder={isTamil ? "கட்டுரைகளைத் தேடுக..." : "Search articles..."}
+            className="w-full pl-4 pr-10 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+          />
+          {search && <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400">✕</button>}
+        </div>
+      </div>
+
+      <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden">
+        {isLoading ? (
+          <div className="py-20 text-center space-y-3">
+            <div className="w-8 h-8 border-4 border-amber-500 border-t-transparent rounded-full animate-spin mx-auto" />
+            <p className="text-xs font-bold text-slate-500">Loading articles...</p>
+          </div>
+        ) : articles.length === 0 ? (
+          <div className="py-16 text-center space-y-3">
+            <div className="text-3xl">📝</div>
+            <h3 className="text-base font-bold text-slate-900 dark:text-white">
+              {isTamil ? 'கட்டுரைகள் எதுவும் இல்லை' : 'No Articles Found'}
+            </h3>
+            <button
+              onClick={() => onNavigate('#/admin/articles/new')}
+              className="px-5 py-2.5 rounded-xl bg-amber-600 text-white font-bold text-xs hover:bg-amber-500 transition-colors shadow"
+            >
+              {isTamil ? 'முதல் கட்டுரையை எழுதுங்கள்' : 'Write Your First Article'}
+            </button>
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs">
+              <thead className="bg-slate-50 dark:bg-slate-950 text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider text-[10px] border-b border-slate-200 dark:border-slate-800">
+                <tr>
+                  <th className="px-6 py-4">Article</th>
+                  <th className="px-6 py-4">Category</th>
+                  <th className="px-6 py-4">Read Time</th>
+                  <th className="px-6 py-4">Status</th>
+                  <th className="px-6 py-4">Date</th>
+                  <th className="px-6 py-4 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-medium">
+                {articles.map(article => (
+                  <tr key={article.id} className="hover:bg-slate-50/60 dark:hover:bg-slate-800/40 transition-colors">
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-3">
+                        <img
+                          src={article.coverImage || '/favicon.svg'}
+                          alt=""
+                          className="w-12 h-12 rounded-xl object-cover bg-slate-950 shrink-0 border border-slate-200 dark:border-slate-800"
+                          onError={(e) => { e.target.src = '/favicon.svg'; }}
+                        />
+                        <div className="min-w-0 max-w-md">
+                          <div className="font-bold text-slate-900 dark:text-white truncate font-serif text-sm">
+                            {article.titleTamil}
+                          </div>
+                          {article.titleEnglish && (
+                            <div className="text-[11px] text-slate-400 truncate">
+                              EN: {article.titleEnglish}
+                            </div>
+                          )}
+                          <div className="text-[10px] font-mono text-slate-400 mt-0.5">
+                            /{article.slug}
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+
+                    <td className="px-6 py-4">
+                      <span className="px-2.5 py-1 rounded-md text-[10px] font-extrabold uppercase bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                        {article.category}
+                      </span>
+                    </td>
+
+                    <td className="px-6 py-4 font-mono text-slate-500 dark:text-slate-400">
+                      ⏱ {article.readTimeMinutes} min
+                    </td>
+
+                    <td className="px-6 py-4">
+                      <button
+                        onClick={() => handleTogglePublish(article)}
+                        title="Click to toggle publish/draft status"
+                        className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider transition-all ${
+                          article.status === 'published'
+                            ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/25'
+                            : 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 hover:bg-amber-500/25'
+                        }`}
+                      >
+                        {article.status === 'published' ? '● Published' : '○ Draft'}
+                      </button>
+                    </td>
+
+                    <td className="px-6 py-4 text-slate-500 text-[11px] whitespace-nowrap">
+                      {article.publishedAt ? new Date(article.publishedAt).toLocaleDateString() : 'Unpublished'}
+                    </td>
+
+                    <td className="px-6 py-4 text-right">
+                      <div className="flex items-center justify-end gap-2">
+                        {article.status === 'published' && (
+                          <button
+                            onClick={() => onNavigate(`#/articles/${article.slug}`)}
+                            title="View live article"
+                            className="p-2 rounded-xl text-slate-400 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                          >
+                            👁️
+                          </button>
+                        )}
+                        <button
+                          onClick={() => onNavigate(`#/admin/articles/edit/${article.id}`)}
+                          title="Edit article"
+                          className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-amber-600 hover:text-white text-slate-700 dark:text-slate-300 font-bold transition-all"
+                        >
+                          ✏️ Edit
+                        </button>
+                        <button
+                          onClick={() => handleDelete(article.id, article.titleTamil)}
+                          disabled={deletingId === article.id}
+                          title="Delete article"
+                          className="p-2 rounded-xl text-red-500 hover:bg-red-500/10 transition-colors disabled:opacity-50"
+                        >
+                          🗑️
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
+  const { language } = useLanguage();
+  const { session, role, supabase } = useAuth();
+  const isTamil = language === 'ta';
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [isTranslating, setIsTranslating] = useState(false);
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
+  const [error, setError] = useState('');
+
+  const [titleTa, setTitleTa] = useState('');
+  const [titleEn, setTitleEn] = useState('');
+  const [slug, setSlug] = useState('');
+  const [isSlugManual, setIsSlugManual] = useState(false);
+  const [excerptTa, setExcerptTa] = useState('');
+  const [excerptEn, setExcerptEn] = useState('');
+  const [bodyTa, setBodyTa] = useState('');
+  const [bodyEn, setBodyEn] = useState('');
+  const [coverImageUrl, setCoverImageUrl] = useState('');
+  const [category, setCategory] = useState('mutual-fund');
+  const [tagsInput, setTagsInput] = useState('');
+  const [status, setStatus] = useState('draft');
+  const [activeTab, setActiveTab] = useState('ta');
+
+  const slugify = (text) => {
+    return (text || '')
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, '')
+      .replace(/[\s_-]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+  };
+
+  const handleTitleTaChange = (e) => {
+    const val = e.target.value;
+    setTitleTa(val);
+    if (!isSlugManual && (!articleId || articleId === 'new')) {
+      const generated = slugify(titleEn || val);
+      if (generated) setSlug(generated);
+    }
+  };
+
+  const handleTitleEnChange = (e) => {
+    const val = e.target.value;
+    setTitleEn(val);
+    if (!isSlugManual && (!articleId || articleId === 'new')) {
+      const generated = slugify(val);
+      if (generated) setSlug(generated);
+    }
+  };
+
+  useEffect(() => {
+    if (!articleId || articleId === 'new') return;
+
+    let isMounted = true;
+    const loadArticle = async () => {
+      setIsLoading(true);
+      try {
+        const token = session?.access_token || '';
+        const res = await fetch(`/api/admin/articles/${articleId}`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (!res.ok) throw new Error('Failed to load article details');
+        const data = await res.json();
+        const a = data.data;
+
+        if (isMounted && a) {
+          setTitleTa(a.title_ta || a.titleTamil || '');
+          setTitleEn(a.title_en || a.titleEnglish || '');
+          setSlug(a.slug || '');
+          setIsSlugManual(true);
+          setExcerptTa(a.excerpt_ta || a.excerptTamil || '');
+          setExcerptEn(a.excerpt_en || a.excerptEnglish || '');
+          setBodyTa(a.body_ta || a.bodyTamil || '');
+          setBodyEn(a.body_en || a.bodyEnglish || '');
+          setCoverImageUrl(a.cover_image_url || a.coverImage || '');
+          setCategory(a.category || 'mutual-fund');
+          setTagsInput(Array.isArray(a.tags) ? a.tags.join(', ') : '');
+          setStatus(a.status || 'draft');
+        }
+      } catch (err) {
+        if (isMounted) setError(err.message);
+      } finally {
+        if (isMounted) setIsLoading(false);
+      }
+    };
+
+    loadArticle();
+    return () => { isMounted = false; };
+  }, [articleId, session]);
+
+  const handleCoverUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploadingImage(true);
+    setError('');
+
+    try {
+      if (supabase && supabase.storage) {
+        const fileExt = file.name.split('.').pop();
+        const fileName = `cover_${Date.now()}_${Math.random().toString(36).substring(2, 8)}.${fileExt}`;
+        const filePath = `${fileName}`;
+
+        const { data, error: uploadError } = await supabase.storage
+          .from('article-covers')
+          .upload(filePath, file, { cacheControl: '3600', upsert: true });
+
+        if (uploadError) throw uploadError;
+
+        const { data: publicUrlData } = supabase.storage
+          .from('article-covers')
+          .getPublicUrl(filePath);
+
+        if (publicUrlData && publicUrlData.publicUrl) {
+          setCoverImageUrl(publicUrlData.publicUrl);
+          if (onShowToast) onShowToast(isTamil ? 'படம் பதிவேற்றப்பட்டது!' : 'Cover image uploaded!');
+          setIsUploadingImage(false);
+          return;
+        }
+      }
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        setCoverImageUrl(reader.result);
+        if (onShowToast) onShowToast('Image loaded');
+        setIsUploadingImage(false);
+      };
+      reader.readAsDataURL(file);
+
+    } catch (err) {
+      console.error('Image upload failed:', err);
+      setError(`Image upload error: ${err.message}`);
+      setIsUploadingImage(false);
+    }
+  };
+
+  const handleAutoTranslate = async () => {
+    if (!titleTa && !bodyTa) {
+      setError(isTamil ? 'மொழிபெயர்க்க தலைப்பு அல்லது உள்ளடக்கத்தை உள்ளிடவும்.' : 'Please enter a Tamil title or body to translate.');
+      return;
+    }
+
+    setIsTranslating(true);
+    setError('');
+
+    try {
+      const token = session?.access_token || '';
+      const res = await fetch('/api/translate', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          title_ta: titleTa,
+          excerpt_ta: excerptTa,
+          body_ta: bodyTa
+        })
+      });
+
+      if (!res.ok) throw new Error('Translation API request failed');
+
+      const result = await res.json();
+      if (result.data) {
+        if (result.data.title_en) {
+          setTitleEn(result.data.title_en);
+          if (!slug || !isSlugManual) {
+            setSlug(slugify(result.data.title_en));
+          }
+        }
+        if (result.data.excerpt_en) setExcerptEn(result.data.excerpt_en);
+        if (result.data.body_en) setBodyEn(result.data.body_en);
+
+        setActiveTab('en');
+        if (onShowToast) onShowToast(isTamil ? 'ஆங்கில மொழிபெயர்ப்பு உருவாக்கப்பட்டது! சரிபார்க்கவும்.' : 'English translation generated! Please review.');
+      }
+    } catch (err) {
+      console.error('Auto-translate error:', err);
+      setError(`Translation error: ${err.message}`);
+    } finally {
+      setIsTranslating(false);
+    }
+  };
+
+  const handleSave = async (publishNow = false) => {
+    setError('');
+
+    if (!titleTa || !titleTa.trim()) {
+      setError(isTamil ? 'தமிழ் தலைப்பு அவசியம்.' : 'Tamil Title is required.');
+      return;
+    }
+
+    if (!bodyTa || !bodyTa.trim() || bodyTa === '<p><br></p>') {
+      setError(isTamil ? 'தமிழ் உள்ளடக்கம் அவசியம்.' : 'Tamil Article Body is required.');
+      return;
+    }
+
+    let finalSlug = slug ? slugify(slug) : slugify(titleEn || titleTa);
+    if (!finalSlug) finalSlug = `article-${Date.now()}`;
+
+    const tags = tagsInput
+      .split(',')
+      .map(t => t.trim())
+      .filter(Boolean);
+
+    const payload = {
+      slug: finalSlug,
+      title_ta: titleTa.trim(),
+      title_en: titleEn.trim() || null,
+      excerpt_ta: excerptTa.trim() || null,
+      excerpt_en: excerptEn.trim() || null,
+      body_ta: bodyTa,
+      body_en: bodyEn || null,
+      cover_image_url: coverImageUrl || null,
+      category,
+      tags,
+      status: publishNow ? 'published' : 'draft'
+    };
+
+    setIsLoading(true);
+
+    try {
+      const token = session?.access_token || '';
+      const isEditing = articleId && articleId !== 'new';
+      const endpoint = isEditing ? `/api/admin/articles/${articleId}` : '/api/admin/articles';
+      const method = isEditing ? 'PUT' : 'POST';
+
+      const res = await fetch(endpoint, {
+        method,
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to save article');
+
+      if (onShowToast) {
+        onShowToast(publishNow ? (isTamil ? 'கட்டுரை உடனடியாக வெளியிடப்பட்டது! 🎉' : 'Article published live! 🎉') : (isTamil ? 'வரைவு சேமிக்கப்பட்டது.' : 'Article draft saved.'));
+      }
+
+      if (publishNow && data.data?.slug) {
+        onNavigate(`#/articles/${data.data.slug}`);
+      } else {
+        onNavigate('#/admin/articles');
+      }
+
+    } catch (err) {
+      console.error('Save article error:', err);
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (role !== 'admin') return null;
+
+  return (
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 animate-fadeIn">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
+        <div>
+          <button
+            onClick={() => onNavigate('#/admin/articles')}
+            className="text-xs font-bold text-slate-500 hover:text-amber-600 dark:hover:text-amber-400 transition-colors inline-flex items-center gap-1"
+          >
+            ← {isTamil ? 'கட்டுரைகள் பட்டியலுக்குத் திரும்பு' : 'Back to Articles Studio'}
+          </button>
+          <h1 className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white font-serif mt-2">
+            {articleId && articleId !== 'new' ? (isTamil ? 'கட்டுரையைத் திருத்துக' : 'Edit Article') : (isTamil ? 'புதிய கட்டுரை எழுதுக' : 'Write New Article')}
+          </h1>
+        </div>
+
+        <div className="flex items-center gap-3 shrink-0">
+          <button
+            type="button"
+            onClick={() => handleSave(false)}
+            disabled={isLoading}
+            className="px-5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs transition-all shadow-sm disabled:opacity-50"
+          >
+            💾 {isTamil ? 'வரைவாகச் சேமி (Draft)' : 'Save Draft'}
+          </button>
+          <button
+            type="button"
+            onClick={() => handleSave(true)}
+            disabled={isLoading}
+            className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs shadow-lg hover:scale-105 transition-all disabled:opacity-50 flex items-center gap-1.5"
+          >
+            <span>🚀</span>
+            <span>{isTamil ? 'உடனே வெளியிடு (Publish Live)' : 'Publish Live'}</span>
+          </button>
+        </div>
+      </div>
+
+      {error && (
+        <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-600 text-xs font-bold flex items-center gap-2">
+          <span>⚠️</span>
+          <span>{error}</span>
+        </div>
+      )}
+
+      <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                {isTamil ? 'தமிழ் தலைப்பு (முதன்மை)' : 'Tamil Title (Primary) *'}
+              </label>
+              <span className="text-[10px] font-black uppercase text-amber-600 dark:text-amber-400">TAMIL</span>
+            </div>
+            <input
+              type="text"
+              value={titleTa}
+              onChange={handleTitleTaChange}
+              placeholder="எ.கா: 2026ல் முதலீடு செய்ய சிறந்த 5 Flexi Cap மியூச்சுவல் ஃபண்டுகள்"
+              required
+              className="w-full px-4 py-2.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:border-amber-500 font-serif"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                {isTamil ? 'ஆங்கில தலைப்பு' : 'English Title'}
+              </label>
+              <span className="text-[10px] font-black uppercase text-blue-600 dark:text-blue-400">ENGLISH</span>
+            </div>
+            <input
+              type="text"
+              value={titleEn}
+              onChange={handleTitleEnChange}
+              placeholder="e.g. Top 5 Flexi Cap Mutual Funds to Invest in 2026"
+              className="w-full px-4 py-2.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+              {isTamil ? 'URL Slug (இணைப்பு முகவரி) *' : 'URL Slug *'}
+            </label>
+            <div className="relative">
+              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-xs font-mono text-slate-400">/</span>
+              <input
+                type="text"
+                value={slug}
+                onChange={(e) => { setSlug(e.target.value); setIsSlugManual(true); }}
+                placeholder="top-flexi-cap-funds-2026"
+                required
+                className="w-full pl-7 pr-4 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-xs font-mono text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+              {isTamil ? 'பிரிவு (Category)' : 'Category'}
+            </label>
+            <select
+              value={category}
+              onChange={e => setCategory(e.target.value)}
+              className="w-full px-4 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+            >
+              <option value="mutual-fund">💰 Mutual Funds</option>
+              <option value="stock-market">📈 Stock Market</option>
+              <option value="personal-finance">💡 Personal Finance</option>
+              <option value="financial-education">🎓 Financial Education</option>
+            </select>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+              {isTamil ? 'குறிச்சொற்கள் (Tags, comma separated)' : 'Tags (comma separated)'}
+            </label>
+            <input
+              type="text"
+              value={tagsInput}
+              onChange={e => setTagsInput(e.target.value)}
+              placeholder="SIP, NIFTY 50, Wealth, Tax"
+              className="w-full px-4 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+            />
+          </div>
+        </div>
+
+        <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                {isTamil ? 'முகப்புப் படம் (Cover Image)' : 'Cover Image Upload & URL'}
+              </label>
+              <p className="text-[11px] text-slate-400">
+                {isTamil ? 'Supabase Storage "article-covers" பக்கத்தில் பதிவேற்றப்படும்.' : 'Uploads directly to Supabase Storage "article-covers" bucket.'}
+              </p>
+            </div>
+            {isUploadingImage && <span className="text-xs font-bold text-amber-500 animate-pulse">Uploading image...</span>}
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
+            <div className="sm:col-span-6">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleCoverUpload}
+                disabled={isUploadingImage}
+                className="block w-full text-xs text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-amber-500/10 file:text-amber-700 dark:file:text-amber-400 hover:file:bg-amber-500/20 cursor-pointer"
+              />
+            </div>
+
+            <div className="sm:col-span-6">
+              <input
+                type="text"
+                value={coverImageUrl}
+                onChange={e => setCoverImageUrl(e.target.value)}
+                placeholder="Or paste image URL (https://...)"
+                className="w-full px-4 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-xs font-mono text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+              />
+            </div>
+          </div>
+
+          {coverImageUrl && (
+            <div className="relative aspect-[21/9] max-h-56 rounded-2xl overflow-hidden bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-md">
+              <img src={coverImageUrl} alt="Preview" className="w-full h-full object-cover" />
+              <button
+                type="button"
+                onClick={() => setCoverImageUrl('')}
+                className="absolute top-2 right-2 px-2 py-1 rounded-lg bg-red-600 text-white font-bold text-[10px] shadow"
+              >
+                ✕ Remove
+              </button>
+            </div>
+          )}
+        </div>
+
+        <div className="p-4 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-900 to-amber-950 border border-amber-500/30 text-white flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="space-y-0.5">
+            <div className="flex items-center gap-2">
+              <span className="text-amber-400 text-base font-black">⚡</span>
+              <span className="text-xs font-black uppercase tracking-wider text-amber-300">
+                {isTamil ? 'தானியங்கி ஆங்கில மொழிபெயர்ப்பு' : 'AI & Rule-Protected Auto Translation'}
+              </span>
+            </div>
+            <p className="text-[11px] text-slate-300">
+              {isTamil ? 'தமிழ் தலைப்பு, சுருக்கம், கட்டுரையை ஆங்கிலத்தில் மொழிபெயர்த்து சரிபார்க்க உதவும்.' : 'Translates Tamil title, excerpt & body into English with financial terms protected (NIFTY, SIP, etc.) for admin review.'}
+            </p>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleAutoTranslate}
+            disabled={isTranslating}
+            className="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs shadow-lg transition-all hover:scale-105 disabled:opacity-50 shrink-0"
+          >
+            {isTranslating ? 'Translating...' : (isTamil ? '🔄 ஆங்கிலத்தில் மொழிபெயர்க்க' : '🔄 Auto-Translate to English')}
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+              {isTamil ? 'சுருக்க உரை (Tamil Excerpt)' : 'Tamil Excerpt (Card Summary)'}
+            </label>
+            <textarea
+              rows={3}
+              value={excerptTa}
+              onChange={e => setExcerptTa(e.target.value)}
+              placeholder="கட்டுரையின் முக்கிய சிறப்பம்சங்கள் மற்றும் சுருக்கம்..."
+              className="w-full px-4 py-2.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-amber-500 leading-relaxed font-serif"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+              {isTamil ? 'ஆங்கில சுருக்க உரை (English Excerpt)' : 'English Excerpt'}
+            </label>
+            <textarea
+              rows={3}
+              value={excerptEn}
+              onChange={e => setExcerptEn(e.target.value)}
+              placeholder="Short preview summary shown on the article cards..."
+              className="w-full px-4 py-2.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-amber-500 leading-relaxed"
+            />
+          </div>
+        </div>
+
+        <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+          <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setActiveTab('ta')}
+                className={`px-4 py-2 rounded-xl text-xs font-black transition-all ${activeTab === 'ta' ? 'bg-amber-500 text-slate-950 shadow-md' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`}
+              >
+                🇮🇳 தமிழ் உள்ளடக்கம் (Tamil Body) *
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('en')}
+                className={`px-4 py-2 rounded-xl text-xs font-black transition-all ${activeTab === 'en' ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`}
+              >
+                🌐 English Body (Reviewed)
+              </button>
+            </div>
+            <span className="text-[11px] font-bold text-slate-400 hidden sm:inline">Rich Text HTML Engine</span>
+          </div>
+
+          {activeTab === 'ta' ? (
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-slate-600 dark:text-slate-400">
+                {isTamil ? 'தமிழ் கட்டுரையின் முழு உள்ளடக்கம் (Rich Text):' : 'Tamil Article Rich Body:'}
+              </label>
+              <RichTextEditor
+                value={bodyTa}
+                onChange={setBodyTa}
+                placeholder="இங்கே உங்கள் கட்டுரையை தமிழில் விரிவாக எழுதுங்கள்..."
+                language="ta"
+                minHeight="380px"
+              />
+            </div>
+          ) : (
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-slate-600 dark:text-slate-400">
+                {isTamil ? 'ஆங்கில கட்டுரையின் முழு உள்ளடக்கம் (சரிபார்க்கவும்):' : 'English Article Rich Body (Review & Polish):'}
+              </label>
+              <RichTextEditor
+                value={bodyEn}
+                onChange={setBodyEn}
+                placeholder="English translation content for global/bilingual readers..."
+                language="en"
+                minHeight="380px"
+              />
+            </div>
+          )}
+        </div>
+
+        <div className="flex items-center justify-end gap-3 pt-4">
+          <button
+            type="button"
+            onClick={() => onNavigate('#/admin/articles')}
+            className="px-5 py-3 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs transition-colors"
+          >
+            {isTamil ? 'ரத்து செய்க' : 'Cancel'}
+          </button>
+          <button
+            type="button"
+            onClick={() => handleSave(false)}
+            disabled={isLoading}
+            className="px-6 py-3 rounded-2xl bg-slate-900 dark:bg-slate-800 text-white font-bold text-xs shadow hover:bg-slate-800 transition-all disabled:opacity-50"
+          >
+            💾 {isTamil ? 'வரைவாகச் சேமி (Save Draft)' : 'Save Draft'}
+          </button>
+          <button
+            type="button"
+            onClick={() => handleSave(true)}
+            disabled={isLoading}
+            className="px-8 py-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs sm:text-sm shadow-xl hover:scale-105 transition-all disabled:opacity-50 flex items-center gap-2"
+          >
+            <span>🚀</span>
+            <span>{isTamil ? 'உடனே வெளியிடு (Publish Live)' : 'Publish Live'}</span>
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -29699,7 +31136,9 @@ function App() {
     if (currentHash === '#/forgot-password') return <AuthPage initialMode="forgot" onNavigate={navigate} />;
     if (currentHash === '#/reset-password') return <AuthPage initialMode="magic-link" onNavigate={navigate} />;
 
-    // 3. PROTECTED ROUTES (Requires authentication when user explores more)
+    // 3. PROTECTED USER & ADMIN ROUTES
+
+    // 3.1 Profile & Watch History
     if (currentHash === '#/profile') {
       return (
         <ProtectedRoute onNavigate={navigate}>
@@ -29716,6 +31155,32 @@ function App() {
       );
     }
 
+    // 3.2 Admin Routes
+    if (currentHash.startsWith('#/admin/articles/edit/')) {
+      const articleId = currentHash.replace('#/admin/articles/edit/', '');
+      return (
+        <AdminRoute onNavigate={navigate}>
+          <ArticleEditorPage articleId={articleId} onNavigate={navigate} onShowToast={setToastMessage} />
+        </AdminRoute>
+      );
+    }
+
+    if (currentHash === '#/admin/articles/new') {
+      return (
+        <AdminRoute onNavigate={navigate}>
+          <ArticleEditorPage articleId="new" onNavigate={navigate} onShowToast={setToastMessage} />
+        </AdminRoute>
+      );
+    }
+
+    if (currentHash === '#/admin/articles') {
+      return (
+        <AdminRoute onNavigate={navigate}>
+          <AdminArticlesPage onNavigate={navigate} onShowToast={setToastMessage} />
+        </AdminRoute>
+      );
+    }
+
     if (currentHash === '#/admin') {
       return (
         <AdminRoute onNavigate={navigate}>
@@ -29724,6 +31189,25 @@ function App() {
       );
     }
 
+    // 3.3 Articles Routes (Protected)
+    if (currentHash.startsWith('#/articles/')) {
+      const slug = currentHash.replace('#/articles/', '');
+      return (
+        <ProtectedRoute onNavigate={navigate}>
+          <ArticleDetailPage slug={slug} onNavigate={navigate} onShowToast={setToastMessage} />
+        </ProtectedRoute>
+      );
+    }
+
+    if (currentHash === '#/articles') {
+      return (
+        <ProtectedRoute onNavigate={navigate}>
+          <ArticlesPage onNavigate={navigate} onShowToast={setToastMessage} />
+        </ProtectedRoute>
+      );
+    }
+
+    // 3.4 Videos Routes
     if (currentHash.startsWith('#/videos/')) {
       const videoId = currentHash.replace('#/videos/', '');
       return (
@@ -29741,6 +31225,7 @@ function App() {
       );
     }
 
+    // 3.5 News Routes
     if (currentHash.startsWith('#/news/')) {
       const slug = currentHash.replace('#/news/', '');
       return (
@@ -29758,6 +31243,7 @@ function App() {
       );
     }
 
+    // 3.6 Category Routes
     if (currentHash.startsWith('#/category/')) {
       const categoryId = currentHash.replace('#/category/', '');
       return (
@@ -29767,6 +31253,7 @@ function App() {
       );
     }
 
+    // 3.7 Tools
     if (currentHash === '#/calculator') {
       return (
         <ProtectedRoute onNavigate={navigate}>
@@ -29812,3 +31299,4 @@ if (container) {
   const root = ReactDOM.createRoot(container);
   root.render(<App />);
 }
+

@@ -10,6 +10,8 @@ import { Footer } from './components/Footer.js';
 
 // Pages
 import { Home } from './pages/Home.js';
+import { Articles } from './pages/Articles.js';
+import { ArticleDetail } from './pages/ArticleDetail.js';
 import { Videos } from './pages/Videos.js';
 import { VideoDetails } from './pages/VideoDetails.js';
 import { News } from './pages/News.js';
@@ -38,6 +40,15 @@ export function App() {
 
   // Route Dispatcher
   const renderRoute = () => {
+    if (currentHash.startsWith('#/articles/')) {
+      const slug = currentHash.replace('#/articles/', '');
+      return <ArticleDetail slug={slug} onNavigate={navigate} onShowToast={setToastMessage} />;
+    }
+
+    if (currentHash === '#/articles') {
+      return <Articles onNavigate={navigate} onShowToast={setToastMessage} />;
+    }
+
     if (currentHash.startsWith('#/videos/')) {
       const videoId = currentHash.replace('#/videos/', '');
       return <VideoDetails videoId={videoId} onNavigate={navigate} onShowToast={setToastMessage} />;

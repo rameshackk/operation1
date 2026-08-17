@@ -145,3 +145,89 @@ CREATE POLICY "Users view own watch history" ON public.watch_history
 -- Users can insert/update their own watch history
 CREATE POLICY "Users manage own watch history" ON public.watch_history
     FOR ALL USING (auth.uid() = user_id);
+
+-- ============================================================
+-- 8. ARTICLES TABLE (Original Written Content by Admin)
+-- ============================================================
+CREATE TABLE IF NOT EXISTS public.articles (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    slug VARCHAR(255) UNIQUE NOT NULL,
+    title_ta TEXT NOT NULL,
+    title_en TEXT,
+    excerpt_ta TEXT,
+    excerpt_en TEXT,
+    body_ta TEXT NOT NULL,
+    body_en TEXT,
+    cover_image_url TEXT,
+    category VARCHAR(64) DEFAULT 'mutual-fund',
+    tags TEXT[] DEFAULT '{}',
+    status VARCHAR(16) NOT NULL DEFAULT 'draft' CHECK (status IN ('draft', 'published')),
+    author_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
+    read_time_minutes INTEGER DEFAULT 3,
+    published_at TIMESTAMPTZ DEFAULT NULL,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Articles Indexes
+CREATE INDEX IF NOT EXISTS idx_articles_slug ON public.articles (slug);
+CREATE INDEX IF NOT EXISTS idx_articles_status_published ON public.articles (status, published_at DESC);
+CREATE INDEX IF NOT EXISTS idx_articles_category ON public.articles (category);
+CREATE INDEX IF NOT EXISTS idx_articles_created_at ON public.articles (created_at DESC);
+
+-- Enable RLS on articles
+ALTER TABLE public.articles ENABLE ROW LEVEL SECURITY;
+
+-- ARTICLES POLICIES:
+-- 1. SELECT: Authenticated users can view published articles, or admins can view all (including drafts)
+DROP POLICY IF EXISTS "Articles read access" ON public.articles;
+CREATE POLICY "Articles read access" ON public.articles
+    FOR SELECT USING (
+        status = 'published' OR 
+        public.is_admin(auth.uid())
+    );
+
+-- 2. INSERT: Admins only
+DROP POLICY IF EXISTS "Admin insert articles" ON public.articles;
+CREATE POLICY "Admin insert articles" ON public.articles
+    FOR INSERT WITH CHECK (public.is_admin(auth.uid()));
+
+-- 3. UPDATE: Admins only
+DROP POLICY IF EXISTS "Admin update articles" ON public.articles;
+CREATE POLICY "Admin update articles" ON public.articles
+    FOR UPDATE USING (public.is_admin(auth.uid()));
+
+-- 4. DELETE: Admins only
+DROP POLICY IF EXISTS "Admin delete articles" ON public.articles;
+CREATE POLICY "Admin delete articles" ON public.articles
+    FOR DELETE USING (public.is_admin(auth.uid()));
+
+-- ============================================================
+-- 9. SUPABASE STORAGE BUCKET: article-covers
+-- ============================================================
+-- Insert bucket if not exists
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('article-covers', 'article-covers', true)
+ON CONFLICT (id) DO UPDATE SET public = true;
+
+-- Storage RLS: Public read access
+DROP POLICY IF EXISTS "Public article cover access" ON storage.objects;
+CREATE POLICY "Public article cover access" ON storage.objects
+    FOR SELECT USING (bucket_id = 'article-covers');
+
+-- Storage RLS: Admin upload access
+DROP POLICY IF EXISTS "Admin upload article cover" ON storage.objects;
+CREATE POLICY "Admin upload article cover" ON storage.objects
+    FOR INSERT WITH CHECK (
+        bucket_id = 'article-covers' AND
+        (public.is_admin(auth.uid()) OR auth.role() = 'service_role')
+    );
+
+-- Storage RLS: Admin update/delete access
+DROP POLICY IF EXISTS "Admin modify article cover" ON storage.objects;
+CREATE POLICY "Admin modify article cover" ON storage.objects
+    FOR ALL USING (
+        bucket_id = 'article-covers' AND
+        (public.is_admin(auth.uid()) OR auth.role() = 'service_role')
+    );
+
