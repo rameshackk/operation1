@@ -28620,7 +28620,10 @@ function VideoFanCard({
       style={{
         transform: transformStyle,
         zIndex,
-        transition: 'transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s ease, z-index 0s'
+        willChange: 'transform',
+        backfaceVisibility: 'hidden',
+        WebkitBackfaceVisibility: 'hidden',
+        transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease'
       }}
       className={`group relative select-none cursor-pointer shrink-0 rounded-2xl sm:rounded-3xl overflow-hidden
         w-[160px] sm:w-[200px] md:w-[220px] aspect-[9/16]
@@ -29220,7 +29223,10 @@ function CinemaVideoCard({
       }}
       style={{
         transform: transformStyle,
-        transition: isHovered ? 'transform 0.1s ease-out, box-shadow 0.25s ease' : 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease'
+        willChange: 'transform',
+        backfaceVisibility: 'hidden',
+        WebkitBackfaceVisibility: 'hidden',
+        transition: isHovered ? 'transform 0.08s ease-out, box-shadow 0.2s ease' : 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease'
       }}
       className="group relative select-none cursor-pointer rounded-xl sm:rounded-2xl overflow-hidden
         w-full aspect-[9/13]

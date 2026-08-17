@@ -114,98 +114,104 @@ body {
   background-attachment: fixed;
 }
 
-/* Dynamic Mixed Chromatic Financial Mesh Atmosphere */
+/* Dynamic Mixed Chromatic Financial Mesh Atmosphere (Hardware-Accelerated 60FPS) */
 .mixed-mesh-ambient {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 0;
   overflow: hidden;
+  contain: strict;
+  transform: translate3d(0, 0, 0);
 }
 
-/* White 50% Translucent Glass Overlay Layer */
+/* White 50% Translucent Glass Overlay Layer (Lightweight Compositing) */
 .bg-glass-overlay-50 {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 0;
   background-color: rgba(255, 255, 255, 0.50);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  contain: strict;
+  transform: translate3d(0, 0, 0);
   transition: background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 [data-theme="dark"] .bg-glass-overlay-50 {
   background-color: rgba(3, 7, 18, 0.50);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .mesh-blob {
   position: absolute;
   border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0.50;
+  filter: blur(40px);
+  opacity: 0.45;
   will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
   transition: background 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
 }
 
 .mesh-blob-gold {
   top: -10%;
   left: -5%;
-  width: 50vw;
-  height: 50vw;
-  background: radial-gradient(circle, rgba(245, 158, 11, 0.75) 0%, rgba(217, 119, 6, 0.4) 45%, transparent 70%);
+  width: 45vw;
+  height: 45vw;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.65) 0%, rgba(217, 119, 6, 0.3) 40%, transparent 70%);
   animation: floatMeshGold 24s ease-in-out infinite alternate;
 }
 
 .mesh-blob-emerald {
   bottom: -10%;
   right: -5%;
-  width: 55vw;
-  height: 55vw;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.7) 0%, rgba(5, 150, 105, 0.35) 45%, transparent 70%);
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.6) 0%, rgba(5, 150, 105, 0.25) 40%, transparent 70%);
   animation: floatMeshEmerald 28s ease-in-out infinite alternate;
 }
 
 .mesh-blob-sapphire {
   top: 30%;
   right: -8%;
-  width: 45vw;
-  height: 45vw;
-  background: radial-gradient(circle, rgba(2, 132, 199, 0.65) 0%, rgba(3, 105, 161, 0.3) 45%, transparent 70%);
+  width: 40vw;
+  height: 40vw;
+  background: radial-gradient(circle, rgba(2, 132, 199, 0.55) 0%, rgba(3, 105, 161, 0.2) 40%, transparent 70%);
   animation: floatMeshSapphire 22s ease-in-out infinite alternate;
 }
 
 .mesh-blob-amethyst {
   bottom: 15%;
   left: -8%;
-  width: 48vw;
-  height: 48vw;
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.6) 0%, rgba(109, 40, 217, 0.3) 45%, transparent 70%);
+  width: 42vw;
+  height: 42vw;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.5) 0%, rgba(109, 40, 217, 0.2) 40%, transparent 70%);
   animation: floatMeshAmethyst 26s ease-in-out infinite alternate;
 }
 
 /* Dark Mixed Chromatic Mesh Shifts on Dark Mode Toggle */
 [data-theme="dark"] .mesh-blob {
-  opacity: 0.50;
-  filter: blur(120px);
+  opacity: 0.45;
+  filter: blur(45px);
 }
 
 [data-theme="dark"] .mesh-blob-gold {
-  background: radial-gradient(circle, rgba(245, 158, 11, 0.45) 0%, rgba(217, 119, 6, 0.18) 45%, transparent 70%);
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.4) 0%, rgba(217, 119, 6, 0.15) 40%, transparent 70%);
 }
 
 [data-theme="dark"] .mesh-blob-emerald {
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.4) 0%, rgba(5, 150, 105, 0.15) 45%, transparent 70%);
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.35) 0%, rgba(5, 150, 105, 0.12) 40%, transparent 70%);
 }
 
 [data-theme="dark"] .mesh-blob-sapphire {
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.4) 0%, rgba(2, 132, 199, 0.15) 45%, transparent 70%);
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.35) 0%, rgba(2, 132, 199, 0.12) 40%, transparent 70%);
 }
 
 [data-theme="dark"] .mesh-blob-amethyst {
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.38) 0%, rgba(109, 40, 217, 0.14) 45%, transparent 70%);
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.32) 0%, rgba(109, 40, 217, 0.1) 40%, transparent 70%);
 }
 
 @keyframes floatMeshGold {
