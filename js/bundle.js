@@ -31731,6 +31731,217 @@ function AuthPage({ initialMode = 'login', onNavigate }) {
   );
 }
 
+function NewsCard({ article, onSelect }) {
+  const { language } = useLanguage();
+  if (!article) return null;
+
+  const isTamil = language === 'ta';
+  const formattedDate = article.publishedAt
+    ? new Intl.DateTimeFormat(isTamil ? 'ta-IN' : 'en-IN', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+      }).format(new Date(article.publishedAt))
+    : '';
+
+  return (
+    <article
+      onClick={() => onSelect && onSelect(article)}
+      className="group bg-white/50 dark:bg-slate-900/50 backdrop-blur-xl rounded-2xl overflow-hidden border border-slate-200/50 dark:border-slate-800/50 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between h-full transform hover:-translate-y-1"
+    >
+      <div className="relative aspect-[16/9] overflow-hidden bg-slate-950">
+        <img
+          src={article.thumbnail || "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&q=80"}
+          alt={article.title}
+          loading="lazy"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+        />
+        <span className="absolute top-3 left-3 px-2.5 py-0.5 text-[10px] font-bold uppercase rounded bg-slate-950/80 text-amber-400 backdrop-blur-sm">
+          {article.category || 'FINANCE'}
+        </span>
+      </div>
+
+      <div className="p-4 space-y-3 flex-1 flex flex-col justify-between">
+        <div className="space-y-2">
+          <h3 className="text-sm font-bold text-slate-900 dark:text-white line-clamp-2 group-hover:text-amber-500 transition-colors font-serif leading-snug">
+            {article.title}
+          </h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
+            {article.summary}
+          </p>
+        </div>
+
+        <div className="flex items-center justify-between text-[11px] text-slate-400 border-t border-slate-100/50 dark:border-slate-800/50 pt-3 font-medium">
+          <span>{formattedDate}</span>
+          <span className="font-mono text-amber-600 dark:text-amber-400">
+            ⏱ {article.readTimeMinutes || 4} {isTamil ? 'நிமிட வாசிப்பு' : 'min read'}
+          </span>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function NewsPage({ onNavigate }) {
+  const { language } = useLanguage();
+  const isTamil = language === 'ta';
+  const articles = (newsData || []).map(item => translateNewsArticle(item, language));
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fadeIn">
+      <div className="border-b border-slate-200/60 dark:border-slate-800/60 pb-4">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 text-xs font-black uppercase tracking-wider mb-2">
+          <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+          <span>{isTamil ? 'செய்திகள் & பகுப்பாய்வு' : 'Market & Financial News'}</span>
+        </div>
+        <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white font-serif tracking-tight">
+          {isTamil ? 'செய்தி மையம்' : 'News Hub'}
+        </h1>
+        <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+          {isTamil
+            ? 'மியூச்சுவல் ஃபண்ட், பங்குச் சந்தை மற்றும் அரசு அறிவிப்புகள் பற்றிய துல்லியமான செய்திகள்'
+            : 'Authoritative financial news, SEBI updates, and market intelligence'}
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {articles.map(article => (
+          <NewsCard
+            key={article.id}
+            article={article}
+            onSelect={() => onNavigate && onNavigate(`#/news/${article.slug}`)}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function NewsDetailsPage({ slug, onNavigate }) {
+  const { language } = useLanguage();
+  const isTamil = language === 'ta';
+  const rawArticle = (newsData || []).find(a => a.slug === slug) || newsData[0];
+  const article = translateNewsArticle(rawArticle, language);
+
+  if (!article) return null;
+
+  const formattedDate = article.publishedAt
+    ? new Intl.DateTimeFormat(isTamil ? 'ta-IN' : 'en-IN', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
+      }).format(new Date(article.publishedAt))
+    : '';
+
+  return (
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 animate-fadeIn">
+      <button
+        onClick={() => onNavigate && onNavigate('#/news')}
+        className="btn-magnetic px-3.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-amber-500 hover:text-slate-950 text-xs font-bold transition-all flex items-center gap-1.5"
+      >
+        <span>←</span>
+        <span>{isTamil ? 'அனைத்து செய்திகள்' : 'Back to News'}</span>
+      </button>
+
+      <div className="space-y-4 border-b border-slate-200/60 dark:border-slate-800/60 pb-6">
+        <div className="flex items-center gap-2">
+          <span className="px-3 py-1 text-xs font-bold uppercase rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-400">
+            {article.category || 'FINANCE'}
+          </span>
+          <span className="text-xs text-slate-400 font-mono">
+            ⏱ {article.readTimeMinutes || 4} {isTamil ? 'நிமிட வாசிப்பு' : 'min read'}
+          </span>
+        </div>
+
+        <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white font-serif leading-tight">
+          {article.title}
+        </h1>
+
+        <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 font-medium">
+          <span>{isTamil ? 'ஆசிரியர்:' : 'By'} {article.author || 'Budget Padmanaban Editorial'}</span>
+          <span>{formattedDate}</span>
+        </div>
+      </div>
+
+      <div className="aspect-video rounded-3xl overflow-hidden shadow-2xl border border-slate-200/50 dark:border-slate-800/50">
+        <img
+          src={article.thumbnail || "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&q=80"}
+          alt={article.title}
+          className="w-full h-full object-cover"
+        />
+      </div>
+
+      <div
+        className="prose dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 text-sm sm:text-base leading-relaxed space-y-4"
+        dangerouslySetInnerHTML={{ __html: article.content }}
+      />
+    </div>
+  );
+}
+
+function CategoryPage({ categoryId, onNavigate, onShowToast }) {
+  const { language } = useLanguage();
+  const isTamil = language === 'ta';
+
+  const categoryTitles = {
+    'mutual-funds': isTamil ? 'மியூச்சுவல் ஃபண்ட் & SIP' : 'Mutual Funds & SIP',
+    'stocks': isTamil ? 'பங்குச் சந்தை & முதலீடு' : 'Stock Market & Equity',
+    'personal-finance': isTamil ? 'தனிநபர் நிதி & சேமிப்பு' : 'Personal Finance & Wealth',
+    'tax-saving': isTamil ? 'வரி சேமிப்பு & ஓய்வூதியம்' : 'Tax Planning & Retirement',
+    'education': isTamil ? 'நிதி கல்வி' : 'Financial Education'
+  };
+
+  const title = categoryTitles[categoryId] || categoryId;
+  const filtered = useMemo(() => {
+    return (videosData || [])
+      .filter(v => v.category === categoryId)
+      .map(v => translateVideo(v, language));
+  }, [categoryId, language]);
+
+  const [selectedVideo, setSelectedVideo] = useState(null);
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fadeIn">
+      <div className="border-b border-slate-200/60 dark:border-slate-800/60 pb-4 flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <span className="text-xs font-bold uppercase tracking-wider text-amber-500">
+            {isTamil ? 'பிரிவு வாரியான அலசல்' : 'Category Hub'}
+          </span>
+          <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white font-serif mt-1">
+            {title}
+          </h1>
+        </div>
+        <p className="text-xs text-slate-500 font-bold">
+          {filtered.length} {isTamil ? 'வீடியோக்கள் உள்ளன' : 'videos available'}
+        </p>
+      </div>
+
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5 sm:gap-4">
+        {filtered.map((video, idx) => (
+          <CinemaVideoCard
+            key={`cat-${video.id || idx}`}
+            video={video}
+            index={idx}
+            onSelect={(v) => setSelectedVideo(v)}
+            language={language}
+            onShowToast={onShowToast}
+          />
+        ))}
+      </div>
+
+      {selectedVideo && (
+        <CinemaTheaterModal
+          video={selectedVideo}
+          allVideos={videosData}
+          onClose={() => setSelectedVideo(null)}
+          onSelectRelated={(rel) => setSelectedVideo(rel)}
+          language={language}
+          onShowToast={onShowToast}
+        />
+      )}
+    </div>
+  );
+}
 
 function App() {
   const [currentHash, setCurrentHash] = useState(() => window.location.hash || '#/');
