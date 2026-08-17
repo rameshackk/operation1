@@ -123,6 +123,24 @@ body {
   overflow: hidden;
 }
 
+/* White 50% Translucent Glass Overlay Layer */
+.bg-glass-overlay-50 {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-color: rgba(255, 255, 255, 0.50);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="dark"] .bg-glass-overlay-50 {
+  background-color: rgba(3, 7, 18, 0.50);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
 .mesh-blob {
   position: absolute;
   border-radius: 50%;
