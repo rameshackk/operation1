@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'https://esm.sh/react@18.2.0';
 
 /**
- * useCardCycle hook for ES module runtime
+ * useCardCycle hook for continuous desynchronized frame animations
  */
 function useCardCycle(frames = [], index = 0, isHovered = false) {
   const [activeFrameIndex, setActiveFrameIndex] = useState(0);
@@ -59,11 +59,11 @@ function useCardCycle(frames = [], index = 0, isHovered = false) {
   const currentFrame = frames && frames.length > 0 ? frames[activeFrameIndex] : '';
   const nextFrame = nextFrameIndex !== null && frames && frames[nextFrameIndex] ? frames[nextFrameIndex] : null;
 
-  return { currentFrame, nextFrame, isCrossfading, activeFrameIndex, prefersReducedMotion };
+  return { currentFrame, nextFrame, isCrossfading, activeFrameIndex, prefersReducedMotion, setActiveFrameIndex };
 }
 
 /**
- * VideoFanCard Component
+ * VideoFanCard Component with specular glare & scrubbing in living arc
  */
 export function VideoFanCard({
   video,
@@ -79,6 +79,10 @@ export function VideoFanCard({
   onSelect,
   language = 'ta'
 }) {
+  const cardRef = useRef(null);
+  const [glare, setGlare] = useState({ x: 50, y: 50, opacity: 0 });
+  const [scrubPercent, setScrubPercent] = useState(null);
+
   const isTamil = language === 'ta';
   const youtubeId = video?.youtubeId || '';
   const frames = [
@@ -88,7 +92,30 @@ export function VideoFanCard({
     youtubeId ? `https://img.youtube.com/vi/${youtubeId}/hq3.jpg` : ''
   ].filter(Boolean);
 
-  const { currentFrame, nextFrame, isCrossfading, prefersReducedMotion } = useCardCycle(frames, index, isHovered);
+  const { currentFrame, nextFrame, isCrossfading, activeFrameIndex, prefersReducedMotion, setActiveFrameIndex } = useCardCycle(frames, index, isHovered);
+
+  const handleMouseMove = (e) => {
+    if (prefersReducedMotion || !cardRef.current || !isHovered) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const pctX = Math.max(0, Math.min(1, x / rect.width));
+    const pctY = Math.max(0, Math.min(1, y / rect.height));
+
+    setGlare({ x: pctX * 100, y: pctY * 100, opacity: 0.35 });
+    setScrubPercent(pctX);
+
+    if (frames.length > 0) {
+      const targetFrame = Math.min(Math.floor(pctX * frames.length), frames.length - 1);
+      setActiveFrameIndex(targetFrame);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setGlare({ x: 50, y: 50, opacity: 0 });
+    setScrubPercent(null);
+    if (onHoverEnd) onHoverEnd();
+  };
 
   let transformStyle = '';
   let zIndex = index + 10;
@@ -115,13 +142,15 @@ export function VideoFanCard({
 
   return (
     <div
+      ref={cardRef}
       role="button"
       tabIndex={0}
       onClick={() => onSelect && onSelect(video)}
       onMouseEnter={onHoverStart}
-      onMouseLeave={onHoverEnd}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
       onFocus={onHoverStart}
-      onBlur={onHoverEnd}
+      onBlur={handleMouseLeave}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
@@ -136,9 +165,10 @@ export function VideoFanCard({
       className={`group relative select-none cursor-pointer shrink-0 rounded-2xl sm:rounded-3xl overflow-hidden
         w-[160px] sm:w-[200px] md:w-[220px] aspect-[9/16]
         bg-slate-900 border border-white/10 dark:border-slate-800
-        shadow-2xl shadow-slate-950/60 hover:shadow-amber-500/20 hover:border-amber-500/40
+        shadow-2xl shadow-slate-950/60 hover:shadow-amber-500/25 hover:border-amber-500/50
         outline-none focus-visible:ring-2 focus-visible:ring-amber-500`}
     >
+      {/* 1. BACKGROUND THUMBNAIL */}
       <div className="absolute inset-0 w-full h-full overflow-hidden bg-slate-950">
         {currentFrame && (
           <img
@@ -161,23 +191,51 @@ export function VideoFanCard({
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-slate-950/40 opacity-80 group-hover:opacity-95 transition-opacity" />
       </div>
 
-      <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none z-10">
-        <span className="px-2.5 py-1 text-[9px] font-black uppercase tracking-wider rounded-full bg-slate-950/80 backdrop-blur-md text-amber-400 border border-amber-400/20 shadow-sm">
+      {/* 2. SPECULAR LIGHT SWEEP GLARE */}
+      <div
+        className="absolute inset-0 pointer-events-none transition-opacity duration-300 z-10"
+        style={{
+          background: `radial-gradient(circle 220px at ${glare.x}% ${glare.y}%, rgba(255, 255, 255, ${glare.opacity}), transparent 80%)`
+        }}
+      />
+
+      {/* 3. TOP BADGES */}
+      <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none z-20">
+        <span className="px-2.5 py-1 text-[9px] font-black uppercase tracking-wider rounded-full bg-slate-950/85 backdrop-blur-md text-amber-400 border border-amber-400/25 shadow-sm">
           {category}
         </span>
-        <span className="px-2 py-1 text-[9px] font-mono font-bold rounded-full bg-slate-950/80 backdrop-blur-md text-slate-300 border border-white/10 shadow-sm">
+        <span className="px-2 py-1 text-[9px] font-mono font-bold rounded-full bg-slate-950/85 backdrop-blur-md text-slate-300 border border-white/10 shadow-sm">
           {duration}
         </span>
       </div>
 
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-        <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 shadow-xl">
-          <svg className="w-5 h-5 text-white fill-current ml-0.5" viewBox="0 0 24 24">
+      {/* 4. CENTER PLAY BUTTON */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
+        <div className="w-12 h-12 rounded-full bg-slate-950/85 backdrop-blur-md border border-white/20 flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 shadow-2xl group-hover:border-amber-500/60">
+          <svg className="w-5 h-5 text-amber-400 fill-current ml-0.5" viewBox="0 0 24 24">
             <polygon points="5 3 19 12 5 21 5 3" />
           </svg>
         </div>
       </div>
 
+      {/* 5. SCRUB PROGRESS INDICATOR */}
+      {scrubPercent !== null && frames.length > 1 && (
+        <div className="absolute top-12 left-3 right-3 z-20 pointer-events-none flex items-center gap-1 bg-slate-950/60 backdrop-blur-md p-1 rounded-full border border-white/10">
+          {frames.map((_, fIdx) => {
+            const isActive = fIdx === activeFrameIndex;
+            return (
+              <div
+                key={`fan-scrub-${fIdx}`}
+                className={`h-1 flex-1 rounded-full transition-all duration-200 ${
+                  isActive ? 'bg-amber-400 shadow-sm' : 'bg-white/20'
+                }`}
+              />
+            );
+          })}
+        </div>
+      )}
+
+      {/* 6. BOTTOM INFO PANEL */}
       <div className="absolute bottom-0 inset-x-0 p-4 pt-10 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent z-20 flex flex-col justify-end gap-2">
         <h3 className="text-xs sm:text-sm font-bold text-white font-serif line-clamp-2 leading-snug group-hover:text-amber-400 transition-colors">
           {title}
@@ -187,8 +245,9 @@ export function VideoFanCard({
           <span className="text-[10px] text-slate-400 font-medium line-clamp-1">
             {video.channelName || 'Budget Padmanaban'}
           </span>
-          <span className="text-[10px] font-bold text-amber-400 group-hover:underline">
-            {isTamil ? 'பார்க்க' : 'Watch'} →
+          <span className="text-[10px] font-bold text-amber-400 group-hover:underline flex items-center gap-0.5">
+            <span>{isTamil ? 'பார்க்க' : 'Watch'}</span>
+            <span>→</span>
           </span>
         </div>
       </div>

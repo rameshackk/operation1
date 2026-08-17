@@ -78,7 +78,57 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
   overflow-x: hidden;
   margin: 0;
-  padding: 0;
+  position: relative;
+}
+
+/* Living Aurora Mesh Atmosphere */
+body::before {
+  content: '';
+  position: fixed;
+  top: 5%;
+  left: 10%;
+  width: 650px;
+  height: 650px;
+  background: radial-gradient(circle, rgba(217, 119, 6, 0.065) 0%, transparent 70%);
+  filter: blur(140px);
+  pointer-events: none;
+  z-index: -1;
+  animation: auroraDrift 28s ease-in-out infinite alternate;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  bottom: 10%;
+  right: 10%;
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.045) 0%, transparent 70%);
+  filter: blur(150px);
+  pointer-events: none;
+  z-index: -1;
+  animation: auroraDriftRev 34s ease-in-out infinite alternate;
+}
+
+@keyframes auroraDrift {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(50px, 40px) scale(1.08); }
+  100% { transform: translate(-30px, 60px) scale(0.95); }
+}
+
+@keyframes auroraDriftRev {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-60px, -40px) scale(1.12); }
+  100% { transform: translate(40px, -20px) scale(0.92); }
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.tilt-card-3d {
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
 /* Tabular figures for numbers, timers, prices, and metrics */
