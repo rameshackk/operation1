@@ -30789,6 +30789,29 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
     }
   };
 
+  const handleDeleteArticle = async () => {
+    if (!articleId || articleId === 'new') return;
+    if (!window.confirm(isTamil ? `இந்தக் கட்டுரையை நிச்சயமாக நீக்க விரும்புகிறீர்களா?\n"${titleTa}"` : `Are you sure you want to delete this article?\n"${titleTa}"`)) {
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const token = session?.access_token || '';
+      const res = await fetch(`/api/admin/articles/${articleId}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (!res.ok) throw new Error('Failed to delete article');
+      if (onShowToast) onShowToast(isTamil ? 'கட்டுரை நீக்கப்பட்டது' : 'Article deleted successfully');
+      onNavigate('#/admin/articles');
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   if (role !== 'admin') return null;
 
   return (
@@ -30806,7 +30829,19 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
           </h1>
         </div>
 
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="flex items-center gap-3 shrink-0 flex-wrap">
+          {articleId && articleId !== 'new' && (
+            <button
+              type="button"
+              onClick={handleDeleteArticle}
+              disabled={isLoading}
+              className="px-4 py-2.5 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 font-bold text-xs transition-all border border-red-500/30 flex items-center gap-1.5"
+              title="Delete this article permanently"
+            >
+              <span>🗑️</span>
+              <span>{isTamil ? 'கட்டுரையை நீக்கு' : 'Delete Article'}</span>
+            </button>
+          )}
           <button
             type="button"
             onClick={() => handleSave(false)}
@@ -31068,31 +31103,48 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
           )}
         </div>
 
-        <div className="flex items-center justify-end gap-3 pt-4">
-          <button
-            type="button"
-            onClick={() => onNavigate('#/admin/articles')}
-            className="px-5 py-3 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs transition-colors"
-          >
-            {isTamil ? 'ரத்து செய்க' : 'Cancel'}
-          </button>
-          <button
-            type="button"
-            onClick={() => handleSave(false)}
-            disabled={isLoading}
-            className="px-6 py-3 rounded-2xl bg-slate-900 dark:bg-slate-800 text-white font-bold text-xs shadow hover:bg-slate-800 transition-all disabled:opacity-50"
-          >
-            💾 {isTamil ? 'வரைவாகச் சேமி (Save Draft)' : 'Save Draft'}
-          </button>
-          <button
-            type="button"
-            onClick={() => handleSave(true)}
-            disabled={isLoading}
-            className="px-8 py-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs sm:text-sm shadow-xl hover:scale-105 transition-all disabled:opacity-50 flex items-center gap-2"
-          >
-            <span>🚀</span>
-            <span>{isTamil ? 'உடனே வெளியிடு (Publish Live)' : 'Publish Live'}</span>
-          </button>
+        <div className="flex items-center justify-between gap-3 pt-4 flex-wrap">
+          <div>
+            {articleId && articleId !== 'new' && (
+              <button
+                type="button"
+                onClick={handleDeleteArticle}
+                disabled={isLoading}
+                className="px-5 py-3 rounded-2xl bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 font-bold text-xs transition-all border border-red-500/30 flex items-center gap-1.5"
+                title="Delete this article permanently"
+              >
+                <span>🗑️</span>
+                <span>{isTamil ? 'கட்டுரையை நீக்கு (Delete Article)' : 'Delete Article'}</span>
+              </button>
+            )}
+          </div>
+
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => onNavigate('#/admin/articles')}
+              className="px-5 py-3 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs transition-colors"
+            >
+              {isTamil ? 'ரத்து செய்க' : 'Cancel'}
+            </button>
+            <button
+              type="button"
+              onClick={() => handleSave(false)}
+              disabled={isLoading}
+              className="px-6 py-3 rounded-2xl bg-slate-900 dark:bg-slate-800 text-white font-bold text-xs shadow hover:bg-slate-800 transition-all disabled:opacity-50"
+            >
+              💾 {isTamil ? 'வரைவாகச் சேமி (Save Draft)' : 'Save Draft'}
+            </button>
+            <button
+              type="button"
+              onClick={() => handleSave(true)}
+              disabled={isLoading}
+              className="px-8 py-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs sm:text-sm shadow-xl hover:scale-105 transition-all disabled:opacity-50 flex items-center gap-2"
+            >
+              <span>🚀</span>
+              <span>{isTamil ? 'உடனே வெளியிடு (Publish Live)' : 'Publish Live'}</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
