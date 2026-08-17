@@ -47,23 +47,23 @@
   --z-modal: 1000;
   --z-scroll-bar: 10000;
 
-  /* Colors - Sovereign Financial Theme */
+  /* Colors - 50% Translucent Glassmorphic Financial Theme */
   --bg-main: transparent;
-  --bg-card: rgba(15, 23, 42, 0.88);
-  --bg-card-hover: rgba(30, 41, 59, 0.95);
-  --border-color: #1e293b;
-  --border-subtle: #0f172a;
-  --text-primary: #f8fafc;
-  --text-secondary: #cbd5e1;
-  --text-muted: #94a3b8;
-  --accent-amber: #f59e0b;
+  --bg-card: rgba(255, 255, 255, 0.50);
+  --bg-card-hover: rgba(255, 255, 255, 0.65);
+  --border-color: rgba(203, 213, 225, 0.50);
+  --border-subtle: rgba(226, 232, 240, 0.50);
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --accent-amber: #d97706;
   --accent-gold: #f59e0b;
   --accent-gold-light: #fbbf24;
-  --accent-emerald: #10b981;
-  --accent-sapphire: #38bdf8;
-  --accent-red: #ef4444;
-  --nav-bg: rgba(11, 15, 25, 0.92);
-  --nav-border: #1e293b;
+  --accent-emerald: #059669;
+  --accent-sapphire: #0284c7;
+  --accent-red: #dc2626;
+  --nav-bg: rgba(255, 255, 255, 0.50);
+  --nav-border: rgba(203, 213, 225, 0.50);
 }
 
 [data-theme="dark"] {
@@ -71,10 +71,10 @@
   --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.7), 0 2px 8px -2px rgba(0, 0, 0, 0.5);
   --shadow-card-hover: 0 20px 35px -6px rgba(0, 0, 0, 0.85), 0 0 24px 2px rgba(245, 158, 11, 0.22);
   --bg-main: transparent;
-  --bg-card: rgba(11, 15, 25, 0.88);
-  --bg-card-hover: rgba(17, 24, 39, 0.95);
-  --border-color: #1e293b;
-  --border-subtle: #0f172a;
+  --bg-card: rgba(11, 15, 25, 0.50);
+  --bg-card-hover: rgba(17, 24, 39, 0.65);
+  --border-color: rgba(30, 41, 59, 0.50);
+  --border-subtle: rgba(15, 23, 42, 0.50);
   --text-primary: #f8fafc;
   --text-secondary: #cbd5e1;
   --text-muted: #94a3b8;
@@ -84,8 +84,8 @@
   --accent-emerald: #10b981;
   --accent-sapphire: #38bdf8;
   --accent-red: #ef4444;
-  --nav-bg: rgba(3, 7, 18, 0.92);
-  --nav-border: #1e293b;
+  --nav-bg: rgba(3, 7, 18, 0.50);
+  --nav-border: rgba(30, 41, 59, 0.50);
 }
 
 html, body, #root {
@@ -127,7 +127,7 @@ body {
   position: absolute;
   border-radius: 50%;
   filter: blur(100px);
-  opacity: 0.65;
+  opacity: 0.50;
   will-change: transform;
   transition: background 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
 }
@@ -170,7 +170,7 @@ body {
 
 /* Dark Mixed Chromatic Mesh Shifts on Dark Mode Toggle */
 [data-theme="dark"] .mesh-blob {
-  opacity: 0.55;
+  opacity: 0.50;
   filter: blur(120px);
 }
 

@@ -27539,7 +27539,7 @@ function HeroSection({ news = newsData, onNavigate }) {
           </div>
         </div>
 
-        <div className="lg:col-span-5 flex flex-col justify-between bg-white/85 dark:bg-slate-900/85 backdrop-blur-xl rounded-3xl border border-slate-200/80 dark:border-slate-800/80 p-4 sm:p-5 shadow-xl">
+        <div className="lg:col-span-5 flex flex-col justify-between bg-white/50 dark:bg-slate-900/50 backdrop-blur-xl rounded-3xl border border-slate-200/50 dark:border-slate-800/50 p-4 sm:p-5 shadow-xl">
           <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3 mb-3">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />

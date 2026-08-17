@@ -79,7 +79,7 @@ export function HeroSection({ news = newsData, onNavigate }) {
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-4">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
         {/* LEFT COLUMN (7 COLS): SEAMLESS FEATURED NEWS TICKER */}
-        <div className="lg:col-span-7 flex flex-col justify-between bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden p-4 sm:p-5">
+        <div className="lg:col-span-7 flex flex-col justify-between bg-white/50 dark:bg-slate-900/50 backdrop-blur-xl rounded-3xl border border-slate-200/50 dark:border-slate-800/50 shadow-xl overflow-hidden p-4 sm:p-5">
           {/* Header */}
           <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3 mb-3">
             <div className="flex items-center gap-2">
@@ -103,7 +103,7 @@ export function HeroSection({ news = newsData, onNavigate }) {
         </div>
 
         {/* RIGHT COLUMN (5 COLS): LATEST ARTICLES SECTION */}
-        <div className="lg:col-span-5 flex flex-col justify-between bg-white/85 dark:bg-slate-900/85 backdrop-blur-xl rounded-3xl border border-slate-200/80 dark:border-slate-800/80 p-4 sm:p-5 shadow-xl">
+        <div className="lg:col-span-5 flex flex-col justify-between bg-white/50 dark:bg-slate-900/50 backdrop-blur-xl rounded-3xl border border-slate-200/50 dark:border-slate-800/50 p-4 sm:p-5 shadow-xl">
           {/* Header */}
           <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3 mb-3">
             <div className="flex items-center gap-2">
