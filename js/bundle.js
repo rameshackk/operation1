@@ -29072,214 +29072,560 @@ function Home({ onNavigate, onShowToast }) {
   );
 }
 
-function YouTubeVideoFeedCard({ video, viewMode = 'grid', onSelect, onShowToast }) {
-  const { t, language } = useLanguage();
-  const { isSaved, toggleBookmark } = useBookmarks();
-  const saved = isSaved(video.id);
 
-  if (!video) return null;
+/**
+ * CINEMA INTERACTIVE UI SYSTEM (APPLE TV+ / NETFLIX STYLE)
+ */
+function CinemaVideoCard({
+  video,
+  aspectRatio = '16/9',
+  onSelect,
+  language = 'ta',
+  onShowToast
+}) {
+  const [isHovered, setIsHovered] = useState(false);
+  const [activeFrameIndex, setActiveFrameIndex] = useState(0);
+  const isTamil = language === 'ta';
+  const timerRef = useRef(null);
 
-  const formattedViews = new Intl.NumberFormat(language === 'ta' ? 'ta-IN' : 'en-IN', { notation: 'compact' }).format(video.views || 10000);
-  
-  const getRelativeTime = (dateStr) => {
-    if (!dateStr) return '';
-    const diffMs = Date.now() - new Date(dateStr).getTime();
-    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-    if (diffDays <= 0) return language === 'ta' ? 'இன்று' : 'Today';
-    if (diffDays === 1) return language === 'ta' ? '1 நாளுக்கு முன்' : '1 day ago';
-    if (diffDays < 30) return language === 'ta' ? `${diffDays} நாட்களுக்கு முன்` : `${diffDays} days ago`;
-    const diffMonths = Math.floor(diffDays / 30);
-    if (diffMonths < 12) return language === 'ta' ? `${diffMonths} மாதங்களுக்கு முன்` : `${diffMonths} months ago`;
-    const diffYears = Math.floor(diffMonths / 12);
-    return language === 'ta' ? `${diffYears} வருடங்களுக்கு முன்` : `${diffYears} years ago`;
-  };
+  const youtubeId = video?.youtubeId || '';
+  const frames = [
+    video?.thumbnail || (youtubeId ? `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg` : ''),
+    youtubeId ? `https://img.youtube.com/vi/${youtubeId}/hq1.jpg` : '',
+    youtubeId ? `https://img.youtube.com/vi/${youtubeId}/hq2.jpg` : '',
+    youtubeId ? `https://img.youtube.com/vi/${youtubeId}/hq3.jpg` : ''
+  ].filter(Boolean);
 
-  const handleShare = (e) => {
-    e.stopPropagation();
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(`${window.location.origin}/#/videos/${video.id}`);
-      onShowToast(language === 'ta' ? 'இணைப்பு நகலெடுக்கப்பட்டது!' : 'Video link copied to clipboard!');
+  useEffect(() => {
+    if (!isHovered || frames.length <= 1) {
+      setActiveFrameIndex(0);
+      if (timerRef.current) clearInterval(timerRef.current);
+      return;
     }
-  };
 
-  const handleBookmark = (e) => {
-    e.stopPropagation();
-    toggleBookmark(video);
-    onShowToast(saved ? (language === 'ta' ? 'புக்மார்க் நீக்கப்பட்டது' : 'Removed from bookmarks') : (language === 'ta' ? 'புக்மார்க் செய்யப்பட்டது' : 'Saved to bookmarks'));
-  };
+    timerRef.current = setInterval(() => {
+      setActiveFrameIndex((prev) => (prev + 1) % frames.length);
+    }, 1200);
 
-  if (viewMode === 'list') {
-    return (
-      <div
-        onClick={() => onSelect(video)}
-        className="group flex flex-col sm:flex-row gap-4 p-3 sm:p-4 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200/80 dark:border-slate-800/80 hover:border-amber-500/50 hover:shadow-xl transition-all duration-300 cursor-pointer"
-      >
-        {/* Thumbnail */}
-        <div className="relative w-full sm:w-64 md:w-72 aspect-video shrink-0 rounded-xl overflow-hidden bg-slate-950 shadow-md">
-          <img
-            src={video.thumbnail || `https://i.ytimg.com/vi/${video.youtubeId}/hqdefault.jpg`}
-            alt={video.title}
-            loading="lazy"
-            onError={(e) => {
-              if (video.youtubeId && !e.target.dataset.triedFallback) {
-                e.target.dataset.triedFallback = 'true';
-                e.target.src = `https://img.youtube.com/vi/${video.youtubeId}/mqdefault.jpg`;
-              }
-            }}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          />
-          {video.duration && (
-            <span className="absolute bottom-2 right-2 px-1.5 py-0.5 text-[10px] font-black rounded bg-slate-950/90 text-white tracking-wider">
-              {video.duration}
-            </span>
-          )}
-          {video.isShort && (
-            <span className="absolute top-2 left-2 px-2 py-0.5 text-[9px] font-black rounded bg-red-600 text-white flex items-center gap-1 shadow">
-               SHORT
-            </span>
-          )}
-          <div className="absolute inset-0 bg-amber-500/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-            <div className="w-10 h-10 rounded-full bg-red-600 text-white flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform">
-              <svg className="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
-            </div>
-          </div>
-        </div>
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [isHovered, frames.length]);
 
-        {/* Info */}
-        <div className="flex-1 flex flex-col justify-between py-1 min-w-0">
-          <div>
-            <div className="flex items-center gap-2 mb-1.5">
-              <span className="px-2 py-0.5 text-[10px] font-black uppercase tracking-wider rounded bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20">
-                {(video.category || 'FINANCE').replace('-', ' ')}
-              </span>
-              <span className="text-xs text-slate-400 font-medium">#{video.id}</span>
-            </div>
-            <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors line-clamp-2 leading-snug mb-2">
-              {video.title}
-            </h3>
-            <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed">
-              {video.description}
-            </p>
-          </div>
+  const title = isTamil
+    ? (video.titleTamil || video.title || 'வீடியோ பதிவு')
+    : (video.titleEnglish || video.title || 'Featured Video');
 
-          <div className="flex items-center justify-between mt-3 pt-3 border-t border-slate-100 dark:border-slate-800/80 text-xs text-slate-500 dark:text-slate-400">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-amber-500 to-red-600 text-white font-black text-[10px] flex items-center justify-center shrink-0">
-                BP
-              </div>
-              <span className="font-bold text-slate-700 dark:text-slate-300">Budget Padmanaban</span>
-              <span className="text-blue-500"></span>
-              <span>•</span>
-              <span>{formattedViews} {t('views')}</span>
-              <span>•</span>
-              <span>{getRelativeTime(video.publishedAt)}</span>
-            </div>
+  const category = (video.category || 'FINANCE').replace('-', ' ').toUpperCase();
+  const duration = video.duration || 'Video';
 
-            <div className="flex items-center gap-1">
-              <button
-                onClick={handleBookmark}
-                title="Save video"
-                className={`p-2 rounded-lg transition-colors ${saved ? 'text-amber-600 bg-amber-50 dark:bg-amber-950/40' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'}`}
-              >
-                <svg className="w-4 h-4" fill={saved ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" /></svg>
-              </button>
-              <button
-                onClick={handleShare}
-                title="Share video"
-                className="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-lg transition-colors"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" /></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  const isVertical = aspectRatio === '9/16' || video.isShort;
 
   return (
     <div
-      onClick={() => onSelect(video)}
-      className="group flex flex-col rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 hover:border-amber-500/40 hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden"
+      role="button"
+      tabIndex={0}
+      onClick={() => onSelect && onSelect(video)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onFocus={() => setIsHovered(true)}
+      onBlur={() => setIsHovered(false)}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onSelect && onSelect(video);
+        }
+      }}
+      className={`group relative select-none cursor-pointer rounded-2xl sm:rounded-3xl overflow-hidden
+        bg-slate-900 border border-slate-800/80 hover:border-amber-500/60
+        shadow-lg hover:shadow-2xl hover:shadow-amber-500/15
+        transition-all duration-300 transform hover:-translate-y-1.5 hover:scale-[1.02]
+        outline-none focus-visible:ring-2 focus-visible:ring-amber-500 shrink-0
+        ${isVertical ? 'w-[170px] sm:w-[210px] aspect-[9/16]' : 'w-full aspect-[16/10] sm:aspect-video'}`}
     >
-      {/* 16:9 Thumbnail with Overlay */}
-      <div className="relative aspect-video w-full bg-slate-950 overflow-hidden">
+      <div className="absolute inset-0 w-full h-full overflow-hidden bg-slate-950">
         <img
-          src={video.thumbnail || `https://i.ytimg.com/vi/${video.youtubeId}/hqdefault.jpg`}
-          alt={video.title}
+          src={frames[activeFrameIndex] || video.thumbnail}
+          alt={title}
           loading="lazy"
-          onError={(e) => {
-            if (video.youtubeId && !e.target.dataset.triedFallback) {
-              e.target.dataset.triedFallback = 'true';
-              e.target.src = `https://img.youtube.com/vi/${video.youtubeId}/mqdefault.jpg`;
-            }
-          }}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 opacity-90 group-hover:opacity-100"
         />
-        {video.duration && (
-          <span className="absolute bottom-2 right-2 px-1.5 py-0.5 text-[10px] font-black rounded bg-slate-950/90 text-white tracking-wider">
-            {video.duration}
-          </span>
-        )}
-        {video.isShort && (
-          <span className="absolute top-2 left-2 px-2 py-0.5 text-[9px] font-black rounded bg-red-600 text-white flex items-center gap-1 shadow">
-             SHORT
-          </span>
-        )}
-        {video.trending && (
-          <span className="absolute top-2 right-2 px-2 py-0.5 text-[9px] font-black rounded bg-amber-500 text-slate-950 flex items-center gap-1 shadow">
-             TRENDING
-          </span>
-        )}
-        <div className="absolute inset-0 bg-slate-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-          <div className="w-12 h-12 rounded-full bg-red-600 text-white flex items-center justify-center shadow-xl transform group-hover:scale-110 transition-transform">
-            <svg className="w-6 h-6 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
-          </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-slate-950/20 group-hover:via-slate-950/50 transition-colors duration-300" />
+      </div>
+
+      <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10 pointer-events-none">
+        <span className="px-2.5 py-0.5 text-[9px] font-black uppercase tracking-wider rounded-full bg-slate-950/85 backdrop-blur-md text-amber-400 border border-amber-400/25 shadow-sm">
+          {category}
+        </span>
+        <span className="px-2 py-0.5 text-[9px] font-mono font-bold rounded-full bg-slate-950/85 backdrop-blur-md text-slate-200 border border-white/10 shadow-sm">
+          {duration}
+        </span>
+      </div>
+
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+        <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-slate-950/80 backdrop-blur-md border border-white/20 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transform scale-75 group-hover:scale-100 transition-all duration-300 shadow-xl group-hover:border-amber-500/60">
+          <svg className="w-5 h-5 text-amber-400 fill-current ml-0.5" viewBox="0 0 24 24">
+            <polygon points="5 3 19 12 5 21 5 3" />
+          </svg>
         </div>
       </div>
 
-      {/* Details with YouTube avatar and verified mark */}
-      <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
-        <div className="flex items-start gap-3">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-500 to-red-600 text-white font-black text-xs flex items-center justify-center shrink-0 shadow-sm">
-            BP
+      <div className="absolute bottom-0 inset-x-0 p-3.5 sm:p-4 pt-8 bg-gradient-to-t from-slate-950 via-slate-950/95 to-transparent z-10 flex flex-col justify-end gap-1.5">
+        <h3 className="text-xs sm:text-sm font-bold text-white font-serif line-clamp-2 leading-snug group-hover:text-amber-400 transition-colors">
+          {title}
+        </h3>
+
+        <div className="flex items-center justify-between text-[10px] text-slate-400 font-medium pt-0.5">
+          <span className="truncate max-w-[140px] text-slate-300">
+            {video.channelName || 'Budget Padmanaban'}
+          </span>
+          <span className="font-bold text-amber-400 group-hover:underline shrink-0">
+            {isTamil ? 'பார்க்க' : 'Watch'} →
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CinemaSpotlightHero({
+  spotlightVideos = [],
+  onWatchVideo,
+  language = 'ta'
+}) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const isTamil = language === 'ta';
+
+  const videos = spotlightVideos && spotlightVideos.length > 0 ? spotlightVideos.slice(0, 5) : [];
+  const currentVideo = videos[currentIndex] || videos[0];
+
+  useEffect(() => {
+    if (videos.length <= 1) return;
+    const interval = setInterval(() => {
+      setCurrentIndex(prev => (prev + 1) % videos.length);
+    }, 7500);
+    return () => clearInterval(interval);
+  }, [videos.length]);
+
+  if (!currentVideo) return null;
+
+  const title = isTamil
+    ? (currentVideo.titleTamil || currentVideo.title || 'முக்கிய முதலீட்டு வழிகாட்டி')
+    : (currentVideo.titleEnglish || currentVideo.title || 'Featured Investment Masterclass');
+
+  const description = isTamil
+    ? (currentVideo.descriptionTamil || currentVideo.description || 'பட்ஜெட் பத்மநாபன் CFP அவர்களின் விரிவான நிதி மற்றும் முதலீட்டு வழிகாட்டி.')
+    : (currentVideo.descriptionEnglish || currentVideo.description || 'Exclusive financial masterclass and wealth-building insights directly from Certified Financial Planner Padmanaban B.');
+
+  const category = (currentVideo.category || 'MUTUAL FUNDS').replace('-', ' ').toUpperCase();
+  const duration = currentVideo.duration || '14:20';
+
+  return (
+    <div className="relative overflow-hidden rounded-3xl bg-slate-950 border border-slate-800 shadow-2xl text-white select-none">
+      <div className="absolute inset-0 overflow-hidden">
+        <img
+          src={currentVideo.thumbnail || `https://img.youtube.com/vi/${currentVideo.youtubeId}/hqdefault.jpg`}
+          alt={title}
+          className="w-full h-full object-cover object-center filter blur-xl scale-110 opacity-30 transition-all duration-1000"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/90 to-slate-950/60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/50" />
+      </div>
+
+      <div className="relative z-10 p-6 sm:p-10 lg:p-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div className="lg:col-span-7 space-y-5">
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <span className="px-3 py-1 text-[10px] font-black uppercase tracking-wider rounded-full bg-amber-500 text-slate-950 shadow-md">
+              {isTamil ? 'சிறப்பு மாஸ்டர் கிளாஸ்' : 'FEATURED MASTERCLASS'}
+            </span>
+            <span className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider rounded-full bg-white/10 backdrop-blur-md text-amber-300 border border-white/10">
+              {category} • {duration}
+            </span>
+            <span className="px-2.5 py-0.5 text-[10px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-full font-bold">
+              CFP Verified
+            </span>
           </div>
-          <div className="flex-1 min-w-0">
-            <h3 className="text-sm font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors line-clamp-2 leading-snug">
-              {video.title}
-            </h3>
-            <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 font-medium mt-1">
-              <span>Budget Padmanaban</span>
-              <span className="text-blue-500 font-bold" title="Verified Creator"></span>
-            </div>
-            <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-              <span>{formattedViews} {t('views')}</span>
+
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black font-serif text-white leading-tight tracking-tight drop-shadow-md">
+            {title}
+          </h1>
+
+          <p className="text-xs sm:text-sm text-slate-300 max-w-xl font-medium leading-relaxed line-clamp-3">
+            {description}
+          </p>
+
+          <div className="flex items-center gap-4 pt-2 flex-wrap">
+            <button
+              onClick={() => onWatchVideo && onWatchVideo(currentVideo)}
+              className="px-6 sm:px-8 py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-400 hover:to-amber-600 text-slate-950 font-black text-xs sm:text-sm shadow-xl shadow-amber-500/20 hover:scale-105 active:scale-95 transition-all flex items-center gap-2"
+            >
+              <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                <polygon points="5 3 19 12 5 21 5 3" />
+              </svg>
+              <span>{isTamil ? 'இப்போதே பார்க்கவும்' : 'Watch Masterclass'}</span>
+            </button>
+
+            <div className="flex items-center gap-2 text-xs text-slate-400 font-bold">
+              <span className="text-white">{currentVideo.channelName || 'Budget Padmanaban'}</span>
               <span>•</span>
-              <span>{getRelativeTime(video.publishedAt)}</span>
+              <span>882 Original Guides</span>
             </div>
           </div>
         </div>
 
-        {/* Footer info & actions */}
-        <div className="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800/80 text-[11px]">
-          <span className="px-2 py-0.5 font-bold uppercase rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
-            {(video.category || 'FINANCE').replace('-', ' ')}
-          </span>
-          <div className="flex items-center gap-1">
-            <button
-              onClick={handleBookmark}
-              title="Bookmark"
-              className={`p-1.5 rounded-lg transition-colors ${saved ? 'text-amber-600' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'}`}
-            >
-              <svg className="w-3.5 h-3.5" fill={saved ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" /></svg>
-            </button>
+        <div className="lg:col-span-5 space-y-4">
+          <div
+            onClick={() => onWatchVideo && onWatchVideo(currentVideo)}
+            className="group relative aspect-video w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-slate-900 border border-white/15 shadow-2xl cursor-pointer"
+          >
+            <img
+              src={currentVideo.thumbnail || `https://img.youtube.com/vi/${currentVideo.youtubeId}/hqdefault.jpg`}
+              alt={title}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            />
+            <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/40 transition-colors flex items-center justify-center">
+              <div className="w-14 h-14 rounded-full bg-amber-500/90 text-slate-950 flex items-center justify-center shadow-2xl transform group-hover:scale-110 transition-transform">
+                <svg className="w-6 h-6 fill-current ml-0.5" viewBox="0 0 24 24">
+                  <polygon points="5 3 19 12 5 21 5 3" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pt-1">
+            {videos.map((vid, idx) => {
+              const isActive = idx === currentIndex;
+              return (
+                <button
+                  key={vid.id || idx}
+                  onClick={() => setCurrentIndex(idx)}
+                  className={`flex-1 min-w-[70px] sm:min-w-[80px] p-1.5 rounded-xl border transition-all text-left ${
+                    isActive
+                      ? 'bg-amber-500/20 border-amber-500 ring-1 ring-amber-500/50'
+                      : 'bg-slate-900/80 border-slate-800 hover:border-slate-700 opacity-60 hover:opacity-100'
+                  }`}
+                >
+                  <div className="text-[9px] font-bold text-slate-300 truncate">
+                    0${idx + 1} • ${vid.duration || 'Video'}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CinemaVideoRail({
+  titleTamil,
+  titleEnglish,
+  subtitleTamil,
+  subtitleEnglish,
+  badgeText,
+  videos = [],
+  aspectRatio = '16/9',
+  onSelectVideo,
+  language = 'ta',
+  onShowToast
+}) {
+  const scrollRef = useRef(null);
+  const isTamil = language === 'ta';
+
+  if (!videos || videos.length === 0) return null;
+
+  const handleScroll = (direction) => {
+    if (!scrollRef.current) return;
+    const distance = direction === 'left' ? -380 : 380;
+    scrollRef.current.scrollBy({ left: distance, behavior: 'smooth' });
+  };
+
+  const title = isTamil ? titleTamil : titleEnglish;
+  const subtitle = isTamil ? subtitleTamil : subtitleEnglish;
+
+  return (
+    <section className="space-y-4 py-4 select-none">
+      <div className="flex items-end justify-between gap-4 border-b border-slate-200 dark:border-slate-800/80 pb-3">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+            <h2 className="text-lg sm:text-2xl font-black text-slate-900 dark:text-white font-serif tracking-tight">
+              {title}
+            </h2>
+            {badgeText && (
+              <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+                {badgeText}
+              </span>
+            )}
+          </div>
+          {subtitle && (
+            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+              {subtitle}
+            </p>
+          )}
+        </div>
+
+        <div className="flex items-center gap-1.5 shrink-0">
+          <button
+            onClick={() => handleScroll('left')}
+            aria-label="Scroll left"
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-slate-100 dark:bg-slate-800/90 hover:bg-amber-600 dark:hover:bg-amber-600 hover:text-white text-slate-700 dark:text-slate-300 flex items-center justify-center transition-all shadow-sm active:scale-95 border border-slate-200 dark:border-slate-700"
+          >
+            ←
+          </button>
+          <button
+            onClick={() => handleScroll('right')}
+            aria-label="Scroll right"
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-slate-100 dark:bg-slate-800/90 hover:bg-amber-600 dark:hover:bg-amber-600 hover:text-white text-slate-700 dark:text-slate-300 flex items-center justify-center transition-all shadow-sm active:scale-95 border border-slate-200 dark:border-slate-700"
+          >
+            →
+          </button>
+        </div>
+      </div>
+
+      <div
+        ref={scrollRef}
+        className="flex items-stretch gap-4 sm:gap-5 overflow-x-auto no-scrollbar py-2 px-0.5 scroll-smooth"
+      >
+        {videos.map((video) => (
+          <div
+            key={`rail-${video.id}`}
+            className={aspectRatio === '9/16' || video.isShort ? 'shrink-0' : 'w-[260px] sm:w-[300px] md:w-[320px] shrink-0'}
+          >
+            <CinemaVideoCard
+              video={video}
+              aspectRatio={aspectRatio}
+              onSelect={onSelectVideo}
+              language={language}
+              onShowToast={onShowToast}
+            />
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function CinemaTheaterModal({
+  video,
+  allVideos = [],
+  onClose,
+  onSelectRelated,
+  language = 'ta',
+  onShowToast
+}) {
+  const [activeTab, setActiveTab] = useState('overview');
+  const [activeLang, setActiveLang] = useState(language);
+  const isTamil = activeLang === 'ta';
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') onClose && onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
+
+  if (!video) return null;
+
+  const youtubeId = video.youtubeId || '';
+  const embedUrl = `https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=1&rel=0&modestbranding=1&enablejsapi=1`;
+
+  const title = isTamil
+    ? (video.titleTamil || video.title || 'வீடியோ பதிவு')
+    : (video.titleEnglish || video.title || 'Featured Video');
+
+  const description = isTamil
+    ? (video.descriptionTamil || video.description || 'விளக்கம் இல்லை')
+    : (video.descriptionEnglish || video.description || 'No description available');
+
+  const category = (video.category || 'FINANCE').replace('-', ' ').toUpperCase();
+  const duration = video.duration || 'Video';
+  const views = video.views ? `${Number(video.views).toLocaleString()} views` : '';
+
+  const relatedVideos = (allVideos && allVideos.length > 0 ? allVideos : [])
+    .filter(v => v.id !== video.id)
+    .slice(0, 6);
+
+  const handleShare = () => {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(`${window.location.origin}/#/videos/${video.id}`);
+      if (onShowToast) {
+        onShowToast(isTamil ? 'இணைப்பு நகலெடுக்கப்பட்டது' : 'Video link copied to clipboard');
+      }
+    }
+  };
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-slate-950/90 backdrop-blur-2xl animate-fadeIn overflow-y-auto"
+      onClick={onClose}
+    >
+      <div
+        className="relative w-full max-w-5xl bg-slate-900 border border-slate-700/80 rounded-2xl sm:rounded-3xl shadow-2xl shadow-slate-950 overflow-hidden flex flex-col my-auto max-h-[94vh]"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-800 bg-slate-950/80 backdrop-blur-md">
+          <div className="flex items-center gap-2.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse" />
+            <span className="text-xs font-black uppercase tracking-wider text-slate-200">
+              {category} • {duration}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <div className="inline-flex p-0.5 rounded-xl bg-slate-800 border border-slate-700 text-[11px] font-bold">
+              <button
+                onClick={() => setActiveLang('ta')}
+                className={`px-2.5 py-1 rounded-lg transition-all ${isTamil ? 'bg-amber-500 text-slate-950 font-black' : 'text-slate-400 hover:text-white'}`}
+              >
+                தமிழ்
+              </button>
+              <button
+                onClick={() => setActiveLang('en')}
+                className={`px-2.5 py-1 rounded-lg transition-all ${!isTamil ? 'bg-amber-500 text-slate-950 font-black' : 'text-slate-400 hover:text-white'}`}
+              >
+                English
+              </button>
+            </div>
+
             <button
               onClick={handleShare}
               title="Share"
-              className="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-lg transition-colors"
+              className="px-3 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-bold transition-colors border border-slate-700"
             >
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" /></svg>
+              {isTamil ? 'பகிர்க' : 'Share'}
             </button>
+
+            <button
+              onClick={onClose}
+              aria-label="Close"
+              className="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition-colors text-sm font-bold border border-slate-700"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">
+          <div className="relative aspect-video w-full rounded-xl sm:rounded-2xl overflow-hidden bg-black shadow-2xl border border-slate-800">
+            {youtubeId ? (
+              <iframe
+                src={embedUrl}
+                title={title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                className="w-full h-full border-0"
+              />
+            ) : (
+              <div className="flex items-center justify-center h-full text-slate-500 text-sm">
+                Video not available
+              </div>
+            )}
+          </div>
+
+          <div className="space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+              <div className="space-y-1">
+                <h1 className="text-xl sm:text-2xl font-black text-white font-serif leading-snug">
+                  {title}
+                </h1>
+                <div className="flex items-center gap-3 text-xs text-slate-400 font-medium flex-wrap">
+                  <span className="text-amber-400 font-bold">{video.channelName || 'Budget Padmanaban'}</span>
+                  <span>•</span>
+                  <span>{views}</span>
+                  {video.publishedAt && (
+                    <>
+                      <span>•</span>
+                      <span>{new Date(video.publishedAt).toLocaleDateString()}</span>
+                    </>
+                  )}
+                </div>
+              </div>
+
+              <div className="inline-flex p-1 rounded-xl bg-slate-950 border border-slate-800 text-xs font-bold shrink-0">
+                <button
+                  onClick={() => setActiveTab('overview')}
+                  className={`px-3 py-1.5 rounded-lg transition-all ${activeTab === 'overview' ? 'bg-amber-500 text-slate-950 font-black' : 'text-slate-400 hover:text-white'}`}
+                >
+                  {isTamil ? 'விளக்கம்' : 'Overview'}
+                </button>
+                <button
+                  onClick={() => setActiveTab('takeaways')}
+                  className={`px-3 py-1.5 rounded-lg transition-all ${activeTab === 'takeaways' ? 'bg-amber-500 text-slate-950 font-black' : 'text-slate-400 hover:text-white'}`}
+                >
+                  {isTamil ? 'முக்கிய குறிப்புகள்' : 'Key Takeaways'}
+                </button>
+                <button
+                  onClick={() => setActiveTab('related')}
+                  className={`px-3 py-1.5 rounded-lg transition-all ${activeTab === 'related' ? 'bg-amber-500 text-slate-950 font-black' : 'text-slate-400 hover:text-white'}`}
+                >
+                  {isTamil ? 'தொடர்புடையவை' : 'Related'}
+                </button>
+              </div>
+            </div>
+
+            {activeTab === 'overview' && (
+              <div className="p-4 sm:p-5 rounded-2xl bg-slate-950/60 border border-slate-800 text-xs sm:text-sm text-slate-300 font-sans leading-relaxed whitespace-pre-line">
+                {description}
+              </div>
+            )}
+
+            {activeTab === 'takeaways' && (
+              <div className="p-4 sm:p-5 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-3">
+                <h3 className="text-xs font-black uppercase tracking-wider text-amber-400">
+                  {isTamil ? 'முக்கிய முதலீட்டுப் பாடங்கள்' : 'Core Investment Principles'}
+                </h3>
+                <ul className="space-y-2 text-xs sm:text-sm text-slate-300 font-medium">
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-500 font-bold">•</span>
+                    <span>{isTamil ? 'நீண்ட கால முதலீட்டு உத்திகள் மற்றும் கூட்டு வட்டியின் ஆற்றல்' : 'Long-term systematic compounding and risk mitigation'}</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-500 font-bold">•</span>
+                    <span>{isTamil ? 'சந்தை ஏற்ற இறக்கங்களை எதிர்கொள்ளும் ஒழுங்கான SIP திட்டமிடல்' : 'Disciplined asset allocation across market cycles'}</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-500 font-bold">•</span>
+                    <span>{isTamil ? 'வரி சேமிப்பு மற்றும் ஓய்வூதிய இலக்குகளுக்கான சரியான நிதி ஒதுக்கீடு' : 'Tax-efficient investment selection aligned with life goals'}</span>
+                  </li>
+                </ul>
+              </div>
+            )}
+
+            {activeTab === 'related' && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                {relatedVideos.map((rel) => {
+                  const relTitle = isTamil ? (rel.titleTamil || rel.title) : (rel.titleEnglish || rel.title);
+                  return (
+                    <div
+                      key={`modal-rel-${rel.id}`}
+                      role="button"
+                      tabIndex={0}
+                      onClick={() => onSelectRelated && onSelectRelated(rel)}
+                      className="group flex items-center gap-3 p-2.5 rounded-xl bg-slate-950 hover:bg-slate-800/80 border border-slate-800 transition-all cursor-pointer"
+                    >
+                      <div className="relative w-20 aspect-[16/10] rounded-lg overflow-hidden shrink-0 bg-slate-950">
+                        <img
+                          src={rel.thumbnail || `https://img.youtube.com/vi/${rel.youtubeId}/hqdefault.jpg`}
+                          alt={relTitle}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                        />
+                        <span className="absolute bottom-1 right-1 px-1 py-0.2 rounded bg-black/80 text-[8px] font-mono text-slate-200">
+                          {rel.duration || 'Video'}
+                        </span>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-xs font-bold text-slate-200 group-hover:text-amber-400 line-clamp-2 leading-tight transition-colors">
+                          {relTitle}
+                        </h4>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -29288,16 +29634,19 @@ function YouTubeVideoFeedCard({ video, viewMode = 'grid', onSelect, onShowToast 
 }
 
 function VideosPage({ onNavigate, onShowToast }) {
-  const { t, language } = useLanguage();
+  const { language } = useLanguage();
+  const isTamil = language === 'ta';
+
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
-  const [sortBy, setSortBy] = useState('newest'); // 'newest' | 'views' | 'oldest' | 'duration'
-  const [viewMode, setViewMode] = useState('grid'); // 'grid' | 'list'
-  const [visibleCount, setVisibleCount] = useState(24);
+  const [sortBy, setSortBy] = useState('newest');
+  const [selectedVideo, setSelectedVideo] = useState(null);
+  const [visibleGridCount, setVisibleGridCount] = useState(24);
+  const [viewMode, setViewMode] = useState('rails');
 
   const categoriesList = [
     { id: 'all', labelTa: 'அனைத்து வீடியோக்கள் (882)', labelEn: 'All Videos (882)' },
-    { id: 'trending', labelTa: 'முக்கிய பதிவுகள்', labelEn: 'Trending' },
+    { id: 'trending', labelTa: 'முக்கிய பதிவுகள்', labelEn: 'Featured & Trending' },
     { id: 'mutual-funds', labelTa: 'மியூச்சுவல் ஃபண்ட் & SIP', labelEn: 'Mutual Funds & SIP' },
     { id: 'stocks', labelTa: 'பங்குச் சந்தை', labelEn: 'Stock Market' },
     { id: 'ipo', labelTa: 'IPO அலசல்', labelEn: 'IPO Analysis' },
@@ -29308,11 +29657,28 @@ function VideosPage({ onNavigate, onShowToast }) {
     { id: 'shorts', labelTa: 'குறுகிய வீடியோக்கள்', labelEn: 'Shorts' }
   ];
 
-  // Filter & Sort across the full 882 dataset
+  const spotlightVideos = useMemo(() => {
+    return videosData
+      .filter(v => v.trending || v.category === 'mutual-funds')
+      .slice(0, 5)
+      .map(v => translateVideo(v, language));
+  }, [language]);
+
+  const railsData = useMemo(() => {
+    const translated = videosData.map(v => translateVideo(v, language));
+    return {
+      masterclasses: translated.filter(v => v.trending || v.views > 25000).slice(0, 10),
+      shorts: translated.filter(v => v.isShort || (v.tags && v.tags.includes('shorts'))).slice(0, 12),
+      mutualFunds: translated.filter(v => v.category === 'mutual-funds').slice(0, 10),
+      stocks: translated.filter(v => v.category === 'stocks' || v.category === 'ipo').slice(0, 10),
+      taxRetirement: translated.filter(v => v.category === 'tax-saving' || v.category === 'retirement').slice(0, 10),
+      personalFinance: translated.filter(v => v.category === 'personal-finance' || v.category === 'gold-bonds').slice(0, 10)
+    };
+  }, [language]);
+
   const filteredVideos = useMemo(() => {
     let list = [...videosData];
 
-    // 1. Category Filter
     if (activeCategory === 'trending') {
       list = list.filter(v => v.trending);
     } else if (activeCategory === 'shorts') {
@@ -29321,7 +29687,6 @@ function VideosPage({ onNavigate, onShowToast }) {
       list = list.filter(v => v.category === activeCategory);
     }
 
-    // 2. Search Filter
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase().trim();
       list = list.filter(v => {
@@ -29334,7 +29699,6 @@ function VideosPage({ onNavigate, onShowToast }) {
       });
     }
 
-    // 3. Sorting
     if (sortBy === 'views') {
       list.sort((a, b) => (b.views || 0) - (a.views || 0));
     } else if (sortBy === 'oldest') {
@@ -29342,97 +29706,26 @@ function VideosPage({ onNavigate, onShowToast }) {
     } else if (sortBy === 'duration') {
       list.sort((a, b) => (b.duration || '').localeCompare(a.duration || ''));
     } else {
-      // 'newest' default
       list.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
     }
 
     return list.map(v => translateVideo(v, language));
   }, [activeCategory, searchQuery, sortBy, language]);
 
-  const displayedVideos = filteredVideos.slice(0, visibleCount);
-
-  const handleLoadMore = () => {
-    setVisibleCount(prev => Math.min(prev + 24, filteredVideos.length));
-  };
+  const isFiltering = activeCategory !== 'all' || searchQuery.trim().length > 0;
 
   return (
-    <div className="min-h-screen pb-20 space-y-6 animate-fadeIn">
-      {/* LIVING FAN WALL HERO AREA */}
-      <VideoFanWall
-        videos={videosData}
-        language={language}
-        onNavigate={onNavigate}
-        titleTamil="பிரத்யேக வீடியோக்கள்"
-        titleEnglish="Living Video Showcase"
-        subtitleTamil="பட்ஜெட் பத்மநாபனின் பிரத்யேக நிதி மற்றும் முதலீட்டு வீடியோ அலசல்கள்"
-        subtitleEnglish="Continuous interactive video gallery featuring original insights and financial masterclasses"
-      />
-
-      {/* 1. OFFICIAL YOUTUBE CHANNEL HEADER BANNER */}
-      <div className="bg-slate-950 text-white border-b border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
-          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
-            {/* Channel Avatar */}
-            <div className="relative group">
-              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-tr from-amber-500 via-red-600 to-amber-400 p-1 shadow-2xl">
-                <div className="w-full h-full rounded-full bg-slate-900 flex items-center justify-center font-black text-2xl sm:text-3xl text-white">
-                  BP
-                </div>
-              </div>
-              <div className="absolute -bottom-1 -right-1 w-7 h-7 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-black shadow border-2 border-slate-950" title="Verified Channel">
-                
-              </div>
-            </div>
-
-            {/* Channel Details */}
-            <div className="flex-1 text-center sm:text-left space-y-2">
-              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
-                <h1 className="text-2xl sm:text-3xl font-black font-serif text-white tracking-tight">
-                  Budget Padmanaban
-                </h1>
-                <span className="inline-flex items-center gap-1 self-center sm:self-auto px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-400 text-xs font-bold border border-amber-500/30">
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
-                  CFP® Certified Financial Planner
-                </span>
-              </div>
-
-              <p className="text-sm text-slate-300 max-w-2xl font-medium">
-                {language === 'ta'
-                  ? 'தமிழ்நாட்டில் மியூச்சுவல் ஃபண்ட், பங்குச் சந்தை, வரி சேமிப்பு மற்றும் ஓய்வூதிய திட்டங்களுக்கான முதன்மை வழிகாட்டி.'
-                  : 'Official Financial Advisory Feed — Mutual Funds, Stock Market, Tax Saving, SIPs & Wealth Creation in Tamil.'}
-              </p>
-
-              {/* Channel Stats Bar */}
-              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 text-xs text-slate-400 font-semibold pt-1">
-                <span className="text-white font-bold">{CHANNEL_HANDLE}</span>
-                <span>•</span>
-                <span className="text-amber-400 font-extrabold">882 Videos Uploaded</span>
-                <span>•</span>
-                <span>250K+ Subscribers</span>
-                <span>•</span>
-                <span>18M+ Total Views</span>
-              </div>
-            </div>
-
-            {/* Subscribe & Social Action */}
-            <div className="shrink-0 flex items-center gap-3">
-              <a
-                href={CHANNEL_URL}
-                target="_blank"
-                rel="noreferrer"
-                className="px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-extrabold text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-red-600/30 transition-all hover:scale-105 active:scale-95"
-              >
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                <span>SUBSCRIBE</span>
-              </a>
-            </div>
-          </div>
-        </div>
+    <div className="min-h-screen pb-24 space-y-8 animate-fadeIn text-slate-900 dark:text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+        <CinemaSpotlightHero
+          spotlightVideos={spotlightVideos}
+          onWatchVideo={(video) => setSelectedVideo(video)}
+          language={language}
+        />
       </div>
 
-      {/* 2. STICKY CATEGORIES FILTER BAR */}
-      <div className="sticky top-16 z-30 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm py-3">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="sticky top-16 z-30 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl border-y border-slate-200 dark:border-slate-800/80 shadow-md py-3.5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-3">
           <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
             {categoriesList.map(cat => {
               const isActive = activeCategory === cat.id;
@@ -29441,884 +29734,215 @@ function VideosPage({ onNavigate, onShowToast }) {
                   key={cat.id}
                   onClick={() => {
                     setActiveCategory(cat.id);
-                    setVisibleCount(24);
+                    setVisibleGridCount(24);
                   }}
-                  className={`px-4 py-1.5 rounded-full text-xs font-extrabold whitespace-nowrap transition-all duration-200 shrink-0 ${
+                  className={`px-4 py-2 rounded-full text-xs font-black whitespace-nowrap transition-all duration-200 shrink-0 ${
                     isActive
-                      ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-950 shadow-md scale-105'
-                      : 'bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200/60 dark:border-slate-800'
+                      ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20 scale-105'
+                      : 'bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800'
                   }`}
                 >
-                  {language === 'ta' ? cat.labelTa : cat.labelEn}
+                  {isTamil ? cat.labelTa : cat.labelEn}
                 </button>
               );
             })}
           </div>
-        </div>
-      </div>
 
-      {/* 3. IN-FEED SEARCH & SORT CONTROLS */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
-          {/* Live In-Feed Search */}
-          <div className="relative flex-1">
-            <svg className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={e => {
-                setSearchQuery(e.target.value);
-                setVisibleCount(24);
-              }}
-              placeholder={language === 'ta' ? "இந்த 882 வீடியோக்களில் தேடுங்கள் (எ.கா: SIP, Nifty, Tax)..." : "Filter these 882 videos (e.g., SIP, Stocks, SGB)..."}
-              className="w-full pl-10 pr-10 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white placeholder-slate-400 text-xs sm:text-sm font-medium focus:outline-none focus:border-amber-500"
-            />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
-              >
-                
-              </button>
-            )}
-          </div>
-
-          {/* Sort & Layout Switcher */}
-          <div className="flex items-center justify-between md:justify-end gap-3 shrink-0">
-            {/* Sort Dropdown */}
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-slate-500 font-bold hidden sm:inline">Sort:</span>
-              <select
-                value={sortBy}
-                onChange={e => setSortBy(e.target.value)}
-                className="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold focus:outline-none focus:border-amber-500"
-              >
-                <option value="newest">Latest Uploads</option>
-                <option value="views">Most Popular</option>
-                <option value="oldest">Oldest First</option>
-                <option value="duration">Longest First</option>
-              </select>
-            </div>
-
-            {/* View Mode (Grid vs List) */}
-            <div className="flex items-center p-1 bg-slate-100 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800">
-              <button
-                onClick={() => setViewMode('grid')}
-                className={`p-1.5 rounded-lg transition-colors ${viewMode === 'grid' ? 'bg-white dark:bg-slate-800 text-amber-600 shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
-                title="Grid View"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
-              </button>
-              <button
-                onClick={() => setViewMode('list')}
-                className={`p-1.5 rounded-lg transition-colors ${viewMode === 'list' ? 'bg-white dark:bg-slate-800 text-amber-600 shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
-                title="List View"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Results Counter Bar */}
-        <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 font-semibold px-2 pt-3">
-          <span>
-            {language === 'ta'
-              ? `${filteredVideos.length} வீடியோக்கள் கண்டறியப்பட்டன (காண்பிக்கப்படுகிறது: ${displayedVideos.length})`
-              : `Found ${filteredVideos.length} videos (Showing ${displayedVideos.length})`}
-          </span>
-          {searchQuery && (
-            <button onClick={() => setSearchQuery('')} className="text-amber-600 dark:text-amber-400 hover:underline font-bold">
-              Reset search filter
-            </button>
-          )}
-        </div>
-      </div>
-
-      {/* 4. VIDEO FEED GRID / LIST */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {displayedVideos.length === 0 ? (
-          <div className="py-20 text-center space-y-3 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800">
-            <div className="w-16 h-16 rounded-full bg-amber-500/10 text-amber-600 flex items-center justify-center mx-auto text-2xl">
-              
-            </div>
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white">
-              {language === 'ta' ? 'வீடியோக்கள் எதுவும் கிடைக்கவில்லை' : 'No Videos Found'}
-            </h3>
-            <p className="text-xs text-slate-500 max-w-sm mx-auto">
-              {language === 'ta'
-                ? 'உங்கள் தேடல் வார்த்தையை மாற்றவும் அல்லது அனைத்து பிரிவுகளையும் பார்வையிடவும்.'
-                : 'Try adjusting your search terms or select another category.'}
-            </p>
-            <button
-              onClick={() => { setSearchQuery(''); setActiveCategory('all'); }}
-              className="px-4 py-2 rounded-xl bg-amber-500 text-slate-950 text-xs font-bold shadow hover:bg-amber-400 transition-colors"
-            >
-              Clear Filters
-            </button>
-          </div>
-        ) : (
-          <div className={viewMode === 'grid' ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5" : "space-y-4"}>
-            {displayedVideos.map(video => (
-              <YouTubeVideoFeedCard
-                key={video.id}
-                video={video}
-                viewMode={viewMode}
-                onSelect={(v) => onNavigate(`#/videos/${v.id}`)}
-                onShowToast={onShowToast}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-1">
+            <div className="relative flex-1">
+              <svg className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                placeholder={isTamil ? "இந்த 882 வீடியோக்களில் தேடுங்கள் (எ.கா: SIP, Nifty, Tax)..." : "Search 882 masterclasses (e.g. SIP, Nifty, Tax)..."}
+                className="w-full pl-10 pr-10 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white placeholder-slate-400 text-xs sm:text-sm font-medium focus:outline-none focus:border-amber-500 transition-colors"
               />
-            ))}
-          </div>
-        )}
-
-        {/* 5. LOAD MORE PROGRESSIVE BATCHING */}
-        {displayedVideos.length < filteredVideos.length && (
-          <div className="py-12 text-center space-y-3">
-            <div className="w-full max-w-xs mx-auto bg-slate-200 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
-              <div
-                className="bg-amber-500 h-full transition-all duration-300"
-                style={{ width: `${(displayedVideos.length / filteredVideos.length) * 100}%` }}
-              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 hover:text-slate-200"
+                >
+                  ✕
+                </button>
+              )}
             </div>
-            <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold">
-              Showing {displayedVideos.length} of {filteredVideos.length} Videos
-            </p>
-            <button
-              onClick={handleLoadMore}
-              className="px-8 py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-sm shadow-xl hover:shadow-amber-500/20 transition-all hover:scale-105 active:scale-95"
-            >
-              {language === 'ta' ? 'மேலும் வீடியோக்களைக் காட்டு' : 'Load More Videos'}
-            </button>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
 
-function VideoDetailsPage({ videoId, onNavigate, onShowToast }) {
-  const { t, language } = useLanguage();
-  const [video, setVideo] = useState(null);
-  const [related, setRelated] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isMiniPlayerVisible, setIsMiniPlayerVisible] = useState(false);
-  const { addToHistory } = useWatchHistory();
-  const playerRef = useRef(null);
-
-  useEffect(() => {
-    setIsLoading(true);
-    let isMounted = true;
-    getVideoById(videoId, language).then(data => {
-      if (isMounted) {
-        setVideo(data);
-        setIsLoading(false);
-        if (data) addToHistory(data);
-      }
-    });
-
-    getRelatedVideos(videoId, language).then(rel => {
-      if (isMounted) setRelated(rel);
-    });
-
-    return () => { isMounted = false; };
-  }, [videoId, language]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!playerRef.current) return;
-      const rect = playerRef.current.getBoundingClientRect();
-      setIsMiniPlayerVisible(rect.bottom < 0);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const handleShare = () => {
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(window.location.href);
-      onShowToast(t('copiedToast'));
-    }
-  };
-
-  if (isLoading) return <div className="py-12 text-center text-slate-500 font-bold">Loading Video...</div>;
-  if (!video) return <div className="py-16 text-center font-bold">Video Not Found</div>;
-
-  const formattedDate = video.publishedAt ? new Intl.DateTimeFormat(language === 'ta' ? 'ta-IN' : 'en-IN', { month: 'long', day: 'numeric', year: 'numeric' }).format(new Date(video.publishedAt)) : '';
-  const actualYtId = (video.youtubeId && video.youtubeId.length === 11 && !video.youtubeId.includes('-')) 
-    ? video.youtubeId 
-    : ((video.id && video.id.length === 11 && !video.id.includes('-')) ? video.id : 'GizYMQfl9CY');
-
-  return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fadeIn">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        <div className="lg:col-span-8 space-y-6">
-          <div ref={playerRef} className="relative aspect-video rounded-3xl overflow-hidden bg-slate-950 shadow-2xl border border-slate-200 dark:border-slate-800">
-            <iframe
-              src={`https://www.youtube-nocookie.com/embed/${actualYtId}?autoplay=1&rel=0`}
-              title={video.title}
-              className="w-full h-full border-0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
-
-          <div className="space-y-4 bg-white dark:bg-slate-900 p-6 sm:p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm">
-            <div className="flex justify-between items-center flex-wrap gap-2">
+            <div className="flex items-center justify-between sm:justify-end gap-3 shrink-0">
               <div className="flex items-center gap-2">
-                <span className="px-3 py-1 text-xs font-black uppercase rounded-full bg-amber-500/20 text-amber-700 dark:text-amber-400">{video.category}</span>
-                <a href={video.youtubeUrl || OFFICIAL_CHANNEL_URL} target="_blank" rel="noreferrer" className="text-xs font-black text-red-600 dark:text-red-500 hover:underline">
-                  {OFFICIAL_CHANNEL_HANDLE} ↗
-                </a>
+                <span className="text-xs text-slate-500 font-bold hidden sm:inline">{isTamil ? 'வரிசை:' : 'Sort:'}</span>
+                <select
+                  value={sortBy}
+                  onChange={e => setSortBy(e.target.value)}
+                  className="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold focus:outline-none focus:border-amber-500"
+                >
+                  <option value="newest">{isTamil ? 'சமீபத்தியவை' : 'Latest Uploads'}</option>
+                  <option value="views">{isTamil ? 'அதிக பார்வை' : 'Most Popular'}</option>
+                  <option value="oldest">{isTamil ? 'பழையவை' : 'Oldest First'}</option>
+                </select>
               </div>
-              <button onClick={handleShare} className="px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-bold flex items-center gap-2 border border-slate-200 dark:border-slate-700 hover:bg-slate-200">{t('share')}</button>
-            </div>
 
-            <h1 className="text-xl sm:text-3xl font-black text-slate-900 dark:text-white font-serif">{video.title}</h1>
-            <div className="flex items-center gap-4 text-xs text-slate-500 dark:text-slate-400 border-t border-b border-slate-100 dark:border-slate-800 py-3.5 font-bold">
-              <span>{(video.views || 18500).toLocaleString()} {t('views')}</span>
-              <span>•</span>
-              <span>{t('publishedAt')}: {formattedDate}</span>
-              <span>•</span>
-              <span className="font-mono text-amber-700 dark:text-amber-400"> {video.duration || (video.isShort ? 'Short' : '10:00')}</span>
+              <div className="inline-flex p-0.5 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                <button
+                  onClick={() => setViewMode('rails')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                    viewMode === 'rails' && !isFiltering
+                      ? 'bg-amber-500 text-slate-950 font-black shadow'
+                      : 'text-slate-500 dark:text-slate-400 hover:text-white'
+                  }`}
+                >
+                  {isTamil ? 'தனித்தனி வரிசைகள்' : 'Cinematic Rails'}
+                </button>
+                <button
+                  onClick={() => setViewMode('grid')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                    viewMode === 'grid' || isFiltering
+                      ? 'bg-amber-500 text-slate-950 font-black shadow'
+                      : 'text-slate-500 dark:text-slate-400 hover:text-white'
+                  }`}
+                >
+                  {isTamil ? 'முழு கட்டம்' : 'Full Grid'}
+                </button>
+              </div>
             </div>
-            <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-medium">{video.description}</p>
           </div>
         </div>
-
-        <div className="lg:col-span-4 space-y-4">
-          <h3 className="text-base font-black text-slate-900 dark:text-white font-serif border-b border-slate-200 dark:border-slate-800 pb-3">{t('relatedVideos')}</h3>
-          <div className="space-y-4">
-            {related.map(rel => (
-              <VideoCard key={rel.id} video={rel} onSelect={(v) => onNavigate(`#/videos/${v.id}`)} onShowToast={onShowToast} />
-            ))}
-          </div>
-        </div>
       </div>
 
-      <MiniPlayer video={video} isVisible={isMiniPlayerVisible} onClose={() => setIsMiniPlayerVisible(false)} onExpand={() => { setIsMiniPlayerVisible(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }} />
-    </div>
-  );
-}
-
-function NewsPage({ onNavigate }) {
-  const { t, language } = useLanguage();
-  const articles = newsData.map(item => translateNewsArticle(item, language));
-
-  return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fadeIn">
-      <div>
-        <h1 className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white font-serif">{t('nav.news')} Hub</h1>
-        <a href={OFFICIAL_CHANNEL_URL} target="_blank" rel="noreferrer" className="text-xs font-bold text-red-600 dark:text-red-400 hover:underline mt-1 inline-block">
-          Official Channel: {OFFICIAL_CHANNEL_HANDLE} ↗
-        </a>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {articles.map(article => (
-          <NewsCard key={article.id} article={article} onSelect={() => onNavigate(`#/news/${article.slug}`)} />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function NewsDetailsPage({ slug, onNavigate }) {
-  const { t, language } = useLanguage();
-  const rawArticle = newsData.find(a => a.slug === slug) || newsData[0];
-  const article = translateNewsArticle(rawArticle, language);
-
-  return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 animate-fadeIn">
-      <div className="space-y-4 border-b border-slate-200 dark:border-slate-800 pb-6">
-        <span className="px-3 py-1 text-xs font-black uppercase rounded-full bg-amber-500/20 text-amber-700 dark:text-amber-400">{article.category}</span>
-        <h1 className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white font-serif">{article.title}</h1>
-      </div>
-      <div className="aspect-video rounded-3xl overflow-hidden shadow-2xl">
-        <img src={article.thumbnail} alt="" className="w-full h-full object-cover" />
-      </div>
-      <div className="prose dark:prose-invert text-slate-700 dark:text-slate-300 text-sm leading-relaxed font-medium" dangerouslySetInnerHTML={{ __html: article.content }} />
-      <button onClick={() => onNavigate('#/news')} className="px-6 py-3 rounded-full bg-slate-900 text-white font-black text-xs hover:bg-amber-600 transition-colors">â† Back to News</button>
-    </div>
-  );
-}
-
-function CategoryPage({ categoryId, onNavigate, onShowToast }) {
-  const { t } = useLanguage();
-  const { videos, isLoading } = useVideos(categoryId);
-  return (
-    <div className="py-6 animate-fadeIn">
-      <div className="max-w-7xl mx-auto px-4 mb-6">
-        <h1 className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white font-serif">{categoryId.toUpperCase()} Feed</h1>
-      </div>
-      <VideoGrid videos={videos} isLoading={isLoading} activeCategory={categoryId} onCategoryChange={(cat) => onNavigate(`#/category/${cat}`)} onSelectVideo={(v) => onNavigate(`#/videos/${v.id}`)} onShowToast={onShowToast} />
-    </div>
-  );
-}
-
-// ==================== AUTH UI PAGE ====================
-function AuthPage({ initialMode = 'login', onNavigate }) {
-  const { language } = useLanguage();
-  const isTamil = language === 'ta';
-  const { signInWithPassword, signInWithGoogle, signInWithMagicLink, signUp, sendPasswordReset } = useAuth();
-
-  const [mode, setMode] = useState(initialMode);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [displayName, setDisplayName] = useState('');
-  const [agreeTerms, setAgreeTerms] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-
-  const getPostLoginTarget = () => {
-    try {
-      const saved = sessionStorage.getItem('auth_redirect_from');
-      if (saved && saved !== '#/login' && saved !== '#/signup' && saved !== '#/register' && saved !== '#/forgot-password' && saved !== '#/reset-password') {
-        sessionStorage.removeItem('auth_redirect_from');
-        return saved;
-      }
-    } catch (e) {}
-    return '#/';
-  };
-
-  const handleLoginSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-    setIsLoading(true);
-    try {
-      await signInWithPassword(email, password);
-      onNavigate(getPostLoginTarget());
-    } catch (err) {
-      setError(err.message || (isTamil ? 'உள்நுழைவு தோல்வியடைந்தது.' : 'Login failed. Check credentials.'));
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleSignupSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-    if (password !== confirmPassword) {
-      setError(isTamil ? 'கடவுச்சொற்கள் பொருந்தவில்லை' : 'Passwords do not match');
-      return;
-    }
-    if (!agreeTerms) {
-      setError(isTamil ? 'விதிமுறைகளை ஏற்க வேண்டும்' : 'You must agree to the Terms & Privacy Policy');
-      return;
-    }
-    setIsLoading(true);
-    try {
-      await signUp(email, password, displayName);
-      setSuccess(isTamil ? 'சரிபார்ப்பு மின்னஞ்சல் அனுப்பப்பட்டது!' : 'Check your email to verify your account');
-    } catch (err) {
-      setError(err.message || 'Signup failed');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleGoogleAuth = async () => {
-    setIsLoading(true);
-    try {
-      await signInWithGoogle();
-      onNavigate(getPostLoginTarget());
-    } catch (err) {
-      setError(err.message || 'Google Auth failed');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleMagicLinkSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-    setIsLoading(true);
-    try {
-      await signInWithMagicLink(email);
-      setSuccess(isTamil ? 'மேஜிக் லிங்க் அனுப்பப்பட்டது' : 'Magic sign-in link sent to your email');
-    } catch (err) {
-      setError(err.message || 'Failed to send magic link');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleForgotSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-    setIsLoading(true);
-    try {
-      await sendPasswordReset(email);
-      setSuccess(isTamil ? 'மீட்டமைப்பு இணைப்பு அனுப்பப்பட்டது' : 'Password reset link sent to your email');
-    } catch (err) {
-      setError(err.message || 'Failed to send reset link');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  return (
-    <div className="max-w-4xl mx-auto my-8 px-4 animate-fadeIn">
-      <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-12">
-        
-        {/* Left Branded Panel */}
-        <div className="hidden md:flex md:col-span-5 bg-gradient-to-br from-slate-950 via-slate-900 to-amber-950 p-8 text-white flex-col justify-between relative overflow-hidden">
-          <div className="relative z-10 space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-2xl bg-amber-500 text-slate-950 font-black flex items-center justify-center text-xl shadow-lg">தன</div>
-              <h1 className="text-xl font-black font-serif text-white">Muthaleetu Thisai</h1>
-            </div>
-            <h3 className="text-2xl font-black font-serif text-amber-400 pt-4 leading-snug">
-              {isTamil ? 'முதலீடுகள் & மியூச்சுவல் ஃபண்ட் வழிகாட்டி' : 'Master Mutual Funds & Wealth Creation'}
-            </h3>
-            <p className="text-xs text-slate-300 leading-relaxed">
-              {isTamil ? 'பட்ஜெட் பத்மநாபன் CFP வழங்கும் நம்பகமான நிதி தகவல்கள்.' : 'Certified financial insights by Certified Financial Planner Padmanaban B.'}
-            </p>
-          </div>
-          <div className="text-xs font-bold text-slate-400">@budgetpadmanaban_ Official</div>
-        </div>
-
-        {/* Right Form Card Panel */}
-        <div className="md:col-span-7 p-6 sm:p-10 flex flex-col justify-center bg-white dark:bg-slate-900">
-          <div className="space-y-1 mb-5">
-            <h2 className="text-2xl font-black text-slate-900 dark:text-white font-serif">
-              {mode === 'signup' ? (isTamil ? 'கணக்கை உருவாக்குங்கள்' : 'Create an Account') :
-               mode === 'forgot' ? (isTamil ? 'கடவுச்சொல்லை மீட்டெடுக்க' : 'Reset Password') :
-               mode === 'magic-link' ? (isTamil ? 'மேஜிக் உள்நுழைவு' : 'Passwordless Magic Link') :
-               (isTamil ? 'மீண்டும் வருக!' : 'Welcome back')}
-            </h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-              {isTamil ? 'உங்கள் நிதி கணக்கில் உள்நுழையவும்' : 'Access your personalized investment dashboard.'}
-            </p>
-          </div>
-
-          {error && (
-            <div className="p-3 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-600 text-xs font-bold mb-4">
-               {error}
-            </div>
-          )}
-
-          {success && (
-            <div className="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 text-xs font-bold mb-4">
-               {success}
-            </div>
-          )}
-
-          {mode === 'login' && (
-            <form onSubmit={handleLoginSubmit} className="space-y-4">
-              <button
-                type="button"
-                onClick={handleGoogleAuth}
-                className="w-full h-12 flex items-center justify-center gap-3 px-4 rounded-2xl bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 font-bold text-xs sm:text-sm border border-slate-300 dark:border-slate-700 shadow-sm hover:shadow-md transition-all active:scale-[0.98]"
-              >
-                <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24">
-                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
-                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
-                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" />
-                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
-                </svg>
-                <span>{isTamil ? 'கூகிள் மூலம் தொடரவும்' : 'Continue with Google'}</span>
-              </button>
-
-              <div className="space-y-1">
-                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">{isTamil ? 'மின்னஞ்சல்' : 'Email'}</label>
-                <input type="email" value={email} onChange={e => setEmail(e.target.value)} required className="w-full h-11 px-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-900 dark:text-white" />
-              </div>
-              <div className="space-y-1">
-                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">{isTamil ? 'கடவுச்சொல்' : 'Password'}</label>
-                <input type="password" value={password} onChange={e => setPassword(e.target.value)} required className="w-full h-11 px-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-900 dark:text-white" />
-              </div>
-              <div className="flex justify-between text-xs font-bold">
-                <button type="button" onClick={() => setMode('forgot')} className="text-amber-600 hover:underline">{isTamil ? 'கடவுச்சொல்லை மறந்ததா?' : 'Forgot password?'}</button>
-                <button type="button" onClick={() => setMode('magic-link')} className="text-slate-500 hover:underline">{isTamil ? 'மேஜிக் லிங்க்' : 'Email magic link'}</button>
-              </div>
-              <button type="submit" disabled={isLoading} className="w-full h-12 rounded-2xl bg-amber-600 hover:bg-amber-500 text-white font-extrabold text-xs shadow-lg">{isLoading ? 'Signing in...' : (isTamil ? 'உள்நுழைக' : 'Sign In')}</button>
-              <div className="text-center pt-2 text-xs font-bold">
-                {isTamil ? 'கணக்கு இல்லையா?' : "Don't have an account?"} <button type="button" onClick={() => setMode('signup')} className="text-amber-600 hover:underline">{isTamil ? 'பதிவு செய்க' : 'Sign up'}</button>
-              </div>
-            </form>
-          )}
-
-          {mode === 'signup' && (
-            <form onSubmit={handleSignupSubmit} className="space-y-3.5">
-              <button
-                type="button"
-                onClick={handleGoogleAuth}
-                className="w-full h-12 flex items-center justify-center gap-3 px-4 rounded-2xl bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 font-bold text-xs sm:text-sm border border-slate-300 dark:border-slate-700 shadow-sm hover:shadow-md transition-all active:scale-[0.98]"
-              >
-                <span>{isTamil ? 'கூகிள் மூலம் பதிவு செய்க' : 'Sign up with Google'}</span>
-              </button>
-              <div className="space-y-1">
-                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">{isTamil ? 'முழு பெயர்' : 'Full Name'}</label>
-                <input type="text" value={displayName} onChange={e => setDisplayName(e.target.value)} required className="w-full h-11 px-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-900 dark:text-white" />
-              </div>
-              <div className="space-y-1">
-                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">{isTamil ? 'மின்னஞ்சல்' : 'Email'}</label>
-                <input type="email" value={email} onChange={e => setEmail(e.target.value)} required className="w-full h-11 px-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-900 dark:text-white" />
-              </div>
-              <div className="space-y-1">
-                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">{isTamil ? 'கடவுச்சொல்' : 'Password'}</label>
-                <input type="password" value={password} onChange={e => setPassword(e.target.value)} required className="w-full h-11 px-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-900 dark:text-white" />
-              </div>
-              <div className="space-y-1">
-                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">{isTamil ? 'கடவுச்சொல்லை உறுதிப்படுத்து' : 'Confirm Password'}</label>
-                <input type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} required className="w-full h-11 px-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-900 dark:text-white" />
-              </div>
-              <div className="flex items-center gap-2 pt-1 text-xs font-bold">
-                <input type="checkbox" checked={agreeTerms} onChange={e => setAgreeTerms(e.target.checked)} required className="w-4 h-4 accent-amber-600" />
-                <span>{isTamil ? 'விதிமுறைகளை ஏற்கிறேன்' : 'I agree to Terms & Privacy Policy'}</span>
-              </div>
-              <button type="submit" disabled={isLoading} className="w-full h-12 rounded-2xl bg-amber-600 hover:bg-amber-500 text-white font-extrabold text-xs shadow-lg">{isLoading ? 'Creating...' : (isTamil ? 'கணக்கு உருவாக்கு' : 'Create Account')}</button>
-              <div className="text-center pt-2 text-xs font-bold">
-                {isTamil ? 'ஏற்கனவே கணக்கு உள்ளதா?' : 'Already have an account?'} <button type="button" onClick={() => setMode('login')} className="text-amber-600 hover:underline">{isTamil ? 'உள்நுழைக' : 'Sign in'}</button>
-              </div>
-            </form>
-          )}
-
-          {mode === 'forgot' && (
-            <form onSubmit={handleForgotSubmit} className="space-y-4">
-              <div className="space-y-1">
-                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">{isTamil ? 'மின்னஞ்சல்' : 'Email'}</label>
-                <input type="email" value={email} onChange={e => setEmail(e.target.value)} required className="w-full h-11 px-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-900 dark:text-white" />
-              </div>
-              <button type="submit" disabled={isLoading} className="w-full h-12 rounded-2xl bg-amber-600 text-white font-extrabold text-xs">{isLoading ? 'Sending...' : (isTamil ? 'மீட்டமைப்பு இணைப்பு அனுப்புக' : 'Send Reset Link')}</button>
-              <button type="button" onClick={() => setMode('login')} className="w-full text-center text-xs font-bold text-slate-500 hover:underline">← {isTamil ? 'திரும்பு' : 'Back to login'}</button>
-            </form>
-          )}
-
-          {mode === 'magic-link' && (
-            <form onSubmit={handleMagicLinkSubmit} className="space-y-4">
-              <div className="space-y-1">
-                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">{isTamil ? 'மின்னஞ்சல்' : 'Email'}</label>
-                <input type="email" value={email} onChange={e => setEmail(e.target.value)} required className="w-full h-11 px-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-900 dark:text-white" />
-              </div>
-              <button type="submit" disabled={isLoading} className="w-full h-12 rounded-2xl bg-amber-600 text-white font-extrabold text-xs">{isLoading ? 'Sending...' : (isTamil ? 'மேஜிக் லிங்க் அனுப்புக ' : 'Send Magic Link ')}</button>
-              <button type="button" onClick={() => setMode('login')} className="w-full text-center text-xs font-bold text-slate-500 hover:underline">← {isTamil ? 'திரும்பு' : 'Back to login'}</button>
-            </form>
-          )}
-
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ==================== USER PROFILE & ADMIN PAGES ====================
-function ProfilePage({ onNavigate, onShowToast }) {
-  const { user, profile, role, signOut } = useAuth();
-  const { language } = useLanguage();
-  const isTamil = language === 'ta';
-
-  if (!user) return null;
-
-  const displayName = profile?.display_name || user.user_metadata?.full_name || user.email?.split('@')[0] || 'User';
-  const email = user.email || '';
-  const avatarUrl = profile?.avatar_url || user.user_metadata?.avatar_url;
-  const initials = displayName.slice(0, 2).toUpperCase();
-
-  return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10 space-y-8 animate-fadeIn">
-      <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-8 shadow-xl relative overflow-hidden">
-        <div className="flex flex-col sm:flex-row items-center gap-6">
-          {avatarUrl ? (
-            <img src={avatarUrl} alt={displayName} className="w-24 h-24 rounded-full object-cover border-4 border-amber-500 shadow-xl" />
-          ) : (
-            <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-amber-600 to-amber-400 text-slate-950 font-black text-3xl flex items-center justify-center border-4 border-amber-400 shadow-xl">
-              {initials}
-            </div>
-          )}
-
-          <div className="text-center sm:text-left space-y-2 flex-1">
-            <div className="flex items-center justify-center sm:justify-start gap-3">
-              <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white font-serif">{displayName}</h1>
-              <span className={`text-xs font-extrabold uppercase px-3 py-1 rounded-full ${
-                role === 'admin' ? 'bg-red-500/10 text-red-600 border border-red-500/30' : 'bg-amber-500/10 text-amber-600 border border-amber-500/30'
-              }`}>
-                {role}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        {(isFiltering || viewMode === 'grid') ? (
+          <section className="space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+              <span className="text-xs font-bold text-slate-500 dark:text-slate-400">
+                {isTamil
+                  ? `மொத்தம் ${filteredVideos.length} வீடியோக்கள் கண்டறியப்பட்டன`
+                  : `Showing ${filteredVideos.length} matching masterclasses`}
               </span>
             </div>
-            <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">{email}</p>
-            <p className="text-[11px] text-slate-400 font-mono">User ID: {user.id || 'N/A'}</p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6 items-stretch">
+              {filteredVideos.slice(0, visibleGridCount).map(video => (
+                <CinemaVideoCard
+                  key={`grid-${video.id}`}
+                  video={video}
+                  aspectRatio={video.isShort ? '9/16' : '16/9'}
+                  onSelect={(v) => setSelectedVideo(v)}
+                  language={language}
+                  onShowToast={onShowToast}
+                />
+              ))}
+            </div>
+
+            {visibleGridCount < filteredVideos.length && (
+              <div className="text-center pt-8">
+                <button
+                  onClick={() => setVisibleGridCount(prev => Math.min(prev + 24, filteredVideos.length))}
+                  className="px-8 py-3.5 rounded-2xl bg-slate-900 dark:bg-slate-800 hover:bg-amber-600 text-white font-extrabold text-xs sm:text-sm border border-slate-700 shadow-xl transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+                >
+                  {isTamil ? 'மேலும் வீடியோக்களைக் காட்டு' : 'Load More Masterclasses'} ({ilteredVideos.length - visibleGridCount} {isTamil ? 'மீதமுள்ளன' : 'remaining'})
+                </button>
+              </div>
+            )}
+          </section>
+        ) : (
+          <div className="space-y-12">
+            <CinemaVideoRail
+              titleTamil="பிரதான முதலீட்டு வழிகாட்டிகள்"
+              titleEnglish="Featured Wealth Masterclasses"
+              subtitleTamil="பட்ஜெட் பத்மநாபன் CFP அவர்களின் தேர்ந்தெடுக்கப்பட்ட பிரதான வழிகாட்டிகள்"
+              subtitleEnglish="Handpicked high-impact wealth-building masterclasses and investment blueprints"
+              badgeText="POPULAR"
+              videos={railsData.masterclasses}
+              aspectRatio="16/9"
+              onSelectVideo={(v) => setSelectedVideo(v)}
+              language={language}
+              onShowToast={onShowToast}
+            />
+
+            <CinemaVideoRail
+              titleTamil="குறுகிய நேர நிதி ஆலோசனைகள்"
+              titleEnglish="Quick Takes & Shorts"
+              subtitleTamil="1 நிமிடத்தில் தெரிந்து கொள்ள வேண்டிய முக்கிய நிதி உண்மைகள்"
+              subtitleEnglish="Bite-sized high-yield financial wisdom and quick money rules"
+              badgeText="SHORTS"
+              videos={railsData.shorts}
+              aspectRatio="9/16"
+              onSelectVideo={(v) => setSelectedVideo(v)}
+              language={language}
+              onShowToast={onShowToast}
+            />
+
+            <CinemaVideoRail
+              titleTamil="மியூச்சுவல் ஃபண்ட் & SIP திட்டங்கள்"
+              titleEnglish="Mutual Funds & Systematic Wealth"
+              subtitleTamil="நீண்ட கால கூட்டு வட்டியின் மூலம் செல்வம் சேர்க்கும் வழிகள்"
+              subtitleEnglish="Comprehensive fund analysis, category reviews, and compounding strategies"
+              badgeText="SIP"
+              videos={railsData.mutualFunds}
+              aspectRatio="16/9"
+              onSelectVideo={(v) => setSelectedVideo(v)}
+              language={language}
+              onShowToast={onShowToast}
+            />
+
+            <CinemaVideoRail
+              titleTamil="பங்குச் சந்தை & IPO அலசல்"
+              titleEnglish="Stock Market & IPO Breakdowns"
+              subtitleTamil="நிறுவனங்களின் நிதி நிலை மற்றும் சந்தை வாய்ப்புகள்"
+              subtitleEnglish="Deep-dive fundamentals, valuation checks, and smart equity strategies"
+              badgeText="STOCKS"
+              videos={railsData.stocks}
+              aspectRatio="16/9"
+              onSelectVideo={(v) => setSelectedVideo(v)}
+              language={language}
+              onShowToast={onShowToast}
+            />
+
+            <CinemaVideoRail
+              titleTamil="வரி சேமிப்பு & ஓய்வூதிய திட்டம்"
+              titleEnglish="Tax Planning & Retirement Blueprint"
+              subtitleTamil="சரியான வரி திட்டமிடல் மற்றும் அமைதியான ஓய்வூதிய வாழ்க்கை"
+              subtitleEnglish="NPS, EPF, Section 80C optimization, and retirement corpus calculators"
+              badgeText="RETIREMENT"
+              videos={railsData.taxRetirement}
+              aspectRatio="16/9"
+              onSelectVideo={(v) => setSelectedVideo(v)}
+              language={language}
+              onShowToast={onShowToast}
+            />
+
+            <CinemaVideoRail
+              titleTamil="தனிநபர் நிதி & தங்க முதலீடுகள்"
+              titleEnglish="Personal Finance & Sovereign Gold"
+              subtitleTamil="குடும்ப பட்ஜெட், அவசர கால நிதி மற்றும் தங்க பத்திரங்கள்"
+              subtitleEnglish="Budgeting frameworks, emergency reserves, and Sovereign Gold Bonds"
+              badgeText="WEALTH"
+              videos={railsData.personalFinance}
+              aspectRatio="16/9"
+              onSelectVideo={(v) => setSelectedVideo(v)}
+              language={language}
+              onShowToast={onShowToast}
+            />
           </div>
-
-          <button
-            onClick={() => { signOut(); if (onShowToast) onShowToast(isTamil ? 'வெளியேறப்பட்டது' : 'Signed out successfully'); }}
-            className="px-5 py-2.5 rounded-full bg-red-500/10 hover:bg-red-600 text-red-600 hover:text-white dark:hover:text-white font-extrabold text-xs transition-all border border-red-500/20 shadow-sm"
-          >
-            {isTamil ? 'வெளியேறு (Log Out)' : 'Log Out'}
-          </button>
-        </div>
+        )}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-md space-y-2">
-          <div className="text-amber-500 text-2xl font-black"></div>
-          <h3 className="text-sm font-bold text-slate-900 dark:text-white">{isTamil ? 'பார்த்த வரலாறுகள்' : 'Watch History'}</h3>
-          <p className="text-xs text-slate-500 dark:text-slate-400">{isTamil ? 'சமீபத்திய வீடியோக்கள்' : 'Track videos you recently watched'}</p>
-          <button onClick={() => onNavigate('#/history')} className="text-xs font-extrabold text-amber-600 hover:underline pt-2 inline-block">
-            {isTamil ? 'வரலாறு பார்க்க →' : 'View History →'}
-          </button>
-        </div>
-
-        <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-md space-y-2">
-          <div className="text-amber-500 text-2xl font-black"></div>
-          <h3 className="text-sm font-bold text-slate-900 dark:text-white">{isTamil ? 'பாதுகாப்பு & கணக்கு' : 'Security & Account'}</h3>
-          <p className="text-xs text-slate-500 dark:text-slate-400">{isTamil ? 'கடவுச்சொல் &Supabase Auth' : 'Protected via Supabase Auth'}</p>
-          <button onClick={() => onNavigate('#/forgot-password')} className="text-xs font-extrabold text-amber-600 hover:underline pt-2 inline-block">
-            {isTamil ? 'கடவுச்சொல் மாற்று →' : 'Change Password →'}
-          </button>
-        </div>
-
-        <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-md space-y-2">
-          <div className="text-amber-500 text-2xl font-black"></div>
-          <h3 className="text-sm font-bold text-slate-900 dark:text-white">{isTamil ? 'விருப்பங்கள்' : 'Device Preferences'}</h3>
-          <p className="text-xs text-slate-500 dark:text-slate-400">{isTamil ? 'தமிழ் / English & தீம்' : 'Bilingual Language & Theme'}</p>
-          <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 pt-2 inline-block"> Active</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function WatchHistoryPage({ onNavigate, onShowToast }) {
-  const { language } = useLanguage();
-  const isTamil = language === 'ta';
-  const { history } = useWatchHistory();
-
-  return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 animate-fadeIn">
-      <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-5">
-        <div>
-          <h1 className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white font-serif">
-            {isTamil ? 'பார்த்த வரலாறுகள்' : 'Watch History'}
-          </h1>
-          <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">
-            {isTamil ? 'நீங்கள் சமீபத்தில் பார்த்த வீடியோக்கள்' : 'Your recently viewed financial & investment videos'}
-          </p>
-        </div>
-      </div>
-
-      {history && history.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {history.map(video => (
-            <VideoCard key={video.id} video={video} onSelect={(v) => onNavigate(`#/videos/${v.id}`)} onShowToast={onShowToast} />
-          ))}
-        </div>
-      ) : (
-        <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-8 space-y-4">
-          <div className="text-4xl"></div>
-          <h3 className="text-lg font-bold text-slate-900 dark:text-white">
-            {isTamil ? 'வரலாறுகள் ஏதும் இல்லை' : 'No Watch History Yet'}
-          </h3>
-          <p className="text-xs text-slate-500 dark:text-slate-400">
-            {isTamil ? 'வீடியோக்களைப் பார்த்து கற்றுக் கொள்ளத் தொடங்குங்கள்' : 'Start watching videos to track your investment learning progress.'}
-          </p>
-          <button onClick={() => onNavigate('#/videos')} className="px-6 py-3 rounded-full bg-amber-600 text-white font-extrabold text-xs shadow-lg hover:bg-amber-500 transition-all">
-            {isTamil ? 'வீடியோக்களைக் காண்க' : 'Browse Videos'}
-          </button>
-        </div>
+      {selectedVideo && (
+        <CinemaTheaterModal
+          video={selectedVideo}
+          allVideos={videosData}
+          onClose={() => setSelectedVideo(null)}
+          onSelectRelated={(relVideo) => setSelectedVideo(relVideo)}
+          language={language}
+          onShowToast={onShowToast}
+        />
       )}
     </div>
   );
 }
 
-function AdminConsolePage({ onNavigate, onShowToast }) {
-  const { user, role } = useAuth();
-  const { language } = useLanguage();
-  const isTamil = language === 'ta';
-  const [isSyncing, setIsSyncing] = useState(false);
-  const [syncStatus, setSyncStatus] = useState('');
-
-  if (role !== 'admin') return null;
-
-  const triggerFullSync = async () => {
-    setIsSyncing(true);
-    setSyncStatus('Initiating full YouTube channel ingestion...');
-    try {
-      const res = await fetch('/api/cron/fetch-videos?fullSync=true', {
-        headers: { 'Authorization': 'Bearer super_secret_cron_bearer_token_123' }
-      });
-      const data = await res.json();
-      setSyncStatus(`Sync result: Ingested ${data.ingested || 0} videos. ${data.message || ''}`);
-      if (onShowToast) onShowToast(isTamil ? 'சேனல் புதுப்பிக்கப்பட்டது!' : 'Channel ingestion complete!');
-    } catch (err) {
-      setSyncStatus(`Sync error: ${err.message}`);
-    } finally {
-      setIsSyncing(false);
-    }
-  };
-
-  return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-8 animate-fadeIn">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-5">
-        <div>
-          <span className="px-3 py-1 text-[10px] font-black uppercase tracking-wider rounded-full bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20">
-            ADMIN CONSOLE
-          </span>
-          <h1 className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white font-serif mt-2">
-            {isTamil ? 'நிர்வாகக் குழு (Admin Console)' : 'System & Content Administration'}
-          </h1>
-        </div>
-
-        <button
-          onClick={() => onNavigate('#/admin/articles')}
-          className="px-6 py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs shadow-lg hover:scale-105 transition-all flex items-center gap-2 shrink-0"
-        >
-          <span></span>
-          <span>{isTamil ? 'கட்டுரைகள் ஸ்டுடியோ (Articles Studio)' : 'Open Articles Studio'}</span>
-        </button>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-md space-y-2">
-          <div className="text-xs font-bold text-slate-400 uppercase">YouTube Channel</div>
-          <div className="text-xl font-black text-slate-900 dark:text-white">@budgetpadmanaban_</div>
-          <div className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold"> Ingestion Engine Active</div>
-        </div>
-
-        <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-md space-y-2">
-          <div className="text-xs font-bold text-slate-400 uppercase">Database Region</div>
-          <div className="text-xl font-black text-slate-900 dark:text-white">Supabase AP-South-1</div>
-          <div className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold"> Connection Pooler (6543)</div>
-        </div>
-
-        <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-md space-y-2">
-          <div className="text-xs font-bold text-slate-400 uppercase">Articles Storage</div>
-          <div className="text-xl font-black text-slate-900 dark:text-white">Supabase Storage</div>
-          <div className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold"> article-covers bucket</div>
-        </div>
-      </div>
-
-      <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-8 shadow-xl space-y-4">
-        <h3 className="text-lg font-black text-slate-900 dark:text-white font-serif">
-          {isTamil ? 'சேனல் வீடியோக்களைப் பெறுக' : 'Channel Content Ingestion Control'}
-        </h3>
-        <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-          Trigger full sync to fetch all historical video uploads from YouTube Data API v3, auto-translate titles & descriptions, and persist to Supabase PostgreSQL.
-        </p>
-
-        <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
-          <button
-            onClick={triggerFullSync}
-            disabled={isSyncing}
-            className="px-6 py-3 rounded-2xl bg-gradient-to-r from-red-600 to-amber-600 text-white font-extrabold text-xs shadow-lg hover:scale-105 transition-all disabled:opacity-50"
-          >
-            {isSyncing ? 'Syncing Channel Videos...' : ' Run Full YouTube Sync'}
-          </button>
-        </div>
-
-        {syncStatus && (
-          <div className="p-4 rounded-2xl bg-slate-900 text-slate-200 font-mono text-xs border border-slate-800">
-            {syncStatus}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-// ==================== 7. ARTICLES SYSTEM COMPONENTS ====================
-
-function RichTextEditor({
-  value = '',
-  onChange,
-  placeholder = 'Write your article content here...',
-  minHeight = '320px',
-  language = 'ta'
-}) {
-  const editorRef = useRef(null);
-  const [wordCount, setWordCount] = useState(0);
-  const [charCount, setCharCount] = useState(0);
-  const isTamil = language === 'ta';
-
-  useEffect(() => {
-    if (editorRef.current && editorRef.current.innerHTML !== value) {
-      if (document.activeElement !== editorRef.current) {
-        editorRef.current.innerHTML = value || '';
-        updateCounts(editorRef.current.innerText || '');
-      }
-    }
-  }, [value]);
-
-  const updateCounts = (text) => {
-    const clean = text.replace(/\s+/g, ' ').trim();
-    const chars = text.length;
-    const words = clean ? clean.split(/\s+/).length : 0;
-    setCharCount(chars);
-    setWordCount(words);
-  };
-
-  const handleInput = () => {
-    if (editorRef.current) {
-      const html = editorRef.current.innerHTML;
-      const text = editorRef.current.innerText || '';
-      updateCounts(text);
-      if (onChange) onChange(html);
-    }
-  };
-
-  const execute = (command, val = null) => {
-    if (editorRef.current) {
-      editorRef.current.focus();
-      document.execCommand(command, false, val);
-      handleInput();
-    }
-  };
-
-  const handleInsertLink = () => {
-    const url = prompt(isTamil ? 'இணைப்பு URL உள்ளிடவும் (https://...):' : 'Enter link URL (https://...):');
-    if (url) execute('createLink', url);
-  };
-
-  const handleInsertImage = () => {
-    const url = prompt(isTamil ? 'படத்தின் URL உள்ளிடவும் (https://...):' : 'Enter Image URL (https://...):');
-    if (url) execute('insertImage', url);
-  };
-
-  const handleFormatBlock = (tag) => {
-    execute('formatBlock', tag);
-  };
-
-  return (
-    <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-sm focus-within:border-amber-500 transition-colors">
-      <div className="flex flex-wrap items-center gap-1 p-2 bg-slate-50 dark:bg-slate-950/80 border-b border-slate-200 dark:border-slate-800 text-xs">
-        <button type="button" onClick={() => handleFormatBlock('<h2>')} title="Heading 2" className="px-2.5 py-1 font-bold rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300">H2</button>
-        <button type="button" onClick={() => handleFormatBlock('<h3>')} title="Heading 3" className="px-2.5 py-1 font-bold rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300">H3</button>
-        <button type="button" onClick={() => handleFormatBlock('<p>')} title="Paragraph" className="px-2.5 py-1 font-medium rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300">¶</button>
-        <span className="w-px h-4 bg-slate-300 dark:bg-slate-700 mx-1" />
-        <button type="button" onClick={() => execute('bold')} title="Bold (Ctrl+B)" className="w-7 h-7 font-black rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 flex items-center justify-center">B</button>
-        <button type="button" onClick={() => execute('italic')} title="Italic (Ctrl+I)" className="w-7 h-7 italic font-serif font-bold rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 flex items-center justify-center">I</button>
-        <button type="button" onClick={() => execute('underline')} title="Underline (Ctrl+U)" className="w-7 h-7 underline font-bold rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 flex items-center justify-center">U</button>
-        <button type="button" onClick={() => execute('strikeThrough')} title="Strikethrough" className="w-7 h-7 line-through font-bold rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 flex items-center justify-center">S</button>
-        <span className="w-px h-4 bg-slate-300 dark:bg-slate-700 mx-1" />
-        <button type="button" onClick={() => execute('insertUnorderedList')} title="Bullet List" className="px-2 py-1 font-bold rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300">• List</button>
-        <button type="button" onClick={() => execute('insertOrderedList')} title="Numbered List" className="px-2 py-1 font-bold rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300">1. List</button>
-        <button type="button" onClick={() => handleFormatBlock('<blockquote>')} title="Quote Block" className="px-2 py-1 font-serif font-black rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300">“ Quote</button>
-        <span className="w-px h-4 bg-slate-300 dark:bg-slate-700 mx-1" />
-        <button type="button" onClick={handleInsertLink} title="Insert Link" className="px-2 py-1 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-amber-600 dark:text-amber-400 font-bold"> Link</button>
-        <button type="button" onClick={handleInsertImage} title="Insert Image" className="px-2 py-1 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold"> Image</button>
-        <span className="w-px h-4 bg-slate-300 dark:bg-slate-700 mx-1" />
-        <button type="button" onClick={() => execute('removeFormat')} title="Clear Formatting" className="px-2 py-1 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-500 text-[11px]"> Clean</button>
-      </div>
-
-      <div
-        ref={editorRef}
-        contentEditable
-        onInput={handleInput}
-        onBlur={handleInput}
-        style={{ minHeight }}
-        data-placeholder={placeholder}
-        className="p-4 sm:p-6 outline-none prose prose-slate dark:prose-invert max-w-none text-sm leading-relaxed overflow-y-auto text-slate-900 dark:text-slate-100 selection:bg-amber-500 selection:text-white empty:before:content-[attr(data-placeholder)] empty:before:text-slate-400 empty:before:pointer-events-none"
-      />
-
-      <div className="flex items-center justify-between px-4 py-2 bg-slate-50/50 dark:bg-slate-950/40 border-t border-slate-100 dark:border-slate-800/80 text-[11px] text-slate-400 font-medium font-mono">
-        <span>{isTamil ? `${wordCount} சொற்கள்` : `${wordCount} words`} • {charCount} chars</span>
-        <span> ~{Math.max(1, Math.ceil(wordCount / (isTamil ? 130 : 180)))} {isTamil ? 'நிமிடம் வாசிக்க' : 'min read'}</span>
-      </div>
-    </div>
-  );
-}
 
 function ArticlesPage({ onNavigate, onShowToast }) {
   const { language } = useLanguage();
