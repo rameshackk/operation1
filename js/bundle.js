@@ -26974,7 +26974,6 @@ function Navbar({ currentPath, onNavigate }) {
     { id: 'videos', hash: '#/videos', label: t('nav.videos') },
     { id: 'news', hash: '#/news', label: t('nav.news') },
     { id: 'mutual-funds', hash: '#/category/mutual-funds', label: t('nav.mutualFunds') },
-    { id: 'personal-finance', hash: '#/category/personal-finance', label: t('nav.personalFinance') },
     { id: 'calculator', hash: '#/calculator', label: t('nav.calculator') },
     { id: 'quiz', hash: '#/quiz', label: t('nav.quiz') || 'Quiz' }
   ];
@@ -26984,19 +26983,7 @@ function Navbar({ currentPath, onNavigate }) {
     ...(role === 'admin' ? [
       { id: 'admin-articles', hash: '#/admin/articles', label: ` ${language === 'ta' ? 'கட்டுரைகள் ஸ்டுடியோ' : 'Article Studio'}` }
     ] : []),
-    {
-      id: 'logout',
-      isAction: true,
-      action: async () => {
-        try {
-          await signOut();
-          onNavigate('#/login');
-        } catch (e) {
-          console.error(e);
-        }
-      },
-      label: ` ${language === 'ta' ? 'வெளியேறு' : 'Sign Out'}`
-    }
+
   ] : [
     { id: 'login', hash: '#/login', label: ` ${language === 'ta' ? 'உள்நுழைக' : 'Sign In'}` }
   ];
@@ -27504,7 +27491,7 @@ function HeroSection({ news = newsData, onNavigate }) {
                 {(item.category || 'FINANCE').replace('-', ' ')}
               </span>
               <span className="px-2 py-0.5 rounded-md bg-slate-950/85 text-slate-200 text-[9px] font-mono font-bold backdrop-blur-sm border border-white/15">
-                {formattedDate}
+                 {formattedDate}
               </span>
             </div>
 
@@ -27638,7 +27625,7 @@ function TrendingArticlesSection({ onNavigate }) {
           </h2>
         </div>
         <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2.5 py-0.5 rounded-full">
-           Trending
+          Trending
         </span>
       </div>
 
@@ -28211,7 +28198,7 @@ function NewsCard({ article, onSelect }) {
 
         <div className="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 border-t border-slate-100 dark:border-slate-800 pt-3 font-semibold">
           <span>{formattedDate}</span>
-          <span className="font-mono text-amber-700 dark:text-amber-400">{article.readTimeMinutes} {t('minRead')}</span>
+          <span className="font-mono text-amber-700 dark:text-amber-400"> {article.readTimeMinutes} {t('minRead')}</span>
         </div>
       </div>
     </article>
@@ -28336,7 +28323,7 @@ function SignInCtaBanner({ onNavigate }) {
           <div className="space-y-2 max-w-2xl">
             <div className="flex items-center gap-2">
               <span className="px-2.5 py-0.5 rounded-full bg-amber-500 text-slate-950 font-black text-[10px] tracking-wider uppercase shadow">
-                {isTamil ? 'உறுப்பினர் அணுகல்' : 'MEMBER ACCESS'}
+                 {isTamil ? 'உறுப்பினர் அணுகல்' : 'MEMBER ACCESS'}
               </span>
               <span className="text-[11px] font-mono text-amber-300/80 font-bold">
                 {isTamil ? 'இலவச கணக்கு' : 'FREE ACCOUNT'}
@@ -28765,15 +28752,15 @@ function VideosPage({ onNavigate, onShowToast }) {
 
   const categoriesList = [
     { id: 'all', labelTa: 'அனைத்து வீடியோக்கள் (882)', labelEn: 'All Videos (882)' },
-    { id: 'trending', labelTa: ' ட்ரெண்டிங்', labelEn: ' Trending' },
+    { id: 'trending', labelTa: 'முக்கிய பதிவுகள்', labelEn: 'Trending' },
     { id: 'mutual-funds', labelTa: 'மியூச்சுவல் ஃபண்ட் & SIP', labelEn: 'Mutual Funds & SIP' },
-    { id: 'stocks', labelTa: 'பங்குச் சந்தை (Stocks)', labelEn: 'Stock Market' },
-    { id: 'ipo', labelTa: ' IPO அலசல்', labelEn: ' IPO Analysis' },
-    { id: 'gold-bonds', labelTa: '🪙 தங்கம் & SGB', labelEn: '🪙 Gold & SGB Bonds' },
-    { id: 'tax-saving', labelTa: ' வரி சேமிப்பு (Tax)', labelEn: ' Tax Planning' },
-    { id: 'retirement', labelTa: ' ஓய்வூதியம் (NPS / EPF)', labelEn: ' Retirement & NPS' },
-    { id: 'personal-finance', labelTa: ' தனிநபர் நிதி & சேமிப்பு', labelEn: 'Personal Finance' },
-    { id: 'shorts', labelTa: ' Shorts (60s)', labelEn: ' Shorts' }
+    { id: 'stocks', labelTa: 'பங்குச் சந்தை', labelEn: 'Stock Market' },
+    { id: 'ipo', labelTa: 'IPO அலசல்', labelEn: 'IPO Analysis' },
+    { id: 'gold-bonds', labelTa: 'தங்கம் & SGB பத்திரங்கள்', labelEn: 'Gold & SGB Bonds' },
+    { id: 'tax-saving', labelTa: 'வரி சேமிப்பு திட்டமிடல்', labelEn: 'Tax Planning' },
+    { id: 'retirement', labelTa: 'ஓய்வூதியம் (NPS & EPF)', labelEn: 'Retirement & NPS' },
+    { id: 'personal-finance', labelTa: 'தனிநபர் நிதி & சேமிப்பு', labelEn: 'Personal Finance' },
+    { id: 'shorts', labelTa: 'குறுகிய வீடியோக்கள்', labelEn: 'Shorts' }
   ];
 
   // Filter & Sort across the full 882 dataset
@@ -29136,7 +29123,7 @@ function VideoDetailsPage({ videoId, onNavigate, onShowToast }) {
               <span>•</span>
               <span>{t('publishedAt')}: {formattedDate}</span>
               <span>•</span>
-              <span className="font-mono text-amber-700 dark:text-amber-400">{video.duration || (video.isShort ? 'Short' : '10:00')}</span>
+              <span className="font-mono text-amber-700 dark:text-amber-400"> {video.duration || (video.isShort ? 'Short' : '10:00')}</span>
             </div>
             <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-medium">{video.description}</p>
           </div>
@@ -29450,7 +29437,7 @@ function AuthPage({ initialMode = 'login', onNavigate }) {
                 <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">{isTamil ? 'மின்னஞ்சல்' : 'Email'}</label>
                 <input type="email" value={email} onChange={e => setEmail(e.target.value)} required className="w-full h-11 px-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-900 dark:text-white" />
               </div>
-              <button type="submit" disabled={isLoading} className="w-full h-12 rounded-2xl bg-amber-600 text-white font-extrabold text-xs">{isLoading ? 'Sending...' : (isTamil ? 'மேஜிக் லிங்க் அனுப்புக 🪄' : 'Send Magic Link 🪄')}</button>
+              <button type="submit" disabled={isLoading} className="w-full h-12 rounded-2xl bg-amber-600 text-white font-extrabold text-xs">{isLoading ? 'Sending...' : (isTamil ? 'மேஜிக் லிங்க் அனுப்புக ' : 'Send Magic Link ')}</button>
               <button type="button" onClick={() => setMode('login')} className="w-full text-center text-xs font-bold text-slate-500 hover:underline">← {isTamil ? 'திரும்பு' : 'Back to login'}</button>
             </form>
           )}
@@ -29753,10 +29740,10 @@ function RichTextEditor({
         <button type="button" onClick={() => execute('insertOrderedList')} title="Numbered List" className="px-2 py-1 font-bold rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300">1. List</button>
         <button type="button" onClick={() => handleFormatBlock('<blockquote>')} title="Quote Block" className="px-2 py-1 font-serif font-black rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300">“ Quote</button>
         <span className="w-px h-4 bg-slate-300 dark:bg-slate-700 mx-1" />
-        <button type="button" onClick={handleInsertLink} title="Insert Link" className="px-2 py-1 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-amber-600 dark:text-amber-400 font-bold">Link</button>
-        <button type="button" onClick={handleInsertImage} title="Insert Image" className="px-2 py-1 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold">Image</button>
+        <button type="button" onClick={handleInsertLink} title="Insert Link" className="px-2 py-1 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-amber-600 dark:text-amber-400 font-bold"> Link</button>
+        <button type="button" onClick={handleInsertImage} title="Insert Image" className="px-2 py-1 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold"> Image</button>
         <span className="w-px h-4 bg-slate-300 dark:bg-slate-700 mx-1" />
-        <button type="button" onClick={() => execute('removeFormat')} title="Clear Formatting" className="px-2 py-1 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-500 text-[11px]">Clean</button>
+        <button type="button" onClick={() => execute('removeFormat')} title="Clear Formatting" className="px-2 py-1 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-500 text-[11px]"> Clean</button>
       </div>
 
       <div
@@ -29771,7 +29758,7 @@ function RichTextEditor({
 
       <div className="flex items-center justify-between px-4 py-2 bg-slate-50/50 dark:bg-slate-950/40 border-t border-slate-100 dark:border-slate-800/80 text-[11px] text-slate-400 font-medium font-mono">
         <span>{isTamil ? `${wordCount} சொற்கள்` : `${wordCount} words`} • {charCount} chars</span>
-        <span>~{Math.max(1, Math.ceil(wordCount / (isTamil ? 130 : 180)))} {isTamil ? 'நிமிடம் வாசிக்க' : 'min read'}</span>
+        <span> ~{Math.max(1, Math.ceil(wordCount / (isTamil ? 130 : 180)))} {isTamil ? 'நிமிடம் வாசிக்க' : 'min read'}</span>
       </div>
     </div>
   );
@@ -29971,7 +29958,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                     <div className="flex items-center gap-3">
                       <span>{formattedDate}</span>
                       <span className="font-mono text-amber-600 dark:text-amber-400 font-bold">
-                        {article.readTimeMinutes} {isTamil ? 'நிமிடம்' : 'min'}
+                         {article.readTimeMinutes} {isTamil ? 'நிமிடம்' : 'min'}
                       </span>
                     </div>
                   </div>
@@ -30175,9 +30162,9 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
             </div>
 
             <div className="flex items-center gap-4 text-xs font-semibold">
-              <span>{formattedDate}</span>
+              <span> {formattedDate}</span>
               <span className="font-mono text-amber-600 dark:text-amber-400 font-bold">
-                {article.readTimeMinutes} {isTamil ? 'நிமிடம் வாசிக்க' : 'min read'}
+                 {article.readTimeMinutes} {isTamil ? 'நிமிடம் வாசிக்க' : 'min read'}
               </span>
             </div>
           </div>
@@ -30223,7 +30210,7 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
               X / Twitter
             </button>
             <button onClick={() => handleShare('copy')} className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs shadow transition-colors">
-              {isTamil ? 'நகலெடு' : 'Copy'}
+               {isTamil ? 'நகலெடு' : 'Copy'}
             </button>
           </div>
         </div>
@@ -30471,7 +30458,7 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                     </td>
 
                     <td className="px-6 py-4 font-mono text-slate-500 dark:text-slate-400">
-                      {article.readTimeMinutes} min
+                       {article.readTimeMinutes} min
                     </td>
 
                     <td className="px-6 py-4">
@@ -30508,7 +30495,7 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                           title="Edit article"
                           className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-amber-600 hover:text-white text-slate-700 dark:text-slate-300 font-bold transition-all"
                         >
-                          Edit
+                           Edit
                         </button>
                         <button
                           onClick={() => handleDelete(article.id, article.titleTamil)}
@@ -30789,29 +30776,6 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
     }
   };
 
-  const handleDeleteArticle = async () => {
-    if (!articleId || articleId === 'new') return;
-    if (!window.confirm(isTamil ? `இந்தக் கட்டுரையை நிச்சயமாக நீக்க விரும்புகிறீர்களா?\n"${titleTa}"` : `Are you sure you want to delete this article?\n"${titleTa}"`)) {
-      return;
-    }
-
-    setIsLoading(true);
-    try {
-      const token = session?.access_token || '';
-      const res = await fetch(`/api/admin/articles/${articleId}`, {
-        method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      if (!res.ok) throw new Error('Failed to delete article');
-      if (onShowToast) onShowToast(isTamil ? 'கட்டுரை நீக்கப்பட்டது' : 'Article deleted successfully');
-      onNavigate('#/admin/articles');
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   if (role !== 'admin') return null;
 
   return (
@@ -30829,33 +30793,23 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
           </h1>
         </div>
 
-        <div className="flex items-center gap-3 shrink-0 flex-wrap">
-          {articleId && articleId !== 'new' && (
-            <button
-              type="button"
-              onClick={handleDeleteArticle}
-              disabled={isLoading}
-              className="px-4 py-2.5 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 font-bold text-xs transition-all border border-red-500/30"
-              title="Delete this article permanently"
-            >
-              {isTamil ? 'கட்டுரையை நீக்கு' : 'Delete Article'}
-            </button>
-          )}
+        <div className="flex items-center gap-3 shrink-0">
           <button
             type="button"
             onClick={() => handleSave(false)}
             disabled={isLoading}
             className="px-5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs transition-all shadow-sm disabled:opacity-50"
           >
-            {isTamil ? 'வரைவாகச் சேமி' : 'Save Draft'}
+             {isTamil ? 'வரைவாகச் சேமி (Draft)' : 'Save Draft'}
           </button>
           <button
             type="button"
             onClick={() => handleSave(true)}
             disabled={isLoading}
-            className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs shadow-lg hover:scale-105 transition-all disabled:opacity-50"
+            className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs shadow-lg hover:scale-105 transition-all disabled:opacity-50 flex items-center gap-1.5"
           >
-            {isTamil ? 'உடனே வெளியிடு' : 'Publish Live'}
+            <span></span>
+            <span>{isTamil ? 'உடனே வெளியிடு (Publish Live)' : 'Publish Live'}</span>
           </button>
         </div>
       </div>
@@ -31019,7 +30973,7 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
             disabled={isTranslating}
             className="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs shadow-lg transition-all hover:scale-105 disabled:opacity-50 shrink-0"
           >
-            {isTranslating ? 'Translating...' : (isTamil ? 'ஆங்கிலத்தில் மொழிபெயர்க்க' : 'Translate to English')}
+            {isTranslating ? 'Translating...' : (isTamil ? ' ஆங்கிலத்தில் மொழிபெயர்க்க' : ' Auto-Translate to English')}
           </button>
         </div>
 
@@ -31101,46 +31055,31 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
           )}
         </div>
 
-        <div className="flex items-center justify-between gap-3 pt-4 flex-wrap">
-          <div>
-            {articleId && articleId !== 'new' && (
-              <button
-                type="button"
-                onClick={handleDeleteArticle}
-                disabled={isLoading}
-                className="px-5 py-3 rounded-2xl bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 font-bold text-xs transition-all border border-red-500/30"
-                title="Delete this article permanently"
-              >
-                {isTamil ? 'கட்டுரையை நீக்கு' : 'Delete Article'}
-              </button>
-            )}
-          </div>
-
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={() => onNavigate('#/admin/articles')}
-              className="px-5 py-3 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs transition-colors"
-            >
-              {isTamil ? 'ரத்து செய்க' : 'Cancel'}
-            </button>
-            <button
-              type="button"
-              onClick={() => handleSave(false)}
-              disabled={isLoading}
-              className="px-6 py-3 rounded-2xl bg-slate-900 dark:bg-slate-800 text-white font-bold text-xs shadow hover:bg-slate-800 transition-all disabled:opacity-50"
-            >
-              {isTamil ? 'வரைவாகச் சேமி' : 'Save Draft'}
-            </button>
-            <button
-              type="button"
-              onClick={() => handleSave(true)}
-              disabled={isLoading}
-              className="px-8 py-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs sm:text-sm shadow-xl hover:scale-105 transition-all disabled:opacity-50"
-            >
-              {isTamil ? 'உடனே வெளியிடு' : 'Publish Live'}
-            </button>
-          </div>
+        <div className="flex items-center justify-end gap-3 pt-4">
+          <button
+            type="button"
+            onClick={() => onNavigate('#/admin/articles')}
+            className="px-5 py-3 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs transition-colors"
+          >
+            {isTamil ? 'ரத்து செய்க' : 'Cancel'}
+          </button>
+          <button
+            type="button"
+            onClick={() => handleSave(false)}
+            disabled={isLoading}
+            className="px-6 py-3 rounded-2xl bg-slate-900 dark:bg-slate-800 text-white font-bold text-xs shadow hover:bg-slate-800 transition-all disabled:opacity-50"
+          >
+             {isTamil ? 'வரைவாகச் சேமி (Save Draft)' : 'Save Draft'}
+          </button>
+          <button
+            type="button"
+            onClick={() => handleSave(true)}
+            disabled={isLoading}
+            className="px-8 py-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs sm:text-sm shadow-xl hover:scale-105 transition-all disabled:opacity-50 flex items-center gap-2"
+          >
+            <span></span>
+            <span>{isTamil ? 'உடனே வெளியிடு (Publish Live)' : 'Publish Live'}</span>
+          </button>
         </div>
       </div>
     </div>
