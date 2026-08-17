@@ -29092,6 +29092,10 @@ function Home({ onNavigate, onShowToast }) {
 /**
  * CINEMA INTERACTIVE UI SYSTEM (OPTION 4: COMPLETE SUITE)
  */
+
+/**
+ * CINEMA INTERACTIVE UI SYSTEM (OPTION 4: COMPLETE SUITE)
+ */
 function CinemaVideoCard({
   video,
   index = 0,

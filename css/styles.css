@@ -36,34 +36,38 @@
   /* Colors - Light Mode */
   --bg-main: #f8fafc;
   --bg-card: #ffffff;
-  --bg-card-hover: #ffffff;
+  --bg-card-hover: #f1f5f9;
   --border-color: #e2e8f0;
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
+  --text-primary: #020617;
+  --text-secondary: #334155;
   --text-muted: #64748b;
   --accent-amber: #d97706;
-  --accent-gold: #b45309;
-  --accent-emerald: #059669;
+  --accent-gold: #f59e0b;
+  --accent-gold-light: #fbbf24;
+  --accent-emerald: #10b981;
+  --accent-sapphire: #38bdf8;
   --accent-red: #dc2626;
-  --nav-bg: #0f172a;
+  --nav-bg: #0b0f19;
 }
 
 [data-theme="dark"] {
   --radius-card: 1.25rem;
-  --shadow-card: 0 4px 14px -2px rgba(0, 0, 0, 0.5), 0 2px 6px -2px rgba(0, 0, 0, 0.3);
-  --shadow-card-hover: 0 20px 32px -6px rgba(0, 0, 0, 0.7), 0 0 18px 2px rgba(217, 119, 6, 0.2);
+  --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.7), 0 2px 8px -2px rgba(0, 0, 0, 0.5);
+  --shadow-card-hover: 0 20px 35px -6px rgba(0, 0, 0, 0.85), 0 0 24px 2px rgba(245, 158, 11, 0.22);
   --bg-main: #020617;
-  --bg-card: #0f172a;
-  --bg-card-hover: #1e293b;
+  --bg-card: #0b0f19;
+  --bg-card-hover: #131b2e;
   --border-color: #1e293b;
   --text-primary: #f8fafc;
   --text-secondary: #cbd5e1;
   --text-muted: #94a3b8;
   --accent-amber: #f59e0b;
-  --accent-gold: #d97706;
+  --accent-gold: #f59e0b;
+  --accent-gold-light: #fbbf24;
   --accent-emerald: #10b981;
+  --accent-sapphire: #38bdf8;
   --accent-red: #ef4444;
-  --nav-bg: #090d16;
+  --nav-bg: #050914;
 }
 
 * {
