@@ -23,7 +23,6 @@ export function Navbar({ currentPath, onNavigate }) {
     { id: 'videos', hash: '#/videos', label: t('nav.videos') || (language === 'ta' ? 'வீடியோக்கள்' : 'Videos') },
     { id: 'news', hash: '#/news', label: t('nav.news') || (language === 'ta' ? 'செய்திகள்' : 'News') },
     { id: 'mutual-funds', hash: '#/category/mutual-funds', label: t('nav.mutualFunds') },
-    { id: 'personal-finance', hash: '#/category/personal-finance', label: t('nav.personalFinance') },
     { id: 'calculator', hash: '#/calculator', label: t('nav.calculator') },
     { id: 'quiz', hash: '#/quiz', label: t('nav.quiz') || 'Quiz' }
   ];
@@ -32,20 +31,7 @@ export function Navbar({ currentPath, onNavigate }) {
     { id: 'profile', hash: '#/profile', label: `👤 ${language === 'ta' ? 'சுயவிவரம்' : 'Profile'}` },
     ...(user?.role === 'admin' || user?.app_metadata?.role === 'admin' ? [
       { id: 'admin-articles', hash: '#/admin/articles', label: `✍️ ${language === 'ta' ? 'கட்டுரைகள் ஸ்டுடியோ' : 'Article Studio'}` }
-    ] : []),
-    {
-      id: 'logout',
-      isAction: true,
-      action: async () => {
-        try {
-          await signOut();
-          onNavigate('#/login');
-        } catch (e) {
-          console.error(e);
-        }
-      },
-      label: `🚪 ${language === 'ta' ? 'வெளியேறு' : 'Sign Out'}`
-    }
+    ] : [])
   ] : [
     { id: 'login', hash: '#/login', label: `🔑 ${language === 'ta' ? 'உள்நுழைக' : 'Sign In'}` }
   ];
