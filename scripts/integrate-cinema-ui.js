@@ -98,18 +98,19 @@ function CinemaVideoCard({
     setScrubPercent(pctX);
 
     cardRef.current.style.setProperty('--mouse-x', \`\${(pctX * 100).toFixed(1)}%\`);
-    cardRef.current.style.setProperty('--mouse-y', \`\${(pctY * 100).toFixed(1)}%\`);
 
-    if (frames.length > 0) {
-      const targetFrame = Math.min(Math.floor(pctX * frames.length), frames.length - 1);
-      setActiveFrameIndex(targetFrame);
-      setNextFrameIndex(null);
-      setIsCrossfading(false);
+    if (frames.length > 1) {
+      const frameIdx = Math.min(frames.length - 1, Math.floor(pctX * frames.length));
+      if (frameIdx !== activeFrameIndex) {
+        setActiveFrameIndex(frameIdx);
+        setIsCrossfading(false);
+      }
     }
   };
 
   const handleMouseEnter = () => {
     setIsHovered(true);
+    if (timerRef.current) clearTimeout(timerRef.current);
   };
 
   const handleMouseLeave = () => {
@@ -117,23 +118,28 @@ function CinemaVideoCard({
     setTilt({ x: 0, y: 0 });
     setGlare({ x: 50, y: 50, opacity: 0 });
     setScrubPercent(null);
+    if (cardRef.current) {
+      cardRef.current.style.removeProperty('--mouse-x');
+    }
   };
 
-  const currentFrame = frames && frames.length > 0 ? frames[activeFrameIndex] : '';
-  const nextFrame = nextFrameIndex !== null && frames && frames[nextFrameIndex] ? frames[nextFrameIndex] : null;
+  if (!video) return null;
 
   const title = isTamil
     ? (video.titleTamil || video.title || 'வீடியோ பதிவு')
     : (video.titleEnglish || video.title || 'Featured Video');
 
-  const category = (video.category || 'FINANCE').replace('-', ' ').toUpperCase();
-  const duration = video.duration || 'Video';
+  const category = (video.category || 'FINANCE').replace('-', ' ');
+  const duration = video.duration || (video.isShort ? '0:59' : '12:00');
+
+  const currentFrame = frames[activeFrameIndex] || frames[0] || '';
+  const nextFrame = nextFrameIndex !== null ? frames[nextFrameIndex] : null;
 
   const transformStyle = prefersReducedMotion
     ? 'none'
     : isHovered
-      ? \`perspective(1000px) rotateX(\${tilt.x.toFixed(2)}deg) rotateY(\${tilt.y.toFixed(2)}deg) translateY(-8px) scale(1.03)\`
-      : 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0) scale(1)';
+    ? \`perspective(1000px) rotateX(\${tilt.x.toFixed(2)}deg) rotateY(\${tilt.y.toFixed(2)}deg) translateY(-8px) scale(1.025)\`
+    : 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px) scale(1)';
 
   return (
     <div
@@ -144,8 +150,6 @@ function CinemaVideoCard({
       onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      onFocus={() => setIsHovered(true)}
-      onBlur={handleMouseLeave}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
@@ -258,73 +262,48 @@ function CinemaSpotlightHero({
   const [currentIndex, setCurrentIndex] = useState(0);
   const isTamil = language === 'ta';
 
-  const videos = spotlightVideos && spotlightVideos.length > 0 ? spotlightVideos.slice(0, 5) : [];
-  const currentVideo = videos[currentIndex] || videos[0];
+  if (!spotlightVideos || spotlightVideos.length === 0) return null;
 
-  useEffect(() => {
-    if (videos.length <= 1) return;
-    const interval = setInterval(() => {
-      setCurrentIndex(prev => (prev + 1) % videos.length);
-    }, 7500);
-    return () => clearInterval(interval);
-  }, [videos.length]);
-
-  if (!currentVideo) return null;
-
+  const currentVideo = spotlightVideos[currentIndex] || spotlightVideos[0];
   const title = isTamil
-    ? (currentVideo.titleTamil || currentVideo.title || 'முக்கிய முதலீட்டு வழிகாட்டி')
-    : (currentVideo.titleEnglish || currentVideo.title || 'Featured Investment Masterclass');
-
+    ? (currentVideo.titleTamil || currentVideo.title)
+    : (currentVideo.titleEnglish || currentVideo.title);
   const description = isTamil
-    ? (currentVideo.descriptionTamil || currentVideo.description || 'பட்ஜெட் பத்மநாபன் CFP அவர்களின் விரிவான நிதி மற்றும் முதலீட்டு வழிகாட்டி.')
-    : (currentVideo.descriptionEnglish || currentVideo.description || 'Exclusive financial masterclass and wealth-building insights directly from Certified Financial Planner Padmanaban B.');
-
-  const category = (currentVideo.category || 'MUTUAL FUNDS').replace('-', ' ').toUpperCase();
-  const duration = currentVideo.duration || '14:20';
+    ? (currentVideo.descriptionTamil || currentVideo.description)
+    : (currentVideo.descriptionEnglish || currentVideo.description);
 
   return (
-    <div className="relative overflow-hidden rounded-3xl bg-slate-950 border border-slate-800 shadow-2xl text-white select-none">
-      <div className="absolute inset-0 overflow-hidden">
-        <img
-          src={currentVideo.thumbnail || \`https://img.youtube.com/vi/\${currentVideo.youtubeId}/hqdefault.jpg\`}
-          alt={title}
-          className="w-full h-full object-cover object-center filter blur-xl scale-110 opacity-30 transition-all duration-1000"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/90 to-slate-950/60" />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/50" />
-      </div>
+    <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-950 via-slate-900 to-amber-950/70 border border-amber-500/30 p-6 sm:p-10 shadow-2xl text-white">
+      <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-amber-500/10 blur-3xl pointer-events-none" />
 
-      <div className="relative z-10 p-6 sm:p-10 lg:p-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-        <div className="lg:col-span-7 space-y-5">
-          <div className="flex items-center gap-2.5 flex-wrap">
-            <span className="px-3 py-1 text-[10px] font-black uppercase tracking-wider rounded-full bg-amber-500 text-slate-950 shadow-md">
-              {isTamil ? 'சிறப்பு மாஸ்டர் கிளாஸ்' : 'FEATURED MASTERCLASS'}
+      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div className="lg:col-span-7 space-y-4">
+          <div className="flex items-center gap-2">
+            <span className="px-3 py-1 rounded-full bg-amber-500 text-slate-950 text-[10px] font-black uppercase tracking-wider shadow">
+              SPOTLIGHT MASTERCLASS
             </span>
-            <span className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider rounded-full bg-white/10 backdrop-blur-md text-amber-300 border border-white/10">
-              {category} • {duration}
-            </span>
-            <span className="px-2.5 py-0.5 text-[10px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-full font-bold">
-              CFP Verified
+            <span className="text-xs font-mono text-amber-400/90 font-bold">
+              {currentVideo.category?.toUpperCase()}
             </span>
           </div>
 
-          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black font-serif text-white leading-tight tracking-tight drop-shadow-md">
+          <h1 className="text-2xl sm:text-4xl font-black font-serif text-white leading-tight tracking-tight">
             {title}
           </h1>
 
-          <p className="text-xs sm:text-sm text-slate-300 max-w-xl font-medium leading-relaxed line-clamp-3">
+          <p className="text-xs sm:text-sm text-slate-300 line-clamp-3 leading-relaxed font-sans max-w-2xl">
             {description}
           </p>
 
-          <div className="flex items-center gap-4 pt-2 flex-wrap">
+          <div className="pt-2 flex flex-wrap items-center gap-4">
             <button
               onClick={() => onWatchVideo && onWatchVideo(currentVideo)}
-              className="btn-magnetic px-6 sm:px-8 py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-400 hover:to-amber-600 text-slate-950 font-black text-xs sm:text-sm shadow-xl shadow-amber-500/20 active:scale-95 transition-all flex items-center gap-2"
+              className="btn-magnetic px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs sm:text-sm shadow-xl shadow-amber-500/25 flex items-center gap-2 transition-transform hover:scale-105"
             >
               <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                 <polygon points="5 3 19 12 5 21 5 3" />
               </svg>
-              <span>{isTamil ? 'இப்போதே பார்க்கவும்' : 'Watch Masterclass'}</span>
+              <span>{isTamil ? 'இப்போதே பார்க்க' : 'Watch Masterclass'}</span>
             </button>
 
             <div className="flex items-center gap-2 text-xs text-slate-400 font-bold">
@@ -355,7 +334,7 @@ function CinemaSpotlightHero({
           </div>
 
           <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pt-1">
-            {videos.map((vid, idx) => {
+            {spotlightVideos.map((vid, idx) => {
               const isActive = idx === currentIndex;
               return (
                 <button
@@ -450,10 +429,7 @@ function CinemaVideoRail({
         className="flex items-stretch gap-4 sm:gap-5 overflow-x-auto no-scrollbar py-2 px-0.5 scroll-smooth"
       >
         {videos.map((video, idx) => (
-          <div
-            key={\`rail-\${video.id}\`}
-            className="w-[175px] sm:w-[210px] md:w-[230px] shrink-0"
-          >
+          <div key={\`rail-\${video.id || idx}\`} className="w-[175px] sm:w-[210px] md:w-[230px] shrink-0">
             <CinemaVideoCard
               video={video}
               index={idx}
@@ -476,217 +452,168 @@ function CinemaTheaterModal({
   language = 'ta',
   onShowToast
 }) {
-  const [activeTab, setActiveTab] = useState('overview');
-  const [activeLang, setActiveLang] = useState(language);
-  const isTamil = activeLang === 'ta';
+  const { session } = useAuth();
+  const isTamil = language === 'ta';
+  const [copied, setCopied] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
 
   useEffect(() => {
-    const handleKeyDown = (e) => {
+    const handleKey = (e) => {
       if (e.key === 'Escape') onClose && onClose();
     };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
   }, [onClose]);
 
   if (!video) return null;
 
   const youtubeId = video.youtubeId || '';
-  const embedUrl = \`https://www.youtube-nocookie.com/embed/\${youtubeId}?autoplay=1&rel=0&modestbranding=1&enablejsapi=1\`;
+  const embedUrl = youtubeId ? \`https://www.youtube.com/embed/\${youtubeId}?autoplay=1&rel=0&modestbranding=1\` : '';
+  const youtubeWatchUrl = video.youtubeUrl || (youtubeId ? \`https://www.youtube.com/watch?v=\${youtubeId}\` : '');
 
   const title = isTamil
-    ? (video.titleTamil || video.title || 'வீடியோ பதிவு')
-    : (video.titleEnglish || video.title || 'Featured Video');
-
+    ? (video.titleTamil || video.title)
+    : (video.titleEnglish || video.title);
   const description = isTamil
-    ? (video.descriptionTamil || video.description || 'விளக்கம் இல்லை')
-    : (video.descriptionEnglish || video.description || 'No description available');
+    ? (video.descriptionTamil || video.description)
+    : (video.descriptionEnglish || video.description);
 
-  const category = (video.category || 'FINANCE').replace('-', ' ').toUpperCase();
-  const duration = video.duration || 'Video';
-  const views = video.views ? \`\${Number(video.views).toLocaleString()} views\` : '';
+  const relatedVideos = allVideos
+    .filter(v => v.id !== video.id && (v.category === video.category || v.trending))
+    .slice(0, 4)
+    .map(v => translateVideo(v, language));
 
-  const relatedVideos = (allVideos && allVideos.length > 0 ? allVideos : [])
-    .filter(v => v.id !== video.id)
-    .slice(0, 6);
-
-  const handleShare = () => {
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(\`\${window.location.origin}/#/videos/\${video.id}\`);
-      if (onShowToast) {
-        onShowToast(isTamil ? 'இணைப்பு நகலெடுக்கப்பட்டது' : 'Video link copied to clipboard');
+  const handleShare = async () => {
+    const shareUrl = youtubeWatchUrl || window.location.href;
+    try {
+      if (navigator.clipboard) {
+        await navigator.clipboard.writeText(shareUrl);
+        setCopied(true);
+        if (onShowToast) onShowToast(isTamil ? 'இணைப்பு நகலெடுக்கப்பட்டது!' : 'Link copied to clipboard!');
+        setTimeout(() => setCopied(false), 2000);
       }
+    } catch (e) {
+      console.error('Failed to copy', e);
     }
   };
 
   return (
     <div
-      className="modal-backdrop-unified p-2 sm:p-4 md:p-6 overflow-y-auto"
-      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      className="fixed inset-0 z-[1000] flex items-center justify-center p-3 sm:p-6 overflow-y-auto modal-backdrop-unified"
     >
       <div
-        className="modal-card-unified relative w-full max-w-5xl bg-slate-900 border border-slate-700/80 rounded-2xl sm:rounded-3xl shadow-2xl shadow-slate-950 overflow-hidden flex flex-col my-auto max-h-[94vh]"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-800 bg-slate-950/80 backdrop-blur-md">
-          <div className="flex items-center gap-2.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse" />
-            <span className="text-xs font-black uppercase tracking-wider text-slate-200">
-              {category} • {duration}
-            </span>
-          </div>
+        onClick={onClose}
+        className="fixed inset-0 bg-slate-950/85 backdrop-blur-xl transition-opacity"
+      />
 
-          <div className="flex items-center gap-3">
-            <div className="inline-flex p-0.5 rounded-xl bg-slate-800 border border-slate-700 text-[11px] font-bold">
-              <button
-                onClick={() => setActiveLang('ta')}
-                className={\`px-2.5 py-1 rounded-lg transition-all \${isTamil ? 'bg-amber-500 text-slate-950 font-black' : 'text-slate-400 hover:text-white'}\`}
-              >
-                தமிழ்
-              </button>
-              <button
-                onClick={() => setActiveLang('en')}
-                className={\`px-2.5 py-1 rounded-lg transition-all \${!isTamil ? 'bg-amber-500 text-slate-950 font-black' : 'text-slate-400 hover:text-white'}\`}
-              >
-                English
-              </button>
+      <div className="relative w-full max-w-5xl rounded-3xl bg-slate-900 border border-slate-700/80 shadow-2xl overflow-hidden z-10 text-white my-auto modal-card-unified">
+        <div className="relative aspect-video w-full bg-black">
+          {embedUrl ? (
+            <iframe
+              src={embedUrl}
+              title={title}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="w-full h-full border-0"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center text-slate-400">
+              <span>Video player unavailable</span>
             </div>
+          )}
 
-            <button
-              onClick={handleShare}
-              title="Share"
-              className="px-3 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-bold transition-colors border border-slate-700 btn-magnetic"
-            >
-              {isTamil ? 'பகிர்க' : 'Share'}
-            </button>
-
-            <button
-              onClick={onClose}
-              aria-label="Close"
-              className="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition-colors text-sm font-bold border border-slate-700 btn-magnetic"
-            >
-              ✕
-            </button>
-          </div>
+          <button
+            onClick={onClose}
+            aria-label="Close modal"
+            className="absolute top-4 right-4 w-10 h-10 rounded-full bg-slate-950/85 hover:bg-red-600 text-white flex items-center justify-center text-sm font-bold backdrop-blur-md border border-white/20 transition-colors shadow-2xl z-30"
+          >
+            ✕
+          </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">
-          <div className="relative aspect-video w-full rounded-xl sm:rounded-2xl overflow-hidden bg-black shadow-2xl border border-slate-800">
-            {youtubeId ? (
-              <iframe
-                src={embedUrl}
-                title={title}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-                className="w-full h-full border-0"
-              />
-            ) : (
-              <div className="flex items-center justify-center h-full text-slate-500 text-sm">
-                Video not available
-              </div>
-            )}
-          </div>
-
-          <div className="space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
-              <div className="space-y-1">
-                <h1 className="text-xl sm:text-2xl font-black text-white font-serif leading-snug">
-                  {title}
-                </h1>
-                <div className="flex items-center gap-3 text-xs text-slate-400 font-medium flex-wrap">
-                  <span className="text-amber-400 font-bold">{video.channelName || 'Budget Padmanaban'}</span>
-                  <span>•</span>
-                  <span>{views}</span>
-                  {video.publishedAt && (
-                    <>
-                      <span>•</span>
-                      <span>{new Date(video.publishedAt).toLocaleDateString()}</span>
-                    </>
-                  )}
-                </div>
+        <div className="p-6 sm:p-8 space-y-6 max-h-[45vh] overflow-y-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            <div className="lg:col-span-8 space-y-4">
+              <div className="flex items-center gap-2">
+                <span className="px-3 py-1 rounded-full bg-amber-500 text-slate-950 text-[10px] font-black uppercase tracking-wider shadow">
+                  {(video.category || 'FINANCE').replace('-', ' ')}
+                </span>
+                <span className="text-xs font-mono text-slate-400">
+                  {video.duration || 'Full Guide'}
+                </span>
+                <span className="text-xs text-amber-400 font-bold">• CFP Verified</span>
               </div>
 
-              <div className="inline-flex p-1 rounded-xl bg-slate-950 border border-slate-800 text-xs font-bold shrink-0">
+              <h2 className="text-xl sm:text-2xl font-black font-serif text-white leading-snug">
+                {title}
+              </h2>
+
+              <div className="flex items-center gap-3 pt-2">
                 <button
-                  onClick={() => setActiveTab('overview')}
-                  className={\`px-3 py-1.5 rounded-lg transition-all \${activeTab === 'overview' ? 'bg-amber-500 text-slate-950 font-black' : 'text-slate-400 hover:text-white'}\`}
+                  onClick={handleShare}
+                  className="btn-magnetic px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-slate-200 hover:text-white flex items-center gap-1.5 transition-colors"
                 >
-                  {isTamil ? 'விளக்கம்' : 'Overview'}
+                  <span>{copied ? 'Copied' : (isTamil ? 'பகிர்' : 'Share')}</span>
                 </button>
-                <button
-                  onClick={() => setActiveTab('takeaways')}
-                  className={\`px-3 py-1.5 rounded-lg transition-all \${activeTab === 'takeaways' ? 'bg-amber-500 text-slate-950 font-black' : 'text-slate-400 hover:text-white'}\`}
-                >
-                  {isTamil ? 'முக்கிய குறிப்புகள்' : 'Key Takeaways'}
-                </button>
-                <button
-                  onClick={() => setActiveTab('related')}
-                  className={\`px-3 py-1.5 rounded-lg transition-all \${activeTab === 'related' ? 'bg-amber-500 text-slate-950 font-black' : 'text-slate-400 hover:text-white'}\`}
-                >
-                  {isTamil ? 'தொடர்புடையவை' : 'Related'}
-                </button>
+
+                {youtubeWatchUrl && (
+                  <a
+                    href={youtubeWatchUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn-magnetic px-4 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs font-black transition-colors shadow flex items-center gap-1.5"
+                  >
+                    <span>YouTube ↗</span>
+                  </a>
+                )}
+              </div>
+
+              <div className="p-4 rounded-xl bg-slate-950/60 border border-slate-800/80 text-xs sm:text-sm text-slate-300 font-sans leading-relaxed whitespace-pre-line">
+                {description}
               </div>
             </div>
 
-            {activeTab === 'overview' && (
-              <div className="p-4 sm:p-5 rounded-2xl bg-slate-950/60 border border-slate-800 text-xs sm:text-sm text-slate-300 font-sans leading-relaxed whitespace-pre-line">
-                {description}
-              </div>
-            )}
+            <div className="lg:col-span-4 space-y-3 border-t lg:border-t-0 lg:border-l border-slate-800 lg:pl-6 pt-4 lg:pt-0">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                {isTamil ? 'தொடர்புடைய வீடியோக்கள்' : 'Related Insights'}
+              </h3>
 
-            {activeTab === 'takeaways' && (
-              <div className="p-4 sm:p-5 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-3">
-                <h3 className="text-xs font-black uppercase tracking-wider text-amber-400">
-                  {isTamil ? 'முக்கிய முதலீட்டுப் பாடங்கள்' : 'Core Investment Principles'}
-                </h3>
-                <ul className="space-y-2 text-xs sm:text-sm text-slate-300 font-medium">
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-500 font-bold">•</span>
-                    <span>{isTamil ? 'நீண்ட கால முதலீட்டு உத்திகள் மற்றும் கூட்டு வட்டியின் ஆற்றல்' : 'Long-term systematic compounding and risk mitigation'}</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-500 font-bold">•</span>
-                    <span>{isTamil ? 'சந்தை ஏற்ற இறக்கங்களை எதிர்கொள்ளும் ஒழுங்கான SIP திட்டமிடல்' : 'Disciplined asset allocation across market cycles'}</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-500 font-bold">•</span>
-                    <span>{isTamil ? 'வரி சேமிப்பு மற்றும் ஓய்வூதிய இலக்குகளுக்கான சரியான நிதி ஒதுக்கீடு' : 'Tax-efficient investment selection aligned with life goals'}</span>
-                  </li>
-                </ul>
-              </div>
-            )}
-
-            {activeTab === 'related' && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              <div className="space-y-2.5">
                 {relatedVideos.map((rel) => {
-                  const relTitle = isTamil ? (rel.titleTamil || rel.title) : (rel.titleEnglish || rel.title);
+                  const relTitle = isTamil
+                    ? (rel.titleTamil || rel.title)
+                    : (rel.titleEnglish || rel.title);
+
                   return (
                     <div
-                      key={\`modal-rel-\${rel.id}\`}
+                      key={\`theater-related-\${rel.id}\`}
                       role="button"
                       tabIndex={0}
                       onClick={() => onSelectRelated && onSelectRelated(rel)}
-                      className="group flex items-center gap-3 p-2.5 rounded-xl bg-slate-950 hover:bg-slate-800/80 border border-slate-800 transition-all cursor-pointer btn-magnetic"
+                      className="group flex items-center gap-3 p-2 rounded-xl bg-slate-950/40 hover:bg-slate-800/80 border border-slate-800/60 transition-all cursor-pointer"
                     >
                       <div className="relative w-20 aspect-[16/10] rounded-lg overflow-hidden shrink-0 bg-slate-950">
                         <img
                           src={rel.thumbnail || \`https://img.youtube.com/vi/\${rel.youtubeId}/hqdefault.jpg\`}
                           alt={relTitle}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
-                        <span className="absolute bottom-1 right-1 px-1 py-0.2 rounded bg-black/80 text-[8px] font-mono text-slate-200">
-                          {rel.duration || 'Video'}
-                        </span>
                       </div>
                       <div className="flex-1 min-w-0">
                         <h4 className="text-xs font-bold text-slate-200 group-hover:text-amber-400 line-clamp-2 leading-tight transition-colors">
                           {relTitle}
                         </h4>
+                        <span className="text-[10px] text-slate-400 block mt-0.5">
+                          {rel.category}
+                        </span>
                       </div>
                     </div>
                   );
                 })}
               </div>
-            )}
+            </div>
           </div>
         </div>
       </div>
@@ -694,6 +621,151 @@ function CinemaTheaterModal({
   );
 }
 
+/**
+ * HOME CINEMA VIDEO SHOWCASE (OPTION 4 CINEMA CARDS ON HOMEPAGE)
+ */
+function HomeCinemaShowcase({ onNavigate, onShowToast, language = 'ta' }) {
+  const isTamil = language === 'ta';
+  const [activeCategory, setActiveCategory] = useState('featured');
+  const [selectedVideo, setSelectedVideo] = useState(null);
+
+  const categories = [
+    { id: 'featured', labelTa: 'முக்கிய பதிவுகள்', labelEn: 'Featured & Trending' },
+    { id: 'mutual-funds', labelTa: 'மியூச்சுவல் ஃபண்ட் & SIP', labelEn: 'Mutual Funds & SIP' },
+    { id: 'stocks', labelTa: 'பங்குச் சந்தை & IPO', labelEn: 'Stocks & IPO' },
+    { id: 'tax-saving', labelTa: 'வரி சேமிப்பு & ஓய்வூதியம்', labelEn: 'Tax & Retirement' },
+    { id: 'shorts', labelTa: 'குறுகிய வீடியோக்கள் (Shorts)', labelEn: 'Quick Takes (Shorts)' }
+  ];
+
+  const showcaseVideos = useMemo(() => {
+    let list = [...videosData];
+    if (activeCategory === 'featured') {
+      list = list.filter(v => v.trending || v.views > 20000).slice(0, 8);
+    } else if (activeCategory === 'shorts') {
+      list = list.filter(v => v.isShort || (v.tags && v.tags.includes('shorts'))).slice(0, 8);
+    } else if (activeCategory === 'mutual-funds') {
+      list = list.filter(v => v.category === 'mutual-funds').slice(0, 8);
+    } else if (activeCategory === 'stocks') {
+      list = list.filter(v => v.category === 'stocks' || v.category === 'ipo').slice(0, 8);
+    } else if (activeCategory === 'tax-saving') {
+      list = list.filter(v => v.category === 'tax-saving' || v.category === 'retirement').slice(0, 8);
+    }
+    return list.map(v => translateVideo(v, language));
+  }, [activeCategory, language]);
+
+  return (
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 select-none space-y-6">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
+        <div className="space-y-1.5">
+          <div className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse" />
+            <span className="px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+              CINEMA VIDEO SUITE
+            </span>
+          </div>
+          <h2 className="text-xl sm:text-3xl font-black text-slate-900 dark:text-white font-serif tracking-tight">
+            {isTamil ? 'பிரத்யேக வீடியோ அலசல் மற்றும் வழிகாட்டி' : 'Cinema Video Masterclasses'}
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium">
+            {isTamil
+              ? 'பட்ஜெட் பத்மநாபன் CFP® வழங்கும் 3D இன்டராக்டிவ் மியூச்சுவல் ஃபண்ட் & பங்குச் சந்தை ஆய்வுகள்'
+              : 'Interactive 3D masterclasses with real-time frame scrubbing, certified by Padmanaban B. CFP®'}
+          </p>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => onNavigate && onNavigate('#/videos')}
+            className="btn-magnetic px-4 py-2 rounded-xl bg-slate-900 dark:bg-slate-800 hover:bg-amber-600 dark:hover:bg-amber-500 text-white dark:hover:text-slate-950 text-xs font-black transition-all shadow-md flex items-center gap-1.5"
+          >
+            <span>{isTamil ? 'அனைத்து 882 வீடியோக்கள்' : 'Browse All 882 Videos'}</span>
+            <span>→</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Category Tabs */}
+      <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+        {categories.map((cat) => {
+          const isActive = activeCategory === cat.id;
+          return (
+            <button
+              key={cat.id}
+              onClick={() => setActiveCategory(cat.id)}
+              className={\`btn-magnetic px-4 py-2 rounded-full text-xs font-black whitespace-nowrap transition-all duration-200 shrink-0 \${
+                isActive
+                  ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20 scale-105'
+                  : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800'
+              }\`}
+            >
+              {isTamil ? cat.labelTa : cat.labelEn}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Responsive Cinema Cards Grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+        {showcaseVideos.map((video, idx) => (
+          <CinemaVideoCard
+            key={\`home-cinema-\${video.id || idx}\`}
+            video={video}
+            index={idx}
+            onSelect={(v) => setSelectedVideo(v)}
+            language={language}
+            onShowToast={onShowToast}
+          />
+        ))}
+      </div>
+
+      {selectedVideo && (
+        <CinemaTheaterModal
+          video={selectedVideo}
+          allVideos={videosData}
+          onClose={() => setSelectedVideo(null)}
+          onSelectRelated={(rel) => setSelectedVideo(rel)}
+          language={language}
+          onShowToast={onShowToast}
+        />
+      )}
+    </section>
+  );
+}
+
+/**
+ * HOME PAGE
+ */
+function Home({ onNavigate, onShowToast }) {
+  const { t, language } = useLanguage();
+  const translatedNews = newsData.map(item => translateNewsArticle(item, language));
+
+  return (
+    <div className="space-y-8 pb-16 animate-fadeIn">
+      {/* 1. FEATURED NEWS TICKER ON LEFT + LATEST ARTICLES ON RIGHT */}
+      <HeroSection news={translatedNews} onNavigate={onNavigate} />
+
+      {/* 2. CINEMA VIDEO CARDS SHOWCASE (Replaces old fan wall) */}
+      <HomeCinemaShowcase
+        onNavigate={onNavigate}
+        onShowToast={onShowToast}
+        language={language}
+      />
+
+      {/* 3. TRENDING ARTICLES SECTION */}
+      <TrendingArticlesSection onNavigate={onNavigate} />
+
+      {/* 4. SIGN IN / REGISTER CALL TO ACTION BANNER */}
+      <SignInCtaBanner onNavigate={onNavigate} />
+
+      {/* 5. FINANCIAL CALCULATOR */}
+      <SipCalculator />
+    </div>
+  );
+}
+
+/**
+ * VIDEOS PAGE (FULL 882 VIDEOS PORTAL)
+ */
 function VideosPage({ onNavigate, onShowToast }) {
   const { language } = useLanguage();
   const isTamil = language === 'ta';
@@ -786,20 +858,7 @@ function VideosPage({ onNavigate, onShowToast }) {
         />
       </div>
 
-      {/* 2. LIVING FAN ARC WALL */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <VideoFanWall
-          videos={videosData}
-          language={language}
-          onNavigate={onNavigate}
-          titleTamil="பிரத்யேக நேரலை வீடியோ கேலரி"
-          titleEnglish="Living Video Arc Showcase"
-          subtitleTamil="பட்ஜெட் பத்மநாபனின் பிரத்யேக நிதி, மியூச்சுவல் ஃபண்ட் மற்றும் முதலீட்டு வீடியோ அலசல்கள்"
-          subtitleEnglish="Continuous desynchronized animated fan arc with multi-frame previews and instant expandable inspection"
-        />
-      </div>
-
-      {/* 3. STICKY CATEGORY & SEARCH CONTROLS BAR */}
+      {/* 2. STICKY CATEGORY & SEARCH CONTROLS BAR */}
       <div className="sticky top-16 z-30 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl border-y border-slate-200 dark:border-slate-800/80 shadow-md py-3.5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-3">
           <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
@@ -887,22 +946,22 @@ function VideosPage({ onNavigate, onShowToast }) {
         </div>
       </div>
 
-      {/* 4. MAIN CONTENT: CURATED CINEMATIC RAILS OR SEARCHABLE GRID */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-        {(isFiltering || viewMode === 'grid') ? (
-          <section className="space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
-              <span className="text-xs font-bold text-slate-500 dark:text-slate-400">
+      {/* 3. MAIN CONTENT: CINEMATIC RAILS OR FULL 882 GRID */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {isFiltering || viewMode === 'grid' ? (
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <p className="text-xs text-slate-500 dark:text-slate-400 font-bold">
                 {isTamil
-                  ? \`மொத்தம் \${filteredVideos.length} வீடியோக்கள் கண்டறியப்பட்டன\`
-                  : \`Showing \${filteredVideos.length} matching masterclasses\`}
-              </span>
+                  ? \`\${filteredVideos.length} வீடியோக்கள் கண்டறியப்பட்டன\`
+                  : \`Found \${filteredVideos.length} masterclasses\`}
+              </p>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3.5 sm:gap-5 items-stretch">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 md:gap-5">
               {filteredVideos.slice(0, visibleGridCount).map((video, idx) => (
                 <CinemaVideoCard
-                  key={\`grid-\${video.id}\`}
+                  key={\`grid-cinema-\${video.id || idx}\`}
                   video={video}
                   index={idx}
                   onSelect={(v) => setSelectedVideo(v)}
@@ -913,24 +972,26 @@ function VideosPage({ onNavigate, onShowToast }) {
             </div>
 
             {visibleGridCount < filteredVideos.length && (
-              <div className="text-center pt-8">
+              <div className="pt-8 text-center">
                 <button
-                  onClick={() => setVisibleGridCount(prev => Math.min(prev + 24, filteredVideos.length))}
-                  className="btn-magnetic px-8 py-3.5 rounded-2xl bg-slate-900 dark:bg-slate-800 hover:bg-amber-600 text-white font-extrabold text-xs sm:text-sm border border-slate-700 shadow-xl transition-all"
+                  onClick={() => setVisibleGridCount(prev => prev + 24)}
+                  className="btn-magnetic px-8 py-3.5 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider shadow-xl shadow-amber-500/20 transition-all transform hover:scale-105"
                 >
-                  {isTamil ? 'மேலும் வீடியோக்களைக் காட்டு' : 'Load More Masterclasses'} ({\filteredVideos.length - visibleGridCount} {isTamil ? 'மீதமுள்ளன' : 'remaining'})
+                  {isTamil
+                    ? \`மேலும் 24 வீடியோக்களைக் காட்டு (\${filteredVideos.length - visibleGridCount} மீதம்)\`
+                    : \`Load 24 More Videos (\${filteredVideos.length - visibleGridCount} remaining)\`}
                 </button>
               </div>
             )}
-          </section>
+          </div>
         ) : (
-          <div className="space-y-12">
+          <div className="space-y-8">
             <CinemaVideoRail
-              titleTamil="பிரதான முதலீட்டு வழிகாட்டிகள்"
-              titleEnglish="Featured Wealth Masterclasses"
-              subtitleTamil="பட்ஜெட் பத்மநாபன் CFP அவர்களின் தேர்ந்தெடுக்கப்பட்ட பிரதான வழிகாட்டிகள்"
-              subtitleEnglish="Handpicked high-impact wealth-building masterclasses and investment blueprints"
-              badgeText="POPULAR"
+              titleTamil="பிரபலமான வீடியோக்கள் & Masterclasses"
+              titleEnglish="Trending & Highly Watched Masterclasses"
+              subtitleTamil="அதிக முதலீட்டாளர்களால் பார்க்கப்பட்ட முதன்மையான மியூச்சுவல் ஃபண்ட் மற்றும் பங்குச் சந்தை வழிகாட்டிகள்"
+              subtitleEnglish="Top-rated investor masterclasses with over 25,000+ views"
+              badgeText="FEATURED"
               videos={railsData.masterclasses}
               onSelectVideo={(v) => setSelectedVideo(v)}
               language={language}
@@ -938,10 +999,10 @@ function VideosPage({ onNavigate, onShowToast }) {
             />
 
             <CinemaVideoRail
-              titleTamil="குறுகிய நேர நிதி ஆலோசனைகள்"
-              titleEnglish="Quick Takes & Shorts"
-              subtitleTamil="1 நிமிடத்தில் தெரிந்து கொள்ள வேண்டிய முக்கிய நிதி உண்மைகள்"
-              subtitleEnglish="Bite-sized high-yield financial wisdom and quick money rules"
+              titleTamil="குறுகிய வீடியோக்கள் & Quick Takes"
+              titleEnglish="Quick Takes & YouTube Shorts"
+              subtitleTamil="1 நிமிடத்தில் புரியும் முக்கியமான முதலீட்டு ஆலோசனைகள் மற்றும் ரகசியங்கள்"
+              subtitleEnglish="Bite-sized high-impact financial lessons in under 60 seconds"
               badgeText="SHORTS"
               videos={railsData.shorts}
               onSelectVideo={(v) => setSelectedVideo(v)}
@@ -951,10 +1012,10 @@ function VideosPage({ onNavigate, onShowToast }) {
 
             <CinemaVideoRail
               titleTamil="மியூச்சுவல் ஃபண்ட் & SIP திட்டங்கள்"
-              titleEnglish="Mutual Funds & Systematic Wealth"
-              subtitleTamil="நீண்ட கால கூட்டு வட்டியின் மூலம் செல்வம் சேர்க்கும் வழிகள்"
-              subtitleEnglish="Comprehensive fund analysis, category reviews, and compounding strategies"
-              badgeText="SIP"
+              titleEnglish="Mutual Funds & SIP Strategies"
+              subtitleTamil="Small Cap, Mid Cap, Flexi Cap மற்றும் Index ஃபண்டுகளின் முழுமையான ஒப்பீடு"
+              subtitleEnglish="Comprehensive fund reviews, CAGR calculations, and portfolio allocation"
+              badgeText="MUTUAL FUNDS"
               videos={railsData.mutualFunds}
               onSelectVideo={(v) => setSelectedVideo(v)}
               language={language}
@@ -964,8 +1025,8 @@ function VideosPage({ onNavigate, onShowToast }) {
             <CinemaVideoRail
               titleTamil="பங்குச் சந்தை & IPO அலசல்"
               titleEnglish="Stock Market & IPO Breakdowns"
-              subtitleTamil="நிறுவனங்களின் நிதி நிலை மற்றும் சந்தை வாய்ப்புகள்"
-              subtitleEnglish="Deep-dive fundamentals, valuation checks, and smart equity strategies"
+              subtitleTamil="நேரடி பங்கு முதலீடு, தொழில்நுட்ப பகுப்பாய்வு மற்றும் புதிய IPO மதிப்பீடுகள்"
+              subtitleEnglish="Direct equity fundamentals, risk management, and live IPO reviews"
               badgeText="STOCKS"
               videos={railsData.stocks}
               onSelectVideo={(v) => setSelectedVideo(v)}
@@ -974,9 +1035,9 @@ function VideosPage({ onNavigate, onShowToast }) {
             />
 
             <CinemaVideoRail
-              titleTamil="வரி சேமிப்பு & ஓய்வூதிய திட்டம்"
-              titleEnglish="Tax Planning & Retirement Blueprint"
-              subtitleTamil="சரியான வரி திட்டமிடல் மற்றும் அமைதியான ஓய்வூதிய வாழ்க்கை"
+              titleTamil="வரி சேமிப்பு & ஓய்வூதியத் திட்டமிடல்"
+              titleEnglish="Tax Optimization & Retirement Planning"
+              subtitleTamil="NPS, EPF, Section 80C வரி சேமிப்பு மற்றும் ஓய்வூதிய நிதி கணக்கீடுகள்"
               subtitleEnglish="NPS, EPF, Section 80C optimization, and retirement corpus calculators"
               badgeText="RETIREMENT"
               videos={railsData.taxRetirement}
@@ -1015,14 +1076,14 @@ function VideosPage({ onNavigate, onShowToast }) {
 }
 `;
 
-const startMarker = 'function CinemaVideoCard(';
+const startMarker = 'function Home({';
 const endMarker = 'function ArticlesPage(';
 
 if (bundleCode.includes(startMarker) && bundleCode.includes(endMarker)) {
   const startIndex = bundleCode.indexOf(startMarker);
   const endIndex = bundleCode.indexOf(endMarker);
   bundleCode = bundleCode.substring(0, startIndex) + `${cinemaComponents}\n\n` + bundleCode.substring(endIndex);
-  console.log('Replaced Cinema components and VideosPage in bundle.js');
+  console.log('Replaced Home and Cinema components in bundle.js');
 }
 
 fs.writeFileSync(bundlePath, bundleCode, 'utf8');
