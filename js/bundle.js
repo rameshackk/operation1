@@ -641,12 +641,12 @@ const videosData = [
     "channelHandle": "@budgetpadmanaban_",
     "channelUrl": "https://www.youtube.com/@budgetpadmanaban_",
     "channelName": "Budget Padmanaban",
-    "titleTamil": "₹30,000 Budget-ல Family-க்கு Complete Financial Plan!| Budget Padmanaban",
-    "titleEnglish": "₹30,000 Budget-ல Family-க்கு Complete Financial Plan!| Budget Padmanaban",
-    "title": "₹30,000 Budget-ல Family-க்கு Complete Financial Plan!| Budget Padmanaban",
-    "descriptionTamil": "₹30,000 Budget-ல Family-க்கு Complete Financial Plan!| Budget Padmanaban\n\nஇந்த வீடியோவில் ஒரு குடும்பத்தின் Financial Planning எப்படி இருக்க வேண்டும் என்பதை நடைமுறை உதாரணங்களுடன் விளக்குகிறோம். குழந்தையின் எதிர்கால Education, Education Loan, Sip F",
-    "descriptionEnglish": "₹30,000 Budget-ல Family-க்கு Complete Financial Plan!| Budget Padmanaban\n\nஇந்த வீடியோவில் ஒரு குடும்பத்தின் Financial Planning எப்படி இருக்க வேண்டும் என்பதை நடைமுறை உதாரணங்களுடன் விளக்குகிறோம். குழந்தையின் எதிர்கால Education, Education Loan, Sip F",
-    "description": "₹30,000 Budget-ல Family-க்கு Complete Financial Plan!| Budget Padmanaban\n\nஇந்த வீடியோவில் ஒரு குடும்பத்தின் Financial Planning எப்படி இருக்க வேண்டும் என்பதை நடைமுறை உதாரணங்களுடன் விளக்குகிறோம். குழந்தையின் எதிர்கால Education, Education Loan, Sip F",
+    "titleTamil": "₹30,000 Budget-ல Family-க்கு Complete Financial Plan! | Budget Padmanaban",
+    "titleEnglish": "₹30,000 Budget-ல Family-க்கு Complete Financial Plan! | Budget Padmanaban",
+    "title": "₹30,000 Budget-ல Family-க்கு Complete Financial Plan! | Budget Padmanaban",
+    "descriptionTamil": "₹30,000 Budget-ல Family-க்கு Complete Financial Plan! | Budget Padmanaban\n\nஇந்த வீடியோவில் ஒரு குடும்பத்தின் Financial Planning எப்படி இருக்க வேண்டும் என்பதை நடைமுறை உதாரணங்களுடன் விளக்குகிறோம். குழந்தையின் எதிர்கால Education, Education Loan, Sip F",
+    "descriptionEnglish": "₹30,000 Budget-ல Family-க்கு Complete Financial Plan! | Budget Padmanaban\n\nஇந்த வீடியோவில் ஒரு குடும்பத்தின் Financial Planning எப்படி இருக்க வேண்டும் என்பதை நடைமுறை உதாரணங்களுடன் விளக்குகிறோம். குழந்தையின் எதிர்கால Education, Education Loan, Sip F",
+    "description": "₹30,000 Budget-ல Family-க்கு Complete Financial Plan! | Budget Padmanaban\n\nஇந்த வீடியோவில் ஒரு குடும்பத்தின் Financial Planning எப்படி இருக்க வேண்டும் என்பதை நடைமுறை உதாரணங்களுடன் விளக்குகிறோம். குழந்தையின் எதிர்கால Education, Education Loan, Sip F",
     "category": "mutual-funds",
     "publishedAt": "2026-07-29T11:30:02Z",
     "duration": "18:28",
@@ -815,12 +815,12 @@ const videosData = [
     "channelHandle": "@budgetpadmanaban_",
     "channelUrl": "https://www.youtube.com/@budgetpadmanaban_",
     "channelName": "Budget Padmanaban",
-    "titleTamil": "SIP vs TOP-UP SIP - எதுல அதிக PROFIT கிடைக்கும்? | Budget Padmanaban",
-    "titleEnglish": "SIP vs TOP-UP SIP - எதுல அதிக PROFIT கிடைக்கும்? | Budget Padmanaban",
-    "title": "SIP vs TOP-UP SIP - எதுல அதிக PROFIT கிடைக்கும்? | Budget Padmanaban",
-    "descriptionTamil": "SIP vs TOP-UP SIP - எதுல அதிக PROFIT கிடைக்கும்? | Budget Padmanaban\n\nஇந்த வீடியோவில் ₹5,000 இருந்தால் அதை எப்படி புத்திசாலித்தனமாக INVEST செய்வது என்பதை எளிமையாக விளக்குகிறோம். GOLD, SIP, TOP-UP SIP, MUTUAL FUNDS, ASSET ALLOCATION போன்ற முக்கியமா",
-    "descriptionEnglish": "SIP vs TOP-UP SIP - எதுல அதிக PROFIT கிடைக்கும்? | Budget Padmanaban\n\nஇந்த வீடியோவில் ₹5,000 இருந்தால் அதை எப்படி புத்திசாலித்தனமாக INVEST செய்வது என்பதை எளிமையாக விளக்குகிறோம். GOLD, SIP, TOP-UP SIP, MUTUAL FUNDS, ASSET ALLOCATION போன்ற முக்கியமா",
-    "description": "SIP vs TOP-UP SIP - எதுல அதிக PROFIT கிடைக்கும்? | Budget Padmanaban\n\nஇந்த வீடியோவில் ₹5,000 இருந்தால் அதை எப்படி புத்திசாலித்தனமாக INVEST செய்வது என்பதை எளிமையாக விளக்குகிறோம். GOLD, SIP, TOP-UP SIP, MUTUAL FUNDS, ASSET ALLOCATION போன்ற முக்கியமா",
+    "titleTamil": "SIP vs TOP-UP SIP - எதுல அதிக PROFIT கிடைக்கும்?  | Budget Padmanaban",
+    "titleEnglish": "SIP vs TOP-UP SIP - எதுல அதிக PROFIT கிடைக்கும்?  | Budget Padmanaban",
+    "title": "SIP vs TOP-UP SIP - எதுல அதிக PROFIT கிடைக்கும்?  | Budget Padmanaban",
+    "descriptionTamil": "SIP vs TOP-UP SIP - எதுல அதிக PROFIT கிடைக்கும்?  | Budget Padmanaban\n\nஇந்த வீடியோவில் ₹5,000 இருந்தால் அதை எப்படி புத்திசாலித்தனமாக INVEST செய்வது என்பதை எளிமையாக விளக்குகிறோம். GOLD, SIP, TOP-UP SIP, MUTUAL FUNDS, ASSET ALLOCATION போன்ற முக்கியமா",
+    "descriptionEnglish": "SIP vs TOP-UP SIP - எதுல அதிக PROFIT கிடைக்கும்?  | Budget Padmanaban\n\nஇந்த வீடியோவில் ₹5,000 இருந்தால் அதை எப்படி புத்திசாலித்தனமாக INVEST செய்வது என்பதை எளிமையாக விளக்குகிறோம். GOLD, SIP, TOP-UP SIP, MUTUAL FUNDS, ASSET ALLOCATION போன்ற முக்கியமா",
+    "description": "SIP vs TOP-UP SIP - எதுல அதிக PROFIT கிடைக்கும்?  | Budget Padmanaban\n\nஇந்த வீடியோவில் ₹5,000 இருந்தால் அதை எப்படி புத்திசாலித்தனமாக INVEST செய்வது என்பதை எளிமையாக விளக்குகிறோம். GOLD, SIP, TOP-UP SIP, MUTUAL FUNDS, ASSET ALLOCATION போன்ற முக்கியமா",
     "category": "mutual-funds",
     "publishedAt": "2026-07-18T12:47:29Z",
     "duration": "18:46",
@@ -7021,12 +7021,12 @@ const videosData = [
     "channelHandle": "@budgetpadmanaban_",
     "channelUrl": "https://www.youtube.com/@budgetpadmanaban_",
     "channelName": "Budget Padmanaban",
-    "titleTamil": "5 Lakhs  1 Crore! இந்த calculationஉங்க எதிர்காலத்தையே மாத்திடும்! | Budget Padmanaban",
-    "titleEnglish": "5 Lakhs  1 Crore! இந்த calculationஉங்க எதிர்காலத்தையே மாத்திடும்! | Budget Padmanaban",
-    "title": "5 Lakhs  1 Crore! இந்த calculationஉங்க எதிர்காலத்தையே மாத்திடும்! | Budget Padmanaban",
-    "descriptionTamil": "5 Lakhs  1 Crore! இந்த calculationஉங்க எதிர்காலத்தையே மாத்திடும்! | Budget Padmanaban\n\n#mutualfunds #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n",
-    "descriptionEnglish": "5 Lakhs  1 Crore! இந்த calculationஉங்க எதிர்காலத்தையே மாத்திடும்! | Budget Padmanaban\n\n#mutualfunds #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n",
-    "description": "5 Lakhs  1 Crore! இந்த calculationஉங்க எதிர்காலத்தையே மாத்திடும்! | Budget Padmanaban\n\n#mutualfunds #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n",
+    "titleTamil": "5 Lakhs  1 Crore! இந்த calculation உங்க எதிர்காலத்தையே மாத்திடும்! | Budget Padmanaban",
+    "titleEnglish": "5 Lakhs  1 Crore! இந்த calculation உங்க எதிர்காலத்தையே மாத்திடும்! | Budget Padmanaban",
+    "title": "5 Lakhs  1 Crore! இந்த calculation உங்க எதிர்காலத்தையே மாத்திடும்! | Budget Padmanaban",
+    "descriptionTamil": "5 Lakhs  1 Crore! இந்த calculation உங்க எதிர்காலத்தையே மாத்திடும்! | Budget Padmanaban\n\n#mutualfunds #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n",
+    "descriptionEnglish": "5 Lakhs  1 Crore! இந்த calculation உங்க எதிர்காலத்தையே மாத்திடும்! | Budget Padmanaban\n\n#mutualfunds #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n",
+    "description": "5 Lakhs  1 Crore! இந்த calculation உங்க எதிர்காலத்தையே மாத்திடும்! | Budget Padmanaban\n\n#mutualfunds #investment #budgetpadmanaban \n\nPadmanaban B | Certified Financial Planner (CFP)\nDirector - Fortune Investment Services Pvt Ltd. \n\nContact  ⤵︎\n",
     "category": "mutual-funds",
     "publishedAt": "2025-07-13T05:30:30Z",
     "duration": "12:08",
@@ -9921,12 +9921,12 @@ const videosData = [
     "channelHandle": "@budgetpadmanaban_",
     "channelUrl": "https://www.youtube.com/@budgetpadmanaban_",
     "channelName": "Budget Padmanaban",
-    "titleTamil": "23 வயதில் மாசம் ₹2000 முதலீடு = 100 வயது வரை Pension + ₹25 கோடி! | Budget Padmanaban",
-    "titleEnglish": "23 வயதில் மாசம் ₹2000 முதலீடு = 100 வயது வரை Pension + ₹25 கோடி! | Budget Padmanaban",
-    "title": "23 வயதில் மாசம் ₹2000 முதலீடு = 100 வயது வரை Pension + ₹25 கோடி! | Budget Padmanaban",
-    "descriptionTamil": "23 வயதில் மாசம் ₹2000 முதலீடு = 100 வயது வரை Pension + ₹25 கோடி! | Budget Padmanaban\n\n#expenses #savings #budgetpadmanaban \n\nFollow me on social media for more updates:\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\nInstagram: ht",
-    "descriptionEnglish": "23 வயதில் மாசம் ₹2000 முதலீடு = 100 வயது வரை Pension + ₹25 கோடி! | Budget Padmanaban\n\n#expenses #savings #budgetpadmanaban \n\nFollow me on social media for more updates:\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\nInstagram: ht",
-    "description": "23 வயதில் மாசம் ₹2000 முதலீடு = 100 வயது வரை Pension + ₹25 கோடி! | Budget Padmanaban\n\n#expenses #savings #budgetpadmanaban \n\nFollow me on social media for more updates:\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\nInstagram: ht",
+    "titleTamil": "23 வயதில் மாசம் ₹2000 முதலீடு = 100 வயது வரை Pension + ₹25 கோடி!  | Budget Padmanaban",
+    "titleEnglish": "23 வயதில் மாசம் ₹2000 முதலீடு = 100 வயது வரை Pension + ₹25 கோடி!  | Budget Padmanaban",
+    "title": "23 வயதில் மாசம் ₹2000 முதலீடு = 100 வயது வரை Pension + ₹25 கோடி!  | Budget Padmanaban",
+    "descriptionTamil": "23 வயதில் மாசம் ₹2000 முதலீடு = 100 வயது வரை Pension + ₹25 கோடி!  | Budget Padmanaban\n\n#expenses #savings #budgetpadmanaban \n\nFollow me on social media for more updates:\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\nInstagram: ht",
+    "descriptionEnglish": "23 வயதில் மாசம் ₹2000 முதலீடு = 100 வயது வரை Pension + ₹25 கோடி!  | Budget Padmanaban\n\n#expenses #savings #budgetpadmanaban \n\nFollow me on social media for more updates:\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\nInstagram: ht",
+    "description": "23 வயதில் மாசம் ₹2000 முதலீடு = 100 வயது வரை Pension + ₹25 கோடி!  | Budget Padmanaban\n\n#expenses #savings #budgetpadmanaban \n\nFollow me on social media for more updates:\n\nContact Form: https://bit.ly/48Do8P6\nWhatsapp: +91 9884349173\nInstagram: ht",
     "category": "mutual-funds",
     "publishedAt": "2025-03-29T14:51:42Z",
     "duration": "01:00",
@@ -10559,12 +10559,12 @@ const videosData = [
     "channelHandle": "@budgetpadmanaban_",
     "channelUrl": "https://www.youtube.com/@budgetpadmanaban_",
     "channelName": "Budget Padmanaban",
-    "titleTamil": "Mutual Fund-ல செய்ய வேண்டிய & செய்யக்கூடாத விஷயங்கள்! | Budget Padmanaban x Keshav",
-    "titleEnglish": "Mutual Fund-ல செய்ய வேண்டிய & செய்யக்கூடாத விஷயங்கள்! | Budget Padmanaban x Keshav",
-    "title": "Mutual Fund-ல செய்ய வேண்டிய & செய்யக்கூடாத விஷயங்கள்! | Budget Padmanaban x Keshav",
-    "descriptionTamil": "#budgetpadmanaban #sip #smallcap \n\nMutual Fund-ல செய்ய வேண்டிய & செய்யக்கூடாத விஷயங்கள்! | Budget Padmanaban x Keshav\n\nIn this video, we explore the **10-year SIP investment strategy**, the impact of **rising Small Cap Valuation**, and how to make",
-    "descriptionEnglish": "#budgetpadmanaban #sip #smallcap \n\nMutual Fund-ல செய்ய வேண்டிய & செய்யக்கூடாத விஷயங்கள்! | Budget Padmanaban x Keshav\n\nIn this video, we explore the **10-year SIP investment strategy**, the impact of **rising Small Cap Valuation**, and how to make",
-    "description": "#budgetpadmanaban #sip #smallcap \n\nMutual Fund-ல செய்ய வேண்டிய & செய்யக்கூடாத விஷயங்கள்! | Budget Padmanaban x Keshav\n\nIn this video, we explore the **10-year SIP investment strategy**, the impact of **rising Small Cap Valuation**, and how to make",
+    "titleTamil": "Mutual Fund-ல செய்ய வேண்டிய & செய்யக்கூடாத விஷயங்கள்!  | Budget Padmanaban x Keshav",
+    "titleEnglish": "Mutual Fund-ல செய்ய வேண்டிய & செய்யக்கூடாத விஷயங்கள்!  | Budget Padmanaban x Keshav",
+    "title": "Mutual Fund-ல செய்ய வேண்டிய & செய்யக்கூடாத விஷயங்கள்!  | Budget Padmanaban x Keshav",
+    "descriptionTamil": "#budgetpadmanaban #sip #smallcap \n\nMutual Fund-ல செய்ய வேண்டிய & செய்யக்கூடாத விஷயங்கள்!  | Budget Padmanaban x Keshav\n\nIn this video, we explore the **10-year SIP investment strategy**, the impact of **rising Small Cap Valuation**, and how to make",
+    "descriptionEnglish": "#budgetpadmanaban #sip #smallcap \n\nMutual Fund-ல செய்ய வேண்டிய & செய்யக்கூடாத விஷயங்கள்!  | Budget Padmanaban x Keshav\n\nIn this video, we explore the **10-year SIP investment strategy**, the impact of **rising Small Cap Valuation**, and how to make",
+    "description": "#budgetpadmanaban #sip #smallcap \n\nMutual Fund-ல செய்ய வேண்டிய & செய்யக்கூடாத விஷயங்கள்!  | Budget Padmanaban x Keshav\n\nIn this video, we explore the **10-year SIP investment strategy**, the impact of **rising Small Cap Valuation**, and how to make",
     "category": "mutual-funds",
     "publishedAt": "2025-03-05T12:30:57Z",
     "duration": "18:34",
@@ -24685,9 +24685,9 @@ const videosData = [
     "titleTamil": "Short Term-ல 1 கோடி சேர்க்கணுமா? இத Follow பண்ணுங்க.. | Padmanaban",
     "titleEnglish": "Short Term-ல 1 கோடி சேர்க்கணுமா? இத Follow பண்ணுங்க.. | Padmanaban",
     "title": "Short Term-ல 1 கோடி சேர்க்கணுமா? இத Follow பண்ணுங்க.. | Padmanaban",
-    "descriptionTamil": "ransform Rs.1,000 Monthly into 1 Crore! in 24 YearsUnleash the Power of Compounding - Start Early, Build Wealth! Learn the Simple SIP Top Strategy for Financial Success!\n\n#Investing #WealthCreation #sip #investment #savings #mutualfunds #moneyp",
-    "descriptionEnglish": "ransform Rs.1,000 Monthly into 1 Crore! in 24 YearsUnleash the Power of Compounding - Start Early, Build Wealth! Learn the Simple SIP Top Strategy for Financial Success!\n\n#Investing #WealthCreation #sip #investment #savings #mutualfunds #moneyp",
-    "description": "ransform Rs.1,000 Monthly into 1 Crore! in 24 YearsUnleash the Power of Compounding - Start Early, Build Wealth! Learn the Simple SIP Top Strategy for Financial Success!\n\n#Investing #WealthCreation #sip #investment #savings #mutualfunds #moneyp",
+    "descriptionTamil": "ransform Rs.1,000 Monthly into 1 Crore! in 24 Years Unleash the Power of Compounding - Start Early, Build Wealth!  Learn the Simple SIP Top Strategy for Financial Success!\n\n#Investing #WealthCreation #sip #investment #savings #mutualfunds #moneyp",
+    "descriptionEnglish": "ransform Rs.1,000 Monthly into 1 Crore! in 24 Years Unleash the Power of Compounding - Start Early, Build Wealth!  Learn the Simple SIP Top Strategy for Financial Success!\n\n#Investing #WealthCreation #sip #investment #savings #mutualfunds #moneyp",
+    "description": "ransform Rs.1,000 Monthly into 1 Crore! in 24 Years Unleash the Power of Compounding - Start Early, Build Wealth!  Learn the Simple SIP Top Strategy for Financial Success!\n\n#Investing #WealthCreation #sip #investment #savings #mutualfunds #moneyp",
     "category": "shorts",
     "publishedAt": "2024-03-25T15:30:04Z",
     "duration": "21:05",
@@ -24888,9 +24888,9 @@ const videosData = [
     "titleTamil": "8-வது அதிசயம்! Power of Compounding | Padmanaban",
     "titleEnglish": "8-வது அதிசயம்! Power of Compounding | Padmanaban",
     "title": "8-வது அதிசயம்! Power of Compounding | Padmanaban",
-    "descriptionTamil": "Unlock the 8th Wonder! Einstein's Secret Revealed: The Power of Compounding Unleashed! Watch how a single rice paddy doubles and conquers kingdoms! Your wealth's journey starts here. \n\n#compounding #powerofcompounding #savings #investments",
-    "descriptionEnglish": "Unlock the 8th Wonder! Einstein's Secret Revealed: The Power of Compounding Unleashed! Watch how a single rice paddy doubles and conquers kingdoms! Your wealth's journey starts here. \n\n#compounding #powerofcompounding #savings #investments",
-    "description": "Unlock the 8th Wonder! Einstein's Secret Revealed: The Power of Compounding Unleashed! Watch how a single rice paddy doubles and conquers kingdoms! Your wealth's journey starts here. \n\n#compounding #powerofcompounding #savings #investments",
+    "descriptionTamil": "Unlock the 8th Wonder!  Einstein's Secret Revealed: The Power of Compounding Unleashed!  Watch how a single rice paddy doubles and conquers kingdoms!  Your wealth's journey starts here. \n\n#compounding #powerofcompounding #savings #investments",
+    "descriptionEnglish": "Unlock the 8th Wonder!  Einstein's Secret Revealed: The Power of Compounding Unleashed!  Watch how a single rice paddy doubles and conquers kingdoms!  Your wealth's journey starts here. \n\n#compounding #powerofcompounding #savings #investments",
+    "description": "Unlock the 8th Wonder!  Einstein's Secret Revealed: The Power of Compounding Unleashed!  Watch how a single rice paddy doubles and conquers kingdoms!  Your wealth's journey starts here. \n\n#compounding #powerofcompounding #savings #investments",
     "category": "mutual-funds",
     "publishedAt": "2024-03-24T08:30:18Z",
     "duration": "01:00",
@@ -24946,9 +24946,9 @@ const videosData = [
     "titleTamil": "செல்வமகள் சேமிப்பு திட்டம் vs Mutual Funds | எது சிறந்த முதலீடு ? | Padmanaban",
     "titleEnglish": "செல்வமகள் சேமிப்பு திட்டம் vs Mutual Funds | எது சிறந்த முதலீடு ? | Padmanaban",
     "title": "செல்வமகள் சேமிப்பு திட்டம் vs Mutual Funds | எது சிறந்த முதலீடு ? | Padmanaban",
-    "descriptionTamil": "Unlock Financial Freedom! Explore Selvamagal for your girl's future with 8.4% interest OR skyrocket your returns with a dynamic mutual fund reaching up to 15%! Maximize flexibility and seize opportunities for your child's bright tomorrow!\n\n#sel",
-    "descriptionEnglish": "Unlock Financial Freedom! Explore Selvamagal for your girl's future with 8.4% interest OR skyrocket your returns with a dynamic mutual fund reaching up to 15%! Maximize flexibility and seize opportunities for your child's bright tomorrow!\n\n#sel",
-    "description": "Unlock Financial Freedom! Explore Selvamagal for your girl's future with 8.4% interest OR skyrocket your returns with a dynamic mutual fund reaching up to 15%! Maximize flexibility and seize opportunities for your child's bright tomorrow!\n\n#sel",
+    "descriptionTamil": "Unlock Financial Freedom!  Explore Selvamagal for your girl's future with 8.4% interest OR skyrocket your returns with a dynamic mutual fund reaching up to 15%!  Maximize flexibility and seize opportunities for your child's bright tomorrow!\n\n#sel",
+    "descriptionEnglish": "Unlock Financial Freedom!  Explore Selvamagal for your girl's future with 8.4% interest OR skyrocket your returns with a dynamic mutual fund reaching up to 15%!  Maximize flexibility and seize opportunities for your child's bright tomorrow!\n\n#sel",
+    "description": "Unlock Financial Freedom!  Explore Selvamagal for your girl's future with 8.4% interest OR skyrocket your returns with a dynamic mutual fund reaching up to 15%!  Maximize flexibility and seize opportunities for your child's bright tomorrow!\n\n#sel",
     "category": "mutual-funds",
     "publishedAt": "2024-03-24T03:30:19Z",
     "duration": "12:02",
@@ -25584,9 +25584,9 @@ const videosData = [
     "titleTamil": "Turn Rs.1500 into 1 Crore in 30 Years? Proof Inside! | Budget Padmanaban",
     "titleEnglish": "Turn Rs.1500 into 1 Crore in 30 Years? Proof Inside! | Budget Padmanaban",
     "title": "Turn Rs.1500 into 1 Crore in 30 Years? Proof Inside! | Budget Padmanaban",
-    "descriptionTamil": "Turn Rs.1500 into 1 Crore in 30 Years? Proof Inside! Uncover the Power of Long-Term Investing! | Padmanaban\n\n#FinancialSuccess #InvestmentJourney #mutualfunds #mutualfundssahihai #mutualfund #investing #compounding \n\nDisclaimer: Please note th",
-    "descriptionEnglish": "Turn Rs.1500 into 1 Crore in 30 Years? Proof Inside! Uncover the Power of Long-Term Investing! | Padmanaban\n\n#FinancialSuccess #InvestmentJourney #mutualfunds #mutualfundssahihai #mutualfund #investing #compounding \n\nDisclaimer: Please note th",
-    "description": "Turn Rs.1500 into 1 Crore in 30 Years? Proof Inside! Uncover the Power of Long-Term Investing! | Padmanaban\n\n#FinancialSuccess #InvestmentJourney #mutualfunds #mutualfundssahihai #mutualfund #investing #compounding \n\nDisclaimer: Please note th",
+    "descriptionTamil": "Turn Rs.1500 into 1 Crore in 30 Years? Proof Inside!   Uncover the Power of Long-Term Investing! | Padmanaban\n\n#FinancialSuccess #InvestmentJourney #mutualfunds #mutualfundssahihai #mutualfund #investing #compounding \n\nDisclaimer: Please note th",
+    "descriptionEnglish": "Turn Rs.1500 into 1 Crore in 30 Years? Proof Inside!   Uncover the Power of Long-Term Investing! | Padmanaban\n\n#FinancialSuccess #InvestmentJourney #mutualfunds #mutualfundssahihai #mutualfund #investing #compounding \n\nDisclaimer: Please note th",
+    "description": "Turn Rs.1500 into 1 Crore in 30 Years? Proof Inside!   Uncover the Power of Long-Term Investing! | Padmanaban\n\n#FinancialSuccess #InvestmentJourney #mutualfunds #mutualfundssahihai #mutualfund #investing #compounding \n\nDisclaimer: Please note th",
     "category": "mutual-funds",
     "publishedAt": "2024-01-17T12:30:24Z",
     "duration": "01:00",
@@ -25639,12 +25639,12 @@ const videosData = [
     "channelHandle": "@budgetpadmanaban_",
     "channelUrl": "https://www.youtube.com/@budgetpadmanaban_",
     "channelName": "Budget Padmanaban",
-    "titleTamil": "Luxury Wedding or Bright Future ? | Budget Padmanaban",
-    "titleEnglish": "Luxury Wedding or Bright Future ? | Budget Padmanaban",
-    "title": "Luxury Wedding or Bright Future ? | Budget Padmanaban",
-    "descriptionTamil": "Luxury Wedding or Bright Future ? Invest 10 lakhs wisely, secure your child's education from school to graduation! \n\n: 10 Lakhs will become 20 lakhs at the rate of 15%, no guarantee in MF. But possibilities are there.\n\n#wedding #photograph",
-    "descriptionEnglish": "Luxury Wedding or Bright Future ? Invest 10 lakhs wisely, secure your child's education from school to graduation! \n\n: 10 Lakhs will become 20 lakhs at the rate of 15%, no guarantee in MF. But possibilities are there.\n\n#wedding #photograph",
-    "description": "Luxury Wedding or Bright Future ? Invest 10 lakhs wisely, secure your child's education from school to graduation! \n\n: 10 Lakhs will become 20 lakhs at the rate of 15%, no guarantee in MF. But possibilities are there.\n\n#wedding #photograph",
+    "titleTamil": "Luxury Wedding  or Bright Future ? | Budget Padmanaban",
+    "titleEnglish": "Luxury Wedding  or Bright Future ? | Budget Padmanaban",
+    "title": "Luxury Wedding  or Bright Future ? | Budget Padmanaban",
+    "descriptionTamil": "Luxury Wedding  or Bright Future ? Invest 10 lakhs wisely, secure your child's education from school to graduation! \n\n: 10 Lakhs will become 20 lakhs at the rate of 15%, no guarantee in MF. But possibilities are there.\n\n#wedding #photograph",
+    "descriptionEnglish": "Luxury Wedding  or Bright Future ? Invest 10 lakhs wisely, secure your child's education from school to graduation! \n\n: 10 Lakhs will become 20 lakhs at the rate of 15%, no guarantee in MF. But possibilities are there.\n\n#wedding #photograph",
+    "description": "Luxury Wedding  or Bright Future ? Invest 10 lakhs wisely, secure your child's education from school to graduation! \n\n: 10 Lakhs will become 20 lakhs at the rate of 15%, no guarantee in MF. But possibilities are there.\n\n#wedding #photograph",
     "category": "mutual-funds",
     "publishedAt": "2024-01-16T12:30:34Z",
     "duration": "12:14",
@@ -25671,9 +25671,9 @@ const videosData = [
     "titleTamil": "Start Saving Before Spending! | 2024 | Budget Padmanaban",
     "titleEnglish": "Start Saving Before Spending! | 2024 | Budget Padmanaban",
     "title": "Start Saving Before Spending! | 2024 | Budget Padmanaban",
-    "descriptionTamil": "Switch It Up in 2024: Start Saving Before Spending! Make Savings Your First Move for a Wealthy Year Ahead!\n\n#newyear #newyear2024 #newyearresolution #finance #financialresolution #padmanaban #budgetpadmanaban \n\nDisclaimer: Please note that invest",
-    "descriptionEnglish": "Switch It Up in 2024: Start Saving Before Spending! Make Savings Your First Move for a Wealthy Year Ahead!\n\n#newyear #newyear2024 #newyearresolution #finance #financialresolution #padmanaban #budgetpadmanaban \n\nDisclaimer: Please note that invest",
-    "description": "Switch It Up in 2024: Start Saving Before Spending! Make Savings Your First Move for a Wealthy Year Ahead!\n\n#newyear #newyear2024 #newyearresolution #finance #financialresolution #padmanaban #budgetpadmanaban \n\nDisclaimer: Please note that invest",
+    "descriptionTamil": "Switch It Up in 2024: Start Saving Before Spending!  Make Savings Your First Move for a Wealthy Year Ahead!\n\n#newyear #newyear2024 #newyearresolution #finance #financialresolution #padmanaban #budgetpadmanaban \n\nDisclaimer: Please note that invest",
+    "descriptionEnglish": "Switch It Up in 2024: Start Saving Before Spending!  Make Savings Your First Move for a Wealthy Year Ahead!\n\n#newyear #newyear2024 #newyearresolution #finance #financialresolution #padmanaban #budgetpadmanaban \n\nDisclaimer: Please note that invest",
+    "description": "Switch It Up in 2024: Start Saving Before Spending!  Make Savings Your First Move for a Wealthy Year Ahead!\n\n#newyear #newyear2024 #newyearresolution #finance #financialresolution #padmanaban #budgetpadmanaban \n\nDisclaimer: Please note that invest",
     "category": "mutual-funds",
     "publishedAt": "2024-01-16T09:30:06Z",
     "duration": "15:27",
@@ -25700,9 +25700,9 @@ const videosData = [
     "titleTamil": "Transform Rs.1,500 Monthly into 1 Crore! | Padmanaban",
     "titleEnglish": "Transform Rs.1,500 Monthly into 1 Crore! | Padmanaban",
     "title": "Transform Rs.1,500 Monthly into 1 Crore! | Padmanaban",
-    "descriptionTamil": "Transform Rs.1,500 Monthly into 1 Crore! Unleash the Power of Compounding - Start Early, Build Wealth! Learn the Simple SIP Strategy for Financial Success!\n\n#Investing #WealthCreation #sip #investment #savings #mutualfunds #moneypechu #nanayamv",
-    "descriptionEnglish": "Transform Rs.1,500 Monthly into 1 Crore! Unleash the Power of Compounding - Start Early, Build Wealth! Learn the Simple SIP Strategy for Financial Success!\n\n#Investing #WealthCreation #sip #investment #savings #mutualfunds #moneypechu #nanayamv",
-    "description": "Transform Rs.1,500 Monthly into 1 Crore! Unleash the Power of Compounding - Start Early, Build Wealth! Learn the Simple SIP Strategy for Financial Success!\n\n#Investing #WealthCreation #sip #investment #savings #mutualfunds #moneypechu #nanayamv",
+    "descriptionTamil": "Transform Rs.1,500 Monthly into 1 Crore!  Unleash the Power of Compounding - Start Early, Build Wealth!  Learn the Simple SIP Strategy for Financial Success!\n\n#Investing #WealthCreation #sip #investment #savings #mutualfunds #moneypechu #nanayamv",
+    "descriptionEnglish": "Transform Rs.1,500 Monthly into 1 Crore!  Unleash the Power of Compounding - Start Early, Build Wealth!  Learn the Simple SIP Strategy for Financial Success!\n\n#Investing #WealthCreation #sip #investment #savings #mutualfunds #moneypechu #nanayamv",
+    "description": "Transform Rs.1,500 Monthly into 1 Crore!  Unleash the Power of Compounding - Start Early, Build Wealth!  Learn the Simple SIP Strategy for Financial Success!\n\n#Investing #WealthCreation #sip #investment #savings #mutualfunds #moneypechu #nanayamv",
     "category": "mutual-funds",
     "publishedAt": "2024-01-16T07:40:34Z",
     "duration": "18:40",
@@ -26974,17 +26974,31 @@ function Navbar({ currentPath, onNavigate }) {
     { id: 'videos', hash: '#/videos', label: t('nav.videos') },
     { id: 'news', hash: '#/news', label: t('nav.news') },
     { id: 'mutual-funds', hash: '#/category/mutual-funds', label: t('nav.mutualFunds') },
+    { id: 'personal-finance', hash: '#/category/personal-finance', label: t('nav.personalFinance') },
     { id: 'calculator', hash: '#/calculator', label: t('nav.calculator') },
     { id: 'quiz', hash: '#/quiz', label: t('nav.quiz') || 'Quiz' }
   ];
 
   const authNavItems = user ? [
-    { id: 'profile', hash: '#/profile', label: `${language === 'ta' ? 'சுயவிவரம்' : 'Profile'}` },
+    { id: 'profile', hash: '#/profile', label: ` ${language === 'ta' ? 'சுயவிவரம்' : 'Profile'}` },
     ...(role === 'admin' ? [
-      { id: 'admin-articles', hash: '#/admin/articles', label: `${language === 'ta' ? 'கட்டுரைகள் ஸ்டுடியோ' : 'Article Studio'}` }
-    ] : [])
+      { id: 'admin-articles', hash: '#/admin/articles', label: ` ${language === 'ta' ? 'கட்டுரைகள் ஸ்டுடியோ' : 'Article Studio'}` }
+    ] : []),
+    {
+      id: 'logout',
+      isAction: true,
+      action: async () => {
+        try {
+          await signOut();
+          onNavigate('#/login');
+        } catch (e) {
+          console.error(e);
+        }
+      },
+      label: ` ${language === 'ta' ? 'வெளியேறு' : 'Sign Out'}`
+    }
   ] : [
-    { id: 'login', hash: '#/login', label: `${language === 'ta' ? 'உள்நுழைக' : 'Sign In'}` }
+    { id: 'login', hash: '#/login', label: ` ${language === 'ta' ? 'உள்நுழைக' : 'Sign In'}` }
   ];
 
   const navItems = [...baseNavItems, ...authNavItems];
@@ -27533,7 +27547,7 @@ function HeroSection({ news = newsData, onNavigate }) {
               </h2>
             </div>
             <span className="text-[10px] font-mono text-amber-400/90 font-bold bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
-              LIVE NEWS TICKER
+               LIVE NEWS TICKER
             </span>
           </div>
 
@@ -27557,7 +27571,7 @@ function HeroSection({ news = newsData, onNavigate }) {
               </h3>
             </div>
             <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full">
-              Latest
+               Latest
             </span>
           </div>
 
@@ -27624,7 +27638,7 @@ function TrendingArticlesSection({ onNavigate }) {
           </h2>
         </div>
         <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2.5 py-0.5 rounded-full">
-          Trending
+           Trending
         </span>
       </div>
 
@@ -28589,7 +28603,7 @@ function YouTubeVideoFeedCard({ video, viewMode = 'grid', onSelect, onShowToast 
           )}
           {video.isShort && (
             <span className="absolute top-2 left-2 px-2 py-0.5 text-[9px] font-black rounded bg-red-600 text-white flex items-center gap-1 shadow">
-              SHORT
+               SHORT
             </span>
           )}
           <div className="absolute inset-0 bg-amber-500/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -28677,12 +28691,12 @@ function YouTubeVideoFeedCard({ video, viewMode = 'grid', onSelect, onShowToast 
         )}
         {video.isShort && (
           <span className="absolute top-2 left-2 px-2 py-0.5 text-[9px] font-black rounded bg-red-600 text-white flex items-center gap-1 shadow">
-            SHORT
+             SHORT
           </span>
         )}
         {video.trending && (
           <span className="absolute top-2 right-2 px-2 py-0.5 text-[9px] font-black rounded bg-amber-500 text-slate-950 flex items-center gap-1 shadow">
-            TRENDING
+             TRENDING
           </span>
         )}
         <div className="absolute inset-0 bg-slate-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -28751,15 +28765,15 @@ function VideosPage({ onNavigate, onShowToast }) {
 
   const categoriesList = [
     { id: 'all', labelTa: 'அனைத்து வீடியோக்கள் (882)', labelEn: 'All Videos (882)' },
-    { id: 'trending', labelTa: 'ட்ரெண்டிங்', labelEn: 'Trending' },
+    { id: 'trending', labelTa: ' ட்ரெண்டிங்', labelEn: ' Trending' },
     { id: 'mutual-funds', labelTa: 'மியூச்சுவல் ஃபண்ட் & SIP', labelEn: 'Mutual Funds & SIP' },
     { id: 'stocks', labelTa: 'பங்குச் சந்தை (Stocks)', labelEn: 'Stock Market' },
-    { id: 'ipo', labelTa: 'IPO அலசல்', labelEn: 'IPO Analysis' },
+    { id: 'ipo', labelTa: ' IPO அலசல்', labelEn: ' IPO Analysis' },
     { id: 'gold-bonds', labelTa: '🪙 தங்கம் & SGB', labelEn: '🪙 Gold & SGB Bonds' },
     { id: 'tax-saving', labelTa: ' வரி சேமிப்பு (Tax)', labelEn: ' Tax Planning' },
     { id: 'retirement', labelTa: ' ஓய்வூதியம் (NPS / EPF)', labelEn: ' Retirement & NPS' },
-    { id: 'personal-finance', labelTa: 'தனிநபர் நிதி & சேமிப்பு', labelEn: 'Personal Finance' },
-    { id: 'shorts', labelTa: 'Shorts (60s)', labelEn: 'Shorts' }
+    { id: 'personal-finance', labelTa: ' தனிநபர் நிதி & சேமிப்பு', labelEn: 'Personal Finance' },
+    { id: 'shorts', labelTa: ' Shorts (60s)', labelEn: ' Shorts' }
   ];
 
   // Filter & Sort across the full 882 dataset
@@ -29338,13 +29352,13 @@ function AuthPage({ initialMode = 'login', onNavigate }) {
 
           {error && (
             <div className="p-3 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-600 text-xs font-bold mb-4">
-              {error}
+               {error}
             </div>
           )}
 
           {success && (
             <div className="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 text-xs font-bold mb-4">
-              {success}
+               {success}
             </div>
           )}
 
@@ -29517,7 +29531,7 @@ function ProfilePage({ onNavigate, onShowToast }) {
           <div className="text-amber-500 text-2xl font-black"></div>
           <h3 className="text-sm font-bold text-slate-900 dark:text-white">{isTamil ? 'விருப்பங்கள்' : 'Device Preferences'}</h3>
           <p className="text-xs text-slate-500 dark:text-slate-400">{isTamil ? 'தமிழ் / English & தீம்' : 'Bilingual Language & Theme'}</p>
-          <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 pt-2 inline-block">Active</span>
+          <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 pt-2 inline-block"> Active</span>
         </div>
       </div>
     </div>
@@ -29617,19 +29631,19 @@ function AdminConsolePage({ onNavigate, onShowToast }) {
         <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-md space-y-2">
           <div className="text-xs font-bold text-slate-400 uppercase">YouTube Channel</div>
           <div className="text-xl font-black text-slate-900 dark:text-white">@budgetpadmanaban_</div>
-          <div className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold">Ingestion Engine Active</div>
+          <div className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold"> Ingestion Engine Active</div>
         </div>
 
         <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-md space-y-2">
           <div className="text-xs font-bold text-slate-400 uppercase">Database Region</div>
           <div className="text-xl font-black text-slate-900 dark:text-white">Supabase AP-South-1</div>
-          <div className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold">Connection Pooler (6543)</div>
+          <div className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold"> Connection Pooler (6543)</div>
         </div>
 
         <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-md space-y-2">
           <div className="text-xs font-bold text-slate-400 uppercase">Articles Storage</div>
           <div className="text-xl font-black text-slate-900 dark:text-white">Supabase Storage</div>
-          <div className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold">article-covers bucket</div>
+          <div className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold"> article-covers bucket</div>
         </div>
       </div>
 
@@ -29891,7 +29905,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
           </div>
         ) : error ? (
           <div className="p-8 text-center bg-red-500/10 rounded-3xl border border-red-500/30 text-red-600 text-xs font-bold max-w-lg mx-auto">
-            {error}
+             {error}
           </div>
         ) : articles.length === 0 ? (
           <div className="py-20 text-center space-y-3 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-8">
@@ -30470,7 +30484,7 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                             : 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 hover:bg-amber-500/25'
                         }`}
                       >
-                        {article.status === 'published' ? 'Published' : 'Draft'}
+                        {article.status === 'published' ? '● Published' : '○ Draft'}
                       </button>
                     </td>
 
@@ -30486,7 +30500,7 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                             title="View live article"
                             className="p-2 rounded-xl text-slate-400 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                           >
-                            View
+                            
                           </button>
                         )}
                         <button
@@ -30821,11 +30835,10 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
               type="button"
               onClick={handleDeleteArticle}
               disabled={isLoading}
-              className="px-4 py-2.5 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 font-bold text-xs transition-all border border-red-500/30 flex items-center gap-1.5"
+              className="px-4 py-2.5 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 font-bold text-xs transition-all border border-red-500/30"
               title="Delete this article permanently"
             >
-              <span></span>
-              <span>{isTamil ? 'கட்டுரையை நீக்கு' : 'Delete Article'}</span>
+              {isTamil ? 'கட்டுரையை நீக்கு' : 'Delete Article'}
             </button>
           )}
           <button
@@ -30840,10 +30853,9 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
             type="button"
             onClick={() => handleSave(true)}
             disabled={isLoading}
-            className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs shadow-lg hover:scale-105 transition-all disabled:opacity-50 flex items-center gap-1.5"
+            className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs shadow-lg hover:scale-105 transition-all disabled:opacity-50"
           >
-            <span></span>
-            <span>{isTamil ? 'உடனே வெளியிடு (Publish Live)' : 'Publish Live'}</span>
+            {isTamil ? 'உடனே வெளியிடு' : 'Publish Live'}
           </button>
         </div>
       </div>
@@ -30982,7 +30994,7 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
                 onClick={() => setCoverImageUrl('')}
                 className="absolute top-2 right-2 px-2 py-1 rounded-lg bg-red-600 text-white font-bold text-[10px] shadow"
               >
-                Remove
+                 Remove
               </button>
             </div>
           )}
@@ -31047,14 +31059,14 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
                 onClick={() => setActiveTab('ta')}
                 className={`px-4 py-2 rounded-xl text-xs font-black transition-all ${activeTab === 'ta' ? 'bg-amber-500 text-slate-950 shadow-md' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`}
               >
-                தமிழ் உள்ளடக்கம் (Tamil Body) *
+                 தமிழ் உள்ளடக்கம் (Tamil Body) *
               </button>
               <button
                 type="button"
                 onClick={() => setActiveTab('en')}
                 className={`px-4 py-2 rounded-xl text-xs font-black transition-all ${activeTab === 'en' ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`}
               >
-                English Body (Reviewed)
+                 English Body (Reviewed)
               </button>
             </div>
             <span className="text-[11px] font-bold text-slate-400 hidden sm:inline">Rich Text HTML Engine</span>
@@ -31096,11 +31108,10 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
                 type="button"
                 onClick={handleDeleteArticle}
                 disabled={isLoading}
-                className="px-5 py-3 rounded-2xl bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 font-bold text-xs transition-all border border-red-500/30 flex items-center gap-1.5"
+                className="px-5 py-3 rounded-2xl bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 font-bold text-xs transition-all border border-red-500/30"
                 title="Delete this article permanently"
               >
-                <span></span>
-                <span>{isTamil ? 'கட்டுரையை நீக்கு (Delete Article)' : 'Delete Article'}</span>
+                {isTamil ? 'கட்டுரையை நீக்கு' : 'Delete Article'}
               </button>
             )}
           </div>
@@ -31125,10 +31136,9 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
               type="button"
               onClick={() => handleSave(true)}
               disabled={isLoading}
-              className="px-8 py-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs sm:text-sm shadow-xl hover:scale-105 transition-all disabled:opacity-50 flex items-center gap-2"
+              className="px-8 py-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs sm:text-sm shadow-xl hover:scale-105 transition-all disabled:opacity-50"
             >
-              <span></span>
-              <span>{isTamil ? 'உடனே வெளியிடு (Publish Live)' : 'Publish Live'}</span>
+              {isTamil ? 'உடனே வெளியிடு' : 'Publish Live'}
             </button>
           </div>
         </div>

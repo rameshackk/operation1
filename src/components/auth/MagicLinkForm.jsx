@@ -48,7 +48,7 @@ export function MagicLinkForm({ onBackToLogin }) {
     return (
       <div className="py-6 text-center space-y-4 animate-fadeIn">
         <div className="w-14 h-14 mx-auto rounded-full bg-amber-500/10 text-amber-500 flex items-center justify-center text-2xl font-bold">
-          🪄
+          
         </div>
         <h3 className="text-xl font-black text-slate-900 dark:text-white font-serif">
           {isTamil ? 'மேஜிக் லிங்க் அனுப்பப்பட்டது' : 'Magic Sign-In Link Sent'}
@@ -110,7 +110,7 @@ export function MagicLinkForm({ onBackToLogin }) {
           {isLoading ? (
             <span>{isTamil ? 'அனுப்பப்படுகிறது...' : 'Sending Link...'}</span>
           ) : (
-            <span>{isTamil ? 'மேஜிக் லிங்க் அனுப்புக 🪄' : 'Send Magic Link 🪄'}</span>
+            <span>{isTamil ? 'மேஜிக் லிங்க் அனுப்புக ' : 'Send Magic Link '}</span>
           )}
         </button>
 
