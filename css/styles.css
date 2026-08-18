@@ -99,19 +99,22 @@ html, body, #root {
 body {
   font-family: var(--font-sans);
   line-height: var(--line-height-body);
-  background: transparent;
+  background: #f8fafc;
   background-attachment: fixed;
   color: var(--text-primary);
-  transition: background 0.5s cubic-bezier(0.16, 1, 0.3, 1), color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1), color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   overflow-x: hidden;
   margin: 0;
   position: relative;
   min-height: 100vh;
 }
 
+html[data-theme="dark"],
 [data-theme="dark"] body {
-  background: transparent !important;
+  background: #020617 !important;
+  background-color: #020617 !important;
   background-attachment: fixed;
+  color: #f8fafc;
 }
 
 /* Dynamic Mixed Chromatic Financial Mesh Atmosphere (Hardware-Accelerated 60FPS) */
