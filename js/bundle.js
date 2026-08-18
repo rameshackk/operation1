@@ -30896,6 +30896,115 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
     </div>
   );
 }
+/**
+ * RICH TEXT EDITOR — Inline contentEditable editor with formatting toolbar.
+ * Props: value (HTML string), onChange (fn), placeholder, language, minHeight
+ */
+function RichTextEditor({ value, onChange, placeholder, language = 'ta', minHeight = '320px' }) {
+  const editorRef = useRef(null);
+  const isTamil = language === 'ta';
+  const isInitialized = useRef(false);
+
+  // Set initial HTML content once on mount
+  useEffect(() => {
+    if (editorRef.current && !isInitialized.current) {
+      editorRef.current.innerHTML = value || '';
+      isInitialized.current = true;
+    }
+  }, []);
+
+  // Sync external value changes (e.g. after auto-translate)
+  useEffect(() => {
+    if (editorRef.current && isInitialized.current) {
+      const current = editorRef.current.innerHTML;
+      if (current !== value) {
+        editorRef.current.innerHTML = value || '';
+      }
+    }
+  }, [value]);
+
+  const exec = (cmd, val = null) => {
+    editorRef.current && editorRef.current.focus();
+    document.execCommand(cmd, false, val);
+    if (onChange && editorRef.current) onChange(editorRef.current.innerHTML);
+  };
+
+  const handleInput = () => {
+    if (onChange && editorRef.current) onChange(editorRef.current.innerHTML);
+  };
+
+  const toolbarBtns = [
+    { label: 'B', title: 'Bold', cmd: 'bold', cls: 'font-black' },
+    { label: 'I', title: 'Italic', cmd: 'italic', cls: 'italic' },
+    { label: 'U', title: 'Underline', cmd: 'underline', cls: 'underline' },
+  ];
+
+  const handleLink = () => {
+    const url = prompt(isTamil ? 'URL உள்ளிடவும்:' : 'Enter URL:');
+    if (url) exec('createLink', url);
+  };
+
+  return (
+    <div className="rounded-2xl border border-slate-200 dark:border-slate-700 overflow-hidden bg-white dark:bg-slate-950 shadow-sm focus-within:border-amber-500 transition-colors">
+      {/* Toolbar */}
+      <div className="flex items-center gap-1 px-3 py-2 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 flex-wrap">
+        {toolbarBtns.map(btn => (
+          <button
+            key={btn.cmd}
+            type="button"
+            title={btn.title}
+            onMouseDown={e => { e.preventDefault(); exec(btn.cmd); }}
+            className={`w-7 h-7 rounded-lg text-xs text-slate-700 dark:text-slate-200 hover:bg-amber-500 hover:text-white transition-colors flex items-center justify-center ${btn.cls}`}
+          >
+            {btn.label}
+          </button>
+        ))}
+        <div className="w-px h-4 bg-slate-300 dark:bg-slate-700 mx-1" />
+        <button type="button" title="Heading 2" onMouseDown={e => { e.preventDefault(); exec('formatBlock', 'h2'); }}
+          className="px-2 h-7 rounded-lg text-[10px] font-black text-slate-700 dark:text-slate-200 hover:bg-amber-500 hover:text-white transition-colors">H2</button>
+        <button type="button" title="Heading 3" onMouseDown={e => { e.preventDefault(); exec('formatBlock', 'h3'); }}
+          className="px-2 h-7 rounded-lg text-[10px] font-black text-slate-700 dark:text-slate-200 hover:bg-amber-500 hover:text-white transition-colors">H3</button>
+        <button type="button" title="Paragraph" onMouseDown={e => { e.preventDefault(); exec('formatBlock', 'p'); }}
+          className="px-2 h-7 rounded-lg text-[10px] font-black text-slate-700 dark:text-slate-200 hover:bg-amber-500 hover:text-white transition-colors">P</button>
+        <div className="w-px h-4 bg-slate-300 dark:bg-slate-700 mx-1" />
+        <button type="button" title="Bullet List" onMouseDown={e => { e.preventDefault(); exec('insertUnorderedList'); }}
+          className="w-7 h-7 rounded-lg text-xs text-slate-700 dark:text-slate-200 hover:bg-amber-500 hover:text-white transition-colors flex items-center justify-center">
+          <svg viewBox="0 0 16 16" className="w-3.5 h-3.5 fill-current"><circle cx="2" cy="4" r="1.5"/><rect x="5" y="3" width="10" height="2"/><circle cx="2" cy="8" r="1.5"/><rect x="5" y="7" width="10" height="2"/><circle cx="2" cy="12" r="1.5"/><rect x="5" y="11" width="10" height="2"/></svg>
+        </button>
+        <button type="button" title="Numbered List" onMouseDown={e => { e.preventDefault(); exec('insertOrderedList'); }}
+          className="w-7 h-7 rounded-lg text-xs text-slate-700 dark:text-slate-200 hover:bg-amber-500 hover:text-white transition-colors flex items-center justify-center">
+          <svg viewBox="0 0 16 16" className="w-3.5 h-3.5 fill-current"><text x="0" y="5" fontSize="5" fontFamily="monospace">1.</text><rect x="5" y="3" width="10" height="2"/><text x="0" y="10" fontSize="5" fontFamily="monospace">2.</text><rect x="5" y="7" width="10" height="2"/><text x="0" y="15" fontSize="5" fontFamily="monospace">3.</text><rect x="5" y="11" width="10" height="2"/></svg>
+        </button>
+        <div className="w-px h-4 bg-slate-300 dark:bg-slate-700 mx-1" />
+        <button type="button" title="Insert Link" onMouseDown={e => { e.preventDefault(); handleLink(); }}
+          className="w-7 h-7 rounded-lg text-xs text-slate-700 dark:text-slate-200 hover:bg-amber-500 hover:text-white transition-colors flex items-center justify-center">
+          <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-none stroke-current" strokeWidth="2.5" strokeLinecap="round">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+          </svg>
+        </button>
+        <button type="button" title="Remove Formatting" onMouseDown={e => { e.preventDefault(); exec('removeFormat'); }}
+          className="w-7 h-7 rounded-lg text-xs text-slate-700 dark:text-slate-200 hover:bg-red-500 hover:text-white transition-colors flex items-center justify-center">
+          <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-none stroke-current" strokeWidth="2.5" strokeLinecap="round">
+            <path d="M6 6l12 12M6 18L18 6"/>
+          </svg>
+        </button>
+      </div>
+
+      {/* Editable Content Area */}
+      <div
+        ref={editorRef}
+        contentEditable
+        suppressContentEditableWarning
+        onInput={handleInput}
+        data-placeholder={placeholder}
+        style={{ minHeight }}
+        className="w-full px-5 py-4 text-sm text-slate-900 dark:text-white leading-relaxed outline-none prose dark:prose-invert max-w-none
+          [&:empty]:before:content-[attr(data-placeholder)] [&:empty]:before:text-slate-400 [&:empty]:before:pointer-events-none"
+      />
+    </div>
+  );
+}
 
 function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
   const { language } = useLanguage();

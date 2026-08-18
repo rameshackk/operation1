@@ -21,7 +21,16 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Muthaleetu Thisai" />
   
-  <!-- Tailwind CSS CDN -->
+  <!-- Tailwind CSS CDN — suppress built-in production warning -->
+  <script>
+    (function() {
+      var _warn = console.warn;
+      console.warn = function() {
+        if (arguments[0] && typeof arguments[0] === 'string' && arguments[0].indexOf('cdn.tailwindcss.com should not be used in production') !== -1) return;
+        _warn.apply(console, arguments);
+      };
+    })();
+  </script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -60,7 +69,7 @@
   </script>
 
   <!-- Custom Styles & Design Tokens -->
-  <link rel="stylesheet" href="css/styles.css?v=3.1.0" />
+  <link rel="stylesheet" href="css/styles.css?v=3.1.1" />
 
   <!-- React 18 & ReactDOM 18 UMD Global Scripts -->
   <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
@@ -374,7 +383,7 @@
   <div id="root" class="relative z-10"></div>
 
   <!-- Main Application Bundle (Pre-compiled production JS) -->
-  <script src="js/bundle.compiled.js?v=3.1.0"></script>
+  <script src="js/bundle.compiled.js?v=3.1.1"></script>
 
 </body>
 </html>
