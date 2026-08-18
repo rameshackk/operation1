@@ -29916,16 +29916,12 @@ function VideosPage({ onNavigate, onShowToast }) {
 
   return (
     <div className="min-h-screen pb-24 space-y-8 animate-fadeIn text-slate-900 dark:text-white">
-      {/* 1. BRANDLYFT LIVING FAN ARC SHOWCASE (CONTINUOUS MULTI-FRAME CYCLING WITH SOFT BLUR/CROSSFADE) */}
+      {/* 1. CINEMA SPOTLIGHT HERO */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
-        <VideoFanWall
-          videos={videosData}
+        <CinemaSpotlightHero
+          spotlightVideos={spotlightVideos}
+          onWatchVideo={(v) => setSelectedVideo(v)}
           language={language}
-          onNavigate={onNavigate}
-          titleTamil="பிரத்யேக நேரலை வீடியோ கேலரி"
-          titleEnglish="Living Video Arc Showcase"
-          subtitleTamil="பட்ஜெட் பத்மநாபனின் பிரத்யேக நிதி, மியூச்சுவல் ஃபண்ட் மற்றும் முதலீட்டு வீடியோ அலசல்கள்"
-          subtitleEnglish="Continuous interactive video gallery featuring original insights and financial masterclasses with multi-frame live previews"
         />
       </div>
 
