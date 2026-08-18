@@ -47,12 +47,12 @@
   --z-modal: 1000;
   --z-scroll-bar: 10000;
 
-  /* Colors - 50% Translucent Glassmorphic Financial Theme */
+  /* Colors - 70% Translucent Glassmorphic Financial Theme */
   --bg-main: transparent;
-  --bg-card: rgba(255, 255, 255, 0.50);
-  --bg-card-hover: rgba(255, 255, 255, 0.65);
-  --border-color: rgba(203, 213, 225, 0.50);
-  --border-subtle: rgba(226, 232, 240, 0.50);
+  --bg-card: rgba(255, 255, 255, 0.70);
+  --bg-card-hover: rgba(255, 255, 255, 0.82);
+  --border-color: rgba(203, 213, 225, 0.70);
+  --border-subtle: rgba(226, 232, 240, 0.70);
   --text-primary: #0f172a;
   --text-secondary: #334155;
   --text-muted: #64748b;
@@ -62,8 +62,8 @@
   --accent-emerald: #059669;
   --accent-sapphire: #0284c7;
   --accent-red: #dc2626;
-  --nav-bg: rgba(255, 255, 255, 0.50);
-  --nav-border: rgba(203, 213, 225, 0.50);
+  --nav-bg: rgba(255, 255, 255, 0.70);
+  --nav-border: rgba(203, 213, 225, 0.70);
 }
 
 [data-theme="dark"] {
@@ -71,10 +71,10 @@
   --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.7), 0 2px 8px -2px rgba(0, 0, 0, 0.5);
   --shadow-card-hover: 0 20px 35px -6px rgba(0, 0, 0, 0.85), 0 0 24px 2px rgba(245, 158, 11, 0.22);
   --bg-main: transparent;
-  --bg-card: rgba(11, 15, 25, 0.50);
-  --bg-card-hover: rgba(17, 24, 39, 0.65);
-  --border-color: rgba(30, 41, 59, 0.50);
-  --border-subtle: rgba(15, 23, 42, 0.50);
+  --bg-card: rgba(11, 15, 25, 0.70);
+  --bg-card-hover: rgba(17, 24, 39, 0.82);
+  --border-color: rgba(30, 41, 59, 0.70);
+  --border-subtle: rgba(15, 23, 42, 0.70);
   --text-primary: #f8fafc;
   --text-secondary: #cbd5e1;
   --text-muted: #94a3b8;
@@ -84,8 +84,8 @@
   --accent-emerald: #10b981;
   --accent-sapphire: #38bdf8;
   --accent-red: #ef4444;
-  --nav-bg: rgba(3, 7, 18, 0.50);
-  --nav-border: rgba(30, 41, 59, 0.50);
+  --nav-bg: rgba(3, 7, 18, 0.70);
+  --nav-border: rgba(30, 41, 59, 0.70);
 }
 
 html, body, #root {
@@ -125,13 +125,13 @@ body {
   transform: translate3d(0, 0, 0);
 }
 
-/* White 50% Translucent Glass Overlay Layer (Lightweight Compositing) */
+/* White 70% Translucent Glass Overlay Layer (Lightweight Compositing) */
 .bg-glass-overlay-50 {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  background-color: rgba(255, 255, 255, 0.50);
+  background-color: rgba(255, 255, 255, 0.70);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   contain: strict;
@@ -140,7 +140,7 @@ body {
 }
 
 [data-theme="dark"] .bg-glass-overlay-50 {
-  background-color: rgba(3, 7, 18, 0.50);
+  background-color: rgba(3, 7, 18, 0.70);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
