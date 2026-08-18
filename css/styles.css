@@ -99,7 +99,12 @@ html, body, #root {
 body {
   font-family: var(--font-sans);
   line-height: var(--line-height-body);
-  background: linear-gradient(135deg, #eef2f6 0%, #e0e7ff 25%, #fef3c7 50%, #d1fae5 75%, #f1f5f9 100%);
+  background: linear-gradient(135deg,
+    rgba(238, 242, 246, 0.70) 0%,
+    rgba(224, 231, 255, 0.70) 25%,
+    rgba(254, 243, 199, 0.70) 50%,
+    rgba(209, 250, 229, 0.70) 75%,
+    rgba(241, 245, 249, 0.70) 100%);
   background-attachment: fixed;
   color: var(--text-primary);
   transition: background 0.5s cubic-bezier(0.16, 1, 0.3, 1), color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
