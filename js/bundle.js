@@ -27539,15 +27539,15 @@ function HeroSection({ news = newsData, onNavigate }) {
           </div>
         </div>
 
-        <div className="lg:col-span-5 flex flex-col justify-between bg-white/50 dark:bg-slate-900/50 backdrop-blur-xl rounded-3xl border border-slate-200/50 dark:border-slate-800/50 p-4 sm:p-5 shadow-xl">
-          <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3 mb-3">
+        <div className="lg:col-span-5 flex flex-col justify-between bg-slate-950 text-white rounded-3xl border border-slate-800 shadow-2xl p-4 sm:p-5">
+          <div className="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-              <h3 className="text-xs sm:text-sm font-black uppercase tracking-wider text-slate-900 dark:text-white font-serif">
+              <h3 className="text-xs sm:text-sm font-black uppercase tracking-wider text-white font-serif">
                 {isTamil ? 'சமீபத்திய கட்டுரைகள்' : 'Latest Articles'}
               </h3>
             </div>
-            <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full">
+            <span className="text-[10px] font-mono font-bold text-amber-400/90 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
               Latest
             </span>
           </div>
@@ -27561,29 +27561,29 @@ function HeroSection({ news = newsData, onNavigate }) {
                   role="button"
                   tabIndex={0}
                   onClick={() => onNavigate && onNavigate(`#/news/${article.slug}`)}
-                  className="btn-magnetic group flex items-center gap-3 p-2 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-all cursor-pointer border border-transparent hover:border-slate-200 dark:hover:border-slate-700/50"
+                  className="btn-magnetic group flex items-center gap-3 p-2 rounded-2xl hover:bg-slate-900/80 transition-all cursor-pointer border border-transparent hover:border-slate-800"
                 >
                   {article.thumbnail && (
                     <img
                       src={article.thumbnail}
                       alt=""
-                      className="w-14 h-14 rounded-xl object-cover shrink-0 border border-slate-200 dark:border-slate-700"
+                      className="w-14 h-14 rounded-xl object-cover shrink-0 border border-slate-800"
                     />
                   )}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-0.5">
-                      <span className="text-[9px] font-black uppercase text-amber-600 dark:text-amber-400 tracking-wider">
+                      <span className="text-[9px] font-black uppercase text-amber-400 tracking-wider">
                         {(article.category || 'FINANCE').replace('-', ' ')}
                       </span>
                       <span className="text-[9px] text-slate-400 font-mono">
                         • {new Date(article.publishedAt).toLocaleDateString([], { month: 'short', day: 'numeric' })}
                       </span>
                     </div>
-                    <h4 className="text-xs font-bold text-slate-900 dark:text-white line-clamp-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors font-serif leading-snug">
+                    <h4 className="text-xs font-bold text-slate-100 line-clamp-2 group-hover:text-amber-400 transition-colors font-serif leading-snug">
                       {title}
                     </h4>
                   </div>
-                  <span className="text-xs text-slate-400 group-hover:text-amber-500 group-hover:translate-x-1 transition-all shrink-0">
+                  <span className="text-xs text-slate-400 group-hover:text-amber-400 group-hover:translate-x-1 transition-all shrink-0">
                     →
                   </span>
                 </div>
