@@ -228,7 +228,7 @@ export default async function handler(req, res) {
 
       let userId = null;
 
-      // 1. Create auth user in Supabase Auth via Admin API
+      // 1. Create or link auth user in Supabase Auth via Admin API
       if (supabaseAdmin) {
         const { data: userRecord, error: userError } = await supabaseAdmin.auth.admin.createUser({
           email: email.trim().toLowerCase(),
@@ -240,14 +240,49 @@ export default async function handler(req, res) {
           }
         });
 
-        if (userError) {
-          if (userError.message?.includes('already registered') || userError.message?.includes('duplicate')) {
-            return res.status(409).json({ error: 'A user with this email address already exists.' });
-          }
-          throw userError;
-        }
+        if (!userError && userRecord?.user?.id) {
+          userId = userRecord.user.id;
+        } else if (userError) {
+          // If user already exists, retrieve existing user ID and update password & role metadata
+          if (
+            userError.message?.toLowerCase().includes('already') ||
+            userError.message?.toLowerCase().includes('duplicate') ||
+            userError.message?.toLowerCase().includes('registered') ||
+            userError.status === 422
+          ) {
+            // Find existing user in profiles or Supabase auth
+            const { data: existingProfile } = await supabaseAdmin
+              .from('profiles')
+              .select('id')
+              .eq('email', email.trim().toLowerCase())
+              .maybeSingle();
 
-        userId = userRecord?.user?.id;
+            if (existingProfile?.id) {
+              userId = existingProfile.id;
+            } else {
+              const { data: userList } = await supabaseAdmin.auth.admin.listUsers();
+              const foundUser = userList?.users?.find(u => u.email?.toLowerCase() === email.trim().toLowerCase());
+              if (foundUser?.id) {
+                userId = foundUser.id;
+              }
+            }
+
+            if (userId) {
+              // Update user password and role metadata
+              await supabaseAdmin.auth.admin.updateUserById(userId, {
+                password: password,
+                user_metadata: {
+                  full_name: display_name.trim(),
+                  role: 'publisher'
+                }
+              });
+            } else {
+              return res.status(409).json({ error: 'A user with this email already exists in Auth. Please try logging in with this email or use another address.' });
+            }
+          } else {
+            throw userError;
+          }
+        }
       }
 
       if (!userId) {

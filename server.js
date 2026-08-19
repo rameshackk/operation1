@@ -86,17 +86,36 @@ const server = http.createServer(async (req, res) => {
       const matchAdminArticleId = reqPath.match(/^\/api\/admin\/articles\/([^/?#]+)$/);
       if (matchAdminArticleId && matchAdminArticleId[1] !== 'index.js') {
         req.query.id = decodeURIComponent(matchAdminArticleId[1]);
-        const mod = await import(`./api/admin/articles/[id].js?t=${Date.now()}`);
+        const mod = await import(`./api/admin/articles/index.js?t=${Date.now()}`);
         return mod.default(req, res);
       }
 
-      // 1.3 Translation API
+      // 1.3 Admin Publishers API
+      if (reqPath === '/api/admin/publishers' || reqPath === '/api/admin/publishers/index.js') {
+        const mod = await import(`./api/admin/publishers/index.js?t=${Date.now()}`);
+        return mod.default(req, res);
+      }
+
+      const matchAdminPublisherId = reqPath.match(/^\/api\/admin\/publishers\/([^/?#]+)$/);
+      if (matchAdminPublisherId && matchAdminPublisherId[1] !== 'index.js') {
+        req.query.id = decodeURIComponent(matchAdminPublisherId[1]);
+        const mod = await import(`./api/admin/publishers/index.js?t=${Date.now()}`);
+        return mod.default(req, res);
+      }
+
+      // 1.4 Publisher Onboarding API
+      if (reqPath === '/api/publisher/onboarding' || reqPath === '/api/publisher/onboarding.js') {
+        const mod = await import(`./api/publisher/onboarding.js?t=${Date.now()}`);
+        return mod.default(req, res);
+      }
+
+      // 1.5 Translation API
       if (reqPath === '/api/translate' || reqPath === '/api/translate.js') {
         const mod = await import(`./api/translate.js?t=${Date.now()}`);
         return mod.default(req, res);
       }
 
-      // 1.4 Admin Metrics & Videos
+      // 1.6 Admin Metrics & Videos
       if (reqPath === '/api/admin/metrics' || reqPath === '/api/admin/metrics.js') {
         const mod = await import(`./api/admin/metrics.js?t=${Date.now()}`);
         return mod.default(req, res);
@@ -107,9 +126,10 @@ const server = http.createServer(async (req, res) => {
         return mod.default(req, res);
       }
 
-      // 1.5 Videos API
+      // 1.7 Videos API
       if (reqPath === '/api/videos/trending-preview' || reqPath === '/api/videos/trending-preview.js') {
-        const mod = await import(`./api/videos/trending-preview.js?t=${Date.now()}`);
+        req.query.preview = '1';
+        const mod = await import(`./api/videos/index.js?t=${Date.now()}`);
         return mod.default(req, res);
       }
 
@@ -121,11 +141,11 @@ const server = http.createServer(async (req, res) => {
       const matchVideoId = reqPath.match(/^\/api\/videos\/([^/?#]+)$/);
       if (matchVideoId && matchVideoId[1] !== 'trending-preview') {
         req.query.id = matchVideoId[1];
-        const mod = await import(`./api/videos/[id].js?t=${Date.now()}`);
+        const mod = await import(`./api/videos/index.js?t=${Date.now()}`);
         return mod.default(req, res);
       }
 
-      // 1.6 Cron API
+      // 1.8 Cron API
       if (reqPath === '/api/cron/fetch-videos' || reqPath === '/api/cron/fetch-videos.js') {
         const mod = await import(`./api/cron/fetch-videos.js?t=${Date.now()}`);
         return mod.default(req, res);
