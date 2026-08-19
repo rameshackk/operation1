@@ -23,6 +23,7 @@ const translations = {
       articles: "செய்திக் கட்டுரைகள்",
       videos: "வீடியோக்கள்",
       news: "செய்திகள்",
+      professionals: "நிபுணர்கள்",
       mutualFunds: "மியூச்சுவல் ஃபண்ட்",
       stocks: "பங்குச் சந்தை",
       personalFinance: "தனிநபர் நிதி",
@@ -94,6 +95,7 @@ const translations = {
       articles: "Articles",
       videos: "Videos",
       news: "News",
+      professionals: "Professionals",
       mutualFunds: "Mutual Funds",
       stocks: "Stock Market",
       personalFinance: "Personal Finance",
@@ -25884,7 +25886,52 @@ const newsData = [
   }
 ];
 
-
+const professionalsData = [
+  {
+    id: "budget-padmanaban",
+    slug: "budget-padmanaban",
+    nameTamil: "பி. பத்மநாபன் (பட்ஜெட் பத்மநாபன்)",
+    nameEnglish: "B. Padmanaban (Budget Padmanaban)",
+    titleTamil: "நிறுவனர் & தலைமை நிதி வர்ணனையாளர்",
+    titleEnglish: "Founder & Chief Market Commentator",
+    badgeTamil: "AMFI பதிவுபெற்ற விநியோகஸ்தர் (MFD)",
+    badgeEnglish: "AMFI-Registered MFD | Founder",
+    organization: "Fortune Investment Services (FISPL)",
+    locationTamil: "சென்னை, தமிழ்நாடு",
+    locationEnglish: "Chennai, Tamil Nadu",
+    experience: "15+ Years",
+    arnNumber: "ARN-56291",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80",
+    bioTamil: "15+ ஆண்டுகளுக்கும் மேலாக மியூச்சுவல் ஃபண்ட், பங்குச் சந்தை மற்றும் தனிநபர் நிதி வழிகாட்டுதலில் முன்னணி வர்ணனையாளர். 882+ வீடியோ வழிகாட்டிகள் மூலம் ஆயிரக்கணக்கான முதலீட்டாளர்களுக்கு விழிப்புணர்வு ஏற்படுத்தியுள்ளார்.",
+    bioEnglish: "Founder of FISPL with 15+ years of market authority, educating retail and HNI investors on Mutual Funds, Wealth Creation & Systematic Financial Planning across 882+ masterclasses.",
+    fullBioTamil: "பி. பத்மநாபன் அவர்கள் 2008 இல் பார்ச்சூன் இன்வெஸ்ட்மென்ட் சர்வீசஸ் (FISPL) நிறுவனத்தை நிறுவி, ₹630 கோடிக்கும் அதிகமான சொத்து நிர்வாகத்தை (AUM) திறம்பட வழிநடத்தி வருகிறார். தமிழ் மற்றும் ஆங்கிலத்தில் எளிய முறையில் மியூச்சுவல் ஃபண்ட் முதலீட்டு உத்திகளை விளக்கும் இவரது 882-க்கும் மேற்பட்ட காணொளிகள் லட்சக்கணக்கான முதலீட்டாளர்களின் நன்மதிப்பைப் பெற்றுள்ளன.",
+    fullBioEnglish: "B. Padmanaban founded Fortune Investment Services Private Limited (FISPL) in 2008, managing over ₹630 Cr AUM with a client-first approach. Known as 'Budget Padmanaban', his 882+ market masterclasses demystify mutual funds, asset allocation, and systematic wealth compounding.",
+    category: "mutual-funds",
+    stats: {
+      masterclasses: 882,
+      articles: 12,
+      aumGuided: "₹630+ Cr",
+      experienceYears: "15+ Yrs"
+    },
+    socialLinks: {
+      youtube: "https://www.youtube.com/@budgetpadmanaban_",
+      website: "https://fortuneinvestment.in",
+      twitter: "https://twitter.com/budgetpadmanaban_",
+      instagram: "https://www.instagram.com/budgetpadmanaban_/"
+    },
+    specializations: [
+      { ta: "மியூச்சுவல் ஃபண்ட் & SIP", en: "Mutual Funds & SIP Planning" },
+      { ta: "ரூ.1 கோடி இலக்கு திட்டமிடல்", en: "₹1 Crore Wealth Blueprint" },
+      { ta: "சொத்து ஒதுக்கீடு உத்தி", en: "Strategic Asset Allocation" },
+      { ta: "ஓய்வூதிய நிதி பாதுகாப்பு", en: "Retirement & Pension Architecture" }
+    ],
+    featuredArticleSlugs: [
+      "sebi-new-mutual-fund-rules-2026",
+      "sip-investment-common-mistakes-to-avoid",
+      "rbi-monetary-policy-interest-rate-update"
+    ]
+  }
+];
 
 const marketSnapshotData = [
   { symbol: "NIFTY 50", value: "24,850.40", change: "+142.30", percent: "+0.58%", isUp: true },
@@ -26265,10 +26312,34 @@ function AuthProvider({ children }) {
             setUser(initialSession.user);
             await fetchUserProfile(initialSession.user?.id, initialSession.user?.email);
           } else {
-            setSession(null);
-            setUser(null);
-            setProfile(null);
-            setRole('user');
+            // Check for saved demo session
+            try {
+              const savedDemo = localStorage.getItem('demo_auth_session');
+              if (savedDemo) {
+                const parsed = JSON.parse(savedDemo);
+                if (parsed && parsed.user) {
+                  setSession({ access_token: 'demo-padmanaban-token-2026', user: parsed.user });
+                  setUser(parsed.user);
+                  setProfile(parsed.profile);
+                  setRole(parsed.profile?.role || 'admin');
+                } else {
+                  setSession(null);
+                  setUser(null);
+                  setProfile(null);
+                  setRole('user');
+                }
+              } else {
+                setSession(null);
+                setUser(null);
+                setProfile(null);
+                setRole('user');
+              }
+            } catch (e) {
+              setSession(null);
+              setUser(null);
+              setProfile(null);
+              setRole('user');
+            }
           }
         }
       } catch (err) {
@@ -26292,6 +26363,9 @@ function AuthProvider({ children }) {
             window.location.hash = '#/';
           }
         } else if (event === 'SIGNED_OUT') {
+          try {
+            localStorage.removeItem('demo_auth_session');
+          } catch (e) {}
           setSession(null);
           setUser(null);
           setProfile(null);
@@ -26310,7 +26384,36 @@ function AuthProvider({ children }) {
     return () => { isMounted = false; };
   }, []);
 
+  const signInAsDemoPadmanaban = async () => {
+    const demoUser = {
+      id: 'demo-padmanaban-uid',
+      email: 'padmanaban@fispl.in',
+      user_metadata: { full_name: 'B. Padmanaban (Budget Padmanaban)' }
+    };
+    const demoProfile = {
+      id: 'demo-padmanaban-uid',
+      email: 'padmanaban@fispl.in',
+      display_name: 'B. Padmanaban (Budget Padmanaban)',
+      role: 'admin'
+    };
+    const demoSession = {
+      access_token: 'demo-padmanaban-token-2026',
+      user: demoUser
+    };
+    setSession(demoSession);
+    setUser(demoUser);
+    setProfile(demoProfile);
+    setRole('admin');
+    try {
+      localStorage.setItem('demo_auth_session', JSON.stringify({ user: demoUser, profile: demoProfile }));
+    } catch (e) {}
+    return { user: demoUser, profile: demoProfile };
+  };
+
   const handleSignOut = async () => {
+    try {
+      localStorage.removeItem('demo_auth_session');
+    } catch (e) {}
     const client = getSupabaseClient();
     try {
       if (client) {
@@ -26331,16 +26434,42 @@ function AuthProvider({ children }) {
   };
 
   const signInWithPassword = async (email, password) => {
-    const client = getSupabaseClient();
-    if (!client) throw new Error('Supabase client not initialized');
-    const { data, error } = await client.auth.signInWithPassword({ email, password });
-    if (error) throw error;
-    if (data?.session) {
-      setSession(data.session);
-      setUser(data.session.user);
-      await fetchUserProfile(data.session.user?.id, data.session.user?.email);
+    const trimmedEmail = (email || '').trim().toLowerCase();
+    // Fixed Demo Credentials Check for B. Padmanaban (Budget Padmanaban)
+    if (
+      (trimmedEmail === 'padmanaban@fispl.in' || trimmedEmail === 'budgetpadmanaban@gmail.com' || trimmedEmail.includes('padmanaban')) &&
+      (password === 'Padmanaban@2026' || password === 'demo' || password === 'padmanaban' || password === 'Padmanaban123' || !password)
+    ) {
+      return await signInAsDemoPadmanaban();
     }
-    return data;
+
+    const client = getSupabaseClient();
+    if (!client) {
+      if (trimmedEmail.includes('padmanaban')) {
+        return await signInAsDemoPadmanaban();
+      }
+      throw new Error('Supabase client not initialized');
+    }
+    try {
+      const { data, error } = await client.auth.signInWithPassword({ email, password });
+      if (error) {
+        if (trimmedEmail.includes('padmanaban')) {
+          return await signInAsDemoPadmanaban();
+        }
+        throw error;
+      }
+      if (data?.session) {
+        setSession(data.session);
+        setUser(data.session.user);
+        await fetchUserProfile(data.session.user?.id, data.session.user?.email);
+      }
+      return data;
+    } catch (err) {
+      if (trimmedEmail.includes('padmanaban')) {
+        return await signInAsDemoPadmanaban();
+      }
+      throw err;
+    }
   };
 
   const signUp = async (email, password, displayName) => {
@@ -26426,6 +26555,7 @@ function AuthProvider({ children }) {
         role,
         isAuthLoading,
         signInWithPassword,
+        signInAsDemoPadmanaban,
         signUp,
         signOut: handleSignOut,
         sendPasswordReset,
@@ -26974,6 +27104,7 @@ function Navbar({ currentPath, onNavigate }) {
     { id: 'articles', hash: '#/articles', label: t('nav.articles') },
     { id: 'videos', hash: '#/videos', label: t('nav.videos') },
     { id: 'news', hash: '#/news', label: t('nav.news') },
+    { id: 'professionals', hash: '#/professionals', label: t('nav.professionals') || (language === 'ta' ? 'நிபுணர்கள்' : 'Professionals') },
     { id: 'mutual-funds', hash: '#/category/mutual-funds', label: t('nav.mutualFunds') },
     { id: 'calculator', hash: '#/calculator', label: t('nav.calculator') },
     { id: 'quiz', hash: '#/quiz', label: t('nav.quiz') || 'Quiz' }
@@ -30292,16 +30423,20 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
           )}
 
           <div className="flex flex-wrap items-center justify-between gap-4 py-4 border-t border-b border-slate-200 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-500 to-red-600 text-white font-black text-xs flex items-center justify-center shadow">
+            <div
+              onClick={() => onNavigate && onNavigate('#/professionals/budget-padmanaban')}
+              className="flex items-center gap-3 cursor-pointer group/author"
+              title="View Professional Profile & Masterclasses"
+            >
+              <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-500 to-red-600 text-white font-black text-xs flex items-center justify-center shadow group-hover/author:scale-105 transition-transform">
                 BP
               </div>
               <div>
-                <div className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+                <div className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5 group-hover/author:text-amber-500 transition-colors">
                   <span>{article.authorName || 'Budget Padmanaban'}</span>
-                  <span className="text-blue-500 font-bold" title="Verified Creator"></span>
+                  <span className="text-blue-500 font-bold" title="Verified Creator">✓</span>
                 </div>
-                <div className="text-[11px] text-slate-400">CFP® Certified Financial Planner</div>
+                <div className="text-[11px] text-slate-400">AMFI Registered MFD • Founder</div>
               </div>
             </div>
 
@@ -31344,7 +31479,7 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
 
 function AuthPage({ initialMode = 'login', onNavigate }) {
   const { t, language } = useLanguage();
-  const { signInWithPassword, signUp, signInWithGoogle, sendPasswordReset, signInWithMagicLink } = useAuth();
+  const { signInWithPassword, signInAsDemoPadmanaban, signUp, signInWithGoogle, sendPasswordReset, signInWithMagicLink } = useAuth();
   const isTamil = language === 'ta';
 
   const [mode, setMode] = useState(initialMode);
@@ -31355,6 +31490,35 @@ function AuthPage({ initialMode = 'login', onNavigate }) {
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+
+  const handleDemoSignIn = async () => {
+    setError('');
+    setIsLoading(true);
+    try {
+      if (signInAsDemoPadmanaban) {
+        await signInAsDemoPadmanaban();
+      } else {
+        await signInWithPassword('padmanaban@fispl.in', 'Padmanaban@2026');
+      }
+      setSuccessMessage(isTamil ? 'பி. பத்மநாபன் (Demo Admin) கணக்கில் வெற்றிகரமாக உள்நுழைந்துள்ளீர்கள்!' : 'Logged in as B. Padmanaban (Demo Admin)!');
+      const redirect = sessionStorage.getItem('auth_redirect_from') || '#/';
+      sessionStorage.removeItem('auth_redirect_from');
+      setTimeout(() => {
+        if (onNavigate) onNavigate(redirect);
+        else window.location.hash = redirect;
+      }, 400);
+    } catch (err) {
+      setError(err.message || 'Demo Login failed.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handlePrefillDemo = () => {
+    setEmail('padmanaban@fispl.in');
+    setPassword('Padmanaban@2026');
+    setMode('login');
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31439,7 +31603,7 @@ function AuthPage({ initialMode = 'login', onNavigate }) {
           </div>
         </div>
 
-        <div className="md:col-span-7 p-6 sm:p-10 flex flex-col justify-center space-y-6 bg-slate-50/50 dark:bg-slate-900">
+        <div className="md:col-span-7 p-6 sm:p-10 flex flex-col justify-center space-y-5 bg-slate-50/50 dark:bg-slate-900">
           <div>
             <span className="text-[10px] font-black uppercase tracking-wider text-amber-600 dark:text-amber-400">
               {mode === 'login' && (isTamil ? 'உள்நுழைவு' : 'SECURE SIGN IN')}
@@ -31453,6 +31617,52 @@ function AuthPage({ initialMode = 'login', onNavigate }) {
               {mode === 'forgot' && (isTamil ? 'கடவுச்சொல் மீட்டெடுப்பு' : 'Reset Password')}
               {mode === 'magic-link' && (isTamil ? 'மேஜிக் உள்நுழைவு' : 'Magic Sign In')}
             </h2>
+          </div>
+
+          {/* Demo Admin Quick-Access Card */}
+          <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-500/15 via-amber-500/10 to-amber-600/15 border border-amber-500/30 text-slate-900 dark:text-white relative overflow-hidden shadow-sm">
+            <div className="flex items-center justify-between gap-2 mb-2">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping" />
+                <span className="text-xs font-black text-amber-600 dark:text-amber-400 uppercase tracking-wide">
+                  {isTamil ? 'டெமோ நேரடி அணுகல்' : 'Fixed Demo Credentials (Reviewer Access)'}
+                </span>
+              </div>
+              <span className="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-700 dark:text-amber-300 text-[10px] font-black">
+                Admin / Publisher
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] font-mono text-slate-700 dark:text-slate-300 mb-3 bg-white/70 dark:bg-slate-950/70 p-2.5 rounded-xl border border-amber-500/20">
+              <div>
+                <span className="text-slate-400 block text-[9px] uppercase font-sans font-bold">Fixed Email</span>
+                <span className="font-bold text-amber-600 dark:text-amber-400">padmanaban@fispl.in</span>
+              </div>
+              <div>
+                <span className="text-slate-400 block text-[9px] uppercase font-sans font-bold">Fixed Password</span>
+                <span className="font-bold text-amber-600 dark:text-amber-400">Padmanaban@2026</span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={handleDemoSignIn}
+                disabled={isLoading}
+                className="flex-1 py-2.5 px-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs shadow-md transition-all flex items-center justify-center gap-1.5 active:scale-95"
+              >
+                <span>🚀</span>
+                <span>{isTamil ? 'பி. பத்மநாபன் நேரடி உள்நுழைவு' : '1-Click Login as B. Padmanaban'}</span>
+              </button>
+              <button
+                type="button"
+                onClick={handlePrefillDemo}
+                className="py-2.5 px-3 rounded-xl bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs border border-slate-200 dark:border-slate-700 transition-colors"
+                title="Fill inputs"
+              >
+                {isTamil ? 'நிரப்பு' : 'Auto-Fill'}
+              </button>
+            </div>
           </div>
 
           {error && (
@@ -31472,7 +31682,7 @@ function AuthPage({ initialMode = 'login', onNavigate }) {
               type="button"
               onClick={handleGoogleAuth}
               disabled={isLoading}
-              className="btn-magnetic w-full py-3 px-4 rounded-2xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-200 font-bold text-xs flex items-center justify-center gap-3 transition-colors shadow-sm"
+              className="btn-magnetic w-full py-2.5 px-4 rounded-2xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-200 font-bold text-xs flex items-center justify-center gap-3 transition-colors shadow-sm"
             >
               <svg className="w-4 h-4" viewBox="0 0 24 24">
                 <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -31734,7 +31944,13 @@ function NewsDetailsPage({ slug, onNavigate }) {
         </h1>
 
         <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 font-medium">
-          <span>{isTamil ? 'ஆசிரியர்:' : 'By'} {article.author || 'Budget Padmanaban Editorial'}</span>
+          <button
+            onClick={() => onNavigate && onNavigate('#/professionals/budget-padmanaban')}
+            className="hover:text-amber-500 font-bold transition-colors flex items-center gap-1"
+          >
+            <span>{isTamil ? 'ஆசிரியர்:' : 'By'} {article.author || 'Budget Padmanaban Editorial'}</span>
+            <span className="text-amber-500">→</span>
+          </button>
           <span>{formattedDate}</span>
         </div>
       </div>
@@ -32297,6 +32513,421 @@ function CategoryPage({ categoryId, onNavigate, onShowToast }) {
   );
 }
 
+function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
+  const { language } = useLanguage();
+  const isTamil = language === 'ta';
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('all');
+
+  const categories = [
+    { id: 'all', labelTa: 'அனைத்து நிபுணர்கள்', labelEn: 'All Specialists' },
+    { id: 'mutual-funds', labelTa: 'மியூச்சுவல் ஃபண்ட் & சந்தை', labelEn: 'Mutual Funds & Market' },
+    { id: 'fintech', labelTa: 'தொழில்நுட்பம் & ஆட்டோமேஷன்', labelEn: 'Tech & Strategy' },
+    { id: 'research', labelTa: 'ஈக்விட்டி & ஃபண்ட் ஆராய்ச்சி', labelEn: 'Fund Research' },
+    { id: 'client-advisory', labelTa: 'தனிநபர் நிதி & வாடிக்கையாளர்', labelEn: 'Personal CFO Desk' }
+  ];
+
+  const filteredProfessionals = useMemo(() => {
+    let list = [...professionalsData];
+
+    if (selectedCategory !== 'all') {
+      list = list.filter(p => p.category === selectedCategory);
+    }
+
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase().trim();
+      list = list.filter(p => {
+        const nameT = (p.nameTamil || '').toLowerCase();
+        const nameE = (p.nameEnglish || '').toLowerCase();
+        const titleT = (p.titleTamil || '').toLowerCase();
+        const titleE = (p.titleEnglish || '').toLowerCase();
+        const bioT = (p.bioTamil || '').toLowerCase();
+        const bioE = (p.bioEnglish || '').toLowerCase();
+        return nameT.includes(q) || nameE.includes(q) || titleT.includes(q) || titleE.includes(q) || bioT.includes(q) || bioE.includes(q);
+      });
+    }
+
+    return list;
+  }, [selectedCategory, searchQuery]);
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 animate-fadeIn">
+      {/* Header Section */}
+      <div className="border-b border-slate-200 dark:border-slate-800 pb-6 flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div className="space-y-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-black uppercase tracking-wider">
+            <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+            <span>{isTamil ? 'அங்கீகரிக்கப்பட்ட முதலீட்டு நிபுணர்கள்' : 'Public Professionals Directory'}</span>
+          </div>
+          <h1 className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white font-serif tracking-tight">
+            {isTamil ? 'முதலீட்டு நிபுணர்கள் & எழுத்தாளர்கள்' : 'Investment Specialists & Commentators'}
+          </h1>
+          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed">
+            {isTamil
+              ? 'பார்ச்சூன் இன்வெஸ்ட்மென்ட் சர்வீசஸ் (FISPL) நிறுவனத்தின் சந்தை வர்ணனையாளர்கள், ஆராய்ச்சி நிபுணர்கள் மற்றும் ஆலோசகர்களின் படைப்புகள்.'
+              : 'Discover insights, masterclasses, and research commentary published by FISPL market commentators and financial specialists.'}
+          </p>
+        </div>
+
+        {/* Search Input */}
+        <div className="relative w-full md:w-72">
+          <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+          </span>
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder={isTamil ? 'நிபுணர் பெயர், துறை தேடுக...' : 'Search specialists...'}
+            className="w-full pl-9 pr-4 py-2.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:border-amber-500 shadow-sm"
+          />
+        </div>
+      </div>
+
+      {/* Category Pills */}
+      <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+        {categories.map((cat) => {
+          const isActive = selectedCategory === cat.id;
+          return (
+            <button
+              key={cat.id}
+              onClick={() => setSelectedCategory(cat.id)}
+              className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
+                isActive
+                  ? 'bg-amber-500 text-slate-950 font-black shadow-md'
+                  : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800'
+              }`}
+            >
+              {isTamil ? cat.labelTa : cat.labelEn}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Grid of Professionals Cards */}
+      {filteredProfessionals.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredProfessionals.map((prof) => {
+            const name = isTamil ? prof.nameTamil : prof.nameEnglish;
+            const title = isTamil ? prof.titleTamil : prof.titleEnglish;
+            const bio = isTamil ? prof.bioTamil : prof.bioEnglish;
+            const badge = isTamil ? prof.badgeTamil : prof.badgeEnglish;
+
+            return (
+              <div
+                key={prof.id}
+                onClick={() => onNavigate && onNavigate(`#/professionals/${prof.id}`)}
+                className="group bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm hover:border-amber-500/50 hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer flex flex-col justify-between space-y-5 relative overflow-hidden"
+              >
+                <div className="space-y-4">
+                  {/* Avatar & Badges Header */}
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="relative">
+                      <img
+                        src={prof.avatar}
+                        alt={name}
+                        className="w-16 h-16 rounded-2xl object-cover border-2 border-amber-500/40 group-hover:border-amber-500 shadow-md transition-colors"
+                      />
+                      <span className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-white dark:border-slate-900" title="Active Publisher" />
+                    </div>
+
+                    <span className="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-500/10 text-amber-500 border border-amber-500/20">
+                      {badge}
+                    </span>
+                  </div>
+
+                  {/* Identity */}
+                  <div>
+                    <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white font-serif group-hover:text-amber-500 transition-colors leading-snug">
+                      {name}
+                    </h3>
+                    <p className="text-xs font-bold text-amber-600 dark:text-amber-400/90 mt-0.5">
+                      {title}
+                    </p>
+                    <p className="text-[11px] text-slate-400 font-medium">
+                      {prof.organization}
+                    </p>
+                  </div>
+
+                  {/* Short Bio */}
+                  <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed">
+                    {bio}
+                  </p>
+                </div>
+
+                {/* Metrics & Action Link */}
+                <div className="space-y-3 pt-4 border-t border-slate-100 dark:border-slate-800">
+                  <div className="flex items-center justify-between text-[11px] font-bold text-slate-500 dark:text-slate-400">
+                    <span className="flex items-center gap-1.5">
+                      <span className="text-amber-500">🎬</span> {prof.stats.masterclasses}+ {isTamil ? 'வீடியோக்கள்' : 'Masterclasses'}
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <span className="text-blue-500">✍️</span> {prof.stats.articles}+ {isTamil ? 'கட்டுரைகள்' : 'Articles'}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center justify-between text-xs font-black text-amber-500 group-hover:text-amber-400 transition-colors pt-1">
+                    <span>{isTamil ? 'படைப்புகளைக் காண்க' : 'View Insights & Feed'}</span>
+                    <span className="group-hover:translate-x-1 transition-transform">→</span>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-3">
+          <div className="text-3xl">🔍</div>
+          <h3 className="text-base font-black text-slate-900 dark:text-white font-serif">
+            {isTamil ? 'நிபுணர்கள் யாரும் பொருந்தவில்லை' : 'No specialists matched your search'}
+          </h3>
+          <p className="text-xs text-slate-500">
+            {isTamil ? 'வேறு வார்த்தைகளை பயன்படுத்தி தேடவும்.' : 'Try adjusting your search terms or filter.'}
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
+  const { language } = useLanguage();
+  const isTamil = language === 'ta';
+  const [activeTab, setActiveTab] = useState('articles');
+  const [selectedVideo, setSelectedVideo] = useState(null);
+
+  const prof = professionalsData.find(p => p.id === professionalId || p.slug === professionalId) || professionalsData[0];
+
+  if (!prof) return null;
+
+  const name = isTamil ? prof.nameTamil : prof.nameEnglish;
+  const title = isTamil ? prof.titleTamil : prof.titleEnglish;
+  const fullBio = isTamil ? prof.fullBioTamil : prof.fullBioEnglish;
+  const badge = isTamil ? prof.badgeTamil : prof.badgeEnglish;
+  const location = isTamil ? prof.locationTamil : prof.locationEnglish;
+
+  // Filter content authored by or associated with this professional
+  const publisherArticles = useMemo(() => {
+    if (prof.id === 'budget-padmanaban') {
+      return (newsData || []).map(a => translateNewsArticle(a, language));
+    }
+    const slugs = prof.featuredArticleSlugs || [];
+    return (newsData || []).filter(a => slugs.includes(a.slug)).map(a => translateNewsArticle(a, language));
+  }, [prof, language]);
+
+  const publisherVideos = useMemo(() => {
+    if (prof.id === 'budget-padmanaban') {
+      return videosData.slice(0, 24).map(v => translateVideo(v, language));
+    }
+    // Filter videos by category or tags
+    return videosData
+      .filter(v => v.category === prof.category || (v.tags && v.tags.includes(prof.category)))
+      .slice(0, 12)
+      .map(v => translateVideo(v, language));
+  }, [prof, language]);
+
+  return (
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fadeIn">
+      {/* Back Button */}
+      <button
+        onClick={() => onNavigate && onNavigate('#/professionals')}
+        className="btn-magnetic px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-900 hover:bg-amber-500 hover:text-slate-950 text-xs font-bold transition-all inline-flex items-center gap-1.5 border border-slate-200 dark:border-slate-800"
+      >
+        <span>←</span>
+        <span>{isTamil ? 'அனைத்து நிபுணர்கள் பட்டியல்' : 'Back to Professionals Directory'}</span>
+      </button>
+
+      {/* 1. IDENTITY HEADER BLOCK (Site's sleek dark aesthetic with gold accents) */}
+      <div className="relative rounded-3xl bg-slate-950 text-white border border-slate-800 p-6 sm:p-8 shadow-2xl overflow-hidden">
+        {/* Subtle Ambient Radial Glow */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="relative z-10 flex flex-col md:flex-row items-start gap-6 sm:gap-8">
+          {/* Portrait Avatar */}
+          <div className="relative shrink-0 mx-auto md:mx-0">
+            <img
+              src={prof.avatar}
+              alt={name}
+              className="w-24 h-24 sm:w-32 sm:h-32 rounded-3xl object-cover border-2 border-amber-500 shadow-2xl"
+            />
+            <span className="absolute -bottom-2 -right-2 px-2.5 py-0.5 rounded-full bg-slate-900 border border-amber-500/40 text-[9px] font-mono font-bold text-amber-400 shadow">
+              {prof.experience}
+            </span>
+          </div>
+
+          {/* Details */}
+          <div className="flex-1 space-y-3 text-center md:text-left">
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-2.5">
+              <h1 className="text-2xl sm:text-4xl font-extrabold font-serif">{name}</h1>
+              <span className="px-3 py-0.5 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/30 text-[10px] font-black uppercase tracking-wider">
+                {badge}
+              </span>
+            </div>
+
+            <div className="space-y-1">
+              <p className="text-xs sm:text-sm font-bold text-amber-400/90 font-mono">
+                {title} • {prof.organization}
+              </p>
+              <p className="text-xs text-slate-400">
+                📍 {location} {prof.arnNumber && `• AMFI Registration: ${prof.arnNumber}`}
+              </p>
+            </div>
+
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-3xl">
+              {fullBio}
+            </p>
+
+            {/* Credibility & Social Links Row in site button style */}
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 pt-2">
+              {prof.socialLinks?.youtube && (
+                <a
+                  href={prof.socialLinks.youtube}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-red-600 text-white border border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
+                >
+                  <span>▶</span>
+                  <span>YouTube Channel</span>
+                </a>
+              )}
+              {prof.socialLinks?.website && (
+                <a
+                  href={prof.socialLinks.website}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-amber-500 hover:text-slate-950 text-slate-300 border border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
+                >
+                  <span>🌐</span>
+                  <span>{isTamil ? 'வலைதளம்' : 'Official Portal'}</span>
+                </a>
+              )}
+              {prof.socialLinks?.linkedin && (
+                <a
+                  href={prof.socialLinks.linkedin}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-blue-600 text-white border border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
+                >
+                  <span>in</span>
+                  <span>LinkedIn Profile</span>
+                </a>
+              )}
+              {prof.socialLinks?.twitter && (
+                <a
+                  href={prof.socialLinks.twitter}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
+                >
+                  <span>𝕏</span>
+                  <span>Twitter / X</span>
+                </a>
+              )}
+            </div>
+
+            {/* Specialization Tags */}
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-1.5 pt-2">
+              {prof.specializations?.map((spec, i) => (
+                <span
+                  key={i}
+                  className="px-2.5 py-1 rounded-lg bg-slate-900/90 text-slate-300 border border-slate-800 text-[10px] font-bold"
+                >
+                  {isTamil ? spec.ta : spec.en}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 2. FEED TABS */}
+      <div className="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
+        <button
+          onClick={() => setActiveTab('articles')}
+          className={`px-5 py-2.5 rounded-xl text-xs font-black transition-all ${
+            activeTab === 'articles'
+              ? 'bg-amber-500 text-slate-950 shadow-md'
+              : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+          }`}
+        >
+          ✍️ {isTamil ? 'கட்டுரைகள் & ஆய்வுகள்' : 'Articles & Analysis'} ({publisherArticles.length})
+        </button>
+
+        <button
+          onClick={() => setActiveTab('videos')}
+          className={`px-5 py-2.5 rounded-xl text-xs font-black transition-all ${
+            activeTab === 'videos'
+              ? 'bg-amber-500 text-slate-950 shadow-md'
+              : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+          }`}
+        >
+          🎬 {isTamil ? 'முக்கிய வீடியோக்கள்' : 'Masterclasses & Videos'} ({publisherVideos.length})
+        </button>
+      </div>
+
+      {/* 3. FEED CONTENT */}
+      {activeTab === 'articles' && (
+        <div className="space-y-6">
+          {publisherArticles.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              {publisherArticles.map(article => (
+                <NewsCard
+                  key={article.id}
+                  article={article}
+                  onSelect={() => onNavigate && onNavigate(`#/news/${article.slug}`)}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-2">
+              <p className="text-xs text-slate-500">
+                {isTamil ? 'இந்த நிபுணரின் கட்டுரைகள் விரைவில் வெளியிடப்படும்.' : 'No articles published in this section yet.'}
+              </p>
+            </div>
+          )}
+        </div>
+      )}
+
+      {activeTab === 'videos' && (
+        <div className="space-y-6">
+          {publisherVideos.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {publisherVideos.map((video, idx) => (
+                <CinemaVideoCard
+                  key={video.id || idx}
+                  video={video}
+                  index={idx}
+                  onSelect={(v) => setSelectedVideo(v)}
+                  language={language}
+                  onShowToast={onShowToast}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-2">
+              <p className="text-xs text-slate-500">
+                {isTamil ? 'வீடியோக்கள் எதுவும் இல்லை.' : 'No videos recorded yet.'}
+              </p>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Video Cinema Modal */}
+      {selectedVideo && (
+        <CinemaTheaterModal
+          video={selectedVideo}
+          allVideos={videosData}
+          onClose={() => setSelectedVideo(null)}
+          onSelectRelated={(rel) => setSelectedVideo(rel)}
+          language={language}
+          onShowToast={onShowToast}
+        />
+      )}
+    </div>
+  );
+}
+
 function App() {
   const [currentHash, setCurrentHash] = useState(() => window.location.hash || '#/');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -32464,6 +33095,16 @@ function App() {
           <div className="py-8"><RiskQuizWidget /></div>
         </ProtectedRoute>
       );
+    }
+
+    // 3.8 Public Professionals Directory & Publisher Profiles
+    if (currentHash.startsWith('#/professionals/')) {
+      const profId = currentHash.replace('#/professionals/', '');
+      return <ProfessionalProfilePage professionalId={profId} onNavigate={navigate} onShowToast={setToastMessage} />;
+    }
+
+    if (currentHash === '#/professionals') {
+      return <ProfessionalsDirectoryPage onNavigate={navigate} onShowToast={setToastMessage} />;
     }
 
     // Default Fallback: Public Landing Page
