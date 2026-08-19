@@ -31755,6 +31755,360 @@ function NewsDetailsPage({ slug, onNavigate }) {
   );
 }
 
+function ProfilePage({ onNavigate, onShowToast }) {
+  const { user, profile, role, signOut, supabase } = useAuth();
+  const { language } = useLanguage();
+  const isTamil = language === 'ta';
+  const { bookmarks, toggleBookmark } = useBookmarks();
+  const { history, clearHistory } = useWatchHistory();
+
+  const [displayName, setDisplayName] = useState(
+    profile?.display_name || user?.user_metadata?.full_name || user?.email?.split('@')[0] || ''
+  );
+  const [isSaving, setIsSaving] = useState(false);
+  const [activeTab, setActiveTab] = useState('overview');
+
+  const email = user?.email || '';
+  const avatarUrl = profile?.avatar_url || user?.user_metadata?.avatar_url;
+  const initials = (displayName || email || 'U').slice(0, 2).toUpperCase();
+
+  const handleUpdateProfile = async (e) => {
+    e.preventDefault();
+    if (!displayName.trim()) return;
+    setIsSaving(true);
+    try {
+      if (supabase && user?.id) {
+        const { error } = await supabase
+          .from('profiles')
+          .update({ display_name: displayName.trim(), updated_at: new Date().toISOString() })
+          .eq('id', user.id);
+        if (error) throw error;
+      }
+      if (onShowToast) {
+        onShowToast(isTamil ? 'சுயவிவரம் புதுப்பிக்கப்பட்டது!' : 'Profile updated successfully!');
+      }
+    } catch (err) {
+      console.error('Failed to update profile:', err);
+      if (onShowToast) onShowToast(err.message || 'Error updating profile');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  return (
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 animate-fadeIn">
+      {/* Header Banner */}
+      <div className="relative rounded-3xl bg-gradient-to-r from-slate-900 via-slate-900 to-amber-950/70 border border-slate-800 p-6 sm:p-8 shadow-2xl overflow-hidden text-white">
+        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 relative z-10">
+          {avatarUrl ? (
+            <img
+              src={avatarUrl}
+              alt={displayName}
+              className="w-20 h-20 rounded-full object-cover border-2 border-amber-500 shadow-xl shrink-0"
+            />
+          ) : (
+            <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-amber-600 to-amber-400 text-slate-950 font-black text-2xl flex items-center justify-center border-2 border-amber-400 shadow-xl shrink-0">
+              {initials}
+            </div>
+          )}
+          <div className="space-y-1.5 text-center sm:text-left flex-1">
+            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
+              <h1 className="text-2xl sm:text-3xl font-extrabold font-serif">{displayName || 'Investor'}</h1>
+              <span className={`px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider rounded-full border ${
+                role === 'admin'
+                  ? 'bg-red-500/20 text-red-400 border-red-500/30'
+                  : 'bg-amber-500/20 text-amber-400 border-amber-500/30'
+              }`}>
+                {role === 'admin' ? 'Administrator' : 'Investor'}
+              </span>
+            </div>
+            <p className="text-xs text-slate-400 font-mono">{email}</p>
+            <p className="text-[11px] text-amber-400/90 font-medium">
+              {isTamil ? 'முதலீட்டு திசை நிதி தளத்தின் உறுப்பினர்' : 'Muthaleetu Thisai Member'}
+            </p>
+          </div>
+
+          <button
+            onClick={signOut}
+            className="btn-magnetic px-4 py-2 rounded-xl bg-red-600/20 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/30 text-xs font-bold transition-all shrink-0"
+          >
+            {isTamil ? 'வெளியேறு (Logout)' : 'Logout'}
+          </button>
+        </div>
+      </div>
+
+      {/* Tabs */}
+      <div className="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
+        <button
+          onClick={() => setActiveTab('overview')}
+          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+            activeTab === 'overview'
+              ? 'bg-amber-500 text-slate-950 shadow-md'
+              : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+          }`}
+        >
+          {isTamil ? 'சுயவிவர விவரங்கள்' : 'Profile Settings'}
+        </button>
+        <button
+          onClick={() => setActiveTab('bookmarks')}
+          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+            activeTab === 'bookmarks'
+              ? 'bg-amber-500 text-slate-950 shadow-md'
+              : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+          }`}
+        >
+          {isTamil ? `சேமிக்கப்பட்டவை (${bookmarks.length})` : `Saved Bookmarks (${bookmarks.length})`}
+        </button>
+      </div>
+
+      {/* Tab Content: Settings */}
+      {activeTab === 'overview' && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+            <h3 className="text-sm font-black uppercase tracking-wider text-slate-900 dark:text-white font-serif">
+              {isTamil ? 'கணக்கு அமைப்புகள்' : 'Personal Details'}
+            </h3>
+            <form onSubmit={handleUpdateProfile} className="space-y-4">
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-slate-600 dark:text-slate-400">
+                  {isTamil ? 'முழு பெயர்' : 'Display Name'}
+                </label>
+                <input
+                  type="text"
+                  value={displayName}
+                  onChange={(e) => setDisplayName(e.target.value)}
+                  className="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-bold focus:outline-none focus:border-amber-500 text-slate-900 dark:text-white"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-slate-600 dark:text-slate-400">
+                  {isTamil ? 'மின்னஞ்சல் முகவரி' : 'Email Address'}
+                </label>
+                <input
+                  type="email"
+                  value={email}
+                  disabled
+                  className="w-full px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 text-xs font-mono text-slate-500 cursor-not-allowed"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSaving}
+                className="btn-magnetic px-6 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs shadow-md transition-all disabled:opacity-50"
+              >
+                {isSaving ? (isTamil ? 'சேமிக்கிறது...' : 'Saving...') : (isTamil ? 'மாற்றங்களைச் சேமி' : 'Save Changes')}
+              </button>
+            </form>
+          </div>
+
+          <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+            <h3 className="text-sm font-black uppercase tracking-wider text-slate-900 dark:text-white font-serif">
+              {isTamil ? 'விரைவு வழிசெலுத்தல்' : 'Quick Actions'}
+            </h3>
+            <div className="space-y-2.5">
+              <button
+                onClick={() => onNavigate && onNavigate('#/history')}
+                className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 hover:bg-amber-500/10 border border-slate-200 dark:border-slate-800 text-xs font-bold transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="p-2 rounded-xl bg-amber-500/20 text-amber-500">▶</span>
+                  <span className="text-slate-800 dark:text-slate-200">
+                    {isTamil ? 'பார்த்த வீடியோக்களின் வரலாறு' : 'View Watch History'}
+                  </span>
+                </div>
+                <span className="text-slate-400">({history.length}) →</span>
+              </button>
+
+              <button
+                onClick={() => onNavigate && onNavigate('#/videos')}
+                className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 hover:bg-amber-500/10 border border-slate-200 dark:border-slate-800 text-xs font-bold transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="p-2 rounded-xl bg-amber-500/20 text-amber-500">🎬</span>
+                  <span className="text-slate-800 dark:text-slate-200">
+                    {isTamil ? '882+ வீடியோ வழிகாட்டி' : 'Browse All 882+ Masterclasses'}
+                  </span>
+                </div>
+                <span className="text-slate-400">→</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Tab Content: Bookmarks */}
+      {activeTab === 'bookmarks' && (
+        <div className="space-y-4">
+          {bookmarks.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              {bookmarks.map((item, idx) => (
+                <div
+                  key={`bm-${item.id || idx}`}
+                  className="group relative bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 p-3.5 flex flex-col justify-between space-y-3 shadow-sm hover:border-amber-500/50 transition-all cursor-pointer"
+                  onClick={() => {
+                    if (item.youtubeId || item.duration) {
+                      if (onNavigate) onNavigate('#/videos');
+                    } else if (item.slug) {
+                      if (onNavigate) onNavigate(`#/news/${item.slug}`);
+                    }
+                  }}
+                >
+                  <div className="space-y-2">
+                    {item.thumbnail && (
+                      <div className="relative aspect-video rounded-xl overflow-hidden bg-slate-950">
+                        <img src={item.thumbnail} alt="" className="w-full h-full object-cover" />
+                      </div>
+                    )}
+                    <h4 className="text-xs font-bold text-slate-900 dark:text-white line-clamp-2 font-serif">
+                      {item.title || item.titleTamil || item.titleEnglish}
+                    </h4>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800">
+                    <span className="text-[10px] font-black uppercase text-amber-500">
+                      {item.category || 'SAVED'}
+                    </span>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleBookmark(item);
+                        if (onShowToast) onShowToast(isTamil ? 'நீக்கப்பட்டது' : 'Removed from bookmarks');
+                      }}
+                      className="text-xs text-red-500 hover:text-red-600 font-bold"
+                    >
+                      {isTamil ? 'நீக்கு' : 'Remove'}
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-16 bg-slate-50 dark:bg-slate-900/40 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-2">
+              <p className="text-xs sm:text-sm font-bold text-slate-500">
+                {isTamil ? 'சேமிக்கப்பட்ட கட்டுரைகள் அல்லது வீடியோக்கள் எதுவும் இல்லை.' : 'No bookmarked videos or articles yet.'}
+              </p>
+              <button
+                onClick={() => onNavigate && onNavigate('#/videos')}
+                className="btn-magnetic px-5 py-2 rounded-xl bg-amber-500 text-slate-950 font-black text-xs mt-2"
+              >
+                {isTamil ? 'வீடியோக்களைப் பார்வையிடு' : 'Explore Masterclasses'}
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function WatchHistoryPage({ onNavigate, onShowToast }) {
+  const { language } = useLanguage();
+  const isTamil = language === 'ta';
+  const { history, clearHistory } = useWatchHistory();
+  const [selectedVideo, setSelectedVideo] = useState(null);
+
+  return (
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6 animate-fadeIn">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
+        <div>
+          <button
+            onClick={() => onNavigate && onNavigate('#/profile')}
+            className="text-xs font-bold text-slate-500 hover:text-amber-500 transition-colors inline-flex items-center gap-1 mb-1"
+          >
+            ← {isTamil ? 'சுயவிவரத்திற்குத் திரும்பு' : 'Back to Profile'}
+          </button>
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white font-serif">
+            {isTamil ? 'பார்த்த வீடியோக்களின் வரலாறு' : 'Watch History'}
+          </h1>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+            {history.length} {isTamil ? 'வீடியோக்கள் பதிவு செய்யப்பட்டுள்ளன' : 'videos recorded'}
+          </p>
+        </div>
+
+        {history.length > 0 && (
+          <button
+            onClick={() => {
+              clearHistory();
+              if (onShowToast) onShowToast(isTamil ? 'வரலாறு அழிக்கப்பட்டது' : 'Watch history cleared');
+            }}
+            className="btn-magnetic px-4 py-2 rounded-xl bg-red-500/10 hover:bg-red-600 text-red-500 hover:text-white border border-red-500/20 text-xs font-bold transition-all shrink-0"
+          >
+            {isTamil ? 'வரலாற்றை அழி (Clear All)' : 'Clear History'}
+          </button>
+        )}
+      </div>
+
+      {history.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {history.map((video, idx) => (
+            <div
+              key={`wh-${video.id || idx}`}
+              onClick={() => setSelectedVideo(video)}
+              className="group bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 p-3 shadow-sm hover:border-amber-500/50 transition-all cursor-pointer flex flex-col justify-between space-y-2.5"
+            >
+              <div className="relative aspect-video rounded-xl overflow-hidden bg-slate-950">
+                <img src={video.thumbnail} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
+                <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span className="w-10 h-10 rounded-full bg-amber-500 text-slate-950 flex items-center justify-center font-black shadow-xl">▶</span>
+                </div>
+                {video.duration && (
+                  <span className="absolute bottom-1.5 right-1.5 px-1.5 py-0.5 rounded bg-black/80 text-white font-mono text-[9px]">
+                    {video.duration}
+                  </span>
+                )}
+              </div>
+
+              <div>
+                <span className="text-[9px] font-black uppercase text-amber-500">
+                  {video.category || 'FINANCE'}
+                </span>
+                <h4 className="text-xs font-bold text-slate-900 dark:text-white line-clamp-2 mt-0.5 font-serif leading-snug">
+                  {video.title || video.titleTamil || video.titleEnglish}
+                </h4>
+              </div>
+
+              {video.viewedAt && (
+                <div className="text-[10px] text-slate-400 font-mono pt-1 border-t border-slate-100 dark:border-slate-800">
+                  {new Date(video.viewedAt).toLocaleDateString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-16 bg-slate-50 dark:bg-slate-900/40 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-3">
+          <div className="text-3xl">🎬</div>
+          <h3 className="text-sm font-black text-slate-900 dark:text-white font-serif">
+            {isTamil ? 'பார்த்த வீடியோக்கள் எதுவும் இல்லை' : 'No watch history yet'}
+          </h3>
+          <p className="text-xs text-slate-500">
+            {isTamil ? 'முதலீட்டு வீடியோக்களைப் பார்த்து உங்கள் வரலாற்றை இங்கே காண்க.' : 'Watch financial masterclasses to automatically save your playback trail here.'}
+          </p>
+          <button
+            onClick={() => onNavigate && onNavigate('#/videos')}
+            className="btn-magnetic px-6 py-2.5 rounded-xl bg-amber-500 text-slate-950 font-black text-xs shadow-md mt-2"
+          >
+            {isTamil ? '882+ வீடியோக்களைக் காண்க' : 'Browse 882+ Masterclasses'}
+          </button>
+        </div>
+      )}
+
+      {selectedVideo && (
+        <CinemaTheaterModal
+          video={selectedVideo}
+          allVideos={videosData}
+          onClose={() => setSelectedVideo(null)}
+          onSelectRelated={(rel) => setSelectedVideo(rel)}
+          language={language}
+          onShowToast={onShowToast}
+        />
+      )}
+    </div>
+  );
+}
+
 function CategoryPage({ categoryId, onNavigate, onShowToast }) {
   const { language } = useLanguage();
   const isTamil = language === 'ta';
