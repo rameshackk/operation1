@@ -12,3 +12,8 @@ Whenever the user submits a request, Antigravity and Claude Code operate as a co
 
 3. **Combined Verification**:
    - Every change is empirically verified (build, test, live browser preview) before finalizing.
+
+4. **Strict File Hygiene & In-Place Modification Policy**:
+   - DO NOT create new files, temporary patch scripts, duplicate components, or one-off JSON dumps unless explicitly and strictly mandatory.
+   - Always modify, update, and rewrite existing project files directly in place (e.g. `js/bundle.js`, `css/styles.css`, `server.js`, `index.html`).
+
