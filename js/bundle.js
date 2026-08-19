@@ -29581,24 +29581,6 @@ function VideosPage({ onNavigate, onShowToast }) {
   const [viewMode, setViewMode] = useState('rails');
   const sentinelRef = useRef(null);
 
-  // Auto-load next 20 videos on scroll
-  useEffect(() => {
-    if (!sentinelRef.current) return;
-    const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        setVisibleGridCount(prev => {
-          if (prev < filteredVideos.length) {
-            return Math.min(prev + 20, filteredVideos.length);
-          }
-          return prev;
-        });
-      }
-    }, { rootMargin: '350px' });
-
-    observer.observe(sentinelRef.current);
-    return () => observer.disconnect();
-  }, [filteredVideos.length, visibleGridCount]);
-
   const categoriesList = [
     { id: 'all', labelTa: 'அனைத்து வீடியோக்கள் (882)', labelEn: 'All Videos (882)' },
     { id: 'trending', labelTa: 'முக்கிய பதிவுகள்', labelEn: 'Featured & Trending' },
@@ -29666,6 +29648,24 @@ function VideosPage({ onNavigate, onShowToast }) {
 
     return list.map(v => translateVideo(v, language));
   }, [activeCategory, searchQuery, sortBy, language]);
+
+  // Auto-load next 20 videos on scroll
+  useEffect(() => {
+    if (!sentinelRef.current) return;
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        setVisibleGridCount(prev => {
+          if (prev < filteredVideos.length) {
+            return Math.min(prev + 20, filteredVideos.length);
+          }
+          return prev;
+        });
+      }
+    }, { rootMargin: '350px' });
+
+    observer.observe(sentinelRef.current);
+    return () => observer.disconnect();
+  }, [filteredVideos.length, visibleGridCount]);
 
   const isFiltering = activeCategory !== 'all' || searchQuery.trim().length > 0;
 
