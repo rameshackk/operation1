@@ -29016,6 +29016,7 @@ function CinemaVideoCard({
             src={thumbnail}
             alt={title}
             loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-200"
           />
         )}
@@ -29575,8 +29576,27 @@ function VideosPage({ onNavigate, onShowToast }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('newest');
   const [selectedVideo, setSelectedVideo] = useState(null);
-  const [visibleGridCount, setVisibleGridCount] = useState(30);
+  const [visibleGridCount, setVisibleGridCount] = useState(20);
   const [viewMode, setViewMode] = useState('rails');
+  const sentinelRef = useRef(null);
+
+  // Auto-load next 20 videos on scroll
+  useEffect(() => {
+    if (!sentinelRef.current) return;
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        setVisibleGridCount(prev => {
+          if (prev < filteredVideos.length) {
+            return Math.min(prev + 20, filteredVideos.length);
+          }
+          return prev;
+        });
+      }
+    }, { rootMargin: '350px' });
+
+    observer.observe(sentinelRef.current);
+    return () => observer.disconnect();
+  }, [filteredVideos.length, visibleGridCount]);
 
   const categoriesList = [
     { id: 'all', labelTa: 'அனைத்து வீடியோக்கள் (882)', labelEn: 'All Videos (882)' },
@@ -29670,7 +29690,7 @@ function VideosPage({ onNavigate, onShowToast }) {
                   key={cat.id}
                   onClick={() => {
                     setActiveCategory(cat.id);
-                    setVisibleGridCount(30);
+                    setVisibleGridCount(20);
                   }}
                   className={`btn-magnetic px-3.5 py-1.5 rounded-full text-xs font-black whitespace-nowrap transition-all duration-200 shrink-0 ${
                     isActive
@@ -29772,18 +29792,28 @@ function VideosPage({ onNavigate, onShowToast }) {
               ))}
             </div>
 
-            {visibleGridCount < filteredVideos.length && (
-              <div className="pt-8 text-center">
-                <button
-                  onClick={() => setVisibleGridCount(prev => prev + 30)}
-                  className="btn-magnetic px-8 py-3.5 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider shadow-xl shadow-amber-500/20 transition-all transform hover:scale-105"
-                >
-                  {isTamil
-                    ? `மேலும் 30 வீடியோக்களைக் காட்டு (${filteredVideos.length - visibleGridCount} மீதம்)`
-                    : `Load 30 More Videos (${filteredVideos.length - visibleGridCount} remaining)`}
-                </button>
-              </div>
-            )}
+            {/* Infinite Scroll Sentinel & Status Counter */}
+            <div ref={sentinelRef} className="pt-6 pb-4 text-center">
+              {visibleGridCount < filteredVideos.length ? (
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-bold text-slate-500">
+                  <div className="w-3 h-3 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
+                  <span>
+                    {isTamil
+                      ? `${Math.min(visibleGridCount, filteredVideos.length)} / ${filteredVideos.length} வீடியோக்கள் (கீழே உருட்டவும்...)`
+                      : `Showing ${Math.min(visibleGridCount, filteredVideos.length)} of ${filteredVideos.length} (scroll for more...)`}
+                  </span>
+                </div>
+              ) : (
+                <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-[11px] font-bold text-slate-400">
+                  <span>✓</span>
+                  <span>
+                    {isTamil
+                      ? `அனைத்து ${filteredVideos.length} வீடியோக்களும் ஏற்றப்பட்டுவிட்டன`
+                      : `All ${filteredVideos.length} masterclasses loaded`}
+                  </span>
+                </div>
+              )}
+            </div>
           </div>
         ) : (
           <div className="space-y-6">
@@ -31730,8 +31760,9 @@ function CategoryPage({ categoryId, onNavigate, onShowToast }) {
 
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('newest');
-  const [visibleCount, setVisibleCount] = useState(30);
+  const [visibleCount, setVisibleCount] = useState(20);
   const [selectedVideo, setSelectedVideo] = useState(null);
+  const sentinelRef = useRef(null);
 
   const categoryTitles = {
     'mutual-funds': isTamil ? 'மியூச்சுவல் ஃபண்ட் & SIP' : 'Mutual Funds & SIP',
@@ -31769,11 +31800,27 @@ function CategoryPage({ categoryId, onNavigate, onShowToast }) {
     return list.map(v => translateVideo(v, language));
   }, [categoryId, searchQuery, sortBy, language]);
 
+  // Auto-load next 20 videos on scroll
+  useEffect(() => {
+    if (!sentinelRef.current) return;
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        setVisibleCount(prev => {
+          if (prev < filtered.length) {
+            return Math.min(prev + 20, filtered.length);
+          }
+          return prev;
+        });
+      }
+    }, { rootMargin: '350px' });
+
+    observer.observe(sentinelRef.current);
+    return () => observer.disconnect();
+  }, [filtered.length, visibleCount]);
+
   const displayedVideos = useMemo(() => {
     return filtered.slice(0, visibleCount);
   }, [filtered, visibleCount]);
-
-  const hasMore = visibleCount < filtered.length;
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
@@ -31803,7 +31850,7 @@ function CategoryPage({ categoryId, onNavigate, onShowToast }) {
             value={searchQuery}
             onChange={(e) => {
               setSearchQuery(e.target.value);
-              setVisibleCount(30);
+              setVisibleCount(20);
             }}
             placeholder={isTamil ? `${title} வீடியோக்களில் தேடுங்கள்...` : `Search within ${title}...`}
             className="w-full pl-9 pr-8 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs sm:text-sm font-medium focus:outline-none focus:border-amber-500 transition-colors"
@@ -31822,7 +31869,10 @@ function CategoryPage({ categoryId, onNavigate, onShowToast }) {
           <span className="text-xs text-slate-500 font-bold">{isTamil ? 'வரிசை:' : 'Sort:'}</span>
           <select
             value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
+            onChange={(e) => {
+              setSortBy(e.target.value);
+              setVisibleCount(20);
+            }}
             className="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-bold focus:outline-none focus:border-amber-500"
           >
             <option value="newest">{isTamil ? 'சமீபத்தியவை' : 'Latest Uploads'}</option>
@@ -31854,19 +31904,28 @@ function CategoryPage({ categoryId, onNavigate, onShowToast }) {
         </div>
       )}
 
-      {/* Smooth Load More Button */}
-      {hasMore && (
-        <div className="text-center pt-4 pb-8">
-          <button
-            onClick={() => setVisibleCount(prev => prev + 30)}
-            className="btn-magnetic px-8 py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs sm:text-sm shadow-lg shadow-amber-500/20 transition-all hover:scale-105"
-          >
-            {isTamil
-              ? `மேலும் வீடியோக்களைக் காட்டு (${displayedVideos.length} / ${filtered.length})`
-              : `Load More Videos (${displayedVideos.length} of ${filtered.length})`}
-          </button>
-        </div>
-      )}
+      {/* Infinite Scroll Sentinel & Status Counter */}
+      <div ref={sentinelRef} className="pt-6 pb-4 text-center">
+        {visibleCount < filtered.length ? (
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-bold text-slate-500">
+            <div className="w-3 h-3 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
+            <span>
+              {isTamil
+                ? `${Math.min(visibleCount, filtered.length)} / ${filtered.length} வீடியோக்கள் (கீழே உருட்டவும்...)`
+                : `Showing ${Math.min(visibleCount, filtered.length)} of ${filtered.length} (scroll for more...)`}
+            </span>
+          </div>
+        ) : (
+          <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-[11px] font-bold text-slate-400">
+            <span>✓</span>
+            <span>
+              {isTamil
+                ? `அனைத்து ${filtered.length} வீடியோக்களும் ஏற்றப்பட்டுவிட்டன`
+                : `All ${filtered.length} videos loaded`}
+            </span>
+          </div>
+        )}
+      </div>
 
       {/* Video Player Modal */}
       {selectedVideo && (
