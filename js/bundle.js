@@ -33000,18 +33000,10 @@ function App() {
       );
     }
 
-    if (currentHash === '#/admin/articles') {
+    if (currentHash === '#/admin/articles' || currentHash === '#/admin') {
       return (
         <AdminRoute onNavigate={navigate}>
           <AdminArticlesPage onNavigate={navigate} onShowToast={setToastMessage} />
-        </AdminRoute>
-      );
-    }
-
-    if (currentHash === '#/admin') {
-      return (
-        <AdminRoute onNavigate={navigate}>
-          <AdminConsolePage onNavigate={navigate} onShowToast={setToastMessage} />
         </AdminRoute>
       );
     }
