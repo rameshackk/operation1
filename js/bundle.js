@@ -28496,62 +28496,8 @@ const BreakingNewsTicker = TrendingTicker;
  * LIVING VIDEO FAN WALL & CARD CYCLE SYSTEM
  */
 function useCardCycle(frames = [], index = 0, isHovered = false) {
-  const [activeFrameIndex, setActiveFrameIndex] = useState(0);
-  const [nextFrameIndex, setNextFrameIndex] = useState(null);
-  const [isCrossfading, setIsCrossfading] = useState(false);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-
-  const timerRef = useRef(null);
-  const fadeTimeoutRef = useRef(null);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined' && window.matchMedia) {
-      const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-      setPrefersReducedMotion(mediaQuery.matches);
-      const listener = (e) => setPrefersReducedMotion(e.matches);
-      if (mediaQuery.addEventListener) {
-        mediaQuery.addEventListener('change', listener);
-        return () => mediaQuery.removeEventListener('change', listener);
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    if (prefersReducedMotion || !frames || frames.length <= 1 || isHovered) {
-      if (timerRef.current) clearTimeout(timerRef.current);
-      return;
-    }
-
-    const baseInterval = 3600;
-    const staggerOffset = (index * 680) % 1800;
-    const intervalTime = baseInterval + staggerOffset;
-
-    const scheduleNextCycle = () => {
-      timerRef.current = setTimeout(() => {
-        const nextIdx = (activeFrameIndex + 1) % frames.length;
-        setNextFrameIndex(nextIdx);
-        setIsCrossfading(true);
-
-        fadeTimeoutRef.current = setTimeout(() => {
-          setActiveFrameIndex(nextIdx);
-          setNextFrameIndex(null);
-          setIsCrossfading(false);
-        }, 700);
-      }, intervalTime);
-    };
-
-    scheduleNextCycle();
-
-    return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
-      if (fadeTimeoutRef.current) clearTimeout(fadeTimeoutRef.current);
-    };
-  }, [frames, activeFrameIndex, isHovered, prefersReducedMotion, index]);
-
-  const currentFrame = frames && frames.length > 0 ? frames[activeFrameIndex] : '';
-  const nextFrame = nextFrameIndex !== null && frames && frames[nextFrameIndex] ? frames[nextFrameIndex] : null;
-
-  return { currentFrame, nextFrame, isCrossfading, activeFrameIndex, prefersReducedMotion };
+  const currentFrame = frames && frames.length > 0 ? frames[0] : '';
+  return { currentFrame, nextFrame: null, isCrossfading: false, activeFrameIndex: 0, prefersReducedMotion: true };
 }
 
 function VideoFanCard({
@@ -28570,30 +28516,7 @@ function VideoFanCard({
 }) {
   const isTamil = language === 'ta';
   const youtubeId = video?.youtubeId || '';
-  const frames = [
-    video?.thumbnail || (youtubeId ? `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg` : ''),
-    youtubeId ? `https://img.youtube.com/vi/${youtubeId}/hq1.jpg` : '',
-    youtubeId ? `https://img.youtube.com/vi/${youtubeId}/hq2.jpg` : '',
-    youtubeId ? `https://img.youtube.com/vi/${youtubeId}/hq3.jpg` : ''
-  ].filter(Boolean);
-
-  const { currentFrame, nextFrame, isCrossfading, prefersReducedMotion } = useCardCycle(frames, index, isHovered);
-
-  let transformStyle = '';
-  let zIndex = index + 10;
-
-  if (prefersReducedMotion) {
-    transformStyle = 'none';
-  } else if (isHovered) {
-    transformStyle = `rotate(0deg) translateY(-16px) scale(1.06)`;
-    zIndex = 50;
-  } else if (anyCardHovered) {
-    transformStyle = `rotate(${fanRotation * 0.9}deg) translateY(${fanTranslateY}px) translateX(${fanTranslateX}px) scale(0.97)`;
-    zIndex = index + 10;
-  } else {
-    transformStyle = `rotate(${fanRotation}deg) translateY(${fanTranslateY}px) translateX(${fanTranslateX}px)`;
-    zIndex = index + 10;
-  }
+  const thumbnail = video?.thumbnail || (youtubeId ? `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg` : '');
 
   const title = isTamil
     ? (video.titleTamil || video.title || 'வீடியோ பதிவு')
@@ -28607,75 +28530,52 @@ function VideoFanCard({
       role="button"
       tabIndex={0}
       onClick={() => onSelect && onSelect(video)}
-      onMouseEnter={onHoverStart}
-      onMouseLeave={onHoverEnd}
-      onFocus={onHoverStart}
-      onBlur={onHoverEnd}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           onSelect && onSelect(video);
         }
       }}
-      style={{
-        transform: transformStyle,
-        zIndex,
-        willChange: 'transform',
-        backfaceVisibility: 'hidden',
-        WebkitBackfaceVisibility: 'hidden',
-        transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease'
-      }}
-      className={`group relative select-none cursor-pointer shrink-0 rounded-2xl sm:rounded-3xl overflow-hidden
+      className="group relative select-none cursor-pointer shrink-0 rounded-2xl overflow-hidden
         w-[160px] sm:w-[200px] md:w-[220px] aspect-[9/16]
-        bg-slate-900 border border-white/10 dark:border-slate-800
-        shadow-2xl shadow-slate-950/60 hover:shadow-amber-500/20 hover:border-amber-500/40
-        outline-none focus-visible:ring-2 focus-visible:ring-amber-500`}
+        bg-slate-900 border border-slate-800 hover:border-amber-500/80
+        shadow-lg hover:shadow-xl transition-all duration-150"
     >
       <div className="absolute inset-0 w-full h-full overflow-hidden bg-slate-950">
-        {currentFrame && (
+        {thumbnail && (
           <img
-            src={currentFrame}
+            src={thumbnail}
             alt={title}
             loading="lazy"
-            className={`absolute inset-0 w-full h-full object-cover object-center transition-all duration-700
-              ${isCrossfading ? 'scale-105 opacity-40 blur-[1px]' : 'scale-100 opacity-90 blur-0'}
-              group-hover:scale-110`}
+            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-200"
           />
         )}
-        {nextFrame && isCrossfading && (
-          <img
-            src={nextFrame}
-            alt={title}
-            loading="lazy"
-            className="absolute inset-0 w-full h-full object-cover object-center animate-fadeIn transition-all duration-700 opacity-95 scale-100"
-          />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-slate-950/40 opacity-80 group-hover:opacity-95 transition-opacity" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent opacity-90" />
       </div>
 
       <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none z-10">
-        <span className="px-2.5 py-1 text-[9px] font-black uppercase tracking-wider rounded-full bg-slate-950/80 backdrop-blur-md text-amber-400 border border-amber-400/20 shadow-sm">
+        <span className="px-2.5 py-1 text-[9px] font-black uppercase tracking-wider rounded-full bg-slate-950/85 text-amber-400 border border-amber-400/20">
           {category}
         </span>
-        <span className="px-2 py-1 text-[9px] font-mono font-bold rounded-full bg-slate-950/80 backdrop-blur-md text-slate-300 border border-white/10 shadow-sm">
+        <span className="px-2 py-1 text-[9px] font-mono font-bold rounded-full bg-slate-950/85 text-slate-300 border border-white/10">
           {duration}
         </span>
       </div>
 
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-        <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 shadow-xl">
-          <svg className="w-5 h-5 text-white fill-current ml-0.5" viewBox="0 0 24 24">
+        <div className="w-11 h-11 rounded-full bg-amber-500 text-slate-950 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-150 shadow-lg">
+          <svg className="w-5 h-5 fill-current ml-0.5" viewBox="0 0 24 24">
             <polygon points="5 3 19 12 5 21 5 3" />
           </svg>
         </div>
       </div>
 
-      <div className="absolute bottom-0 inset-x-0 p-4 pt-10 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent z-20 flex flex-col justify-end gap-2">
+      <div className="absolute bottom-0 inset-x-0 p-3.5 pt-8 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent z-20 flex flex-col justify-end gap-1.5">
         <h3 className="text-xs sm:text-sm font-bold text-white font-serif line-clamp-2 leading-snug group-hover:text-amber-400 transition-colors">
           {title}
         </h3>
 
-        <div className="flex items-center justify-between pt-1 opacity-80 group-hover:opacity-100 transition-opacity">
+        <div className="flex items-center justify-between pt-0.5">
           <span className="text-[10px] text-slate-400 font-medium line-clamp-1">
             {video.channelName || 'Budget Padmanaban'}
           </span>
@@ -29080,239 +28980,75 @@ function CinemaVideoCard({
   language = 'ta',
   onShowToast
 }) {
-  const cardRef = useRef(null);
-  const [isHovered, setIsHovered] = useState(false);
-  const [activeFrameIndex, setActiveFrameIndex] = useState(0);
-  const [nextFrameIndex, setNextFrameIndex] = useState(null);
-  const [isCrossfading, setIsCrossfading] = useState(false);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  const [glare, setGlare] = useState({ x: 50, y: 50, opacity: 0 });
-  const [scrubPercent, setScrubPercent] = useState(null);
-
   const isTamil = language === 'ta';
-  const timerRef = useRef(null);
-  const fadeTimeoutRef = useRef(null);
+  if (!video) return null;
 
   const youtubeId = video?.youtubeId || '';
-  const frames = [
-    video?.thumbnail || (youtubeId ? `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg` : ''),
-    youtubeId ? `https://img.youtube.com/vi/${youtubeId}/hq1.jpg` : '',
-    youtubeId ? `https://img.youtube.com/vi/${youtubeId}/hq2.jpg` : '',
-    youtubeId ? `https://img.youtube.com/vi/${youtubeId}/hq3.jpg` : ''
-  ].filter(Boolean);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined' && window.matchMedia) {
-      const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-      setPrefersReducedMotion(mediaQuery.matches);
-      const listener = (e) => setPrefersReducedMotion(e.matches);
-      if (mediaQuery.addEventListener) {
-        mediaQuery.addEventListener('change', listener);
-        return () => mediaQuery.removeEventListener('change', listener);
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    if (prefersReducedMotion || !frames || frames.length <= 1 || isHovered) {
-      if (timerRef.current) clearTimeout(timerRef.current);
-      return;
-    }
-
-    const baseInterval = 3400;
-    const staggerOffset = (index * 550) % 2000;
-    const intervalTime = baseInterval + staggerOffset;
-
-    const scheduleNextCycle = () => {
-      timerRef.current = setTimeout(() => {
-        const nextIdx = (activeFrameIndex + 1) % frames.length;
-        setNextFrameIndex(nextIdx);
-        setIsCrossfading(true);
-
-        fadeTimeoutRef.current = setTimeout(() => {
-          setActiveFrameIndex(nextIdx);
-          setNextFrameIndex(null);
-          setIsCrossfading(false);
-        }, 650);
-      }, intervalTime);
-    };
-
-    scheduleNextCycle();
-
-    return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
-      if (fadeTimeoutRef.current) clearTimeout(fadeTimeoutRef.current);
-    };
-  }, [frames, activeFrameIndex, isHovered, prefersReducedMotion, index]);
-
-  const handleMouseMove = (e) => {
-    if (prefersReducedMotion || !cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const pctX = Math.max(0, Math.min(1, x / rect.width));
-    const pctY = Math.max(0, Math.min(1, y / rect.height));
-
-    const tiltY = (pctX - 0.5) * 10;
-    const tiltX = (0.5 - pctY) * 10;
-
-    setTilt({ x: tiltX, y: tiltY });
-    setGlare({ x: pctX * 100, y: pctY * 100, opacity: 0.3 });
-    setScrubPercent(pctX);
-
-    cardRef.current.style.setProperty('--mouse-x', `${(pctX * 100).toFixed(1)}%`);
-
-    if (frames.length > 1) {
-      const frameIdx = Math.min(frames.length - 1, Math.floor(pctX * frames.length));
-      if (frameIdx !== activeFrameIndex) {
-        setActiveFrameIndex(frameIdx);
-        setIsCrossfading(false);
-      }
-    }
-  };
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-    if (timerRef.current) clearTimeout(timerRef.current);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    setTilt({ x: 0, y: 0 });
-    setGlare({ x: 50, y: 50, opacity: 0 });
-    setScrubPercent(null);
-    if (cardRef.current) {
-      cardRef.current.style.removeProperty('--mouse-x');
-    }
-  };
-
-  if (!video) return null;
+  const thumbnail = video?.thumbnail || (youtubeId ? `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg` : '');
 
   const title = isTamil
     ? (video.titleTamil || video.title || 'வீடியோ பதிவு')
     : (video.titleEnglish || video.title || 'Featured Video');
 
-  const category = (video.category || 'FINANCE').replace('-', ' ');
+  const category = (video.category || 'FINANCE').replace('-', ' ').toUpperCase();
   const duration = video.duration || (video.isShort ? '0:59' : '12:00');
-
-  const currentFrame = frames[activeFrameIndex] || frames[0] || '';
-  const nextFrame = nextFrameIndex !== null ? frames[nextFrameIndex] : null;
-
-  const transformStyle = prefersReducedMotion
-    ? 'none'
-    : isHovered
-    ? `perspective(800px) rotateX(${tilt.x.toFixed(2)}deg) rotateY(${tilt.y.toFixed(2)}deg) translateY(-5px) scale(1.02)`
-    : 'perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0px) scale(1)';
 
   return (
     <div
-      ref={cardRef}
       role="button"
       tabIndex={0}
       onClick={() => onSelect && onSelect(video)}
-      onMouseEnter={handleMouseEnter}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           onSelect && onSelect(video);
         }
       }}
-      style={{
-        transform: transformStyle,
-        willChange: 'transform',
-        backfaceVisibility: 'hidden',
-        WebkitBackfaceVisibility: 'hidden',
-        transition: isHovered ? 'transform 0.08s ease-out, box-shadow 0.2s ease' : 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease'
-      }}
       className="group relative select-none cursor-pointer rounded-xl sm:rounded-2xl overflow-hidden
         w-full aspect-[9/13]
-        bg-slate-900 border border-slate-800/90 hover:border-amber-500/60
-        shadow-lg shadow-slate-950/70 hover:shadow-xl hover:shadow-amber-500/20
-        outline-none focus-visible:ring-2 focus-visible:ring-amber-500 shrink-0"
+        bg-slate-900 border border-slate-800 hover:border-amber-500
+        shadow-md hover:shadow-xl hover:shadow-amber-500/10
+        transition-all duration-150 shrink-0"
     >
-      <div
-        className="absolute inset-0 pointer-events-none rounded-xl sm:rounded-2xl z-10 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
-        style={{
-          boxShadow: 'inset 0 0 0 1.5px rgba(245, 158, 11, 0.45)'
-        }}
-      />
-
       <div className="absolute inset-0 w-full h-full overflow-hidden bg-slate-950">
-        {currentFrame && (
+        {thumbnail && (
           <img
-            src={currentFrame}
+            src={thumbnail}
             alt={title}
             loading="lazy"
-            className={`absolute inset-0 w-full h-full object-cover object-center transition-all duration-400
-              ${isCrossfading ? 'scale-105 opacity-40 blur-[1px]' : 'scale-100 opacity-90 blur-0'}
-              group-hover:scale-105 group-hover:opacity-100`}
+            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-200"
           />
         )}
-        {nextFrame && isCrossfading && (
-          <img
-            src={nextFrame}
-            alt={title}
-            loading="lazy"
-            className="absolute inset-0 w-full h-full object-cover object-center animate-fadeIn transition-all duration-400 opacity-95 scale-100"
-          />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/35 to-slate-950/40 opacity-85 group-hover:opacity-95 transition-opacity" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent opacity-90" />
       </div>
 
-      <div
-        className="absolute inset-0 pointer-events-none transition-opacity duration-300 z-15"
-        style={{
-          background: `radial-gradient(circle 180px at ${glare.x}% ${glare.y}%, rgba(255, 255, 255, ${glare.opacity}), transparent 80%)`
-        }}
-      />
-
       <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between z-20 pointer-events-none">
-        <span className="px-2 py-0.5 text-[8.5px] font-black uppercase tracking-wider rounded-full bg-slate-950/85 backdrop-blur-md text-amber-400 border border-amber-400/25 shadow-sm">
+        <span className="px-2 py-0.5 text-[8.5px] font-black uppercase tracking-wider rounded-full bg-slate-950/85 text-amber-400 border border-amber-400/20">
           {category}
         </span>
-        <span className="px-1.5 py-0.5 text-[8.5px] font-mono font-bold rounded-full bg-slate-950/85 backdrop-blur-md text-slate-200 border border-white/10 shadow-sm">
+        <span className="px-1.5 py-0.5 text-[8.5px] font-mono font-bold rounded-full bg-slate-950/85 text-slate-200 border border-white/10">
           {duration}
         </span>
       </div>
 
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
-        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-950/85 backdrop-blur-md border border-white/20 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transform scale-75 group-hover:scale-100 transition-all duration-250 shadow-xl group-hover:border-amber-500/60">
-          <svg className="w-4 h-4 text-amber-400 fill-current ml-0.5" viewBox="0 0 24 24">
+        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-amber-500 text-slate-950 flex items-center justify-center opacity-0 group-hover:opacity-100 transform scale-90 group-hover:scale-100 transition-all duration-150 shadow-lg">
+          <svg className="w-4 h-4 fill-current ml-0.5" viewBox="0 0 24 24">
             <polygon points="5 3 19 12 5 21 5 3" />
           </svg>
         </div>
       </div>
-
-      {scrubPercent !== null && frames.length > 1 && (
-        <div className="absolute top-9 left-2.5 right-2.5 z-20 pointer-events-none flex items-center gap-0.5 bg-slate-950/70 backdrop-blur-md p-0.5 rounded-full border border-white/10">
-          {frames.map((_, fIdx) => {
-            const isActive = fIdx === activeFrameIndex;
-            return (
-              <div
-                key={`scrub-${fIdx}`}
-                className={`h-0.5 flex-1 rounded-full transition-all duration-150 ${
-                  isActive ? 'bg-amber-400 shadow-sm' : 'bg-white/20'
-                }`}
-              />
-            );
-          })}
-        </div>
-      )}
 
       <div className="absolute bottom-0 inset-x-0 p-3 pt-8 bg-gradient-to-t from-slate-950 via-slate-950/95 to-transparent z-20 flex flex-col justify-end gap-1.5">
         <h3 className="text-[11px] sm:text-xs font-bold text-white font-serif line-clamp-2 leading-tight group-hover:text-amber-400 transition-colors">
           {title}
         </h3>
 
-        <div className="flex items-center justify-between pt-0.5 opacity-80 group-hover:opacity-100 transition-opacity">
+        <div className="flex items-center justify-between pt-0.5 opacity-80 group-hover:opacity-100">
           <span className="text-[9px] text-slate-400 font-medium truncate max-w-[100px]">
             {video.channelName || 'Budget Padmanaban'}
           </span>
-          <span className="text-[9px] font-bold text-amber-400 group-hover:underline shrink-0 flex items-center gap-0.5 btn-magnetic">
+          <span className="text-[9px] font-bold text-amber-400 group-hover:underline shrink-0 flex items-center gap-0.5">
             <span>{isTamil ? 'பார்க்க' : 'Watch'}</span>
             <span>→</span>
           </span>
@@ -29341,9 +29077,7 @@ function CinemaSpotlightHero({
     : (currentVideo.descriptionEnglish || currentVideo.description);
 
   return (
-    <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-slate-950 via-slate-900 to-amber-950/70 border border-amber-500/30 p-5 sm:p-8 shadow-2xl text-white">
-      <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-amber-500/10 blur-3xl pointer-events-none" />
-
+    <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-slate-900 border border-amber-500/30 p-5 sm:p-8 shadow-xl text-white">
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
         <div className="lg:col-span-7 space-y-3 sm:space-y-4">
           <div className="flex items-center gap-2">
@@ -29915,7 +29649,7 @@ function VideosPage({ onNavigate, onShowToast }) {
   const isFiltering = activeCategory !== 'all' || searchQuery.trim().length > 0;
 
   return (
-    <div className="min-h-screen pb-24 space-y-8 animate-fadeIn text-slate-900 dark:text-white">
+    <div className="min-h-screen pb-24 space-y-8 text-slate-900 dark:text-white">
       {/* 1. CINEMA SPOTLIGHT HERO */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
         <CinemaSpotlightHero
