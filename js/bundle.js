@@ -31619,52 +31619,6 @@ function AuthPage({ initialMode = 'login', onNavigate }) {
             </h2>
           </div>
 
-          {/* Demo Admin Quick-Access Card */}
-          <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-500/15 via-amber-500/10 to-amber-600/15 border border-amber-500/30 text-slate-900 dark:text-white relative overflow-hidden shadow-sm">
-            <div className="flex items-center justify-between gap-2 mb-2">
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping" />
-                <span className="text-xs font-black text-amber-600 dark:text-amber-400 uppercase tracking-wide">
-                  {isTamil ? 'டெமோ நேரடி அணுகல்' : 'Fixed Demo Credentials (Reviewer Access)'}
-                </span>
-              </div>
-              <span className="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-700 dark:text-amber-300 text-[10px] font-black">
-                Admin / Publisher
-              </span>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] font-mono text-slate-700 dark:text-slate-300 mb-3 bg-white/70 dark:bg-slate-950/70 p-2.5 rounded-xl border border-amber-500/20">
-              <div>
-                <span className="text-slate-400 block text-[9px] uppercase font-sans font-bold">Fixed Email</span>
-                <span className="font-bold text-amber-600 dark:text-amber-400">padmanaban@fispl.in</span>
-              </div>
-              <div>
-                <span className="text-slate-400 block text-[9px] uppercase font-sans font-bold">Fixed Password</span>
-                <span className="font-bold text-amber-600 dark:text-amber-400">Padmanaban@2026</span>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={handleDemoSignIn}
-                disabled={isLoading}
-                className="flex-1 py-2.5 px-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs shadow-md transition-all flex items-center justify-center gap-1.5 active:scale-95"
-              >
-                <span>🚀</span>
-                <span>{isTamil ? 'பி. பத்மநாபன் நேரடி உள்நுழைவு' : '1-Click Login as B. Padmanaban'}</span>
-              </button>
-              <button
-                type="button"
-                onClick={handlePrefillDemo}
-                className="py-2.5 px-3 rounded-xl bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs border border-slate-200 dark:border-slate-700 transition-colors"
-                title="Fill inputs"
-              >
-                {isTamil ? 'நிரப்பு' : 'Auto-Fill'}
-              </button>
-            </div>
-          </div>
-
           {error && (
             <div className="p-3.5 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-600 dark:text-red-400 text-xs font-bold">
               {error}
