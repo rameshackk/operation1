@@ -26552,8 +26552,10 @@ function AuthProvider({ children }) {
         session,
         user,
         profile,
+        setProfile,
         role,
         isAuthLoading,
+        fetchUserProfile,
         signInWithPassword,
         signInAsDemoPadmanaban,
         signUp,
@@ -26862,7 +26864,7 @@ function AdminRoute({ children, onNavigate }) {
     }
     return null;
   }
-  if (role !== 'admin') {
+  if (role !== 'admin' && role !== 'publisher') {
     if (typeof window !== 'undefined' && window.location.hash !== '#/') {
       if (onNavigate) {
         onNavigate('#/');
@@ -27112,8 +27114,8 @@ function Navbar({ currentPath, onNavigate }) {
 
   const authNavItems = user ? [
     { id: 'profile', hash: '#/profile', label: ` ${language === 'ta' ? 'சுயவிவரம்' : 'Profile'}` },
-    ...(role === 'admin' ? [
-      { id: 'admin-articles', hash: '#/admin/articles', label: ` ${language === 'ta' ? 'கட்டுரைகள் ஸ்டுடியோ' : 'Article Studio'}` }
+    ...(role === 'admin' || role === 'publisher' ? [
+      { id: 'admin-articles', hash: '#/admin/articles', label: `✍️ ${language === 'ta' ? 'கட்டுரைகள் ஸ்டுடியோ' : 'Article Studio'}` }
     ] : []),
 
   ] : [
@@ -30517,17 +30519,44 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
 
 function AdminArticlesPage({ onNavigate, onShowToast }) {
   const { language } = useLanguage();
-  const { session, role } = useAuth();
+  const { session, role, user, profile, setProfile } = useAuth();
   const isTamil = language === 'ta';
+  const isAdmin = role === 'admin';
 
+  // Admin Tab: 'articles' | 'publishers'
+  const [activeTab, setActiveTab] = useState('articles');
+
+  // Articles state
   const [articles, setArticles] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingArticles, setIsLoadingArticles] = useState(true);
   const [statusFilter, setStatusFilter] = useState('all');
   const [search, setSearch] = useState('');
   const [deletingId, setDeletingId] = useState(null);
 
+  // Publishers state
+  const [publishers, setPublishers] = useState([]);
+  const [isLoadingPublishers, setIsLoadingPublishers] = useState(false);
+  const [publisherSearch, setPublisherSearch] = useState('');
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [editingPublisher, setEditingPublisher] = useState(null);
+  const [deletingPublisherId, setDeletingPublisherId] = useState(null);
+
+  // Create Publisher Form State
+  const [newPubName, setNewPubName] = useState('');
+  const [newPubEmail, setNewPubEmail] = useState('');
+  const [newPubPassword, setNewPubPassword] = useState('');
+  const [newPubTitle, setNewPubTitle] = useState('AMFI Registered Mutual Fund Distributor');
+  const [newPubArn, setNewPubArn] = useState('');
+  const [newPubSpecialties, setNewPubSpecialties] = useState('Mutual Funds, SIP Portfolios, Wealth Planning');
+  const [newPubLinkedin, setNewPubLinkedin] = useState('');
+  const [newPubTwitter, setNewPubTwitter] = useState('');
+  const [newPubYoutube, setNewPubYoutube] = useState('');
+  const [newPubPhone, setNewPubPhone] = useState('');
+  const [isSubmittingPublisher, setIsSubmittingPublisher] = useState(false);
+  const [createdCredentials, setCreatedCredentials] = useState(null);
+
   const fetchArticles = async () => {
-    setIsLoading(true);
+    setIsLoadingArticles(true);
     try {
       const token = session?.access_token || '';
       const res = await fetch(`/api/admin/articles?status=${statusFilter}&search=${encodeURIComponent(search)}&limit=100`, {
@@ -30539,17 +30568,40 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
       console.error('Failed to load admin articles:', err);
       if (onShowToast) onShowToast(err.message);
     } finally {
-      setIsLoading(false);
+      setIsLoadingArticles(false);
+    }
+  };
+
+  const fetchPublishers = async () => {
+    setIsLoadingPublishers(true);
+    try {
+      const token = session?.access_token || '';
+      const res = await fetch('/api/admin/publishers', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const data = await res.json();
+      setPublishers(data.data || []);
+    } catch (err) {
+      console.error('Failed to load publishers:', err);
+      if (onShowToast) onShowToast(err.message);
+    } finally {
+      setIsLoadingPublishers(false);
     }
   };
 
   useEffect(() => {
-    if (role === 'admin') {
+    if (role === 'admin' || role === 'publisher') {
       fetchArticles();
     }
   }, [session, role, statusFilter, search]);
 
-  const handleDelete = async (id, title) => {
+  useEffect(() => {
+    if (role === 'admin' && activeTab === 'publishers') {
+      fetchPublishers();
+    }
+  }, [session, role, activeTab]);
+
+  const handleDeleteArticle = async (id, title) => {
     if (!window.confirm(isTamil ? `இந்தக் கட்டுரையை நிச்சயமாக நீக்க விரும்புகிறீர்களா?\n"${title}"` : `Are you sure you want to delete this article?\n"${title}"`)) {
       return;
     }
@@ -30597,18 +30649,163 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
     }
   };
 
-  if (role !== 'admin') return null;
+  // Generate strong random password for new publisher
+  const generateStrongPassword = () => {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789!@#$%';
+    let pass = 'Pub@';
+    for (let i = 0; i < 8; i++) {
+      pass += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    setNewPubPassword(pass);
+  };
+
+  // Create Publisher Handler
+  const handleCreatePublisher = async (e) => {
+    e.preventDefault();
+    if (!newPubName.trim() || !newPubEmail.trim() || !newPubPassword.trim()) {
+      if (onShowToast) onShowToast(isTamil ? 'பெயர், மின்னஞ்சல் மற்றும் கடவுச்சொல் தேவை' : 'Name, email and password are required');
+      return;
+    }
+
+    setIsSubmittingPublisher(true);
+    try {
+      const token = session?.access_token || '';
+      const specialtiesArr = newPubSpecialties.split(',').map(s => s.trim()).filter(Boolean);
+      const res = await fetch('/api/admin/publishers', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          display_name: newPubName.trim(),
+          email: newPubEmail.trim(),
+          password: newPubPassword.trim(),
+          title: newPubTitle.trim(),
+          arn_number: newPubArn.trim(),
+          specialties: specialtiesArr,
+          linkedin_url: newPubLinkedin.trim(),
+          twitter_url: newPubTwitter.trim(),
+          youtube_url: newPubYoutube.trim(),
+          phone: newPubPhone.trim()
+        })
+      });
+
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || 'Failed to create publisher');
+
+      setCreatedCredentials({
+        name: newPubName,
+        email: newPubEmail,
+        password: newPubPassword
+      });
+
+      if (onShowToast) onShowToast(isTamil ? 'வெளியீட்டாளர் வெற்றிகரமாக சேர்க்கப்பட்டார்!' : 'Publisher account created successfully!');
+      fetchPublishers();
+
+      // Reset form fields
+      setNewPubName('');
+      setNewPubEmail('');
+      setNewPubPassword('');
+      setNewPubArn('');
+      setNewPubLinkedin('');
+      setNewPubTwitter('');
+      setNewPubYoutube('');
+      setNewPubPhone('');
+    } catch (err) {
+      if (onShowToast) onShowToast(`Error: ${err.message}`);
+    } finally {
+      setIsSubmittingPublisher(false);
+    }
+  };
+
+  // Delete Publisher Handler
+  const handleDeletePublisher = async (pubId, pubName) => {
+    if (!window.confirm(isTamil
+      ? `"${pubName}" வெளியீட்டாளர் கணக்கை நிச்சயமாக நீக்க விரும்புகிறீர்களா?\nஇந்த செயல் திரும்பப்பெற முடியாது.`
+      : `Are you sure you want to permanently delete publisher "${pubName}"?\nThis action cannot be undone.`)) {
+      return;
+    }
+
+    setDeletingPublisherId(pubId);
+    try {
+      const token = session?.access_token || '';
+      const res = await fetch(`/api/admin/publishers/${pubId}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || 'Failed to delete publisher');
+
+      if (onShowToast) onShowToast(isTamil ? 'வெளியீட்டாளர் நீக்கப்பட்டார்' : 'Publisher deleted successfully');
+      setPublishers(prev => prev.filter(p => p.id !== pubId));
+    } catch (err) {
+      if (onShowToast) onShowToast(`Error: ${err.message}`);
+    } finally {
+      setDeletingPublisherId(null);
+    }
+  };
+
+  // Edit Publisher Update Handler
+  const handleUpdatePublisher = async (e) => {
+    e.preventDefault();
+    if (!editingPublisher) return;
+
+    try {
+      const token = session?.access_token || '';
+      const res = await fetch(`/api/admin/publishers/${editingPublisher.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          display_name: editingPublisher.display_name,
+          title: editingPublisher.title,
+          arn_number: editingPublisher.arn_number,
+          specialties: Array.isArray(editingPublisher.specialties) ? editingPublisher.specialties : editingPublisher.specialties?.split(',').map(s => s.trim()).filter(Boolean),
+          bio: editingPublisher.bio,
+          linkedin_url: editingPublisher.linkedin_url,
+          twitter_url: editingPublisher.twitter_url,
+          youtube_url: editingPublisher.youtube_url,
+          phone: editingPublisher.phone
+        })
+      });
+
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || 'Failed to update publisher');
+
+      if (onShowToast) onShowToast(isTamil ? 'விவரங்கள் புதுப்பிக்கப்பட்டன' : 'Publisher updated successfully');
+      setPublishers(prev => prev.map(p => p.id === editingPublisher.id ? json.data : p));
+      setEditingPublisher(null);
+    } catch (err) {
+      if (onShowToast) onShowToast(`Error: ${err.message}`);
+    }
+  };
+
+  if (role !== 'admin' && role !== 'publisher') return null;
 
   const publishedCount = articles.filter(a => a.status === 'published').length;
   const draftCount = articles.filter(a => a.status === 'draft').length;
 
+  const filteredPublishers = publishers.filter(p => {
+    if (!publisherSearch.trim()) return true;
+    const q = publisherSearch.toLowerCase();
+    return (p.display_name && p.display_name.toLowerCase().includes(q)) ||
+           (p.email && p.email.toLowerCase().includes(q)) ||
+           (p.arn_number && p.arn_number.toLowerCase().includes(q)) ||
+           (p.title && p.title.toLowerCase().includes(q));
+  });
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 animate-fadeIn">
+      {/* Header Banner */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
         <div>
           <div className="flex items-center gap-2">
-            <span className="px-3 py-1 text-[10px] font-black uppercase tracking-wider rounded-full bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20">
-              ADMIN ARTICLE STUDIO
+            <span className="px-3 py-1 text-[10px] font-black uppercase tracking-wider rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+              {isAdmin ? 'ADMIN & PUBLISHER CONSOLE' : 'PUBLISHER STUDIO'}
             </span>
             <button
               onClick={() => onNavigate('#/admin')}
@@ -30618,180 +30815,1058 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
             </button>
           </div>
           <h1 className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white font-serif mt-2">
-            {isTamil ? 'கட்டுரைகள் மேலாண்மை' : 'Articles & Content Studio'}
+            {isAdmin 
+              ? (isTamil ? 'நிர்வாகம் & வெளியீட்டாளர் மேலாண்மை' : 'Admin & Content Management')
+              : (isTamil ? 'வெளியீட்டாளர் கட்டுரை அரங்கம்' : 'Publisher Article Studio')}
           </h1>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-            {isTamil ? 'அசல் கட்டுரைகளை எழுதுங்கள், திருத்துங்கள், மொழிபெயர்த்து உடனே வெளியிடுங்கள்.' : 'Create, rich-text edit, auto-translate, and publish original articles directly to Supabase.'}
+            {isTamil 
+              ? 'கட்டுரைகளை எழுதுங்கள், திருத்துங்கள், வெளியீட்டாளர்களை நிர்வகியுங்கள்.' 
+              : 'Create articles, manage certified financial publishers, and curate investor content.'}
           </p>
         </div>
 
-        <button
-          onClick={() => onNavigate('#/admin/articles/new')}
-          className="px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs sm:text-sm shadow-xl hover:scale-105 transition-all flex items-center gap-2 shrink-0"
-        >
-          <span></span>
-          <span>{isTamil ? 'புதிய கட்டுரை எழுதுக' : '+ Write New Article'}</span>
-        </button>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
-          <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">{isTamil ? 'மொத்த கட்டுரைகள்' : 'Total Articles'}</span>
-          <div className="text-2xl font-black text-slate-900 dark:text-white font-mono">{articles.length}</div>
-        </div>
-
-        <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
-          <span className="text-[10px] font-black uppercase tracking-wider text-emerald-600 dark:text-emerald-400">{isTamil ? 'வெளியிடப்பட்டவை' : 'Published Live'}</span>
-          <div className="text-2xl font-black text-emerald-600 dark:text-emerald-400 font-mono">{publishedCount}</div>
-        </div>
-
-        <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
-          <span className="text-[10px] font-black uppercase tracking-wider text-amber-600 dark:text-amber-400">{isTamil ? 'வரைவுகள் (Drafts)' : 'Saved Drafts'}</span>
-          <div className="text-2xl font-black text-amber-600 dark:text-amber-400 font-mono">{draftCount}</div>
-        </div>
-      </div>
-
-      <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
-        <div className="flex items-center gap-2">
-          <span className="text-xs font-bold text-slate-500">{isTamil ? 'நிலை:' : 'Status:'}</span>
-          <button onClick={() => setStatusFilter('all')} className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${statusFilter === 'all' ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-950' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`}>All ({articles.length})</button>
-          <button onClick={() => setStatusFilter('published')} className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${statusFilter === 'published' ? 'bg-emerald-600 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`}>Published</button>
-          <button onClick={() => setStatusFilter('draft')} className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${statusFilter === 'draft' ? 'bg-amber-600 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`}>Drafts</button>
-        </div>
-
-        <div className="relative flex-1 max-w-sm">
-          <input
-            type="text"
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            placeholder={isTamil ? "கட்டுரைகளைத் தேடுக..." : "Search articles..."}
-            className="w-full pl-4 pr-10 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
-          />
-          {search && <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400"></button>}
-        </div>
-      </div>
-
-      <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden">
-        {isLoading ? (
-          <div className="py-20 text-center space-y-3">
-            <div className="w-8 h-8 border-4 border-amber-500 border-t-transparent rounded-full animate-spin mx-auto" />
-            <p className="text-xs font-bold text-slate-500">Loading articles...</p>
-          </div>
-        ) : articles.length === 0 ? (
-          <div className="py-16 text-center space-y-3">
-            <div className="text-3xl"></div>
-            <h3 className="text-base font-bold text-slate-900 dark:text-white">
-              {isTamil ? 'கட்டுரைகள் எதுவும் இல்லை' : 'No Articles Found'}
-            </h3>
+        <div className="flex items-center gap-3">
+          {isAdmin && (
             <button
-              onClick={() => onNavigate('#/admin/articles/new')}
-              className="px-5 py-2.5 rounded-xl bg-amber-600 text-white font-bold text-xs hover:bg-amber-500 transition-colors shadow"
+              onClick={() => {
+                setCreatedCredentials(null);
+                generateStrongPassword();
+                setIsCreateModalOpen(true);
+              }}
+              className="px-5 py-3 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100 font-black text-xs sm:text-sm shadow-md transition-all flex items-center gap-2 shrink-0"
             >
-              {isTamil ? 'முதல் கட்டுரையை எழுதுங்கள்' : 'Write Your First Article'}
+              <span>👥</span>
+              <span>{isTamil ? '+ புதிய வெளியீட்டாளர்' : '+ Create Publisher'}</span>
+            </button>
+          )}
+
+          <button
+            onClick={() => onNavigate('#/admin/articles/new')}
+            className="px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs sm:text-sm shadow-xl hover:scale-105 transition-all flex items-center gap-2 shrink-0"
+          >
+            <span>✍️</span>
+            <span>{isTamil ? 'புதிய கட்டுரை எழுதுக' : '+ Write New Article'}</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Main Tab Navigation (Admin Only) */}
+      {isAdmin && (
+        <div className="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-2">
+          <button
+            onClick={() => setActiveTab('articles')}
+            className={`px-5 py-2.5 rounded-2xl text-xs font-black transition-all flex items-center gap-2 ${
+              activeTab === 'articles'
+                ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
+                : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
+            }`}
+          >
+            <span>✍️</span>
+            <span>{isTamil ? 'கட்டுரைகள் ஸ்டுடியோ' : 'Articles Studio'} ({articles.length})</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('publishers')}
+            className={`px-5 py-2.5 rounded-2xl text-xs font-black transition-all flex items-center gap-2 ${
+              activeTab === 'publishers'
+                ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
+                : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
+            }`}
+          >
+            <span>👥</span>
+            <span>{isTamil ? 'வெளியீட்டாளர்கள் & நிபுணர்கள்' : 'Publishers & Advisors'} ({publishers.length})</span>
+          </button>
+        </div>
+      )}
+
+      {/* ================= TAB 1: ARTICLES STUDIO ================= */}
+      {activeTab === 'articles' && (
+        <div className="space-y-6">
+          {/* Quick Metrics */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+              <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">{isTamil ? 'மொத்த கட்டுரைகள்' : 'Total Articles'}</span>
+              <div className="text-2xl font-black text-slate-900 dark:text-white font-mono">{articles.length}</div>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+              <span className="text-[10px] font-black uppercase tracking-wider text-emerald-600 dark:text-emerald-400">{isTamil ? 'வெளியிடப்பட்டவை' : 'Published Live'}</span>
+              <div className="text-2xl font-black text-emerald-600 dark:text-emerald-400 font-mono">{publishedCount}</div>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+              <span className="text-[10px] font-black uppercase tracking-wider text-amber-600 dark:text-amber-400">{isTamil ? 'வரைவுகள் (Drafts)' : 'Saved Drafts'}</span>
+              <div className="text-2xl font-black text-amber-600 dark:text-amber-400 font-mono">{draftCount}</div>
+            </div>
+          </div>
+
+          {/* Filter and Search Bar */}
+          <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold text-slate-500">{isTamil ? 'நிலை:' : 'Status:'}</span>
+              <button onClick={() => setStatusFilter('all')} className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${statusFilter === 'all' ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-950' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`}>All ({articles.length})</button>
+              <button onClick={() => setStatusFilter('published')} className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${statusFilter === 'published' ? 'bg-emerald-600 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`}>Published</button>
+              <button onClick={() => setStatusFilter('draft')} className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${statusFilter === 'draft' ? 'bg-amber-600 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`}>Drafts</button>
+            </div>
+
+            <div className="relative flex-1 max-w-sm">
+              <input
+                type="text"
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                placeholder={isTamil ? "கட்டுரைகளைத் தேடுக..." : "Search articles..."}
+                className="w-full pl-4 pr-10 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+              />
+              {search && <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400">✕</button>}
+            </div>
+          </div>
+
+          {/* Articles Table */}
+          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden">
+            {isLoadingArticles ? (
+              <div className="py-20 text-center space-y-3">
+                <div className="w-8 h-8 border-4 border-amber-500 border-t-transparent rounded-full animate-spin mx-auto" />
+                <p className="text-xs font-bold text-slate-500">Loading articles...</p>
+              </div>
+            ) : articles.length === 0 ? (
+              <div className="py-16 text-center space-y-3">
+                <div className="text-3xl">📝</div>
+                <h3 className="text-base font-bold text-slate-900 dark:text-white">
+                  {isTamil ? 'கட்டுரைகள் எதுவும் இல்லை' : 'No Articles Found'}
+                </h3>
+                <button
+                  onClick={() => onNavigate('#/admin/articles/new')}
+                  className="px-5 py-2.5 rounded-xl bg-amber-600 text-white font-bold text-xs hover:bg-amber-500 transition-colors shadow"
+                >
+                  {isTamil ? 'முதல் கட்டுரையை எழுதுங்கள்' : 'Write Your First Article'}
+                </button>
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-slate-50 dark:bg-slate-950 text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider text-[10px] border-b border-slate-200 dark:border-slate-800">
+                    <tr>
+                      <th className="px-6 py-4">Article</th>
+                      <th className="px-6 py-4">Category</th>
+                      <th className="px-6 py-4">Read Time</th>
+                      <th className="px-6 py-4">Status</th>
+                      <th className="px-6 py-4">Date</th>
+                      <th className="px-6 py-4 text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-medium">
+                    {articles.map(article => (
+                      <tr key={article.id} className="hover:bg-slate-50/60 dark:hover:bg-slate-800/40 transition-colors">
+                        <td className="px-6 py-4">
+                          <div className="flex items-center gap-3">
+                            <img
+                              src={article.coverImage || '/favicon.svg'}
+                              alt=""
+                              className="w-12 h-12 rounded-xl object-cover bg-slate-950 shrink-0 border border-slate-200 dark:border-slate-800"
+                              onError={(e) => { e.target.src = '/favicon.svg'; }}
+                            />
+                            <div className="min-w-0 max-w-md">
+                              <div className="font-bold text-slate-900 dark:text-white truncate font-serif text-sm">
+                                {article.titleTamil}
+                              </div>
+                              {article.titleEnglish && (
+                                <div className="text-[11px] text-slate-400 truncate">
+                                  EN: {article.titleEnglish}
+                                </div>
+                              )}
+                              <div className="text-[10px] font-mono text-slate-400 mt-0.5">
+                                /{article.slug}
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+
+                        <td className="px-6 py-4">
+                          <span className="px-2.5 py-1 rounded-md text-[10px] font-extrabold uppercase bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                            {article.category}
+                          </span>
+                        </td>
+
+                        <td className="px-6 py-4 font-mono text-slate-500 dark:text-slate-400">
+                          ⏱ {article.readTimeMinutes} min
+                        </td>
+
+                        <td className="px-6 py-4">
+                          <button
+                            onClick={() => handleTogglePublish(article)}
+                            title="Click to toggle publish/draft status"
+                            className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider transition-all ${
+                              article.status === 'published'
+                                ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/25'
+                                : 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 hover:bg-amber-500/25'
+                            }`}
+                          >
+                            {article.status === 'published' ? '● Published' : '○ Draft'}
+                          </button>
+                        </td>
+
+                        <td className="px-6 py-4 text-slate-500 text-[11px] whitespace-nowrap">
+                          {article.publishedAt ? new Date(article.publishedAt).toLocaleDateString() : 'Unpublished'}
+                        </td>
+
+                        <td className="px-6 py-4 text-right">
+                          <div className="flex items-center justify-end gap-2">
+                            {article.status === 'published' && (
+                              <button
+                                onClick={() => onNavigate(`#/articles/${article.slug}`)}
+                                title="View live article"
+                                className="p-2 rounded-xl text-slate-400 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                              >
+                                👁️
+                              </button>
+                            )}
+                            <button
+                              onClick={() => onNavigate(`#/admin/articles/edit/${article.id}`)}
+                              title="Edit article"
+                              className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-amber-600 hover:text-white text-slate-700 dark:text-slate-300 font-bold transition-all"
+                            >
+                              ✏️ Edit
+                            </button>
+                            <button
+                              onClick={() => handleDeleteArticle(article.id, article.titleTamil)}
+                              disabled={deletingId === article.id}
+                              title="Delete article"
+                              className="p-2 rounded-xl text-red-500 hover:bg-red-500/10 transition-colors disabled:opacity-50"
+                            >
+                              🗑️
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* ================= TAB 2: PUBLISHERS & ADVISORS MANAGEMENT ================= */}
+      {isAdmin && activeTab === 'publishers' && (
+        <div className="space-y-6">
+          {/* Publishers Overview Metrics */}
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+            <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+              <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">{isTamil ? 'மொத்த வெளியீட்டாளர்கள்' : 'Total Publishers'}</span>
+              <div className="text-2xl font-black text-slate-900 dark:text-white font-mono">{publishers.length}</div>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+              <span className="text-[10px] font-black uppercase tracking-wider text-emerald-600 dark:text-emerald-400">{isTamil ? 'முழுமை அடைந்த விவரங்கள்' : 'Profile Complete'}</span>
+              <div className="text-2xl font-black text-emerald-600 dark:text-emerald-400 font-mono">
+                {publishers.filter(p => p.is_onboarded).length}
+              </div>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+              <span className="text-[10px] font-black uppercase tracking-wider text-amber-600 dark:text-amber-400">{isTamil ? 'முதல் உள்நுழைவு நிலுவை' : 'Pending First Login'}</span>
+              <div className="text-2xl font-black text-amber-600 dark:text-amber-400 font-mono">
+                {publishers.filter(p => !p.is_onboarded).length}
+              </div>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+              <span className="text-[10px] font-black uppercase tracking-wider text-blue-600 dark:text-blue-400">{isTamil ? 'மொத்த கட்டுரைகள்' : 'Publisher Articles'}</span>
+              <div className="text-2xl font-black text-blue-600 dark:text-blue-400 font-mono">
+                {publishers.reduce((acc, p) => acc + parseInt(p.article_count || 0, 10), 0)}
+              </div>
+            </div>
+          </div>
+
+          {/* Search and Action Bar */}
+          <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+            <div className="relative flex-1 max-w-md">
+              <input
+                type="text"
+                value={publisherSearch}
+                onChange={e => setPublisherSearch(e.target.value)}
+                placeholder={isTamil ? "வெளியீட்டாளர் பெயர், மின்னஞ்சல் அல்லது ARN தேடுக..." : "Search publishers by name, email or ARN..."}
+                className="w-full pl-4 pr-10 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+              />
+              {publisherSearch && (
+                <button onClick={() => setPublisherSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400">✕</button>
+              )}
+            </div>
+
+            <button
+              onClick={() => {
+                setCreatedCredentials(null);
+                generateStrongPassword();
+                setIsCreateModalOpen(true);
+              }}
+              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs shadow-md transition-all flex items-center justify-center gap-2"
+            >
+              <span>+</span>
+              <span>{isTamil ? 'புதிய வெளியீட்டாளர் சேர்க்க' : 'Add New Publisher'}</span>
             </button>
           </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 dark:bg-slate-950 text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider text-[10px] border-b border-slate-200 dark:border-slate-800">
-                <tr>
-                  <th className="px-6 py-4">Article</th>
-                  <th className="px-6 py-4">Category</th>
-                  <th className="px-6 py-4">Read Time</th>
-                  <th className="px-6 py-4">Status</th>
-                  <th className="px-6 py-4">Date</th>
-                  <th className="px-6 py-4 text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-medium">
-                {articles.map(article => (
-                  <tr key={article.id} className="hover:bg-slate-50/60 dark:hover:bg-slate-800/40 transition-colors">
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
-                        <img
-                          src={article.coverImage || '/favicon.svg'}
-                          alt=""
-                          className="w-12 h-12 rounded-xl object-cover bg-slate-950 shrink-0 border border-slate-200 dark:border-slate-800"
-                          onError={(e) => { e.target.src = '/favicon.svg'; }}
-                        />
-                        <div className="min-w-0 max-w-md">
-                          <div className="font-bold text-slate-900 dark:text-white truncate font-serif text-sm">
-                            {article.titleTamil}
-                          </div>
-                          {article.titleEnglish && (
-                            <div className="text-[11px] text-slate-400 truncate">
-                              EN: {article.titleEnglish}
+
+          {/* Publishers Cards / Table */}
+          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden">
+            {isLoadingPublishers ? (
+              <div className="py-20 text-center space-y-3">
+                <div className="w-8 h-8 border-4 border-amber-500 border-t-transparent rounded-full animate-spin mx-auto" />
+                <p className="text-xs font-bold text-slate-500">Loading publishers list...</p>
+              </div>
+            ) : filteredPublishers.length === 0 ? (
+              <div className="py-16 text-center space-y-3">
+                <div className="text-3xl">👥</div>
+                <h3 className="text-base font-bold text-slate-900 dark:text-white">
+                  {isTamil ? 'வெளியீட்டாளர்கள் எதுவும் இல்லை' : 'No Publishers Found'}
+                </h3>
+                <button
+                  onClick={() => setIsCreateModalOpen(true)}
+                  className="px-5 py-2.5 rounded-xl bg-amber-600 text-white font-bold text-xs hover:bg-amber-500 transition-colors shadow"
+                >
+                  {isTamil ? 'முதல் வெளியீட்டாளரைச் சேருங்கள்' : 'Add First Publisher'}
+                </button>
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-slate-50 dark:bg-slate-950 text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider text-[10px] border-b border-slate-200 dark:border-slate-800">
+                    <tr>
+                      <th className="px-6 py-4">Publisher / Advisor</th>
+                      <th className="px-6 py-4">ARN / License</th>
+                      <th className="px-6 py-4">Role & Status</th>
+                      <th className="px-6 py-4">Onboarding</th>
+                      <th className="px-6 py-4">Articles</th>
+                      <th className="px-6 py-4 text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-medium">
+                    {filteredPublishers.map(pub => (
+                      <tr key={pub.id} className="hover:bg-slate-50/60 dark:hover:bg-slate-800/40 transition-colors">
+                        {/* Avatar & Name */}
+                        <td className="px-6 py-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-500 to-amber-700 text-slate-950 font-black flex items-center justify-center text-sm uppercase overflow-hidden shrink-0 border border-amber-500/30">
+                              {pub.avatar_url ? (
+                                <img src={pub.avatar_url} alt="" className="w-full h-full object-cover" onError={(e) => { e.target.style.display = 'none'; }} />
+                              ) : (
+                                <span>{(pub.display_name || pub.email || 'P').charAt(0)}</span>
+                              )}
                             </div>
-                          )}
-                          <div className="text-[10px] font-mono text-slate-400 mt-0.5">
-                            /{article.slug}
+                            <div className="min-w-0 max-w-xs">
+                              <div className="font-bold text-slate-900 dark:text-white truncate text-sm">
+                                {pub.display_name || 'Publisher'}
+                              </div>
+                              <div className="text-[11px] text-slate-400 truncate font-mono">
+                                {pub.email}
+                              </div>
+                              <div className="text-[10px] text-amber-600 dark:text-amber-400 truncate font-medium">
+                                {pub.title || 'Mutual Fund Specialist'}
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                    </td>
+                        </td>
 
-                    <td className="px-6 py-4">
-                      <span className="px-2.5 py-1 rounded-md text-[10px] font-extrabold uppercase bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
-                        {article.category}
-                      </span>
-                    </td>
+                        {/* ARN / Registration */}
+                        <td className="px-6 py-4">
+                          {pub.arn_number ? (
+                            <span className="px-2.5 py-1 rounded-md text-[10px] font-mono font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+                              {pub.arn_number}
+                            </span>
+                          ) : (
+                            <span className="text-slate-400 text-[10px] italic">Not Provided</span>
+                          )}
+                        </td>
 
-                    <td className="px-6 py-4 font-mono text-slate-500 dark:text-slate-400">
-                       {article.readTimeMinutes} min
-                    </td>
+                        {/* Role */}
+                        <td className="px-6 py-4">
+                          <span className={`px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${
+                            pub.role === 'admin'
+                              ? 'bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/30'
+                              : 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30'
+                          }`}>
+                            {pub.role || 'publisher'}
+                          </span>
+                        </td>
 
-                    <td className="px-6 py-4">
-                      <button
-                        onClick={() => handleTogglePublish(article)}
-                        title="Click to toggle publish/draft status"
-                        className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider transition-all ${
-                          article.status === 'published'
-                            ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/25'
-                            : 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 hover:bg-amber-500/25'
-                        }`}
-                      >
-                        {article.status === 'published' ? '● Published' : '○ Draft'}
-                      </button>
-                    </td>
+                        {/* Onboarding State */}
+                        <td className="px-6 py-4">
+                          {pub.is_onboarded ? (
+                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                              <span>✅</span>
+                              <span>Completed</span>
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+                              <span>⏳</span>
+                              <span>Pending 1st Login</span>
+                            </span>
+                          )}
+                        </td>
 
-                    <td className="px-6 py-4 text-slate-500 text-[11px] whitespace-nowrap">
-                      {article.publishedAt ? new Date(article.publishedAt).toLocaleDateString() : 'Unpublished'}
-                    </td>
+                        {/* Article Count */}
+                        <td className="px-6 py-4 font-mono text-slate-700 dark:text-slate-300 font-bold">
+                          {pub.article_count || 0}
+                        </td>
 
-                    <td className="px-6 py-4 text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        {article.status === 'published' && (
-                          <button
-                            onClick={() => onNavigate(`#/articles/${article.slug}`)}
-                            title="View live article"
-                            className="p-2 rounded-xl text-slate-400 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-                          >
-                            
-                          </button>
-                        )}
-                        <button
-                          onClick={() => onNavigate(`#/admin/articles/edit/${article.id}`)}
-                          title="Edit article"
-                          className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-amber-600 hover:text-white text-slate-700 dark:text-slate-300 font-bold transition-all"
-                        >
-                           Edit
-                        </button>
-                        <button
-                          onClick={() => handleDelete(article.id, article.titleTamil)}
-                          disabled={deletingId === article.id}
-                          title="Delete article"
-                          className="p-2 rounded-xl text-red-500 hover:bg-red-500/10 transition-colors disabled:opacity-50"
-                        >
-                          
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                        {/* Actions */}
+                        <td className="px-6 py-4 text-right">
+                          <div className="flex items-center justify-end gap-2">
+                            {/* Edit Publisher */}
+                            <button
+                              onClick={() => setEditingPublisher(pub)}
+                              title="Edit publisher details"
+                              className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-amber-600 hover:text-white text-slate-700 dark:text-slate-300 font-bold transition-all"
+                            >
+                              ✏️ Edit
+                            </button>
+
+                            {/* Delete Publisher */}
+                            {pub.id !== user?.id && (
+                              <button
+                                onClick={() => handleDeletePublisher(pub.id, pub.display_name || pub.email)}
+                                disabled={deletingPublisherId === pub.id}
+                                title="Delete publisher account"
+                                className="px-3 py-1.5 rounded-xl bg-red-500/10 hover:bg-red-600 hover:text-white text-red-600 dark:text-red-400 font-bold transition-all disabled:opacity-50"
+                              >
+                                🗑️ Delete
+                              </button>
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
-        )}
+        </div>
+      )}
+
+      {/* ================= CREATE PUBLISHER MODAL ================= */}
+      {isCreateModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fadeIn">
+          <div className="w-full max-w-xl bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
+            {/* Modal Header */}
+            <div className="p-6 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+              <div>
+                <span className="px-2.5 py-0.5 rounded-md bg-amber-500/15 text-amber-600 dark:text-amber-400 text-[10px] font-black uppercase tracking-wider">
+                  AUTHOR ACCESS PROVISIONING
+                </span>
+                <h3 className="text-xl font-serif font-black text-slate-900 dark:text-white mt-1">
+                  {isTamil ? 'புதிய வெளியீட்டாளரைச் சேர்க்கவும்' : 'Create Publisher Account'}
+                </h3>
+              </div>
+              <button
+                onClick={() => setIsCreateModalOpen(false)}
+                className="p-2 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="p-6 overflow-y-auto space-y-4">
+              {createdCredentials ? (
+                <div className="p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-slate-900 dark:text-white space-y-3">
+                  <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-bold">
+                    <span>🎉</span>
+                    <span>Publisher account created successfully!</span>
+                  </div>
+                  <p className="text-xs text-slate-600 dark:text-slate-300">
+                    Share these login credentials with the publisher. When they log in for the first time, they will be prompted to complete their profile (photo, bio, social links, ARN).
+                  </p>
+                  <div className="p-3.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono text-xs space-y-1.5">
+                    <div><span className="text-slate-400">Email:</span> <strong className="text-amber-600 dark:text-amber-400">{createdCredentials.email}</strong></div>
+                    <div><span className="text-slate-400">Password:</span> <strong className="text-amber-600 dark:text-amber-400">{createdCredentials.password}</strong></div>
+                    <div><span className="text-slate-400">Login URL:</span> <strong className="text-slate-600 dark:text-slate-300">{window.location.origin}/#/login</strong></div>
+                  </div>
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText(`Muthaleetu Thisai Publisher Credentials:\nLogin: ${window.location.origin}/#/login\nEmail: ${createdCredentials.email}\nPassword: ${createdCredentials.password}`);
+                      if (onShowToast) onShowToast('Credentials copied to clipboard!');
+                    }}
+                    className="w-full py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow transition-colors flex items-center justify-center gap-2"
+                  >
+                    📋 Copy Credentials
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleCreatePublisher} className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {/* Full Name */}
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold text-slate-700 dark:text-slate-300">Full Name *</label>
+                      <input
+                        type="text"
+                        required
+                        value={newPubName}
+                        onChange={e => setNewPubName(e.target.value)}
+                        placeholder="e.g. S. Ramanathan, CFP"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+                      />
+                    </div>
+
+                    {/* Email */}
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold text-slate-700 dark:text-slate-300">Email Address *</label>
+                      <input
+                        type="email"
+                        required
+                        value={newPubEmail}
+                        onChange={e => setNewPubEmail(e.target.value)}
+                        placeholder="publisher@example.com"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Password + Generator */}
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-between">
+                      <label className="text-xs font-bold text-slate-700 dark:text-slate-300">Initial Password *</label>
+                      <button
+                        type="button"
+                        onClick={generateStrongPassword}
+                        className="text-[11px] text-amber-600 dark:text-amber-400 hover:underline font-bold"
+                      >
+                        🎲 Auto-Generate
+                      </button>
+                    </div>
+                    <input
+                      type="text"
+                      required
+                      value={newPubPassword}
+                      onChange={e => setNewPubPassword(e.target.value)}
+                      placeholder="Minimum 6 characters"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-mono font-bold text-amber-600 dark:text-amber-400 focus:outline-none focus:border-amber-500"
+                    />
+                  </div>
+
+                  {/* Title & ARN */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold text-slate-700 dark:text-slate-300">Professional Designation</label>
+                      <input
+                        type="text"
+                        value={newPubTitle}
+                        onChange={e => setNewPubTitle(e.target.value)}
+                        placeholder="e.g. Certified Financial Planner"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+                      />
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold text-slate-700 dark:text-slate-300">AMFI ARN / SEBI Reg</label>
+                      <input
+                        type="text"
+                        value={newPubArn}
+                        onChange={e => setNewPubArn(e.target.value)}
+                        placeholder="e.g. ARN-123456"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-mono text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Specialties */}
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-slate-700 dark:text-slate-300">Specialties (Comma Separated)</label>
+                    <input
+                      type="text"
+                      value={newPubSpecialties}
+                      onChange={e => setNewPubSpecialties(e.target.value)}
+                      placeholder="Mutual Funds, Equity SIPs, Retirement, Tax Planning"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+                    />
+                  </div>
+
+                  {/* Submit Button */}
+                  <div className="pt-2 flex items-center justify-end gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setIsCreateModalOpen(false)}
+                      className="px-4 py-2.5 rounded-xl text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 font-bold text-xs"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={isSubmittingPublisher}
+                      className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs shadow-md transition-all disabled:opacity-50"
+                    >
+                      {isSubmittingPublisher ? 'Creating...' : '🚀 Create Publisher'}
+                    </button>
+                  </div>
+                </form>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ================= EDIT PUBLISHER MODAL ================= */}
+      {editingPublisher && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fadeIn">
+          <div className="w-full max-w-xl bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
+            <div className="p-6 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+              <div>
+                <span className="px-2.5 py-0.5 rounded-md bg-amber-500/15 text-amber-600 dark:text-amber-400 text-[10px] font-black uppercase tracking-wider">
+                  UPDATE DETAILS
+                </span>
+                <h3 className="text-xl font-serif font-black text-slate-900 dark:text-white mt-1">
+                  Edit Publisher: {editingPublisher.display_name}
+                </h3>
+              </div>
+              <button
+                onClick={() => setEditingPublisher(null)}
+                className="p-2 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              >
+                ✕
+              </button>
+            </div>
+
+            <form onSubmit={handleUpdatePublisher} className="p-6 overflow-y-auto space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="text-xs font-bold text-slate-700 dark:text-slate-300">Display Name</label>
+                  <input
+                    type="text"
+                    value={editingPublisher.display_name || ''}
+                    onChange={e => setEditingPublisher({ ...editingPublisher, display_name: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-xs font-bold text-slate-700 dark:text-slate-300">Designation / Title</label>
+                  <input
+                    type="text"
+                    value={editingPublisher.title || ''}
+                    onChange={e => setEditingPublisher({ ...editingPublisher, title: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="text-xs font-bold text-slate-700 dark:text-slate-300">AMFI ARN / License</label>
+                  <input
+                    type="text"
+                    value={editingPublisher.arn_number || ''}
+                    onChange={e => setEditingPublisher({ ...editingPublisher, arn_number: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-mono text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-xs font-bold text-slate-700 dark:text-slate-300">Phone / WhatsApp</label>
+                  <input
+                    type="text"
+                    value={editingPublisher.phone || ''}
+                    onChange={e => setEditingPublisher({ ...editingPublisher, phone: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">LinkedIn Profile URL</label>
+                <input
+                  type="url"
+                  value={editingPublisher.linkedin_url || ''}
+                  onChange={e => setEditingPublisher({ ...editingPublisher, linkedin_url: e.target.value })}
+                  placeholder="https://linkedin.com/in/username"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">Bio & Summary</label>
+                <textarea
+                  rows={3}
+                  value={editingPublisher.bio || ''}
+                  onChange={e => setEditingPublisher({ ...editingPublisher, bio: e.target.value })}
+                  placeholder="Short professional summary"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+                />
+              </div>
+
+              <div className="pt-3 flex items-center justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={() => setEditingPublisher(null)}
+                  className="px-4 py-2.5 rounded-xl text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 font-bold text-xs"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-6 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-black text-xs shadow-md transition-all"
+                >
+                  Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/**
+ * FIRST-TIME PUBLISHER ONBOARDING MODAL WIZARD
+ * Prompts newly registered publishers for profile photo, title, ARN, bio, and social links.
+ */
+function PublisherOnboardingModal({ profile, onComplete }) {
+  const { language } = useLanguage();
+  const { session, setProfile } = useAuth();
+  const isTamil = language === 'ta';
+
+  const [step, setStep] = useState(1);
+  const [displayName, setDisplayName] = useState(profile?.display_name || '');
+  const [avatarUrl, setAvatarUrl] = useState(profile?.avatar_url || '');
+  const [title, setTitle] = useState(profile?.title || 'AMFI Registered Mutual Fund Distributor');
+  const [arnNumber, setArnNumber] = useState(profile?.arn_number || '');
+  const [specialties, setSpecialties] = useState(Array.isArray(profile?.specialties) ? profile.specialties.join(', ') : 'Mutual Funds, SIPs, Wealth Compounding');
+  const [bio, setBio] = useState(profile?.bio || '');
+  const [bioTa, setBioTa] = useState(profile?.bio_ta || '');
+  const [linkedinUrl, setLinkedinUrl] = useState(profile?.linkedin_url || '');
+  const [twitterUrl, setTwitterUrl] = useState(profile?.twitter_url || '');
+  const [youtubeUrl, setYoutubeUrl] = useState(profile?.youtube_url || '');
+  const [whatsappNumber, setWhatsappNumber] = useState(profile?.whatsapp_number || profile?.phone || '');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
+
+  // Sample quick avatars
+  const avatarPresets = [
+    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80'
+  ];
+
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
+    setError('');
+    try {
+      const token = session?.access_token || '';
+      const payload = {
+        display_name: displayName.trim(),
+        avatar_url: avatarUrl.trim(),
+        title: title.trim(),
+        arn_number: arnNumber.trim(),
+        specialties: specialties.split(',').map(s => s.trim()).filter(Boolean),
+        bio: bio.trim(),
+        bio_ta: bioTa.trim(),
+        linkedin_url: linkedinUrl.trim(),
+        twitter_url: twitterUrl.trim(),
+        youtube_url: youtubeUrl.trim(),
+        whatsapp_number: whatsappNumber.trim(),
+        phone: whatsappNumber.trim()
+      };
+
+      const res = await fetch('/api/publisher/onboarding', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || 'Failed to save publisher profile');
+
+      const updated = json.data || { ...profile, ...payload, is_onboarded: true };
+      if (setProfile) setProfile(updated);
+      if (onComplete) onComplete(updated);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-fadeIn">
+      <div className="w-full max-w-2xl bg-white dark:bg-slate-900 rounded-3xl border border-amber-500/30 shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
+        {/* Header with Progress Steps */}
+        <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-amber-950 p-6 text-white border-b border-slate-800">
+          <div className="flex items-center justify-between mb-3">
+            <span className="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-black uppercase tracking-wider">
+              ✨ PUBLISHER ONBOARDING WIZARD
+            </span>
+            <span className="text-xs font-mono text-amber-400 font-bold">
+              Step {step} of 3
+            </span>
+          </div>
+          <h2 className="text-xl sm:text-2xl font-serif font-black text-white">
+            {isTamil ? 'வணக்கம்! உங்கள் வெளியீட்டாளர் விவரங்களை நிறைவுசெய்யுங்கள்' : 'Welcome! Complete Your Publisher Profile'}
+          </h2>
+          <p className="text-xs text-slate-300 mt-1">
+            {isTamil ? 'உங்கள் புகைப்படம், AMFI பதிவு எண் மற்றும் சமூக வலைத்தள இணைப்புகளைச் சேருங்கள்.' : 'Set up your credentials, photo, ARN, and social media channels to start publishing articles.'}
+          </p>
+
+          {/* Progress Bar */}
+          <div className="flex items-center gap-2 mt-4">
+            <div className={`h-1.5 flex-1 rounded-full transition-all ${step >= 1 ? 'bg-amber-500' : 'bg-slate-800'}`} />
+            <div className={`h-1.5 flex-1 rounded-full transition-all ${step >= 2 ? 'bg-amber-500' : 'bg-slate-800'}`} />
+            <div className={`h-1.5 flex-1 rounded-full transition-all ${step >= 3 ? 'bg-amber-500' : 'bg-slate-800'}`} />
+          </div>
+        </div>
+
+        {/* Wizard Step Body */}
+        <div className="p-6 overflow-y-auto space-y-5 flex-1">
+          {error && (
+            <div className="p-3.5 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-600 dark:text-red-400 text-xs font-bold">
+              {error}
+            </div>
+          )}
+
+          {/* STEP 1: PHOTO & CREDENTIALS */}
+          {step === 1 && (
+            <div className="space-y-4 animate-fadeIn">
+              {/* Avatar Live Preview */}
+              <div className="flex flex-col sm:flex-row items-center gap-4 p-4 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+                <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-700 overflow-hidden shrink-0 border-2 border-amber-500/40 flex items-center justify-center text-slate-950 font-black text-2xl shadow-lg">
+                  {avatarUrl ? (
+                    <img src={avatarUrl} alt="" className="w-full h-full object-cover" onError={(e) => { e.target.style.display = 'none'; }} />
+                  ) : (
+                    <span>{(displayName || 'P').charAt(0)}</span>
+                  )}
+                </div>
+                <div className="space-y-2 flex-1 w-full">
+                  <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block">
+                    Profile Photo URL / Avatar
+                  </label>
+                  <input
+                    type="url"
+                    value={avatarUrl}
+                    onChange={e => setAvatarUrl(e.target.value)}
+                    placeholder="https://example.com/photo.jpg"
+                    className="w-full px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+                  />
+                  {/* Preset Avatars */}
+                  <div className="flex items-center gap-2 pt-1">
+                    <span className="text-[10px] text-slate-400 font-bold">Presets:</span>
+                    {avatarPresets.map((preset, idx) => (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => setAvatarUrl(preset)}
+                        className="w-6 h-6 rounded-full overflow-hidden border border-amber-500/50 hover:scale-110 transition-transform"
+                      >
+                        <img src={preset} alt="" className="w-full h-full object-cover" />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Full Name */}
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                  Full Display Name *
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={displayName}
+                  onChange={e => setDisplayName(e.target.value)}
+                  placeholder="e.g. B. Padmanaban"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+                />
+              </div>
+
+              {/* Title & ARN */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                    Professional Designation
+                  </label>
+                  <input
+                    type="text"
+                    value={title}
+                    onChange={e => setTitle(e.target.value)}
+                    placeholder="Certified Financial Planner (CFP)"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                    AMFI ARN / SEBI Registration Number
+                  </label>
+                  <input
+                    type="text"
+                    value={arnNumber}
+                    onChange={e => setArnNumber(e.target.value)}
+                    placeholder="e.g. ARN-56291"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-mono font-bold text-amber-600 dark:text-amber-400 focus:outline-none focus:border-amber-500"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* STEP 2: BIO & SPECIALTIES */}
+          {step === 2 && (
+            <div className="space-y-4 animate-fadeIn">
+              {/* Specialties */}
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                  Areas of Expertise / Specialties (Comma separated)
+                </label>
+                <input
+                  type="text"
+                  value={specialties}
+                  onChange={e => setSpecialties(e.target.value)}
+                  placeholder="Mutual Funds, Equity SIPs, Retirement, Tax Saving"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+                />
+              </div>
+
+              {/* Bio (English) */}
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                  About You & Investment Philosophy (English)
+                </label>
+                <textarea
+                  rows={3}
+                  value={bio}
+                  onChange={e => setBio(e.target.value)}
+                  placeholder="Share your experience, guiding principles, and wealth compounding approach..."
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+                />
+              </div>
+
+              {/* Bio (Tamil) */}
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                  சுயவிவரம் & முதலீட்டு நோக்கம் (தமிழ்)
+                </label>
+                <textarea
+                  rows={3}
+                  value={bioTa}
+                  onChange={e => setBioTa(e.target.value)}
+                  placeholder="உங்கள் நிதி ஆலோசனை அனுபவம் மற்றும் முதலீட்டாளர்களுக்கான வழிகாட்டல்..."
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500 font-serif"
+                />
+              </div>
+            </div>
+          )}
+
+          {/* STEP 3: SOCIAL & CONNECT LINKS */}
+          {step === 3 && (
+            <div className="space-y-4 animate-fadeIn">
+              {/* LinkedIn URL */}
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                  <span>💼</span>
+                  <span>LinkedIn Profile URL</span>
+                </label>
+                <input
+                  type="url"
+                  value={linkedinUrl}
+                  onChange={e => setLinkedinUrl(e.target.value)}
+                  placeholder="https://linkedin.com/in/your-profile"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+                />
+              </div>
+
+              {/* Twitter / X */}
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                  <span>🐦</span>
+                  <span>Twitter / X Profile URL or Handle</span>
+                </label>
+                <input
+                  type="text"
+                  value={twitterUrl}
+                  onChange={e => setTwitterUrl(e.target.value)}
+                  placeholder="https://x.com/yourhandle or @yourhandle"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+                />
+              </div>
+
+              {/* YouTube Channel */}
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                  <span>🎬</span>
+                  <span>YouTube Channel URL</span>
+                </label>
+                <input
+                  type="url"
+                  value={youtubeUrl}
+                  onChange={e => setYoutubeUrl(e.target.value)}
+                  placeholder="https://youtube.com/@channelname"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+                />
+              </div>
+
+              {/* WhatsApp / Phone */}
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                  <span>💬</span>
+                  <span>WhatsApp Consultation / Phone Number</span>
+                </label>
+                <input
+                  type="text"
+                  value={whatsappNumber}
+                  onChange={e => setWhatsappNumber(e.target.value)}
+                  placeholder="+91 98400 12345"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+                />
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Wizard Footer Navigation */}
+        <div className="p-6 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 flex items-center justify-between">
+          {step > 1 ? (
+            <button
+              type="button"
+              onClick={() => setStep(s => s - 1)}
+              className="px-5 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs transition-colors"
+            >
+              ← Back
+            </button>
+          ) : (
+            <div />
+          )}
+
+          {step < 3 ? (
+            <button
+              type="button"
+              onClick={() => {
+                if (step === 1 && !displayName.trim()) {
+                  setError('Please enter your full name');
+                  return;
+                }
+                setError('');
+                setStep(s => s + 1);
+              }}
+              className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs shadow-md transition-all flex items-center gap-1.5"
+            >
+              <span>Next Step</span>
+              <span>→</span>
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={handleSubmit}
+              disabled={isSubmitting}
+              className="px-8 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs shadow-xl transition-all disabled:opacity-50 flex items-center gap-2"
+            >
+              <span>{isSubmitting ? 'Saving Profile...' : '🚀 Complete Setup & Enter Studio'}</span>
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -32882,6 +33957,33 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
   );
 }
 
+function AppContent({ currentHash, navigate, isSearchOpen, setIsSearchOpen, toastMessage, setToastMessage, renderRoute }) {
+  const { user, role, profile, setProfile } = useAuth();
+
+  return (
+    <div className="min-h-screen flex flex-col text-slate-900 dark:text-slate-100 font-sans">
+      <Header onOpenSearch={() => setIsSearchOpen(true)} onNavigate={navigate} />
+      <Navbar currentPath={currentHash} onNavigate={navigate} />
+      <TrendingTicker />
+      <main className="flex-1">{renderRoute()}</main>
+      <Footer onNavigate={navigate} onShowToast={setToastMessage} />
+      <CommandPalette isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} onNavigate={navigate} />
+      <Toast message={toastMessage} onClose={() => setToastMessage('')} />
+
+      {/* Automatic First-Time Publisher Onboarding Modal */}
+      {user && role === 'publisher' && profile && profile.is_onboarded === false && (
+        <PublisherOnboardingModal
+          profile={profile}
+          onComplete={(updated) => {
+            if (setProfile) setProfile(updated);
+            setToastMessage('🎉 Welcome! Your publisher profile is complete.');
+          }}
+        />
+      )}
+    </div>
+  );
+}
+
 function App() {
   const [currentHash, setCurrentHash] = useState(() => window.location.hash || '#/');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -32936,7 +34038,7 @@ function App() {
       );
     }
 
-    // 3.2 Admin Routes
+    // 3.2 Admin & Publisher Studio Routes
     if (currentHash.startsWith('#/admin/articles/edit/')) {
       const articleId = currentHash.replace('#/admin/articles/edit/', '');
       return (
@@ -33061,15 +34163,15 @@ function App() {
     <ThemeProvider>
       <LanguageProvider>
         <AuthProvider>
-          <div className="min-h-screen flex flex-col text-slate-900 dark:text-slate-100 font-sans">
-            <Header onOpenSearch={() => setIsSearchOpen(true)} onNavigate={navigate} />
-            <Navbar currentPath={currentHash} onNavigate={navigate} />
-            <TrendingTicker />
-            <main className="flex-1">{renderRoute()}</main>
-            <Footer onNavigate={navigate} onShowToast={setToastMessage} />
-            <CommandPalette isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} onNavigate={navigate} />
-            <Toast message={toastMessage} onClose={() => setToastMessage('')} />
-          </div>
+          <AppContent
+            currentHash={currentHash}
+            navigate={navigate}
+            isSearchOpen={isSearchOpen}
+            setIsSearchOpen={setIsSearchOpen}
+            toastMessage={toastMessage}
+            setToastMessage={setToastMessage}
+            renderRoute={renderRoute}
+          />
         </AuthProvider>
       </LanguageProvider>
     </ThemeProvider>
@@ -33082,4 +34184,5 @@ if (container) {
   const root = ReactDOM.createRoot(container);
   root.render(<App />);
 }
+
 

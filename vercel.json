@@ -28,16 +28,24 @@
   ],
   "rewrites": [
     {
+      "source": "/api/videos/trending-preview",
+      "destination": "/api/videos?preview=1"
+    },
+    {
       "source": "/api/videos/:id",
-      "destination": "/api/videos/[id]"
+      "destination": "/api/videos?id=:id"
     },
     {
       "source": "/api/articles/:slug",
-      "destination": "/api/articles/[slug]"
+      "destination": "/api/articles?slug=:slug"
     },
     {
       "source": "/api/admin/articles/:id",
-      "destination": "/api/admin/articles/[id]"
+      "destination": "/api/admin/articles?id=:id"
+    },
+    {
+      "source": "/api/admin/publishers/:id",
+      "destination": "/api/admin/publishers?id=:id"
     }
   ]
 }

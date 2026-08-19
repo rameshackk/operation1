@@ -1,11 +1,34 @@
-import { listArticles } from '../../lib/db.js';
-import { verifyUserRequest } from '../../lib/auth-server.js';
+import { listArticles, getArticleBySlug } from '../../lib/db.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  const { slug } = req.query || {};
+
+  // ================= SINGLE ARTICLE BY SLUG =================
+  if (slug) {
+    try {
+      const article = await getArticleBySlug(slug.toString(), false);
+      if (!article) {
+        return res.status(404).json({ error: 'Article not found' });
+      }
+
+      res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=300');
+      res.setHeader('Content-Type', 'application/json');
+
+      return res.status(200).json({
+        status: 'success',
+        data: article
+      });
+    } catch (error) {
+      console.error(`Error in GET /api/articles/${slug}:`, error);
+      return res.status(500).json({ error: 'Failed to fetch article', message: error.message });
+    }
+  }
+
+  // ================= ARTICLES LISTING =================
   try {
     const { page = '1', limit = '50', category = 'all', search = '', sort = 'newest' } = req.query || {};
 
