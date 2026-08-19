@@ -4,11 +4,12 @@ const OFFICIAL_CHANNEL_URL = "https://www.youtube.com/@budgetpadmanaban_";
 const OFFICIAL_CHANNEL_HANDLE = "@budgetpadmanaban_";
 const OFFICIAL_CHANNEL_NAME = "Budget Padmanaban";
 
-// Reset theme to light by default
-if (!localStorage.getItem("dhanavriksha_theme_initialized")) {
-  localStorage.setItem("dhanavriksha_theme", "light");
-  localStorage.setItem("dhanavriksha_theme_initialized", "true");
+// Initialize default theme to dark
+if (!localStorage.getItem("dhanavriksha_theme_v3_dark_default")) {
+  localStorage.setItem("dhanavriksha_theme", "dark");
+  localStorage.setItem("dhanavriksha_theme_v3_dark_default", "true");
 }
+document.documentElement.setAttribute("data-theme", localStorage.getItem("dhanavriksha_theme") || "dark");
 
 // ==================== 1. DATA LAYER ====================
 const translations = {
@@ -26170,7 +26171,7 @@ const useLanguage = () => useContext(LanguageContext);
 const ThemeContext = createContext();
 
 function ThemeProvider({ children }) {
-  const [theme, setThemeState] = useState(() => localStorage.getItem("dhanavriksha_theme") || "light");
+  const [theme, setThemeState] = useState(() => localStorage.getItem("dhanavriksha_theme") || "dark");
 
   const toggleTheme = () => {
     const nextTheme = theme === "dark" ? "light" : "dark";
