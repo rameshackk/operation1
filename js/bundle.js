@@ -28055,19 +28055,24 @@ function SipCalculator() {
   ];
 
   return (
-    <section id="financial-calculators" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 select-none">
-      <div className="text-center space-y-2 max-w-2xl mx-auto">
-        <span className="px-3.5 py-1 text-[10px] font-black uppercase tracking-widest rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 shadow-sm">
-          {isTamil ? 'நிதி கணக்கீட்டுக் கருவிகள்' : 'FINANCIAL WEALTH STUDIO'}
-        </span>
-        <h2 className="text-2xl sm:text-4xl font-black font-serif text-slate-900 dark:text-white tracking-tight">
-          {isTamil ? 'நிதி கணக்கீட்டுக் கருவிகள்' : 'Interactive Wealth Studio'}
-        </h2>
-        <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
-          {isTamil
-            ? 'SIP, ஒரே முறை முதலீடு, முதலீட்டு வருவாய் மற்றும் கூட்டு வட்டி ஆகியவற்றைக் கணக்கிட உதவும் சாதனங்கள்.'
-            : 'Plan SIPs, Lump Sum investments, returns, and compound interest growth with real-time analytics.'}
-        </p>
+    <section id="financial-calculators" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 select-none animate-fadeIn">
+      {/* Unified Compact Hero Header Banner (Light & Dark mode) */}
+      <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 lg:p-7 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
+        <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="relative z-10 space-y-2 max-w-3xl">
+          <div className="inline-flex items-center gap-2 px-3 py-1 text-[11px] font-black uppercase tracking-wider rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-600 dark:text-amber-400 shadow-sm">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400 animate-pulse" />
+            <span>{isTamil ? 'நிதி கணக்கீட்டுக் கருவிகள்' : 'FINANCIAL WEALTH STUDIO'}</span>
+          </div>
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-slate-900 dark:text-white leading-snug">
+            {isTamil ? 'நிதி கணக்கீட்டுக் கருவிகள்' : 'Interactive Wealth Studio'}
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+            {isTamil
+              ? 'SIP, ஒரே முறை முதலீடு, முதலீட்டு வருவாய் மற்றும் கூட்டு வட்டி ஆகியவற்றைக் கணக்கிட உதவும் சாதனங்கள்.'
+              : 'Plan SIPs, Lump Sum investments, returns, and compound interest growth with real-time analytics.'}
+          </p>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -28398,12 +28403,25 @@ function RiskQuizWidget() {
   };
 
   return (
-    <section id="quiz" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 border border-slate-200 dark:border-slate-800 shadow-xl space-y-6">
-        <div className="flex items-center gap-2">
-          <span className="px-3 py-1 text-[10px] font-black uppercase tracking-wider rounded-full bg-emerald-600/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">INTERACTIVE QUIZ</span>
-          <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white font-serif">Find Your Mutual Fund Match</h3>
+    <section id="quiz" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fadeIn">
+      {/* Unified Compact Hero Header Banner (Light & Dark mode) */}
+      <div className="relative rounded-3xl bg-gradient-to-br from-white via-emerald-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-emerald-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 lg:p-7 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
+        <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 dark:bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="relative z-10 space-y-2 max-w-3xl">
+          <div className="inline-flex items-center gap-2 px-3 py-1 text-[11px] font-black uppercase tracking-wider rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 shadow-sm">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse" />
+            <span>INTERACTIVE RISK & MATCH QUIZ</span>
+          </div>
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-slate-900 dark:text-white leading-snug">
+            Find Your Mutual Fund Match
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+            Answer quick questions to discover tailored asset allocation and investment strategies for your risk appetite.
+          </p>
         </div>
+      </div>
+
+      <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 border border-slate-200 dark:border-slate-800 shadow-xl space-y-6">
 
         {!result ? (
           <div className="space-y-5">
@@ -29803,7 +29821,28 @@ function VideosPage({ onNavigate, onShowToast }) {
   const isFiltering = activeCategory !== 'all' || searchQuery.trim().length > 0;
 
   return (
-    <div className="min-h-screen pb-24 space-y-8 text-slate-900 dark:text-white">
+    <div className="min-h-screen pb-24 space-y-6 text-slate-900 dark:text-white animate-fadeIn">
+      {/* Unified Compact Hero Header Banner (Light & Dark mode) */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+        <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 lg:p-7 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="relative z-10 space-y-2 max-w-3xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 text-[11px] font-black uppercase tracking-wider rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-600 dark:text-amber-400 shadow-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400 animate-pulse" />
+              <span>{isTamil ? 'வீடியோ மாஸ்டர்கிளாஸ்கள்' : 'FINANCIAL VIDEO MASTERCLASSES'}</span>
+            </div>
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-slate-900 dark:text-white leading-snug">
+              {isTamil ? '882+ வீடியோ வழிகாட்டிகள் & ஆய்வுகள்' : '882+ Financial Masterclasses & Analysis'}
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+              {isTamil
+                ? 'மியூச்சுவல் ஃபண்ட், பங்குச் சந்தை, தனிநபர் நிதி, IPO மற்றும் வரி சேமிப்பு பற்றிய பட்ஜெட் பத்மநாபனின் நேரடி வீடியோக்கள்.'
+                : 'Curated financial education, mutual fund breakdowns, IPO reviews, tax planning strategies, and stock market analysis.'}
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* 1. CINEMA SPOTLIGHT HERO */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
         <CinemaSpotlightHero
@@ -30088,17 +30127,20 @@ function ArticlesPage({ onNavigate, onShowToast }) {
   }, [session, activeCategory, searchQuery, sortBy]);
 
   return (
-    <div className="min-h-screen pb-20 space-y-8 animate-fadeIn">
-      <div className="bg-slate-950 text-white border-b border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-          <div className="max-w-3xl space-y-3">
-            <span className="px-3 py-1 text-[10px] font-black uppercase tracking-wider rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30">
-              {isTamil ? 'செய்திக் கட்டுரைகள்' : 'EDITORIAL & ARTICLES'}
-            </span>
-            <h1 className="text-3xl sm:text-5xl font-black font-serif text-white tracking-tight leading-tight">
+    <div className="min-h-screen pb-20 space-y-6 animate-fadeIn">
+      {/* Unified Compact Hero Header Banner (Light & Dark mode) */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+        <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 lg:p-7 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="relative z-10 space-y-2 max-w-3xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 text-[11px] font-black uppercase tracking-wider rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-600 dark:text-amber-400 shadow-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400 animate-pulse" />
+              <span>{isTamil ? 'செய்திக் கட்டுரைகள்' : 'EDITORIAL & ARTICLES'}</span>
+            </div>
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-slate-900 dark:text-white leading-snug">
               {isTamil ? 'முதலீட்டு ஆய்வுக் கட்டுரைகள்' : 'In-Depth Investment Articles'}
             </h1>
-            <p className="text-sm sm:text-base text-slate-300 font-medium leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
               {isTamil
                 ? 'பட்ஜெட் பத்மநாபன் CFP® மற்றும் நிபுணர்களின் பிரத்யேக மியூச்சுவல் ஃபண்ட், பங்குச் சந்தை மற்றும் தனிநபர் நிதி ஆழமான ஆய்வுக் கட்டுரைகள்.'
                 : 'Exclusive original investment insights, mutual fund analyses, tax-saving strategies, and financial guidance written directly by Certified Financial Planner Padmanaban B.'}
@@ -30404,60 +30446,64 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
         />
       </div>
 
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12 space-y-8">
-        <div className="flex items-center justify-between">
-          <button
-            onClick={() => onNavigate('#/articles')}
-            className="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
-          >
-            ← {isTamil ? 'அனைத்து கட்டுரைகள்' : 'All Articles'}
-          </button>
-          <span className="px-3 py-1 text-[10px] font-black uppercase tracking-wider rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/30">
-            {(article.category || 'FINANCE').replace('-', ' ')}
-          </span>
-        </div>
-
-        <div className="space-y-4">
-          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white font-serif leading-tight sm:leading-snug">
-            {title}
-          </h1>
-
-          {excerpt && (
-            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 font-medium leading-relaxed border-l-4 border-amber-500 pl-4 py-1 italic">
-              {excerpt}
-            </p>
-          )}
-
-          <div className="flex flex-wrap items-center justify-between gap-4 py-4 border-t border-b border-slate-200 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400">
-            <div
-              onClick={() => onNavigate && onNavigate(`#/professionals/${article.authorId || 'budget-padmanaban'}`)}
-              className="flex items-center gap-3 cursor-pointer group/author"
-              title="View Professional Profile & Published Insights"
-            >
-              <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-500 to-amber-700 text-slate-950 font-black text-sm flex items-center justify-center shadow overflow-hidden group-hover:scale-105 transition-transform border border-amber-500/30">
-                {article.authorAvatar ? (
-                  <img src={article.authorAvatar} alt="" className="w-full h-full object-cover" onError={(e) => { e.target.style.display = 'none'; }} />
-                ) : (
-                  <span>{(article.authorName || 'P').charAt(0)}</span>
-                )}
-              </div>
-              <div>
-                <div className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5 group-hover:text-amber-500 transition-colors">
-                  <span>{article.authorName || 'Budget Padmanaban'}</span>
-                  <span className="text-blue-500 font-bold" title="Verified Creator">✓</span>
-                </div>
-                <div className="text-[11px] text-slate-400">
-                  {article.authorTitle || 'AMFI Registered MFD • Wealth Advisor'}
-                  {article.authorArn ? ` • ARN: ${article.authorArn}` : ''}
-                </div>
-              </div>
+      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
+        {/* Unified Compact Hero Header Banner (Light & Dark mode) */}
+        <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-7 lg:p-8 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="relative z-10 space-y-4">
+            <div className="flex items-center justify-between">
+              <button
+                onClick={() => onNavigate('#/articles')}
+                className="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
+              >
+                ← {isTamil ? 'அனைத்து கட்டுரைகள்' : 'All Articles'}
+              </button>
+              <span className="px-3 py-1 text-[10px] font-black uppercase tracking-wider rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/30 shadow-sm">
+                {(article.category || 'FINANCE').replace('-', ' ')}
+              </span>
             </div>
 
-            <div className="flex items-center gap-4 text-xs font-semibold">
-              <span> {formattedDate}</span>
-              <span className="font-mono text-amber-600 dark:text-amber-400 font-bold">
-                 {article.readTimeMinutes} {isTamil ? 'நிமிடம் வாசிக்க' : 'min read'}
-              </span>
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 dark:text-white font-serif leading-tight sm:leading-snug">
+              {title}
+            </h1>
+
+            {excerpt && (
+              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 font-medium leading-relaxed border-l-4 border-amber-500 pl-4 py-1 italic">
+                {excerpt}
+              </p>
+            )}
+
+            <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-slate-200/80 dark:border-slate-800/80 text-xs text-slate-500 dark:text-slate-400">
+              <div
+                onClick={() => onNavigate && onNavigate(`#/professionals/${article.authorId || 'budget-padmanaban'}`)}
+                className="flex items-center gap-3 cursor-pointer group/author"
+                title="View Professional Profile & Published Insights"
+              >
+                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-500 to-amber-700 text-slate-950 font-black text-sm flex items-center justify-center shadow overflow-hidden group-hover:scale-105 transition-transform border border-amber-500/30">
+                  {article.authorAvatar ? (
+                    <img src={article.authorAvatar} alt="" className="w-full h-full object-cover" onError={(e) => { e.target.style.display = 'none'; }} />
+                  ) : (
+                    <span>{(article.authorName || 'P').charAt(0)}</span>
+                  )}
+                </div>
+                <div>
+                  <div className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5 group-hover:text-amber-500 transition-colors">
+                    <span>{article.authorName || 'Budget Padmanaban'}</span>
+                    <span className="text-blue-500 font-bold" title="Verified Creator">✓</span>
+                  </div>
+                  <div className="text-[11px] text-slate-400">
+                    {article.authorTitle || 'AMFI Registered MFD • Wealth Advisor'}
+                    {article.authorArn ? ` • ARN: ${article.authorArn}` : ''}
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4 text-xs font-semibold">
+                <span>🗓 {formattedDate}</span>
+                <span className="font-mono text-amber-600 dark:text-amber-400 font-bold">
+                  ⏱ {article.readTimeMinutes} {isTamil ? 'நிமிடம் வாசிக்க' : 'min read'}
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -30852,34 +30898,36 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
   });
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 animate-fadeIn">
-      {/* Header Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="px-3 py-1 text-[10px] font-black uppercase tracking-wider rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
-              {isAdmin ? 'ADMIN & PUBLISHER CONSOLE' : 'PUBLISHER STUDIO'}
-            </span>
-            <button
-              onClick={() => onNavigate('#/admin')}
-              className="text-xs text-slate-500 hover:text-amber-600 dark:hover:text-amber-400 underline font-semibold"
-            >
-              ← YouTube Ingestion Console
-            </button>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fadeIn">
+      {/* Unified Compact Hero Header Banner (Light & Dark mode) */}
+      <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 lg:p-7 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
+        <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5">
+          <div className="space-y-2 max-w-2xl">
+            <div className="flex items-center gap-2">
+              <span className="px-3 py-1 text-[11px] font-black uppercase tracking-wider rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-600 dark:text-amber-400 shadow-sm">
+                {isAdmin ? 'ADMIN & PUBLISHER CONSOLE' : 'PUBLISHER STUDIO'}
+              </span>
+              <button
+                onClick={() => onNavigate('#/admin')}
+                className="text-xs text-slate-500 hover:text-amber-600 dark:hover:text-amber-400 underline font-semibold"
+              >
+                ← YouTube Ingestion Console
+              </button>
+            </div>
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 dark:text-white font-serif tracking-tight leading-snug">
+              {isAdmin 
+                ? (isTamil ? 'நிர்வாகம் & வெளியீட்டாளர் மேலாண்மை' : 'Admin & Content Management')
+                : (isTamil ? 'வெளியீட்டாளர் கட்டுரை அரங்கம்' : 'Publisher Article Studio')}
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+              {isTamil 
+                ? 'கட்டுரைகளை எழுதுங்கள், திருத்துங்கள், வெளியீட்டாளர்களை நிர்வகியுங்கள்.' 
+                : 'Create articles, manage certified financial publishers, and curate investor content.'}
+            </p>
           </div>
-          <h1 className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white font-serif mt-2">
-            {isAdmin 
-              ? (isTamil ? 'நிர்வாகம் & வெளியீட்டாளர் மேலாண்மை' : 'Admin & Content Management')
-              : (isTamil ? 'வெளியீட்டாளர் கட்டுரை அரங்கம்' : 'Publisher Article Studio')}
-          </h1>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-            {isTamil 
-              ? 'கட்டுரைகளை எழுதுங்கள், திருத்துங்கள், வெளியீட்டாளர்களை நிர்வகியுங்கள்.' 
-              : 'Create articles, manage certified financial publishers, and curate investor content.'}
-          </p>
-        </div>
 
-        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 shrink-0">
           {isAdmin && (
             <button
               onClick={() => {
@@ -30902,6 +30950,7 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
             <span>{isTamil ? 'புதிய கட்டுரை எழுதுக' : '+ Write New Article'}</span>
           </button>
         </div>
+      </div>
       </div>
 
       {/* Main Tab Navigation (Admin Only) */}
@@ -32496,38 +32545,47 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
   if (role !== 'admin') return null;
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 animate-fadeIn">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
-        <div>
-          <button
-            onClick={() => onNavigate('#/admin/articles')}
-            className="text-xs font-bold text-slate-500 hover:text-amber-600 dark:hover:text-amber-400 transition-colors inline-flex items-center gap-1"
-          >
-            ← {isTamil ? 'கட்டுரைகள் பட்டியலுக்குத் திரும்பு' : 'Back to Articles Studio'}
-          </button>
-          <h1 className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white font-serif mt-2">
-            {articleId && articleId !== 'new' ? (isTamil ? 'கட்டுரையைத் திருத்துக' : 'Edit Article') : (isTamil ? 'புதிய கட்டுரை எழுதுக' : 'Write New Article')}
-          </h1>
-        </div>
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fadeIn">
+      {/* Unified Compact Hero Header Banner (Light & Dark mode) */}
+      <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 lg:p-7 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
+        <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5">
+          <div className="space-y-2 max-w-2xl">
+            <button
+              onClick={() => onNavigate('#/admin/articles')}
+              className="text-xs font-bold text-slate-500 hover:text-amber-600 dark:hover:text-amber-400 transition-colors inline-flex items-center gap-1"
+            >
+              ← {isTamil ? 'கட்டுரைகள் பட்டியலுக்குத் திரும்பு' : 'Back to Articles Studio'}
+            </button>
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 dark:text-white font-serif tracking-tight leading-snug">
+              {articleId && articleId !== 'new' ? (isTamil ? 'கட்டுரையைத் திருத்துக' : 'Edit Article') : (isTamil ? 'புதிய கட்டுரை எழுதுக' : 'Write New Article')}
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+              {isTamil
+                ? 'தமிழ் மற்றும் ஆங்கிலத்தில் தொழில்முறை முதலீட்டுக் கட்டுரைகளை எழுதி வெளியிடுங்கள்.'
+                : 'Compose, format, translate, and publish certified financial analyses for investors.'}
+            </p>
+          </div>
 
-        <div className="flex items-center gap-3 shrink-0">
-          <button
-            type="button"
-            onClick={() => handleSave(false)}
-            disabled={isLoading}
-            className="px-5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs transition-all shadow-sm disabled:opacity-50"
-          >
-             {isTamil ? 'வரைவாகச் சேமி (Draft)' : 'Save Draft'}
-          </button>
-          <button
-            type="button"
-            onClick={() => handleSave(true)}
-            disabled={isLoading}
-            className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs shadow-lg hover:scale-105 transition-all disabled:opacity-50 flex items-center gap-1.5"
-          >
-            <span></span>
-            <span>{isTamil ? 'உடனே வெளியிடு (Publish Live)' : 'Publish Live'}</span>
-          </button>
+          <div className="flex items-center gap-3 shrink-0">
+            <button
+              type="button"
+              onClick={() => handleSave(false)}
+              disabled={isLoading}
+              className="px-5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs transition-all shadow-sm disabled:opacity-50"
+            >
+              {isTamil ? 'வரைவாகச் சேமி (Draft)' : 'Save Draft'}
+            </button>
+            <button
+              type="button"
+              onClick={() => handleSave(true)}
+              disabled={isLoading}
+              className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs shadow-lg hover:scale-105 transition-all disabled:opacity-50 flex items-center gap-1.5"
+            >
+              <span>✍️</span>
+              <span>{isTamil ? 'உடனே வெளியிடு (Publish Live)' : 'Publish Live'}</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -33157,20 +33215,24 @@ function NewsPage({ onNavigate }) {
   const articles = (newsData || []).map(item => translateNewsArticle(item, language));
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fadeIn">
-      <div className="border-b border-slate-200/60 dark:border-slate-800/60 pb-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 text-xs font-black uppercase tracking-wider mb-2">
-          <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
-          <span>{isTamil ? 'செய்திகள் & பகுப்பாய்வு' : 'Market & Financial News'}</span>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fadeIn">
+      {/* Unified Compact Hero Header Banner (Light & Dark mode) */}
+      <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 lg:p-7 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
+        <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="relative z-10 space-y-2 max-w-3xl">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-600 dark:text-amber-400 text-[11px] font-black uppercase tracking-wider shadow-sm">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400 animate-pulse" />
+            <span>{isTamil ? 'செய்திகள் & பகுப்பாய்வு' : 'MARKET & FINANCIAL NEWS'}</span>
+          </div>
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-slate-900 dark:text-white leading-snug">
+            {isTamil ? 'செய்தி மையம்' : 'News Hub'}
+          </h1>
+          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+            {isTamil
+              ? 'மியூச்சுவல் ஃபண்ட், பங்குச் சந்தை மற்றும் அரசு அறிவிப்புகள் பற்றிய துல்லியமான செய்திகள்'
+              : 'Authoritative financial news, SEBI updates, and market intelligence'}
+          </p>
         </div>
-        <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white font-serif tracking-tight">
-          {isTamil ? 'செய்தி மையம்' : 'News Hub'}
-        </h1>
-        <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
-          {isTamil
-            ? 'மியூச்சுவல் ஃபண்ட், பங்குச் சந்தை மற்றும் அரசு அறிவிப்புகள் பற்றிய துல்லியமான செய்திகள்'
-            : 'Authoritative financial news, SEBI updates, and market intelligence'}
-        </p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -33784,20 +33846,29 @@ function CategoryPage({ categoryId, onNavigate, onShowToast }) {
   }, [filtered, visibleCount]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-      {/* Header Bar */}
-      <div className="border-b border-slate-200 dark:border-slate-800 pb-4 flex flex-col md:flex-row md:items-end justify-between gap-4">
-        <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-amber-500">
-            {isTamil ? 'பிரிவு வாரியான அலசல்' : 'Category Hub'}
-          </span>
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white font-serif mt-1">
-            {title}
-          </h1>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fadeIn">
+      {/* Unified Compact Hero Header Banner (Light & Dark mode) */}
+      <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 lg:p-7 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
+        <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5">
+          <div className="space-y-2 max-w-2xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-600 dark:text-amber-400 text-[11px] font-black uppercase tracking-wider shadow-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400 animate-pulse" />
+              <span>{isTamil ? 'பிரிவு வாரியான அலசல்' : 'CATEGORY HUB'}</span>
+            </div>
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-slate-900 dark:text-white leading-snug">
+              {title}
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+              {isTamil
+                ? 'பிரத்யேக வீடியோக்கள், ஆழமான பகுப்பாய்வு மற்றும் முதலீட்டு வழிகாட்டுதல்கள்.'
+                : 'Specialized video masterclasses, curated insights, and expert investor guidance.'}
+            </p>
+          </div>
+          <div className="px-4 py-2 rounded-2xl bg-white/80 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 text-xs font-mono font-bold text-slate-700 dark:text-slate-300 shadow-sm shrink-0">
+            {filtered.length} {isTamil ? 'வீடியோக்கள் உள்ளன' : 'videos available'}
+          </div>
         </div>
-        <p className="text-xs text-slate-500 dark:text-slate-400 font-bold">
-          {filtered.length} {isTamil ? 'வீடியோக்கள் உள்ளன' : 'videos available'}
-        </p>
       </div>
 
       {/* Search & Sort Controls */}
@@ -34052,24 +34123,24 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fadeIn">
-      {/* Compact Hero Header Banner */}
-      <div className="relative rounded-3xl bg-gradient-to-br from-slate-900 via-slate-900/95 to-amber-950/40 border border-slate-800 p-5 sm:p-6 lg:p-7 shadow-xl overflow-hidden text-white">
+      {/* Compact Hero Header Banner (Dark & Light mode supported) */}
+      <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 lg:p-7 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
         {/* Ambient Decorative Lighting */}
-        <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5 md:gap-8">
           {/* Header Text Block */}
           <div className="space-y-2 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-400 text-[11px] font-black uppercase tracking-wider shadow-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-600 dark:text-amber-400 text-[11px] font-black uppercase tracking-wider shadow-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400 animate-pulse" />
               <span>{isTamil ? 'அங்கீகரிக்கப்பட்ட முதலீட்டு நிபுணர்கள்' : 'PUBLIC PROFESSIONALS DIRECTORY'}</span>
             </div>
 
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-white leading-snug">
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-slate-900 dark:text-white leading-snug">
               {isTamil ? 'முதலீட்டு நிபுணர்கள் & எழுத்தாளர்கள்' : 'Investment Specialists & Commentators'}
             </h1>
 
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
               {isTamil
                 ? 'AMFI பதிவுசெய்த ஆலோசகர்கள், நிதி எழுத்தாளர்கள் மற்றும் பார்ச்சூன் இன்வெஸ்ட்மென்ட் சர்வீசஸ் (FISPL) நிறுவன நிபுணர்களின் விவரங்கள் & படைப்புகள்.'
                 : 'Discover insights, masterclasses, and research commentary published by FISPL market commentators and financial specialists.'}
@@ -34079,7 +34150,7 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
           {/* Compact Search Bar */}
           <div className="w-full md:w-72 lg:w-80 shrink-0">
             <div className="relative group">
-              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-amber-400 transition-colors pointer-events-none">
+              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-amber-500 dark:group-focus-within:text-amber-400 transition-colors pointer-events-none">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
@@ -34089,18 +34160,18 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={isTamil ? 'நிபுணர் பெயர், ARN தேடுக...' : 'Search specialists...'}
-                className="w-full pl-9 pr-8 py-2.5 sm:py-3 rounded-2xl bg-slate-950/90 border border-slate-700 hover:border-slate-600 focus:border-amber-500 text-xs sm:text-sm font-bold text-white placeholder-slate-400 focus:outline-none shadow-md transition-all"
+                className="w-full pl-9 pr-8 py-2.5 sm:py-3 rounded-2xl bg-white dark:bg-slate-950/90 border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 focus:border-amber-500 text-xs sm:text-sm font-bold text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none shadow-sm dark:shadow-md transition-all"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs font-bold bg-slate-800 hover:bg-slate-700 w-5 h-5 rounded-full flex items-center justify-center transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 dark:hover:text-white text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 w-5 h-5 rounded-full flex items-center justify-center transition-colors"
                 >
                   ✕
                 </button>
               )}
             </div>
-            <p className="text-[10px] text-slate-400 mt-1.5 px-1 font-mono">
+            <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1.5 px-1 font-mono">
               {filteredProfessionals.length} {isTamil ? 'நிபுணர்கள்' : 'specialists available'}
             </p>
           </div>

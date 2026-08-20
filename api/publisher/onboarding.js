@@ -98,7 +98,7 @@ export default async function handler(req, res) {
             is_onboarded = true,
             updated_at = CURRENT_TIMESTAMP
           RETURNING *;
-        `.replace('COCLUDED', 'COALESCE');
+        `;
 
         const values = [
           userId,
