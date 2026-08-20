@@ -34052,35 +34052,59 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 animate-fadeIn">
-      {/* Header Section */}
-      <div className="border-b border-slate-200 dark:border-slate-800 pb-6 flex flex-col md:flex-row md:items-end justify-between gap-6">
-        <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-black uppercase tracking-wider">
-            <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
-            <span>{isTamil ? 'அங்கீகரிக்கப்பட்ட முதலீட்டு நிபுணர்கள்' : 'PUBLIC PROFESSIONALS DIRECTORY'}</span>
-          </div>
-          <h1 className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white font-serif tracking-tight">
-            {isTamil ? 'முதலீட்டு நிபுணர்கள் & எழுத்தாளர்கள்' : 'Investment Specialists & Commentators'}
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed">
-            {isTamil
-              ? 'AMFI பதிவுசெய்த ஆலோசகர்கள், நிதி எழுத்தாளர்கள் மற்றும் பார்ச்சூன் இன்வெஸ்ட்மென்ட் சர்வீசஸ் (FISPL) நிறுவன நிபுணர்களின் விவரங்கள் & படைப்புகள்.'
-              : 'Discover insights, masterclasses, and research commentary published by FISPL market commentators and financial specialists.'}
-          </p>
-        </div>
+      {/* Rich Hero Header Banner */}
+      <div className="relative rounded-3xl bg-gradient-to-br from-slate-900 via-slate-900/95 to-amber-950/40 border border-slate-800 p-6 sm:p-8 lg:p-10 shadow-2xl overflow-hidden text-white">
+        {/* Ambient Decorative Lighting */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-1/3 w-64 h-64 bg-amber-600/5 rounded-full blur-2xl pointer-events-none" />
 
-        {/* Search Input */}
-        <div className="relative w-full md:w-72">
-          <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-          </span>
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder={isTamil ? 'நிபுணர் பெயர், ARN, துறை தேடுக...' : 'Search specialists...'}
-            className="w-full pl-9 pr-4 py-2.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:border-amber-500 shadow-sm"
-          />
+        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6 lg:gap-10">
+          {/* Header Text Block */}
+          <div className="space-y-3 max-w-3xl">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-400 text-xs font-black uppercase tracking-wider shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+              <span>{isTamil ? 'அங்கீகரிக்கப்பட்ட முதலீட்டு நிபுணர்கள்' : 'PUBLIC PROFESSIONALS DIRECTORY'}</span>
+            </div>
+
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black font-serif tracking-tight text-white leading-tight">
+              {isTamil ? 'முதலீட்டு நிபுணர்கள் & எழுத்தாளர்கள்' : 'Investment Specialists & Commentators'}
+            </h1>
+
+            <p className="text-xs sm:text-sm lg:text-base text-slate-300 leading-relaxed font-medium">
+              {isTamil
+                ? 'AMFI பதிவுசெய்த ஆலோசகர்கள், நிதி எழுத்தாளர்கள் மற்றும் பார்ச்சூன் இன்வெஸ்ட்மென்ட் சர்வீசஸ் (FISPL) நிறுவன நிபுணர்களின் விவரங்கள் & படைப்புகள்.'
+                : 'Discover insights, masterclasses, and research commentary published by FISPL market commentators and financial specialists.'}
+            </p>
+          </div>
+
+          {/* Large Prominent Search Bar */}
+          <div className="w-full lg:w-[380px] shrink-0">
+            <div className="relative group">
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-amber-400 transition-colors pointer-events-none">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </span>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder={isTamil ? 'நிபுணர் பெயர், ARN, துறை தேடுக...' : 'Search specialists, ARN, topics...'}
+                className="w-full pl-12 pr-11 py-3.5 sm:py-4 rounded-2xl bg-slate-950/90 border-2 border-slate-700/80 hover:border-slate-600 focus:border-amber-500 text-sm sm:text-base font-bold text-white placeholder-slate-400 focus:outline-none shadow-xl transition-all"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-sm font-bold bg-slate-800 hover:bg-slate-700 w-6 h-6 rounded-full flex items-center justify-center transition-colors"
+                >
+                  ✕
+                </button>
+              )}
+            </div>
+            <p className="text-[11px] text-slate-400 mt-2 px-1 font-mono">
+              {filteredProfessionals.length} {isTamil ? 'நிபுணர்கள் கிடைக்கின்றனர்' : 'specialists available'}
+            </p>
+          </div>
         </div>
       </div>
 
