@@ -143,7 +143,7 @@ export default async function handler(req, res) {
           WHERE status = 'published'
           GROUP BY author_id
         ) art ON p.id::text = art.author_id::text
-        WHERE p.role IN ('publisher', 'admin')
+        WHERE p.role = 'publisher'
       `;
 
       const params = [];
@@ -169,7 +169,7 @@ export default async function handler(req, res) {
       let q = client
         .from('profiles')
         .select('id, display_name, avatar_url, role, title, arn_number, specialties, bio, bio_ta, linkedin_url, twitter_url, youtube_url, whatsapp_number, phone, is_onboarded, created_at')
-        .in('role', ['publisher', 'admin'])
+        .eq('role', 'publisher')
         .order('created_at', { ascending: false })
         .limit(parseInt(limit, 10) || 50);
 
