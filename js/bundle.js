@@ -30226,11 +30226,15 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                   </div>
 
                   <div className="px-5 pb-5 pt-2 flex items-center justify-between border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-500 dark:text-slate-400 font-semibold">
-                    <div className="flex items-center gap-2">
-                      <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-amber-500 to-red-600 text-white font-black text-[9px] flex items-center justify-center">
-                        BP
-                      </div>
-                      <span>{article.authorName || 'Budget Padmanaban'}</span>
+                    <div className="flex items-center gap-2 min-w-0">
+                      {article.authorAvatar ? (
+                        <img src={article.authorAvatar} alt="" className="w-5 h-5 rounded-full object-cover border border-amber-500/40 shrink-0" onError={(e) => { e.target.style.display = 'none'; }} />
+                      ) : (
+                        <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-amber-500 to-amber-700 text-slate-950 font-black text-[9px] flex items-center justify-center shrink-0">
+                          {(article.authorName || 'P').charAt(0)}
+                        </div>
+                      )}
+                      <span className="truncate max-w-[130px]">{article.authorName || 'Budget Padmanaban'}</span>
                     </div>
                     <div className="flex items-center gap-3">
                       <span>{formattedDate}</span>
@@ -30426,19 +30430,26 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
 
           <div className="flex flex-wrap items-center justify-between gap-4 py-4 border-t border-b border-slate-200 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400">
             <div
-              onClick={() => onNavigate && onNavigate('#/professionals/budget-padmanaban')}
+              onClick={() => onNavigate && onNavigate(`#/professionals/${article.authorId || 'budget-padmanaban'}`)}
               className="flex items-center gap-3 cursor-pointer group/author"
-              title="View Professional Profile & Masterclasses"
+              title="View Professional Profile & Published Insights"
             >
-              <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-500 to-red-600 text-white font-black text-xs flex items-center justify-center shadow group-hover/author:scale-105 transition-transform">
-                BP
+              <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-500 to-amber-700 text-slate-950 font-black text-sm flex items-center justify-center shadow overflow-hidden group-hover:scale-105 transition-transform border border-amber-500/30">
+                {article.authorAvatar ? (
+                  <img src={article.authorAvatar} alt="" className="w-full h-full object-cover" onError={(e) => { e.target.style.display = 'none'; }} />
+                ) : (
+                  <span>{(article.authorName || 'P').charAt(0)}</span>
+                )}
               </div>
               <div>
-                <div className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5 group-hover/author:text-amber-500 transition-colors">
+                <div className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5 group-hover:text-amber-500 transition-colors">
                   <span>{article.authorName || 'Budget Padmanaban'}</span>
                   <span className="text-blue-500 font-bold" title="Verified Creator">✓</span>
                 </div>
-                <div className="text-[11px] text-slate-400">AMFI Registered MFD • Founder</div>
+                <div className="text-[11px] text-slate-400">
+                  {article.authorTitle || 'AMFI Registered MFD • Wealth Advisor'}
+                  {article.authorArn ? ` • ARN: ${article.authorArn}` : ''}
+                </div>
               </div>
             </div>
 
@@ -30496,20 +30507,62 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
           </div>
         </div>
 
-        <div className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row items-center gap-6">
-          <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-amber-500 via-red-600 to-amber-400 p-1 shadow-lg shrink-0">
-            <div className="w-full h-full rounded-full bg-slate-900 flex items-center justify-center font-black text-xl text-white">BP</div>
-          </div>
-          <div className="space-y-2 text-center sm:text-left">
-            <div className="flex items-center justify-center sm:justify-start gap-2">
-              <h3 className="text-base font-bold text-slate-900 dark:text-white">Budget Padmanaban (Padmanaban B)</h3>
-              <span className="px-2 py-0.5 text-[10px] font-black uppercase rounded bg-amber-500/10 text-amber-700 dark:text-amber-400">CFP®</span>
+        {/* Dynamic Author Profile & Contact Card */}
+        <div className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 flex-1">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-amber-500 via-amber-600 to-amber-700 p-0.5 shadow-lg shrink-0 overflow-hidden">
+              {article.authorAvatar ? (
+                <img src={article.authorAvatar} alt="" className="w-full h-full rounded-2xl object-cover" onError={(e) => { e.target.style.display = 'none'; }} />
+              ) : (
+                <div className="w-full h-full rounded-2xl bg-slate-900 flex items-center justify-center font-black text-xl text-amber-400">
+                  {(article.authorName || 'P').charAt(0)}
+                </div>
+              )}
             </div>
-            <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-              {isTamil
-                ? 'பட்ஜெட் பத்மநாபன் CFP® சான்றளிக்கப்பட்ட நிதி திட்டமிடுபவர். மியூச்சுவல் ஃபண்ட், ஓய்வூதியத் திட்டமிடல், வரி சேமிப்பு மற்றும் தனிநபர் நிதி மேலாண்மையில் 10+ ஆண்டுகளுக்கும் மேலான அனுபவம் கொண்டவர்.'
-                : 'Certified Financial Planner (CFP®) dedicated to simplifying Mutual Funds, Personal Finance, and Long-Term Wealth Creation for Tamil investors.'}
-            </p>
+            <div className="space-y-1.5">
+              <div className="flex flex-wrap items-center gap-2">
+                <h3 className="text-base font-bold text-slate-900 dark:text-white">
+                  {article.authorName || 'Budget Padmanaban'}
+                </h3>
+                <span className="px-2 py-0.5 text-[10px] font-black uppercase rounded bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20">
+                  {article.authorArn ? `AMFI ARN: ${article.authorArn}` : (article.authorTitle || 'CFP® Specialist')}
+                </span>
+              </div>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl">
+                {isTamil
+                  ? (article.authorBioTa || article.authorBio || 'மியூச்சுவல் ஃபண்ட், ஓய்வூதியத் திட்டமிடல், வரி சேமிப்பு மற்றும் முதலீட்டு மேலாண்மையில் சான்றளிக்கப்பட்ட நிதி ஆலோசகர்.')
+                  : (article.authorBio || article.authorBioTa || 'Certified Financial Planner & Wealth Advisor dedicated to simplifying Mutual Funds, Personal Finance, and Long-Term Wealth Creation.')}
+              </p>
+              {article.authorSpecialties && Array.isArray(article.authorSpecialties) && article.authorSpecialties.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 pt-1">
+                  {article.authorSpecialties.map((s, idx) => (
+                    <span key={idx} className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-slate-600 dark:text-slate-300">
+                      {s}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 shrink-0 w-full sm:w-auto">
+            {(article.authorWhatsapp || article.authorPhone) && (
+              <a
+                href={`https://wa.me/${(article.authorWhatsapp || article.authorPhone).replace(/\D/g, '')}?text=${encodeURIComponent(`Hello ${article.authorName || 'Advisor'}, I read your article "${title}" on Muthaleetu Thisai and would like an investment consultation.`)}`}
+                target="_blank"
+                rel="noreferrer"
+                className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md transition-all text-center flex items-center justify-center gap-1.5"
+              >
+                <span>💬</span>
+                <span>{isTamil ? 'ஆலோசனை பெறுக' : 'Consult via WhatsApp'}</span>
+              </a>
+            )}
+            <button
+              onClick={() => onNavigate && onNavigate(`#/professionals/${article.authorId || 'budget-padmanaban'}`)}
+              className="px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-amber-500 hover:text-slate-950 text-slate-700 dark:text-slate-200 font-bold text-xs transition-all text-center"
+            >
+              {isTamil ? 'சுயவிவரம்' : 'View Profile'} →
+            </button>
           </div>
         </div>
       </article>
@@ -31521,17 +31574,22 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
  * FIRST-TIME PUBLISHER ONBOARDING MODAL WIZARD
  * Prompts newly registered publishers for profile photo, title, ARN, bio, and social links.
  */
-function PublisherOnboardingModal({ profile, onComplete }) {
+function PublisherOnboardingModal({ profile, onComplete, onClose }) {
   const { language } = useLanguage();
   const { session, setProfile } = useAuth();
   const isTamil = language === 'ta';
+  const fileInputRef = useRef(null);
 
   const [step, setStep] = useState(1);
   const [displayName, setDisplayName] = useState(profile?.display_name || '');
   const [avatarUrl, setAvatarUrl] = useState(profile?.avatar_url || '');
   const [title, setTitle] = useState(profile?.title || 'AMFI Registered Mutual Fund Distributor');
   const [arnNumber, setArnNumber] = useState(profile?.arn_number || '');
-  const [specialties, setSpecialties] = useState(Array.isArray(profile?.specialties) ? profile.specialties.join(', ') : 'Mutual Funds, SIPs, Wealth Compounding');
+  const [specialties, setSpecialties] = useState(
+    Array.isArray(profile?.specialties)
+      ? profile.specialties.join(', ')
+      : (profile?.specialties || 'Mutual Funds, SIPs, Wealth Compounding, Tax Saving')
+  );
   const [bio, setBio] = useState(profile?.bio || '');
   const [bioTa, setBioTa] = useState(profile?.bio_ta || '');
   const [linkedinUrl, setLinkedinUrl] = useState(profile?.linkedin_url || '');
@@ -31539,15 +31597,84 @@ function PublisherOnboardingModal({ profile, onComplete }) {
   const [youtubeUrl, setYoutubeUrl] = useState(profile?.youtube_url || '');
   const [whatsappNumber, setWhatsappNumber] = useState(profile?.whatsapp_number || profile?.phone || '');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
   const [error, setError] = useState('');
+  const [photoMode, setPhotoMode] = useState('upload'); // 'upload' | 'url' | 'presets'
 
-  // Sample quick avatars
+  // Curated professional avatars
   const avatarPresets = [
     'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80',
     'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&auto=format&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80'
+    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=200&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=200&auto=format&fit=crop&q=80'
   ];
+
+  // Handle local image file upload & high-performance compression via HTML5 Canvas
+  const handleImageFileChange = (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      setError(isTamil ? 'தயவுசெய்து சரியான படக் கோப்பைத் தேர்ந்தெடுக்கவும்.' : 'Please select a valid image file.');
+      return;
+    }
+
+    setIsUploadingPhoto(true);
+    setError('');
+
+    const reader = new FileReader();
+    reader.onload = (loadEvt) => {
+      const img = new Image();
+      img.onload = () => {
+        try {
+          const canvas = document.createElement('canvas');
+          const maxDim = 400;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > maxDim) {
+              height = Math.round((height * maxDim) / width);
+              width = maxDim;
+            }
+          } else {
+            if (height > maxDim) {
+              width = Math.round((width * maxDim) / height);
+              height = maxDim;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Compress to lightweight high-quality JPEG
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+          setAvatarUrl(dataUrl);
+          setIsUploadingPhoto(false);
+        } catch (err) {
+          console.warn('Canvas compression fallback:', err);
+          setAvatarUrl(loadEvt.target.result);
+          setIsUploadingPhoto(false);
+        }
+      };
+      img.onerror = () => {
+        setError('Could not load selected image.');
+        setIsUploadingPhoto(false);
+      };
+      img.src = loadEvt.target.result;
+    };
+    reader.onerror = () => {
+      setError('Failed to read image file.');
+      setIsUploadingPhoto(false);
+    };
+    reader.readAsDataURL(file);
+  };
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
@@ -31559,7 +31686,9 @@ function PublisherOnboardingModal({ profile, onComplete }) {
         avatar_url: avatarUrl.trim(),
         title: title.trim(),
         arn_number: arnNumber.trim(),
-        specialties: specialties.split(',').map(s => s.trim()).filter(Boolean),
+        specialties: typeof specialties === 'string'
+          ? specialties.split(',').map(s => s.trim()).filter(Boolean)
+          : specialties,
         bio: bio.trim(),
         bio_ta: bioTa.trim(),
         linkedin_url: linkedinUrl.trim(),
@@ -31583,7 +31712,11 @@ function PublisherOnboardingModal({ profile, onComplete }) {
 
       const updated = json.data || { ...profile, ...payload, is_onboarded: true };
       if (setProfile) setProfile(updated);
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('publisher-profile-updated', { detail: updated }));
+      }
       if (onComplete) onComplete(updated);
+      if (onClose) onClose();
     } catch (err) {
       setError(err.message);
     } finally {
@@ -31594,97 +31727,210 @@ function PublisherOnboardingModal({ profile, onComplete }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-fadeIn">
       <div className="w-full max-w-2xl bg-white dark:bg-slate-900 rounded-3xl border border-amber-500/30 shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
-        {/* Header with Progress Steps */}
-        <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-amber-950 p-6 text-white border-b border-slate-800">
-          <div className="flex items-center justify-between mb-3">
+        {/* Header with Step Switcher */}
+        <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-amber-950 p-6 text-white border-b border-slate-800 relative">
+          {onClose && (
+            <button
+              onClick={onClose}
+              className="absolute top-5 right-5 w-8 h-8 rounded-full bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition-colors text-sm font-bold"
+            >
+              ✕
+            </button>
+          )}
+          <div className="flex items-center justify-between mb-2 pr-10">
             <span className="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-black uppercase tracking-wider">
-              ✨ PUBLISHER ONBOARDING WIZARD
+              ✨ PUBLISHER PROFILE & CREDENTIALS
             </span>
             <span className="text-xs font-mono text-amber-400 font-bold">
               Step {step} of 3
             </span>
           </div>
           <h2 className="text-xl sm:text-2xl font-serif font-black text-white">
-            {isTamil ? 'வணக்கம்! உங்கள் வெளியீட்டாளர் விவரங்களை நிறைவுசெய்யுங்கள்' : 'Welcome! Complete Your Publisher Profile'}
+            {isTamil ? 'வெளியீட்டாளர் விவரங்கள் & சான்றுகள்' : 'Edit Publisher Profile & Credentials'}
           </h2>
           <p className="text-xs text-slate-300 mt-1">
-            {isTamil ? 'உங்கள் புகைப்படம், AMFI பதிவு எண் மற்றும் சமூக வலைத்தள இணைப்புகளைச் சேருங்கள்.' : 'Set up your credentials, photo, ARN, and social media channels to start publishing articles.'}
+            {isTamil ? 'உங்கள் சுயவிவர புகைப்படம், AMFI பதிவு எண், சிறப்புத் துறைகள் மற்றும் சமூக வலைத்தள இணைப்புகள்.' : 'Update your profile photo, AMFI ARN number, bio, and consultation channels for investors.'}
           </p>
 
-          {/* Progress Bar */}
+          {/* Interactive Step Switcher Tabs */}
           <div className="flex items-center gap-2 mt-4">
-            <div className={`h-1.5 flex-1 rounded-full transition-all ${step >= 1 ? 'bg-amber-500' : 'bg-slate-800'}`} />
-            <div className={`h-1.5 flex-1 rounded-full transition-all ${step >= 2 ? 'bg-amber-500' : 'bg-slate-800'}`} />
-            <div className={`h-1.5 flex-1 rounded-full transition-all ${step >= 3 ? 'bg-amber-500' : 'bg-slate-800'}`} />
+            <button
+              type="button"
+              onClick={() => setStep(1)}
+              className={`flex-1 py-1.5 px-2 rounded-lg text-[11px] font-black transition-all flex items-center justify-center gap-1.5 ${
+                step === 1 ? 'bg-amber-500 text-slate-950 shadow' : 'bg-slate-900 text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              <span>👤</span>
+              <span className="truncate">1. Photo & Identity</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setStep(2)}
+              className={`flex-1 py-1.5 px-2 rounded-lg text-[11px] font-black transition-all flex items-center justify-center gap-1.5 ${
+                step === 2 ? 'bg-amber-500 text-slate-950 shadow' : 'bg-slate-900 text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              <span>📝</span>
+              <span className="truncate">2. Bio & Specialties</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setStep(3)}
+              className={`flex-1 py-1.5 px-2 rounded-lg text-[11px] font-black transition-all flex items-center justify-center gap-1.5 ${
+                step === 3 ? 'bg-amber-500 text-slate-950 shadow' : 'bg-slate-900 text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              <span>📱</span>
+              <span className="truncate">3. Social & Contact</span>
+            </button>
           </div>
         </div>
 
         {/* Wizard Step Body */}
         <div className="p-6 overflow-y-auto space-y-5 flex-1">
           {error && (
-            <div className="p-3.5 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-600 dark:text-red-400 text-xs font-bold">
-              {error}
+            <div className="p-3.5 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-600 dark:text-red-400 text-xs font-bold flex items-center justify-between">
+              <span>{error}</span>
+              <button onClick={() => setError('')} className="text-sm font-bold">✕</button>
             </div>
           )}
 
           {/* STEP 1: PHOTO & CREDENTIALS */}
           {step === 1 && (
-            <div className="space-y-4 animate-fadeIn">
-              {/* Avatar Live Preview */}
-              <div className="flex flex-col sm:flex-row items-center gap-4 p-4 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
-                <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-700 overflow-hidden shrink-0 border-2 border-amber-500/40 flex items-center justify-center text-slate-950 font-black text-2xl shadow-lg">
-                  {avatarUrl ? (
-                    <img src={avatarUrl} alt="" className="w-full h-full object-cover" onError={(e) => { e.target.style.display = 'none'; }} />
-                  ) : (
-                    <span>{(displayName || 'P').charAt(0)}</span>
-                  )}
-                </div>
-                <div className="space-y-2 flex-1 w-full">
-                  <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block">
-                    Profile Photo URL / Avatar
-                  </label>
-                  <input
-                    type="url"
-                    value={avatarUrl}
-                    onChange={e => setAvatarUrl(e.target.value)}
-                    placeholder="https://example.com/photo.jpg"
-                    className="w-full px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
-                  />
-                  {/* Preset Avatars */}
-                  <div className="flex items-center gap-2 pt-1">
-                    <span className="text-[10px] text-slate-400 font-bold">Presets:</span>
-                    {avatarPresets.map((preset, idx) => (
+            <div className="space-y-5 animate-fadeIn">
+              {/* Avatar Live Preview & Photo Uploader Box */}
+              <div className="p-5 rounded-3xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-4">
+                <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5">
+                  {/* Avatar Large Preview */}
+                  <div className="relative group/photo shrink-0">
+                    <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl bg-gradient-to-br from-amber-500 to-amber-700 overflow-hidden border-2 border-amber-500 flex items-center justify-center text-slate-950 font-black text-3xl shadow-xl">
+                      {avatarUrl ? (
+                        <img
+                          src={avatarUrl}
+                          alt="Avatar"
+                          className="w-full h-full object-cover"
+                          onError={(e) => { e.target.style.display = 'none'; }}
+                        />
+                      ) : (
+                        <span>{(displayName || 'P').charAt(0).toUpperCase()}</span>
+                      )}
+                    </div>
+                    {isUploadingPhoto && (
+                      <div className="absolute inset-0 rounded-3xl bg-slate-950/70 backdrop-blur-sm flex items-center justify-center">
+                        <div className="w-6 h-6 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Photo Actions */}
+                  <div className="space-y-3 flex-1 text-center sm:text-left w-full">
+                    <div>
+                      <h4 className="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white">
+                        {isTamil ? 'சுயவிவரப் புகைப்படம் (Profile Photo)' : 'Publisher Profile Photo'}
+                      </h4>
+                      <p className="text-[11px] text-slate-500 mt-0.5">
+                        {isTamil ? 'உங்கள் சாதனத்திலிருந்து புகைப்படத்தைப் பதிவேற்றவும் அல்லது இணைப்பை உள்ளிடவும்.' : 'Upload directly from your device, choose a curated preset, or paste an image URL.'}
+                      </p>
+                    </div>
+
+                    {/* Action Buttons: Upload & Presets */}
+                    <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                      <input
+                        type="file"
+                        ref={fileInputRef}
+                        accept="image/*"
+                        onChange={handleImageFileChange}
+                        className="hidden"
+                      />
                       <button
-                        key={idx}
                         type="button"
-                        onClick={() => setAvatarUrl(preset)}
-                        className="w-6 h-6 rounded-full overflow-hidden border border-amber-500/50 hover:scale-110 transition-transform"
+                        onClick={() => fileInputRef.current && fileInputRef.current.click()}
+                        className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-black shadow-md transition-all flex items-center gap-1.5"
                       >
-                        <img src={preset} alt="" className="w-full h-full object-cover" />
+                        <span>📤</span>
+                        <span>{isTamil ? 'படத்தை பதிவேற்றுக' : 'Upload from Device'}</span>
                       </button>
-                    ))}
+
+                      <button
+                        type="button"
+                        onClick={() => setPhotoMode(photoMode === 'url' ? 'upload' : 'url')}
+                        className="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold hover:border-amber-500 transition-all flex items-center gap-1"
+                      >
+                        <span>🔗</span>
+                        <span>{photoMode === 'url' ? 'Hide URL' : 'Image URL'}</span>
+                      </button>
+
+                      {avatarUrl && (
+                        <button
+                          type="button"
+                          onClick={() => setAvatarUrl('')}
+                          className="px-3 py-2 rounded-xl bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white border border-red-500/20 text-xs font-bold transition-all flex items-center gap-1"
+                        >
+                          <span>🗑️</span>
+                          <span>{isTamil ? 'அகற்று' : 'Clear'}</span>
+                        </button>
+                      )}
+                    </div>
+
+                    {/* Image URL Input (when toggled) */}
+                    {photoMode === 'url' && (
+                      <div className="space-y-1 pt-1 animate-fadeIn">
+                        <input
+                          type="url"
+                          value={avatarUrl}
+                          onChange={e => setAvatarUrl(e.target.value)}
+                          placeholder="https://example.com/your-photo.jpg"
+                          className="w-full px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+                        />
+                      </div>
+                    )}
+
+                    {/* Quick Avatar Presets */}
+                    <div className="pt-2 border-t border-slate-200 dark:border-slate-800/80">
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Presets:</span>
+                        <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
+                          {avatarPresets.map((preset, idx) => (
+                            <button
+                              key={idx}
+                              type="button"
+                              onClick={() => setAvatarUrl(preset)}
+                              className={`w-7 h-7 rounded-full overflow-hidden border transition-all ${
+                                avatarUrl === preset
+                                  ? 'border-amber-500 scale-110 shadow-md ring-2 ring-amber-500/40'
+                                  : 'border-slate-300 dark:border-slate-700 opacity-70 hover:opacity-100 hover:scale-105'
+                              }`}
+                            >
+                              <img src={preset} alt="" className="w-full h-full object-cover" />
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              {/* Full Name */}
-              <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
-                  Full Display Name *
+              {/* Full Display Name */}
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center justify-between">
+                  <span>Full Display Name *</span>
+                  <span className="text-[10px] text-slate-400 font-normal">Shown publicly on all articles & directory</span>
                 </label>
                 <input
                   type="text"
                   required
                   value={displayName}
                   onChange={e => setDisplayName(e.target.value)}
-                  placeholder="e.g. B. Padmanaban"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+                  placeholder="e.g. Ramesh V"
+                  className="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
                 />
               </div>
 
               {/* Title & ARN */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1">
+                <div className="space-y-1.5">
                   <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
                     Professional Designation
                   </label>
@@ -31692,12 +31938,12 @@ function PublisherOnboardingModal({ profile, onComplete }) {
                     type="text"
                     value={title}
                     onChange={e => setTitle(e.target.value)}
-                    placeholder="Certified Financial Planner (CFP)"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+                    placeholder="AMFI Registered Mutual Fund Distributor"
+                    className="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
                   />
                 </div>
 
-                <div className="space-y-1">
+                <div className="space-y-1.5">
                   <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
                     AMFI ARN / SEBI Registration Number
                   </label>
@@ -31706,7 +31952,7 @@ function PublisherOnboardingModal({ profile, onComplete }) {
                     value={arnNumber}
                     onChange={e => setArnNumber(e.target.value)}
                     placeholder="e.g. ARN-56291"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-mono font-bold text-amber-600 dark:text-amber-400 focus:outline-none focus:border-amber-500"
+                    className="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-mono font-bold text-amber-600 dark:text-amber-400 focus:outline-none focus:border-amber-500"
                   />
                 </div>
               </div>
@@ -31717,7 +31963,7 @@ function PublisherOnboardingModal({ profile, onComplete }) {
           {step === 2 && (
             <div className="space-y-4 animate-fadeIn">
               {/* Specialties */}
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
                   Areas of Expertise / Specialties (Comma separated)
                 </label>
@@ -31725,13 +31971,16 @@ function PublisherOnboardingModal({ profile, onComplete }) {
                   type="text"
                   value={specialties}
                   onChange={e => setSpecialties(e.target.value)}
-                  placeholder="Mutual Funds, Equity SIPs, Retirement, Tax Saving"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+                  placeholder="Mutual Funds, Equity SIPs, Wealth Compounding, Tax Saving"
+                  className="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
                 />
+                <p className="text-[10px] text-slate-400">
+                  e.g. Mutual Funds, SIP Strategies, Retirement Planning, Sovereign Gold Bonds, ELSS Tax Saving
+                </p>
               </div>
 
               {/* Bio (English) */}
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
                   About You & Investment Philosophy (English)
                 </label>
@@ -31739,13 +31988,13 @@ function PublisherOnboardingModal({ profile, onComplete }) {
                   rows={3}
                   value={bio}
                   onChange={e => setBio(e.target.value)}
-                  placeholder="Share your experience, guiding principles, and wealth compounding approach..."
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+                  placeholder="Share your experience, investment philosophy, and wealth compounding approach..."
+                  className="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
                 />
               </div>
 
               {/* Bio (Tamil) */}
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
                   சுயவிவரம் & முதலீட்டு நோக்கம் (தமிழ்)
                 </label>
@@ -31754,7 +32003,7 @@ function PublisherOnboardingModal({ profile, onComplete }) {
                   value={bioTa}
                   onChange={e => setBioTa(e.target.value)}
                   placeholder="உங்கள் நிதி ஆலோசனை அனுபவம் மற்றும் முதலீட்டாளர்களுக்கான வழிகாட்டல்..."
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500 font-serif"
+                  className="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500 font-serif"
                 />
               </div>
             </div>
@@ -31763,8 +32012,26 @@ function PublisherOnboardingModal({ profile, onComplete }) {
           {/* STEP 3: SOCIAL & CONNECT LINKS */}
           {step === 3 && (
             <div className="space-y-4 animate-fadeIn">
+              {/* WhatsApp Consultation */}
+              <div className="space-y-1.5 p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
+                <label className="text-xs font-black text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
+                  <span>💬</span>
+                  <span>Direct WhatsApp Consultation Number</span>
+                </label>
+                <input
+                  type="text"
+                  value={whatsappNumber}
+                  onChange={e => setWhatsappNumber(e.target.value)}
+                  placeholder="+91 98400 12345"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-emerald-500/30 text-xs font-mono font-bold text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500"
+                />
+                <p className="text-[10px] text-emerald-600 dark:text-emerald-400/80">
+                  Enables users to connect with you directly via WhatsApp on your profile and articles.
+                </p>
+              </div>
+
               {/* LinkedIn URL */}
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
                   <span>💼</span>
                   <span>LinkedIn Profile URL</span>
@@ -31778,23 +32045,8 @@ function PublisherOnboardingModal({ profile, onComplete }) {
                 />
               </div>
 
-              {/* Twitter / X */}
-              <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-                  <span>🐦</span>
-                  <span>Twitter / X Profile URL or Handle</span>
-                </label>
-                <input
-                  type="text"
-                  value={twitterUrl}
-                  onChange={e => setTwitterUrl(e.target.value)}
-                  placeholder="https://x.com/yourhandle or @yourhandle"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
-                />
-              </div>
-
               {/* YouTube Channel */}
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
                   <span>🎬</span>
                   <span>YouTube Channel URL</span>
@@ -31808,17 +32060,17 @@ function PublisherOnboardingModal({ profile, onComplete }) {
                 />
               </div>
 
-              {/* WhatsApp / Phone */}
-              <div className="space-y-1">
+              {/* Twitter / X */}
+              <div className="space-y-1.5">
                 <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-                  <span>💬</span>
-                  <span>WhatsApp Consultation / Phone Number</span>
+                  <span>🐦</span>
+                  <span>Twitter / X Profile URL or Handle</span>
                 </label>
                 <input
                   type="text"
-                  value={whatsappNumber}
-                  onChange={e => setWhatsappNumber(e.target.value)}
-                  placeholder="+91 98400 12345"
+                  value={twitterUrl}
+                  onChange={e => setTwitterUrl(e.target.value)}
+                  placeholder="https://x.com/yourhandle or @yourhandle"
                   className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
                 />
               </div>
@@ -31827,7 +32079,7 @@ function PublisherOnboardingModal({ profile, onComplete }) {
         </div>
 
         {/* Wizard Footer Navigation */}
-        <div className="p-6 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 flex items-center justify-between">
+        <div className="p-6 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 flex items-center justify-between gap-3">
           {step > 1 ? (
             <button
               type="button"
@@ -31840,32 +32092,34 @@ function PublisherOnboardingModal({ profile, onComplete }) {
             <div />
           )}
 
-          {step < 3 ? (
-            <button
-              type="button"
-              onClick={() => {
-                if (step === 1 && !displayName.trim()) {
-                  setError('Please enter your full name');
-                  return;
-                }
-                setError('');
-                setStep(s => s + 1);
-              }}
-              className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs shadow-md transition-all flex items-center gap-1.5"
-            >
-              <span>Next Step</span>
-              <span>→</span>
-            </button>
-          ) : (
+          <div className="flex items-center gap-2">
+            {step < 3 && (
+              <button
+                type="button"
+                onClick={() => {
+                  if (step === 1 && !displayName.trim()) {
+                    setError('Please enter your full display name');
+                    return;
+                  }
+                  setError('');
+                  setStep(s => s + 1);
+                }}
+                className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs transition-all flex items-center gap-1.5"
+              >
+                <span>Next Step</span>
+                <span>→</span>
+              </button>
+            )}
+
             <button
               type="button"
               onClick={handleSubmit}
-              disabled={isSubmitting}
-              className="px-8 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs shadow-xl transition-all disabled:opacity-50 flex items-center gap-2"
+              disabled={isSubmitting || !displayName.trim()}
+              className="px-7 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs shadow-xl transition-all disabled:opacity-50 flex items-center gap-2"
             >
-              <span>{isSubmitting ? 'Saving Profile...' : '🚀 Complete Setup & Enter Studio'}</span>
+              <span>{isSubmitting ? 'Saving Profile...' : '🚀 Save All Changes'}</span>
             </button>
-          )}
+          </div>
         </div>
       </div>
     </div>
@@ -33001,7 +33255,7 @@ function NewsDetailsPage({ slug, onNavigate }) {
 }
 
 function ProfilePage({ onNavigate, onShowToast }) {
-  const { user, profile, role, signOut, supabase } = useAuth();
+  const { user, profile, role, signOut, supabase, setProfile } = useAuth();
   const { language } = useLanguage();
   const isTamil = language === 'ta';
   const { bookmarks, toggleBookmark } = useBookmarks();
@@ -33012,6 +33266,9 @@ function ProfilePage({ onNavigate, onShowToast }) {
   );
   const [isSaving, setIsSaving] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
+  const [isEditingPublisherModalOpen, setIsEditingPublisherModalOpen] = useState(false);
+
+  const isPublisher = role === 'publisher' || profile?.role === 'publisher' || role === 'admin';
 
   const email = user?.email || '';
   const avatarUrl = profile?.avatar_url || user?.user_metadata?.avatar_url;
@@ -33028,6 +33285,9 @@ function ProfilePage({ onNavigate, onShowToast }) {
           .update({ display_name: displayName.trim(), updated_at: new Date().toISOString() })
           .eq('id', user.id);
         if (error) throw error;
+        if (setProfile) {
+          setProfile(prev => ({ ...prev, display_name: displayName.trim() }));
+        }
       }
       if (onShowToast) {
         onShowToast(isTamil ? 'சுயவிவரம் புதுப்பிக்கப்பட்டது!' : 'Profile updated successfully!');
@@ -33045,40 +33305,66 @@ function ProfilePage({ onNavigate, onShowToast }) {
       {/* Header Banner */}
       <div className="relative rounded-3xl bg-gradient-to-r from-slate-900 via-slate-900 to-amber-950/70 border border-slate-800 p-6 sm:p-8 shadow-2xl overflow-hidden text-white">
         <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 relative z-10">
-          {avatarUrl ? (
-            <img
-              src={avatarUrl}
-              alt={displayName}
-              className="w-20 h-20 rounded-full object-cover border-2 border-amber-500 shadow-xl shrink-0"
-            />
-          ) : (
-            <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-amber-600 to-amber-400 text-slate-950 font-black text-2xl flex items-center justify-center border-2 border-amber-400 shadow-xl shrink-0">
-              {initials}
-            </div>
-          )}
+          <div
+            onClick={() => isPublisher ? setIsEditingPublisherModalOpen(true) : null}
+            className={`relative group/avatar shrink-0 ${isPublisher ? 'cursor-pointer' : ''}`}
+            title={isPublisher ? (isTamil ? 'சுயவிவரப் புகைப்படத்தை மாற்ற கிளிக் செய்யவும்' : 'Click to change profile photo & credentials') : ''}
+          >
+            {avatarUrl ? (
+              <img
+                src={avatarUrl}
+                alt={displayName}
+                className="w-20 h-20 rounded-full object-cover border-2 border-amber-500 shadow-xl shrink-0 group-hover/avatar:opacity-85 transition-opacity"
+                onError={(e) => { e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName || 'User')}&background=f59e0b&color=0f172a&bold=true`; }}
+              />
+            ) : (
+              <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-amber-600 to-amber-400 text-slate-950 font-black text-2xl flex items-center justify-center border-2 border-amber-400 shadow-xl shrink-0">
+                {initials}
+              </div>
+            )}
+            {isPublisher && (
+              <div className="absolute inset-0 rounded-full bg-slate-950/70 opacity-0 group-hover/avatar:opacity-100 flex flex-col items-center justify-center text-amber-300 text-[10px] font-black transition-opacity">
+                <span className="text-sm">📷</span>
+                <span>{isTamil ? 'புகைப்படம்' : 'Change'}</span>
+              </div>
+            )}
+          </div>
           <div className="space-y-1.5 text-center sm:text-left flex-1">
             <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
               <h1 className="text-2xl sm:text-3xl font-extrabold font-serif">{displayName || 'Investor'}</h1>
               <span className={`px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider rounded-full border ${
                 role === 'admin'
                   ? 'bg-red-500/20 text-red-400 border-red-500/30'
-                  : 'bg-amber-500/20 text-amber-400 border-amber-500/30'
+                  : role === 'publisher'
+                  ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
+                  : 'bg-slate-500/20 text-slate-300 border-slate-500/30'
               }`}>
-                {role === 'admin' ? 'Administrator' : 'Investor'}
+                {role === 'admin' ? 'Administrator' : (role === 'publisher' ? 'AMFI Publisher / Advisor' : 'Investor')}
               </span>
             </div>
             <p className="text-xs text-slate-400 font-mono">{email}</p>
             <p className="text-[11px] text-amber-400/90 font-medium">
-              {isTamil ? 'முதலீட்டு திசை நிதி தளத்தின் உறுப்பினர்' : 'Muthaleetu Thisai Member'}
+              {profile?.title || (isTamil ? 'முதலீட்டு திசை நிதி தளத்தின் உறுப்பினர்' : 'Muthaleetu Thisai Certified Member')}
             </p>
           </div>
 
-          <button
-            onClick={signOut}
-            className="btn-magnetic px-4 py-2 rounded-xl bg-red-600/20 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/30 text-xs font-bold transition-all shrink-0"
-          >
-            {isTamil ? 'வெளியேறு (Logout)' : 'Logout'}
-          </button>
+          <div className="flex items-center gap-2 shrink-0">
+            {isPublisher && (
+              <button
+                onClick={() => setIsEditingPublisherModalOpen(true)}
+                className="btn-magnetic px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs shadow-md transition-all flex items-center gap-1.5"
+              >
+                <span>✏️</span>
+                <span>{isTamil ? 'சான்றுகளை திருத்து' : 'Edit Credentials'}</span>
+              </button>
+            )}
+            <button
+              onClick={signOut}
+              className="btn-magnetic px-4 py-2 rounded-xl bg-red-600/20 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/30 text-xs font-bold transition-all shrink-0"
+            >
+              {isTamil ? 'வெளியேறு (Logout)' : 'Logout'}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -33109,6 +33395,7 @@ function ProfilePage({ onNavigate, onShowToast }) {
       {/* Tab Content: Settings */}
       {activeTab === 'overview' && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Account Basics Form */}
           <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
             <h3 className="text-sm font-black uppercase tracking-wider text-slate-900 dark:text-white font-serif">
               {isTamil ? 'கணக்கு அமைப்புகள்' : 'Personal Details'}
@@ -33148,39 +33435,113 @@ function ProfilePage({ onNavigate, onShowToast }) {
             </form>
           </div>
 
-          <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
-            <h3 className="text-sm font-black uppercase tracking-wider text-slate-900 dark:text-white font-serif">
-              {isTamil ? 'விரைவு வழிசெலுத்தல்' : 'Quick Actions'}
-            </h3>
-            <div className="space-y-2.5">
-              <button
-                onClick={() => onNavigate && onNavigate('#/history')}
-                className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 hover:bg-amber-500/10 border border-slate-200 dark:border-slate-800 text-xs font-bold transition-colors"
-              >
-                <div className="flex items-center gap-3">
-                  <span className="p-2 rounded-xl bg-amber-500/20 text-amber-500">▶</span>
-                  <span className="text-slate-800 dark:text-slate-200">
-                    {isTamil ? 'பார்த்த வீடியோக்களின் வரலாறு' : 'View Watch History'}
-                  </span>
+          {/* Right Column: Publisher Credentials Card or Quick Actions */}
+          <div className="space-y-6">
+            {isPublisher && (
+              <div className="bg-gradient-to-br from-slate-900 via-slate-950 to-amber-950/50 rounded-3xl p-6 border border-amber-500/30 shadow-md text-white space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="text-base">💼</span>
+                    <h3 className="text-sm font-black uppercase tracking-wider text-amber-400 font-serif">
+                      {isTamil ? 'வெளியீட்டாளர் & AMFI சான்றுகள்' : 'Publisher & AMFI Credentials'}
+                    </h3>
+                  </div>
+                  <button
+                    onClick={() => setIsEditingPublisherModalOpen(true)}
+                    className="text-xs font-bold text-amber-400 hover:underline flex items-center gap-1"
+                  >
+                    <span>✏️</span>
+                    <span>{isTamil ? 'திருத்து' : 'Edit'}</span>
+                  </button>
                 </div>
-                <span className="text-slate-400">({history.length}) →</span>
-              </button>
 
-              <button
-                onClick={() => onNavigate && onNavigate('#/videos')}
-                className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 hover:bg-amber-500/10 border border-slate-200 dark:border-slate-800 text-xs font-bold transition-colors"
-              >
-                <div className="flex items-center gap-3">
-                  <span className="p-2 rounded-xl bg-amber-500/20 text-amber-500">🎬</span>
-                  <span className="text-slate-800 dark:text-slate-200">
-                    {isTamil ? '882+ வீடியோ வழிகாட்டி' : 'Browse All 882+ Masterclasses'}
-                  </span>
+                <div className="space-y-2.5 text-xs text-slate-300">
+                  <div className="flex justify-between py-1 border-b border-slate-800">
+                    <span className="text-slate-400">{isTamil ? 'பதவி / பதவிப்பெயர்:' : 'Designation:'}</span>
+                    <span className="font-bold text-white text-right">{profile?.title || 'AMFI Registered MFD'}</span>
+                  </div>
+                  <div className="flex justify-between py-1 border-b border-slate-800">
+                    <span className="text-slate-400">{isTamil ? 'AMFI ARN எண்:' : 'ARN License:'}</span>
+                    <span className="font-mono font-bold text-amber-400">{profile?.arn_number || 'Not Set'}</span>
+                  </div>
+                  <div className="flex justify-between py-1 border-b border-slate-800">
+                    <span className="text-slate-400">{isTamil ? 'வாட்ஸ்அப் ஆலோசனை:' : 'WhatsApp:'}</span>
+                    <span className="font-mono text-white">{profile?.whatsapp_number || profile?.phone || 'Not Set'}</span>
+                  </div>
+                  <div className="py-1 border-b border-slate-800">
+                    <span className="text-slate-400 block mb-1">{isTamil ? 'சிறப்புத் துறைகள்:' : 'Specialties:'}</span>
+                    <div className="flex flex-wrap gap-1">
+                      {profile?.specialties && Array.isArray(profile.specialties) ? (
+                        profile.specialties.map((s, idx) => (
+                          <span key={idx} className="px-2 py-0.5 rounded bg-slate-800 text-[10px] text-amber-300 border border-slate-700">
+                            {s}
+                          </span>
+                        ))
+                      ) : (
+                        <span className="text-[11px] text-slate-400">Mutual Funds, SIPs, Wealth Planning</span>
+                      )}
+                    </div>
+                  </div>
                 </div>
-                <span className="text-slate-400">→</span>
-              </button>
+
+                <div className="pt-2 flex items-center gap-2">
+                  <button
+                    onClick={() => onNavigate && onNavigate(`#/professionals/${profile?.id || user?.id}`)}
+                    className="w-full py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 font-bold text-xs border border-amber-500/20 transition-all text-center"
+                  >
+                    {isTamil ? 'உங்கள் பொது சுயவிவரத்தைக் காண்க →' : 'View Your Public Profile →'}
+                  </button>
+                </div>
+              </div>
+            )}
+
+            <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+              <h3 className="text-sm font-black uppercase tracking-wider text-slate-900 dark:text-white font-serif">
+                {isTamil ? 'விரைவு வழிசெலுத்தல்' : 'Quick Actions'}
+              </h3>
+              <div className="space-y-2.5">
+                <button
+                  onClick={() => onNavigate && onNavigate('#/history')}
+                  className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 hover:bg-amber-500/10 border border-slate-200 dark:border-slate-800 text-xs font-bold transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="p-2 rounded-xl bg-amber-500/20 text-amber-500">▶</span>
+                    <span className="text-slate-800 dark:text-slate-200">
+                      {isTamil ? 'பார்த்த வீடியோக்களின் வரலாறு' : 'View Watch History'}
+                    </span>
+                  </div>
+                  <span className="text-slate-400">({history.length}) →</span>
+                </button>
+
+                <button
+                  onClick={() => onNavigate && onNavigate('#/professionals')}
+                  className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 hover:bg-amber-500/10 border border-slate-200 dark:border-slate-800 text-xs font-bold transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="p-2 rounded-xl bg-amber-500/20 text-amber-500">👥</span>
+                    <span className="text-slate-800 dark:text-slate-200">
+                      {isTamil ? 'அனைத்து நிதி நிபுணர்கள் & ஆலோசகர்கள்' : 'Browse All Wealth Advisors'}
+                    </span>
+                  </div>
+                  <span className="text-slate-400">→</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
+      )}
+
+      {/* Publisher Edit Modal when opened from profile */}
+      {isEditingPublisherModalOpen && (
+        <PublisherOnboardingModal
+          profile={profile}
+          onClose={() => setIsEditingPublisherModalOpen(false)}
+          onComplete={(updated) => {
+            if (setProfile) setProfile(updated);
+            setIsEditingPublisherModalOpen(false);
+            if (onShowToast) onShowToast(isTamil ? 'வெளியீட்டாளர் சுயவிவரம் புதுப்பிக்கப்பட்டது!' : 'Publisher profile updated successfully!');
+          }}
+        />
       )}
 
       {/* Tab Content: Bookmarks */}
@@ -33547,6 +33908,36 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
   const isTamil = language === 'ta';
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [livePublishers, setLivePublishers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Fetch live publishers from PostgreSQL /api/publishers with real-time update listener
+  useEffect(() => {
+    let isMounted = true;
+    async function loadPublishers() {
+      try {
+        const res = await fetch('/api/publishers?t=' + Date.now());
+        if (res.ok) {
+          const json = await res.json();
+          if (isMounted && json.data && Array.isArray(json.data)) {
+            setLivePublishers(json.data);
+          }
+        }
+      } catch (err) {
+        console.warn('Could not fetch live publishers:', err);
+      } finally {
+        if (isMounted) setIsLoading(false);
+      }
+    }
+    loadPublishers();
+
+    const handleUpdate = () => loadPublishers();
+    window.addEventListener('publisher-profile-updated', handleUpdate);
+    return () => {
+      isMounted = false;
+      window.removeEventListener('publisher-profile-updated', handleUpdate);
+    };
+  }, []);
 
   const categories = [
     { id: 'all', labelTa: 'அனைத்து நிபுணர்கள்', labelEn: 'All Specialists' },
@@ -33556,8 +33947,87 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
     { id: 'client-advisory', labelTa: 'தனிநபர் நிதி & வாடிக்கையாளர்', labelEn: 'Personal CFO Desk' }
   ];
 
+  // Merge live database publishers with platform seed professionals
+  const allPublishers = useMemo(() => {
+    const list = [];
+    const seenIds = new Set();
+    const seenNames = new Set();
+
+    // 1. Live DB Publishers (All registered publishers stored in database)
+    (livePublishers || []).forEach(p => {
+      const displayName = p.display_name || p.email?.split('@')[0] || 'Advisor';
+      const cleanName = displayName.trim();
+      seenIds.add(p.id);
+      seenNames.add(cleanName.toLowerCase());
+
+      const isFounder = p.id === 'fe41c6c1-647f-4f8c-81b8-c39ca3666426' || cleanName.toLowerCase().includes('budget padmanaban');
+      const arn = p.arn_number || '';
+      const badgeEn = isFounder
+        ? 'AMFI-REGISTERED MFD | FOUNDER'
+        : (arn ? `AMFI-REGISTERED MFD | ${arn}` : 'AMFI-REGISTERED MFD');
+      const badgeTa = isFounder
+        ? 'AMFI பதிவுசெய்த ஆலோசகர் | நிறுவனர்'
+        : (arn ? `AMFI பதிவுசெய்த ஆலோசகர் | ${arn}` : 'AMFI பதிவுசெய்த ஆலோசகர்');
+
+      list.push({
+        id: p.id,
+        isLive: true,
+        nameEnglish: cleanName,
+        nameTamil: cleanName,
+        titleEnglish: p.title || (isFounder ? 'Founder & Chief Market Commentator' : 'AMFI Registered Mutual Fund Distributor'),
+        titleTamil: p.title || (isFounder ? 'நிறுவனர் & தலைமை சந்தை ஆய்வாளர்' : 'பதிவுசெய்யப்பட்ட நிதி ஆலோசகர்'),
+        organization: isFounder ? 'Fortune Investment Services (FISPL)' : 'Fortune Investment Services (FISPL Partner)',
+        arnNumber: arn,
+        avatar: p.avatar_url || (isFounder ? 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80' : `https://ui-avatars.com/api/?name=${encodeURIComponent(cleanName)}&background=f59e0b&color=0f172a&bold=true`),
+        badgeEnglish: badgeEn,
+        badgeTamil: badgeTa,
+        bioEnglish: p.bio || (isFounder
+          ? 'Founder of FISPL with 15+ years of market authority, educating retail and HNI investors on Mutual Funds, Wealth Creation & Systematic Financial Planning across 882+ masterclasses.'
+          : 'Certified AMFI mutual fund distributor dedicated to investor financial freedom, portfolio diversification, and long-term compounding.'),
+        bioTamil: p.bio_ta || p.bio || (isFounder
+          ? 'FISPL நிறுவனர், 15+ ஆண்டுகால நிதி அனுபவத்துடன் மியூச்சுவல் ஃபண்ட் மற்றும் நீண்டகால செல்வ உருவாக்கம் குறித்த வழிகாட்டல்.'
+          : 'முதலீட்டாளர்களின் நிதி சுதந்திரம் மற்றும் நீண்ட கால செல்வ உருவாக்கத்திற்கு வழிகாட்டும் AMFI அங்கீகாரம் பெற்ற ஆலோசகர்.'),
+        category: 'mutual-funds',
+        stats: {
+          masterclasses: isFounder ? 882 : 0,
+          articles: parseInt(p.article_count || (isFounder ? '12' : '0'), 10)
+        },
+        specialties: Array.isArray(p.specialties) && p.specialties.length > 0
+          ? p.specialties
+          : ['Mutual Funds', 'SIP Portfolios', 'Wealth Planning', 'Tax Saving'],
+        whatsapp: p.whatsapp_number || p.phone || '',
+        articleCount: parseInt(p.article_count || (isFounder ? '12' : '0'), 10),
+        socialLinks: {
+          linkedin: p.linkedin_url || '',
+          twitter: p.twitter_url || '',
+          youtube: p.youtube_url || ''
+        }
+      });
+    });
+
+    // 2. Default Seed Specialists (if not already in database)
+    (professionalsData || []).forEach(seed => {
+      const matchName = (seed.nameEnglish || '').toLowerCase();
+      if (!seenIds.has(seed.id) && !seenNames.has(matchName)) {
+        seenIds.add(seed.id);
+        list.push({
+          ...seed,
+          isLive: false,
+          stats: {
+            masterclasses: seed.stats?.masterclasses || 0,
+            articles: seed.stats?.articles || 5
+          },
+          articleCount: seed.stats?.articles || 5,
+          specialties: seed.specializations ? seed.specializations.map(s => s.en) : ['Mutual Funds', 'Market Research']
+        });
+      }
+    });
+
+    return list;
+  }, [livePublishers]);
+
   const filteredProfessionals = useMemo(() => {
-    let list = [...professionalsData];
+    let list = [...allPublishers];
 
     if (selectedCategory !== 'all') {
       list = list.filter(p => p.category === selectedCategory);
@@ -33572,12 +34042,13 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
         const titleE = (p.titleEnglish || '').toLowerCase();
         const bioT = (p.bioTamil || '').toLowerCase();
         const bioE = (p.bioEnglish || '').toLowerCase();
-        return nameT.includes(q) || nameE.includes(q) || titleT.includes(q) || titleE.includes(q) || bioT.includes(q) || bioE.includes(q);
+        const arn = (p.arnNumber || '').toLowerCase();
+        return nameT.includes(q) || nameE.includes(q) || titleT.includes(q) || titleE.includes(q) || bioT.includes(q) || bioE.includes(q) || arn.includes(q);
       });
     }
 
     return list;
-  }, [selectedCategory, searchQuery]);
+  }, [allPublishers, selectedCategory, searchQuery]);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 animate-fadeIn">
@@ -33586,14 +34057,14 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
         <div className="space-y-2">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-black uppercase tracking-wider">
             <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
-            <span>{isTamil ? 'அங்கீகரிக்கப்பட்ட முதலீட்டு நிபுணர்கள்' : 'Public Professionals Directory'}</span>
+            <span>{isTamil ? 'அங்கீகரிக்கப்பட்ட முதலீட்டு நிபுணர்கள்' : 'PUBLIC PROFESSIONALS DIRECTORY'}</span>
           </div>
           <h1 className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white font-serif tracking-tight">
             {isTamil ? 'முதலீட்டு நிபுணர்கள் & எழுத்தாளர்கள்' : 'Investment Specialists & Commentators'}
           </h1>
           <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed">
             {isTamil
-              ? 'பார்ச்சூன் இன்வெஸ்ட்மென்ட் சர்வீசஸ் (FISPL) நிறுவனத்தின் சந்தை வர்ணனையாளர்கள், ஆராய்ச்சி நிபுணர்கள் மற்றும் ஆலோசகர்களின் படைப்புகள்.'
+              ? 'AMFI பதிவுசெய்த ஆலோசகர்கள், நிதி எழுத்தாளர்கள் மற்றும் பார்ச்சூன் இன்வெஸ்ட்மென்ட் சர்வீசஸ் (FISPL) நிறுவன நிபுணர்களின் விவரங்கள் & படைப்புகள்.'
               : 'Discover insights, masterclasses, and research commentary published by FISPL market commentators and financial specialists.'}
           </p>
         </div>
@@ -33607,7 +34078,7 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder={isTamil ? 'நிபுணர் பெயர், துறை தேடுக...' : 'Search specialists...'}
+            placeholder={isTamil ? 'நிபுணர் பெயர், ARN, துறை தேடுக...' : 'Search specialists...'}
             className="w-full pl-9 pr-4 py-2.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:border-amber-500 shadow-sm"
           />
         </div>
@@ -33656,13 +34127,23 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
                         src={prof.avatar}
                         alt={name}
                         className="w-16 h-16 rounded-2xl object-cover border-2 border-amber-500/40 group-hover:border-amber-500 shadow-md transition-colors"
+                        onError={(e) => {
+                          e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=f59e0b&color=0f172a&bold=true`;
+                        }}
                       />
                       <span className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-white dark:border-slate-900" title="Active Publisher" />
                     </div>
 
-                    <span className="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-500/10 text-amber-500 border border-amber-500/20">
-                      {badge}
-                    </span>
+                    <div className="flex flex-col items-end gap-1">
+                      <span className="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/20 text-right">
+                        {badge}
+                      </span>
+                      {prof.arnNumber && (
+                        <span className="px-2 py-0.5 rounded-md text-[9px] font-mono font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+                          {prof.arnNumber}
+                        </span>
+                      )}
+                    </div>
                   </div>
 
                   {/* Identity */}
@@ -33682,21 +34163,44 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
                   <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed">
                     {bio}
                   </p>
+
+                  {/* Specialties Pills */}
+                  {prof.specialties && Array.isArray(prof.specialties) && prof.specialties.length > 0 && (
+                    <div className="flex flex-wrap gap-1 pt-1">
+                      {prof.specialties.slice(0, 3).map((spec, sIdx) => (
+                        <span key={sIdx} className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 text-[10px] font-semibold">
+                          {spec}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 {/* Metrics & Action Link */}
                 <div className="space-y-3 pt-4 border-t border-slate-100 dark:border-slate-800">
                   <div className="flex items-center justify-between text-[11px] font-bold text-slate-500 dark:text-slate-400">
-                    <span className="flex items-center gap-1.5">
-                      <span className="text-amber-500">🎬</span> {prof.stats.masterclasses}+ {isTamil ? 'வீடியோக்கள்' : 'Masterclasses'}
+                    <span className="flex items-center gap-1">
+                      <span className="text-amber-500">🎬</span> {prof.stats?.masterclasses || 0}+ {isTamil ? 'வீடியோக்கள்' : 'Masterclasses'}
                     </span>
-                    <span className="flex items-center gap-1.5">
-                      <span className="text-blue-500">✍️</span> {prof.stats.articles}+ {isTamil ? 'கட்டுரைகள்' : 'Articles'}
+                    <span className="flex items-center gap-1">
+                      <span className="text-blue-500">✍️</span> {prof.articleCount || prof.stats?.articles || 0}+ {isTamil ? 'கட்டுரைகள்' : 'Articles'}
                     </span>
+                    {prof.whatsapp && (
+                      <span
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          const clean = prof.whatsapp.replace(/[^0-9]/g, '');
+                          window.open(`https://wa.me/${clean}?text=${encodeURIComponent('Hello! I came across your profile on Muthaleetu Thisai and would like to connect.')}`, '_blank');
+                        }}
+                        className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 hover:underline cursor-pointer"
+                      >
+                        <span>💬</span> WhatsApp
+                      </span>
+                    )}
                   </div>
 
                   <div className="flex items-center justify-between text-xs font-black text-amber-500 group-hover:text-amber-400 transition-colors pt-1">
-                    <span>{isTamil ? 'படைப்புகளைக் காண்க' : 'View Insights & Feed'}</span>
+                    <span>{isTamil ? 'சுயவிவரம் & கட்டுரைகளைக் காண்க' : 'View Insights & Feed'}</span>
                     <span className="group-hover:translate-x-1 transition-transform">→</span>
                   </div>
                 </div>
@@ -33724,8 +34228,69 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
   const isTamil = language === 'ta';
   const [activeTab, setActiveTab] = useState('articles');
   const [selectedVideo, setSelectedVideo] = useState(null);
+  const [livePublisher, setLivePublisher] = useState(null);
+  const [liveArticles, setLiveArticles] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const prof = professionalsData.find(p => p.id === professionalId || p.slug === professionalId) || professionalsData[0];
+  // Fetch publisher data by ID from /api/publishers?id=...
+  useEffect(() => {
+    let isMounted = true;
+    async function loadPublisherDetail() {
+      try {
+        const res = await fetch(`/api/publishers?id=${encodeURIComponent(professionalId)}`);
+        if (res.ok) {
+          const json = await res.json();
+          if (isMounted && json.data) {
+            setLivePublisher(json.data);
+            if (Array.isArray(json.data.articles)) {
+              setLiveArticles(json.data.articles);
+            }
+          }
+        }
+      } catch (err) {
+        console.warn('Could not fetch publisher details:', err);
+      } finally {
+        if (isMounted) setIsLoading(false);
+      }
+    }
+    loadPublisherDetail();
+    return () => { isMounted = false; };
+  }, [professionalId]);
+
+  // Fallback to static seed data if not found in live DB
+  const seedProf = professionalsData.find(p => p.id === professionalId || p.slug === professionalId);
+
+  const prof = useMemo(() => {
+    if (livePublisher) {
+      return {
+        id: livePublisher.id,
+        nameEnglish: livePublisher.display_name || 'Certified Advisor',
+        nameTamil: livePublisher.display_name || 'அங்கீகரிக்கப்பட்ட ஆலோசகர்',
+        titleEnglish: livePublisher.title || 'AMFI Registered Mutual Fund Distributor',
+        titleTamil: livePublisher.title || 'பதிவுசெய்யப்பட்ட நிதி ஆலோசகர்',
+        organization: 'FISPL Certified Partner',
+        arnNumber: livePublisher.arn_number || '',
+        avatar: livePublisher.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(livePublisher.display_name || 'Advisor')}&background=f59e0b&color=0f172a&bold=true`,
+        badgeEnglish: 'VERIFIED ADVISOR',
+        badgeTamil: 'சரிபார்க்கப்பட்ட ஆலோசகர்',
+        locationEnglish: 'Tamil Nadu, India',
+        locationTamil: 'தமிழ்நாடு, இந்தியா',
+        experience: 'AMFI Certified',
+        fullBioEnglish: livePublisher.bio || 'Certified AMFI mutual fund distributor dedicated to investor financial freedom and long-term compounding.',
+        fullBioTamil: livePublisher.bio_ta || livePublisher.bio || 'முதலீட்டாளர்களின் நிதி சுதந்திரம் மற்றும் நீண்ட கால செல்வ உருவாக்கத்திற்கு வழிகாட்டும் AMFI அங்கீகாரம் பெற்ற ஆலோசகர்.',
+        specializations: Array.isArray(livePublisher.specialties)
+          ? livePublisher.specialties.map(s => ({ en: s, ta: s }))
+          : [{ en: 'Mutual Funds', ta: 'மியூச்சுவல் ஃபண்ட்' }, { en: 'Equity SIPs', ta: 'ஈக்விட்டி SIP' }],
+        whatsapp: livePublisher.whatsapp_number || livePublisher.phone || '',
+        socialLinks: {
+          linkedin: livePublisher.linkedin_url || '',
+          twitter: livePublisher.twitter_url || '',
+          youtube: livePublisher.youtube_url || ''
+        }
+      };
+    }
+    return seedProf || professionalsData[0];
+  }, [livePublisher, seedProf]);
 
   if (!prof) return null;
 
@@ -33735,25 +34300,42 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
   const badge = isTamil ? prof.badgeTamil : prof.badgeEnglish;
   const location = isTamil ? prof.locationTamil : prof.locationEnglish;
 
-  // Filter content authored by or associated with this professional
+  // Combine live articles with static articles
   const publisherArticles = useMemo(() => {
+    if (liveArticles.length > 0) {
+      return liveArticles.map(a => ({
+        id: a.id,
+        slug: a.slug,
+        title: isTamil && a.title_ta ? a.title_ta : a.title,
+        titleTa: a.title_ta,
+        summary: isTamil && a.summary_ta ? a.summary_ta : (a.summary || ''),
+        summaryTa: a.summary_ta,
+        coverImage: a.cover_image || 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&auto=format&fit=crop&q=80',
+        category: a.category || 'MARKETS',
+        readTimeMinutes: a.read_time_minutes || 4,
+        publishedAt: a.published_at || a.created_at,
+        author: a.author_name || name,
+        authorName: a.author_name || name,
+        authorAvatar: a.author_avatar || prof.avatar,
+        authorArn: a.author_arn || prof.arnNumber
+      }));
+    }
+
     if (prof.id === 'budget-padmanaban') {
       return (newsData || []).map(a => translateNewsArticle(a, language));
     }
     const slugs = prof.featuredArticleSlugs || [];
     return (newsData || []).filter(a => slugs.includes(a.slug)).map(a => translateNewsArticle(a, language));
-  }, [prof, language]);
+  }, [liveArticles, prof, language, isTamil, name]);
 
   const publisherVideos = useMemo(() => {
-    if (prof.id === 'budget-padmanaban') {
+    if (prof.id === 'budget-padmanaban' || !livePublisher) {
       return videosData.slice(0, 24).map(v => translateVideo(v, language));
     }
-    // Filter videos by category or tags
-    return videosData
-      .filter(v => v.category === prof.category || (v.tags && v.tags.includes(prof.category)))
-      .slice(0, 12)
-      .map(v => translateVideo(v, language));
-  }, [prof, language]);
+    return [];
+  }, [prof, language, livePublisher]);
+
+  const cleanWhatsApp = (prof.whatsapp || '').replace(/[^0-9]/g, '');
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fadeIn">
@@ -33763,12 +34345,11 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
         className="btn-magnetic px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-900 hover:bg-amber-500 hover:text-slate-950 text-xs font-bold transition-all inline-flex items-center gap-1.5 border border-slate-200 dark:border-slate-800"
       >
         <span>←</span>
-        <span>{isTamil ? 'அனைத்து நிபுணர்கள் பட்டியல்' : 'Back to Professionals Directory'}</span>
+        <span>{isTamil ? 'அனைத்து நிபுணர்கள் பட்டியல்' : 'Back to Advisors Directory'}</span>
       </button>
 
-      {/* 1. IDENTITY HEADER BLOCK (Site's sleek dark aesthetic with gold accents) */}
+      {/* 1. IDENTITY HERO BANNER */}
       <div className="relative rounded-3xl bg-slate-950 text-white border border-slate-800 p-6 sm:p-8 shadow-2xl overflow-hidden">
-        {/* Subtle Ambient Radial Glow */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col md:flex-row items-start gap-6 sm:gap-8">
@@ -33777,11 +34358,16 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
             <img
               src={prof.avatar}
               alt={name}
-              className="w-24 h-24 sm:w-32 sm:h-32 rounded-3xl object-cover border-2 border-amber-500 shadow-2xl"
+              className="w-28 h-28 sm:w-36 sm:h-36 rounded-3xl object-cover border-2 border-amber-500 shadow-2xl"
+              onError={(e) => {
+                e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=f59e0b&color=0f172a&bold=true`;
+              }}
             />
-            <span className="absolute -bottom-2 -right-2 px-2.5 py-0.5 rounded-full bg-slate-900 border border-amber-500/40 text-[9px] font-mono font-bold text-amber-400 shadow">
-              {prof.experience}
-            </span>
+            {prof.experience && (
+              <span className="absolute -bottom-2 -right-2 px-2.5 py-0.5 rounded-full bg-slate-900 border border-amber-500/40 text-[9px] font-mono font-bold text-amber-400 shadow">
+                {prof.experience}
+              </span>
+            )}
           </div>
 
           {/* Details */}
@@ -33798,7 +34384,7 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
                 {title} • {prof.organization}
               </p>
               <p className="text-xs text-slate-400">
-                📍 {location} {prof.arnNumber && `• AMFI Registration: ${prof.arnNumber}`}
+                📍 {location} {prof.arnNumber && `• AMFI Registration ARN: ${prof.arnNumber}`}
               </p>
             </div>
 
@@ -33806,28 +34392,41 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
               {fullBio}
             </p>
 
-            {/* Credibility & Social Links Row in site button style */}
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 pt-2">
+            {/* Specialization Tags */}
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-1.5 pt-1">
+              {prof.specializations?.map((spec, i) => (
+                <span
+                  key={i}
+                  className="px-2.5 py-1 rounded-lg bg-slate-900/90 text-amber-300 border border-amber-500/20 text-[10px] font-bold"
+                >
+                  {isTamil ? (spec.ta || spec.en) : spec.en}
+                </span>
+              ))}
+            </div>
+
+            {/* Action Buttons: WhatsApp Direct Consultation + Social Links */}
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-2.5 pt-3">
+              {cleanWhatsApp && (
+                <a
+                  href={`https://wa.me/${cleanWhatsApp}?text=${encodeURIComponent(`Hello ${name}, I read your profile on Muthaleetu Thisai and would like to request an investment consultation.`)}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-slate-950 font-black text-xs shadow-lg transition-all flex items-center gap-2"
+                >
+                  <span className="text-sm">💬</span>
+                  <span>{isTamil ? 'வாட்ஸ்அப் வழியே ஆலோசனை பெறுக' : 'Direct WhatsApp Consultation'}</span>
+                </a>
+              )}
+
               {prof.socialLinks?.youtube && (
                 <a
                   href={prof.socialLinks.youtube}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-red-600 text-white border border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
+                  className="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-red-600 text-white border border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
                 >
                   <span>▶</span>
-                  <span>YouTube Channel</span>
-                </a>
-              )}
-              {prof.socialLinks?.website && (
-                <a
-                  href={prof.socialLinks.website}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-amber-500 hover:text-slate-950 text-slate-300 border border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
-                >
-                  <span>🌐</span>
-                  <span>{isTamil ? 'வலைதளம்' : 'Official Portal'}</span>
+                  <span>YouTube</span>
                 </a>
               )}
               {prof.socialLinks?.linkedin && (
@@ -33835,10 +34434,10 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
                   href={prof.socialLinks.linkedin}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-blue-600 text-white border border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
+                  className="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-blue-600 text-white border border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
                 >
                   <span>in</span>
-                  <span>LinkedIn Profile</span>
+                  <span>LinkedIn</span>
                 </a>
               )}
               {prof.socialLinks?.twitter && (
@@ -33846,24 +34445,12 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
                   href={prof.socialLinks.twitter}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
+                  className="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
                 >
                   <span>𝕏</span>
                   <span>Twitter / X</span>
                 </a>
               )}
-            </div>
-
-            {/* Specialization Tags */}
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-1.5 pt-2">
-              {prof.specializations?.map((spec, i) => (
-                <span
-                  key={i}
-                  className="px-2.5 py-1 rounded-lg bg-slate-900/90 text-slate-300 border border-slate-800 text-[10px] font-bold"
-                >
-                  {isTamil ? spec.ta : spec.en}
-                </span>
-              ))}
             </div>
           </div>
         </div>
@@ -33879,19 +34466,21 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
               : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
           }`}
         >
-          ✍️ {isTamil ? 'கட்டுரைகள் & ஆய்வுகள்' : 'Articles & Analysis'} ({publisherArticles.length})
+          ✍️ {isTamil ? 'கட்டுரைகள் & ஆய்வுகள்' : 'Articles & Research'} ({publisherArticles.length})
         </button>
 
-        <button
-          onClick={() => setActiveTab('videos')}
-          className={`px-5 py-2.5 rounded-xl text-xs font-black transition-all ${
-            activeTab === 'videos'
-              ? 'bg-amber-500 text-slate-950 shadow-md'
-              : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
-          }`}
-        >
-          🎬 {isTamil ? 'முக்கிய வீடியோக்கள்' : 'Masterclasses & Videos'} ({publisherVideos.length})
-        </button>
+        {publisherVideos.length > 0 && (
+          <button
+            onClick={() => setActiveTab('videos')}
+            className={`px-5 py-2.5 rounded-xl text-xs font-black transition-all ${
+              activeTab === 'videos'
+                ? 'bg-amber-500 text-slate-950 shadow-md'
+                : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+            }`}
+          >
+            🎬 {isTamil ? 'முக்கிய வீடியோக்கள்' : 'Masterclasses'} ({publisherVideos.length})
+          </button>
+        )}
       </div>
 
       {/* 3. FEED CONTENT */}
@@ -33900,45 +34489,70 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
           {publisherArticles.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {publisherArticles.map(article => (
-                <NewsCard
-                  key={article.id}
-                  article={article}
-                  onSelect={() => onNavigate && onNavigate(`#/news/${article.slug}`)}
-                />
+                <div
+                  key={article.id || article.slug}
+                  onClick={() => onNavigate && onNavigate(`#/articles/${article.slug}`)}
+                  className="group bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl hover:border-amber-500/50 transition-all cursor-pointer flex flex-col"
+                >
+                  <div className="relative h-48 overflow-hidden">
+                    <img
+                      src={article.coverImage}
+                      alt={article.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute top-3 left-3">
+                      <span className="px-3 py-1 text-[10px] font-black uppercase rounded-full bg-slate-950/80 backdrop-blur-md text-amber-400 border border-amber-500/30">
+                        {article.category}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+                    <div className="space-y-2">
+                      <h3 className="text-base font-bold font-serif text-slate-900 dark:text-white group-hover:text-amber-500 transition-colors line-clamp-2 leading-snug">
+                        {article.title}
+                      </h3>
+                      {article.summary && (
+                        <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed">
+                          {article.summary}
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="flex items-center justify-between text-[11px] font-bold text-slate-400 pt-3 border-t border-slate-100 dark:border-slate-800">
+                      <span>⏱ {article.readTimeMinutes} min read</span>
+                      <span className="text-amber-500 group-hover:translate-x-1 transition-transform">
+                        {isTamil ? 'படிக்க →' : 'Read Article →'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
               ))}
             </div>
           ) : (
             <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-2">
               <p className="text-xs text-slate-500">
-                {isTamil ? 'இந்த நிபுணரின் கட்டுரைகள் விரைவில் வெளியிடப்படும்.' : 'No articles published in this section yet.'}
+                {isTamil ? 'இந்த நிபுணர் இன்னும் கட்டுரைகளை வெளியிடவில்லை.' : 'This advisor has not published any articles yet.'}
               </p>
             </div>
           )}
         </div>
       )}
 
-      {activeTab === 'videos' && (
+      {activeTab === 'videos' && publisherVideos.length > 0 && (
         <div className="space-y-6">
-          {publisherVideos.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {publisherVideos.map((video, idx) => (
-                <CinemaVideoCard
-                  key={video.id || idx}
-                  video={video}
-                  index={idx}
-                  onSelect={(v) => setSelectedVideo(v)}
-                  language={language}
-                  onShowToast={onShowToast}
-                />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-2">
-              <p className="text-xs text-slate-500">
-                {isTamil ? 'வீடியோக்கள் எதுவும் இல்லை.' : 'No videos recorded yet.'}
-              </p>
-            </div>
-          )}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {publisherVideos.map((video, idx) => (
+              <CinemaVideoCard
+                key={video.id || idx}
+                video={video}
+                index={idx}
+                onSelect={(v) => setSelectedVideo(v)}
+                language={language}
+                onShowToast={onShowToast}
+              />
+            ))}
+          </div>
         </div>
       )}
 
@@ -33971,12 +34585,12 @@ function AppContent({ currentHash, navigate, isSearchOpen, setIsSearchOpen, toas
       <Toast message={toastMessage} onClose={() => setToastMessage('')} />
 
       {/* Automatic First-Time Publisher Onboarding Modal */}
-      {user && role === 'publisher' && profile && profile.is_onboarded === false && (
+      {user && (role === 'publisher' || profile?.role === 'publisher') && (!profile?.is_onboarded || profile?.is_onboarded === false) && (
         <PublisherOnboardingModal
           profile={profile}
           onComplete={(updated) => {
             if (setProfile) setProfile(updated);
-            setToastMessage('🎉 Welcome! Your publisher profile is complete.');
+            setToastMessage('🎉 Welcome! Your publisher profile is complete and visible to all users.');
           }}
         />
       )}

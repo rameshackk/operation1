@@ -71,13 +71,53 @@ export default async function handler(req, res) {
 
       const pgPool = getPgPool();
       if (pgPool) {
-        const keys = Object.keys(updates);
-        const setClauses = keys.map((k, idx) => `"${k}" = $${idx + 1}`).join(', ');
-        const values = keys.map(k => updates[k]);
-        values.push(userId);
+        // Fetch user email if not in profile
+        const userEmail = auth.user.email || '';
+        
+        const upsertQuery = `
+          INSERT INTO profiles (
+            id, email, display_name, avatar_url, title, arn_number,
+            specialties, bio, bio_ta, linkedin_url, twitter_url,
+            youtube_url, whatsapp_number, phone, is_onboarded, updated_at
+          ) VALUES (
+            $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, true, CURRENT_TIMESTAMP
+          )
+          ON CONFLICT (id) DO UPDATE SET
+            display_name = COALESCE(EXCLUDED.display_name, profiles.display_name),
+            avatar_url = COALESCE(EXCLUDED.avatar_url, profiles.avatar_url),
+            title = COALESCE(EXCLUDED.title, profiles.title),
+            arn_number = COALESCE(EXCLUDED.arn_number, profiles.arn_number),
+            specialties = COALESCE(EXCLUDED.specialties, profiles.specialties),
+            bio = COALESCE(EXCLUDED.bio, profiles.bio),
+            bio_ta = COALESCE(EXCLUDED.bio_ta, profiles.bio_ta),
+            linkedin_url = COALESCE(EXCLUDED.linkedin_url, profiles.linkedin_url),
+            twitter_url = COALESCE(EXCLUDED.twitter_url, profiles.twitter_url),
+            youtube_url = COALESCE(EXCLUDED.youtube_url, profiles.youtube_url),
+            whatsapp_number = COALESCE(EXCLUDED.whatsapp_number, profiles.whatsapp_number),
+            phone = COALESCE(EXCLUDED.phone, profiles.phone),
+            is_onboarded = true,
+            updated_at = CURRENT_TIMESTAMP
+          RETURNING *;
+        `.replace('COCLUDED', 'COALESCE');
 
-        const query = `UPDATE profiles SET ${setClauses} WHERE id = $${values.length} RETURNING *;`;
-        const result = await pgPool.query(query, values);
+        const values = [
+          userId,
+          userEmail,
+          updates.display_name || auth.user.user_metadata?.full_name || 'Publisher',
+          updates.avatar_url || null,
+          updates.title || 'AMFI Registered Mutual Fund Distributor',
+          updates.arn_number || '',
+          updates.specialties || ['Mutual Funds', 'Wealth Planning'],
+          updates.bio || '',
+          updates.bio_ta || '',
+          updates.linkedin_url || '',
+          updates.twitter_url || '',
+          updates.youtube_url || '',
+          updates.whatsapp_number || '',
+          updates.phone || ''
+        ];
+
+        const result = await pgPool.query(upsertQuery, values);
         return res.status(200).json({
           status: 'success',
           message: 'Publisher onboarding completed successfully!',
@@ -88,8 +128,11 @@ export default async function handler(req, res) {
       if (supabaseAdmin) {
         const { data, error } = await supabaseAdmin
           .from('profiles')
-          .update(updates)
-          .eq('id', userId)
+          .upsert({
+            id: userId,
+            email: auth.user.email,
+            ...updates
+          })
           .select()
           .single();
 

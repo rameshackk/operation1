@@ -73,11 +73,24 @@ const server = http.createServer(async (req, res) => {
       const matchArticleSlug = reqPath.match(/^\/api\/articles\/([^/?#]+)$/);
       if (matchArticleSlug && matchArticleSlug[1] !== 'index.js') {
         req.query.slug = decodeURIComponent(matchArticleSlug[1]);
-        const mod = await import(`./api/articles/[slug].js?t=${Date.now()}`);
+        const mod = await import(`./api/articles/index.js?t=${Date.now()}`);
         return mod.default(req, res);
       }
 
-      // 1.2 Admin Articles API
+      // 1.2 Public Publishers & Advisors API
+      if (reqPath === '/api/publishers' || reqPath === '/api/publishers/index.js') {
+        const mod = await import(`./api/publishers/index.js?t=${Date.now()}`);
+        return mod.default(req, res);
+      }
+
+      const matchPublicPublisherId = reqPath.match(/^\/api\/publishers\/([^/?#]+)$/);
+      if (matchPublicPublisherId && matchPublicPublisherId[1] !== 'index.js') {
+        req.query.id = decodeURIComponent(matchPublicPublisherId[1]);
+        const mod = await import(`./api/publishers/index.js?t=${Date.now()}`);
+        return mod.default(req, res);
+      }
+
+      // 1.3 Admin Articles API
       if (reqPath === '/api/admin/articles' || reqPath === '/api/admin/articles/index.js') {
         const mod = await import(`./api/admin/articles/index.js?t=${Date.now()}`);
         return mod.default(req, res);
@@ -90,7 +103,7 @@ const server = http.createServer(async (req, res) => {
         return mod.default(req, res);
       }
 
-      // 1.3 Admin Publishers API
+      // 1.4 Admin Publishers API
       if (reqPath === '/api/admin/publishers' || reqPath === '/api/admin/publishers/index.js') {
         const mod = await import(`./api/admin/publishers/index.js?t=${Date.now()}`);
         return mod.default(req, res);
@@ -103,7 +116,7 @@ const server = http.createServer(async (req, res) => {
         return mod.default(req, res);
       }
 
-      // 1.4 Publisher Onboarding API
+      // 1.5 Publisher Onboarding API
       if (reqPath === '/api/publisher/onboarding' || reqPath === '/api/publisher/onboarding.js') {
         const mod = await import(`./api/publisher/onboarding.js?t=${Date.now()}`);
         return mod.default(req, res);

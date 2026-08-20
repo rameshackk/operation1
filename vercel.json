@@ -40,6 +40,10 @@
       "destination": "/api/articles?slug=:slug"
     },
     {
+      "source": "/api/publishers/:id",
+      "destination": "/api/publishers?id=:id"
+    },
+    {
       "source": "/api/admin/articles/:id",
       "destination": "/api/admin/articles?id=:id"
     },
