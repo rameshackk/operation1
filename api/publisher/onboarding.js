@@ -86,9 +86,15 @@ export default async function handler(req, res) {
                 updates.youtube_channel_verified = true; // Automatically mark verified so videos display on their profile immediately
               }
             } catch (ytErr) {
-              console.warn('YouTube channel resolution warning:', ytErr.message);
-              return res.status(400).json({ error: ytErr.message });
+              console.warn('YouTube channel resolution notice (continuing save):', ytErr.message);
+              const fallbackName = (updates.youtube_url.match(/(?:@|channel\/)([A-Za-z0-9_.-]+)/)?.[1]) || 'YouTube Channel';
+              updates.youtube_channel_title = fallbackName;
+              updates.youtube_channel_verified = true;
             }
+          } else {
+            const fallbackName = (updates.youtube_url.match(/(?:@|channel\/)([A-Za-z0-9_.-]+)/)?.[1]) || 'YouTube Channel';
+            updates.youtube_channel_title = fallbackName;
+            updates.youtube_channel_verified = true;
           }
         } else {
           updates.youtube_channel_id = null;
