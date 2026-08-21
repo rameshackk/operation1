@@ -1,5 +1,7 @@
 import { supabaseAdmin, supabaseAnon } from '../../lib/supabase.js';
-import { getPgPool, formatArticleRow, formatVideoRow } from '../../lib/db.js';
+import { getPgPool, formatArticleRow, formatVideoRow, upsertVideo } from '../../lib/db.js';
+import { resolveChannelWithoutApiKey, fetchChannelVideosViaRss } from '../../lib/youtube.js';
+import { classifyCategory, extractSeoKeywords } from '../../lib/taxonomy.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
@@ -40,8 +42,8 @@ export default async function handler(req, res) {
             COALESCE(vid.video_count, 0) as video_count
           FROM profiles p
           LEFT JOIN (
-            SELECT author_id, COUNT(*) as article_count 
-            FROM articles 
+            SELECT author_id, COUNT(*) as article_count
+            FROM articles
             WHERE status = 'published'
             GROUP BY author_id
           ) art ON p.id::text = art.author_id::text
@@ -112,7 +114,43 @@ export default async function handler(req, res) {
           ORDER BY v.published_at DESC NULLS LAST, v.created_at DESC
           LIMIT 50;
         `;
-        const videosRes = await pgPool.query(videosQuery, [String(publisher.id)]);
+        let videosRes = await pgPool.query(videosQuery, [String(publisher.id)]);
+
+        // Auto-fetch on the fly if publisher has a linked channel but 0 videos cached
+        if (videosRes.rows.length === 0 && (publisher.youtube_channel_id || publisher.youtube_url)) {
+          try {
+            let chId = publisher.youtube_channel_id;
+            if (!chId || !chId.startsWith('UC')) {
+              const noKey = await resolveChannelWithoutApiKey(publisher.youtube_url);
+              if (noKey?.channelId) {
+                chId = noKey.channelId;
+                await pgPool.query(`
+                  UPDATE profiles 
+                  SET youtube_channel_id = $1, youtube_channel_title = COALESCE(youtube_channel_title, $2), youtube_channel_verified = true
+                  WHERE id = $3;
+                `, [chId, noKey.channelTitle, publisher.id]);
+              }
+            }
+
+            if (chId && chId.startsWith('UC')) {
+              const rssVideos = await fetchChannelVideosViaRss(chId);
+              for (const rv of rssVideos) {
+                const assignedCategory = classifyCategory(rv.titleTamil, rv.descriptionTamil, rv.tags || []);
+                const assignedTags = extractSeoKeywords(rv.titleTamil, rv.descriptionTamil, rv.tags || [], assignedCategory);
+                await upsertVideo({
+                  ...rv,
+                  category: assignedCategory,
+                  tags: assignedTags,
+                  source_publisher_id: publisher.id,
+                  status: 'published'
+                });
+              }
+              videosRes = await pgPool.query(videosQuery, [String(publisher.id)]);
+            }
+          } catch (autoErr) {
+            console.warn('Auto on-demand video sync note:', autoErr.message);
+          }
+        }
 
         res.setHeader('Cache-Control', 'public, s-maxage=30, stale-while-revalidate=120');
         return res.status(200).json({

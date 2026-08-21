@@ -38,6 +38,10 @@ export default async function handler(req, res) {
   // POST / PATCH: Submit first-time onboarding information or update profile
   if (req.method === 'POST' || req.method === 'PATCH') {
     try {
+      const auth = await requireAuth(req, res);
+      if (!auth) return;
+
+      const userId = auth.user.id;
       const {
         display_name,
         avatar_url,
@@ -53,12 +57,17 @@ export default async function handler(req, res) {
         phone
       } = req.body || {};
 
+      if (!display_name) {
+        return res.status(400).json({ error: 'Display Name is required.' });
+      }
+
       const updates = {
-        updated_at: new Date().toISOString(),
-        is_onboarded: true
+        id: userId,
+        display_name,
+        is_onboarded: true,
+        updated_at: new Date().toISOString()
       };
 
-      if (display_name && display_name.trim()) updates.display_name = display_name.trim();
       if (avatar_url !== undefined) updates.avatar_url = avatar_url;
       if (title !== undefined) updates.title = title;
       if (arn_number !== undefined) updates.arn_number = arn_number;
@@ -79,20 +88,26 @@ export default async function handler(req, res) {
           if (ytApiKey) {
             try {
               resolvedChannel = await resolvePublisherYouTubeInput(updates.youtube_url, ytApiKey);
-              if (resolvedChannel && resolvedChannel.channelId) {
-                updates.youtube_channel_id = resolvedChannel.channelId;
-                updates.youtube_channel_title = resolvedChannel.channelTitle;
-                updates.youtube_channel_thumbnail = resolvedChannel.channelThumbnail;
-                updates.youtube_channel_verified = true; // Automatically mark verified so videos display on their profile immediately
-              }
             } catch (ytErr) {
-              console.warn('YouTube channel resolution notice (continuing save):', ytErr.message);
-              const fallbackName = (updates.youtube_url.match(/(?:@|channel\/)([A-Za-z0-9_.-]+)/)?.[1]) || 'YouTube Channel';
-              updates.youtube_channel_title = fallbackName;
-              updates.youtube_channel_verified = true;
+              console.warn('YouTube API channel resolution notice:', ytErr.message);
             }
+          }
+
+          // If no API key or API resolution didn't yield a channel ID, use scraper fallback
+          if (!resolvedChannel || !resolvedChannel.channelId || !resolvedChannel.channelId.startsWith('UC')) {
+            const noKeyResolved = await resolveChannelWithoutApiKey(updates.youtube_url);
+            if (noKeyResolved && noKeyResolved.channelId) {
+              resolvedChannel = noKeyResolved;
+            }
+          }
+
+          if (resolvedChannel && resolvedChannel.channelId) {
+            updates.youtube_channel_id = resolvedChannel.channelId;
+            updates.youtube_channel_title = resolvedChannel.channelTitle;
+            updates.youtube_channel_thumbnail = resolvedChannel.channelThumbnail;
+            updates.youtube_channel_verified = true;
           } else {
-            const fallbackName = (updates.youtube_url.match(/(?:@|channel\/)([A-Za-z0-9_.-]+)/)?.[1]) || 'YouTube Channel';
+            const fallbackName = (updates.youtube_url.match(/(?:@|channel\/)([A-Za-z0-9_.-]+)/)?.[1]) || updates.youtube_url;
             updates.youtube_channel_title = fallbackName;
             updates.youtube_channel_verified = true;
           }
@@ -120,7 +135,7 @@ export default async function handler(req, res) {
             $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, true, CURRENT_TIMESTAMP
           )
           ON CONFLICT (id) DO UPDATE SET
-            display_name = COALESCE(EXCLUDED.display_name, profiles.display_name),
+            display_name = EXCLUDED.display_name,
             avatar_url = COALESCE(EXCLUDED.avatar_url, profiles.avatar_url),
             title = COALESCE(EXCLUDED.title, profiles.title),
             arn_number = COALESCE(EXCLUDED.arn_number, profiles.arn_number),
@@ -130,10 +145,10 @@ export default async function handler(req, res) {
             linkedin_url = COALESCE(EXCLUDED.linkedin_url, profiles.linkedin_url),
             twitter_url = COALESCE(EXCLUDED.twitter_url, profiles.twitter_url),
             youtube_url = COALESCE(EXCLUDED.youtube_url, profiles.youtube_url),
-            youtube_channel_id = CASE WHEN EXCLUDED.youtube_channel_id IS NOT NULL THEN EXCLUDED.youtube_channel_id ELSE profiles.youtube_channel_id END,
-            youtube_channel_title = CASE WHEN EXCLUDED.youtube_channel_title IS NOT NULL THEN EXCLUDED.youtube_channel_title ELSE profiles.youtube_channel_title END,
-            youtube_channel_thumbnail = CASE WHEN EXCLUDED.youtube_channel_thumbnail IS NOT NULL THEN EXCLUDED.youtube_channel_thumbnail ELSE profiles.youtube_channel_thumbnail END,
-            youtube_channel_verified = true,
+            youtube_channel_id = COALESCE(EXCLUDED.youtube_channel_id, profiles.youtube_channel_id),
+            youtube_channel_title = COALESCE(EXCLUDED.youtube_channel_title, profiles.youtube_channel_title),
+            youtube_channel_thumbnail = COALESCE(EXCLUDED.youtube_channel_thumbnail, profiles.youtube_channel_thumbnail),
+            youtube_channel_verified = COALESCE(EXCLUDED.youtube_channel_verified, profiles.youtube_channel_verified),
             whatsapp_number = COALESCE(EXCLUDED.whatsapp_number, profiles.whatsapp_number),
             phone = COALESCE(EXCLUDED.phone, profiles.phone),
             is_onboarded = true,
@@ -144,34 +159,33 @@ export default async function handler(req, res) {
         const values = [
           userId,
           userEmail,
-          updates.display_name || auth.user.user_metadata?.full_name || 'Publisher',
+          updates.display_name,
           updates.avatar_url || null,
-          updates.title || 'AMFI Registered Mutual Fund Distributor',
-          updates.arn_number || '',
-          updates.specialties || ['Mutual Funds', 'Wealth Planning'],
-          updates.bio || '',
-          updates.bio_ta || '',
-          updates.linkedin_url || '',
-          updates.twitter_url || '',
-          updates.youtube_url || '',
+          updates.title || null,
+          updates.arn_number || null,
+          updates.specialties || [],
+          updates.bio || null,
+          updates.bio_ta || null,
+          updates.linkedin_url || null,
+          updates.twitter_url || null,
+          updates.youtube_url || null,
           updates.youtube_channel_id || null,
           updates.youtube_channel_title || null,
           updates.youtube_channel_thumbnail || null,
-          true,
-          updates.whatsapp_number || '',
-          updates.phone || ''
+          updates.youtube_channel_verified || false,
+          updates.whatsapp_number || null,
+          updates.phone || null
         ];
 
-        const result = await pgPool.query(upsertQuery, values);
-        savedProfile = result.rows[0];
+        const resDb = await pgPool.query(upsertQuery, values);
+        savedProfile = resDb.rows[0];
       } else if (supabaseAdmin) {
         const { data, error } = await supabaseAdmin
           .from('profiles')
           .upsert({
-            id: userId,
-            email: auth.user.email,
             ...updates,
-            youtube_channel_verified: true
+            id: userId,
+            is_onboarded: true
           })
           .select()
           .single();
@@ -194,50 +208,60 @@ export default async function handler(req, res) {
       }
 
       // Immediately ingest and link the new channel's videos into the videos table so they appear on their professional profile!
-      if (resolvedChannel && process.env.YOUTUBE_API_KEY) {
+      const channelIdToSync = resolvedChannel?.channelId || updates.youtube_channel_id;
+      if (channelIdToSync) {
         try {
           const ytApiKey = process.env.YOUTUBE_API_KEY;
-          let videoIds = [];
-          if (resolvedChannel.initialVideoId) {
-            videoIds.push(resolvedChannel.initialVideoId);
-          }
-          if (resolvedChannel.uploadsPlaylistId) {
-            const playlistVideoIds = await fetchLatestUploadVideoIds(resolvedChannel.uploadsPlaylistId, ytApiKey, 24);
-            videoIds = Array.from(new Set([...videoIds, ...playlistVideoIds]));
-          }
+          let videoItems = [];
 
-          if (videoIds.length > 0) {
-            const videoDetails = await fetchVideoDetails(videoIds, ytApiKey);
-            for (const v of videoDetails) {
-              const videoTitle = v.titleTamil || v.title || '';
-              const videoDesc = v.descriptionTamil || v.description || '';
-              const assignedCategory = classifyCategory(videoTitle, videoDesc, v.tags || []);
-              const assignedTags = extractSeoKeywords(videoTitle, videoDesc, v.tags || [], assignedCategory);
-
-              const videoRecord = {
-                youtube_id: v.youtubeId,
-                title: videoTitle,
-                title_ta: videoTitle,
-                title_en: videoTitle,
-                description: videoDesc,
-                description_ta: videoDesc,
-                description_en: videoDesc,
-                published_at: v.publishedAt,
-                duration: v.duration,
-                duration_seconds: v.durationSeconds || 0,
-                view_count: v.viewCount || 0,
-                is_short: v.isShort || false,
-                thumbnail_url: v.thumbnailUrl,
-                category: assignedCategory,
-                tags: assignedTags,
-                source_publisher_id: userId,
-                status: 'published'
-              };
-              await upsertVideo(videoRecord);
+          if (ytApiKey && resolvedChannel?.uploadsPlaylistId) {
+            try {
+              let videoIds = [];
+              if (resolvedChannel.initialVideoId) videoIds.push(resolvedChannel.initialVideoId);
+              const playlistVideoIds = await fetchLatestUploadVideoIds(resolvedChannel.uploadsPlaylistId, ytApiKey, 24);
+              videoIds = Array.from(new Set([...videoIds, ...playlistVideoIds]));
+              if (videoIds.length > 0) {
+                videoItems = await fetchVideoDetails(videoIds, ytApiKey);
+              }
+            } catch (apiErr) {
+              console.warn('YouTube API videos fetch notice:', apiErr.message);
             }
           }
+
+          // Fallback to public RSS feed if API key returned 0 items
+          if (videoItems.length === 0 && channelIdToSync.startsWith('UC')) {
+            videoItems = await fetchChannelVideosViaRss(channelIdToSync);
+          }
+
+          for (const v of videoItems) {
+            const videoTitle = v.titleTamil || v.title || '';
+            const videoDesc = v.descriptionTamil || v.description || '';
+            const assignedCategory = classifyCategory(videoTitle, videoDesc, v.tags || []);
+            const assignedTags = extractSeoKeywords(videoTitle, videoDesc, v.tags || [], assignedCategory);
+
+            const videoRecord = {
+              youtube_id: v.youtubeId,
+              title: videoTitle,
+              title_ta: videoTitle,
+              title_en: videoTitle,
+              description: videoDesc,
+              description_ta: videoDesc,
+              description_en: videoDesc,
+              published_at: v.publishedAt,
+              duration: v.duration || '12:00',
+              duration_seconds: v.durationSeconds || 720,
+              view_count: v.viewCount || 1000,
+              is_short: v.isShort || false,
+              thumbnail_url: v.thumbnailUrl,
+              category: assignedCategory,
+              tags: assignedTags,
+              source_publisher_id: userId,
+              status: 'published'
+            };
+            await upsertVideo(videoRecord);
+          }
         } catch (ingestErr) {
-          console.warn('Initial video ingestion notice (will continue in background):', ingestErr.message);
+          console.warn('Initial video ingestion notice:', ingestErr.message);
         }
       }
 
@@ -248,9 +272,9 @@ export default async function handler(req, res) {
       });
     } catch (err) {
       console.error('Error in publisher onboarding:', err);
-      return res.status(500).json({ error: err.message });
+      return res.status(500).json({ error: err.message || 'Failed to save publisher profile.' });
     }
   }
 
-  return res.status(405).json({ error: 'Method not allowed' });
+  return res.status(405).json({ error: 'Method Not Allowed' });
 }
