@@ -1,4 +1,4 @@
-const CACHE_NAME = 'muthaleetu-thisai-v3-6-0';
+const CACHE_NAME = 'muthaleetu-thisai-v4-0-0';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
