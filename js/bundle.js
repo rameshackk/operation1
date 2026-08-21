@@ -29247,18 +29247,26 @@ function CinemaTheaterModal({
   const [sidebarFilter, setSidebarFilter] = useState('all'); // 'all' | 'category' | 'shorts'
   const [sidebarSearch, setSidebarSearch] = useState('');
 
+  // Lock body scroll and listen for Escape key
   useEffect(() => {
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
     const handleKey = (e) => {
       if (e.key === 'Escape') onClose && onClose();
     };
     window.addEventListener('keydown', handleKey);
-    return () => window.removeEventListener('keydown', handleKey);
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener('keydown', handleKey);
+    };
   }, [onClose]);
 
   if (!video) return null;
 
   const youtubeId = video.youtubeId || '';
-  const embedUrl = youtubeId ? `https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0&modestbranding=1` : '';
+  const embedUrl = youtubeId ? `https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=1&rel=0&modestbranding=1` : '';
   const youtubeWatchUrl = video.youtubeUrl || (youtubeId ? `https://www.youtube.com/watch?v=${youtubeId}` : '');
 
   const title = isTamil
@@ -29286,7 +29294,7 @@ function CinemaTheaterModal({
         (v.category && v.category.toLowerCase().includes(q))
       );
     }
-    return list.slice(0, 20).map(v => (typeof translateVideo === 'function' ? translateVideo(v, language) : v));
+    return list.slice(0, 25).map(v => (typeof translateVideo === 'function' ? translateVideo(v, language) : v));
   }, [rawVideos, video.id, video.category, sidebarFilter, sidebarSearch, language]);
 
   const handleShare = async () => {
@@ -29303,21 +29311,22 @@ function CinemaTheaterModal({
     }
   };
 
-  return (
+  const modalNode = (
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-[9999] w-screen h-screen bg-[#070b14] flex flex-col overflow-hidden text-white animate-fadeIn"
+      className="fixed inset-0 z-[999999] w-screen h-screen bg-[#070b14] flex flex-col overflow-hidden text-white animate-fadeIn"
+      style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, width: '100vw', height: '100vh', zIndex: 999999 }}
     >
-      {/* TOP COMPACT CINEMA NAVIGATION BAR */}
-      <header className="h-14 bg-[#090e1a]/95 border-b border-slate-800/90 flex items-center justify-between px-4 sm:px-6 shrink-0 z-30 backdrop-blur-xl">
+      {/* 1. TOP STUDIO NAVIGATION BAR */}
+      <header className="h-14 bg-[#090e1a] border-b border-slate-800/90 flex items-center justify-between px-4 sm:px-6 shrink-0 z-30 shadow-lg">
         <div className="flex items-center gap-3 min-w-0">
           <button
             onClick={onClose}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-amber-500 hover:text-slate-950 text-slate-300 transition-all text-xs font-black border border-slate-700/80 shrink-0"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-amber-500 hover:text-slate-950 text-slate-200 transition-all text-xs font-black border border-slate-700 shrink-0"
           >
             <span>←</span>
-            <span className="hidden sm:inline">{isTamil ? 'அனைத்து வீடியோக்கள்' : 'All Videos'}</span>
+            <span className="hidden sm:inline">{isTamil ? 'அனைத்து வீடியோக்கள்' : 'Back to Videos'}</span>
           </button>
 
           <div className="h-4 w-[1px] bg-slate-800 hidden sm:block" />
@@ -29326,7 +29335,7 @@ function CinemaTheaterModal({
             <span className="px-2.5 py-0.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-400 text-[10px] font-black uppercase tracking-wider shrink-0">
               {(video.category || 'FINANCE').replace('-', ' ')}
             </span>
-            <span className="text-xs text-slate-400 font-medium truncate hidden md:inline">
+            <span className="text-xs text-slate-300 font-bold truncate hidden md:inline">
               {title}
             </span>
           </div>
@@ -29335,7 +29344,7 @@ function CinemaTheaterModal({
         <div className="flex items-center gap-2 shrink-0">
           <button
             onClick={handleShare}
-            className="px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 border border-slate-700/80 text-xs font-bold text-slate-200 hover:text-white flex items-center gap-1.5 transition-colors"
+            className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-slate-200 hover:text-white flex items-center gap-1.5 transition-colors"
           >
             <span>{copied ? '✓ Copied' : (isTamil ? 'பகிர்' : 'Share')}</span>
           </button>
@@ -29354,21 +29363,21 @@ function CinemaTheaterModal({
           <button
             onClick={onClose}
             aria-label="Exit Fullscreen"
-            className="w-8 h-8 rounded-xl bg-slate-800 hover:bg-red-600 text-slate-300 hover:text-white flex items-center justify-center transition-colors text-sm font-bold border border-slate-700"
+            className="w-8 h-8 rounded-xl bg-slate-800 hover:bg-red-600 text-slate-300 hover:text-white flex items-center justify-center transition-colors text-sm font-bold border border-slate-700 ml-1"
           >
             ✕
           </button>
         </div>
       </header>
 
-      {/* MAIN TWO-COLUMN BALANCED STAGE */}
+      {/* 2. STUDIO SPLIT VIEW (LEFT STAGE + RIGHT PLAYLIST) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 flex-1 min-h-0 overflow-hidden divide-y lg:divide-y-0 lg:divide-x divide-slate-800/80">
         
-        {/* LEFT COLUMN: Large HD Cinema Stage & Rich Interactive Tabs (8 Cols on LG, 9 on 2XL) */}
-        <main className="lg:col-span-8 2xl:col-span-9 flex flex-col min-h-0 bg-[#040711] overflow-y-auto">
+        {/* LEFT COLUMN: Large HD Cinema Stage & Interactive Tabs (8 Cols on LG, 9 on XL) */}
+        <main className="lg:col-span-8 xl:col-span-9 flex flex-col min-h-0 bg-[#040711] overflow-y-auto">
           {/* 16:9 Video Canvas Frame */}
-          <div className="w-full bg-black flex items-center justify-center relative shadow-2xl shrink-0">
-            <div className="w-full aspect-video max-h-[64vh] bg-black">
+          <div className="w-full bg-black flex items-center justify-center p-0 sm:p-2 lg:p-4 shrink-0 shadow-2xl">
+            <div className="w-full max-w-5xl aspect-video max-h-[62vh] rounded-none sm:rounded-2xl overflow-hidden bg-black shadow-2xl border border-slate-900">
               {embedUrl ? (
                 <iframe
                   src={embedUrl}
@@ -29385,11 +29394,11 @@ function CinemaTheaterModal({
             </div>
           </div>
 
-          {/* Video Metadata, Channel Banner & Interactive Tabs */}
-          <div className="p-5 sm:p-7 space-y-6 max-w-5xl">
+          {/* Video Information & Details Container */}
+          <div className="p-5 sm:p-8 space-y-6 max-w-5xl">
             {/* Title & Channel Header */}
             <div className="space-y-3 border-b border-slate-800/80 pb-5">
-              <h1 className="text-lg sm:text-2xl font-black font-serif text-white leading-snug">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-black font-serif text-white leading-snug tracking-tight">
                 {title}
               </h1>
 
@@ -29404,23 +29413,25 @@ function CinemaTheaterModal({
                       <span className="text-sm font-bold text-white">
                         {video.channelName || 'Budget Padmanaban'}
                       </span>
-                      <span className="text-emerald-400 text-xs" title="CFP Certified">✓</span>
+                      <span className="text-emerald-400 text-xs font-bold" title="CFP Certified">✓ CFP®</span>
                     </div>
                     <p className="text-[11px] text-slate-400 font-medium">
-                      Certified Financial Planner (CFP®) • 882+ Masterclasses
+                      Certified Financial Planner • 882+ Masterclasses
                     </p>
                   </div>
                 </div>
 
                 {/* Meta stats */}
-                <div className="flex items-center gap-3 text-xs font-mono text-slate-400 bg-slate-900/80 px-3.5 py-1.5 rounded-xl border border-slate-800">
-                  <span>{video.views ? `${video.views.toLocaleString()} views` : 'Financial Guide'}</span>
+                <div className="flex items-center gap-3 text-xs font-mono text-slate-300 bg-slate-900 px-3.5 py-1.5 rounded-xl border border-slate-800">
+                  <span className="text-amber-400 font-bold">{video.views ? `${video.views.toLocaleString()} views` : 'Masterclass'}</span>
                   <span>•</span>
                   <span>{video.duration || '12:00'}</span>
                   {video.publishedAt && (
                     <>
                       <span>•</span>
-                      <span>{new Date(video.publishedAt).toLocaleDateString()}</span>
+                      <span className="text-slate-400">
+                        {new Date(video.publishedAt).toLocaleDateString()}
+                      </span>
                     </>
                   )}
                 </div>
@@ -29434,10 +29445,10 @@ function CinemaTheaterModal({
                 className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all ${
                   activeTab === 'overview'
                     ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
-                    : 'bg-slate-900/80 text-slate-400 hover:text-white border border-slate-800'
+                    : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
                 }`}
               >
-                {isTamil ? '📖 முழு விளக்கம்' : '📖 Overview & Description'}
+                {isTamil ? '📖 விளக்கம் & விவரங்கள்' : '📖 Overview & Details'}
               </button>
 
               <button
@@ -29445,10 +29456,10 @@ function CinemaTheaterModal({
                 className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all ${
                   activeTab === 'takeaways'
                     ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
-                    : 'bg-slate-900/80 text-slate-400 hover:text-white border border-slate-800'
+                    : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
                 }`}
               >
-                {isTamil ? '💡 முக்கிய பாடங்கள்' : '💡 Key Insights'}
+                {isTamil ? '💡 முக்கிய ஆலோசனைகள்' : '💡 Key Takeaways'}
               </button>
 
               <button
@@ -29456,7 +29467,7 @@ function CinemaTheaterModal({
                 className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all ${
                   activeTab === 'tools'
                     ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
-                    : 'bg-slate-900/80 text-slate-400 hover:text-white border border-slate-800'
+                    : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
                 }`}
               >
                 {isTamil ? '🧮 SIP கால்குலேட்டர்' : '🧮 SIP Calculator'}
@@ -29465,38 +29476,41 @@ function CinemaTheaterModal({
 
             {/* Tab Content Display */}
             {activeTab === 'overview' && (
-              <div className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 text-xs sm:text-sm text-slate-300 font-sans leading-relaxed whitespace-pre-line space-y-3">
+              <div className="p-5 sm:p-6 rounded-2xl bg-slate-900/90 border border-slate-800 text-xs sm:text-sm text-slate-300 font-sans leading-relaxed whitespace-pre-line space-y-4">
                 <p>{description || (isTamil ? 'இந்த வீடியோவிற்கான விளக்கம் விரைவில் புதுப்பிக்கப்படும்.' : 'No detailed description available.')}</p>
-                <div className="pt-3 border-t border-slate-800 flex flex-wrap gap-2">
-                  <span className="px-2.5 py-1 rounded-lg bg-slate-950 text-[11px] font-mono text-amber-400 border border-slate-800">
+                <div className="pt-4 border-t border-slate-800/80 flex flex-wrap gap-2">
+                  <span className="px-3 py-1 rounded-lg bg-slate-950 text-xs font-mono text-amber-400 border border-slate-800">
                     #{(video.category || 'finance').toUpperCase()}
                   </span>
-                  <span className="px-2.5 py-1 rounded-lg bg-slate-950 text-[11px] font-mono text-slate-400 border border-slate-800">
+                  <span className="px-3 py-1 rounded-lg bg-slate-950 text-xs font-mono text-slate-400 border border-slate-800">
                     #BudgetPadmanaban
                   </span>
-                  <span className="px-2.5 py-1 rounded-lg bg-slate-950 text-[11px] font-mono text-slate-400 border border-slate-800">
+                  <span className="px-3 py-1 rounded-lg bg-slate-950 text-xs font-mono text-slate-400 border border-slate-800">
                     #MutualFunds
+                  </span>
+                  <span className="px-3 py-1 rounded-lg bg-slate-950 text-xs font-mono text-slate-400 border border-slate-800">
+                    #SIPCompounding
                   </span>
                 </div>
               </div>
             )}
 
             {activeTab === 'takeaways' && (
-              <div className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3">
+              <div className="p-5 sm:p-6 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-3.5">
                 <h3 className="text-sm font-bold text-amber-400">
                   {isTamil ? 'பட்ஜெட் பத்மநாபன் CFP® முக்கிய ஆலோசனைகள்:' : 'Core Principles & Financial Takeaways:'}
                 </h3>
-                <ul className="space-y-2 text-xs sm:text-sm text-slate-300 font-medium">
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-500 font-bold">•</span>
+                <ul className="space-y-2.5 text-xs sm:text-sm text-slate-300 font-medium">
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-amber-400 font-bold mt-0.5">•</span>
                     <span>{isTamil ? 'நீண்ட கால கூட்டு வட்டி (Compounding) பயனை முழுமையாகப் பயன்படுத்த ஒழுங்கான SIP முதலீட்டை தொடரவும்.' : 'Maintain disciplined SIP investments to harness long-term compounding benefits.'}</span>
                   </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-500 font-bold">•</span>
-                    <span>{isTamil ? 'சந்தையின் ஏற்ற இறக்கங்களைப் பார்த்து அவசரப்பட்டு முதலீட்டை திரும்பப் பெறாதீர்கள்.' : 'Avoid emotional exits during market corrections; stay focused on financial goals.'}</span>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-amber-400 font-bold mt-0.5">•</span>
+                    <span>{isTamil ? 'சந்தையின் குறுகிய கால ஏற்ற இறக்கங்களைப் பார்த்து அவசரப்பட்டு முதலீட்டை திரும்பப் பெறாதீர்கள்.' : 'Avoid emotional exits during market corrections; stay focused on your financial goals.'}</span>
                   </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-500 font-bold">•</span>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-amber-400 font-bold mt-0.5">•</span>
                     <span>{isTamil ? 'உங்கள் குடும்பத்தின் மருத்துவ காப்பீடு மற்றும் அவசர கால நிதியை எப்போதும் உறுதி செய்யுங்கள்.' : 'Ensure adequate health insurance and 6-month emergency reserve before investing.'}</span>
                   </li>
                 </ul>
@@ -29504,7 +29518,7 @@ function CinemaTheaterModal({
             )}
 
             {activeTab === 'tools' && (
-              <div className="p-5 rounded-2xl bg-gradient-to-br from-slate-900 to-amber-950/30 border border-amber-500/30 space-y-3 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-slate-900 to-amber-950/40 border border-amber-500/30 space-y-3 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div className="space-y-1">
                   <h3 className="text-sm font-bold text-white">
                     {isTamil ? 'உங்கள் SIP இலக்கை உடனடியாகக் கணக்கிடுங்கள்' : 'Calculate Your SIP Wealth Growth'}
@@ -29527,10 +29541,10 @@ function CinemaTheaterModal({
           </div>
         </main>
 
-        {/* RIGHT COLUMN: Interactive Playlist & Search Sidebar (4 Cols on LG, 3 on 2XL) */}
-        <aside className="lg:col-span-4 2xl:col-span-3 flex flex-col min-h-0 bg-[#0a0f1d] overflow-hidden">
+        {/* RIGHT COLUMN: Interactive Playlist & Search Sidebar (4 Cols on LG, 3 on XL) */}
+        <aside className="lg:col-span-4 xl:col-span-3 flex flex-col min-h-0 bg-[#090e1a] overflow-hidden">
           {/* Sidebar Header with Filter Tabs & Search */}
-          <div className="p-3.5 border-b border-slate-800 bg-[#070b16] space-y-2.5 shrink-0">
+          <div className="p-3.5 border-b border-slate-800 bg-[#070b14] space-y-2.5 shrink-0">
             <div className="flex items-center justify-between">
               <h2 className="text-xs font-black uppercase tracking-wider text-slate-200 flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
@@ -29614,7 +29628,7 @@ function CinemaTheaterModal({
                     role="button"
                     tabIndex={0}
                     onClick={() => onSelectRelated && onSelectRelated(rel)}
-                    className="group flex items-start gap-3 p-2 rounded-xl hover:bg-slate-800/90 border border-transparent hover:border-amber-500/40 transition-all cursor-pointer pt-2.5 first:pt-1"
+                    className="group flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-800/90 border border-transparent hover:border-amber-500/40 transition-all cursor-pointer pt-3 first:pt-1"
                   >
                     <div className="relative w-28 sm:w-32 aspect-video rounded-lg overflow-hidden shrink-0 bg-slate-950 shadow">
                       <img
@@ -29646,6 +29660,8 @@ function CinemaTheaterModal({
       </div>
     </div>
   );
+
+  return ReactDOM.createPortal(modalNode, document.body);
 }
 
 /**
