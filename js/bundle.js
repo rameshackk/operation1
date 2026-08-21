@@ -34648,11 +34648,24 @@ function ProfilePage({ onNavigate, onShowToast }) {
                   <div className="flex justify-between items-center py-1 border-b border-slate-800">
                     <span className="text-slate-400">{isTamil ? 'யூடியூப் சேனல்:' : 'YouTube Channel:'}</span>
                     <div className="text-right">
-                      {profile?.youtube_channel_id ? (
+                      {profile?.youtube_channel_id || profile?.youtube_url ? (
                         <div className="space-y-1">
-                          <div className="font-bold text-white text-xs truncate max-w-[180px]">
-                            {profile?.youtube_channel_title || profile?.youtube_channel_id}
-                          </div>
+                          <a
+                            href={
+                              profile?.youtube_channel_id && String(profile.youtube_channel_id).startsWith('UC')
+                                ? `https://www.youtube.com/channel/${profile.youtube_channel_id}`
+                                : (profile?.youtube_url && profile.youtube_url.startsWith('http')
+                                    ? profile.youtube_url
+                                    : (profile?.youtube_url && profile.youtube_url.startsWith('@')
+                                        ? `https://www.youtube.com/${profile.youtube_url}`
+                                        : `https://www.youtube.com/results?search_query=${encodeURIComponent(profile?.youtube_url || profile?.youtube_channel_title || '')}`))
+                            }
+                            target="_blank"
+                            rel="noreferrer"
+                            className="font-bold text-amber-400 hover:underline text-xs truncate max-w-[180px] block"
+                          >
+                            {profile?.youtube_channel_title || profile?.youtube_channel_id || profile?.youtube_url} ↗
+                          </a>
                           {profile?.youtube_channel_verified ? (
                             <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-black bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
                               <span>✓</span>
@@ -35514,6 +35527,36 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
   );
 }
 
+function normalizeSocialUrl(raw, type = 'generic', channelId = null) {
+  if (!raw && !channelId) return '';
+  if (type === 'youtube') {
+    if (channelId && String(channelId).startsWith('UC')) {
+      return `https://www.youtube.com/channel/${channelId}`;
+    }
+    const clean = (raw || '').trim();
+    if (!clean) return '';
+    if (clean.startsWith('http://') || clean.startsWith('https://')) return clean;
+    if (clean.startsWith('www.youtube.com') || clean.startsWith('youtube.com') || clean.startsWith('youtu.be')) {
+      return `https://${clean}`;
+    }
+    if (clean.startsWith('@')) return `https://www.youtube.com/${clean}`;
+    if (clean.startsWith('UC') && clean.length === 24) return `https://www.youtube.com/channel/${clean}`;
+    return `https://www.youtube.com/results?search_query=${encodeURIComponent(clean)}`;
+  }
+  const clean = (raw || '').trim();
+  if (!clean) return '';
+  if (clean.startsWith('http://') || clean.startsWith('https://')) return clean;
+  if (type === 'linkedin') {
+    if (clean.includes('linkedin.com')) return `https://${clean}`;
+    return `https://www.linkedin.com/in/${clean.replace(/^in\//, '')}`;
+  }
+  if (type === 'twitter') {
+    if (clean.includes('twitter.com') || clean.includes('x.com')) return `https://${clean}`;
+    return `https://x.com/${clean.replace(/^@/, '')}`;
+  }
+  return `https://${clean}`;
+}
+
 function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
   const { language } = useLanguage();
   const isTamil = language === 'ta';
@@ -35593,9 +35636,9 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
           : [{ en: 'Mutual Funds', ta: 'மியூச்சுவல் ஃபண்ட்' }, { en: 'Equity SIPs', ta: 'ஈக்விட்டி SIP' }],
         whatsapp: livePublisher.whatsapp_number || livePublisher.phone || '',
         socialLinks: {
-          linkedin: livePublisher.linkedin_url || '',
-          twitter: livePublisher.twitter_url || '',
-          youtube: livePublisher.youtube_url || ''
+          linkedin: normalizeSocialUrl(livePublisher.linkedin_url, 'linkedin'),
+          twitter: normalizeSocialUrl(livePublisher.twitter_url, 'twitter'),
+          youtube: normalizeSocialUrl(livePublisher.youtube_url, 'youtube', livePublisher.youtube_channel_id)
         }
       };
     }
