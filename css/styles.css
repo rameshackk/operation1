@@ -152,7 +152,7 @@ html[data-theme="dark"],
   position: absolute;
   border-radius: 50%;
   filter: none !important;
-  opacity: 0.25;
+  opacity: 1.0 !important;
   will-change: transform;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
@@ -164,7 +164,7 @@ html[data-theme="dark"],
   left: -5%;
   width: 45vw;
   height: 45vw;
-  background: radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, rgba(217, 119, 6, 0.05) 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.45) 0%, rgba(217, 119, 6, 0.20) 40%, transparent 70%);
   animation: floatMeshGold 24s ease-in-out infinite alternate;
 }
 
@@ -173,7 +173,7 @@ html[data-theme="dark"],
   right: -5%;
   width: 50vw;
   height: 50vw;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, rgba(5, 150, 105, 0.04) 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.40) 0%, rgba(5, 150, 105, 0.18) 40%, transparent 70%);
   animation: floatMeshEmerald 28s ease-in-out infinite alternate;
 }
 
@@ -182,7 +182,7 @@ html[data-theme="dark"],
   right: -8%;
   width: 40vw;
   height: 40vw;
-  background: radial-gradient(circle, rgba(2, 132, 199, 0.12) 0%, rgba(3, 105, 161, 0.04) 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(2, 132, 199, 0.38) 0%, rgba(3, 105, 161, 0.16) 40%, transparent 70%);
   animation: floatMeshSapphire 22s ease-in-out infinite alternate;
 }
 
@@ -191,30 +191,30 @@ html[data-theme="dark"],
   left: -8%;
   width: 42vw;
   height: 42vw;
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.10) 0%, rgba(109, 40, 217, 0.03) 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.35) 0%, rgba(109, 40, 217, 0.15) 40%, transparent 70%);
   animation: floatMeshAmethyst 26s ease-in-out infinite alternate;
 }
 
-/* Dark Mixed Chromatic Mesh Shifts on Dark Mode Toggle */
+/* Dark Mixed Chromatic Mesh Shifts on Dark Mode Toggle (100% Universal Opacity) */
 [data-theme="dark"] .mesh-blob {
-  opacity: 0.20;
+  opacity: 1.0 !important;
   filter: none !important;
 }
 
 [data-theme="dark"] .mesh-blob-gold {
-  background: radial-gradient(circle, rgba(245, 158, 11, 0.4) 0%, rgba(217, 119, 6, 0.15) 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.45) 0%, rgba(217, 119, 6, 0.20) 40%, transparent 70%);
 }
 
 [data-theme="dark"] .mesh-blob-emerald {
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.35) 0%, rgba(5, 150, 105, 0.12) 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.40) 0%, rgba(5, 150, 105, 0.18) 40%, transparent 70%);
 }
 
 [data-theme="dark"] .mesh-blob-sapphire {
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.35) 0%, rgba(2, 132, 199, 0.12) 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.40) 0%, rgba(2, 132, 199, 0.18) 40%, transparent 70%);
 }
 
 [data-theme="dark"] .mesh-blob-amethyst {
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.32) 0%, rgba(109, 40, 217, 0.1) 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.38) 0%, rgba(109, 40, 217, 0.16) 40%, transparent 70%);
 }
 
 @keyframes floatMeshGold {
@@ -253,21 +253,22 @@ html[data-theme="dark"],
   100% { transform: translate(50px, -30px) scale(0.9) rotate(4deg); }
 }
 
-/* Subtle Animated Financial Bull Market Background Layer */
+/* Animated Financial Bull Market Background Layer (100% Opacity) */
 .wealth-bg-grid {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 0;
   background-image: 
-    radial-gradient(circle at 1px 1px, rgba(217, 119, 6, 0.07) 1px, transparent 0);
+    radial-gradient(circle at 1px 1px, rgba(217, 119, 6, 0.12) 1px, transparent 0);
   background-size: 40px 40px;
-  opacity: 0.7;
+  opacity: 1.0;
 }
 
 [data-theme="dark"] .wealth-bg-grid {
   background-image: 
-    radial-gradient(circle at 1px 1px, rgba(245, 158, 11, 0.1) 1px, transparent 0);
+    radial-gradient(circle at 1px 1px, rgba(245, 158, 11, 0.18) 1px, transparent 0);
+  opacity: 1.0;
 }
 
 .perspective-1000 {
