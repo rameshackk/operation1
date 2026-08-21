@@ -1118,7 +1118,7 @@ function AuthProvider({ children }) {
     return (
       <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-slate-950 text-white p-6 select-none">
         <div className="relative flex items-center justify-center mb-6">
-          <div className="w-16 h-16 rounded-3xl bg-gradient-to-tr from-amber-600 via-amber-500 to-yellow-400 animate-spin opacity-80 blur-sm" />
+          <div className="w-16 h-16 rounded-3xl bg-gradient-to-tr from-amber-600 via-amber-500 to-yellow-400 animate-spin opacity-80 " />
           <div className="absolute w-12 h-12 rounded-2xl bg-amber-500 flex items-center justify-center shadow-xl">
             <span className="text-xl font-black text-slate-950">DV</span>
           </div>
@@ -1576,7 +1576,7 @@ function Header({ onOpenSearch, onNavigate }) {
   };
 
   return (
-    <header className={`w-full relative z-40 transition-all duration-300 border-b border-slate-200 dark:border-slate-800 backdrop-blur-glass bg-white/95 dark:bg-slate-950/95 ${
+    <header className={`w-full relative z-40 transition-all duration-300 border-b border-slate-200 dark:border-slate-800 backdrop--glass bg-white/95 dark:bg-slate-950/95 ${
       isScrolled ? 'py-2 shadow-sm' : 'py-3'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
@@ -1917,7 +1917,7 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-start justify-center pt-16 sm:pt-24 px-4 animate-fadeIn"
+      className="fixed inset-0 z-50 bg-slate-950/80  flex items-start justify-center pt-16 sm:pt-24 px-4 animate-fadeIn"
       onClick={onClose}
     >
       <div
@@ -2099,12 +2099,12 @@ function VideoCard({ video, onSelect, onShowToast }) {
           <span className="absolute top-3 left-3 px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider rounded-md bg-amber-600 text-white shadow-md">{t('newBadge')}</span>
         ) : null}
 
-        <span className="absolute bottom-3 right-3 px-2.5 py-0.5 text-[11px] font-mono font-bold rounded-md bg-slate-950/85 text-white backdrop-blur-md border border-white/10">{video.duration || (video.isShort ? 'Short' : '10:00')}</span>
+        <span className="absolute bottom-3 right-3 px-2.5 py-0.5 text-[11px] font-mono font-bold rounded-md bg-slate-950/85 text-white  border border-white/10">{video.duration || (video.isShort ? 'Short' : '10:00')}</span>
 
         <div className="absolute top-3 right-3 flex items-center gap-1.5">
           <button
             onClick={handleBookmark}
-            className="p-1.5 rounded-md bg-slate-950/70 text-white hover:bg-amber-600 transition-colors backdrop-blur-md"
+            className="p-1.5 rounded-md bg-slate-950/70 text-white hover:bg-amber-600 transition-colors "
             title="Save to Watch Later"
           >
             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" /></svg>
@@ -2300,7 +2300,7 @@ function HeroSection({ news, onNavigate }) {
               <span className="px-2.5 py-0.5 text-[9px] font-black uppercase tracking-wider rounded-md bg-amber-500 text-slate-950 shadow-md">
                 {(item.category || 'FINANCE').replace('-', ' ')}
               </span>
-              <span className="px-2 py-0.5 rounded-md bg-slate-950/85 text-slate-200 text-[9px] font-mono font-bold backdrop-blur-sm border border-white/15">
+              <span className="px-2 py-0.5 rounded-md bg-slate-950/85 text-slate-200 text-[9px] font-mono font-bold  border border-white/15">
                 {formattedDate}
               </span>
             </div>
@@ -2599,7 +2599,7 @@ function SipCalculator() {
     <section id="financial-calculators" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 select-none animate-fadeIn">
       {/* Unified Compact Hero Header Banner (Light & Dark mode) */}
       <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 lg:p-7 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full  pointer-events-none" />
         <div className="relative z-10 space-y-2 max-w-3xl">
           <div className="inline-flex items-center gap-2 px-3 py-1 text-[11px] font-black uppercase tracking-wider rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-600 dark:text-amber-400 shadow-sm">
             <span className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400 animate-pulse" />
@@ -2947,7 +2947,7 @@ function RiskQuizWidget() {
     <section id="quiz" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fadeIn">
       {/* Unified Compact Hero Header Banner (Light & Dark mode) */}
       <div className="relative rounded-3xl bg-gradient-to-br from-white via-emerald-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-emerald-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 lg:p-7 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 dark:bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 dark:bg-emerald-500/10 rounded-full  pointer-events-none" />
         <div className="relative z-10 space-y-2 max-w-3xl">
           <div className="inline-flex items-center gap-2 px-3 py-1 text-[11px] font-black uppercase tracking-wider rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 shadow-sm">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse" />
@@ -3022,7 +3022,7 @@ function SignInCtaBanner({ onNavigate }) {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-6 animate-fadeIn">
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-slate-900 to-amber-950/80 border border-amber-500/30 dark:border-amber-500/20 p-6 sm:p-8 shadow-2xl text-white">
-        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-amber-500/15 blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-amber-500/15  pointer-events-none" />
 
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="space-y-2 max-w-2xl">
@@ -4171,7 +4171,7 @@ function VideosPage({ onNavigate, onShowToast }) {
       </div>
 
       {/* 2. CATEGORY & SEARCH CONTROLS BAR */}
-      <div className="bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl border-y border-slate-200 dark:border-slate-800/80 shadow-sm py-3">
+      <div className="bg-white/95 dark:bg-slate-950/95  border-y border-slate-200 dark:border-slate-800/80 shadow-sm py-3">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-2.5">
           <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1">
             {categoriesList.map(cat => {
@@ -4464,7 +4464,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
       {/* Unified Compact Hero Header Banner (Light & Dark mode) */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
         <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 lg:p-7 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full  pointer-events-none" />
           <div className="relative z-10 space-y-2 max-w-3xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 text-[11px] font-black uppercase tracking-wider rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-600 dark:text-amber-400 shadow-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400 animate-pulse" />
@@ -4482,7 +4482,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
         </div>
       </div>
 
-      <div className="sticky top-16 z-30 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm py-3">
+      <div className="sticky top-16 z-30 bg-white/95 dark:bg-slate-950/95  border-b border-slate-200 dark:border-slate-800 shadow-sm py-3">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
             {categories.map(cat => {
@@ -4580,7 +4580,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         onError={(e) => { e.target.src = '/favicon.svg'; }}
                       />
-                      <span className="absolute top-3 left-3 px-2.5 py-0.5 text-[10px] font-extrabold uppercase rounded-md bg-slate-950/85 text-amber-400 backdrop-blur-md">
+                      <span className="absolute top-3 left-3 px-2.5 py-0.5 text-[10px] font-extrabold uppercase rounded-md bg-slate-950/85 text-amber-400 ">
                         {(article.category || 'FINANCE').replace('-', ' ')}
                       </span>
                       <span className="absolute top-3 right-3 px-2 py-0.5 text-[9px] font-black uppercase rounded-md bg-amber-600 text-white">
@@ -4782,7 +4782,7 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
       <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
         {/* Unified Compact Hero Header Banner (Light & Dark mode) */}
         <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-7 lg:p-8 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full  pointer-events-none" />
           <div className="relative z-10 space-y-4">
             <div className="flex items-center justify-between">
               <button
@@ -5339,7 +5339,7 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fadeIn">
       {/* Unified Compact Hero Header Banner (Light & Dark mode) */}
       <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 lg:p-7 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full  pointer-events-none" />
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5">
           <div className="space-y-2 max-w-2xl">
             <div className="flex items-center gap-2">
@@ -5811,7 +5811,7 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
 
       {/* ================= CREATE PUBLISHER MODAL ================= */}
       {isCreateModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fadeIn">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80  animate-fadeIn">
           <div className="w-full max-w-xl bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
             {/* Modal Header */}
             <div className="p-6 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
@@ -6442,7 +6442,7 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
 
       {/* ================= EDIT PUBLISHER MODAL ================= */}
       {editingPublisher && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fadeIn">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80  animate-fadeIn">
           <div className="w-full max-w-xl bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
             <div className="p-6 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
               <div>
@@ -6706,7 +6706,7 @@ function PublisherOnboardingModal({ profile, onComplete, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85  animate-fadeIn">
       <div className="w-full max-w-2xl bg-white dark:bg-slate-900 rounded-3xl border border-amber-500/30 shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
         {/* Header with Step Switcher */}
         <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-amber-950 p-6 text-white border-b border-slate-800 relative">
@@ -6798,7 +6798,7 @@ function PublisherOnboardingModal({ profile, onComplete, onClose }) {
                       )}
                     </div>
                     {isUploadingPhoto && (
-                      <div className="absolute inset-0 rounded-3xl bg-slate-950/70 backdrop-blur-sm flex items-center justify-center">
+                      <div className="absolute inset-0 rounded-3xl bg-slate-950/70  flex items-center justify-center">
                         <div className="w-6 h-6 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
                       </div>
                     )}
@@ -7491,7 +7491,7 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fadeIn">
       {/* Unified Compact Hero Header Banner (Light & Dark mode) */}
       <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 lg:p-7 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full  pointer-events-none" />
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5">
           <div className="space-y-2 max-w-2xl">
             <button
@@ -8117,7 +8117,7 @@ function NewsCard({ article, onSelect }) {
   return (
     <article
       onClick={() => onSelect && onSelect(article)}
-      className="group bg-white/50 dark:bg-slate-900/50 backdrop-blur-xl rounded-2xl overflow-hidden border border-slate-200/50 dark:border-slate-800/50 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between h-full transform hover:-translate-y-1"
+      className="group bg-white/50 dark:bg-slate-900/50  rounded-2xl overflow-hidden border border-slate-200/50 dark:border-slate-800/50 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between h-full transform hover:-translate-y-1"
     >
       <div className="relative aspect-[16/9] overflow-hidden bg-slate-950">
         <img
@@ -8126,7 +8126,7 @@ function NewsCard({ article, onSelect }) {
           loading="lazy"
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
-        <span className="absolute top-3 left-3 px-2.5 py-0.5 text-[10px] font-bold uppercase rounded bg-slate-950/80 text-amber-400 backdrop-blur-sm">
+        <span className="absolute top-3 left-3 px-2.5 py-0.5 text-[10px] font-bold uppercase rounded bg-slate-950/80 text-amber-400 ">
           {article.category || 'FINANCE'}
         </span>
       </div>
@@ -8161,7 +8161,7 @@ function NewsPage({ onNavigate }) {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fadeIn">
       {/* Unified Compact Hero Header Banner (Light & Dark mode) */}
       <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 lg:p-7 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full  pointer-events-none" />
         <div className="relative z-10 space-y-2 max-w-3xl">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-600 dark:text-amber-400 text-[11px] font-black uppercase tracking-wider shadow-sm">
             <span className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400 animate-pulse" />
@@ -9142,7 +9142,7 @@ function CategoryPage({ categoryId, onNavigate, onShowToast }) {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fadeIn">
       {/* Unified Compact Hero Header Banner (Light & Dark mode) */}
       <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 lg:p-7 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full  pointer-events-none" />
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5">
           <div className="space-y-2 max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-600 dark:text-amber-400 text-[11px] font-black uppercase tracking-wider shadow-sm">
@@ -9434,7 +9434,7 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
       {/* Compact Hero Header Banner (Dark & Light mode supported) */}
       <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 lg:p-7 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
         {/* Ambient Decorative Lighting */}
-        <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full  pointer-events-none" />
 
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5 md:gap-8">
           {/* Header Text Block */}
@@ -9724,10 +9724,10 @@ function ProfessionalWidescreenVideoCard({ video, onSelect, language = 'ta' }) {
 
         {/* Top Badges */}
         <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between z-10 pointer-events-none">
-          <span className="px-2.5 py-0.5 text-[9px] font-black uppercase tracking-wider rounded-full bg-slate-950/90 text-amber-400 border border-amber-400/30 backdrop-blur-sm">
+          <span className="px-2.5 py-0.5 text-[9px] font-black uppercase tracking-wider rounded-full bg-slate-950/90 text-amber-400 border border-amber-400/30 ">
             {category}
           </span>
-          <span className="px-2 py-0.5 text-[9px] font-mono font-bold rounded-full bg-slate-950/90 text-white border border-white/20 backdrop-blur-sm">
+          <span className="px-2 py-0.5 text-[9px] font-mono font-bold rounded-full bg-slate-950/90 text-white border border-white/20 ">
             {duration}
           </span>
         </div>
@@ -9967,7 +9967,7 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
 
       {/* 1. IDENTITY HERO BANNER */}
       <div className="relative rounded-3xl bg-slate-950 text-white border border-slate-800 p-6 sm:p-8 shadow-2xl overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full  pointer-events-none" />
 
         <div className="relative z-10 flex flex-col md:flex-row items-start gap-6 sm:gap-8">
           {/* Portrait Avatar */}
@@ -10195,7 +10195,7 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute top-3 left-3">
-                      <span className="px-3 py-1 text-[10px] font-black uppercase rounded-full bg-slate-950/80 backdrop-blur-md text-amber-400 border border-amber-500/30">
+                      <span className="px-3 py-1 text-[10px] font-black uppercase rounded-full bg-slate-950/80  text-amber-400 border border-amber-500/30">
                         {article.category}
                       </span>
                     </div>
