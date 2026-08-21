@@ -1,8 +1,14 @@
 import { verifyUserRequest } from '../../lib/auth-server.js';
 import { supabaseAdmin } from '../../lib/supabase.js';
 import { getPgPool, upsertVideo } from '../../lib/db.js';
-import { resolvePublisherYouTubeInput, fetchLatestUploadVideoIds, fetchVideoDetails } from '../../lib/youtube.js';
-import { translateVideo } from '../../lib/translate.js';
+import {
+  resolvePublisherYouTubeInput,
+  resolveChannelWithoutApiKey,
+  fetchLatestUploadVideoIds,
+  fetchVideoDetails,
+  fetchChannelVideosViaRss
+} from '../../lib/youtube.js';
+import { classifyCategory, extractSeoKeywords } from '../../lib/taxonomy.js';
 
 export default async function handler(req, res) {
   // 1. Verify authenticated user
@@ -38,10 +44,6 @@ export default async function handler(req, res) {
   // POST / PATCH: Submit first-time onboarding information or update profile
   if (req.method === 'POST' || req.method === 'PATCH') {
     try {
-      const auth = await requireAuth(req, res);
-      if (!auth) return;
-
-      const userId = auth.user.id;
       const {
         display_name,
         avatar_url,
