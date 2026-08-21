@@ -28780,12 +28780,12 @@ function VideoTheaterModal({
     .slice(0, 5);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 md:p-8 bg-slate-950/90 backdrop-blur-xl animate-fadeIn overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-slate-950/90 backdrop-blur-md animate-fadeIn">
       <div
-        className="relative w-full max-w-5xl bg-slate-900 border border-slate-700/80 rounded-2xl sm:rounded-3xl shadow-2xl shadow-slate-950 overflow-hidden flex flex-col my-auto max-h-[92vh]"
+        className="relative w-full max-w-4xl bg-slate-900 border border-slate-700/80 rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh]"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-800 bg-slate-950/70 backdrop-blur-md">
+        <div className="flex items-center justify-between px-4 sm:px-5 py-3 border-b border-slate-800 bg-slate-950/70 backdrop-blur-md shrink-0">
           <div className="flex items-center gap-2.5">
             <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse" />
             <span className="text-xs font-black uppercase tracking-wider text-slate-300">
@@ -28819,8 +28819,8 @@ function VideoTheaterModal({
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">
-          <div className="relative aspect-video w-full rounded-xl sm:rounded-2xl overflow-hidden bg-black shadow-2xl border border-slate-800">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4">
+          <div className="relative aspect-video max-h-[54vh] sm:max-h-[58vh] w-full rounded-xl overflow-hidden bg-black shadow-2xl border border-slate-800 shrink-0">
             {youtubeId ? (
               <iframe
                 src={embedUrl}
@@ -29455,20 +29455,21 @@ function CinemaTheaterModal({
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-[1000] flex items-center justify-center p-3 sm:p-6 overflow-y-auto modal-backdrop-unified"
+      className="fixed inset-0 z-[1000] flex items-center justify-center p-2 sm:p-4 md:p-6 bg-slate-950/90 backdrop-blur-md"
     >
       <div
         onClick={onClose}
-        className="fixed inset-0 bg-slate-950/85 backdrop-blur-xl transition-opacity"
+        className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm transition-opacity"
       />
 
-      <div className="relative w-full max-w-5xl rounded-3xl bg-slate-900 border border-slate-700/80 shadow-2xl overflow-hidden z-10 text-white my-auto modal-card-unified">
-        <div className="relative aspect-video w-full bg-black">
+      <div className="relative w-full max-w-4xl max-h-[92vh] rounded-2xl sm:rounded-3xl bg-slate-900 border border-slate-700/80 shadow-2xl overflow-hidden z-10 text-white flex flex-col">
+        {/* Video Player Frame - Constrained to 56vh max so details are always visible without scrolling off screen */}
+        <div className="relative w-full aspect-video max-h-[54vh] sm:max-h-[58vh] bg-black shrink-0">
           {embedUrl ? (
             <iframe
               src={embedUrl}
               title={title}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
               className="w-full h-full border-0"
             />
@@ -29481,17 +29482,18 @@ function CinemaTheaterModal({
           <button
             onClick={onClose}
             aria-label="Close modal"
-            className="absolute top-4 right-4 w-10 h-10 rounded-full bg-slate-950/85 hover:bg-red-600 text-white flex items-center justify-center text-sm font-bold backdrop-blur-md border border-white/20 transition-colors shadow-2xl z-30"
+            className="absolute top-3 right-3 w-9 h-9 rounded-full bg-slate-950/85 hover:bg-red-600 text-white flex items-center justify-center text-sm font-bold backdrop-blur-md border border-white/20 transition-all shadow-xl z-30"
           >
             ✕
           </button>
         </div>
 
-        <div className="p-6 sm:p-8 space-y-6 max-h-[45vh] overflow-y-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-            <div className="lg:col-span-8 space-y-4">
+        {/* Compact Details & Related Videos Area */}
+        <div className="p-4 sm:p-5 space-y-4 overflow-y-auto flex-1 text-slate-200">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">
+            <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <span className="px-3 py-1 rounded-full bg-amber-500 text-slate-950 text-[10px] font-black uppercase tracking-wider shadow">
+                <span className="px-2.5 py-0.5 rounded-full bg-amber-500 text-slate-950 text-[9px] font-black uppercase tracking-wider shadow">
                   {(video.category || 'FINANCE').replace('-', ' ')}
                 </span>
                 <span className="text-xs font-mono text-slate-400">
@@ -29499,42 +29501,45 @@ function CinemaTheaterModal({
                 </span>
                 <span className="text-xs text-amber-400 font-bold">• CFP Verified</span>
               </div>
-
-              <h2 className="text-xl sm:text-2xl font-black font-serif text-white leading-snug">
+              <h2 className="text-base sm:text-lg font-black font-serif text-white leading-snug">
                 {title}
               </h2>
-
-              <div className="flex items-center gap-3 pt-2">
-                <button
-                  onClick={handleShare}
-                  className="btn-magnetic px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-slate-200 hover:text-white flex items-center gap-1.5 transition-colors"
-                >
-                  <span>{copied ? 'Copied' : (isTamil ? 'பகிர்' : 'Share')}</span>
-                </button>
-
-                {youtubeWatchUrl && (
-                  <a
-                    href={youtubeWatchUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="btn-magnetic px-4 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs font-black transition-colors shadow flex items-center gap-1.5"
-                  >
-                    <span>YouTube ↗</span>
-                  </a>
-                )}
-              </div>
-
-              <div className="p-4 rounded-xl bg-slate-950/60 border border-slate-800/80 text-xs sm:text-sm text-slate-300 font-sans leading-relaxed whitespace-pre-line">
-                {description}
-              </div>
             </div>
 
-            <div className="lg:col-span-4 space-y-3 border-t lg:border-t-0 lg:border-l border-slate-800 lg:pl-6 pt-4 lg:pt-0">
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                onClick={handleShare}
+                className="btn-magnetic px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-slate-200 hover:text-white flex items-center gap-1.5 transition-colors"
+              >
+                <span>{copied ? 'Copied' : (isTamil ? 'பகிர்' : 'Share')}</span>
+              </button>
+
+              {youtubeWatchUrl && (
+                <a
+                  href={youtubeWatchUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn-magnetic px-3 py-1.5 rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs font-black transition-colors shadow flex items-center gap-1.5"
+                >
+                  <span>YouTube ↗</span>
+                </a>
+              )}
+            </div>
+          </div>
+
+          {description && (
+            <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80 text-xs text-slate-300 font-sans leading-relaxed whitespace-pre-line line-clamp-3">
+              {description}
+            </div>
+          )}
+
+          {relatedVideos.length > 0 && (
+            <div className="space-y-2 pt-1">
               <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
                 {isTamil ? 'தொடர்புடைய வீடியோக்கள்' : 'Related Insights'}
               </h3>
 
-              <div className="space-y-2.5">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
                 {relatedVideos.map((rel) => {
                   const relTitle = isTamil
                     ? (rel.titleTamil || rel.title)
@@ -29546,29 +29551,24 @@ function CinemaTheaterModal({
                       role="button"
                       tabIndex={0}
                       onClick={() => onSelectRelated && onSelectRelated(rel)}
-                      className="group flex items-center gap-3 p-2 rounded-xl bg-slate-950/40 hover:bg-slate-800/80 border border-slate-800/60 transition-all cursor-pointer"
+                      className="group p-2 rounded-xl bg-slate-950/60 hover:bg-slate-800 border border-slate-800 hover:border-amber-500/60 transition-all cursor-pointer flex flex-col gap-1.5"
                     >
-                      <div className="relative w-20 aspect-[16/10] rounded-lg overflow-hidden shrink-0 bg-slate-950">
+                      <div className="relative aspect-video rounded-lg overflow-hidden bg-slate-950">
                         <img
                           src={rel.thumbnail || `https://img.youtube.com/vi/${rel.youtubeId}/hqdefault.jpg`}
                           alt={relTitle}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="text-xs font-bold text-slate-200 group-hover:text-amber-400 line-clamp-2 leading-tight transition-colors">
-                          {relTitle}
-                        </h4>
-                        <span className="text-[10px] text-slate-400 block mt-0.5">
-                          {rel.category}
-                        </span>
-                      </div>
+                      <h4 className="text-[11px] font-bold text-slate-200 group-hover:text-amber-400 line-clamp-2 leading-tight">
+                        {relTitle}
+                      </h4>
                     </div>
                   );
                 })}
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>
