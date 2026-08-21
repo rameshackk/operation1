@@ -111,8 +111,8 @@ body {
 
 html[data-theme="dark"],
 [data-theme="dark"] body {
-  background: #020617 !important;
-  background-color: #020617 !important;
+  background: #0F172A !important;
+  background-color: #0F172A !important;
   background-attachment: fixed;
   color: #f8fafc;
 }
