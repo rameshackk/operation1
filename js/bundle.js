@@ -27006,8 +27006,8 @@ function Header({ onOpenSearch, onNavigate }) {
   };
 
   return (
-    <header className={`sticky top-0 z-40 transition-all duration-300 border-b border-slate-200 dark:border-slate-800 backdrop-blur-glass ${
-      isScrolled ? 'py-2.5 shadow-lg bg-white/90 dark:bg-slate-950/90' : 'py-3.5'
+    <header className={`w-full transition-all duration-300 border-b border-slate-200 dark:border-slate-800 backdrop-blur-glass bg-white/95 dark:bg-slate-950/95 ${
+      isScrolled ? 'py-2 shadow-sm' : 'py-3'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
         
@@ -29918,8 +29918,8 @@ function VideosPage({ onNavigate, onShowToast }) {
         />
       </div>
 
-      {/* 2. STICKY CATEGORY & SEARCH CONTROLS BAR */}
-      <div className="sticky top-16 z-30 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl border-y border-slate-200 dark:border-slate-800/80 shadow-md py-3">
+      {/* 2. CATEGORY & SEARCH CONTROLS BAR */}
+      <div className="bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl border-y border-slate-200 dark:border-slate-800/80 shadow-sm py-3">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-2.5">
           <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1">
             {categoriesList.map(cat => {
@@ -34736,9 +34736,13 @@ function AppContent({ currentHash, navigate, isSearchOpen, setIsSearchOpen, toas
 
   return (
     <div className="min-h-screen flex flex-col text-slate-900 dark:text-slate-100 font-sans">
-      <Header onOpenSearch={() => setIsSearchOpen(true)} onNavigate={navigate} />
-      <Navbar currentPath={currentHash} onNavigate={navigate} />
-      <TrendingTicker />
+      {/* FIXED TOP HEADER STACK (Logo Header + Navbar + Breaking News Ticker) */}
+      <div className="sticky top-0 z-40 w-full shadow-lg bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+        <Header onOpenSearch={() => setIsSearchOpen(true)} onNavigate={navigate} />
+        <Navbar currentPath={currentHash} onNavigate={navigate} />
+        <TrendingTicker />
+      </div>
+
       <main className="flex-1">{renderRoute()}</main>
       <Footer onNavigate={navigate} onShowToast={setToastMessage} />
       <CommandPalette isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} onNavigate={navigate} />
