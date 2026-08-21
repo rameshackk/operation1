@@ -180,7 +180,20 @@ export default async function handler(req, res) {
         savedProfile = data;
       }
 
-      // Immediately ingest and link the publisher's initial videos into the videos table so they appear on their professional profile!
+      // If YouTube channel was changed or updated, remove old videos for this publisher and sync fresh ones
+      if (youtube_url !== undefined) {
+        try {
+          if (pgPool) {
+            await pgPool.query('DELETE FROM videos WHERE source_publisher_id::text = $1', [userId]);
+          } else if (supabaseAdmin) {
+            await supabaseAdmin.from('videos').delete().eq('source_publisher_id', userId);
+          }
+        } catch (delErr) {
+          console.warn('Could not clean old publisher videos:', delErr.message);
+        }
+      }
+
+      // Immediately ingest and link the new channel's videos into the videos table so they appear on their professional profile!
       if (resolvedChannel && process.env.YOUTUBE_API_KEY) {
         try {
           const ytApiKey = process.env.YOUTUBE_API_KEY;
@@ -189,7 +202,7 @@ export default async function handler(req, res) {
             videoIds.push(resolvedChannel.initialVideoId);
           }
           if (resolvedChannel.uploadsPlaylistId) {
-            const playlistVideoIds = await fetchLatestUploadVideoIds(resolvedChannel.uploadsPlaylistId, ytApiKey, 12);
+            const playlistVideoIds = await fetchLatestUploadVideoIds(resolvedChannel.uploadsPlaylistId, ytApiKey, 24);
             videoIds = Array.from(new Set([...videoIds, ...playlistVideoIds]));
           }
 
