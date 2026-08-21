@@ -29822,29 +29822,8 @@ function VideosPage({ onNavigate, onShowToast }) {
 
   return (
     <div className="min-h-screen pb-24 space-y-6 text-slate-900 dark:text-white animate-fadeIn">
-      {/* Unified Compact Hero Header Banner (Light & Dark mode) */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-        <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 lg:p-7 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="relative z-10 space-y-2 max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 text-[11px] font-black uppercase tracking-wider rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-600 dark:text-amber-400 shadow-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400 animate-pulse" />
-              <span>{isTamil ? 'வீடியோ மாஸ்டர்கிளாஸ்கள்' : 'FINANCIAL VIDEO MASTERCLASSES'}</span>
-            </div>
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-slate-900 dark:text-white leading-snug">
-              {isTamil ? '882+ வீடியோ வழிகாட்டிகள் & ஆய்வுகள்' : '882+ Financial Masterclasses & Analysis'}
-            </h1>
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
-              {isTamil
-                ? 'மியூச்சுவல் ஃபண்ட், பங்குச் சந்தை, தனிநபர் நிதி, IPO மற்றும் வரி சேமிப்பு பற்றிய பட்ஜெட் பத்மநாபனின் நேரடி வீடியோக்கள்.'
-                : 'Curated financial education, mutual fund breakdowns, IPO reviews, tax planning strategies, and stock market analysis.'}
-            </p>
-          </div>
-        </div>
-      </div>
-
       {/* 1. CINEMA SPOTLIGHT HERO */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
         <CinemaSpotlightHero
           spotlightVideos={spotlightVideos}
           onWatchVideo={(v) => setSelectedVideo(v)}
