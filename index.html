@@ -21,6 +21,17 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Muthaleetu Thisai" />
   
+  <!-- Auto Cache Invalidation -->
+  <script>
+    if ('caches' in window) {
+      caches.keys().then(function(names) {
+        for (var name of names) {
+          if (name !== 'muthaleetu-thisai-v3-6-0') caches.delete(name);
+        }
+      });
+    }
+  </script>
+
   <!-- Tailwind CSS CDN — suppress built-in production warning -->
   <script>
     (function() {

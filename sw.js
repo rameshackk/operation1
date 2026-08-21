@@ -1,4 +1,4 @@
-const CACHE_NAME = 'muthaleetu-thisai-v2';
+const CACHE_NAME = 'muthaleetu-thisai-v3-6-0';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
@@ -17,7 +17,7 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  // Always fetch fresh from network for application assets
+  // Network first: always fetch fresh bundle and assets
   event.respondWith(
     fetch(event.request).catch(() => caches.match(event.request))
   );
