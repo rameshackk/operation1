@@ -26688,7 +26688,7 @@ function ProfileMenu({ onNavigate }) {
   };
 
   return (
-    <div className="relative inline-block text-left" ref={menuRef}>
+    <div className="relative inline-block text-left z-50" ref={menuRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
@@ -26720,7 +26720,7 @@ function ProfileMenu({ onNavigate }) {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2.5 w-64 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl z-50 overflow-hidden dropdown-anchored-unified">
+        <div className="absolute right-0 top-full mt-2 w-64 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl z-[100] overflow-hidden">
           <div className="p-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-850/50">
             <div className="flex items-center justify-between mb-1">
               <p className="text-xs font-black text-slate-900 dark:text-white truncate max-w-[140px]">
@@ -27006,7 +27006,7 @@ function Header({ onOpenSearch, onNavigate }) {
   };
 
   return (
-    <header className={`w-full transition-all duration-300 border-b border-slate-200 dark:border-slate-800 backdrop-blur-glass bg-white/95 dark:bg-slate-950/95 ${
+    <header className={`w-full relative z-40 transition-all duration-300 border-b border-slate-200 dark:border-slate-800 backdrop-blur-glass bg-white/95 dark:bg-slate-950/95 ${
       isScrolled ? 'py-2 shadow-sm' : 'py-3'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
@@ -27125,7 +27125,7 @@ function Navbar({ currentPath, onNavigate }) {
   const navItems = [...baseNavItems, ...authNavItems];
 
   return (
-    <nav className="bg-slate-900 text-slate-100 border-b border-slate-800 shadow-xl relative z-30">
+    <nav className="bg-slate-900 text-slate-100 border-b border-slate-800 shadow-xl relative z-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="hidden lg:flex items-center justify-between gap-2 py-1.5">
           <div className="flex items-center justify-between flex-1 gap-1 xl:gap-2">
@@ -27243,7 +27243,7 @@ function TrendingTicker() {
   );
 
   return (
-    <div className="bg-slate-950 text-slate-100 border-b border-slate-800 text-xs py-2.5 overflow-hidden select-none shadow-sm">
+    <div className="bg-slate-950 text-slate-100 border-b border-slate-800 text-xs py-2.5 overflow-hidden select-none shadow-sm relative z-10">
       <div className="max-w-7xl mx-auto px-4 flex items-center gap-3.5">
         <div className="flex items-center gap-2 shrink-0 bg-red-600 text-white font-black px-3 py-1 rounded-md text-[10px] uppercase tracking-wider shadow-md z-10">
           <span className="w-2 h-2 rounded-full bg-white animate-ping" />
