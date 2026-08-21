@@ -19,6 +19,8 @@ CREATE TABLE IF NOT EXISTS public.videos (
     tags TEXT[] DEFAULT '{}',
     trending BOOLEAN DEFAULT false,
     translated_at TIMESTAMPTZ DEFAULT NULL,
+    source_publisher_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
+    status VARCHAR(16) NOT NULL DEFAULT 'published' CHECK (status IN ('pending', 'published', 'rejected')),
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
@@ -27,6 +29,8 @@ CREATE TABLE IF NOT EXISTS public.videos (
 CREATE INDEX IF NOT EXISTS idx_videos_published_at ON public.videos (published_at DESC);
 CREATE INDEX IF NOT EXISTS idx_videos_category ON public.videos (category);
 CREATE INDEX IF NOT EXISTS idx_videos_pending_translation ON public.videos (translated_at) WHERE translated_at IS NULL;
+CREATE INDEX IF NOT EXISTS idx_videos_status ON public.videos (status);
+CREATE INDEX IF NOT EXISTS idx_videos_source_publisher ON public.videos (source_publisher_id, status);
 
 -- 2. PROFILES TABLE (Tied to Supabase Auth)
 CREATE TABLE IF NOT EXISTS public.profiles (
@@ -35,12 +39,28 @@ CREATE TABLE IF NOT EXISTS public.profiles (
     display_name TEXT,
     avatar_url TEXT,
     role VARCHAR(16) NOT NULL DEFAULT 'user' CHECK (role IN ('user', 'admin', 'publisher')),
+    title TEXT,
+    arn_number TEXT,
+    specialties TEXT[] DEFAULT '{}',
+    bio TEXT,
+    bio_ta TEXT,
+    linkedin_url TEXT,
+    twitter_url TEXT,
+    youtube_url TEXT,
+    youtube_channel_id TEXT DEFAULT NULL,
+    youtube_channel_title TEXT DEFAULT NULL,
+    youtube_channel_thumbnail TEXT DEFAULT NULL,
+    youtube_channel_verified BOOLEAN DEFAULT false,
+    whatsapp_number TEXT,
+    phone TEXT,
+    is_onboarded BOOLEAN DEFAULT false,
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
--- Index for role lookup
+-- Index for role lookup & verified channels
 CREATE INDEX IF NOT EXISTS idx_profiles_role ON public.profiles (role);
+CREATE INDEX IF NOT EXISTS idx_profiles_yt_channel_verified ON public.profiles (youtube_channel_verified) WHERE youtube_channel_verified = true;
 
 -- 3. WATCH HISTORY TABLE
 CREATE TABLE IF NOT EXISTS public.watch_history (
@@ -91,8 +111,6 @@ CREATE TRIGGER on_auth_user_created
     AFTER INSERT ON auth.users
     FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
 
--- 6. ROW-LEVEL SECURITY (RLS) POLICIES
-
 -- 6. PUBLIC HOMEPAGE PREVIEW VIEW (Non-sensitive metadata only)
 CREATE OR REPLACE VIEW public.trending_preview AS
 SELECT 
@@ -106,8 +124,11 @@ SELECT
     published_at,
     view_count,
     category,
-    trending
-FROM public.videos;
+    trending,
+    status,
+    source_publisher_id
+FROM public.videos
+WHERE status = 'published';
 
 -- Grant select to anon (public) and authenticated roles
 GRANT SELECT ON public.trending_preview TO anon, authenticated;
@@ -120,13 +141,16 @@ ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.watch_history ENABLE ROW LEVEL SECURITY;
 
 -- VIDEOS POLICIES:
--- Authenticated users have full read access to videos
+-- Public and authenticated users can view published videos, admins can view all, publishers can view their own
 DROP POLICY IF EXISTS "Public videos read access" ON public.videos;
 DROP POLICY IF EXISTS "Authenticated videos read access" ON public.videos;
-CREATE POLICY "Authenticated videos read access" ON public.videos
-    FOR SELECT TO authenticated USING (true);
-
--- Service role full access to videos (handled automatically by Supabase service key)
+DROP POLICY IF EXISTS "Videos select policy" ON public.videos;
+CREATE POLICY "Videos select policy" ON public.videos
+    FOR SELECT USING (
+        status = 'published' 
+        OR (auth.uid() IS NOT NULL AND public.is_admin(auth.uid()))
+        OR (auth.uid() IS NOT NULL AND source_publisher_id = auth.uid())
+    );
 
 -- PROFILES POLICIES:
 -- Users can view their own profile

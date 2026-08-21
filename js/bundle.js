@@ -25970,18 +25970,34 @@ function translateNewsArticle(article, language = "ta") {
   };
 }
 
+/**
+ * Normalises a video row into the shape the UI expects.
+ * /api/videos already returns camelCase via formatVideoRow, but the snake_case
+ * fallbacks keep this safe for raw rows and for the bundled static catalog.
+ */
+function normalizeVideoRow(v) {
+  const youtubeId = v.youtubeId || v.youtube_id || v.id;
+  return {
+    ...v,
+    youtubeId,
+    titleTamil: v.title_ta || v.titleTamil || v.title,
+    titleEnglish: v.title_en || v.titleEnglish || v.title,
+    descriptionTamil: v.description_ta || v.descriptionTamil || v.description,
+    descriptionEnglish: v.description_en || v.descriptionEnglish || v.description,
+    thumbnail: v.thumbnail_url || v.thumbnail || (youtubeId ? `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg` : ''),
+    views: v.view_count || v.views || 0,
+    publishedAt: v.published_at || v.publishedAt,
+    tags: v.tags || []
+  };
+}
+
 async function getTrendingPreviewVideos(language = "ta") {
   try {
     const res = await fetch('/api/videos/trending-preview?limit=8');
     if (res.ok) {
       const json = await res.json();
       if (json.status === 'success' && Array.isArray(json.data) && json.data.length > 0) {
-        return json.data.map(v => translateVideo({
-          ...v,
-          titleTamil: v.title_ta || v.titleTamil || v.title,
-          titleEnglish: v.title_en || v.titleEnglish || v.title,
-          publishedAt: v.published_at || v.publishedAt
-        }, language));
+        return json.data.map(v => translateVideo(normalizeVideoRow(v), language));
       }
     }
   } catch (e) {
@@ -26005,19 +26021,12 @@ async function getLatestVideos(language = "ta", category = "all", sort = "newest
       } catch (e) {}
     }
 
-    const url = `/api/videos?limit=100&category=${encodeURIComponent(category)}&sort=${encodeURIComponent(sort)}`;
+    const url = `/api/videos?limit=1000&category=${encodeURIComponent(category)}&sort=${encodeURIComponent(sort)}`;
     const res = await fetch(url, { headers });
     if (res.ok) {
       const json = await res.json();
       if (json.status === 'success' && Array.isArray(json.data) && json.data.length > 0) {
-        return json.data.map(v => translateVideo({
-          ...v,
-          titleTamil: v.title_ta || v.titleTamil || v.title,
-          titleEnglish: v.title_en || v.titleEnglish || v.title,
-          descriptionTamil: v.description_ta || v.descriptionTamil || v.description,
-          descriptionEnglish: v.description_en || v.descriptionEnglish || v.description,
-          publishedAt: v.published_at || v.publishedAt
-        }, language));
+        return json.data.map(v => translateVideo(normalizeVideoRow(v), language));
       }
     }
   } catch (e) {
@@ -26041,16 +26050,15 @@ async function getLatestVideos(language = "ta", category = "all", sort = "newest
 async function getVideoById(id, language = "ta") {
   if (!id) return null;
 
-  // 1. Try local memory / static list
-  let video = videosData.find(v => v.id === id || v.youtubeId === id || v.youtube_id === id);
-  if (video) {
-    const ytId = (video.youtubeId && video.youtubeId.length === 11) ? video.youtubeId : (video.id && video.id.length === 11 ? video.id : 'GizYMQfl9CY');
-    return translateVideo({ ...video, youtubeId: ytId }, language);
-  }
+  // Legacy catalog ids (vid-bp-XXX) predate the database migration, so resolve them
+  // to a real YouTube id up front — the API only looks videos up by youtube_id.
+  const staticMatch = videosData.find(v => v.id === id || v.youtubeId === id || v.youtube_id === id);
+  const lookupId = (staticMatch && staticMatch.youtubeId) ? staticMatch.youtubeId : id;
 
-  // 2. Try fetching from backend API
+  // 1. The database is the source of truth: try it first so freshly ingested videos
+  //    and refreshed view counts resolve instead of being masked by the bundled copy.
   try {
-    const res = await fetch(`/api/videos/${encodeURIComponent(id)}`);
+    const res = await fetch(`/api/videos/${encodeURIComponent(lookupId)}`);
     if (res.ok) {
       const json = await res.json();
       if (json.status === 'success' && json.data) {
@@ -26077,6 +26085,12 @@ async function getVideoById(id, language = "ta") {
     console.warn('API fetch video detail fallback:', e);
   }
 
+  // 2. Fall back to the bundled catalog only when the API is unreachable or has no row.
+  if (staticMatch) {
+    const ytId = (staticMatch.youtubeId && staticMatch.youtubeId.length === 11) ? staticMatch.youtubeId : (staticMatch.id && staticMatch.id.length === 11 ? staticMatch.id : 'GizYMQfl9CY');
+    return translateVideo({ ...staticMatch, youtubeId: ytId }, language);
+  }
+
   // 3. Fallback: If id is a valid 11-char YouTube ID (or fallback to latest channel video)
   const is11CharYt = typeof id === 'string' && id.length === 11 && !id.includes('-');
   const safeYtId = is11CharYt ? id : '_fvxhThYO70';
@@ -26097,19 +26111,54 @@ async function getVideoById(id, language = "ta") {
   }, language);
 }
 
-async function getRelatedVideos(currentId, language = "ta") {
-  await new Promise(resolve => setTimeout(resolve, 30));
+async function getRelatedVideos(currentId, language = "ta", category = "all") {
+  try {
+    const res = await fetch(`/api/videos?limit=12&sort=newest&category=${encodeURIComponent(category || 'all')}`);
+    if (res.ok) {
+      const json = await res.json();
+      if (json.status === 'success' && Array.isArray(json.data) && json.data.length > 0) {
+        const related = json.data
+          .map(normalizeVideoRow)
+          .filter(v => v.id !== currentId && v.youtubeId !== currentId);
+        if (related.length > 0) {
+          return related.slice(0, 4).map(v => translateVideo(v, language));
+        }
+      }
+    }
+  } catch (e) {
+    console.warn('Related videos API fallback:', e);
+  }
+
   const filtered = videosData.filter(v => v.id !== currentId && v.youtubeId !== currentId);
   return filtered.slice(0, 4).map(v => translateVideo(v, language));
 }
 
-function searchAllContent(query, language = "ta") {
+async function searchAllContent(query, language = "ta") {
   if (!query || !query.trim()) return [];
   const q = query.toLowerCase().trim();
   const qTerms = q.split(/\s+/).filter(Boolean);
 
-  // 1. Search across all 882 videos
-  const matchedVideos = videosData.map(v => {
+  // 1. Videos come from the database, which searches Tamil and English titles and
+  //    descriptions. The bundled catalog is only used if that request fails.
+  let videoPool = null;
+  try {
+    const res = await fetch(`/api/videos?limit=100&search=${encodeURIComponent(query.trim())}`);
+    if (res.ok) {
+      const json = await res.json();
+      if (json.status === 'success' && Array.isArray(json.data)) {
+        videoPool = json.data.map(normalizeVideoRow);
+      }
+    }
+  } catch (e) {
+    console.warn('Search videos API fallback:', e);
+  }
+
+  // API rows already matched server-side, so a zero local score there means
+  // "rank last", not "exclude". Local rows still need the score to filter.
+  const fromApi = videoPool !== null;
+  if (!fromApi) videoPool = videosData;
+
+  const matchedVideos = videoPool.map(v => {
     let score = 0;
     const titleT = (v.titleTamil || v.title || "").toLowerCase();
     const titleE = (v.titleEnglish || v.title || "").toLowerCase();
@@ -26128,7 +26177,7 @@ function searchAllContent(query, language = "ta") {
       if (tags.includes(term)) score += 10;
     });
 
-    if (score === 0) return null;
+    if (score === 0 && !fromApi) return null;
     const translated = translateVideo(v, language);
     return {
       ...translated,
@@ -26167,7 +26216,7 @@ function searchAllContent(query, language = "ta") {
 }
 
 async function searchVideos(query, language = "ta") {
-  const all = searchAllContent(query, language);
+  const all = await searchAllContent(query, language);
   return all.filter(item => item.contentType === 'video');
 }
 
@@ -27352,10 +27401,18 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
       return;
     }
     setIsSearching(true);
-    const data = searchAllContent(debouncedQuery, language);
-    setResults(data);
-    setIsSearching(false);
-    setSelectedIndex(0);
+    let isStale = false;
+    searchAllContent(debouncedQuery, language).then(data => {
+      if (isStale) return;
+      setResults(data);
+      setIsSearching(false);
+      setSelectedIndex(0);
+    }).catch(() => {
+      if (isStale) return;
+      setResults([]);
+      setIsSearching(false);
+    });
+    return () => { isStale = true; };
   }, [debouncedQuery, language]);
 
   useEffect(() => {
@@ -28824,7 +28881,7 @@ function VideoFanWall({
   const [activeTab, setActiveTab] = useState('all');
   const [startIndex, setStartIndex] = useState(0);
 
-  const videoPool = videos && videos.length > 0 ? videos : videosData;
+  const videoPool = Array.isArray(videos) ? videos : [];
 
   const filteredVideos = useMemo(() => {
     let list = [...videoPool];
@@ -29735,6 +29792,8 @@ function HomeCinemaShowcase({ onNavigate, onShowToast, language = 'ta' }) {
   const [activeCategory, setActiveCategory] = useState('featured');
   const [selectedVideo, setSelectedVideo] = useState(null);
 
+  const { videos: allVideos = [], isLoading } = useVideos('all', 'newest');
+
   const categories = [
     { id: 'featured', labelTa: 'முக்கிய பதிவுகள்', labelEn: 'Featured & Trending' },
     { id: 'mutual-funds', labelTa: 'மியூச்சுவல் ஃபண்ட் & SIP', labelEn: 'Mutual Funds & SIP' },
@@ -29744,7 +29803,7 @@ function HomeCinemaShowcase({ onNavigate, onShowToast, language = 'ta' }) {
   ];
 
   const showcaseVideos = useMemo(() => {
-    let list = [...videosData];
+    let list = [...allVideos];
     if (activeCategory === 'featured') {
       list = list.filter(v => v.trending || v.views > 20000).slice(0, 10);
     } else if (activeCategory === 'shorts') {
@@ -29756,8 +29815,8 @@ function HomeCinemaShowcase({ onNavigate, onShowToast, language = 'ta' }) {
     } else if (activeCategory === 'tax-saving') {
       list = list.filter(v => v.category === 'tax-saving' || v.category === 'retirement').slice(0, 10);
     }
-    return list.map(v => translateVideo(v, language));
-  }, [activeCategory, language]);
+    return list;
+  }, [allVideos, activeCategory]);
 
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 select-none space-y-4">
@@ -29827,7 +29886,7 @@ function HomeCinemaShowcase({ onNavigate, onShowToast, language = 'ta' }) {
       {selectedVideo && (
         <CinemaTheaterModal
           video={selectedVideo}
-          allVideos={videosData}
+          allVideos={allVideos}
           onClose={() => setSelectedVideo(null)}
           onSelectRelated={(rel) => setSelectedVideo(rel)}
           language={language}
@@ -29884,8 +29943,11 @@ function VideosPage({ onNavigate, onShowToast }) {
   const [viewMode, setViewMode] = useState('rails');
   const sentinelRef = useRef(null);
 
+  // Live video hook — pulls directly from Supabase /api/videos with built-in fallback
+  const { videos: allLiveVideos = [], isLoading: isVideosLoading } = useVideos('all', 'newest');
+
   const categoriesList = [
-    { id: 'all', labelTa: 'அனைத்து வீடியோக்கள் (882)', labelEn: 'All Videos (882)' },
+    { id: 'all', labelTa: `அனைத்து வீடியோக்கள் (${allLiveVideos.length || 882})`, labelEn: `All Videos (${allLiveVideos.length || 882})` },
     { id: 'trending', labelTa: 'முக்கிய பதிவுகள்', labelEn: 'Featured & Trending' },
     { id: 'mutual-funds', labelTa: 'மியூச்சுவல் ஃபண்ட் & SIP', labelEn: 'Mutual Funds & SIP' },
     { id: 'stocks', labelTa: 'பங்குச் சந்தை', labelEn: 'Stock Market' },
@@ -29898,31 +29960,29 @@ function VideosPage({ onNavigate, onShowToast }) {
   ];
 
   const spotlightVideos = useMemo(() => {
-    return videosData
+    return allLiveVideos
       .filter(v => v.trending || v.category === 'mutual-funds')
-      .slice(0, 5)
-      .map(v => translateVideo(v, language));
-  }, [language]);
+      .slice(0, 5);
+  }, [allLiveVideos]);
 
   const railsData = useMemo(() => {
-    const translated = videosData.map(v => translateVideo(v, language));
     return {
-      masterclasses: translated.filter(v => v.trending || v.views > 25000).slice(0, 12),
-      shorts: translated.filter(v => v.isShort || (v.tags && v.tags.includes('shorts'))).slice(0, 14),
-      mutualFunds: translated.filter(v => v.category === 'mutual-funds').slice(0, 12),
-      stocks: translated.filter(v => v.category === 'stocks' || v.category === 'ipo').slice(0, 12),
-      taxRetirement: translated.filter(v => v.category === 'tax-saving' || v.category === 'retirement').slice(0, 12),
-      personalFinance: translated.filter(v => v.category === 'personal-finance' || v.category === 'gold-bonds').slice(0, 12)
+      masterclasses: allLiveVideos.filter(v => v.trending || v.views > 25000).slice(0, 12),
+      shorts: allLiveVideos.filter(v => v.isShort || (v.tags && v.tags.includes('shorts'))).slice(0, 14),
+      mutualFunds: allLiveVideos.filter(v => v.category === 'mutual-funds').slice(0, 12),
+      stocks: allLiveVideos.filter(v => v.category === 'stocks' || v.category === 'ipo').slice(0, 12),
+      taxRetirement: allLiveVideos.filter(v => v.category === 'tax-saving' || v.category === 'retirement').slice(0, 12),
+      personalFinance: allLiveVideos.filter(v => v.category === 'personal-finance' || v.category === 'gold-bonds').slice(0, 12)
     };
-  }, [language]);
+  }, [allLiveVideos]);
 
   const filteredVideos = useMemo(() => {
-    let list = [...videosData];
+    let list = [...allLiveVideos];
 
     if (activeCategory === 'trending') {
       list = list.filter(v => v.trending);
     } else if (activeCategory === 'shorts') {
-      list = list.filter(v => v.isShort);
+      list = list.filter(v => v.isShort || (v.tags && v.tags.includes('shorts')));
     } else if (activeCategory !== 'all') {
       list = list.filter(v => v.category === activeCategory);
     }
@@ -29949,8 +30009,8 @@ function VideosPage({ onNavigate, onShowToast }) {
       list.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
     }
 
-    return list.map(v => translateVideo(v, language));
-  }, [activeCategory, searchQuery, sortBy, language]);
+    return list;
+  }, [allLiveVideos, activeCategory, searchQuery, sortBy]);
 
   // Seamless auto-load on scroll with generous threshold
   useEffect(() => {
@@ -30222,7 +30282,7 @@ function VideosPage({ onNavigate, onShowToast }) {
       {selectedVideo && (
         <CinemaTheaterModal
           video={selectedVideo}
-          allVideos={videosData}
+          allVideos={allLiveVideos}
           onClose={() => setSelectedVideo(null)}
           onSelectRelated={(relVideo) => setSelectedVideo(relVideo)}
           language={language}
@@ -30777,6 +30837,7 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
   const isAdmin = role === 'admin';
 
   // Admin Tab: 'articles' | 'publishers'
+  // Admin Tab: 'articles' | 'publishers' | 'channels' | 'videos'
   const [activeTab, setActiveTab] = useState('articles');
 
   // Articles state
@@ -30793,6 +30854,18 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [editingPublisher, setEditingPublisher] = useState(null);
   const [deletingPublisherId, setDeletingPublisherId] = useState(null);
+
+  // Channel Approvals Queue state
+  const [channels, setChannels] = useState([]);
+  const [isLoadingChannels, setIsLoadingChannels] = useState(false);
+  const [channelStatusFilter, setChannelStatusFilter] = useState('pending');
+  const [processingChannelId, setProcessingChannelId] = useState(null);
+
+  // Video Moderation Queue state
+  const [adminVideos, setAdminVideos] = useState([]);
+  const [isLoadingAdminVideos, setIsLoadingAdminVideos] = useState(false);
+  const [videoStatusFilter, setVideoStatusFilter] = useState('pending');
+  const [processingVideoId, setProcessingVideoId] = useState(null);
 
   // Create Publisher Form State
   const [newPubName, setNewPubName] = useState('');
@@ -30842,6 +30915,40 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
     }
   };
 
+  const fetchChannels = async () => {
+    setIsLoadingChannels(true);
+    try {
+      const token = session?.access_token || '';
+      const res = await fetch(`/api/admin/channels?status=${channelStatusFilter}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const data = await res.json();
+      setChannels(data.data || []);
+    } catch (err) {
+      console.error('Failed to load channels:', err);
+      if (onShowToast) onShowToast(err.message);
+    } finally {
+      setIsLoadingChannels(false);
+    }
+  };
+
+  const fetchAdminVideos = async () => {
+    setIsLoadingAdminVideos(true);
+    try {
+      const token = session?.access_token || '';
+      const res = await fetch(`/api/admin/videos?status=${videoStatusFilter}&limit=100`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const data = await res.json();
+      setAdminVideos(data.data?.videos || []);
+    } catch (err) {
+      console.error('Failed to load admin videos:', err);
+      if (onShowToast) onShowToast(err.message);
+    } finally {
+      setIsLoadingAdminVideos(false);
+    }
+  };
+
   useEffect(() => {
     if (role === 'admin' || role === 'publisher') {
       fetchArticles();
@@ -30853,6 +30960,64 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
       fetchPublishers();
     }
   }, [session, role, activeTab]);
+
+  useEffect(() => {
+    if (role === 'admin' && activeTab === 'channels') {
+      fetchChannels();
+    }
+  }, [session, role, activeTab, channelStatusFilter]);
+
+  useEffect(() => {
+    if (role === 'admin' && activeTab === 'videos') {
+      fetchAdminVideos();
+    }
+  }, [session, role, activeTab, videoStatusFilter]);
+
+  const handleVerifyChannelAction = async (publisherId, isApprove) => {
+    setProcessingChannelId(publisherId);
+    try {
+      const token = session?.access_token || '';
+      const res = await fetch('/api/admin/channels', {
+        method: 'PATCH',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ publisherId, action: isApprove ? 'approve' : 'reject' })
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || 'Failed to update channel');
+      if (onShowToast) onShowToast(json.message);
+      fetchChannels();
+    } catch (err) {
+      if (onShowToast) onShowToast(`Error: ${err.message}`);
+    } finally {
+      setProcessingChannelId(null);
+    }
+  };
+
+  const handleUpdateVideoStatusAction = async (youtubeId, newStatus) => {
+    setProcessingVideoId(youtubeId);
+    try {
+      const token = session?.access_token || '';
+      const res = await fetch('/api/admin/videos', {
+        method: 'PATCH',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ youtubeId, status: newStatus })
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || 'Failed to update video status');
+      if (onShowToast) onShowToast(json.message);
+      setAdminVideos(prev => prev.map(v => (v.youtubeId === youtubeId || v.id === youtubeId) ? { ...v, status: newStatus } : v));
+    } catch (err) {
+      if (onShowToast) onShowToast(`Error: ${err.message}`);
+    } finally {
+      setProcessingVideoId(null);
+    }
+  };
 
   const handleDeleteArticle = async (id, title) => {
     if (!window.confirm(isTamil ? `இந்தக் கட்டுரையை நிச்சயமாக நீக்க விரும்புகிறீர்களா?\n"${title}"` : `Are you sure you want to delete this article?\n"${title}"`)) {
@@ -31109,10 +31274,10 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
 
       {/* Main Tab Navigation (Admin Only) */}
       {isAdmin && (
-        <div className="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-2">
+        <div className="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-2 overflow-x-auto">
           <button
             onClick={() => setActiveTab('articles')}
-            className={`px-5 py-2.5 rounded-2xl text-xs font-black transition-all flex items-center gap-2 ${
+            className={`px-5 py-2.5 rounded-2xl text-xs font-black transition-all flex items-center gap-2 shrink-0 ${
               activeTab === 'articles'
                 ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
                 : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
@@ -31124,7 +31289,7 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
 
           <button
             onClick={() => setActiveTab('publishers')}
-            className={`px-5 py-2.5 rounded-2xl text-xs font-black transition-all flex items-center gap-2 ${
+            className={`px-5 py-2.5 rounded-2xl text-xs font-black transition-all flex items-center gap-2 shrink-0 ${
               activeTab === 'publishers'
                 ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
                 : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
@@ -31132,6 +31297,30 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
           >
             <span>👥</span>
             <span>{isTamil ? 'வெளியீட்டாளர்கள் & நிபுணர்கள்' : 'Publishers & Advisors'} ({publishers.length})</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('channels')}
+            className={`px-5 py-2.5 rounded-2xl text-xs font-black transition-all flex items-center gap-2 shrink-0 ${
+              activeTab === 'channels'
+                ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
+                : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
+            }`}
+          >
+            <span>🎬</span>
+            <span>{isTamil ? 'சேனல் ஒப்புதல் வரிசை' : 'Channel Approvals'} ({channels.length})</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('videos')}
+            className={`px-5 py-2.5 rounded-2xl text-xs font-black transition-all flex items-center gap-2 shrink-0 ${
+              activeTab === 'videos'
+                ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
+                : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
+            }`}
+          >
+            <span>📹</span>
+            <span>{isTamil ? 'வீடியோக்கள் மதிப்பாய்வு' : 'Video Moderation'} ({adminVideos.filter(v => v.status === 'pending').length})</span>
           </button>
         </div>
       )}
@@ -31658,6 +31847,476 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                 </form>
               )}
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* ================= TAB 3: CHANNEL APPROVALS QUEUE ================= */}
+      {activeTab === 'channels' && (
+        <div className="space-y-6">
+          {/* Quick Metrics */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+              <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">
+                {isTamil ? 'மொத்த சமர்ப்பிக்கப்பட்ட சேனல்கள்' : 'Total Submitted Channels'}
+              </span>
+              <div className="text-2xl font-black text-slate-900 dark:text-white font-mono">{channels.length}</div>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+              <span className="text-[10px] font-black uppercase tracking-wider text-amber-600 dark:text-amber-400">
+                {isTamil ? 'சரிபார்ப்பு நிலுவையில்' : 'Pending Verification'}
+              </span>
+              <div className="text-2xl font-black text-amber-600 dark:text-amber-400 font-mono">
+                {channels.filter(c => !c.youtube_channel_verified).length}
+              </div>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+              <span className="text-[10px] font-black uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                {isTamil ? 'சரிபார்க்கப்பட்டு இணைக்கப்பட்டது' : 'Verified & Auto-Syncing'}
+              </span>
+              <div className="text-2xl font-black text-emerald-600 dark:text-emerald-400 font-mono">
+                {channels.filter(c => c.youtube_channel_verified).length}
+              </div>
+            </div>
+          </div>
+
+          {/* Filter Bar */}
+          <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold text-slate-500">{isTamil ? 'நிலை:' : 'Status:'}</span>
+              <button
+                onClick={() => setChannelStatusFilter('pending')}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${
+                  channelStatusFilter === 'pending'
+                    ? 'bg-amber-600 text-white'
+                    : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                }`}
+              >
+                Pending Review
+              </button>
+              <button
+                onClick={() => setChannelStatusFilter('verified')}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${
+                  channelStatusFilter === 'verified'
+                    ? 'bg-emerald-600 text-white'
+                    : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                }`}
+              >
+                Verified Channels
+              </button>
+              <button
+                onClick={() => setChannelStatusFilter('all')}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${
+                  channelStatusFilter === 'all'
+                    ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-950'
+                    : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                }`}
+              >
+                All Linked Channels
+              </button>
+            </div>
+
+            <button
+              onClick={fetchChannels}
+              className="px-4 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 transition-colors self-end sm:self-auto flex items-center gap-1.5"
+            >
+              <span>🔄</span>
+              <span>Refresh Queue</span>
+            </button>
+          </div>
+
+          {/* Channels Table */}
+          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden">
+            {isLoadingChannels ? (
+              <div className="py-20 text-center space-y-3">
+                <div className="w-8 h-8 border-4 border-amber-500 border-t-transparent rounded-full animate-spin mx-auto" />
+                <p className="text-xs font-bold text-slate-500">Loading channel approval queue...</p>
+              </div>
+            ) : channels.length === 0 ? (
+              <div className="py-16 text-center space-y-3">
+                <div className="text-3xl">🎬</div>
+                <h3 className="text-base font-bold text-slate-900 dark:text-white">
+                  {isTamil ? 'சேனல் ஒப்புதல் வரிசை காலியாக உள்ளது' : 'No Channels in Approval Queue'}
+                </h3>
+                <p className="text-xs text-slate-400">
+                  {isTamil ? 'புதிய வெளியீட்டாளர்கள் தங்கள் YouTube சேனலை இணைக்கும்போது இங்கே தோன்றும்.' : 'When publishers link their YouTube channel URL during onboarding, they will appear here for verification.'}
+                </p>
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-slate-50 dark:bg-slate-950 text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider text-[10px] border-b border-slate-200 dark:border-slate-800">
+                    <tr>
+                      <th className="px-6 py-4">Publisher</th>
+                      <th className="px-6 py-4">Linked YouTube Channel</th>
+                      <th className="px-6 py-4">Channel ID</th>
+                      <th className="px-6 py-4">Status</th>
+                      <th className="px-6 py-4 text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-medium">
+                    {channels.map(ch => (
+                      <tr key={ch.id} className="hover:bg-slate-50/60 dark:hover:bg-slate-800/40 transition-colors">
+                        <td className="px-6 py-4">
+                          <div className="flex items-center gap-3">
+                            <img
+                              src={ch.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(ch.display_name || 'Publisher')}&background=f59e0b&color=0f172a`}
+                              alt=""
+                              className="w-10 h-10 rounded-xl object-cover bg-slate-950 shrink-0 border border-slate-200 dark:border-slate-800"
+                            />
+                            <div>
+                              <div className="font-bold text-slate-900 dark:text-white">
+                                {ch.display_name || 'Anonymous Publisher'}
+                              </div>
+                              <div className="text-[11px] text-slate-400 font-mono">
+                                {ch.email}
+                              </div>
+                              {ch.arn_number && (
+                                <div className="text-[10px] font-mono text-amber-500 font-bold mt-0.5">
+                                  ARN: {ch.arn_number}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </td>
+
+                        <td className="px-6 py-4">
+                          <div className="flex items-center gap-3">
+                            {ch.youtube_channel_thumbnail ? (
+                              <img
+                                src={ch.youtube_channel_thumbnail}
+                                alt=""
+                                className="w-10 h-10 rounded-full object-cover bg-slate-950 border border-red-500 shrink-0"
+                              />
+                            ) : (
+                              <div className="w-10 h-10 rounded-full bg-red-600/20 text-red-500 flex items-center justify-center font-bold text-base shrink-0">
+                                ▶
+                              </div>
+                            )}
+                            <div className="min-w-0 max-w-xs">
+                              <div className="font-bold text-slate-900 dark:text-white truncate">
+                                {ch.youtube_channel_title || 'YouTube Channel'}
+                              </div>
+                              <a
+                                href={ch.youtube_channel_id ? `https://www.youtube.com/channel/${ch.youtube_channel_id}` : (ch.youtube_url || '#')}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="text-[11px] text-blue-500 hover:underline flex items-center gap-1 truncate"
+                              >
+                                <span>{ch.youtube_url || `youtube.com/channel/${ch.youtube_channel_id}`}</span>
+                                <span>↗</span>
+                              </a>
+                            </div>
+                          </div>
+                        </td>
+
+                        <td className="px-6 py-4 font-mono text-slate-500 dark:text-slate-400">
+                          {ch.youtube_channel_id || 'Not resolved'}
+                        </td>
+
+                        <td className="px-6 py-4">
+                          {ch.youtube_channel_verified ? (
+                            <span className="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 flex items-center gap-1 w-max">
+                              <span>✓</span>
+                              <span>Verified & Ingesting</span>
+                            </span>
+                          ) : (
+                            <span className="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 flex items-center gap-1 w-max">
+                              <span>⏳</span>
+                              <span>Pending Review</span>
+                            </span>
+                          )}
+                        </td>
+
+                        <td className="px-6 py-4 text-right">
+                          <div className="flex items-center justify-end gap-2">
+                            {!ch.youtube_channel_verified ? (
+                              <>
+                                <button
+                                  onClick={() => handleVerifyChannelAction(ch.id, true)}
+                                  disabled={processingChannelId === ch.id}
+                                  className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-sm transition-all disabled:opacity-50 flex items-center gap-1"
+                                >
+                                  <span>✓</span>
+                                  <span>Approve</span>
+                                </button>
+                                <button
+                                  onClick={() => handleVerifyChannelAction(ch.id, false)}
+                                  disabled={processingChannelId === ch.id}
+                                  className="px-3 py-1.5 rounded-xl bg-red-600/10 hover:bg-red-600 text-red-600 hover:text-white font-bold text-xs border border-red-500/20 transition-all disabled:opacity-50 flex items-center gap-1"
+                                >
+                                  <span>✕</span>
+                                  <span>Reject</span>
+                                </button>
+                              </>
+                            ) : (
+                              <button
+                                onClick={() => handleVerifyChannelAction(ch.id, false)}
+                                disabled={processingChannelId === ch.id}
+                                className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-red-600 hover:text-white text-slate-500 text-xs font-bold transition-all disabled:opacity-50"
+                              >
+                                Revoke Sync
+                              </button>
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* ================= TAB 4: VIDEO MODERATION QUEUE ================= */}
+      {activeTab === 'videos' && (
+        <div className="space-y-6">
+          {/* Quick Metrics */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+              <span className="text-[10px] font-black uppercase tracking-wider text-amber-600 dark:text-amber-400">
+                {isTamil ? 'மதிப்பாய்வு நிலுவையில் (Pending)' : 'Pending Publisher Videos'}
+              </span>
+              <div className="text-2xl font-black text-amber-600 dark:text-amber-400 font-mono">
+                {adminVideos.filter(v => v.status === 'pending').length}
+              </div>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+              <span className="text-[10px] font-black uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                {isTamil ? 'நேரலையில் வெளியிடப்பட்டவை' : 'Published Live'}
+              </span>
+              <div className="text-2xl font-black text-emerald-600 dark:text-emerald-400 font-mono">
+                {adminVideos.filter(v => v.status === 'published').length}
+              </div>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+              <span className="text-[10px] font-black uppercase tracking-wider text-red-600 dark:text-red-400">
+                {isTamil ? 'நிராகரிக்கப்பட்டவை' : 'Rejected Videos'}
+              </span>
+              <div className="text-2xl font-black text-red-600 dark:text-red-400 font-mono">
+                {adminVideos.filter(v => v.status === 'rejected').length}
+              </div>
+            </div>
+          </div>
+
+          {/* Filter Bar */}
+          <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold text-slate-500">{isTamil ? 'நிலை:' : 'Status:'}</span>
+              <button
+                onClick={() => setVideoStatusFilter('pending')}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${
+                  videoStatusFilter === 'pending'
+                    ? 'bg-amber-600 text-white'
+                    : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                }`}
+              >
+                Pending Review
+              </button>
+              <button
+                onClick={() => setVideoStatusFilter('published')}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${
+                  videoStatusFilter === 'published'
+                    ? 'bg-emerald-600 text-white'
+                    : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                }`}
+              >
+                Published Live
+              </button>
+              <button
+                onClick={() => setVideoStatusFilter('rejected')}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${
+                  videoStatusFilter === 'rejected'
+                    ? 'bg-red-600 text-white'
+                    : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                }`}
+              >
+                Rejected
+              </button>
+              <button
+                onClick={() => setVideoStatusFilter('all')}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${
+                  videoStatusFilter === 'all'
+                    ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-950'
+                    : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                }`}
+              >
+                All Videos
+              </button>
+            </div>
+
+            <button
+              onClick={fetchAdminVideos}
+              className="px-4 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 transition-colors self-end sm:self-auto flex items-center gap-1.5"
+            >
+              <span>🔄</span>
+              <span>Refresh Videos</span>
+            </button>
+          </div>
+
+          {/* Videos Table */}
+          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden">
+            {isLoadingAdminVideos ? (
+              <div className="py-20 text-center space-y-3">
+                <div className="w-8 h-8 border-4 border-amber-500 border-t-transparent rounded-full animate-spin mx-auto" />
+                <p className="text-xs font-bold text-slate-500">Loading video moderation queue...</p>
+              </div>
+            ) : adminVideos.length === 0 ? (
+              <div className="py-16 text-center space-y-3">
+                <div className="text-3xl">📹</div>
+                <h3 className="text-base font-bold text-slate-900 dark:text-white">
+                  {isTamil ? 'வீடியோக்கள் எதுவும் இல்லை' : 'No Videos Found in this Queue'}
+                </h3>
+                <p className="text-xs text-slate-400">
+                  {isTamil ? 'சரிபார்க்கப்பட்ட வெளியீட்டாளர்களின் புதிய வீடியோக்கள் தானாகவே இங்கே பட்டியலிடப்படும்.' : 'Videos ingested from verified publisher YouTube channels will appear here for admin review.'}
+                </p>
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-slate-50 dark:bg-slate-950 text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider text-[10px] border-b border-slate-200 dark:border-slate-800">
+                    <tr>
+                      <th className="px-6 py-4">Video</th>
+                      <th className="px-6 py-4">Source Publisher</th>
+                      <th className="px-6 py-4">Duration & Views</th>
+                      <th className="px-6 py-4">Translation</th>
+                      <th className="px-6 py-4">Status</th>
+                      <th className="px-6 py-4 text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-medium">
+                    {adminVideos.map(v => (
+                      <tr key={v.id || v.youtubeId} className="hover:bg-slate-50/60 dark:hover:bg-slate-800/40 transition-colors">
+                        <td className="px-6 py-4">
+                          <div className="flex items-center gap-3">
+                            <div className="relative w-20 h-12 rounded-lg overflow-hidden bg-slate-950 shrink-0 border border-slate-200 dark:border-slate-800 group">
+                              <img
+                                src={v.thumbnail || `https://img.youtube.com/vi/${v.youtubeId}/hqdefault.jpg`}
+                                alt=""
+                                className="w-full h-full object-cover"
+                              />
+                              <a
+                                href={v.youtubeUrl || `https://www.youtube.com/watch?v=${v.youtubeId}`}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-bold"
+                              >
+                                ▶
+                              </a>
+                            </div>
+                            <div className="min-w-0 max-w-md">
+                              <div className="font-bold text-slate-900 dark:text-white truncate font-serif text-sm">
+                                {v.titleTamil || v.title}
+                              </div>
+                              {v.titleEnglish && (
+                                <div className="text-[11px] text-slate-400 truncate">
+                                  EN: {v.titleEnglish}
+                                </div>
+                              )}
+                              <a
+                                href={`https://www.youtube.com/watch?v=${v.youtubeId}`}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="text-[10px] font-mono text-blue-500 hover:underline inline-block mt-0.5"
+                              >
+                                {v.youtubeId} ↗
+                              </a>
+                            </div>
+                          </div>
+                        </td>
+
+                        <td className="px-6 py-4">
+                          {v.sourcePublisherName ? (
+                            <div>
+                              <div className="font-bold text-slate-900 dark:text-white">
+                                {v.sourcePublisherName}
+                              </div>
+                              {v.sourcePublisherArn && (
+                                <div className="text-[10px] font-mono text-amber-500 font-bold">
+                                  ARN: {v.sourcePublisherArn}
+                                </div>
+                              )}
+                            </div>
+                          ) : (
+                            <span className="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-slate-600 dark:text-slate-400">
+                              Budget Padmanaban (Main)
+                            </span>
+                          )}
+                        </td>
+
+                        <td className="px-6 py-4">
+                          <div className="font-mono text-slate-700 dark:text-slate-300">
+                            ⏱ {v.duration || '00:00'}
+                          </div>
+                          <div className="text-[10px] text-slate-400">
+                            👁 {(v.views || 0).toLocaleString()} views
+                          </div>
+                        </td>
+
+                        <td className="px-6 py-4">
+                          {v.translatedAt ? (
+                            <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                              ✓ Gemini Translated
+                            </span>
+                          ) : (
+                            <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-400">
+                              Untranslated
+                            </span>
+                          )}
+                        </td>
+
+                        <td className="px-6 py-4">
+                          {v.status === 'published' ? (
+                            <span className="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                              ✓ Published
+                            </span>
+                          ) : v.status === 'rejected' ? (
+                            <span className="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20">
+                              ✕ Rejected
+                            </span>
+                          ) : (
+                            <span className="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+                              ⏳ Pending Review
+                            </span>
+                          )}
+                        </td>
+
+                        <td className="px-6 py-4 text-right">
+                          <div className="flex items-center justify-end gap-2">
+                            {v.status !== 'published' && (
+                              <button
+                                onClick={() => handleUpdateVideoStatusAction(v.youtubeId, 'published')}
+                                disabled={processingVideoId === v.youtubeId}
+                                className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-sm transition-all disabled:opacity-50 flex items-center gap-1"
+                              >
+                                <span>✓</span>
+                                <span>Publish</span>
+                              </button>
+                            )}
+                            {v.status !== 'rejected' && (
+                              <button
+                                onClick={() => handleUpdateVideoStatusAction(v.youtubeId, 'rejected')}
+                                disabled={processingVideoId === v.youtubeId}
+                                className="px-3 py-1.5 rounded-xl bg-red-600/10 hover:bg-red-600 text-red-600 hover:text-white font-bold text-xs border border-red-500/20 transition-all disabled:opacity-50 flex items-center gap-1"
+                              >
+                                <span>✕</span>
+                                <span>Reject</span>
+                              </button>
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -32249,18 +32908,24 @@ function PublisherOnboardingModal({ profile, onComplete, onClose }) {
               </div>
 
               {/* YouTube Channel */}
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-                  <span>🎬</span>
-                  <span>YouTube Channel URL</span>
+              <div className="space-y-1.5 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20">
+                <label className="text-xs font-bold text-amber-700 dark:text-amber-300 flex items-center justify-between">
+                  <span className="flex items-center gap-1.5">
+                    <span>🎬</span>
+                    <span>YouTube Channel URL or @Handle</span>
+                  </span>
+                  <span className="text-[10px] text-amber-600 dark:text-amber-400 font-semibold">Auto-Ingestion</span>
                 </label>
                 <input
-                  type="url"
+                  type="text"
                   value={youtubeUrl}
                   onChange={e => setYoutubeUrl(e.target.value)}
-                  placeholder="https://youtube.com/@channelname"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+                  placeholder="e.g. @yourchannel or https://youtube.com/@handle or /channel/UC..."
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-amber-500/30 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
                 />
+                <p className="text-[10px] text-amber-700/90 dark:text-amber-300/80 leading-relaxed">
+                  💡 We accept <strong>@handle</strong> URLs, <strong>/channel/UC...</strong> IDs, and legacy <strong>/user/</strong> URLs. Once verified by an admin, your uploads are automatically fetched, translated by AI, and featured on your profile. (For custom /c/ URLs, please enter your @handle or find your Channel ID in YouTube Studio).
+                </p>
               </div>
 
               {/* Twitter / X */}
@@ -33980,6 +34645,31 @@ function ProfilePage({ onNavigate, onShowToast }) {
                     <span className="text-slate-400">{isTamil ? 'AMFI ARN எண்:' : 'ARN License:'}</span>
                     <span className="font-mono font-bold text-amber-400">{profile?.arn_number || 'Not Set'}</span>
                   </div>
+                  <div className="flex justify-between items-center py-1 border-b border-slate-800">
+                    <span className="text-slate-400">{isTamil ? 'யூடியூப் சேனல்:' : 'YouTube Channel:'}</span>
+                    <div className="text-right">
+                      {profile?.youtube_channel_id ? (
+                        <div className="space-y-1">
+                          <div className="font-bold text-white text-xs truncate max-w-[180px]">
+                            {profile?.youtube_channel_title || profile?.youtube_channel_id}
+                          </div>
+                          {profile?.youtube_channel_verified ? (
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-black bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                              <span>✓</span>
+                              <span>Auto-Syncing</span>
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-black bg-amber-500/20 text-amber-400 border border-amber-500/30">
+                              <span>⏳</span>
+                              <span>Verification Pending</span>
+                            </span>
+                          )}
+                        </div>
+                      ) : (
+                        <span className="text-slate-500 text-[11px] italic">Not Linked</span>
+                      )}
+                    </div>
+                  </div>
                   <div className="flex justify-between py-1 border-b border-slate-800">
                     <span className="text-slate-400">{isTamil ? 'வாட்ஸ்அப் ஆலோசனை:' : 'WhatsApp:'}</span>
                     <span className="font-mono text-white">{profile?.whatsapp_number || profile?.phone || 'Not Set'}</span>
@@ -34131,6 +34821,10 @@ function WatchHistoryPage({ onNavigate, onShowToast }) {
   const { history, clearHistory } = useWatchHistory();
   const [selectedVideo, setSelectedVideo] = useState(null);
 
+  // Live catalog for the player's related-videos rail; bundled catalog as fallback.
+  const { videos: liveVideos } = useVideos('all', 'newest');
+  const playerCatalog = (liveVideos && liveVideos.length > 0) ? liveVideos : videosData;
+
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6 animate-fadeIn">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
@@ -34220,7 +34914,7 @@ function WatchHistoryPage({ onNavigate, onShowToast }) {
       {selectedVideo && (
         <CinemaTheaterModal
           video={selectedVideo}
-          allVideos={videosData}
+          allVideos={playerCatalog}
           onClose={() => setSelectedVideo(null)}
           onSelectRelated={(rel) => setSelectedVideo(rel)}
           language={language}
@@ -34241,6 +34935,14 @@ function CategoryPage({ categoryId, onNavigate, onShowToast }) {
   const [selectedVideo, setSelectedVideo] = useState(null);
   const sentinelRef = useRef(null);
 
+  // Live category feed from the database; falls back to the bundled catalog.
+  const { videos: liveVideos } = useVideos(categoryId, 'newest');
+  const categoryVideos = useMemo(() => (
+    liveVideos && liveVideos.length > 0
+      ? liveVideos
+      : (videosData || []).filter(v => v.category === categoryId)
+  ), [liveVideos, categoryId]);
+
   const categoryTitles = {
     'mutual-funds': isTamil ? 'மியூச்சுவல் ஃபண்ட் & SIP' : 'Mutual Funds & SIP',
     'stocks': isTamil ? 'பங்குச் சந்தை & முதலீடு' : 'Stock Market & Equity',
@@ -34253,7 +34955,7 @@ function CategoryPage({ categoryId, onNavigate, onShowToast }) {
 
   // Filter & Sort
   const filtered = useMemo(() => {
-    let list = (videosData || []).filter(v => v.category === categoryId);
+    let list = [...categoryVideos];
 
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase().trim();
@@ -34275,7 +34977,7 @@ function CategoryPage({ categoryId, onNavigate, onShowToast }) {
     }
 
     return list.map(v => translateVideo(v, language));
-  }, [categoryId, searchQuery, sortBy, language]);
+  }, [categoryVideos, searchQuery, sortBy, language]);
 
   // Auto-load next 20 videos on scroll
   useEffect(() => {
@@ -34417,7 +35119,7 @@ function CategoryPage({ categoryId, onNavigate, onShowToast }) {
       {selectedVideo && (
         <CinemaTheaterModal
           video={selectedVideo}
-          allVideos={videosData}
+          allVideos={categoryVideos}
           onClose={() => setSelectedVideo(null)}
           onSelectRelated={(rel) => setSelectedVideo(rel)}
           language={language}
@@ -34833,6 +35535,8 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
     return null;
   });
   const [liveArticles, setLiveArticles] = useState([]);
+  const [liveVideos, setLiveVideos] = useState([]);
+  const [brandVideos, setBrandVideos] = useState([]);
   const [isLoading, setIsLoading] = useState(() => !livePublisher);
 
   // Fetch publisher data by ID from /api/publishers?id=...
@@ -34847,6 +35551,9 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
             setLivePublisher(json.data);
             if (Array.isArray(json.data.articles)) {
               setLiveArticles(json.data.articles);
+            }
+            if (Array.isArray(json.data.videos)) {
+              setLiveVideos(json.data.videos);
             }
           }
         }
@@ -34962,12 +35669,37 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
     return [];
   }, [liveArticles, prof, language, isTamil, name]);
 
+  // Main brand channel videos carry no source_publisher_id, so /api/publishers returns
+  // none for that profile — pull them straight from the catalog endpoint instead.
+  const isBrandProfile = prof.id === 'budget-padmanaban' || !livePublisher ||
+    (prof.nameEnglish && prof.nameEnglish.toLowerCase().includes('padmanaban'));
+
+  useEffect(() => {
+    if (!isBrandProfile || (liveVideos && liveVideos.length > 0)) return;
+    let isMounted = true;
+    fetch('/api/videos?limit=48&sort=newest')
+      .then(res => (res.ok ? res.json() : null))
+      .then(json => {
+        if (isMounted && json && json.status === 'success' && Array.isArray(json.data)) {
+          setBrandVideos(json.data.map(normalizeVideoRow));
+        }
+      })
+      .catch(err => console.warn('Brand channel videos API fallback:', err));
+    return () => { isMounted = false; };
+  }, [isBrandProfile, liveVideos]);
+
   const publisherVideos = useMemo(() => {
-    if (prof.id === 'budget-padmanaban' || !livePublisher || (prof.nameEnglish && prof.nameEnglish.toLowerCase().includes('padmanaban'))) {
+    if (liveVideos && liveVideos.length > 0) {
+      return liveVideos.map(v => translateVideo(v, language));
+    }
+    if (brandVideos.length > 0) {
+      return brandVideos.map(v => translateVideo(v, language));
+    }
+    if (isBrandProfile) {
       return videosData.slice(0, 48).map(v => translateVideo(v, language));
     }
     return [];
-  }, [prof, language, livePublisher]);
+  }, [liveVideos, brandVideos, isBrandProfile, language]);
 
   const cleanWhatsApp = (prof.whatsapp || '').replace(/[^0-9]/g, '');
 
@@ -35092,46 +35824,108 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
 
       {/* 2. FEED TABS */}
       <div className="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
-        {publisherVideos.length > 0 && (
+        {(publisherVideos.length > 0 || prof.socialLinks?.youtube || livePublisher?.youtube_url || livePublisher?.youtube_channel_id) && (
           <button
             onClick={() => setActiveTab('videos')}
-            className={`px-5 py-2.5 rounded-xl text-xs font-black transition-all ${
+            className={`px-5 py-2.5 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
               activeTab === 'videos'
                 ? 'bg-amber-500 text-slate-950 shadow-md'
                 : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
             }`}
           >
-            🎬 {isTamil ? 'முக்கிய வீடியோக்கள்' : 'Masterclasses'} ({publisherVideos.length})
+            <span>🎬</span>
+            <span>{isTamil ? 'முக்கிய வீடியோக்கள் (Masterclasses)' : 'Video Masterclasses'}</span>
+            <span className={`px-2 py-0.5 rounded-full text-[10px] font-black ${
+              activeTab === 'videos' ? 'bg-slate-950/20 text-slate-950' : 'bg-slate-800 text-amber-400'
+            }`}>
+              {publisherVideos.length || 'YouTube'}
+            </span>
           </button>
         )}
 
         <button
           onClick={() => setActiveTab('articles')}
-          className={`px-5 py-2.5 rounded-xl text-xs font-black transition-all ${
+          className={`px-5 py-2.5 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
             activeTab === 'articles'
               ? 'bg-amber-500 text-slate-950 shadow-md'
               : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
           }`}
         >
-          ✍️ {isTamil ? 'கட்டுரைகள் & ஆய்வுகள்' : 'Articles & Research'} ({publisherArticles.length})
+          <span>✍️</span>
+          <span>{isTamil ? 'கட்டுரைகள் & ஆய்வுகள்' : 'Articles & Research'}</span>
+          <span className={`px-2 py-0.5 rounded-full text-[10px] font-black ${
+            activeTab === 'articles' ? 'bg-slate-950/20 text-slate-950' : 'bg-slate-800 text-amber-400'
+          }`}>
+            {publisherArticles.length}
+          </span>
         </button>
       </div>
 
       {/* 3. FEED CONTENT */}
-      {activeTab === 'videos' && publisherVideos.length > 0 && (
+      {activeTab === 'videos' && (
         <div className="space-y-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {publisherVideos.map((video, idx) => (
-              <CinemaVideoCard
-                key={video.id || idx}
-                video={video}
-                index={idx}
-                onSelect={(v) => setSelectedVideo(v)}
-                language={language}
-                onShowToast={onShowToast}
-              />
-            ))}
-          </div>
+          {publisherVideos.length > 0 ? (
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <p className="text-xs text-slate-500 font-bold">
+                  {isTamil ? `${name} அவர்களின் வீடியோ வழிகாட்டிகள் (${publisherVideos.length})` : `Video masterclasses by ${name} (${publisherVideos.length})`}
+                </p>
+                {prof.socialLinks?.youtube && (
+                  <a
+                    href={prof.socialLinks.youtube}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1 text-[11px] font-bold text-red-500 hover:underline"
+                  >
+                    <span>▶</span>
+                    <span>{isTamil ? 'அனைத்து வீடியோக்களும் YouTube-ல்' : 'View on YouTube'} →</span>
+                  </a>
+                )}
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {publisherVideos.map((video, idx) => (
+                  <CinemaVideoCard
+                    key={video.id || idx}
+                    video={video}
+                    index={idx}
+                    onSelect={(v) => setSelectedVideo(v)}
+                    language={language}
+                    onShowToast={onShowToast}
+                  />
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="text-center py-14 px-6 bg-slate-900/60 rounded-3xl border border-slate-800 space-y-4 max-w-2xl mx-auto">
+              <div className="w-14 h-14 rounded-2xl bg-red-500/10 text-red-500 mx-auto flex items-center justify-center text-2xl font-bold">
+                ▶
+              </div>
+              <div className="space-y-1.5">
+                <h3 className="text-base font-extrabold text-white font-serif">
+                  {isTamil ? `${name} - அதிகாரப்பூர்வ YouTube சேனல்` : `${name} - Official YouTube Channel`}
+                </h3>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  {isTamil
+                    ? 'இந்த ஆலோசகரின் YouTube சேனல் இணைக்கப்பட்டுள்ளது. புதிய பதிவுகள் தானாகவே இந்த பக்கத்தில் ஒத்திசைக்கப்படும்.'
+                    : 'This advisor has linked their YouTube channel. Uploads and masterclasses will be displayed here automatically.'}
+                </p>
+              </div>
+
+              {prof.socialLinks?.youtube && (
+                <a
+                  href={prof.socialLinks.youtube}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-red-600 hover:bg-red-500 text-white font-black text-xs shadow-xl transition-all"
+                >
+                  <span>▶</span>
+                  <span>{isTamil ? 'YouTube சேனலைத் திறக்கவும்' : 'Open YouTube Channel'}</span>
+                  <span>↗</span>
+                </a>
+              )}
+            </div>
+          )}
         </div>
       )}
 
@@ -35188,8 +35982,8 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
               </h3>
               <p className="text-xs text-slate-500 max-w-md mx-auto">
                 {isTamil
-                  ? 'பட்ஜெட் பத்மநாபன் CFP® அவர்களின் வீடியோ வழிகாட்டிகளை பார்க்க "முக்கிய வீடியோக்கள் (Masterclasses)" பிரிவைத் திறக்கவும்.'
-                  : 'Padmanaban B. CFP® shares financial insights primarily through 882 video masterclasses.'}
+                  ? 'ஆலோசகரின் வீடியோ வழிகாட்டிகளை பார்க்க "முக்கிய வீடியோக்கள் (Masterclasses)" பிரிவைத் திறக்கவும்.'
+                  : 'This advisor shares financial insights primarily through video masterclasses.'}
               </p>
               <button
                 onClick={() => setActiveTab('videos')}
@@ -35202,28 +35996,11 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
         </div>
       )}
 
-      {activeTab === 'videos' && publisherVideos.length > 0 && (
-        <div className="space-y-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {publisherVideos.map((video, idx) => (
-              <CinemaVideoCard
-                key={video.id || idx}
-                video={video}
-                index={idx}
-                onSelect={(v) => setSelectedVideo(v)}
-                language={language}
-                onShowToast={onShowToast}
-              />
-            ))}
-          </div>
-        </div>
-      )}
-
       {/* Video Cinema Modal */}
       {selectedVideo && (
         <CinemaTheaterModal
           video={selectedVideo}
-          allVideos={videosData}
+          allVideos={publisherVideos}
           onClose={() => setSelectedVideo(null)}
           onSelectRelated={(rel) => setSelectedVideo(rel)}
           language={language}

@@ -1,5 +1,5 @@
 import { verifyAdminRequest } from '../../lib/auth-server.js';
-import { listVideos, getVideoByYoutubeId, updateVideoTranslation } from '../../lib/db.js';
+import { listVideos, getVideoByYoutubeId, updateVideoTranslation, updateVideoStatus } from '../../lib/db.js';
 import { translateVideo } from '../../lib/translate.js';
 import { supabaseAdmin } from '../../lib/supabase.js';
 
@@ -12,11 +12,14 @@ export default async function handler(req, res) {
 
   if (req.method === 'GET') {
     try {
-      const { page = '1', limit = '50', category = 'all' } = req.query;
+      const { page = '1', limit = '50', category = 'all', status = 'all', sourcePublisherId = null, search = '' } = req.query;
       const result = await listVideos({
         page: parseInt(page, 10),
         limit: parseInt(limit, 10),
-        category: category.toString()
+        category: category.toString(),
+        status: status.toString(),
+        sourcePublisherId: sourcePublisherId ? sourcePublisherId.toString() : null,
+        search: search.toString()
       });
       return res.status(200).json({ status: 'success', data: result });
     } catch (error) {
@@ -26,7 +29,7 @@ export default async function handler(req, res) {
 
   if (req.method === 'PATCH') {
     try {
-      const { youtubeId, category, tags, trending, retryTranslation } = req.body || {};
+      const { youtubeId, status, category, tags, trending, retryTranslation } = req.body || {};
 
       if (!youtubeId) {
         return res.status(400).json({ error: 'youtubeId is required' });
@@ -53,6 +56,17 @@ export default async function handler(req, res) {
         } else {
           return res.status(500).json({ error: 'Translation retry failed', details: result.error });
         }
+      }
+
+      // Handle direct status update (Approve/Reject)
+      if (status && ['published', 'rejected', 'pending'].includes(status)) {
+        const updatedRow = await updateVideoStatus(youtubeId, status);
+        return res.status(200).json({
+          status: 'success',
+          message: `Video status updated to ${status}`,
+          data: updatedRow,
+          updatedTranslation
+        });
       }
 
       // Update fields in database using supabaseAdmin

@@ -1,6 +1,7 @@
 import { getUploadsPlaylistId, fetchLatestUploadVideoIds, fetchAllUploadVideoIds, fetchVideoDetails } from '../../lib/youtube.js';
 import { translateVideo } from '../../lib/translate.js';
-import { getExistingYoutubeIds, upsertVideo, getVideosPendingTranslation, updateVideoTranslation } from '../../lib/db.js';
+import { getExistingYoutubeIds, upsertVideo, getVideosPendingTranslation, updateVideoTranslation, getVerifiedPublisherChannels } from '../../lib/db.js';
+import { classifyCategory, extractSeoKeywords } from '../../lib/taxonomy.js';
 
 export default async function handler(req, res) {
   // Allow GET and POST for cron job invocation
@@ -18,7 +19,7 @@ export default async function handler(req, res) {
   }
 
   const youtubeApiKey = process.env.YOUTUBE_API_KEY;
-  const channelId = process.env.YOUTUBE_CHANNEL_ID || 'UCWD5lYsFycgIDyCB_EHpYOQ';
+  const mainChannelId = process.env.YOUTUBE_CHANNEL_ID || 'UCWD5lYsFycgIDyCB_EHpYOQ';
   const translateApiKey = process.env.TRANSLATE_API_KEY;
 
   const isFullSync = req.query.fullSync === 'true' || req.query.fullSync === '1';
@@ -29,49 +30,120 @@ export default async function handler(req, res) {
   }
 
   try {
-    // 1. Resolve Uploads Playlist ID
-    const playlistId = await getUploadsPlaylistId(channelId, youtubeApiKey);
+    // 1. Build List of Channels to Ingest: Main Brand Channel + Verified Publisher Channels
+    const channelsToIngest = [
+      {
+        channelId: mainChannelId,
+        sourcePublisherId: null,
+        status: 'published',
+        channelName: 'Budget Padmanaban (Main)'
+      }
+    ];
 
-    // 2. Fetch Upload Video IDs (Full sync paginates through all pages; regular poll fetches 10)
-    let candidateVideoIds = [];
-    if (isFullSync) {
-      candidateVideoIds = await fetchAllUploadVideoIds(playlistId, youtubeApiKey, maxPages);
-    } else {
-      candidateVideoIds = await fetchLatestUploadVideoIds(playlistId, youtubeApiKey, 15);
+    // Fetch verified publisher channels from database
+    try {
+      const verifiedPublishers = await getVerifiedPublisherChannels();
+      for (const pub of verifiedPublishers) {
+        if (pub.youtube_channel_id && pub.youtube_channel_id !== mainChannelId) {
+          channelsToIngest.push({
+            channelId: pub.youtube_channel_id,
+            sourcePublisherId: pub.id,
+            status: 'pending', // Verified publisher videos require admin moderation
+            channelName: pub.display_name || pub.youtube_channel_title || 'Publisher'
+          });
+        }
+      }
+    } catch (pubErr) {
+      console.warn('Could not fetch verified publisher channels for cron:', pubErr.message);
     }
 
-    // 3. Diff against existing database records
-    const existingIds = await getExistingYoutubeIds(candidateVideoIds);
-    const existingSet = new Set(existingIds);
-    const newVideoIds = candidateVideoIds.filter(id => !existingSet.has(id));
+    let totalChecked = 0;
+    let totalIngested = 0;
+    const channelSummaries = [];
 
-    let ingestedCount = 0;
-
-    // 4. Fetch details in chunks of 50
-    if (newVideoIds.length > 0) {
-      const chunkSize = 50;
-      for (let i = 0; i < newVideoIds.length; i += chunkSize) {
-        const chunkIds = newVideoIds.slice(i, i + chunkSize);
-        const detailsList = await fetchVideoDetails(chunkIds, youtubeApiKey);
-
-        for (const video of detailsList) {
-          // Attempt translation
-          const translationResult = await translateVideo(video, translateApiKey);
-
-          const videoToSave = {
-            ...video,
-            titleEnglish: translationResult.titleEn || video.titleTamil,
-            descriptionEnglish: translationResult.descriptionEn || video.descriptionTamil,
-            translatedAt: translationResult.success ? new Date().toISOString() : null
-          };
-
-          const savedRow = await upsertVideo(videoToSave);
-          if (savedRow) ingestedCount++;
+    // 2. Loop through each channel
+    for (const channelConfig of channelsToIngest) {
+      try {
+        const playlistId = await getUploadsPlaylistId(channelConfig.channelId, youtubeApiKey);
+        
+        let candidateVideoIds = [];
+        if (isFullSync) {
+          candidateVideoIds = await fetchAllUploadVideoIds(playlistId, youtubeApiKey, maxPages);
+        } else {
+          candidateVideoIds = await fetchLatestUploadVideoIds(playlistId, youtubeApiKey, 15);
         }
+
+        totalChecked += candidateVideoIds.length;
+
+        // Diff against existing database records
+        const existingIds = await getExistingYoutubeIds(candidateVideoIds);
+        const existingSet = new Set(existingIds);
+        const newVideoIds = candidateVideoIds.filter(id => !existingSet.has(id));
+
+        let channelIngestedCount = 0;
+
+        if (newVideoIds.length > 0) {
+          const chunkSize = 50;
+          for (let i = 0; i < newVideoIds.length; i += chunkSize) {
+            const chunkIds = newVideoIds.slice(i, i + chunkSize);
+            const detailsList = await fetchVideoDetails(chunkIds, youtubeApiKey);
+
+            for (const video of detailsList) {
+              // Categorize and extract SEO tags using taxonomy engine
+              const assignedCategory = classifyCategory(
+                video.titleTamil || video.title,
+                video.descriptionTamil || video.description,
+                video.tags || []
+              );
+              const assignedTags = extractSeoKeywords(
+                video.titleTamil || video.title,
+                video.descriptionTamil || video.description,
+                video.tags || [],
+                assignedCategory
+              );
+
+              // Attempt translation
+              const translationResult = await translateVideo(video, translateApiKey);
+
+              const videoToSave = {
+                ...video,
+                category: assignedCategory,
+                tags: assignedTags,
+                titleEnglish: translationResult.titleEn || video.titleTamil,
+                descriptionEnglish: translationResult.descriptionEn || video.descriptionTamil,
+                translatedAt: translationResult.success ? new Date().toISOString() : null,
+                sourcePublisherId: channelConfig.sourcePublisherId,
+                status: channelConfig.status
+              };
+
+              const savedRow = await upsertVideo(videoToSave);
+              if (savedRow) {
+                channelIngestedCount++;
+                totalIngested++;
+              }
+            }
+          }
+        }
+
+        channelSummaries.push({
+          channelName: channelConfig.channelName,
+          channelId: channelConfig.channelId,
+          checked: candidateVideoIds.length,
+          newIngested: channelIngestedCount,
+          defaultStatus: channelConfig.status
+        });
+
+      } catch (cErr) {
+        console.error(`Error processing channel ${channelConfig.channelId} (${channelConfig.channelName}):`, cErr);
+        channelSummaries.push({
+          channelName: channelConfig.channelName,
+          channelId: channelConfig.channelId,
+          error: cErr.message
+        });
       }
     }
 
-    // 5. Retry pending translations for existing videos where translated_at is NULL
+    // 3. Retry pending translations for existing videos where translated_at is NULL
     let retriesAttempted = 0;
     let retriesSucceeded = 0;
 
@@ -96,10 +168,12 @@ export default async function handler(req, res) {
       status: 'success',
       timestamp: new Date().toISOString(),
       summary: {
-        checked: latestVideoIds.length,
-        newVideosIngested: ingestedCount,
+        channelsProcessed: channelsToIngest.length,
+        totalChecked,
+        newVideosIngested: totalIngested,
         retriesAttempted,
-        retriesSucceeded
+        retriesSucceeded,
+        channels: channelSummaries
       }
     });
 
