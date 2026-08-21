@@ -1695,7 +1695,7 @@ function Navbar({ currentPath, onNavigate }) {
   const navItems = [...baseNavItems, ...authNavItems];
 
   return (
-    <nav className="bg-slate-900 text-slate-100 border-b border-slate-800 shadow-xl relative z-20">
+    <nav className="bg-white/85 dark:bg-slate-900 text-slate-800 dark:text-slate-100 border-b border-[rgba(217,207,199,0.75)] dark:border-slate-800 shadow-sm relative z-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="hidden lg:flex items-center justify-between gap-2 py-1.5">
           <div className="flex items-center justify-between flex-1 gap-1 xl:gap-2">
@@ -1705,7 +1705,7 @@ function Navbar({ currentPath, onNavigate }) {
                   <button
                     key={item.id}
                     onClick={() => item.action && item.action()}
-                    className="relative px-3 py-2 text-xs font-extrabold transition-all rounded-lg whitespace-nowrap text-red-400 hover:text-white hover:bg-red-900/40 border border-red-500/20"
+                    className="relative px-3 py-2 text-xs font-extrabold transition-all rounded-lg whitespace-nowrap text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-white hover:bg-red-500/10 border border-red-500/20"
                   >
                     {item.label}
                   </button>
@@ -1716,7 +1716,7 @@ function Navbar({ currentPath, onNavigate }) {
                 <button
                   key={item.id}
                   onClick={() => onNavigate(item.hash)}
-                  className={`relative px-3 py-2 text-xs font-extrabold transition-all rounded-lg whitespace-nowrap ${isActive ? 'bg-amber-500/15 text-amber-400 shadow-sm border border-amber-500/30' : 'text-slate-300 hover:text-white hover:bg-slate-800/80'}`}
+                  className={`relative px-3 py-2 text-xs font-extrabold transition-all rounded-lg whitespace-nowrap ${isActive ? 'bg-amber-500/15 text-amber-700 dark:text-amber-400 shadow-sm border border-amber-500/30' : 'text-slate-700 dark:text-slate-300 hover:text-amber-700 dark:hover:text-white hover:bg-[rgba(239,233,227,0.7)] dark:hover:bg-slate-800/80'}`}
                 >
                   {item.label}
                   {isActive && <span className="absolute bottom-0 left-2.5 right-2.5 h-0.5 bg-amber-500 rounded-full" />}
@@ -1727,13 +1727,13 @@ function Navbar({ currentPath, onNavigate }) {
         </div>
 
         <div className="lg:hidden flex items-center justify-between h-12">
-          <span className="text-xs font-black text-amber-400 uppercase tracking-wider flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-amber-400" />
+          <span className="text-xs font-black text-amber-600 dark:text-amber-400 uppercase tracking-wider flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-amber-500" />
             {navItems.find(i => i.hash === currentPath)?.label || t('nav.home')}
           </span>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="p-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-700"
+            className="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-[rgba(239,233,227,0.8)] dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-700"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
           </button>
@@ -1741,7 +1741,7 @@ function Navbar({ currentPath, onNavigate }) {
       </div>
 
       {mobileOpen && (
-        <div className="lg:hidden bg-slate-900 border-t border-slate-800 px-4 pt-3 pb-5 space-y-1.5 shadow-2xl">
+        <div className="lg:hidden bg-white dark:bg-slate-900 border-t border-[rgba(217,207,199,0.75)] dark:border-slate-800 px-4 pt-3 pb-5 space-y-1.5 shadow-2xl">
           {navItems.map((item) => (
             <button
               key={item.id}
@@ -1755,10 +1755,10 @@ function Navbar({ currentPath, onNavigate }) {
               }}
               className={`block w-full text-left px-3.5 py-2.5 rounded-lg text-sm font-bold transition-colors ${
                 item.isAction
-                  ? 'text-red-400 hover:bg-red-950/40'
+                  ? 'text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40'
                   : currentPath === item.hash
-                    ? 'bg-amber-500/10 text-amber-400 border-l-4 border-amber-500'
-                    : 'text-slate-300 hover:bg-slate-800'
+                    ? 'bg-amber-500/10 text-amber-700 dark:text-amber-400 border-l-4 border-amber-500'
+                    : 'text-slate-700 dark:text-slate-300 hover:bg-[rgba(239,233,227,0.7)] dark:hover:bg-slate-800'
               }`}
             >
               {item.label}
@@ -1788,14 +1788,14 @@ function TrendingTicker() {
 
   const renderTickerTrack = (keyPrefix) => (
     <div key={keyPrefix} className="flex items-center gap-8 shrink-0 pr-8">
-      <div className="flex items-center gap-3 border-r border-slate-800 pr-8">
-        <span className="text-amber-400 font-extrabold uppercase text-[10px] tracking-wider">
+      <div className="flex items-center gap-3 border-r border-[rgba(217,207,199,0.7)] dark:border-slate-800 pr-8">
+        <span className="text-amber-700 dark:text-amber-400 font-extrabold uppercase text-[10px] tracking-wider">
           {t('marketTitle')}:
         </span>
         {marketSnapshotData.map((item, idx) => (
           <div key={`${keyPrefix}-mkt-${idx}`} className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md font-mono text-[11px] font-bold ${item.isUp ? 'market-up' : 'market-down'}`}>
             <span>{item.symbol}</span>
-            <span className="text-slate-200">{item.value}</span>
+            <span className="text-slate-800 dark:text-slate-200">{item.value}</span>
             <span className="text-[10px]">{item.isUp ? '▲' : '▼'} {item.percent}</span>
           </div>
         ))}
@@ -1803,8 +1803,8 @@ function TrendingTicker() {
 
       <div className="flex items-center gap-8 font-medium">
         {tickerHeadlines.map((headline, idx) => (
-          <span key={`${keyPrefix}-hl-${idx}`} className="hover:text-amber-400 cursor-pointer transition-colors flex items-center gap-2 text-slate-300 whitespace-nowrap">
-            <span className="text-amber-500 font-black">•</span>
+          <span key={`${keyPrefix}-hl-${idx}`} className="hover:text-amber-700 dark:hover:text-amber-400 cursor-pointer transition-colors flex items-center gap-2 text-slate-700 dark:text-slate-300 whitespace-nowrap">
+            <span className="text-amber-600 dark:text-amber-500 font-black">•</span>
             {headline}
           </span>
         ))}
@@ -1813,7 +1813,7 @@ function TrendingTicker() {
   );
 
   return (
-    <div className="bg-slate-950 text-slate-100 border-b border-slate-800 text-xs py-2.5 overflow-hidden select-none shadow-sm relative z-10">
+    <div className="bg-[rgba(249,248,246,0.92)] dark:bg-slate-950 text-slate-800 dark:text-slate-100 border-b border-[rgba(217,207,199,0.7)] dark:border-slate-800 text-xs py-2.5 overflow-hidden select-none shadow-sm relative z-10">
       <div className="max-w-7xl mx-auto px-4 flex items-center gap-3.5">
         <div className="flex items-center gap-2 shrink-0 bg-red-600 text-white font-black px-3 py-1 rounded-md text-[10px] uppercase tracking-wider shadow-md z-10">
           <span className="w-2 h-2 rounded-full bg-white animate-ping" />
@@ -2330,20 +2330,20 @@ function HeroSection({ news, onNavigate }) {
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-4 select-none">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
-        <div className="lg:col-span-7 flex flex-col justify-between bg-slate-950 rounded-3xl border border-slate-800 shadow-2xl overflow-hidden p-4 sm:p-5 text-white">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
+        <div className="lg:col-span-7 flex flex-col justify-between bg-white/90 dark:bg-slate-950 rounded-3xl border border-[rgba(201,181,156,0.5)] dark:border-slate-800 shadow-xl overflow-hidden p-4 sm:p-5 text-slate-900 dark:text-white">
+          <div className="flex items-center justify-between border-b border-[rgba(217,207,199,0.7)] dark:border-slate-800 pb-3 mb-3">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-red-600 animate-ping" />
-              <h2 className="text-xs sm:text-sm font-black tracking-wider uppercase text-white font-serif flex items-center gap-1.5">
+              <h2 className="text-xs sm:text-sm font-black tracking-wider uppercase text-slate-900 dark:text-white font-serif flex items-center gap-1.5">
                 <span>{t('featuredNews') || 'சிறப்புச் செய்திகள் & ஆய்வுகள்'}</span>
               </h2>
             </div>
-            <span className="text-[10px] font-mono text-amber-400/90 font-bold bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
+            <span className="text-[10px] font-mono text-amber-700 dark:text-amber-400/90 font-bold bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
               LIVE NEWS TICKER
             </span>
           </div>
 
-          <div className="featured-marquee-wrapper overflow-hidden rounded-2xl border border-slate-800 bg-slate-950 my-auto">
+          <div className="featured-marquee-wrapper overflow-hidden rounded-2xl border border-[rgba(217,207,199,0.7)] dark:border-slate-800 bg-[rgba(239,233,227,0.5)] dark:bg-slate-950 my-auto">
             <div className="animate-featured-marquee flex items-stretch gap-0 whitespace-normal">
               {renderFeaturedTrack('ftrack-1')}
               {renderFeaturedTrack('ftrack-2')}
@@ -2351,15 +2351,15 @@ function HeroSection({ news, onNavigate }) {
           </div>
         </div>
 
-        <div className="lg:col-span-5 flex flex-col justify-between bg-slate-950 text-white rounded-3xl border border-slate-800 shadow-2xl p-4 sm:p-5">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
+        <div className="lg:col-span-5 flex flex-col justify-between bg-white/90 dark:bg-slate-950 text-slate-900 dark:text-white rounded-3xl border border-[rgba(201,181,156,0.5)] dark:border-slate-800 shadow-xl p-4 sm:p-5">
+          <div className="flex items-center justify-between border-b border-[rgba(217,207,199,0.7)] dark:border-slate-800 pb-3 mb-3">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-              <h3 className="text-xs sm:text-sm font-black uppercase tracking-wider text-white font-serif">
+              <h3 className="text-xs sm:text-sm font-black uppercase tracking-wider text-slate-900 dark:text-white font-serif">
                 {isTamil ? 'சமீபத்திய கட்டுரைகள்' : 'Latest Articles'}
               </h3>
             </div>
-            <span className="text-[10px] font-mono font-bold text-amber-400/90 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
+            <span className="text-[10px] font-mono font-bold text-amber-700 dark:text-amber-400/90 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
               Latest
             </span>
           </div>
@@ -2371,29 +2371,29 @@ function HeroSection({ news, onNavigate }) {
                 role="button"
                 tabIndex={0}
                 onClick={() => onNavigate && onNavigate(`#/articles/${article.slug}`)}
-                className="btn-magnetic group flex items-center gap-3 p-2 rounded-2xl hover:bg-slate-900/80 transition-all cursor-pointer border border-transparent hover:border-slate-800"
+                className="btn-magnetic group flex items-center gap-3 p-2 rounded-2xl hover:bg-[rgba(239,233,227,0.8)] dark:hover:bg-slate-900/80 transition-all cursor-pointer border border-transparent hover:border-[rgba(201,181,156,0.4)] dark:hover:border-slate-800"
               >
                 {article.thumbnail && (
                   <img
                     src={article.thumbnail}
                     alt=""
-                    className="w-14 h-14 rounded-xl object-cover shrink-0 border border-slate-800"
+                    className="w-14 h-14 rounded-xl object-cover shrink-0 border border-[rgba(217,207,199,0.8)] dark:border-slate-800"
                   />
                 )}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-0.5">
-                    <span className="text-[9px] font-black uppercase text-amber-400 tracking-wider">
+                    <span className="text-[9px] font-black uppercase text-amber-700 dark:text-amber-400 tracking-wider">
                       {(article.category || 'FINANCE').replace('-', ' ')}
                     </span>
-                    <span className="text-[9px] text-slate-400 font-mono">
+                    <span className="text-[9px] text-slate-500 dark:text-slate-400 font-mono">
                       • {new Date(article.publishedAt).toLocaleDateString([], { month: 'short', day: 'numeric' })}
                     </span>
                   </div>
-                  <h4 className="text-xs font-bold text-slate-100 line-clamp-2 group-hover:text-amber-400 transition-colors font-serif leading-snug">
+                  <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100 line-clamp-2 group-hover:text-amber-700 dark:group-hover:text-amber-400 transition-colors font-serif leading-snug">
                     {article.title}
                   </h4>
                 </div>
-                <span className="text-xs text-slate-400 group-hover:text-amber-400 group-hover:translate-x-1 transition-all shrink-0">
+                <span className="text-xs text-slate-400 group-hover:text-amber-700 dark:group-hover:text-amber-400 group-hover:translate-x-1 transition-all shrink-0">
                   →
                 </span>
               </div>
@@ -2665,10 +2665,10 @@ function SipCalculator() {
         })}
       </div>
 
-      <div className="bg-slate-950 text-white rounded-3xl p-6 sm:p-10 border border-slate-800 shadow-2xl space-y-8">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-800 pb-6">
+      <div className="bg-white/90 dark:bg-slate-950 text-slate-900 dark:text-white rounded-3xl p-6 sm:p-10 border border-[rgba(201,181,156,0.5)] dark:border-slate-800 shadow-xl space-y-8">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-[rgba(217,207,199,0.7)] dark:border-slate-800 pb-6">
           <div className="space-y-1">
-            <h3 className="text-xl sm:text-2xl font-black font-serif text-white flex items-center gap-2">
+            <h3 className="text-xl sm:text-2xl font-black font-serif text-slate-900 dark:text-white flex items-center gap-2">
               <span className="w-3 h-3 rounded-full bg-amber-500" />
               <span>
                 {calcMode === 'sip' && (isTamil ? 'SIP முதலீட்டுக் கணக்கீடு' : 'SIP Wealth Studio')}
@@ -2677,7 +2677,7 @@ function SipCalculator() {
                 {calcMode === 'compound' && (isTamil ? 'கூட்டு வட்டி கணக்கீடு' : 'Compound Interest Studio')}
               </span>
             </h3>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-600 dark:text-slate-400">
               {isTamil
                 ? 'உங்கள் நீண்ட கால முதலீட்டு இலக்கை அடைய துல்லியமான கூட்டு வட்டி கணிப்பு'
                 : 'Interactive asset compounding and inflation-adjusted growth projections'}
@@ -2685,24 +2685,24 @@ function SipCalculator() {
           </div>
 
           <div className="flex flex-wrap items-center gap-2 text-xs">
-            <span className="text-slate-400 font-bold uppercase text-[10px]">
+            <span className="text-slate-500 dark:text-slate-400 font-bold uppercase text-[10px]">
               {isTamil ? 'இலக்குகள்:' : 'Goals:'}
             </span>
             <button
               onClick={() => applyPresetGoal(5000, 12, 15)}
-              className="btn-magnetic px-3 py-1.5 rounded-full bg-slate-800 hover:bg-amber-600 text-slate-200 hover:text-white transition-colors font-bold text-xs border border-slate-700"
+              className="btn-magnetic px-3 py-1.5 rounded-full bg-[rgba(239,233,227,0.8)] dark:bg-slate-800 hover:bg-amber-600 dark:hover:bg-amber-600 text-slate-800 dark:text-slate-200 hover:text-white transition-colors font-bold text-xs border border-[rgba(201,181,156,0.5)] dark:border-slate-700"
             >
               {isTamil ? '₹1 கோடி இலக்கு' : '₹1 Crore Goal'}
             </button>
             <button
               onClick={() => applyPresetGoal(10000, 14, 10)}
-              className="btn-magnetic px-3 py-1.5 rounded-full bg-slate-800 hover:bg-amber-600 text-slate-200 hover:text-white transition-colors font-bold text-xs border border-slate-700"
+              className="btn-magnetic px-3 py-1.5 rounded-full bg-[rgba(239,233,227,0.8)] dark:bg-slate-800 hover:bg-amber-600 dark:hover:bg-amber-600 text-slate-800 dark:text-slate-200 hover:text-white transition-colors font-bold text-xs border border-[rgba(201,181,156,0.5)] dark:border-slate-700"
             >
               {isTamil ? '₹50 லட்சம் இலக்கு' : '₹50 Lakh Goal'}
             </button>
             <button
               onClick={() => applyPresetGoal(25000, 12, 5)}
-              className="btn-magnetic px-3 py-1.5 rounded-full bg-slate-800 hover:bg-amber-600 text-slate-200 hover:text-white transition-colors font-bold text-xs border border-slate-700"
+              className="btn-magnetic px-3 py-1.5 rounded-full bg-[rgba(239,233,227,0.8)] dark:bg-slate-800 hover:bg-amber-600 dark:hover:bg-amber-600 text-slate-800 dark:text-slate-200 hover:text-white transition-colors font-bold text-xs border border-[rgba(201,181,156,0.5)] dark:border-slate-700"
             >
               {isTamil ? '₹20 லட்சம் குறுகிய காலம்' : '₹20 Lakh Short Term'}
             </button>
@@ -2710,16 +2710,16 @@ function SipCalculator() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          <div className="lg:col-span-6 space-y-6 bg-slate-900/60 p-6 rounded-3xl border border-slate-800 flex flex-col justify-between">
+          <div className="lg:col-span-6 space-y-6 bg-[rgba(239,233,227,0.55)] dark:bg-slate-900/60 p-6 rounded-3xl border border-[rgba(201,181,156,0.5)] dark:border-slate-800 flex flex-col justify-between">
             <div className="space-y-5">
               <div className="space-y-2">
                 <div className="flex justify-between items-center text-xs font-bold">
-                  <label className="text-slate-300">
+                  <label className="text-slate-700 dark:text-slate-300">
                     {calcMode === 'lumpsum' || calcMode === 'compound'
                       ? (isTamil ? 'தொடக்க முதலீட்டுத் தொகை (₹)' : 'Initial Investment (₹)')
                       : (isTamil ? 'மாதாந்திர SIP தொகை (₹)' : 'Monthly SIP Amount (₹)')}
                   </label>
-                  <span className="text-amber-400 font-mono text-sm font-black">
+                  <span className="text-amber-700 dark:text-amber-400 font-mono text-sm font-black">
                     {formatCurrency(monthlyInvest)}
                   </span>
                 </div>
@@ -2730,17 +2730,17 @@ function SipCalculator() {
                   step={calcMode === 'lumpsum' || calcMode === 'compound' ? '5000' : '500'}
                   value={monthlyInvest}
                   onChange={(e) => setMonthlyInvest(Number(e.target.value))}
-                  className="w-full h-2.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-500"
+                  className="w-full h-2.5 bg-[rgba(217,207,199,0.8)] dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-500"
                 />
               </div>
 
               {calcMode === 'stepup' && (
                 <div className="space-y-2">
                   <div className="flex justify-between items-center text-xs font-bold">
-                    <label className="text-slate-300">
+                    <label className="text-slate-700 dark:text-slate-300">
                       {isTamil ? 'ஆண்டு முதலீட்டு உயர்வு (%)' : 'Annual Step-Up Increase (%)'}
                     </label>
-                    <span className="text-amber-400 font-mono text-sm font-black">
+                    <span className="text-amber-700 dark:text-amber-400 font-mono text-sm font-black">
                       +{stepUpPercent}% / {isTamil ? 'ஆண்டுக்கு' : 'Year'}
                     </span>
                   </div>
@@ -2751,17 +2751,17 @@ function SipCalculator() {
                     step="1"
                     value={stepUpPercent}
                     onChange={(e) => setStepUpPercent(Number(e.target.value))}
-                    className="w-full h-2.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-500"
+                    className="w-full h-2.5 bg-[rgba(217,207,199,0.8)] dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-500"
                   />
                 </div>
               )}
 
               <div className="space-y-2">
                 <div className="flex justify-between items-center text-xs font-bold">
-                  <label className="text-slate-300">
+                  <label className="text-slate-700 dark:text-slate-300">
                     {isTamil ? 'எதிர்பார்க்கும் ஆண்டு வட்டி விகிதம் (%)' : 'Expected Annual Return Rate (%)'}
                   </label>
-                  <span className="text-amber-400 font-mono text-sm font-black">
+                  <span className="text-amber-700 dark:text-amber-400 font-mono text-sm font-black">
                     {returnRate}% / {isTamil ? 'ஆண்டுக்கு' : 'Year'}
                   </span>
                 </div>
@@ -2772,16 +2772,16 @@ function SipCalculator() {
                   step="0.5"
                   value={returnRate}
                   onChange={(e) => setReturnRate(Number(e.target.value))}
-                  className="w-full h-2.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-500"
+                  className="w-full h-2.5 bg-[rgba(217,207,199,0.8)] dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-500"
                 />
               </div>
 
               <div className="space-y-2">
                 <div className="flex justify-between items-center text-xs font-bold">
-                  <label className="text-slate-300">
+                  <label className="text-slate-700 dark:text-slate-300">
                     {isTamil ? 'முதலீட்டுக் காலம் (ஆண்டுகள்)' : 'Time Horizon (Years)'}
                   </label>
-                  <span className="text-amber-400 font-mono text-sm font-black">
+                  <span className="text-amber-700 dark:text-amber-400 font-mono text-sm font-black">
                     {timeYears} {isTamil ? 'ஆண்டுகள்' : 'Years'}
                   </span>
                 </div>
@@ -2792,16 +2792,16 @@ function SipCalculator() {
                   step="1"
                   value={timeYears}
                   onChange={(e) => setTimeYears(Number(e.target.value))}
-                  className="w-full h-2.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-500"
+                  className="w-full h-2.5 bg-[rgba(217,207,199,0.8)] dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-500"
                 />
               </div>
 
-              <div className="space-y-2 pt-2 border-t border-slate-800">
+              <div className="space-y-2 pt-2 border-t border-[rgba(217,207,199,0.7)] dark:border-slate-800">
                 <div className="flex justify-between items-center text-xs font-bold">
-                  <label className="text-slate-400">
+                  <label className="text-slate-500 dark:text-slate-400">
                     {isTamil ? 'எதிர்பார்க்கப்படும் பணவீக்கம் (%)' : 'Expected Inflation Rate (%)'}
                   </label>
-                  <span className="text-slate-300 font-mono text-xs">
+                  <span className="text-slate-700 dark:text-slate-300 font-mono text-xs">
                     {inflationRate}%
                   </span>
                 </div>
@@ -2812,45 +2812,45 @@ function SipCalculator() {
                   step="0.5"
                   value={inflationRate}
                   onChange={(e) => setInflationRate(Number(e.target.value))}
-                  className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-slate-400"
+                  className="w-full h-2 bg-[rgba(217,207,199,0.8)] dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-slate-400"
                 />
               </div>
             </div>
 
-            <div className="space-y-2 pt-4 border-t border-slate-800">
-              <div className="flex items-center justify-between text-[11px] font-bold text-slate-400">
+            <div className="space-y-2 pt-4 border-t border-[rgba(217,207,199,0.7)] dark:border-slate-800">
+              <div className="flex items-center justify-between text-[11px] font-bold text-slate-500 dark:text-slate-400">
                 <span className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-slate-600" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-slate-400 dark:bg-slate-600" />
                   <span>{isTamil ? 'முதலீடு' : 'Invested'}: {investedPercent}%</span>
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-amber-400" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
                   <span>{isTamil ? 'வட்டி லாபம்' : 'Wealth Gain'}: {gainPercent}%</span>
                 </span>
               </div>
-              <div className="h-3 w-full rounded-full bg-slate-800 overflow-hidden flex">
-                <div style={{ width: `${investedPercent}%` }} className="bg-slate-600 transition-all duration-300" />
+              <div className="h-3 w-full rounded-full bg-stone-300 dark:bg-slate-800 overflow-hidden flex">
+                <div style={{ width: `${investedPercent}%` }} className="bg-stone-400 dark:bg-slate-600 transition-all duration-300" />
                 <div style={{ width: `${gainPercent}%` }} className="bg-gradient-to-r from-amber-500 to-amber-400 transition-all duration-300 shadow-lg shadow-amber-500/50" />
               </div>
             </div>
           </div>
 
-          <div className="lg:col-span-6 space-y-6 bg-slate-900/90 p-6 sm:p-8 rounded-3xl border border-slate-800 shadow-2xl flex flex-col justify-between">
+          <div className="lg:col-span-6 space-y-6 bg-[rgba(239,233,227,0.7)] dark:bg-slate-900/90 p-6 sm:p-8 rounded-3xl border border-[rgba(201,181,156,0.5)] dark:border-slate-800 shadow-xl flex flex-col justify-between">
             <div className="space-y-5">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-                <span className="text-xs font-extrabold uppercase tracking-widest text-slate-400">
+              <div className="flex items-center justify-between border-b border-[rgba(217,207,199,0.7)] dark:border-slate-800 pb-4">
+                <span className="text-xs font-extrabold uppercase tracking-widest text-slate-500 dark:text-slate-400">
                   {isTamil ? 'மொத்த முதலீடு' : 'Total Invested'}
                 </span>
-                <span className="text-lg font-black font-mono text-white">
+                <span className="text-lg font-black font-mono text-slate-900 dark:text-white">
                   {formatCurrency(totalInvested)}
                 </span>
               </div>
 
-              <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-                <span className="text-xs font-extrabold uppercase tracking-widest text-slate-400">
+              <div className="flex items-center justify-between border-b border-[rgba(217,207,199,0.7)] dark:border-slate-800 pb-4">
+                <span className="text-xs font-extrabold uppercase tracking-widest text-slate-500 dark:text-slate-400">
                   {isTamil ? 'மதிப்பிடப்பட்ட வட்டி லாபம்' : 'Estimated Growth Returns'}
                 </span>
-                <span className="text-lg font-black font-mono text-emerald-400">
+                <span className="text-lg font-black font-mono text-emerald-600 dark:text-emerald-400">
                   +{formatCurrency(estimatedGain)}
                 </span>
               </div>
@@ -3099,22 +3099,22 @@ function Footer({ onNavigate, onShowToast }) {
   };
 
   return (
-    <footer className="bg-slate-950 text-slate-300 border-t border-slate-800 pt-12 pb-8">
+    <footer className="bg-[rgba(239,233,227,0.85)] dark:bg-slate-950 text-slate-700 dark:text-slate-300 border-t border-[rgba(201,181,156,0.6)] dark:border-slate-800 pt-12 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         {/* Top Grid: Newsletter + Quick Links */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 pb-12 border-b border-slate-800">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 pb-12 border-b border-[rgba(217,207,199,0.7)] dark:border-slate-800">
           {/* Brand & Newsletter */}
           <div className="lg:col-span-6 space-y-4">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-xl bg-amber-500 text-slate-950 font-bold flex items-center justify-center text-lg shadow-lg">
                 தன
               </div>
-              <span className="text-xl font-extrabold text-white font-serif">
+              <span className="text-xl font-extrabold text-slate-900 dark:text-white font-serif">
                 {t('siteName')}
               </span>
             </div>
             
-            <p className="text-xs text-slate-400 max-w-md leading-relaxed">
+            <p className="text-xs text-slate-600 dark:text-slate-400 max-w-md leading-relaxed">
               {t('newsLetterDesc')}
             </p>
 
@@ -3125,7 +3125,7 @@ function Footer({ onNavigate, onShowToast }) {
                 onChange={e => setEmail(e.target.value)}
                 placeholder="your.email@example.com"
                 required
-                className="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
+                className="flex-1 bg-white dark:bg-slate-900 border border-[rgba(201,181,156,0.6)] dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-amber-500"
               />
               <button
                 type="submit"
@@ -3138,33 +3138,33 @@ function Footer({ onNavigate, onShowToast }) {
 
           {/* Sitemap Links */}
           <div className="lg:col-span-3 space-y-3">
-            <h4 className="text-xs font-extrabold uppercase tracking-wider text-amber-400">
+            <h4 className="text-xs font-extrabold uppercase tracking-wider text-amber-800 dark:text-amber-400">
               {t('nav.mutualFunds')} & {t('nav.stocks')}
             </h4>
-            <ul className="space-y-2 text-xs font-medium text-slate-400">
-              <li><button onClick={() => onNavigate && onNavigate('#/category/mutual-funds')} className="hover:text-white transition-colors">{t('nav.mutualFunds')}</button></li>
-              <li><button onClick={() => onNavigate && onNavigate('#/category/stocks')} className="hover:text-white transition-colors">{t('nav.stocks')}</button></li>
-              <li><button onClick={() => onNavigate && onNavigate('#/category/personal-finance')} className="hover:text-white transition-colors">{t('nav.personalFinance')}</button></li>
-              <li><button onClick={() => onNavigate && onNavigate('#/category/education')} className="hover:text-white transition-colors">{t('nav.education')}</button></li>
+            <ul className="space-y-2 text-xs font-medium text-slate-600 dark:text-slate-400">
+              <li><button onClick={() => onNavigate && onNavigate('#/category/mutual-funds')} className="hover:text-slate-900 dark:hover:text-white transition-colors">{t('nav.mutualFunds')}</button></li>
+              <li><button onClick={() => onNavigate && onNavigate('#/category/stocks')} className="hover:text-slate-900 dark:hover:text-white transition-colors">{t('nav.stocks')}</button></li>
+              <li><button onClick={() => onNavigate && onNavigate('#/category/personal-finance')} className="hover:text-slate-900 dark:hover:text-white transition-colors">{t('nav.personalFinance')}</button></li>
+              <li><button onClick={() => onNavigate && onNavigate('#/category/education')} className="hover:text-slate-900 dark:hover:text-white transition-colors">{t('nav.education')}</button></li>
             </ul>
           </div>
 
           {/* Financial Tools */}
           <div className="lg:col-span-3 space-y-3">
-            <h4 className="text-xs font-extrabold uppercase tracking-wider text-amber-400">
+            <h4 className="text-xs font-extrabold uppercase tracking-wider text-amber-800 dark:text-amber-400">
               Financial Utilities
             </h4>
-            <ul className="space-y-2 text-xs font-medium text-slate-400">
-              <li><button onClick={() => onNavigate && onNavigate('#/calculator')} className="hover:text-white transition-colors">{t('sipCalculatorTitle')}</button></li>
-              <li><button onClick={() => onNavigate && onNavigate('#/videos')} className="hover:text-white transition-colors">YouTube Video Feed</button></li>
-              <li><button onClick={() => onNavigate && onNavigate('#/news')} className="hover:text-white transition-colors">Financial News Hub</button></li>
+            <ul className="space-y-2 text-xs font-medium text-slate-600 dark:text-slate-400">
+              <li><button onClick={() => onNavigate && onNavigate('#/calculator')} className="hover:text-slate-900 dark:hover:text-white transition-colors">{t('sipCalculatorTitle')}</button></li>
+              <li><button onClick={() => onNavigate && onNavigate('#/videos')} className="hover:text-slate-900 dark:hover:text-white transition-colors">YouTube Video Feed</button></li>
+              <li><button onClick={() => onNavigate && onNavigate('#/news')} className="hover:text-slate-900 dark:hover:text-white transition-colors">Financial News Hub</button></li>
             </ul>
           </div>
         </div>
 
         {/* Regulatory Disclaimer */}
         <div className="space-y-2 text-[11px] text-slate-500 leading-relaxed max-w-5xl">
-          <h5 className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">
+          <h5 className="font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider text-[10px]">
             {t('footerDisclaimerTitle')}
           </h5>
           <p>
@@ -3287,23 +3287,23 @@ function CinemaSpotlightHero({
     : (currentVideo.descriptionEnglish || currentVideo.description);
 
   return (
-    <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-slate-900 border border-amber-500/30 p-5 sm:p-8 shadow-xl text-white">
+    <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-white/90 dark:bg-slate-900 border border-[rgba(201,181,156,0.5)] dark:border-amber-500/30 p-5 sm:p-8 shadow-xl text-slate-900 dark:text-white">
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
         <div className="lg:col-span-7 space-y-3 sm:space-y-4">
           <div className="flex items-center gap-2">
             <span className="px-2.5 py-0.5 rounded-full bg-amber-500 text-slate-950 text-[9px] font-black uppercase tracking-wider shadow">
               SPOTLIGHT MASTERCLASS
             </span>
-            <span className="text-xs font-mono text-amber-400/90 font-bold">
+            <span className="text-xs font-mono text-amber-700 dark:text-amber-400/90 font-bold">
               {currentVideo.category?.toUpperCase()}
             </span>
           </div>
 
-          <h1 className="text-xl sm:text-3xl font-black font-serif text-white leading-tight tracking-tight">
+          <h1 className="text-xl sm:text-3xl font-black font-serif text-slate-900 dark:text-white leading-tight tracking-tight">
             {title}
           </h1>
 
-          <p className="text-xs sm:text-sm text-slate-300 line-clamp-3 leading-relaxed font-sans max-w-2xl">
+          <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 line-clamp-3 leading-relaxed font-sans max-w-2xl">
             {description}
           </p>
 
@@ -3318,8 +3318,8 @@ function CinemaSpotlightHero({
               <span>{isTamil ? 'இப்போதே பார்க்க' : 'Watch Masterclass'}</span>
             </button>
 
-            <div className="flex items-center gap-2 text-xs text-slate-400 font-bold">
-              <span className="text-white">{currentVideo.channelName || 'Budget Padmanaban'}</span>
+            <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 font-bold">
+              <span className="text-slate-900 dark:text-white">{currentVideo.channelName || 'Budget Padmanaban'}</span>
               <span>•</span>
               <span>882 Original Guides</span>
             </div>
@@ -3329,7 +3329,7 @@ function CinemaSpotlightHero({
         <div className="lg:col-span-5 space-y-3">
           <div
             onClick={() => onWatchVideo && onWatchVideo(currentVideo)}
-            className="group relative aspect-video w-full rounded-2xl overflow-hidden bg-slate-900 border border-white/15 shadow-2xl cursor-pointer"
+            className="group relative aspect-video w-full rounded-2xl overflow-hidden bg-slate-900 border border-[rgba(217,207,199,0.7)] dark:border-white/15 shadow-2xl cursor-pointer"
           >
             <img
               src={currentVideo.thumbnail || `https://img.youtube.com/vi/${currentVideo.youtubeId}/hqdefault.jpg`}
@@ -3354,11 +3354,11 @@ function CinemaSpotlightHero({
                   onClick={() => setCurrentIndex(idx)}
                   className={`flex-1 min-w-[65px] sm:min-w-[75px] p-1.5 rounded-xl border transition-all text-left ${
                     isActive
-                      ? 'bg-amber-500/20 border-amber-500 ring-1 ring-amber-500/50'
-                      : 'bg-slate-900/80 border-slate-800 hover:border-slate-700 opacity-60 hover:opacity-100'
+                      ? 'bg-amber-500/20 border-amber-500 ring-1 ring-amber-500/50 text-amber-900 dark:text-amber-300'
+                      : 'bg-[rgba(239,233,227,0.7)] dark:bg-slate-900/80 border-[rgba(201,181,156,0.4)] dark:border-slate-800 hover:border-amber-500 text-slate-700 dark:text-slate-300'
                   }`}
                 >
-                  <div className="text-[9px] font-bold text-slate-300 truncate">
+                  <div className="text-[9px] font-bold truncate">
                     0${idx + 1} • ${vid.duration || 'Video'}
                   </div>
                 </button>

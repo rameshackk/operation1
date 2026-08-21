@@ -702,3 +702,103 @@ html[data-theme="dark"],
     display: none !important;
   }
 }
+
+/* ==========================================================================
+   LIGHT MODE DESIGN SYSTEM OVERRIDES (ONLY IN LIGHT MODE)
+   Harmonizes all pages with:
+   - rgb(249, 248, 246)
+   - rgb(239, 233, 227)
+   - rgb(217, 207, 199)
+   - rgb(201, 181, 156)
+   ========================================================================== */
+
+html:not([data-theme="dark"]),
+[data-theme="light"] {
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --bg-card-hover: rgba(255, 255, 255, 0.95);
+  --border-color: rgba(201, 181, 156, 0.50);
+  --border-subtle: rgba(217, 207, 199, 0.60);
+  --text-primary: #1c1917;
+  --text-secondary: #44403c;
+  --text-muted: #78716c;
+}
+
+/* Light mode cards, containers & panels */
+html:not([data-theme="dark"]) .card-unified,
+[data-theme="light"] .card-unified,
+html:not([data-theme="dark"]) .article-card,
+[data-theme="light"] .article-card,
+html:not([data-theme="dark"]) .video-card-cinema,
+[data-theme="light"] .video-card-cinema {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(201, 181, 156, 0.45) !important;
+  color: #1c1917 !important;
+  box-shadow: 0 4px 16px -2px rgba(201, 181, 156, 0.20) !important;
+}
+
+html:not([data-theme="dark"]) .card-unified:hover,
+[data-theme="light"] .card-unified:hover,
+html:not([data-theme="dark"]) .article-card:hover,
+[data-theme="light"] .article-card:hover {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(201, 181, 156, 0.70) !important;
+  box-shadow: 0 16px 28px -4px rgba(201, 181, 156, 0.35) !important;
+}
+
+/* Light mode modal dialogs */
+html:not([data-theme="dark"]) .modal-card-unified,
+[data-theme="light"] .modal-card-unified {
+  background-color: rgb(249, 248, 246) !important;
+  border-color: rgba(201, 181, 156, 0.6) !important;
+  color: #1c1917 !important;
+}
+
+/* Light mode category filter pills */
+html:not([data-theme="dark"]) .category-pill-unified:not(.active),
+[data-theme="light"] .category-pill-unified:not(.active) {
+  background-color: rgba(239, 233, 227, 0.75) !important;
+  color: #44403c !important;
+  border-color: rgba(217, 207, 199, 0.7) !important;
+}
+
+html:not([data-theme="dark"]) .category-pill-unified:not(.active):hover,
+[data-theme="light"] .category-pill-unified:not(.active):hover {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  color: #b45309 !important;
+  border-color: rgba(201, 181, 156, 0.8) !important;
+}
+
+/* Light mode inputs & search boxes */
+html:not([data-theme="dark"]) input[type="text"],
+[data-theme="light"] input[type="text"],
+html:not([data-theme="dark"]) input[type="email"],
+[data-theme="light"] input[type="email"],
+html:not([data-theme="dark"]) select,
+[data-theme="light"] select,
+html:not([data-theme="dark"]) textarea,
+[data-theme="light"] textarea {
+  background-color: #ffffff !important;
+  color: #1c1917 !important;
+  border-color: rgba(201, 181, 156, 0.6) !important;
+}
+
+/* Light mode dropdowns and tables */
+html:not([data-theme="dark"]) .dropdown-anchored-unified,
+[data-theme="light"] .dropdown-anchored-unified {
+  background-color: #ffffff !important;
+  border-color: rgba(201, 181, 156, 0.6) !important;
+  box-shadow: 0 12px 32px -4px rgba(201, 181, 156, 0.3) !important;
+}
+
+html:not([data-theme="dark"]) table thead,
+[data-theme="light"] table thead {
+  background-color: rgba(239, 233, 227, 0.7) !important;
+  color: #57534e !important;
+  border-bottom-color: rgba(217, 207, 199, 0.8) !important;
+}
+
+html:not([data-theme="dark"]) table tbody tr:hover,
+[data-theme="light"] table tbody tr:hover {
+  background-color: rgba(249, 248, 246, 0.8) !important;
+}
+
