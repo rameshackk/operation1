@@ -27702,25 +27702,116 @@ function SkeletonCard() {
 
 
 
-function HeroSection({ news = newsData, onNavigate }) {
+function useLiveArticles() {
+  const [liveArticles, setLiveArticles] = useState(() => {
+    try {
+      const cached = localStorage.getItem('muthaleetu_articles_cache');
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch (_) {}
+    return [];
+  });
+  const [isLoading, setIsLoading] = useState(liveArticles.length === 0);
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchArticles = async () => {
+      try {
+        const res = await fetch('/api/articles?limit=30&sort=newest');
+        if (res.ok) {
+          const json = await res.json();
+          const list = json.data || [];
+          if (isMounted && Array.isArray(list) && list.length > 0) {
+            setLiveArticles(list);
+            try {
+              localStorage.setItem('muthaleetu_articles_cache', JSON.stringify(list));
+            } catch (_) {}
+          }
+        }
+      } catch (err) {
+        console.warn('Live articles fetch fallback:', err);
+      } finally {
+        if (isMounted) setIsLoading(false);
+      }
+    };
+
+    fetchArticles();
+    return () => { isMounted = false; };
+  }, []);
+
+  return { liveArticles, isLoading };
+}
+
+function normalizeArticleItem(item, language = 'ta') {
+  if (!item) return null;
+  const isTamil = language === 'ta';
+  const id = item.id || item.slug || Math.random().toString(36).substring(2, 9);
+  const slug = item.slug || `article-${id}`;
+  const titleTamil = item.titleTamil || item.title_ta || item.title || 'நிதி செய்திகள்';
+  const titleEnglish = item.titleEnglish || item.title_en || item.title || titleTamil;
+  const title = isTamil ? (titleTamil || titleEnglish) : (titleEnglish || titleTamil);
+  const summaryTamil = item.summaryTamil || item.excerptTamil || item.excerpt_ta || item.summary || '';
+  const summaryEnglish = item.summaryEnglish || item.excerptEnglish || item.excerpt_en || summaryTamil;
+  const summary = isTamil ? (summaryTamil || summaryEnglish) : (summaryEnglish || summaryTamil);
+  const thumbnail = item.coverImage || item.cover_image_url || item.thumbnail || 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80';
+  const category = (item.category || 'mutual-fund').replace('_', '-');
+  const publishedAt = item.publishedAt || item.published_at || item.created_at || new Date().toISOString();
+  const authorName = item.authorName || item.author_name || (item.author_profile ? item.author_profile.full_name : null) || 'Budget Padmanaban CFP®';
+  const authorRole = item.authorRole || item.author_role || (item.author_profile ? item.author_profile.designation : null) || 'Financial Advisor';
+  const isLive = Boolean(item.created_at || item.published_at || item.body_ta || item.body);
+
+  return {
+    id,
+    slug,
+    titleTamil,
+    titleEnglish,
+    title,
+    summaryTamil,
+    summaryEnglish,
+    summary,
+    thumbnail,
+    category,
+    publishedAt,
+    authorName,
+    authorRole,
+    isLive
+  };
+}
+
+function HeroSection({ news, onNavigate }) {
   const { t, language } = useLanguage();
   const isTamil = language === 'ta';
-  const featuredStories = news && news.length > 0 ? news : newsData;
-  const latestStories = (news && news.length > 0 ? news : newsData).slice(0, 4);
+  const { liveArticles } = useLiveArticles();
 
-  const getHeadline = (item) => {
-    return language === 'ta' ? item.titleTamil : (item.titleEnglish || item.titleTamil);
-  };
+  const combinedArticles = useMemo(() => {
+    const liveList = (liveArticles || []).map(a => normalizeArticleItem(a, language)).filter(Boolean);
+    const passedList = (news || newsData || []).map(a => normalizeArticleItem(a, language)).filter(Boolean);
+    
+    const seen = new Set();
+    const merged = [];
+    for (const a of liveList) {
+      if (a.slug && !seen.has(a.slug)) {
+        seen.add(a.slug);
+        merged.push(a);
+      }
+    }
+    for (const p of passedList) {
+      if (p.slug && !seen.has(p.slug)) {
+        seen.add(p.slug);
+        merged.push(p);
+      }
+    }
+    return merged;
+  }, [liveArticles, news, language]);
 
-  const getSummary = (item) => {
-    return language === 'ta' ? item.summaryTamil : (item.summaryEnglish || item.summaryTamil);
-  };
+  const featuredStories = combinedArticles.slice(0, 10);
+  const latestStories = combinedArticles.slice(0, 4);
 
   const renderFeaturedTrack = (keyPrefix) => (
     <div key={keyPrefix} className="flex items-stretch gap-0 shrink-0 h-full">
       {featuredStories.map((item, idx) => {
-        const headline = getHeadline(item);
-        const summary = getSummary(item);
         const formattedDate = new Intl.DateTimeFormat(
           language === 'ta' ? 'ta-IN' : 'en-IN',
           { month: 'short', day: 'numeric' }
@@ -27729,12 +27820,12 @@ function HeroSection({ news = newsData, onNavigate }) {
         return (
           <article
             key={`${keyPrefix}-${item.id}-${idx}`}
-            onClick={() => onNavigate && onNavigate(`#/news/${item.slug}`)}
+            onClick={() => onNavigate && onNavigate(`#/articles/${item.slug}`)}
             className="group relative w-[250px] sm:w-[280px] md:w-[310px] h-[300px] sm:h-[330px] shrink-0 border-r border-white/10 overflow-hidden flex flex-col justify-end p-4 sm:p-5 select-none cursor-pointer bg-slate-950"
           >
             <img
               src={item.thumbnail}
-              alt={headline}
+              alt={item.title}
               loading="lazy"
               className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80"
             />
@@ -27751,11 +27842,11 @@ function HeroSection({ news = newsData, onNavigate }) {
 
             <div className="relative z-10 space-y-2">
               <h3 className="text-sm sm:text-base font-black text-white leading-snug font-serif group-hover:text-amber-400 transition-colors drop-shadow-md line-clamp-2">
-                {headline}
+                {item.title}
               </h3>
-              {summary && (
+              {item.summary && (
                 <p className="text-xs text-slate-300/95 line-clamp-2 font-sans leading-relaxed drop-shadow">
-                  {summary}
+                  {item.summary}
                 </p>
               )}
               <div className="pt-1 flex items-center justify-between text-xs text-amber-400 font-extrabold">
@@ -27779,7 +27870,7 @@ function HeroSection({ news = newsData, onNavigate }) {
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-red-600 animate-ping" />
               <h2 className="text-xs sm:text-sm font-black tracking-wider uppercase text-white font-serif flex items-center gap-1.5">
-                <span>{t('featuredNews') || 'சிறப்புச் செய்திகள்'}</span>
+                <span>{t('featuredNews') || 'சிறப்புச் செய்திகள் & ஆய்வுகள்'}</span>
               </h2>
             </div>
             <span className="text-[10px] font-mono text-amber-400/90 font-bold bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
@@ -27809,42 +27900,39 @@ function HeroSection({ news = newsData, onNavigate }) {
           </div>
 
           <div className="space-y-2.5 flex-1 flex flex-col justify-between">
-            {latestStories.map((article, idx) => {
-              const title = getHeadline(article);
-              return (
-                <div
-                  key={article.id || idx}
-                  role="button"
-                  tabIndex={0}
-                  onClick={() => onNavigate && onNavigate(`#/news/${article.slug}`)}
-                  className="btn-magnetic group flex items-center gap-3 p-2 rounded-2xl hover:bg-slate-900/80 transition-all cursor-pointer border border-transparent hover:border-slate-800"
-                >
-                  {article.thumbnail && (
-                    <img
-                      src={article.thumbnail}
-                      alt=""
-                      className="w-14 h-14 rounded-xl object-cover shrink-0 border border-slate-800"
-                    />
-                  )}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-0.5">
-                      <span className="text-[9px] font-black uppercase text-amber-400 tracking-wider">
-                        {(article.category || 'FINANCE').replace('-', ' ')}
-                      </span>
-                      <span className="text-[9px] text-slate-400 font-mono">
-                        • {new Date(article.publishedAt).toLocaleDateString([], { month: 'short', day: 'numeric' })}
-                      </span>
-                    </div>
-                    <h4 className="text-xs font-bold text-slate-100 line-clamp-2 group-hover:text-amber-400 transition-colors font-serif leading-snug">
-                      {title}
-                    </h4>
+            {latestStories.map((article, idx) => (
+              <div
+                key={article.id || `latest-${idx}`}
+                role="button"
+                tabIndex={0}
+                onClick={() => onNavigate && onNavigate(`#/articles/${article.slug}`)}
+                className="btn-magnetic group flex items-center gap-3 p-2 rounded-2xl hover:bg-slate-900/80 transition-all cursor-pointer border border-transparent hover:border-slate-800"
+              >
+                {article.thumbnail && (
+                  <img
+                    src={article.thumbnail}
+                    alt=""
+                    className="w-14 h-14 rounded-xl object-cover shrink-0 border border-slate-800"
+                  />
+                )}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-0.5">
+                    <span className="text-[9px] font-black uppercase text-amber-400 tracking-wider">
+                      {(article.category || 'FINANCE').replace('-', ' ')}
+                    </span>
+                    <span className="text-[9px] text-slate-400 font-mono">
+                      • {new Date(article.publishedAt).toLocaleDateString([], { month: 'short', day: 'numeric' })}
+                    </span>
                   </div>
-                  <span className="text-xs text-slate-400 group-hover:text-amber-400 group-hover:translate-x-1 transition-all shrink-0">
-                    →
-                  </span>
+                  <h4 className="text-xs font-bold text-slate-100 line-clamp-2 group-hover:text-amber-400 transition-colors font-serif leading-snug">
+                    {article.title}
+                  </h4>
                 </div>
-              );
-            })}
+                <span className="text-xs text-slate-400 group-hover:text-amber-400 group-hover:translate-x-1 transition-all shrink-0">
+                  →
+                </span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -27852,14 +27940,33 @@ function HeroSection({ news = newsData, onNavigate }) {
   );
 }
 
-
 function TrendingArticlesSection({ onNavigate }) {
   const { t, language } = useLanguage();
-  const trendingArticles = newsData.slice(0, 6);
+  const isTamil = language === 'ta';
+  const { liveArticles } = useLiveArticles();
 
-  const getHeadline = (item) => {
-    return language === 'ta' ? item.titleTamil : (item.titleEnglish || item.titleTamil);
-  };
+  const allArticles = useMemo(() => {
+    const liveList = (liveArticles || []).map(a => normalizeArticleItem(a, language)).filter(Boolean);
+    const seedList = (newsData || []).map(a => normalizeArticleItem(a, language)).filter(Boolean);
+
+    const seenSlugs = new Set();
+    const merged = [];
+
+    // Prioritize live published articles added by admin or publisher
+    for (const a of liveList) {
+      if (a.slug && !seenSlugs.has(a.slug)) {
+        seenSlugs.add(a.slug);
+        merged.push(a);
+      }
+    }
+    for (const s of seedList) {
+      if (s.slug && !seenSlugs.has(s.slug)) {
+        seenSlugs.add(s.slug);
+        merged.push(s);
+      }
+    }
+    return merged.slice(0, 6);
+  }, [liveArticles, language]);
 
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-4">
@@ -27867,7 +27974,7 @@ function TrendingArticlesSection({ onNavigate }) {
         <div className="flex items-center gap-2">
           <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
           <h2 className="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white font-serif">
-            {t('trendingArticlesTitle') || 'டிரெண்டிங் செய்திகள்'}
+            {t('trendingArticlesTitle') || 'டிரெண்டிங் செய்திகள் & கட்டுரைகள்'}
           </h2>
         </div>
         <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2.5 py-0.5 rounded-full">
@@ -27876,25 +27983,29 @@ function TrendingArticlesSection({ onNavigate }) {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {trendingArticles.map((article, idx) => {
-          const rankStr = article.rank || `0${idx + 1}`;
-          const title = getHeadline(article);
+        {allArticles.map((article, idx) => {
+          const rankStr = `0${idx + 1}`;
           return (
             <div
-              key={article.id}
-              onClick={() => onNavigate && onNavigate(`#/news/${article.slug}`)}
-              className="group flex items-center gap-3 p-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md hover:border-amber-500/50 transition-all cursor-pointer"
+              key={article.id || `trend-${idx}`}
+              onClick={() => onNavigate && onNavigate(`#/articles/${article.slug}`)}
+              className="group flex items-center gap-3 p-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md hover:border-amber-500/50 transition-all cursor-pointer select-none"
             >
               <span className="text-xl font-black text-amber-600 dark:text-amber-400 font-serif w-7 shrink-0 text-center">
                 {rankStr}
               </span>
 
               {article.thumbnail && (
-                <img
-                  src={article.thumbnail}
-                  alt=""
-                  className="w-14 h-14 rounded-xl object-cover shrink-0 border border-slate-200 dark:border-slate-700"
-                />
+                <div className="relative w-14 h-14 rounded-xl overflow-hidden shrink-0 border border-slate-200 dark:border-slate-700 bg-slate-950">
+                  <img
+                    src={article.thumbnail}
+                    alt=""
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  {article.isLive && (
+                    <span className="absolute bottom-1 right-1 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-slate-950" />
+                  )}
+                </div>
               )}
 
               <div className="flex-1 min-w-0">
@@ -27902,13 +28013,18 @@ function TrendingArticlesSection({ onNavigate }) {
                   <span className="text-[9px] font-black uppercase text-amber-600 dark:text-amber-400 tracking-wider">
                     {article.category.replace('-', ' ')}
                   </span>
-                  <span className="text-[9px] text-slate-400">
-                    • {new Date(article.publishedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  <span className="text-[9px] text-slate-400 font-medium">
+                    • {new Date(article.publishedAt).toLocaleDateString(isTamil ? 'ta-IN' : 'en-IN', { month: 'short', day: 'numeric' })}
                   </span>
                 </div>
                 <h4 className="text-xs font-bold text-slate-900 dark:text-white line-clamp-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors font-serif leading-snug">
-                  {title}
+                  {article.title}
                 </h4>
+                {article.authorName && (
+                  <p className="text-[10px] text-slate-400 truncate mt-0.5">
+                    ✍️ {article.authorName}
+                  </p>
+                )}
               </div>
             </div>
           );
@@ -29920,12 +30036,11 @@ function HomeCinemaShowcase({ onNavigate, onShowToast, language = 'ta' }) {
  */
 function Home({ onNavigate, onShowToast }) {
   const { t, language } = useLanguage();
-  const translatedNews = newsData.map(item => translateNewsArticle(item, language));
 
   return (
     <div className="space-y-8 pb-16 animate-fadeIn">
       {/* 1. FEATURED NEWS TICKER ON LEFT + LATEST ARTICLES ON RIGHT */}
-      <HeroSection news={translatedNews} onNavigate={onNavigate} />
+      <HeroSection onNavigate={onNavigate} />
 
       {/* 2. COMPACT CINEMA VIDEO CARDS SHOWCASE */}
       <HomeCinemaShowcase
@@ -29934,7 +30049,7 @@ function Home({ onNavigate, onShowToast }) {
         language={language}
       />
 
-      {/* 3. TRENDING ARTICLES SECTION */}
+      {/* 3. TRENDING ARTICLES SECTION (DYNAMIC DB SYNC) */}
       <TrendingArticlesSection onNavigate={onNavigate} />
 
       {/* 4. SIGN IN / REGISTER CALL TO ACTION BANNER */}

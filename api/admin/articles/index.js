@@ -1,9 +1,9 @@
-import { verifyAdminRequest } from '../../../lib/auth-server.js';
+import { verifyAdminOrPublisherRequest } from '../../../lib/auth-server.js';
 import { listArticles, createArticle, getArticleById, updateArticle, deleteArticle } from '../../../lib/db.js';
 
 export default async function handler(req, res) {
-  // 1. Verify admin role
-  const auth = await verifyAdminRequest(req);
+  // 1. Verify admin or publisher role
+  const auth = await verifyAdminOrPublisherRequest(req);
   if (!auth.authorized) {
     return res.status(auth.status).json({ error: auth.error });
   }
