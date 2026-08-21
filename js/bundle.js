@@ -34815,7 +34815,7 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
 function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
   const { language } = useLanguage();
   const isTamil = language === 'ta';
-  const [activeTab, setActiveTab] = useState('articles');
+  const [activeTab, setActiveTab] = useState('videos');
   const [selectedVideo, setSelectedVideo] = useState(null);
 
   // 1. Instant Cache-First Initialization
@@ -34939,9 +34939,9 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
   const badge = isTamil ? prof.badgeTamil : prof.badgeEnglish;
   const location = isTamil ? prof.locationTamil : prof.locationEnglish;
 
-  // Combine live articles with static articles
+  // Only return live articles from database — no dead dummy links
   const publisherArticles = useMemo(() => {
-    if (liveArticles.length > 0) {
+    if (liveArticles && liveArticles.length > 0) {
       return liveArticles.map(a => ({
         id: a.id,
         slug: a.slug,
@@ -34959,17 +34959,12 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
         authorArn: a.author_arn || prof.arnNumber
       }));
     }
-
-    if (prof.id === 'budget-padmanaban') {
-      return (newsData || []).map(a => translateNewsArticle(a, language));
-    }
-    const slugs = prof.featuredArticleSlugs || [];
-    return (newsData || []).filter(a => slugs.includes(a.slug)).map(a => translateNewsArticle(a, language));
+    return [];
   }, [liveArticles, prof, language, isTamil, name]);
 
   const publisherVideos = useMemo(() => {
-    if (prof.id === 'budget-padmanaban' || !livePublisher) {
-      return videosData.slice(0, 24).map(v => translateVideo(v, language));
+    if (prof.id === 'budget-padmanaban' || !livePublisher || (prof.nameEnglish && prof.nameEnglish.toLowerCase().includes('padmanaban'))) {
+      return videosData.slice(0, 48).map(v => translateVideo(v, language));
     }
     return [];
   }, [prof, language, livePublisher]);
@@ -35097,17 +35092,6 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
 
       {/* 2. FEED TABS */}
       <div className="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
-        <button
-          onClick={() => setActiveTab('articles')}
-          className={`px-5 py-2.5 rounded-xl text-xs font-black transition-all ${
-            activeTab === 'articles'
-              ? 'bg-amber-500 text-slate-950 shadow-md'
-              : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
-          }`}
-        >
-          ✍️ {isTamil ? 'கட்டுரைகள் & ஆய்வுகள்' : 'Articles & Research'} ({publisherArticles.length})
-        </button>
-
         {publisherVideos.length > 0 && (
           <button
             onClick={() => setActiveTab('videos')}
@@ -35120,9 +35104,37 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
             🎬 {isTamil ? 'முக்கிய வீடியோக்கள்' : 'Masterclasses'} ({publisherVideos.length})
           </button>
         )}
+
+        <button
+          onClick={() => setActiveTab('articles')}
+          className={`px-5 py-2.5 rounded-xl text-xs font-black transition-all ${
+            activeTab === 'articles'
+              ? 'bg-amber-500 text-slate-950 shadow-md'
+              : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+          }`}
+        >
+          ✍️ {isTamil ? 'கட்டுரைகள் & ஆய்வுகள்' : 'Articles & Research'} ({publisherArticles.length})
+        </button>
       </div>
 
       {/* 3. FEED CONTENT */}
+      {activeTab === 'videos' && publisherVideos.length > 0 && (
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {publisherVideos.map((video, idx) => (
+              <CinemaVideoCard
+                key={video.id || idx}
+                video={video}
+                index={idx}
+                onSelect={(v) => setSelectedVideo(v)}
+                language={language}
+                onShowToast={onShowToast}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
       {activeTab === 'articles' && (
         <div className="space-y-6">
           {publisherArticles.length > 0 ? (
@@ -35169,10 +35181,22 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
               ))}
             </div>
           ) : (
-            <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-2">
-              <p className="text-xs text-slate-500">
-                {isTamil ? 'இந்த நிபுணர் இன்னும் கட்டுரைகளை வெளியிடவில்லை.' : 'This advisor has not published any articles yet.'}
+            <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-3">
+              <div className="text-3xl">🎬</div>
+              <h3 className="text-sm font-black text-slate-900 dark:text-white font-serif">
+                {isTamil ? 'வீடியோ வழிகாட்டிகள் மட்டுமே வழங்கப்பட்டுள்ளன' : 'Original Video Masterclasses Channel'}
+              </h3>
+              <p className="text-xs text-slate-500 max-w-md mx-auto">
+                {isTamil
+                  ? 'பட்ஜெட் பத்மநாபன் CFP® அவர்களின் வீடியோ வழிகாட்டிகளை பார்க்க "முக்கிய வீடியோக்கள் (Masterclasses)" பிரிவைத் திறக்கவும்.'
+                  : 'Padmanaban B. CFP® shares financial insights primarily through 882 video masterclasses.'}
               </p>
+              <button
+                onClick={() => setActiveTab('videos')}
+                className="px-5 py-2.5 rounded-xl bg-amber-500 text-slate-950 font-black text-xs shadow-md"
+              >
+                {isTamil ? 'வீடியோக்களைப் பார்க்க →' : 'Watch Masterclasses →'}
+              </button>
             </div>
           )}
         </div>
