@@ -29318,8 +29318,17 @@ function CinemaTheaterModal({
       className="fixed inset-0 z-[999999] w-screen h-screen bg-[#070b14] flex flex-col overflow-hidden text-white animate-fadeIn"
       style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, width: '100vw', height: '100vh', zIndex: 999999 }}
     >
-      {/* 1. TOP STUDIO NAVIGATION BAR */}
-      <header className="h-14 bg-[#090e1a] border-b border-slate-800/90 flex items-center justify-between px-4 sm:px-6 shrink-0 z-30 shadow-lg">
+      {/* 1. SITE BRAND LOGO HEADER */}
+      <Header onOpenSearch={() => {}} onNavigate={(h) => { onClose && onClose(); if (typeof onNavigate === 'function') onNavigate(h); else window.location.hash = h; }} />
+
+      {/* 2. NAVIGATION BUTTONS BAR */}
+      <Navbar currentPath="#/videos" onNavigate={(h) => { onClose && onClose(); if (typeof onNavigate === 'function') onNavigate(h); else window.location.hash = h; }} />
+
+      {/* 3. BREAKING NEWS TICKER */}
+      <TrendingTicker />
+
+      {/* 4. TOP STUDIO SUB-NAVIGATION BAR */}
+      <div className="h-12 bg-[#090e1a] border-b border-slate-800/90 flex items-center justify-between px-4 sm:px-6 shrink-0 z-20 shadow-md">
         <div className="flex items-center gap-3 min-w-0">
           <button
             onClick={onClose}
@@ -29349,17 +29358,6 @@ function CinemaTheaterModal({
             <span>{copied ? '✓ Copied' : (isTamil ? 'பகிர்' : 'Share')}</span>
           </button>
 
-          {youtubeWatchUrl && (
-            <a
-              href={youtubeWatchUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="px-3 py-1.5 rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs font-black transition-colors shadow flex items-center gap-1.5"
-            >
-              <span>YouTube ↗</span>
-            </a>
-          )}
-
           <button
             onClick={onClose}
             aria-label="Exit Fullscreen"
@@ -29368,7 +29366,7 @@ function CinemaTheaterModal({
             ✕
           </button>
         </div>
-      </header>
+      </div>
 
       {/* 2. STUDIO SPLIT VIEW (LEFT STAGE + RIGHT PLAYLIST) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 flex-1 min-h-0 overflow-hidden divide-y lg:divide-y-0 lg:divide-x divide-slate-800/80">
