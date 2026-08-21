@@ -117,7 +117,7 @@ html[data-theme="dark"],
   color: #f8fafc;
 }
 
-/* Dynamic Mixed Chromatic Financial Mesh Atmosphere (Hardware-Accelerated 60FPS) */
+/* Dynamic Mixed Chromatic Financial Mesh Atmosphere (0% Universal Background Opacity) */
 .mixed-mesh-ambient {
   position: fixed;
   inset: 0;
@@ -126,9 +126,11 @@ html[data-theme="dark"],
   overflow: hidden;
   contain: strict;
   transform: translate3d(0, 0, 0);
+  opacity: 0 !important;
+  display: none !important;
 }
 
-/* Fully Transparent Background Layer (Maximizes Background Animation Visibility) */
+/* Fully Transparent Background Layer */
 .bg-glass-overlay-50 {
   position: fixed;
   inset: 0;
@@ -137,138 +139,51 @@ html[data-theme="dark"],
   background-color: transparent;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  contain: strict;
-  transform: translate3d(0, 0, 0);
-  transition: background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0 !important;
 }
 
 [data-theme="dark"] .bg-glass-overlay-50 {
   background-color: transparent;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
+  opacity: 0 !important;
 }
 
 .mesh-blob {
   position: absolute;
   border-radius: 50%;
   filter: none !important;
-  opacity: 1.0 !important;
-  will-change: transform;
-  transform: translate3d(0, 0, 0);
-  backface-visibility: hidden;
-  transition: background 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+  opacity: 0 !important;
+  display: none !important;
 }
 
-.mesh-blob-gold {
-  top: -10%;
-  left: -5%;
-  width: 45vw;
-  height: 45vw;
-  background: radial-gradient(circle, rgba(245, 158, 11, 0.45) 0%, rgba(217, 119, 6, 0.20) 40%, transparent 70%);
-  animation: floatMeshGold 24s ease-in-out infinite alternate;
-}
-
-.mesh-blob-emerald {
-  bottom: -10%;
-  right: -5%;
-  width: 50vw;
-  height: 50vw;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.40) 0%, rgba(5, 150, 105, 0.18) 40%, transparent 70%);
-  animation: floatMeshEmerald 28s ease-in-out infinite alternate;
-}
-
-.mesh-blob-sapphire {
-  top: 30%;
-  right: -8%;
-  width: 40vw;
-  height: 40vw;
-  background: radial-gradient(circle, rgba(2, 132, 199, 0.38) 0%, rgba(3, 105, 161, 0.16) 40%, transparent 70%);
-  animation: floatMeshSapphire 22s ease-in-out infinite alternate;
-}
-
+.mesh-blob-gold,
+.mesh-blob-emerald,
+.mesh-blob-sapphire,
 .mesh-blob-amethyst {
-  bottom: 15%;
-  left: -8%;
-  width: 42vw;
-  height: 42vw;
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.35) 0%, rgba(109, 40, 217, 0.15) 40%, transparent 70%);
-  animation: floatMeshAmethyst 26s ease-in-out infinite alternate;
+  display: none !important;
+  opacity: 0 !important;
 }
 
-/* Dark Mixed Chromatic Mesh Shifts on Dark Mode Toggle (100% Universal Opacity) */
+/* Dark Mixed Chromatic Mesh Shifts on Dark Mode Toggle (0% Universal Opacity) */
 [data-theme="dark"] .mesh-blob {
-  opacity: 1.0 !important;
-  filter: none !important;
+  opacity: 0 !important;
+  display: none !important;
 }
 
-[data-theme="dark"] .mesh-blob-gold {
-  background: radial-gradient(circle, rgba(245, 158, 11, 0.45) 0%, rgba(217, 119, 6, 0.20) 40%, transparent 70%);
-}
-
-[data-theme="dark"] .mesh-blob-emerald {
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.40) 0%, rgba(5, 150, 105, 0.18) 40%, transparent 70%);
-}
-
-[data-theme="dark"] .mesh-blob-sapphire {
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.40) 0%, rgba(2, 132, 199, 0.18) 40%, transparent 70%);
-}
-
-[data-theme="dark"] .mesh-blob-amethyst {
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.38) 0%, rgba(109, 40, 217, 0.16) 40%, transparent 70%);
-}
-
-@keyframes floatMeshGold {
-  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-  50% { transform: translate(8vw, 8vh) scale(1.14) rotate(12deg); }
-  100% { transform: translate(-4vw, 12vh) scale(0.9) rotate(-8deg); }
-}
-
-@keyframes floatMeshEmerald {
-  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-  50% { transform: translate(-8vw, -10vh) scale(1.15) rotate(-10deg); }
-  100% { transform: translate(5vw, -6vh) scale(0.92) rotate(8deg); }
-}
-
-@keyframes floatMeshSapphire {
-  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-  50% { transform: translate(-6vw, 6vh) scale(1.1) rotate(6deg); }
-  100% { transform: translate(3vw, -5vh) scale(0.95) rotate(-6deg); }
-}
-
-@keyframes floatMeshAmethyst {
-  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-  50% { transform: translate(10vw, -8vh) scale(1.12) rotate(8deg); }
-  100% { transform: translate(-6vw, 4vh) scale(0.88) rotate(-10deg); }
-}
-
-@keyframes auroraDrift {
-  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-  50% { transform: translate(60px, 50px) scale(1.12) rotate(3deg); }
-  100% { transform: translate(-40px, 70px) scale(0.92) rotate(-3deg); }
-}
-
-@keyframes auroraDriftRev {
-  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-  50% { transform: translate(-70px, -50px) scale(1.15) rotate(-4deg); }
-  100% { transform: translate(50px, -30px) scale(0.9) rotate(4deg); }
-}
-
-/* Animated Financial Bull Market Background Layer (100% Opacity) */
+/* Animated Financial Bull Market Background Layer (0% Universal Opacity) */
 .wealth-bg-grid {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  background-image: 
-    radial-gradient(circle at 1px 1px, rgba(217, 119, 6, 0.12) 1px, transparent 0);
-  background-size: 40px 40px;
-  opacity: 1.0;
+  opacity: 0 !important;
+  display: none !important;
 }
 
 [data-theme="dark"] .wealth-bg-grid {
-  background-image: 
-    radial-gradient(circle at 1px 1px, rgba(245, 158, 11, 0.18) 1px, transparent 0);
-  opacity: 1.0;
+  opacity: 0 !important;
+  display: none !important;
 }
 
 .perspective-1000 {
