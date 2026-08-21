@@ -47,23 +47,23 @@
   --z-modal: 1000;
   --z-scroll-bar: 10000;
 
-  /* Colors - 70% Translucent Glassmorphic Financial Theme */
+  /* Colors - 70% Translucent Glassmorphic Warm Organic Palette for Light Mode */
   --bg-main: transparent;
-  --bg-card: rgba(255, 255, 255, 0.70);
-  --bg-card-hover: rgba(255, 255, 255, 0.82);
-  --border-color: rgba(203, 213, 225, 0.70);
-  --border-subtle: rgba(226, 232, 240, 0.70);
-  --text-primary: #0f172a;
-  --text-secondary: #334155;
-  --text-muted: #64748b;
+  --bg-card: rgba(255, 255, 255, 0.78);
+  --bg-card-hover: rgba(255, 255, 255, 0.90);
+  --border-color: rgba(201, 181, 156, 0.45);
+  --border-subtle: rgba(217, 207, 199, 0.55);
+  --text-primary: #1c1917;
+  --text-secondary: #44403c;
+  --text-muted: #78716c;
   --accent-amber: #d97706;
   --accent-gold: #f59e0b;
   --accent-gold-light: #fbbf24;
   --accent-emerald: #059669;
   --accent-sapphire: #0284c7;
   --accent-red: #dc2626;
-  --nav-bg: rgba(255, 255, 255, 0.70);
-  --nav-border: rgba(203, 213, 225, 0.70);
+  --nav-bg: rgba(249, 248, 246, 0.82);
+  --nav-border: rgba(217, 207, 199, 0.65);
 }
 
 [data-theme="dark"] {
@@ -99,7 +99,14 @@ html, body, #root {
 body {
   font-family: var(--font-sans);
   line-height: var(--line-height-body);
-  background: #f8fafc;
+  background-color: rgb(249, 248, 246);
+  background-image: 
+    radial-gradient(at 0% 0%, rgb(249, 248, 246) 0%, transparent 55%),
+    radial-gradient(at 100% 0%, rgb(239, 233, 227) 0%, transparent 60%),
+    radial-gradient(at 100% 100%, rgb(201, 181, 156) 0%, transparent 55%),
+    radial-gradient(at 0% 100%, rgb(217, 207, 199) 0%, transparent 60%),
+    radial-gradient(at 50% 50%, rgb(239, 233, 227) 0%, transparent 65%),
+    linear-gradient(135deg, rgb(249, 248, 246) 0%, rgb(239, 233, 227) 35%, rgb(217, 207, 199) 70%, rgb(201, 181, 156) 100%);
   background-attachment: fixed;
   color: var(--text-primary);
   transition: background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1), color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
@@ -126,6 +133,12 @@ html[data-theme="dark"],
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="dark"] #vanta-bg {
+  opacity: 1;
 }
 
 #vanta-bg canvas {
