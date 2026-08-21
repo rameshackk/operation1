@@ -47,12 +47,12 @@
   --z-modal: 1000;
   --z-scroll-bar: 10000;
 
-  /* Colors - 80% Translucent Glassmorphic Financial Theme */
+  /* Colors - 100% Transparent Theme (No Blur Effect) */
   --bg-main: transparent;
-  --bg-card: rgba(255, 255, 255, 0.80);
-  --bg-card-hover: rgba(255, 255, 255, 0.88);
-  --border-color: rgba(203, 213, 225, 0.80);
-  --border-subtle: rgba(226, 232, 240, 0.80);
+  --bg-card: transparent;
+  --bg-card-hover: rgba(245, 158, 11, 0.06);
+  --border-color: rgba(203, 213, 225, 0.40);
+  --border-subtle: rgba(226, 232, 240, 0.30);
   --text-primary: #0f172a;
   --text-secondary: #334155;
   --text-muted: #64748b;
@@ -62,8 +62,8 @@
   --accent-emerald: #059669;
   --accent-sapphire: #0284c7;
   --accent-red: #dc2626;
-  --nav-bg: rgba(255, 255, 255, 0.80);
-  --nav-border: rgba(203, 213, 225, 0.80);
+  --nav-bg: transparent;
+  --nav-border: rgba(203, 213, 225, 0.40);
 }
 
 [data-theme="dark"] {
@@ -71,10 +71,10 @@
   --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.7), 0 2px 8px -2px rgba(0, 0, 0, 0.5);
   --shadow-card-hover: 0 20px 35px -6px rgba(0, 0, 0, 0.85), 0 0 24px 2px rgba(245, 158, 11, 0.22);
   --bg-main: transparent;
-  --bg-card: rgba(11, 15, 25, 0.80);
-  --bg-card-hover: rgba(17, 24, 39, 0.88);
-  --border-color: rgba(30, 41, 59, 0.80);
-  --border-subtle: rgba(15, 23, 42, 0.80);
+  --bg-card: transparent;
+  --bg-card-hover: rgba(255, 255, 255, 0.05);
+  --border-color: rgba(255, 255, 255, 0.12);
+  --border-subtle: rgba(255, 255, 255, 0.08);
   --text-primary: #f8fafc;
   --text-secondary: #cbd5e1;
   --text-muted: #94a3b8;
@@ -84,8 +84,8 @@
   --accent-emerald: #10b981;
   --accent-sapphire: #38bdf8;
   --accent-red: #ef4444;
-  --nav-bg: rgba(3, 7, 18, 0.80);
-  --nav-border: rgba(30, 41, 59, 0.80);
+  --nav-bg: transparent;
+  --nav-border: rgba(255, 255, 255, 0.12);
 }
 
 html, body, #root {
@@ -151,8 +151,8 @@ html[data-theme="dark"],
 .mesh-blob {
   position: absolute;
   border-radius: 50%;
-  filter: blur(40px);
-  opacity: 0.80;
+  filter: none !important;
+  opacity: 0.25;
   will-change: transform;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
@@ -164,7 +164,7 @@ html[data-theme="dark"],
   left: -5%;
   width: 45vw;
   height: 45vw;
-  background: radial-gradient(circle, rgba(245, 158, 11, 0.65) 0%, rgba(217, 119, 6, 0.3) 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, rgba(217, 119, 6, 0.05) 40%, transparent 70%);
   animation: floatMeshGold 24s ease-in-out infinite alternate;
 }
 
@@ -173,7 +173,7 @@ html[data-theme="dark"],
   right: -5%;
   width: 50vw;
   height: 50vw;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.6) 0%, rgba(5, 150, 105, 0.25) 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, rgba(5, 150, 105, 0.04) 40%, transparent 70%);
   animation: floatMeshEmerald 28s ease-in-out infinite alternate;
 }
 
@@ -182,7 +182,7 @@ html[data-theme="dark"],
   right: -8%;
   width: 40vw;
   height: 40vw;
-  background: radial-gradient(circle, rgba(2, 132, 199, 0.55) 0%, rgba(3, 105, 161, 0.2) 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(2, 132, 199, 0.12) 0%, rgba(3, 105, 161, 0.04) 40%, transparent 70%);
   animation: floatMeshSapphire 22s ease-in-out infinite alternate;
 }
 
@@ -191,14 +191,14 @@ html[data-theme="dark"],
   left: -8%;
   width: 42vw;
   height: 42vw;
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.5) 0%, rgba(109, 40, 217, 0.2) 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.10) 0%, rgba(109, 40, 217, 0.03) 40%, transparent 70%);
   animation: floatMeshAmethyst 26s ease-in-out infinite alternate;
 }
 
 /* Dark Mixed Chromatic Mesh Shifts on Dark Mode Toggle */
 [data-theme="dark"] .mesh-blob {
-  opacity: 0.80;
-  filter: blur(45px);
+  opacity: 0.20;
+  filter: none !important;
 }
 
 [data-theme="dark"] .mesh-blob-gold {
@@ -367,15 +367,17 @@ html[data-theme="dark"],
   }
 }
 
-/* Glassmorphism Effect */
+/* Transparent Surface (No Blur Effect) */
 .backdrop-blur-glass {
-  background: rgba(255, 255, 255, 0.80);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: transparent;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
 [data-theme="dark"] .backdrop-blur-glass {
-  background: rgba(15, 23, 42, 0.80);
+  background: transparent;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
 /* Custom Scrollbar */
@@ -771,8 +773,9 @@ html[data-theme="dark"],
 .modal-backdrop-unified {
   position: fixed;
   inset: 0;
-  background: rgba(2, 6, 23, 0.8);
-  backdrop-filter: blur(12px);
+  background: rgba(2, 6, 23, 0.75);
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   z-index: var(--z-modal, 1000);
   display: flex;
   align-items: center;
@@ -805,17 +808,20 @@ html[data-theme="dark"],
   transform: translateY(0);
 }
 
-/* 4. Compressed Header on Scroll */
+/* 4. Compressed Header on Scroll (100% Transparent, No Blur) */
 .header-compressed {
   padding-top: 0.375rem !important;
   padding-bottom: 0.375rem !important;
-  background: rgba(255, 255, 255, 0.80) !important;
-  backdrop-filter: blur(16px) !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.08) !important;
 }
 
 [data-theme="dark"] .header-compressed {
-  background: rgba(2, 6, 23, 0.80) !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   box-shadow: 0 4px 25px -2px rgba(0, 0, 0, 0.7) !important;
 }
 
