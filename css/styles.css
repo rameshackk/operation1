@@ -128,117 +128,132 @@ html[data-theme="dark"],
   transform: translate3d(0, 0, 0);
 }
 
-/* Fully Transparent Background Layer (Maximizes Background Animation Visibility) */
-.bg-glass-overlay-50 {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background-color: transparent;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  contain: strict;
-  transform: translate3d(0, 0, 0);
-  transition: background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-[data-theme="dark"] .bg-glass-overlay-50 {
-  background-color: transparent;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-}
-
+/* Vivid Moving Atmospheric Glowing Nebulae */
 .mesh-blob {
   position: absolute;
   border-radius: 50%;
   filter: none;
-  opacity: 0.70;
-  will-change: transform;
+  opacity: 0.90;
+  will-change: transform, opacity;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
-  transition: background 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+  transition: opacity 0.5s ease;
 }
 
 .mesh-blob-gold {
-  top: -10%;
-  left: -5%;
-  width: 45vw;
-  height: 45vw;
-  background: radial-gradient(circle, rgba(245, 158, 11, 0.65) 0%, rgba(217, 119, 6, 0.3) 40%, transparent 70%);
-  animation: floatMeshGold 24s ease-in-out infinite alternate;
+  top: -8%;
+  left: -8%;
+  width: 55vw;
+  height: 55vw;
+  background: radial-gradient(circle at 35% 35%, rgba(245, 158, 11, 0.75) 0%, rgba(217, 119, 6, 0.45) 35%, rgba(180, 83, 9, 0.2) 60%, transparent 80%);
+  animation: floatMeshGold 18s ease-in-out infinite alternate;
 }
 
 .mesh-blob-emerald {
-  bottom: -10%;
-  right: -5%;
-  width: 50vw;
-  height: 50vw;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.6) 0%, rgba(5, 150, 105, 0.25) 40%, transparent 70%);
-  animation: floatMeshEmerald 28s ease-in-out infinite alternate;
+  bottom: -8%;
+  right: -8%;
+  width: 58vw;
+  height: 58vw;
+  background: radial-gradient(circle at 65% 65%, rgba(16, 185, 129, 0.7) 0%, rgba(5, 150, 105, 0.4) 35%, rgba(4, 120, 87, 0.18) 60%, transparent 80%);
+  animation: floatMeshEmerald 22s ease-in-out infinite alternate;
 }
 
 .mesh-blob-sapphire {
-  top: 30%;
-  right: -8%;
-  width: 40vw;
-  height: 40vw;
-  background: radial-gradient(circle, rgba(2, 132, 199, 0.55) 0%, rgba(3, 105, 161, 0.2) 40%, transparent 70%);
-  animation: floatMeshSapphire 22s ease-in-out infinite alternate;
+  top: 25%;
+  right: -10%;
+  width: 52vw;
+  height: 52vw;
+  background: radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.75) 0%, rgba(2, 132, 199, 0.45) 35%, rgba(3, 105, 161, 0.2) 60%, transparent 80%);
+  animation: floatMeshSapphire 19s ease-in-out infinite alternate;
 }
 
 .mesh-blob-amethyst {
-  bottom: 15%;
-  left: -8%;
-  width: 42vw;
-  height: 42vw;
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.5) 0%, rgba(109, 40, 217, 0.2) 40%, transparent 70%);
-  animation: floatMeshAmethyst 26s ease-in-out infinite alternate;
+  bottom: 12%;
+  left: -10%;
+  width: 54vw;
+  height: 54vw;
+  background: radial-gradient(circle at 40% 40%, rgba(168, 85, 247, 0.7) 0%, rgba(139, 92, 246, 0.4) 35%, rgba(109, 40, 217, 0.18) 60%, transparent 80%);
+  animation: floatMeshAmethyst 21s ease-in-out infinite alternate;
 }
 
-/* Dark Mixed Chromatic Mesh Shifts on Dark Mode Toggle */
+/* Vivid Dark Mode Illumination for Left & Right Margins */
 [data-theme="dark"] .mesh-blob {
-  opacity: 0.60;
-  filter: none;
+  opacity: 0.85;
 }
 
 [data-theme="dark"] .mesh-blob-gold {
-  background: radial-gradient(circle, rgba(245, 158, 11, 0.4) 0%, rgba(217, 119, 6, 0.15) 40%, transparent 70%);
+  background: radial-gradient(circle at 35% 35%, rgba(245, 158, 11, 0.70) 0%, rgba(217, 119, 6, 0.38) 35%, rgba(180, 83, 9, 0.15) 60%, transparent 80%);
 }
 
 [data-theme="dark"] .mesh-blob-emerald {
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.35) 0%, rgba(5, 150, 105, 0.12) 40%, transparent 70%);
+  background: radial-gradient(circle at 65% 65%, rgba(16, 185, 129, 0.65) 0%, rgba(5, 150, 105, 0.35) 35%, rgba(4, 120, 87, 0.14) 60%, transparent 80%);
 }
 
 [data-theme="dark"] .mesh-blob-sapphire {
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.35) 0%, rgba(2, 132, 199, 0.12) 40%, transparent 70%);
+  background: radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.70) 0%, rgba(2, 132, 199, 0.38) 35%, rgba(3, 105, 161, 0.15) 60%, transparent 80%);
 }
 
 [data-theme="dark"] .mesh-blob-amethyst {
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.32) 0%, rgba(109, 40, 217, 0.1) 40%, transparent 70%);
+  background: radial-gradient(circle at 40% 40%, rgba(168, 85, 247, 0.65) 0%, rgba(139, 92, 246, 0.35) 35%, rgba(109, 40, 217, 0.14) 60%, transparent 80%);
+}
+
+/* Side Aurora Light Streams for Active Margin Motion */
+.aurora-side-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 25vw;
+  height: 100vh;
+  background: linear-gradient(180deg, rgba(245, 158, 11, 0.25) 0%, rgba(168, 85, 247, 0.2) 50%, rgba(245, 158, 11, 0.1) 100%);
+  animation: auroraSideFlowLeft 14s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.aurora-side-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 25vw;
+  height: 100vh;
+  background: linear-gradient(180deg, rgba(6, 182, 212, 0.25) 0%, rgba(16, 185, 129, 0.2) 50%, rgba(6, 182, 212, 0.1) 100%);
+  animation: auroraSideFlowRight 16s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes auroraSideFlowLeft {
+  0% { transform: translateY(-10%) scaleX(1); opacity: 0.6; }
+  50% { transform: translateY(10%) scaleX(1.15); opacity: 0.9; }
+  100% { transform: translateY(-5%) scaleX(0.9); opacity: 0.65; }
+}
+
+@keyframes auroraSideFlowRight {
+  0% { transform: translateY(10%) scaleX(1); opacity: 0.6; }
+  50% { transform: translateY(-10%) scaleX(1.15); opacity: 0.9; }
+  100% { transform: translateY(5%) scaleX(0.9); opacity: 0.65; }
 }
 
 @keyframes floatMeshGold {
-  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-  50% { transform: translate(8vw, 8vh) scale(1.14) rotate(12deg); }
-  100% { transform: translate(-4vw, 12vh) scale(0.9) rotate(-8deg); }
+  0% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate3d(12vw, 10vh, 0) scale(1.18) rotate(15deg); }
+  100% { transform: translate3d(-6vw, 14vh, 0) scale(0.92) rotate(-10deg); }
 }
 
 @keyframes floatMeshEmerald {
-  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-  50% { transform: translate(-8vw, -10vh) scale(1.15) rotate(-10deg); }
-  100% { transform: translate(5vw, -6vh) scale(0.92) rotate(8deg); }
+  0% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate3d(-12vw, -12vh, 0) scale(1.2) rotate(-12deg); }
+  100% { transform: translate3d(8vw, -8vh, 0) scale(0.9) rotate(10deg); }
 }
 
 @keyframes floatMeshSapphire {
-  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-  50% { transform: translate(-6vw, 6vh) scale(1.1) rotate(6deg); }
-  100% { transform: translate(3vw, -5vh) scale(0.95) rotate(-6deg); }
+  0% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate3d(-10vw, 8vh, 0) scale(1.15) rotate(8deg); }
+  100% { transform: translate3d(6vw, -8vh, 0) scale(0.92) rotate(-8deg); }
 }
 
 @keyframes floatMeshAmethyst {
-  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-  50% { transform: translate(10vw, -8vh) scale(1.12) rotate(8deg); }
-  100% { transform: translate(-6vw, 4vh) scale(0.88) rotate(-10deg); }
+  0% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate3d(14vw, -10vh, 0) scale(1.16) rotate(10deg); }
+  100% { transform: translate3d(-8vw, 6vh, 0) scale(0.88) rotate(-12deg); }
 }
 
 @keyframes auroraDrift {
