@@ -29432,10 +29432,10 @@ function CinemaTheaterModal({
     ? (video.descriptionTamil || video.description)
     : (video.descriptionEnglish || video.description);
 
-  const relatedVideos = allVideos
+  const relatedVideos = (allVideos && allVideos.length > 0 ? allVideos : (typeof videosData !== 'undefined' ? videosData : []))
     .filter(v => v.id !== video.id && (v.category === video.category || v.trending))
-    .slice(0, 4)
-    .map(v => translateVideo(v, language));
+    .slice(0, 10)
+    .map(v => (typeof translateVideo === 'function' ? translateVideo(v, language) : v));
 
   const handleShare = async () => {
     const shareUrl = youtubeWatchUrl || window.location.href;
@@ -29455,120 +29455,156 @@ function CinemaTheaterModal({
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-[1000] flex items-center justify-center p-2 sm:p-4 md:p-6 bg-slate-950/90 backdrop-blur-md"
+      className="fixed inset-0 z-[1000] flex items-center justify-center p-2 sm:p-4 lg:p-6 bg-slate-950/90 backdrop-blur-md animate-fadeIn"
     >
       <div
         onClick={onClose}
         className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm transition-opacity"
       />
 
-      <div className="relative w-full max-w-4xl max-h-[92vh] rounded-2xl sm:rounded-3xl bg-slate-900 border border-slate-700/80 shadow-2xl overflow-hidden z-10 text-white flex flex-col">
-        {/* Video Player Frame - Constrained to 56vh max so details are always visible without scrolling off screen */}
-        <div className="relative w-full aspect-video max-h-[54vh] sm:max-h-[58vh] bg-black shrink-0">
-          {embedUrl ? (
-            <iframe
-              src={embedUrl}
-              title={title}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-              className="w-full h-full border-0"
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center text-slate-400">
-              <span>Video player unavailable</span>
-            </div>
-          )}
-
-          <button
-            onClick={onClose}
-            aria-label="Close modal"
-            className="absolute top-3 right-3 w-9 h-9 rounded-full bg-slate-950/85 hover:bg-red-600 text-white flex items-center justify-center text-sm font-bold backdrop-blur-md border border-white/20 transition-all shadow-xl z-30"
-          >
-            ✕
-          </button>
-        </div>
-
-        {/* Compact Details & Related Videos Area */}
-        <div className="p-4 sm:p-5 space-y-4 overflow-y-auto flex-1 text-slate-200">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2">
-                <span className="px-2.5 py-0.5 rounded-full bg-amber-500 text-slate-950 text-[9px] font-black uppercase tracking-wider shadow">
-                  {(video.category || 'FINANCE').replace('-', ' ')}
-                </span>
-                <span className="text-xs font-mono text-slate-400">
-                  {video.duration || 'Full Guide'}
-                </span>
-                <span className="text-xs text-amber-400 font-bold">• CFP Verified</span>
-              </div>
-              <h2 className="text-base sm:text-lg font-black font-serif text-white leading-snug">
-                {title}
-              </h2>
-            </div>
-
-            <div className="flex items-center gap-2 shrink-0">
-              <button
-                onClick={handleShare}
-                className="btn-magnetic px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-slate-200 hover:text-white flex items-center gap-1.5 transition-colors"
-              >
-                <span>{copied ? 'Copied' : (isTamil ? 'பகிர்' : 'Share')}</span>
-              </button>
-
-              {youtubeWatchUrl && (
-                <a
-                  href={youtubeWatchUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="btn-magnetic px-3 py-1.5 rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs font-black transition-colors shadow flex items-center gap-1.5"
-                >
-                  <span>YouTube ↗</span>
-                </a>
-              )}
-            </div>
+      <div className="relative w-full max-w-6xl max-h-[90vh] rounded-2xl sm:rounded-3xl bg-slate-900 border border-slate-800 shadow-2xl overflow-hidden z-10 text-white flex flex-col">
+        {/* Top Header Bar with Close Button */}
+        <div className="flex items-center justify-between px-4 sm:px-6 py-3 border-b border-slate-800/80 bg-slate-950/70 backdrop-blur-md shrink-0">
+          <div className="flex items-center gap-2.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse" />
+            <span className="text-xs font-black uppercase tracking-wider text-amber-400">
+              {(video.category || 'FINANCE').replace('-', ' ')}
+            </span>
+            <span className="text-xs text-slate-500 font-mono hidden sm:inline">•</span>
+            <span className="text-xs font-mono text-slate-400 hidden sm:inline">
+              {video.duration || 'Full Guide'}
+            </span>
+            <span className="text-xs text-emerald-400 font-bold hidden md:inline">• CFP Verified</span>
           </div>
 
-          {description && (
-            <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80 text-xs text-slate-300 font-sans leading-relaxed whitespace-pre-line line-clamp-3">
-              {description}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleShare}
+              className="btn-magnetic px-3 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-slate-200 hover:text-white flex items-center gap-1.5 transition-colors"
+            >
+              <span>{copied ? 'Copied' : (isTamil ? 'பகிர்' : 'Share')}</span>
+            </button>
+
+            {youtubeWatchUrl && (
+              <a
+                href={youtubeWatchUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="btn-magnetic px-3 py-1 rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs font-black transition-colors shadow flex items-center gap-1"
+              >
+                <span>YouTube ↗</span>
+              </a>
+            )}
+
+            <button
+              onClick={onClose}
+              aria-label="Close modal"
+              className="w-8 h-8 rounded-full bg-slate-800 hover:bg-red-600 text-slate-300 hover:text-white flex items-center justify-center transition-colors text-sm font-bold border border-slate-700 ml-1"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+
+        {/* Main 2-Column Theater Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 overflow-y-auto flex-1 divide-y lg:divide-y-0 lg:divide-x divide-slate-800/80">
+          {/* Left Column (Main Video Player + Metadata) - 8 Cols */}
+          <div className="lg:col-span-8 flex flex-col overflow-y-auto p-4 sm:p-5 space-y-4 bg-slate-950/40">
+            {/* 16:9 Video Frame */}
+            <div className="relative aspect-video w-full rounded-xl sm:rounded-2xl overflow-hidden bg-black shadow-2xl border border-slate-800/80 shrink-0">
+              {embedUrl ? (
+                <iframe
+                  src={embedUrl}
+                  title={title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  className="w-full h-full border-0"
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-slate-400">
+                  <span>Video player unavailable</span>
+                </div>
+              )}
             </div>
-          )}
 
-          {relatedVideos.length > 0 && (
-            <div className="space-y-2 pt-1">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                {isTamil ? 'தொடர்புடைய வீடியோக்கள்' : 'Related Insights'}
-              </h3>
-
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                {relatedVideos.map((rel) => {
-                  const relTitle = isTamil
-                    ? (rel.titleTamil || rel.title)
-                    : (rel.titleEnglish || rel.title);
-
-                  return (
-                    <div
-                      key={`theater-related-${rel.id}`}
-                      role="button"
-                      tabIndex={0}
-                      onClick={() => onSelectRelated && onSelectRelated(rel)}
-                      className="group p-2 rounded-xl bg-slate-950/60 hover:bg-slate-800 border border-slate-800 hover:border-amber-500/60 transition-all cursor-pointer flex flex-col gap-1.5"
-                    >
-                      <div className="relative aspect-video rounded-lg overflow-hidden bg-slate-950">
-                        <img
-                          src={rel.thumbnail || `https://img.youtube.com/vi/${rel.youtubeId}/hqdefault.jpg`}
-                          alt={relTitle}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        />
-                      </div>
-                      <h4 className="text-[11px] font-bold text-slate-200 group-hover:text-amber-400 line-clamp-2 leading-tight">
-                        {relTitle}
-                      </h4>
-                    </div>
-                  );
-                })}
+            {/* Video Title & Channel Info */}
+            <div className="space-y-2">
+              <h2 className="text-base sm:text-xl font-black font-serif text-white leading-snug">
+                {title}
+              </h2>
+              <div className="flex items-center gap-3 text-xs text-slate-400 flex-wrap">
+                <span className="font-bold text-amber-400">{video.channelName || 'Budget Padmanaban'}</span>
+                <span>•</span>
+                <span>{video.views ? `${video.views.toLocaleString()} views` : 'Masterclass'}</span>
+                {video.publishedAt && (
+                  <>
+                    <span>•</span>
+                    <span>{new Date(video.publishedAt).toLocaleDateString()}</span>
+                  </>
+                )}
               </div>
             </div>
-          )}
+
+            {/* Collapsible / Clean Description */}
+            {description && (
+              <div className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 text-xs sm:text-sm text-slate-300 font-sans leading-relaxed whitespace-pre-line">
+                {description}
+              </div>
+            )}
+          </div>
+
+          {/* Right Column (Related Videos Sidebar) - 4 Cols */}
+          <div className="lg:col-span-4 flex flex-col bg-slate-900/95 overflow-hidden">
+            <div className="px-4 py-3 border-b border-slate-800 bg-slate-900/80 flex items-center justify-between shrink-0">
+              <h3 className="text-xs font-black uppercase tracking-wider text-slate-300 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-amber-500" />
+                <span>{isTamil ? 'தொடர்புடைய வீடியோக்கள்' : 'Related Masterclasses'}</span>
+              </h3>
+              <span className="text-[10px] font-mono font-bold text-slate-500">
+                {relatedVideos.length} {isTamil ? 'வீடியோக்கள்' : 'videos'}
+              </span>
+            </div>
+
+            <div className="p-3 space-y-2.5 overflow-y-auto flex-1 divide-y divide-slate-800/40">
+              {relatedVideos.map((rel) => {
+                const relTitle = isTamil
+                  ? (rel.titleTamil || rel.title)
+                  : (rel.titleEnglish || rel.title);
+
+                return (
+                  <div
+                    key={`theater-related-${rel.id}`}
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => onSelectRelated && onSelectRelated(rel)}
+                    className="group flex items-start gap-3 p-2 rounded-xl hover:bg-slate-800/80 border border-transparent hover:border-amber-500/30 transition-all cursor-pointer pt-2.5 first:pt-2"
+                  >
+                    <div className="relative w-28 sm:w-32 aspect-video rounded-lg overflow-hidden shrink-0 bg-slate-950 shadow">
+                      <img
+                        src={rel.thumbnail || `https://img.youtube.com/vi/${rel.youtubeId}/hqdefault.jpg`}
+                        alt={relTitle}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <span className="absolute bottom-1 right-1 px-1.5 py-0.5 rounded bg-black/85 text-[8px] font-mono font-bold text-slate-200">
+                        {rel.duration || '12:00'}
+                      </span>
+                    </div>
+
+                    <div className="flex-1 min-w-0 space-y-1">
+                      <h4 className="text-xs font-bold text-slate-200 group-hover:text-amber-400 line-clamp-2 leading-tight transition-colors">
+                        {relTitle}
+                      </h4>
+                      <div className="flex items-center gap-1.5 text-[10px] text-slate-400">
+                        <span className="text-amber-500 font-semibold uppercase text-[9px]">
+                          {(rel.category || 'FINANCE').replace('-', ' ')}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
     </div>
