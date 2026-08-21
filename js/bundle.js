@@ -29795,27 +29795,33 @@ function HomeCinemaShowcase({ onNavigate, onShowToast, language = 'ta' }) {
   const { videos: allVideos = [], isLoading } = useVideos('all', 'newest');
 
   const categories = [
-    { id: 'featured', labelTa: 'முக்கிய பதிவுகள்', labelEn: 'Featured & Trending' },
+    { id: 'featured', labelTa: 'சமீபத்திய & முக்கிய வீடியோக்கள்', labelEn: 'Latest & Featured' },
+    { id: 'personal-finance', labelTa: 'தனிநபர் நிதி & சேமிப்பு', labelEn: 'Personal Finance' },
     { id: 'mutual-funds', labelTa: 'மியூச்சுவல் ஃபண்ட் & SIP', labelEn: 'Mutual Funds & SIP' },
-    { id: 'stocks', labelTa: 'பங்குச் சந்தை & IPO', labelEn: 'Stocks & IPO' },
+    { id: 'stocks', labelTa: 'பங்குச் சந்தை & IPO', labelEn: 'Stocks & Markets' },
     { id: 'tax-saving', labelTa: 'வரி சேமிப்பு & ஓய்வூதியம்', labelEn: 'Tax & Retirement' },
+    { id: 'education', labelTa: 'முதலீட்டுக் கல்வி', labelEn: 'Financial Education' },
     { id: 'shorts', labelTa: 'குறுகிய வீடியோக்கள் (Shorts)', labelEn: 'Quick Takes (Shorts)' }
   ];
 
   const showcaseVideos = useMemo(() => {
     let list = [...allVideos];
     if (activeCategory === 'featured') {
-      list = list.filter(v => v.trending || v.views > 20000).slice(0, 10);
+      return list.slice(0, 10);
     } else if (activeCategory === 'shorts') {
-      list = list.filter(v => v.isShort || (v.tags && v.tags.includes('shorts'))).slice(0, 10);
+      return list.filter(v => v.isShort || (v.tags && v.tags.includes('shorts'))).slice(0, 10);
+    } else if (activeCategory === 'personal-finance') {
+      return list.filter(v => v.category === 'personal-finance').slice(0, 10);
     } else if (activeCategory === 'mutual-funds') {
-      list = list.filter(v => v.category === 'mutual-funds').slice(0, 10);
+      return list.filter(v => v.category === 'mutual-funds').slice(0, 10);
     } else if (activeCategory === 'stocks') {
-      list = list.filter(v => v.category === 'stocks' || v.category === 'ipo').slice(0, 10);
+      return list.filter(v => v.category === 'stocks' || v.category === 'ipo').slice(0, 10);
     } else if (activeCategory === 'tax-saving') {
-      list = list.filter(v => v.category === 'tax-saving' || v.category === 'retirement').slice(0, 10);
+      return list.filter(v => v.category === 'tax-saving' || v.category === 'retirement').slice(0, 10);
+    } else if (activeCategory === 'education') {
+      return list.filter(v => v.category === 'education').slice(0, 10);
     }
-    return list;
+    return list.slice(0, 10);
   }, [allVideos, activeCategory]);
 
   return (
@@ -29825,7 +29831,7 @@ function HomeCinemaShowcase({ onNavigate, onShowToast, language = 'ta' }) {
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
             <span className="px-2 py-0.5 text-[9px] font-black uppercase tracking-wider rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
-              {isTamil ? 'சிறப்புக் காணொளிகள்' : 'FEATURED VIDEOS'}
+              {isTamil ? 'நேரலை யூடியூப் வீடியோக்கள்' : 'LIVE YOUTUBE MASTERCLASSES'}
             </span>
           </div>
           <h2 className="text-lg sm:text-2xl font-black text-slate-900 dark:text-white font-serif tracking-tight">
@@ -29833,8 +29839,8 @@ function HomeCinemaShowcase({ onNavigate, onShowToast, language = 'ta' }) {
           </h2>
           <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
             {isTamil
-              ? 'பட்ஜெட் பத்மநாபன் CFP® வழங்கும் மியூச்சுவல் ஃபண்ட் மற்றும் நிதி முதலீட்டு வழிகாட்டுதல்கள்'
-              : 'Curated financial guidance, mutual fund analysis & wealth strategies by Padmanaban B. CFP®'}
+              ? 'பட்ஜெட் பத்மநாபன் CFP® மற்றும் சரிபார்க்கப்பட்ட நிபுணர்களின் நேரடி வீடியோ வழிகாட்டிகள்'
+              : 'Live video masterclasses & financial insights by Padmanaban B. CFP® & certified advisors'}
           </p>
         </div>
 
@@ -29843,7 +29849,7 @@ function HomeCinemaShowcase({ onNavigate, onShowToast, language = 'ta' }) {
             onClick={() => onNavigate && onNavigate('#/videos')}
             className="btn-magnetic px-3.5 py-1.5 rounded-xl bg-slate-900 dark:bg-slate-800 hover:bg-amber-600 dark:hover:bg-amber-500 text-white dark:hover:text-slate-950 text-xs font-black transition-all shadow-sm flex items-center gap-1.5"
           >
-            <span>{isTamil ? 'அனைத்து 882 வீடியோக்கள்' : 'Browse All 882 Videos'}</span>
+            <span>{isTamil ? `அனைத்து ${allVideos.length || 882} வீடியோக்கள்` : `Browse All ${allVideos.length || 882} Videos`}</span>
             <span>→</span>
           </button>
         </div>
@@ -29870,18 +29876,30 @@ function HomeCinemaShowcase({ onNavigate, onShowToast, language = 'ta' }) {
       </div>
 
       {/* 5-Column Level Responsive Grid (2 mobile, 3 sm, 4 md, 5 lg/xl) */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5 sm:gap-4">
-        {showcaseVideos.map((video, idx) => (
-          <CinemaVideoCard
-            key={`home-cinema-${video.id || idx}`}
-            video={video}
-            index={idx}
-            onSelect={(v) => setSelectedVideo(v)}
-            language={language}
-            onShowToast={onShowToast}
-          />
-        ))}
-      </div>
+      {isLoading && showcaseVideos.length === 0 ? (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5 sm:gap-4 animate-pulse">
+          {Array.from({ length: 10 }).map((_, idx) => (
+            <div key={idx} className="rounded-2xl bg-slate-200 dark:bg-slate-800/60 aspect-[16/12] p-3 space-y-2">
+              <div className="aspect-video bg-slate-300 dark:bg-slate-700/60 rounded-xl" />
+              <div className="h-3 bg-slate-300 dark:bg-slate-700/60 rounded w-3/4" />
+              <div className="h-2 bg-slate-300 dark:bg-slate-700/60 rounded w-1/2" />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5 sm:gap-4">
+          {showcaseVideos.map((video, idx) => (
+            <CinemaVideoCard
+              key={`home-cinema-${video.id || idx}`}
+              video={video}
+              index={idx}
+              onSelect={(v) => setSelectedVideo(v)}
+              language={language}
+              onShowToast={onShowToast}
+            />
+          ))}
+        </div>
+      )}
 
       {selectedVideo && (
         <CinemaTheaterModal
