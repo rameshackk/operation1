@@ -124,32 +124,6 @@ html[data-theme="dark"],
   color: #f8fafc;
 }
 
-/* Vanta.js 3D Animated Clouds Background */
-#vanta-bg {
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-  opacity: 0;
-  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-[data-theme="dark"] #vanta-bg {
-  opacity: 1;
-}
-
-#vanta-bg canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100% !important;
-  height: 100% !important;
-  pointer-events: none;
-}
-
 .perspective-1000 {
   perspective: 1000px;
 }
