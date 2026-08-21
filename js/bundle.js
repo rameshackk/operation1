@@ -27719,7 +27719,7 @@ function useLiveArticles() {
     let isMounted = true;
     const fetchArticles = async () => {
       try {
-        const res = await fetch('/api/articles?limit=30&sort=newest');
+        const res = await fetch(`/api/articles?limit=30&sort=newest&_t=${Date.now()}`);
         if (res.ok) {
           const json = await res.json();
           const list = json.data || [];
@@ -27738,7 +27738,16 @@ function useLiveArticles() {
     };
 
     fetchArticles();
-    return () => { isMounted = false; };
+
+    const handleUpdate = () => {
+      fetchArticles();
+    };
+
+    window.addEventListener('articles_updated', handleUpdate);
+    return () => {
+      isMounted = false;
+      window.removeEventListener('articles_updated', handleUpdate);
+    };
   }, []);
 
   return { liveArticles, isLoading };
@@ -33476,6 +33485,11 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to save article');
 
+      try {
+        localStorage.removeItem('muthaleetu_articles_cache');
+        window.dispatchEvent(new CustomEvent('articles_updated'));
+      } catch (_) {}
+
       if (onShowToast) {
         onShowToast(publishNow ? (isTamil ? 'கட்டுரை உடனடியாக வெளியிடப்பட்டது! ' : 'Article published live! ') : (isTamil ? 'வரைவு சேமிக்கப்பட்டது.' : 'Article draft saved.'));
       }
@@ -33483,7 +33497,7 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
       if (publishNow && data.data?.slug) {
         onNavigate(`#/articles/${data.data.slug}`);
       } else {
-        onNavigate('#/admin/articles');
+        onNavigate(role === 'admin' ? '#/admin/articles' : '#/profile');
       }
 
     } catch (err) {
@@ -33494,7 +33508,7 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
     }
   };
 
-  if (role !== 'admin') return null;
+  if (role !== 'admin' && role !== 'publisher') return null;
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fadeIn">
