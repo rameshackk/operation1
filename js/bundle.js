@@ -1576,14 +1576,14 @@ function Header({ onOpenSearch, onNavigate }) {
   };
 
   return (
-    <header className={`w-full relative z-40 transition-all duration-300 border-b border-slate-200 dark:border-slate-800 backdrop--glass bg-white/95 dark:bg-slate-950/95 ${
-      isScrolled ? 'py-2 shadow-sm' : 'py-3'
+    <header className={`w-full relative z-40 transition-all duration-300 border-b border-slate-800/80 bg-slate-950 text-white ${
+      isScrolled ? 'py-2 shadow-lg' : 'py-3'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
         
         {/* Left Side: Welcome Badge */}
         <div className="hidden sm:flex items-center gap-2 min-w-[140px] md:min-w-[170px] shrink-0">
-          <span className="inline-flex items-center gap-2 px-3 py-1 text-xs font-bold rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/25 shadow-sm">
+          <span className="inline-flex items-center gap-2 px-3 py-1 text-xs font-bold rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/25 shadow-sm">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <span>{t('welcome')}</span>
           </span>
@@ -1601,15 +1601,15 @@ function Header({ onOpenSearch, onNavigate }) {
           </div>
           <div>
             <div className="flex items-center gap-2.5 justify-center sm:justify-start">
-              <h1 className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 dark:text-white font-serif group-hover:text-amber-600 transition-colors whitespace-nowrap">
+              <h1 className="text-xl sm:text-2xl font-black tracking-tight text-white font-serif group-hover:text-amber-400 transition-colors whitespace-nowrap">
                 {t('siteName')}
               </h1>
-              <span className="sm:hidden inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
+              <span className="sm:hidden inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 <span>{t('welcome')}</span>
               </span>
             </div>
-            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:block">
+            <p className="text-xs text-slate-400 font-medium hidden sm:block">
               {t('tagline')}
             </p>
           </div>
@@ -1619,10 +1619,10 @@ function Header({ onOpenSearch, onNavigate }) {
         <div className="flex items-center justify-end gap-2 sm:gap-2.5 shrink-0">
           <button
             onClick={onOpenSearch}
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all text-xs font-semibold border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md"
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-slate-900 text-slate-200 hover:bg-slate-800 hover:text-white transition-all text-xs font-semibold border border-slate-700 shadow-sm hover:shadow-md"
             aria-label="Search"
           >
-            <svg className="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+            <svg className="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
             <span className="hidden md:inline">{t('searchTitle')}</span>
           </button>
           <LanguageSwitcher />

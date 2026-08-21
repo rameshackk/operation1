@@ -802,3 +802,11 @@ html:not([data-theme="dark"]) table tbody tr:hover,
   background-color: rgba(249, 248, 246, 0.8) !important;
 }
 
+/* Top site header bar is intentionally always dark */
+header {
+  background-color: #050811 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: #f8fafc !important;
+}
+
+
