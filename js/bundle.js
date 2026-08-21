@@ -34045,19 +34045,34 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
   const isTamil = language === 'ta';
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [livePublishers, setLivePublishers] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
 
-  // Fetch live publishers from PostgreSQL /api/publishers with real-time update listener
+  // 1. Instant Cache-First Initialization (Zero render delay)
+  const [livePublishers, setLivePublishers] = useState(() => {
+    try {
+      const cached = localStorage.getItem('muthaleetu_publishers_cache');
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch (_) {}
+    return [];
+  });
+  const [isLoading, setIsLoading] = useState(() => livePublishers.length === 0);
+
+  // Fetch live publishers from PostgreSQL /api/publishers with background cache sync
   useEffect(() => {
     let isMounted = true;
-    async function loadPublishers() {
+    async function loadPublishers(forceFresh = false) {
       try {
-        const res = await fetch('/api/publishers?t=' + Date.now());
+        const url = forceFresh ? `/api/publishers?t=${Date.now()}` : '/api/publishers';
+        const res = await fetch(url);
         if (res.ok) {
           const json = await res.json();
           if (isMounted && json.data && Array.isArray(json.data)) {
             setLivePublishers(json.data);
+            try {
+              localStorage.setItem('muthaleetu_publishers_cache', JSON.stringify(json.data));
+            } catch (_) {}
           }
         }
       } catch (err) {
@@ -34068,7 +34083,7 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
     }
     loadPublishers();
 
-    const handleUpdate = () => loadPublishers();
+    const handleUpdate = () => loadPublishers(true);
     window.addEventListener('publisher-profile-updated', handleUpdate);
     return () => {
       isMounted = false;
@@ -34142,7 +34157,7 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
       });
     });
 
-    // 2. Default Seed Specialists (if not already in database)
+    // 2. Default Seed Specialists (only if not already in database)
     (professionalsData || []).forEach(seed => {
       const matchName = (seed.nameEnglish || '').toLowerCase();
       if (!seenIds.has(seed.id) && !seenNames.has(matchName)) {
@@ -34264,8 +34279,34 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
         })}
       </div>
 
-      {/* Grid of Professionals Cards */}
-      {filteredProfessionals.length > 0 ? (
+      {/* Grid of Professionals Cards or Skeleton Loaders */}
+      {isLoading && livePublishers.length === 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[1, 2, 3, 4, 5, 6].map((n) => (
+            <div
+              key={n}
+              className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-5 animate-pulse"
+            >
+              <div className="flex items-start justify-between">
+                <div className="w-16 h-16 rounded-2xl bg-slate-200 dark:bg-slate-800" />
+                <div className="w-28 h-6 rounded-full bg-slate-200 dark:bg-slate-800" />
+              </div>
+              <div className="space-y-2">
+                <div className="w-3/4 h-5 rounded-lg bg-slate-200 dark:bg-slate-800" />
+                <div className="w-1/2 h-4 rounded-lg bg-slate-200 dark:bg-slate-800" />
+              </div>
+              <div className="space-y-2 pt-2">
+                <div className="w-full h-3 rounded bg-slate-200 dark:bg-slate-800" />
+                <div className="w-5/6 h-3 rounded bg-slate-200 dark:bg-slate-800" />
+              </div>
+              <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex justify-between">
+                <div className="w-20 h-4 rounded bg-slate-200 dark:bg-slate-800" />
+                <div className="w-20 h-4 rounded bg-slate-200 dark:bg-slate-800" />
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : filteredProfessionals.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProfessionals.map((prof) => {
             const name = isTamil ? prof.nameTamil : prof.nameEnglish;
@@ -34388,9 +34429,23 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
   const isTamil = language === 'ta';
   const [activeTab, setActiveTab] = useState('articles');
   const [selectedVideo, setSelectedVideo] = useState(null);
-  const [livePublisher, setLivePublisher] = useState(null);
+
+  // 1. Instant Cache-First Initialization
+  const [livePublisher, setLivePublisher] = useState(() => {
+    try {
+      const cached = localStorage.getItem('muthaleetu_publishers_cache');
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed)) {
+          const match = parsed.find(p => p.id === professionalId || p.arn_number === professionalId);
+          if (match) return match;
+        }
+      }
+    } catch (_) {}
+    return null;
+  });
   const [liveArticles, setLiveArticles] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(() => !livePublisher);
 
   // Fetch publisher data by ID from /api/publishers?id=...
   useEffect(() => {
@@ -34417,7 +34472,7 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
     return () => { isMounted = false; };
   }, [professionalId]);
 
-  // Fallback to static seed data if not found in live DB
+  // Fallback to static seed data ONLY IF professionalId matches seed data
   const seedProf = professionalsData.find(p => p.id === professionalId || p.slug === professionalId);
 
   const prof = useMemo(() => {
@@ -34428,7 +34483,7 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
         nameTamil: livePublisher.display_name || 'அங்கீகரிக்கப்பட்ட ஆலோசகர்',
         titleEnglish: livePublisher.title || 'AMFI Registered Mutual Fund Distributor',
         titleTamil: livePublisher.title || 'பதிவுசெய்யப்பட்ட நிதி ஆலோசகர்',
-        organization: 'FISPL Certified Partner',
+        organization: 'Fortune Investment Services (FISPL Partner)',
         arnNumber: livePublisher.arn_number || '',
         avatar: livePublisher.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(livePublisher.display_name || 'Advisor')}&background=f59e0b&color=0f172a&bold=true`,
         badgeEnglish: 'VERIFIED ADVISOR',
@@ -34449,10 +34504,46 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
         }
       };
     }
-    return seedProf || professionalsData[0];
+    return seedProf || null;
   }, [livePublisher, seedProf]);
 
-  if (!prof) return null;
+  // Skeleton state while profile is loading
+  if (isLoading && !prof) {
+    return (
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-pulse">
+        <div className="w-36 h-9 rounded-xl bg-slate-200 dark:bg-slate-800" />
+        <div className="rounded-3xl bg-slate-900 border border-slate-800 p-6 sm:p-8 flex flex-col md:flex-row items-center md:items-start gap-6">
+          <div className="w-32 h-32 rounded-3xl bg-slate-800 shrink-0" />
+          <div className="space-y-4 flex-1 w-full text-center md:text-left">
+            <div className="w-1/3 h-8 bg-slate-800 rounded-lg mx-auto md:mx-0" />
+            <div className="w-1/4 h-4 bg-slate-800 rounded mx-auto md:mx-0" />
+            <div className="w-full h-12 bg-slate-800 rounded-lg" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Not Found state
+  if (!prof) {
+    return (
+      <div className="max-w-4xl mx-auto px-4 py-16 text-center space-y-4">
+        <div className="text-4xl">⚠️</div>
+        <h2 className="text-xl font-bold text-slate-900 dark:text-white font-serif">
+          {isTamil ? 'ஆலோசகர் சுயவிவரம் கிடைக்கவில்லை' : 'Advisor Profile Not Found'}
+        </h2>
+        <p className="text-sm text-slate-500">
+          {isTamil ? 'கோரப்பட்ட ஆலோசகர் விவரங்கள் கிடைக்கவில்லை அல்லது நீக்கப்பட்டு இருக்கலாம்.' : 'The requested advisor profile may have been removed or does not exist.'}
+        </p>
+        <button
+          onClick={() => onNavigate && onNavigate('#/professionals')}
+          className="px-5 py-2.5 rounded-xl bg-amber-500 text-slate-950 font-bold text-xs"
+        >
+          {isTamil ? 'அனைத்து நிபுணர்கள் பட்டியல்' : 'Back to Advisors Directory'}
+        </button>
+      </div>
+    );
+  }
 
   const name = isTamil ? prof.nameTamil : prof.nameEnglish;
   const title = isTamil ? prof.titleTamil : prof.titleEnglish;

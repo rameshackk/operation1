@@ -66,7 +66,7 @@ export default async function handler(req, res) {
         `;
         const articlesRes = await pgPool.query(articlesQuery, [String(publisher.id)]);
 
-        res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+        res.setHeader('Cache-Control', 'public, s-maxage=30, stale-while-revalidate=120');
         return res.status(200).json({
           status: 'success',
           data: {
@@ -157,7 +157,7 @@ export default async function handler(req, res) {
 
       const result = await pgPool.query(query, params);
 
-      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.setHeader('Cache-Control', 'public, s-maxage=30, stale-while-revalidate=120');
       return res.status(200).json({
         status: 'success',
         data: result.rows
