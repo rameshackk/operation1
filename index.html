@@ -16,7 +16,7 @@
 
   <!-- PWA & Theme -->
   <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#0F172A" />
+  <meta name="theme-color" content="#020617" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Muthaleetu Thisai" />
@@ -80,7 +80,7 @@
   </script>
 
   <!-- Custom Styles & Design Tokens -->
-  <link rel="stylesheet" href="css/styles.css?v=4.4.0" />
+  <link rel="stylesheet" href="css/styles.css?v=4.5.0" />
 
   <!-- React 18 & ReactDOM 18 UMD Global Scripts -->
   <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
@@ -93,186 +93,49 @@
     window.SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV0YW5va2R2Znl2a2lkcGVvdmRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY2ODUxNzUsImV4cCI6MjEwMjI2MTE3NX0.SLzp5gIZyZdB7nmDrfjvghFbAwKwAIWuf4Ys_HC4AaE";
   </script>
 
+  <!-- Three.js (r134) & Vanta.js Clouds Engine -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanta/0.5.24/vanta.clouds.min.js"></script>
+
   <!-- Babel standalone for browser JSX compilation -->
   <script src="https://unpkg.com/@babel/standalone@7.23.6/babel.min.js"></script>
 </head>
 <body class="text-slate-900 dark:text-slate-100 antialiased relative">
 
-  <!-- Dynamic Mixed Chromatic Atmosphere (Gold, Emerald, Sapphire, Amethyst) -->
-  <div class="mixed-mesh-ambient">
-    <div class="aurora-side-left"></div>
-    <div class="aurora-side-right"></div>
-    <div class="mesh-blob mesh-blob-gold"></div>
-    <div class="mesh-blob mesh-blob-emerald"></div>
-    <div class="mesh-blob mesh-blob-sapphire"></div>
-    <div class="mesh-blob mesh-blob-amethyst"></div>
-  </div>
-
-  <!-- Subtle Financial Matrix Grid Background -->
-  <div class="wealth-bg-grid"></div>
-
-  <!-- Animated Mutual Fund & Wealth Growth Background Engine -->
-  <canvas id="growth-canvas" class="fixed inset-0 pointer-events-none z-0 select-none"></canvas>
+  <!-- Vanta.js 3D Clouds Background Container -->
+  <div id="vanta-bg" class="fixed inset-0 pointer-events-none z-0"></div>
   <script>
     (function() {
-      const canvas = document.getElementById('growth-canvas');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return;
-
-      let w = 0, h = 0;
-      function resize() {
-        const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        w = window.innerWidth;
-        h = window.innerHeight;
-        canvas.width = w * dpr;
-        canvas.height = h * dpr;
-        ctx.scale(dpr, dpr);
-      }
-      resize();
-      window.addEventListener('resize', resize, { passive: true });
-
-      // Financial Wealth Badges & Symbols
-      const symbols = ['₹', '+18.4%', '+24.6%', 'SIP ↑', 'NAV ↑', '₹10L', '₹1Cr', '📈', '💹', '⭐', '+15.2%', '₹'];
-      const colors = ['#f59e0b', '#10b981', '#fbbf24', '#34d399', '#38bdf8', '#ffffff'];
-
-      // Rising Wealth Floating Elements
-      const items = [];
-      const count = 38;
-
-      for (let i = 0; i < count; i++) {
-        const isLeft = Math.random() < 0.52;
-        const x = isLeft ? Math.random() * (w * 0.22) + 10 : w * 0.78 + Math.random() * (w * 0.20);
-        items.push({
-          x: x,
-          y: Math.random() * h,
-          vy: Math.random() * 0.75 + 0.35,
-          vx: (Math.random() - 0.5) * 0.25,
-          text: symbols[Math.floor(Math.random() * symbols.length)],
-          color: colors[Math.floor(Math.random() * colors.length)],
-          size: Math.random() * 5 + 11,
-          alpha: Math.random() * 0.45 + 0.45,
-          isBadge: Math.random() > 0.45
-        });
-      }
-
-      let time = 0;
-
-      function render() {
-        ctx.clearRect(0, 0, w, h);
-        time += 0.015;
-
-        // 1. Draw Glowing Ascending Financial Growth Curves (Bull Market Trendline)
-        ctx.save();
-        
-        // Golden Trend Wave
-        ctx.beginPath();
-        ctx.lineWidth = 2.5;
-        ctx.strokeStyle = 'rgba(245, 158, 11, 0.45)';
-        for (let x = 0; x <= w; x += 15) {
-          const progress = x / w;
-          const baseline = h * 0.82 - progress * (h * 0.62);
-          const y = baseline + Math.sin(x * 0.005 + time) * 35 + Math.cos(x * 0.008 - time * 0.7) * 20;
-          if (x === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        }
-        ctx.stroke();
-
-        // Emerald Compounding Wave
-        ctx.beginPath();
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = 'rgba(16, 185, 129, 0.4)';
-        for (let x = 0; x <= w; x += 15) {
-          const progress = x / w;
-          const baseline = h * 0.88 - progress * (h * 0.68);
-          const y = baseline + Math.sin(x * 0.006 - time * 1.1) * 30 + Math.cos(x * 0.004 + time * 0.5) * 25;
-          if (x === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        }
-        ctx.stroke();
-
-        // Glowing Milestone Nodes on the Golden Trendline
-        for (let i = 1; i <= 5; i++) {
-          const nx = (w / 6) * i;
-          const progress = nx / w;
-          const ny = (h * 0.82 - progress * (h * 0.62)) + Math.sin(nx * 0.005 + time) * 35 + Math.cos(nx * 0.008 - time * 0.7) * 20;
-          
-          // Outer Pulse Ring
-          const pulse = (Math.sin(time * 3 + i) + 1) * 3.5;
-          ctx.beginPath();
-          ctx.arc(nx, ny, 5 + pulse, 0, Math.PI * 2);
-          ctx.strokeStyle = 'rgba(251, 191, 36, 0.45)';
-          ctx.lineWidth = 1.5;
-          ctx.stroke();
-
-          // Inner Solid Glowing Node
-          ctx.beginPath();
-          ctx.arc(nx, ny, 3, 0, Math.PI * 2);
-          ctx.fillStyle = '#fbbf24';
-          ctx.fill();
-        }
-
-        ctx.restore();
-
-        // 2. Draw Floating Upward Wealth & Mutual Fund Growth Badges
-        items.forEach(function(item) {
-          item.y -= item.vy;
-          item.x += item.vx;
-
-          if (item.y < -40) {
-            item.y = h + 40;
-            const isLeft = Math.random() < 0.52;
-            item.x = isLeft ? Math.random() * (w * 0.22) + 10 : w * 0.78 + Math.random() * (w * 0.20);
+      function initVantaClouds() {
+        if (window.VANTA && window.VANTA.CLOUDS) {
+          try {
+            window._vantaCloudsEffect = window.VANTA.CLOUDS({
+              el: "#vanta-bg",
+              mouseControls: true,
+              touchControls: true,
+              gyroControls: false,
+              minHeight: 200.00,
+              minWidth: 200.00,
+              backgroundColor: 0xffffff,
+              skyColor: 0x77775c,
+              cloudColor: 0xadc1de,
+              cloudShadowColor: 0x285495,
+              sunColor: 0xff9919,
+              sunGlareColor: 0xb33311,
+              sunlightColor: 0xff9933,
+              speed: 1.00
+            });
+          } catch(e) {
+            console.error("VANTA.CLOUDS init error:", e);
           }
-
-          ctx.save();
-          ctx.translate(item.x, item.y);
-          ctx.globalAlpha = item.alpha;
-
-          if (item.isBadge && !['📈', '💹', '⭐'].includes(item.text)) {
-            // Draw sleek rounded financial badge pill
-            ctx.font = 'bold ' + Math.round(item.size) + 'px sans-serif';
-            const metrics = ctx.measureText(item.text);
-            const padX = 7;
-            const padY = 3.5;
-            const boxW = metrics.width + padX * 2;
-            const boxH = item.size + padY * 2;
-
-            ctx.fillStyle = 'rgba(15, 23, 42, 0.75)';
-            ctx.strokeStyle = item.color;
-            ctx.lineWidth = 1.2;
-            
-            // Rounded rectangle badge
-            ctx.beginPath();
-            if (ctx.roundRect) {
-              ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 6);
-            } else {
-              ctx.rect(-boxW / 2, -boxH / 2, boxW, boxH);
-            }
-            ctx.fill();
-            ctx.stroke();
-
-            // Text
-            ctx.fillStyle = item.color;
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(item.text, 0, 1);
-          } else {
-            // Standalone glowing symbol / currency
-            ctx.font = (item.text === '₹' ? 'bold ' : '') + Math.round(item.size * 1.35) + 'px sans-serif';
-            ctx.fillStyle = item.color;
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(item.text, 0, 0);
-          }
-
-          ctx.restore();
-        });
-
-        requestAnimationFrame(render);
+        }
       }
 
-      render();
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initVantaClouds);
+      } else {
+        initVantaClouds();
+      }
     })();
   </script>
   <script>
