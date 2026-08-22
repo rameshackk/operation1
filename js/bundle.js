@@ -375,15 +375,13 @@ const professionalsData = [
     locationTamil: "சென்னை, தமிழ்நாடு",
     locationEnglish: "Chennai, Tamil Nadu",
     experience: "15+ Years",
-    arnNumber: "ARN-56291",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80",
-    bioTamil: "15+ ஆண்டுகளுக்கும் மேலாக மியூச்சுவல் ஃபண்ட், பங்குச் சந்தை மற்றும் தனிநபர் நிதி வழிகாட்டுதலில் முன்னணி வர்ணனையாளர். 882+ வீடியோ வழிகாட்டிகள் மூலம் ஆயிரக்கணக்கான முதலீட்டாளர்களுக்கு விழிப்புணர்வு ஏற்படுத்தியுள்ளார்.",
-    bioEnglish: "Founder of FISPL with 15+ years of market authority, educating retail and HNI investors on Mutual Funds, Wealth Creation & Systematic Financial Planning across 882+ masterclasses.",
-    fullBioTamil: "பி. பத்மநாபன் அவர்கள் 2008 இல் பார்ச்சூன் இன்வெஸ்ட்மென்ட் சர்வீசஸ் (FISPL) நிறுவனத்தை நிறுவி, ₹630 கோடிக்கும் அதிகமான சொத்து நிர்வாகத்தை (AUM) திறம்பட வழிநடத்தி வருகிறார். தமிழ் மற்றும் ஆங்கிலத்தில் எளிய முறையில் மியூச்சுவல் ஃபண்ட் முதலீட்டு உத்திகளை விளக்கும் இவரது 882-க்கும் மேற்பட்ட காணொளிகள் லட்சக்கணக்கான முதலீட்டாளர்களின் நன்மதிப்பைப் பெற்றுள்ளன.",
-    fullBioEnglish: "B. Padmanaban founded Fortune Investment Services Private Limited (FISPL) in 2008, managing over ₹630 Cr AUM with a client-first approach. Known as 'Budget Padmanaban', his 882+ market masterclasses demystify mutual funds, asset allocation, and systematic wealth compounding.",
+    bioTamil: "15+ ஆண்டுகளுக்கும் மேலாக மியூச்சுவல் ஃபண்ட், பங்குச் சந்தை மற்றும் தனிநபர் நிதி வழிகாட்டுதலில் முன்னணி வர்ணனையாளர். வீடியோ வழிகாட்டிகள் மூலம் ஆயிரக்கணக்கான முதலீட்டாளர்களுக்கு விழிப்புணர்வு ஏற்படுத்தியுள்ளார்.",
+    bioEnglish: "Founder of FISPL with 15+ years of market authority, educating retail and HNI investors on Mutual Funds, Wealth Creation & Systematic Financial Planning across video masterclasses.",
+    fullBioTamil: "பி. பத்மநாபன் அவர்கள் 2008 இல் பார்ச்சூன் இன்வெஸ்ட்மென்ட் சர்வீசஸ் (FISPL) நிறுவனத்தை நிறுவி, ₹630 கோடிக்கும் அதிகமான சொத்து நிர்வாகத்தை (AUM) திறம்பட வழிநடத்தி வருகிறார். தமிழ் மற்றும் ஆங்கிலத்தில் எளிய முறையில் மியூச்சுவல் ஃபண்ட் முதலீட்டு உத்திகளை விளக்கும் இவரது காணொளிகள் லட்சக்கணக்கான முதலீட்டாளர்களின் நன்மதிப்பைப் பெற்றுள்ளன.",
+    fullBioEnglish: "B. Padmanaban founded Fortune Investment Services Private Limited (FISPL) in 2008, managing over ₹630 Cr AUM with a client-first approach. Known as 'Budget Padmanaban', his market masterclasses demystify mutual funds, asset allocation, and systematic wealth compounding.",
     category: "mutual-funds",
     stats: {
-      masterclasses: 882,
+      masterclasses: "800+",
       articles: 12,
       aumGuided: "₹630+ Cr",
       experienceYears: "15+ Yrs"
@@ -3580,7 +3578,7 @@ function CinemaSpotlightHero({
             <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 font-bold">
               <span className="text-slate-900 dark:text-white">{currentVideo.channelName || 'Budget Padmanaban'}</span>
               <span>•</span>
-              <span>882 Original Guides</span>
+              <span>Original Guides</span>
             </div>
           </div>
         </div>
@@ -3897,7 +3895,7 @@ function CinemaTheaterModal({
                       <span className="text-emerald-400 text-xs font-bold" title="CFP Certified">✓ CFP®</span>
                     </div>
                     <p className="text-[11px] text-slate-400 font-medium">
-                      Certified Financial Planner • 882+ Masterclasses
+                      Certified Financial Planner • Video Masterclasses
                     </p>
                   </div>
                 </div>
@@ -4316,7 +4314,7 @@ function VideosPage({ onNavigate, onShowToast }) {
   const { videos: allLiveVideos = [], isLoading: isVideosLoading } = useVideos('all', 'newest');
 
   const categoriesList = [
-    { id: 'all', labelTa: `அனைத்து வீடியோக்கள் (${allLiveVideos.length || 882})`, labelEn: `All Videos (${allLiveVideos.length || 882})` },
+    { id: 'all', labelTa: `அனைத்து வீடியோக்கள்${allLiveVideos.length ? ` (${allLiveVideos.length})` : ''}`, labelEn: `All Videos${allLiveVideos.length ? ` (${allLiveVideos.length})` : ''}` },
     { id: 'trending', labelTa: 'முக்கிய பதிவுகள்', labelEn: 'Featured & Trending' },
     { id: 'mutual-funds', labelTa: 'மியூச்சுவல் ஃபண்ட் & SIP', labelEn: 'Mutual Funds & SIP' },
     { id: 'stocks', labelTa: 'பங்குச் சந்தை', labelEn: 'Stock Market' },
@@ -4457,7 +4455,7 @@ function VideosPage({ onNavigate, onShowToast }) {
                   setSearchQuery(e.target.value);
                   setVisibleGridCount(48);
                 }}
-                placeholder={isTamil ? "இந்த 882 வீடியோக்களில் தேடுங்கள் (எ.கா: SIP, Nifty, Tax)..." : "Search 882 masterclasses (e.g. SIP, Nifty, Tax)..."}
+                placeholder={isTamil ? "வீடியோக்களில் தேடுங்கள் (எ.கா: SIP, Nifty, Tax)..." : "Search masterclasses (e.g. SIP, Nifty, Tax)..."}
                 className="w-full pl-10 pr-10 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white placeholder-slate-400 text-xs sm:text-sm font-medium focus:outline-none focus:border-amber-500 transition-colors"
               />
               {searchQuery && (
@@ -9601,7 +9599,7 @@ function WatchHistoryPage({ onNavigate, onShowToast }) {
             onClick={() => onNavigate && onNavigate('#/videos')}
             className="btn-magnetic px-6 py-2.5 rounded-xl bg-amber-500 text-slate-950 font-black text-xs shadow-md mt-2"
           >
-            {isTamil ? '882+ வீடியோக்களைக் காண்க' : 'Browse 882+ Masterclasses'}
+            {isTamil ? 'அனைத்து வீடியோக்களையும் காண்க' : 'Browse All Masterclasses'}
           </button>
         </div>
       )}
@@ -9919,14 +9917,14 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
         badgeEnglish: badgeEn,
         badgeTamil: badgeTa,
         bioEnglish: p.bio || (isFounder
-          ? 'Founder of FISPL with 15+ years of market authority, educating retail and HNI investors on Mutual Funds, Wealth Creation & Systematic Financial Planning across 882+ masterclasses.'
+          ? 'Founder of FISPL with 15+ years of market authority, educating retail and HNI investors on Mutual Funds, Wealth Creation & Systematic Financial Planning across video masterclasses.'
           : 'Certified AMFI mutual fund distributor dedicated to investor financial freedom, portfolio diversification, and long-term compounding.'),
         bioTamil: p.bio_ta || p.bio || (isFounder
           ? 'FISPL நிறுவனர், 15+ ஆண்டுகால நிதி அனுபவத்துடன் மியூச்சுவல் ஃபண்ட் மற்றும் நீண்டகால செல்வ உருவாக்கம் குறித்த வழிகாட்டல்.'
           : 'முதலீட்டாளர்களின் நிதி சுதந்திரம் மற்றும் நீண்ட கால செல்வ உருவாக்கத்திற்கு வழிகாட்டும் AMFI அங்கீகாரம் பெற்ற ஆலோசகர்.'),
         category: 'mutual-funds',
         stats: {
-          masterclasses: isFounder ? 882 : 0,
+          masterclasses: isFounder ? '800+' : 0,
           articles: parseInt(p.article_count || (isFounder ? '12' : '0'), 10)
         },
         specialties: Array.isArray(p.specialties) && p.specialties.length > 0
