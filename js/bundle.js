@@ -742,7 +742,7 @@ const useLanguage = () => useContext(LanguageContext);
 const ThemeContext = createContext();
 
 function ThemeProvider({ children }) {
-  const [theme, setThemeState] = useState(() => localStorage.getItem("dhanavriksha_theme") || "dark");
+  const [theme, setThemeState] = useState(() => localStorage.getItem("dhanavriksha_theme") || "light");
 
   const toggleTheme = () => {
     const nextTheme = theme === "dark" ? "light" : "dark";

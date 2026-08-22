@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ta" data-theme="dark">
+<html lang="ta" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,6 +7,16 @@
   
   <meta name="description" content="பட்ஜெட் பத்மநாபன் ஃபைனான்ஷியல் - மியூச்சுவல் ஃபண்ட், பங்குச் சந்தை, தனிநபர் நிதி மற்றும் முதலீட்டு வழிகாட்டி." />
   
+  <!-- Early Theme Initialization to prevent flash of wrong theme -->
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('dhanavriksha_theme') || 'light';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
+
   <!-- Favicons & Brand Identity Icons -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="alternate icon" type="image/svg+xml" href="favicon.svg" />
@@ -16,7 +26,7 @@
 
   <!-- PWA & Theme -->
   <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#020617" />
+  <meta name="theme-color" content="#f9f8f6" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Muthaleetu Thisai" />
