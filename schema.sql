@@ -113,7 +113,8 @@ CREATE TRIGGER on_auth_user_created
     FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
 
 -- 6. PUBLIC HOMEPAGE PREVIEW VIEW (Non-sensitive metadata only)
-CREATE OR REPLACE VIEW public.trending_preview AS
+CREATE OR REPLACE VIEW public.trending_preview 
+WITH (security_invoker = true) AS
 SELECT 
     id,
     youtube_id,
