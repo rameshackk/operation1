@@ -57,6 +57,7 @@ export default async function handler(req, res) {
           'avatar_url',
           'linkedin_url',
           'twitter_url',
+          'website_url',
           'youtube_url',
           'phone',
           'whatsapp_number',
@@ -209,6 +210,7 @@ export default async function handler(req, res) {
         bio_ta,
         linkedin_url,
         twitter_url,
+        website_url,
         youtube_url,
         phone,
         whatsapp_number
@@ -302,6 +304,7 @@ export default async function handler(req, res) {
         bio_ta: bio_ta || '',
         linkedin_url: linkedin_url || '',
         twitter_url: twitter_url || '',
+        website_url: website_url || '',
         youtube_url: youtube_url || '',
         phone: phone || '',
         whatsapp_number: whatsapp_number || '',
@@ -314,9 +317,9 @@ export default async function handler(req, res) {
         const query = `
           INSERT INTO profiles (
             id, email, display_name, role, title, arn_number,
-            specialties, bio, bio_ta, linkedin_url, twitter_url,
+            specialties, bio, bio_ta, linkedin_url, twitter_url, website_url,
             youtube_url, phone, whatsapp_number, is_onboarded, updated_at
-          ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, CURRENT_TIMESTAMP)
+          ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, CURRENT_TIMESTAMP)
           ON CONFLICT (id) DO UPDATE SET
             display_name = EXCLUDED.display_name,
             role = EXCLUDED.role,
@@ -327,6 +330,7 @@ export default async function handler(req, res) {
             bio_ta = EXCLUDED.bio_ta,
             linkedin_url = EXCLUDED.linkedin_url,
             twitter_url = EXCLUDED.twitter_url,
+            website_url = EXCLUDED.website_url,
             youtube_url = EXCLUDED.youtube_url,
             phone = EXCLUDED.phone,
             whatsapp_number = EXCLUDED.whatsapp_number,
@@ -346,6 +350,7 @@ export default async function handler(req, res) {
           profileData.bio_ta,
           profileData.linkedin_url,
           profileData.twitter_url,
+          profileData.website_url,
           profileData.youtube_url,
           profileData.phone,
           profileData.whatsapp_number,

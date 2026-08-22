@@ -4995,7 +4995,7 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
   const [newPubSpecialties, setNewPubSpecialties] = useState('Mutual Funds, SIP Portfolios, Wealth Planning');
   const [newPubLinkedin, setNewPubLinkedin] = useState('');
   const [newPubTwitter, setNewPubTwitter] = useState('');
-  const [newPubYoutube, setNewPubYoutube] = useState('');
+  const [newPubWebsite, setNewPubWebsite] = useState('');
   const [newPubPhone, setNewPubPhone] = useState('');
   const [isSubmittingPublisher, setIsSubmittingPublisher] = useState(false);
   const [createdCredentials, setCreatedCredentials] = useState(null);
@@ -5223,7 +5223,7 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
           specialties: specialtiesArr,
           linkedin_url: newPubLinkedin.trim(),
           twitter_url: newPubTwitter.trim(),
-          youtube_url: newPubYoutube.trim(),
+          website_url: newPubWebsite.trim(),
           phone: newPubPhone.trim()
         })
       });
@@ -5247,7 +5247,7 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
       setNewPubArn('');
       setNewPubLinkedin('');
       setNewPubTwitter('');
-      setNewPubYoutube('');
+      setNewPubWebsite('');
       setNewPubPhone('');
     } catch (err) {
       if (onShowToast) onShowToast(`Error: ${err.message}`);
@@ -5305,7 +5305,7 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
           bio: editingPublisher.bio,
           linkedin_url: editingPublisher.linkedin_url,
           twitter_url: editingPublisher.twitter_url,
-          youtube_url: editingPublisher.youtube_url,
+          website_url: editingPublisher.website_url,
           phone: editingPublisher.phone
         })
       });
@@ -5946,6 +5946,30 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                     />
                   </div>
 
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold text-slate-700 dark:text-slate-300">LinkedIn Profile URL</label>
+                      <input
+                        type="url"
+                        value={newPubLinkedin}
+                        onChange={e => setNewPubLinkedin(e.target.value)}
+                        placeholder="https://linkedin.com/in/username"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+                      />
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold text-slate-700 dark:text-slate-300">Website URL</label>
+                      <input
+                        type="url"
+                        value={newPubWebsite}
+                        onChange={e => setNewPubWebsite(e.target.value)}
+                        placeholder="https://yourwebsite.com"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+                      />
+                    </div>
+                  </div>
+
                   {/* Submit Button */}
                   <div className="pt-2 flex items-center justify-end gap-3">
                     <button
@@ -6506,15 +6530,28 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                 </div>
               </div>
 
-              <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">LinkedIn Profile URL</label>
-                <input
-                  type="url"
-                  value={editingPublisher.linkedin_url || ''}
-                  onChange={e => setEditingPublisher({ ...editingPublisher, linkedin_url: e.target.value })}
-                  placeholder="https://linkedin.com/in/username"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
-                />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="text-xs font-bold text-slate-700 dark:text-slate-300">LinkedIn Profile URL</label>
+                  <input
+                    type="url"
+                    value={editingPublisher.linkedin_url || ''}
+                    onChange={e => setEditingPublisher({ ...editingPublisher, linkedin_url: e.target.value })}
+                    placeholder="https://linkedin.com/in/username"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-xs font-bold text-slate-700 dark:text-slate-300">Website URL</label>
+                  <input
+                    type="url"
+                    value={editingPublisher.website_url || ''}
+                    onChange={e => setEditingPublisher({ ...editingPublisher, website_url: e.target.value })}
+                    placeholder="https://yourwebsite.com"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+                  />
+                </div>
               </div>
 
               <div className="space-y-1">
@@ -6575,7 +6612,7 @@ function PublisherOnboardingModal({ profile, onComplete, onClose }) {
   const [bioTa, setBioTa] = useState(profile?.bio_ta || '');
   const [linkedinUrl, setLinkedinUrl] = useState(profile?.linkedin_url || '');
   const [twitterUrl, setTwitterUrl] = useState(profile?.twitter_url || '');
-  const [youtubeUrl, setYoutubeUrl] = useState(profile?.youtube_url || '');
+  const [websiteUrl, setWebsiteUrl] = useState(profile?.website_url || '');
   const [whatsappNumber, setWhatsappNumber] = useState(profile?.whatsapp_number || profile?.phone || '');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
@@ -6674,7 +6711,7 @@ function PublisherOnboardingModal({ profile, onComplete, onClose }) {
         bio_ta: bioTa.trim(),
         linkedin_url: linkedinUrl.trim(),
         twitter_url: twitterUrl.trim(),
-        youtube_url: youtubeUrl.trim(),
+        website_url: websiteUrl.trim(),
         whatsapp_number: whatsappNumber.trim(),
         phone: whatsappNumber.trim()
       };
@@ -7026,24 +7063,26 @@ function PublisherOnboardingModal({ profile, onComplete, onClose }) {
                 />
               </div>
 
-              {/* YouTube Channel */}
+              {/* Official Website URL */}
               <div className="space-y-1.5 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20">
                 <label className="text-xs font-bold text-amber-700 dark:text-amber-300 flex items-center justify-between">
                   <span className="flex items-center gap-1.5">
-                    <span>🎬</span>
-                    <span>YouTube Channel URL or @Handle</span>
+                    <span>🌐</span>
+                    <span>{isTamil ? 'அதிகாரப்பூர்வ வலைத்தளம் (Website URL)' : 'Official Website URL'}</span>
                   </span>
-                  <span className="text-[10px] text-amber-600 dark:text-amber-400 font-semibold">Auto-Ingestion</span>
+                  <span className="text-[10px] text-amber-600 dark:text-amber-400 font-semibold">{isTamil ? 'இணைப்பு' : 'Direct Link'}</span>
                 </label>
                 <input
-                  type="text"
-                  value={youtubeUrl}
-                  onChange={e => setYoutubeUrl(e.target.value)}
-                  placeholder="e.g. @yourchannel or https://youtube.com/@handle or /channel/UC..."
+                  type="url"
+                  value={websiteUrl}
+                  onChange={e => setWebsiteUrl(e.target.value)}
+                  placeholder="https://www.yourwebsite.com"
                   className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-amber-500/30 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
                 />
                 <p className="text-[10px] text-amber-700/90 dark:text-amber-300/80 leading-relaxed">
-                  💡 We accept <strong>@handle</strong> URLs, <strong>/channel/UC...</strong> IDs, and legacy <strong>/user/</strong> URLs. Once verified by an admin, your uploads are automatically fetched, translated by AI, and featured on your profile. (For custom /c/ URLs, please enter your @handle or find your Channel ID in YouTube Studio).
+                  {isTamil
+                    ? '💡 உங்கள் தனிப்பட்ட அல்லது நிறுவன வலைத்தள இணைப்பை உள்ளிடவும். முதலீட்டாளர்கள் மற்றும் வாசகர்கள் உங்கள் சேவைகளைப் பற்றி மேலும் அறிய இந்த இணைப்பைப் பார்வையிடலாம்.'
+                    : '💡 Enter your personal or advisory website URL. Readers and investors can visit your official website to learn more about your services.'}
                 </p>
               </div>
 
@@ -8770,40 +8809,19 @@ function ProfilePage({ onNavigate, onShowToast }) {
                     <span className="font-mono font-bold text-amber-400">{profile?.arn_number || 'Not Set'}</span>
                   </div>
                   <div className="flex justify-between items-center py-1 border-b border-slate-800">
-                    <span className="text-slate-400">{isTamil ? 'யூடியூப் சேனல்:' : 'YouTube Channel:'}</span>
+                    <span className="text-slate-400">{isTamil ? 'அதிகாரப்பூர்வ வலைத்தளம்:' : 'Official Website:'}</span>
                     <div className="text-right">
-                      {profile?.youtube_channel_id || profile?.youtube_url ? (
-                        <div className="space-y-1">
-                          <a
-                            href={
-                              profile?.youtube_channel_id && String(profile.youtube_channel_id).startsWith('UC')
-                                ? `https://www.youtube.com/channel/${profile.youtube_channel_id}`
-                                : (profile?.youtube_url && profile.youtube_url.startsWith('http')
-                                    ? profile.youtube_url
-                                    : (profile?.youtube_url && profile.youtube_url.startsWith('@')
-                                        ? `https://www.youtube.com/${profile.youtube_url}`
-                                        : `https://www.youtube.com/results?search_query=${encodeURIComponent(profile?.youtube_url || profile?.youtube_channel_title || '')}`))
-                            }
-                            target="_blank"
-                            rel="noreferrer"
-                            className="font-bold text-amber-400 hover:underline text-xs truncate max-w-[180px] block"
-                          >
-                            {profile?.youtube_channel_title || profile?.youtube_channel_id || profile?.youtube_url} ↗
-                          </a>
-                          {profile?.youtube_channel_verified ? (
-                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-black bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-                              <span>✓</span>
-                              <span>Auto-Syncing</span>
-                            </span>
-                          ) : (
-                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-black bg-amber-500/20 text-amber-400 border border-amber-500/30">
-                              <span>⏳</span>
-                              <span>Verification Pending</span>
-                            </span>
-                          )}
-                        </div>
+                      {profile?.website_url ? (
+                        <a
+                          href={profile.website_url.startsWith('http') ? profile.website_url : `https://${profile.website_url}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="font-bold text-amber-400 hover:underline text-xs truncate max-w-[180px] block"
+                        >
+                          {profile.website_url.replace(/^https?:\/\//, '')} ↗
+                        </a>
                       ) : (
-                        <span className="text-slate-500 text-[11px] italic">Not Linked</span>
+                        <span className="text-slate-500 text-[11px] italic">Not Set</span>
                       )}
                     </div>
                   </div>
@@ -9379,7 +9397,8 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
         socialLinks: {
           linkedin: p.linkedin_url || '',
           twitter: p.twitter_url || '',
-          youtube: p.youtube_url || ''
+          youtube: p.youtube_url || '',
+          website: p.website_url || ''
         }
       });
     });
@@ -9846,7 +9865,8 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
         socialLinks: {
           linkedin: normalizeSocialUrl(livePublisher.linkedin_url, 'linkedin'),
           twitter: normalizeSocialUrl(livePublisher.twitter_url, 'twitter'),
-          youtube: normalizeSocialUrl(livePublisher.youtube_url, 'youtube', livePublisher.youtube_channel_id)
+          youtube: normalizeSocialUrl(livePublisher.youtube_url, 'youtube', livePublisher.youtube_channel_id),
+          website: livePublisher.website_url ? (livePublisher.website_url.startsWith('http') ? livePublisher.website_url : `https://${livePublisher.website_url}`) : ''
         }
       };
     }
@@ -10035,6 +10055,17 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
                 </a>
               )}
 
+              {prof.socialLinks?.website && (
+                <a
+                  href={prof.socialLinks.website}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-amber-600 hover:text-slate-950 text-white border border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
+                >
+                  <span>🌐</span>
+                  <span>{isTamil ? 'வலைத்தளம்' : 'Website'}</span>
+                </a>
+              )}
               {prof.socialLinks?.youtube && (
                 <a
                   href={prof.socialLinks.youtube}

@@ -54,6 +54,7 @@ export default async function handler(req, res) {
         bio_ta,
         linkedin_url,
         twitter_url,
+        website_url,
         youtube_url,
         whatsapp_number,
         phone
@@ -78,6 +79,7 @@ export default async function handler(req, res) {
       if (bio_ta !== undefined) updates.bio_ta = bio_ta;
       if (linkedin_url !== undefined) updates.linkedin_url = linkedin_url;
       if (twitter_url !== undefined) updates.twitter_url = twitter_url;
+      if (website_url !== undefined) updates.website_url = website_url ? website_url.trim() : '';
       if (whatsapp_number !== undefined) updates.whatsapp_number = whatsapp_number;
       if (phone !== undefined) updates.phone = phone;
 
@@ -130,11 +132,11 @@ export default async function handler(req, res) {
         const upsertQuery = `
           INSERT INTO profiles (
             id, email, display_name, avatar_url, title, arn_number,
-            specialties, bio, bio_ta, linkedin_url, twitter_url,
+            specialties, bio, bio_ta, linkedin_url, twitter_url, website_url,
             youtube_url, youtube_channel_id, youtube_channel_title, youtube_channel_thumbnail, youtube_channel_verified,
             whatsapp_number, phone, is_onboarded, updated_at
           ) VALUES (
-            $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, true, CURRENT_TIMESTAMP
+            $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, true, CURRENT_TIMESTAMP
           )
           ON CONFLICT (id) DO UPDATE SET
             display_name = EXCLUDED.display_name,
@@ -146,6 +148,7 @@ export default async function handler(req, res) {
             bio_ta = COALESCE(EXCLUDED.bio_ta, profiles.bio_ta),
             linkedin_url = COALESCE(EXCLUDED.linkedin_url, profiles.linkedin_url),
             twitter_url = COALESCE(EXCLUDED.twitter_url, profiles.twitter_url),
+            website_url = COALESCE(EXCLUDED.website_url, profiles.website_url),
             youtube_url = COALESCE(EXCLUDED.youtube_url, profiles.youtube_url),
             youtube_channel_id = COALESCE(EXCLUDED.youtube_channel_id, profiles.youtube_channel_id),
             youtube_channel_title = COALESCE(EXCLUDED.youtube_channel_title, profiles.youtube_channel_title),
@@ -170,6 +173,7 @@ export default async function handler(req, res) {
           updates.bio_ta || null,
           updates.linkedin_url || null,
           updates.twitter_url || null,
+          updates.website_url || null,
           updates.youtube_url || null,
           updates.youtube_channel_id || null,
           updates.youtube_channel_title || null,

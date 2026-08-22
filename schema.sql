@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS public.profiles (
     bio_ta TEXT,
     linkedin_url TEXT,
     twitter_url TEXT,
+    website_url TEXT DEFAULT NULL,
     youtube_url TEXT,
     youtube_channel_id TEXT DEFAULT NULL,
     youtube_channel_title TEXT DEFAULT NULL,

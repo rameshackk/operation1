@@ -29,6 +29,7 @@ export default async function handler(req, res) {
             p.bio_ta,
             p.linkedin_url,
             p.twitter_url,
+            p.website_url,
             p.youtube_url,
             p.youtube_channel_id,
             p.youtube_channel_title,
@@ -167,7 +168,7 @@ export default async function handler(req, res) {
       if (client) {
         const { data: pubData, error: pubErr } = await client
           .from('profiles')
-          .select('id, display_name, avatar_url, role, title, arn_number, specialties, bio, bio_ta, linkedin_url, twitter_url, youtube_url, youtube_channel_id, youtube_channel_title, youtube_channel_thumbnail, youtube_channel_verified, whatsapp_number, phone, is_onboarded, created_at')
+          .select('id, display_name, avatar_url, role, title, arn_number, specialties, bio, bio_ta, linkedin_url, twitter_url, website_url, youtube_url, youtube_channel_id, youtube_channel_title, youtube_channel_thumbnail, youtube_channel_verified, whatsapp_number, phone, is_onboarded, created_at')
           .or(`id.eq.${id},arn_number.eq.${id}`)
           .maybeSingle();
 
@@ -228,6 +229,7 @@ export default async function handler(req, res) {
           p.bio_ta,
           p.linkedin_url,
           p.twitter_url,
+          p.website_url,
           p.youtube_url,
           p.whatsapp_number,
           p.phone,
