@@ -1576,8 +1576,8 @@ function Header({ onOpenSearch, onNavigate }) {
   };
 
   return (
-    <header className={`w-full sticky top-0 z-50 transition-all duration-300 border-b border-slate-800/80 bg-slate-950 text-white ${
-      isScrolled ? 'py-2 shadow-2xl backdrop-blur-md bg-slate-950/98' : 'py-3 shadow-lg'
+    <header className={`w-full sticky top-0 z-50 transition-all duration-300 border-b border-white/10 bg-[#050811] text-white ${
+      isScrolled ? 'py-2 shadow-2xl' : 'py-3 shadow-lg'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
         
