@@ -1631,11 +1631,11 @@ function useDebounce(value, delay = 250) {
 function LanguageSwitcher() {
   const { language, setLanguage, isTranslating } = useLanguage();
   return (
-    <div className="relative inline-flex items-center bg-white/90 dark:bg-slate-800 p-1 rounded-full border border-[#E3DACE] dark:border-slate-700 shadow-inner">
+    <div className="relative inline-flex items-center bg-white/80 dark:bg-slate-800 p-1 rounded-full border border-[#cdb7a3] dark:border-slate-700 shadow-inner">
       <button
         onClick={() => setLanguage('ta')}
         className={`px-3.5 py-1 text-xs font-bold rounded-full transition-all duration-300 ${
-          language === 'ta' ? 'bg-[#D97706] text-white shadow-md scale-105' : 'text-[#1C1917] dark:text-slate-300 hover:text-[#D97706]'
+          language === 'ta' ? 'bg-amber-600 text-white shadow-md scale-105' : 'text-[#0a1833] dark:text-slate-300 hover:text-amber-700'
         }`}
       >
         தமிழ்
@@ -1643,13 +1643,13 @@ function LanguageSwitcher() {
       <button
         onClick={() => setLanguage('en')}
         className={`px-3.5 py-1 text-xs font-bold rounded-full transition-all duration-300 ${
-          language === 'en' ? 'bg-[#D97706] text-white shadow-md scale-105' : 'text-[#1C1917] dark:text-slate-300 hover:text-[#D97706]'
+          language === 'en' ? 'bg-amber-600 text-white shadow-md scale-105' : 'text-[#0a1833] dark:text-slate-300 hover:text-amber-700'
         }`}
       >
         English
       </button>
       {isTranslating && (
-        <span className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[10px] text-[#D97706] font-bold whitespace-nowrap animate-pulse">
+        <span className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[10px] text-amber-600 font-bold whitespace-nowrap animate-pulse">
           Translating...
         </span>
       )}
@@ -1662,13 +1662,13 @@ function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="p-2.5 rounded-full bg-white/90 dark:bg-slate-800 text-[#1C1917] dark:text-slate-200 hover:text-[#D97706] transition-all border border-[#E3DACE] dark:border-slate-700 shadow-sm hover:scale-105"
+      className="p-2.5 rounded-full bg-white/90 dark:bg-slate-800 text-[#0a1833] dark:text-slate-200 hover:text-amber-700 transition-all border border-[#cdb7a3] dark:border-slate-700 shadow-sm hover:scale-105"
       title="Toggle Light / Dark Theme"
     >
       {theme === 'dark' ? (
         <svg className="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
       ) : (
-        <svg className="w-4 h-4 text-[#1C1917]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+        <svg className="w-4 h-4 text-[#0a1833]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
       )}
     </button>
   );
@@ -1704,8 +1704,8 @@ function Header({ onOpenSearch, onNavigate }) {
   };
 
   return (
-    <header className={`w-full sticky top-0 z-50 transition-all duration-300 border-b border-[#E3DACE] dark:border-white/10 bg-[#FAF8F5]/96 dark:bg-[#0b0f19] text-[#1C1917] dark:text-white backdrop-blur-md ${
-      isScrolled ? 'py-2 shadow-xl shadow-stone-900/5 dark:shadow-2xl' : 'py-3 shadow-sm'
+    <header className={`w-full sticky top-0 z-50 transition-all duration-300 border-b border-[#cdb7a3]/70 dark:border-white/10 bg-[#C9B29E]/95 dark:bg-[#0b0f19] text-[#0a1833] dark:text-white backdrop-blur-md ${
+      isScrolled ? 'py-2 shadow-xl shadow-stone-900/5 dark:shadow-2xl' : 'py-3 shadow-md'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
         
@@ -1719,7 +1719,7 @@ function Header({ onOpenSearch, onNavigate }) {
 
         {/* Center: Brand Logo & Title */}
         <a href="#/" className="flex items-center gap-3 group mx-auto text-center sm:text-left">
-          <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-br from-[#D97706] via-amber-600 to-amber-800 flex items-center justify-center text-white shadow-lg shadow-amber-500/25 group-hover:scale-105 transition-transform duration-300 border border-amber-400/40 shrink-0">
+          <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-br from-amber-500 via-amber-600 to-amber-800 flex items-center justify-center text-white shadow-lg shadow-amber-500/25 group-hover:scale-105 transition-transform duration-300 border border-amber-400/40 shrink-0">
             <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white drop-shadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="12" r="9" className="opacity-35" strokeWidth="1.5" />
               <path d="M12 3v2M12 19v2M3 12h2M19 12h2" opacity="0.5" strokeWidth="1.5" />
@@ -1729,7 +1729,7 @@ function Header({ onOpenSearch, onNavigate }) {
           </div>
           <div>
             <div className="flex items-center gap-2.5 justify-center sm:justify-start">
-              <h1 className="text-xl sm:text-2xl font-black tracking-tight text-[#1C1917] dark:text-white font-serif group-hover:text-[#D97706] dark:group-hover:text-amber-400 transition-colors whitespace-nowrap">
+              <h1 className="text-xl sm:text-2xl font-black tracking-tight text-[#0a1833] dark:text-white font-serif group-hover:text-amber-700 dark:group-hover:text-amber-400 transition-colors whitespace-nowrap">
                 {t('siteName')}
               </h1>
               <span className="sm:hidden inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider rounded-full bg-emerald-600/10 text-emerald-800 dark:text-emerald-400 border border-emerald-600/30">
@@ -1737,7 +1737,7 @@ function Header({ onOpenSearch, onNavigate }) {
                 <span>{t('welcome')}</span>
               </span>
             </div>
-            <p className="text-xs text-[#78716C] dark:text-slate-400 font-medium hidden sm:block">
+            <p className="text-xs text-[#162a52] dark:text-slate-400 font-medium hidden sm:block">
               {t('tagline')}
             </p>
           </div>
@@ -1747,10 +1747,10 @@ function Header({ onOpenSearch, onNavigate }) {
         <div className="flex items-center justify-end gap-2 sm:gap-2.5 shrink-0">
           <button
             onClick={onOpenSearch}
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-white/90 dark:bg-slate-900 text-[#1C1917] dark:text-slate-200 hover:bg-[#F3EFEA] dark:hover:bg-slate-800 transition-all text-xs font-semibold border border-[#E3DACE] dark:border-slate-700 shadow-sm hover:shadow-md"
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-white/90 dark:bg-slate-900 text-[#0a1833] dark:text-slate-200 hover:bg-[#cdb7a3] dark:hover:bg-slate-800 transition-all text-xs font-semibold border border-[#cdb7a3] dark:border-slate-700 shadow-sm hover:shadow-md"
             aria-label="Search"
           >
-            <svg className="w-4 h-4 text-[#D97706] dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+            <svg className="w-4 h-4 text-amber-500 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
             <span className="hidden md:inline">{t('searchTitle')}</span>
           </button>
           <LanguageSwitcher />
@@ -1762,7 +1762,7 @@ function Header({ onOpenSearch, onNavigate }) {
               <button
                 onClick={handleLogout}
                 disabled={isLoggingOut}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-[#DC2626] hover:bg-red-700 active:scale-95 text-white font-black text-xs shadow-md hover:shadow-red-600/30 transition-all shrink-0 disabled:opacity-50 border border-red-500/30"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-red-600 hover:bg-red-700 active:scale-95 text-white font-black text-xs shadow-md hover:shadow-red-600/30 transition-all shrink-0 disabled:opacity-50 border border-red-500/30"
                 title={language === 'ta' ? 'கணக்கிலிருந்து வெளியேறு' : 'Log out of website'}
               >
                 {isLoggingOut ? (
@@ -1782,7 +1782,7 @@ function Header({ onOpenSearch, onNavigate }) {
                 if (onNavigate) onNavigate('#/login');
                 else if (typeof window !== 'undefined') window.location.hash = '#/login';
               }}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#D97706] hover:bg-amber-600 text-white font-extrabold text-xs shadow-md hover:scale-105 transition-all shrink-0"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-amber-600 hover:bg-amber-500 text-white font-extrabold text-xs shadow-md hover:scale-105 transition-all shrink-0"
             >
               <span></span>
               <span>{language === 'ta' ? 'உள்நுழைக' : 'Sign In'}</span>
@@ -10517,15 +10517,15 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
       {/* Back Button */}
       <button
         onClick={() => onNavigate && onNavigate('#/professionals')}
-        className="btn-magnetic px-4 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-[#F3EFEA] dark:hover:bg-amber-500 hover:text-slate-950 text-xs font-bold transition-all inline-flex items-center gap-1.5 border border-[#E3DACE] dark:border-slate-800 text-[#1C1917] dark:text-slate-200 shadow-sm"
+        className="btn-magnetic px-4 py-2 rounded-xl bg-white/90 dark:bg-slate-900 hover:bg-[#e6dacc] dark:hover:bg-slate-800 text-[#0a1833] dark:text-slate-200 text-xs font-bold transition-all inline-flex items-center gap-1.5 border border-[#cdb7a3] dark:border-slate-800 shadow-sm"
       >
         <span>←</span>
         <span>{isTamil ? 'அனைத்து நிபுணர்கள் பட்டியல்' : 'Back to Advisors Directory'}</span>
       </button>
 
       {/* 1. IDENTITY HERO BANNER */}
-      <div className="relative rounded-3xl bg-gradient-to-br from-white via-[#FAF8F5] to-[#F3EFEA] dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 text-[#1C1917] dark:text-white border border-[#E3DACE] dark:border-slate-800 p-6 sm:p-8 shadow-xl dark:shadow-2xl overflow-hidden backdrop-blur-md">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full  pointer-events-none" />
+      <div className="relative rounded-3xl bg-white/90 dark:bg-slate-950 text-[#0a1833] dark:text-white border border-[#cdb7a3] dark:border-slate-800 p-6 sm:p-8 shadow-xl dark:shadow-2xl overflow-hidden backdrop-blur-md">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full pointer-events-none" />
 
         <div className="relative z-10 flex flex-col md:flex-row items-start gap-6 sm:gap-8">
           {/* Portrait Avatar */}
@@ -10533,13 +10533,13 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
             <img
               src={prof.avatar}
               alt={name}
-              className="w-28 h-28 sm:w-36 sm:h-36 rounded-3xl object-cover border-2 border-[#D97706] shadow-2xl"
+              className="w-28 h-28 sm:w-36 sm:h-36 rounded-3xl object-cover border-2 border-amber-500 shadow-xl"
               onError={(e) => {
-                e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=f59e0b&color=1c1917&bold=true`;
+                e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=f59e0b&color=0a1833&bold=true`;
               }}
             />
             {prof.experience && (
-              <span className="absolute -bottom-2 -right-2 px-2.5 py-0.5 rounded-full bg-[#FEF3C7] dark:bg-slate-900 border border-[#FDE68A] text-[9px] font-mono font-bold text-[#92400E] dark:text-amber-400 shadow">
+              <span className="absolute -bottom-2 -right-2 px-2.5 py-0.5 rounded-full bg-white dark:bg-slate-900 border border-[#cdb7a3] dark:border-amber-500/40 text-[9px] font-mono font-bold text-[#0a1833] dark:text-amber-400 shadow-md">
                 {prof.experience}
               </span>
             )}
@@ -10548,22 +10548,22 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
           {/* Details */}
           <div className="flex-1 space-y-3 text-center md:text-left">
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-2.5">
-              <h1 className="text-2xl sm:text-4xl font-extrabold font-serif text-[#1C1917] dark:text-white">{name}</h1>
-              <span className="px-3 py-0.5 rounded-full bg-[#FEF3C7] text-[#92400E] dark:bg-amber-500/20 dark:text-amber-400 border border-[#FDE68A] dark:border-amber-500/30 text-[10px] font-black uppercase tracking-wider shadow-sm">
+              <h1 className="text-2xl sm:text-4xl font-extrabold font-serif text-[#0a1833] dark:text-white">{name}</h1>
+              <span className="px-3 py-0.5 rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/30 text-[10px] font-black uppercase tracking-wider">
                 {badge}
               </span>
             </div>
 
             <div className="space-y-1">
-              <p className="text-xs sm:text-sm font-bold text-[#D97706] dark:text-amber-400/90 font-mono">
+              <p className="text-xs sm:text-sm font-bold text-amber-700 dark:text-amber-400/90 font-mono">
                 {title} • {prof.organization}
               </p>
-              <p className="text-xs text-[#78716C] dark:text-slate-400 font-medium">
+              <p className="text-xs text-[#162a52] dark:text-slate-400">
                 📍 {location} {prof.arnNumber && `• AMFI Registration ARN: ${prof.arnNumber}`}
               </p>
             </div>
 
-            <p className="text-xs sm:text-sm text-[#44403C] dark:text-slate-300 leading-relaxed max-w-3xl font-medium">
+            <p className="text-xs sm:text-sm text-[#162a52] dark:text-slate-300 leading-relaxed max-w-3xl font-medium">
               {fullBio}
             </p>
 
@@ -10572,7 +10572,7 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
               {prof.specializations?.map((spec, i) => (
                 <span
                   key={i}
-                  className="px-2.5 py-1 rounded-lg bg-[#FEF3C7]/90 dark:bg-slate-900/90 text-[#92400E] dark:text-amber-300 border border-[#FDE68A]/70 dark:border-amber-500/20 text-[10px] font-bold shadow-sm"
+                  className="px-2.5 py-1 rounded-lg bg-[#e6dacc] dark:bg-slate-900/90 text-[#0a1833] dark:text-amber-300 border border-[#cdb7a3] dark:border-amber-500/20 text-[10px] font-bold shadow-sm"
                 >
                   {isTamil ? (spec.ta || spec.en) : spec.en}
                 </span>
@@ -10586,7 +10586,7 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
                   href={`https://wa.me/${cleanWhatsApp}?text=${encodeURIComponent(`Hello ${name}, I read your profile on Muthaleetu Thisai and would like to request an investment consultation.`)}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 text-white font-black text-xs shadow-lg transition-all flex items-center gap-2"
+                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-slate-950 font-black text-xs shadow-lg transition-all flex items-center gap-2"
                 >
                   <span className="text-sm">💬</span>
                   <span>{isTamil ? 'வாட்ஸ்அப் வழியே ஆலோசனை பெறுக' : 'Direct WhatsApp Consultation'}</span>
@@ -10598,7 +10598,7 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
                   href={prof.socialLinks.website}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-[#F3EFEA] dark:hover:bg-amber-600 text-[#1C1917] dark:text-white border border-[#E3DACE] dark:border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
+                  className="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-[#e6dacc] dark:hover:bg-amber-600 text-[#0a1833] dark:text-white border border-[#cdb7a3] dark:border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
                 >
                   <span>🌐</span>
                   <span>{isTamil ? 'வலைத்தளம்' : 'Website'}</span>
@@ -10609,7 +10609,7 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
                   href={prof.socialLinks.youtube}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-red-600 hover:text-white text-[#1C1917] dark:text-white border border-[#E3DACE] dark:border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
+                  className="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-red-600 hover:text-white text-[#0a1833] dark:text-white border border-[#cdb7a3] dark:border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
                 >
                   <span>▶</span>
                   <span>YouTube</span>
@@ -10620,7 +10620,7 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
                   href={prof.socialLinks.linkedin}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-blue-600 hover:text-white text-[#1C1917] dark:text-white border border-[#E3DACE] dark:border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
+                  className="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-blue-600 hover:text-white text-[#0a1833] dark:text-white border border-[#cdb7a3] dark:border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
                 >
                   <span>in</span>
                   <span>LinkedIn</span>
@@ -10631,7 +10631,7 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
                   href={prof.socialLinks.twitter}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-[#F3EFEA] text-[#1C1917] dark:text-slate-300 border border-[#E3DACE] dark:border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
+                  className="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-[#e6dacc] text-[#0a1833] dark:text-slate-300 border border-[#cdb7a3] dark:border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
                 >
                   <span>𝕏</span>
                   <span>Twitter / X</span>
@@ -10643,19 +10643,19 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
       </div>
 
       {/* 2. FEED TABS */}
-      <div className="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
+      <div className="flex items-center gap-2 border-b border-[#cdb7a3] dark:border-slate-800 pb-3">
         <button
           onClick={() => setActiveTab('articles')}
           className={`px-5 py-2.5 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
             activeTab === 'articles'
               ? 'bg-amber-500 text-slate-950 shadow-md'
-              : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+              : 'text-[#0a1833] dark:text-slate-400 bg-white/70 dark:bg-slate-800/80 hover:bg-[#e6dacc] dark:hover:bg-slate-800 border border-[#cdb7a3] dark:border-slate-700'
           }`}
         >
           <span>✍️</span>
           <span>{isTamil ? 'கட்டுரைகள் & ஆய்வுகள்' : 'Articles & Research'}</span>
           <span className={`px-2 py-0.5 rounded-full text-[10px] font-black ${
-            activeTab === 'articles' ? 'bg-slate-950/20 text-slate-950' : 'bg-[#cdb7a3]/60 dark:bg-slate-800 text-[#0a1833] dark:text-amber-400'
+            activeTab === 'articles' ? 'bg-slate-950/20 text-slate-950' : 'bg-[#cdb7a3] dark:bg-slate-800 text-[#0a1833] dark:text-amber-400'
           }`}>
             {publisherArticles.length}
           </span>
@@ -10667,13 +10667,13 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
             className={`px-5 py-2.5 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
               activeTab === 'videos'
                 ? 'bg-amber-500 text-slate-950 shadow-md'
-                : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+                : 'text-[#0a1833] dark:text-slate-400 bg-white/70 dark:bg-slate-800/80 hover:bg-[#e6dacc] dark:hover:bg-slate-800 border border-[#cdb7a3] dark:border-slate-700'
             }`}
           >
             <span>🎬</span>
             <span>{isTamil ? 'முக்கிய வீடியோக்கள் (Masterclasses)' : 'Video Masterclasses'}</span>
             <span className={`px-2 py-0.5 rounded-full text-[10px] font-black ${
-              activeTab === 'videos' ? 'bg-slate-950/20 text-slate-950' : 'bg-[#cdb7a3]/60 dark:bg-slate-800 text-[#0a1833] dark:text-amber-400'
+              activeTab === 'videos' ? 'bg-slate-950/20 text-slate-950' : 'bg-[#cdb7a3] dark:bg-slate-800 text-[#0a1833] dark:text-amber-400'
             }`}>
               {publisherVideos.length}
             </span>
