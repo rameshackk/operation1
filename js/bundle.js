@@ -9787,7 +9787,7 @@ function ProfessionalWidescreenVideoCard({ video, onSelect, language = 'ta' }) {
 function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
   const { language } = useLanguage();
   const isTamil = language === 'ta';
-  const [activeTab, setActiveTab] = useState('videos');
+  const [activeTab, setActiveTab] = useState('articles');
   const [selectedVideo, setSelectedVideo] = useState(null);
 
   // 1. Instant Cache-First Initialization
@@ -10106,25 +10106,6 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
 
       {/* 2. FEED TABS */}
       <div className="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
-        {(publisherVideos.length > 0 || prof.socialLinks?.youtube || livePublisher?.youtube_url || livePublisher?.youtube_channel_id) && (
-          <button
-            onClick={() => setActiveTab('videos')}
-            className={`px-5 py-2.5 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
-              activeTab === 'videos'
-                ? 'bg-amber-500 text-slate-950 shadow-md'
-                : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
-            }`}
-          >
-            <span>🎬</span>
-            <span>{isTamil ? 'முக்கிய வீடியோக்கள் (Masterclasses)' : 'Video Masterclasses'}</span>
-            <span className={`px-2 py-0.5 rounded-full text-[10px] font-black ${
-              activeTab === 'videos' ? 'bg-slate-950/20 text-slate-950' : 'bg-slate-800 text-amber-400'
-            }`}>
-              {publisherVideos.length || 'YouTube'}
-            </span>
-          </button>
-        )}
-
         <button
           onClick={() => setActiveTab('articles')}
           className={`px-5 py-2.5 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
@@ -10141,71 +10122,59 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
             {publisherArticles.length}
           </span>
         </button>
+
+        {publisherVideos.length > 0 && (
+          <button
+            onClick={() => setActiveTab('videos')}
+            className={`px-5 py-2.5 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
+              activeTab === 'videos'
+                ? 'bg-amber-500 text-slate-950 shadow-md'
+                : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+            }`}
+          >
+            <span>🎬</span>
+            <span>{isTamil ? 'முக்கிய வீடியோக்கள் (Masterclasses)' : 'Video Masterclasses'}</span>
+            <span className={`px-2 py-0.5 rounded-full text-[10px] font-black ${
+              activeTab === 'videos' ? 'bg-slate-950/20 text-slate-950' : 'bg-slate-800 text-amber-400'
+            }`}>
+              {publisherVideos.length}
+            </span>
+          </button>
+        )}
       </div>
 
       {/* 3. FEED CONTENT */}
-      {activeTab === 'videos' && (
+      {activeTab === 'videos' && publisherVideos.length > 0 && (
         <div className="space-y-6">
-          {publisherVideos.length > 0 ? (
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <p className="text-xs text-slate-500 font-bold">
-                  {isTamil ? `${name} அவர்களின் வீடியோ வழிகாட்டிகள் (${publisherVideos.length})` : `Video masterclasses by ${name} (${publisherVideos.length})`}
-                </p>
-                {prof.socialLinks?.youtube && (
-                  <a
-                    href={prof.socialLinks.youtube}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-1 text-[11px] font-bold text-red-500 hover:underline"
-                  >
-                    <span>▶</span>
-                    <span>{isTamil ? 'அனைத்து வீடியோக்களும் YouTube-ல்' : 'View on YouTube'} →</span>
-                  </a>
-                )}
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-                {publisherVideos.map((video, idx) => (
-                  <ProfessionalWidescreenVideoCard
-                    key={video.id || idx}
-                    video={video}
-                    onSelect={(v) => setSelectedVideo(v)}
-                    language={language}
-                  />
-                ))}
-              </div>
-            </div>
-          ) : (
-            <div className="text-center py-14 px-6 bg-slate-900/60 rounded-3xl border border-slate-800 space-y-4 max-w-2xl mx-auto">
-              <div className="w-14 h-14 rounded-2xl bg-red-500/10 text-red-500 mx-auto flex items-center justify-center text-2xl font-bold">
-                ▶
-              </div>
-              <div className="space-y-1.5">
-                <h3 className="text-base font-extrabold text-white font-serif">
-                  {isTamil ? `${name} - அதிகாரப்பூர்வ YouTube சேனல்` : `${name} - Official YouTube Channel`}
-                </h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  {isTamil
-                    ? 'இந்த ஆலோசகரின் YouTube சேனல் இணைக்கப்பட்டுள்ளது. புதிய பதிவுகள் தானாகவே இந்த பக்கத்தில் ஒத்திசைக்கப்படும்.'
-                    : 'This advisor has linked their YouTube channel. Uploads and masterclasses will be displayed here automatically.'}
-                </p>
-              </div>
-
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <p className="text-xs text-slate-500 font-bold">
+                {isTamil ? `${name} அவர்களின் வீடியோ வழிகாட்டிகள் (${publisherVideos.length})` : `Video masterclasses by ${name} (${publisherVideos.length})`}
+              </p>
               {prof.socialLinks?.youtube && (
                 <a
                   href={prof.socialLinks.youtube}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-red-600 hover:bg-red-500 text-white font-black text-xs shadow-xl transition-all"
+                  className="inline-flex items-center gap-1 text-[11px] font-bold text-red-500 hover:underline"
                 >
                   <span>▶</span>
-                  <span>{isTamil ? 'YouTube சேனலைத் திறக்கவும்' : 'Open YouTube Channel'}</span>
-                  <span>↗</span>
+                  <span>{isTamil ? 'அனைத்து வீடியோக்களும் YouTube-ல்' : 'View on YouTube'} →</span>
                 </a>
               )}
             </div>
-          )}
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+              {publisherVideos.map((video, idx) => (
+                <ProfessionalWidescreenVideoCard
+                  key={video.id || idx}
+                  video={video}
+                  onSelect={(v) => setSelectedVideo(v)}
+                  language={language}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       )}
 
@@ -10255,22 +10224,16 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
               ))}
             </div>
           ) : (
-            <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-3">
-              <div className="text-3xl">🎬</div>
-              <h3 className="text-sm font-black text-slate-900 dark:text-white font-serif">
-                {isTamil ? 'வீடியோ வழிகாட்டிகள் மட்டுமே வழங்கப்பட்டுள்ளன' : 'Original Video Masterclasses Channel'}
+            <div className="text-center py-16 px-6 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-3 max-w-xl mx-auto">
+              <div className="text-3xl">✍️</div>
+              <h3 className="text-base font-bold text-slate-900 dark:text-white font-serif">
+                {isTamil ? `${name} - ஆய்வுக் கட்டுரைகள்` : `${name} - Articles & Research`}
               </h3>
-              <p className="text-xs text-slate-500 max-w-md mx-auto">
+              <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto leading-relaxed">
                 {isTamil
-                  ? 'ஆலோசகரின் வீடியோ வழிகாட்டிகளை பார்க்க "முக்கிய வீடியோக்கள் (Masterclasses)" பிரிவைத் திறக்கவும்.'
-                  : 'This advisor shares financial insights primarily through video masterclasses.'}
+                  ? 'இந்த ஆலோசகர் வெளியிடும் புதிய கட்டுரைகள் மற்றும் முதலீட்டு வழிகாட்டல்கள் விரைவில் இந்த பக்கத்தில் பிரசுரிக்கப்படும்.'
+                  : 'Financial advisory and research articles published by this advisor will appear here.'}
               </p>
-              <button
-                onClick={() => setActiveTab('videos')}
-                className="px-5 py-2.5 rounded-xl bg-amber-500 text-slate-950 font-black text-xs shadow-md"
-              >
-                {isTamil ? 'வீடியோக்களைப் பார்க்க →' : 'Watch Masterclasses →'}
-              </button>
             </div>
           )}
         </div>
