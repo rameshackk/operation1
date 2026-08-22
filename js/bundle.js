@@ -4205,16 +4205,6 @@ function HomeCinemaShowcase({ onNavigate, onShowToast, language = 'ta' }) {
               : 'Live video masterclasses & financial insights by Padmanaban B. CFP® & certified advisors'}
           </p>
         </div>
-
-        <div className="relative z-10 flex items-center gap-2 shrink-0">
-          <button
-            onClick={() => onNavigate && onNavigate('#/videos')}
-            className="btn-magnetic px-4 py-2.5 rounded-xl bg-slate-900 dark:bg-amber-500 hover:bg-amber-600 dark:hover:bg-amber-400 text-white dark:text-slate-950 text-xs font-black transition-all shadow-md flex items-center gap-2 hover:scale-105"
-          >
-            <span>{isTamil ? `அனைத்து ${allVideos.length || 882} வீடியோக்கள்` : `Browse All ${allVideos.length || 882} Videos`}</span>
-            <span>→</span>
-          </button>
-        </div>
       </div>
 
       {/* Category Tabs */}
