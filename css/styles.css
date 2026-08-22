@@ -64,14 +64,14 @@
   --bg-card-hover: rgba(230, 218, 204, 0.92);
   --border-color: rgba(205, 183, 163, 0.75);
   --border-subtle: rgba(230, 218, 204, 0.85);
-  --text-primary: #765b46;
-  --text-secondary: #957861;
-  --text-muted: #b3957d;
-  --accent-amber: #957861;
+  --text-primary: #0a1833;
+  --text-secondary: #162a52;
+  --text-muted: #2d4373;
+  --accent-amber: #b3957d;
   --accent-gold: #b3957d;
   --accent-gold-light: #cdb7a3;
   --accent-emerald: #059669;
-  --accent-sapphire: #765b46;
+  --accent-sapphire: #0a1833;
   --accent-red: #dc2626;
   --nav-bg: rgba(230, 218, 204, 0.88);
   --nav-border: rgba(205, 183, 163, 0.75);
@@ -130,44 +130,39 @@ body {
 }
 
 /* =========================================================================
-   LIGHT MODE CUSTOM PALETTE MAPPING (Only for Light Mode)
-   [ #e6dacc ] Light Tint (Alabaster / Sand)
-   [ #cdb7a3 ] Soft Tint (Warm Beige)
-   [ #b3957d ] Base Color (Ochre / Camel)
-   [ #957861 ] Dark Tone (Muted Clay)
-   [ #765b46 ] Deep Shade (Walnut / Espresso)
+   LIGHT MODE TEXT COLOR SYSTEM -> #0a1833 (Deep Navy Ink)
    ========================================================================= */
 html:not([data-theme="dark"]),
 html:not([data-theme="dark"]) body {
-  color: #765b46;
+  color: #0a1833 !important;
 }
 
 html:not([data-theme="dark"]) .text-slate-900,
 html:not([data-theme="dark"]) .text-slate-850,
-html:not([data-theme="dark"]) .text-slate-800 {
-  color: #765b46 !important;
+html:not([data-theme="dark"]) .text-slate-800,
+html:not([data-theme="dark"]) .text-slate-700 {
+  color: #0a1833 !important;
 }
 
-html:not([data-theme="dark"]) .text-slate-700,
-html:not([data-theme="dark"]) .text-slate-600 {
-  color: #957861 !important;
+html:not([data-theme="dark"]) .text-slate-600,
+html:not([data-theme="dark"]) .text-slate-500 {
+  color: #162a52 !important;
 }
 
-html:not([data-theme="dark"]) .text-slate-500,
 html:not([data-theme="dark"]) .text-slate-400 {
-  color: #b3957d !important;
+  color: #2d4373 !important;
 }
 
 html:not([data-theme="dark"]) .bg-slate-900,
 html:not([data-theme="dark"]) .bg-slate-850,
 html:not([data-theme="dark"]) .bg-slate-800 {
-  background-color: #765b46 !important;
+  background-color: #0a1833 !important;
   color: #ffffff !important;
 }
 
 html:not([data-theme="dark"]) .hover\:bg-slate-800:hover,
 html:not([data-theme="dark"]) .hover\:bg-slate-900:hover {
-  background-color: #957861 !important;
+  background-color: #162a52 !important;
   color: #ffffff !important;
 }
 
@@ -989,8 +984,8 @@ html:not([data-theme="dark"]) header,
   background: linear-gradient(135deg, rgba(245, 239, 233, 0.97) 0%, rgba(230, 218, 204, 0.95) 45%, rgba(201, 178, 158, 0.94) 100%) !important;
   background-color: #C9B29E !important;
   border-bottom: 1px solid rgba(179, 149, 125, 0.55) !important;
-  color: #5a4231 !important;
-  box-shadow: 0 4px 22px -2px rgba(118, 91, 70, 0.12) !important;
+  color: #0a1833 !important;
+  box-shadow: 0 4px 22px -2px rgba(10, 24, 51, 0.12) !important;
   backdrop-filter: blur(14px) !important;
   -webkit-backdrop-filter: blur(14px) !important;
 }
@@ -998,11 +993,11 @@ html:not([data-theme="dark"]) header,
 html:not([data-theme="dark"]) header a h1,
 html:not([data-theme="dark"]) header .site-title,
 html:not([data-theme="dark"]) header .brand-title {
-  color: #5a4231 !important;
+  color: #0a1833 !important;
 }
 
 html:not([data-theme="dark"]) header a p {
-  color: #765b46 !important;
+  color: #162a52 !important;
 }
 
 [data-theme="dark"] header {
