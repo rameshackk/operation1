@@ -1704,7 +1704,7 @@ function Header({ onOpenSearch, onNavigate }) {
   };
 
   return (
-    <header className={`w-full sticky top-0 z-50 transition-all duration-300 border-b border-[#cdb7a3]/70 dark:border-white/10 bg-[#e6dacc]/95 dark:bg-[#050811] text-[#765b46] dark:text-white backdrop-blur-md ${
+    <header className={`w-full sticky top-0 z-50 transition-all duration-300 border-b border-[#cdb7a3]/70 dark:border-white/10 bg-[#C9B29E]/95 dark:bg-[#0b0f19] text-[#5a4231] dark:text-white backdrop-blur-md ${
       isScrolled ? 'py-2 shadow-xl shadow-stone-900/5 dark:shadow-2xl' : 'py-3 shadow-md'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">

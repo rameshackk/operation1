@@ -832,15 +832,22 @@ html[data-theme="dark"],
   transform: translateY(0);
 }
 
-/* 4. Compressed Header on Scroll - Always Solid Obsidian Dark */
-.header-compressed,
-[data-theme="dark"] .header-compressed,
-[data-theme="light"] .header-compressed,
-html:not([data-theme="dark"]) .header-compressed {
+/* 4. Compressed Header on Scroll */
+html:not([data-theme="dark"]) .header-compressed,
+[data-theme="light"] .header-compressed {
   padding-top: 0.375rem !important;
   padding-bottom: 0.375rem !important;
-  background-color: #050811 !important;
-  background: #050811 !important;
+  background: linear-gradient(135deg, rgba(245, 239, 233, 0.98) 0%, rgba(230, 218, 204, 0.96) 50%, rgba(201, 178, 158, 0.95) 100%) !important;
+  background-color: #C9B29E !important;
+  color: #5a4231 !important;
+  box-shadow: 0 4px 20px -2px rgba(118, 91, 70, 0.15) !important;
+}
+
+[data-theme="dark"] .header-compressed {
+  padding-top: 0.375rem !important;
+  padding-bottom: 0.375rem !important;
+  background-color: #0b0f19 !important;
+  background: #0b0f19 !important;
   color: #f8fafc !important;
   box-shadow: 0 4px 25px -2px rgba(0, 0, 0, 0.7) !important;
 }
@@ -972,27 +979,48 @@ html:not([data-theme="dark"]) table tbody tr:hover,
   background-color: rgba(249, 248, 246, 0.8) !important;
 }
 
-/* Top site header bar is fixed/sticky and fixed solid dark on all pages across all themes & scroll states */
-header,
-header.header-compressed,
-[data-theme="light"] header,
-[data-theme="dark"] header,
-html:not([data-theme="dark"]) header {
+/* Top site header bar is fixed/sticky - Light Mode uses #C9B29E mixed palette */
+html:not([data-theme="dark"]) header,
+[data-theme="light"] header {
   position: -webkit-sticky !important;
   position: sticky !important;
   top: 0 !important;
   z-index: 1000 !important;
-  background-color: #050811 !important;
-  background: #050811 !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-  color: #f8fafc !important;
-  box-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.55) !important;
+  background: linear-gradient(135deg, rgba(245, 239, 233, 0.97) 0%, rgba(230, 218, 204, 0.95) 45%, rgba(201, 178, 158, 0.94) 100%) !important;
+  background-color: #C9B29E !important;
+  border-bottom: 1px solid rgba(179, 149, 125, 0.55) !important;
+  color: #5a4231 !important;
+  box-shadow: 0 4px 22px -2px rgba(118, 91, 70, 0.12) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
 }
 
-header a h1,
-header a p,
-header a span,
-header .site-title,
-header .brand-title {
+html:not([data-theme="dark"]) header a h1,
+html:not([data-theme="dark"]) header .site-title,
+html:not([data-theme="dark"]) header .brand-title {
+  color: #5a4231 !important;
+}
+
+html:not([data-theme="dark"]) header a p {
+  color: #765b46 !important;
+}
+
+[data-theme="dark"] header {
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1000 !important;
+  background-color: #0b0f19 !important;
+  background: #0b0f19 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: #f8fafc !important;
+  box-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.65) !important;
+}
+
+[data-theme="dark"] header a h1,
+[data-theme="dark"] header a p,
+[data-theme="dark"] header a span,
+[data-theme="dark"] header .site-title,
+[data-theme="dark"] header .brand-title {
   color: #ffffff !important;
 }
