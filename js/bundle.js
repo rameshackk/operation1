@@ -609,50 +609,85 @@ async function getRelatedVideos(currentId, language = "ta", category = "all") {
 }
 
 async function searchAllContent(query, language = "ta") {
-  if (!query || !query.trim()) return [];
-  const q = query.toLowerCase().trim();
-  const qTerms = q.split(/\s+/).filter(Boolean);
-
-  // 1. Videos come from the database, which searches Tamil and English titles and
-  //    descriptions. The bundled catalog is only used if that request fails.
-  let videoPool = null;
-  try {
-    const res = await fetch(`/api/videos?limit=100&search=${encodeURIComponent(query.trim())}`);
-    if (res.ok) {
-      const json = await res.json();
-      if (json.status === 'success' && Array.isArray(json.data)) {
-        videoPool = json.data.map(normalizeVideoRow);
-      }
-    }
-  } catch (e) {
-    console.warn('Search videos API fallback:', e);
+  if (!query || !query.trim()) {
+    return { all: [], articles: [], videos: [], news: [], publishers: [] };
   }
 
-  // API rows already matched server-side, so a zero local score there means
-  // "rank last", not "exclude". Local rows still need the score to filter.
-  const fromApi = videoPool !== null;
-  if (!fromApi) videoPool = videosData;
+  const rawQ = query.trim();
+  const q = rawQ.toLowerCase();
+  const qTerms = q.split(/\s+/).filter(Boolean);
 
-  const matchedVideos = videoPool.map(v => {
+  // Parallel asynchronous fetching across all platform resources
+  const [videosRes, articlesRes, publishersRes] = await Promise.allSettled([
+    fetch(`/api/videos?limit=80&search=${encodeURIComponent(rawQ)}`).then(r => r.ok ? r.json() : null),
+    fetch(`/api/articles?limit=50&search=${encodeURIComponent(rawQ)}`).then(r => r.ok ? r.json() : null),
+    fetch(`/api/publishers?limit=30&search=${encodeURIComponent(rawQ)}`).then(r => r.ok ? r.json() : null)
+  ]);
+
+  // 1. VIDEOS POOL
+  let videoPool = [];
+  if (videosRes.status === 'fulfilled' && videosRes.value?.status === 'success' && Array.isArray(videosRes.value?.data)) {
+    videoPool = videosRes.value.data.map(normalizeVideoRow);
+  }
+  if (videoPool.length === 0 && typeof videosData !== 'undefined') {
+    videoPool = videosData;
+  }
+
+  // 2. ARTICLES & NEWS POOL
+  let articlesPool = [];
+  if (articlesRes.status === 'fulfilled' && articlesRes.value?.status === 'success' && Array.isArray(articlesRes.value?.data)) {
+    articlesPool = articlesRes.value.data;
+  }
+  if (typeof newsData !== 'undefined') {
+    const existingSlugs = new Set(articlesPool.map(a => a.slug));
+    newsData.forEach(n => {
+      if (!existingSlugs.has(n.slug)) {
+        articlesPool.push(n);
+      }
+    });
+  }
+
+  // 3. PUBLISHERS POOL
+  let publishersPool = [];
+  if (publishersRes.status === 'fulfilled' && publishersRes.value?.status === 'success' && Array.isArray(publishersRes.value?.data)) {
+    publishersPool = publishersRes.value.data;
+  }
+  if (typeof professionalsData !== 'undefined') {
+    const existingPubIds = new Set(publishersPool.map(p => p.id));
+    professionalsData.forEach(p => {
+      if (!existingPubIds.has(p.id)) {
+        publishersPool.push(p);
+      }
+    });
+  }
+
+  // --- SCORE & RANK VIDEOS ---
+  const scoredVideos = videoPool.map(v => {
     let score = 0;
-    const titleT = (v.titleTamil || v.title || "").toLowerCase();
-    const titleE = (v.titleEnglish || v.title || "").toLowerCase();
+    const titleT = (v.titleTamil || v.title || "").toLowerCase().trim();
+    const titleE = (v.titleEnglish || v.title || "").toLowerCase().trim();
     const descT = (v.descriptionTamil || v.description || "").toLowerCase();
     const descE = (v.descriptionEnglish || v.description || "").toLowerCase();
     const cat = (v.category || "").toLowerCase();
+    const channel = (v.channelName || "").toLowerCase();
     const tags = (v.tags || []).join(' ').toLowerCase();
 
-    if (titleT.includes(q) || titleE.includes(q)) score += 120;
+    // SEO EXACT MATCH (+350)
+    if (titleT === q || titleE === q) score += 350;
+    else if (titleT.startsWith(q) || titleE.startsWith(q)) score += 180;
+    else if (titleT.includes(q) || titleE.includes(q)) score += 120;
+
+    if (channel.includes(q)) score += 80;
     if (cat.includes(q) || q.includes(cat.replace('-', ' '))) score += 70;
-    if (tags.includes(q)) score += 50;
+    if (tags.includes(q)) score += 60;
 
     qTerms.forEach(term => {
-      if (titleT.includes(term) || titleE.includes(term)) score += 30;
-      if (descT.includes(term) || descE.includes(term)) score += 15;
-      if (tags.includes(term)) score += 10;
+      if (titleT.includes(term) || titleE.includes(term)) score += 40;
+      if (descT.includes(term) || descE.includes(term)) score += 20;
+      if (tags.includes(term)) score += 15;
     });
 
-    if (score === 0 && !fromApi) return null;
+    if (score === 0) return null;
     const translated = translateVideo(v, language);
     return {
       ...translated,
@@ -661,38 +696,114 @@ async function searchAllContent(query, language = "ta") {
     };
   }).filter(Boolean);
 
-  // 2. Search across news articles
-  const matchedArticles = newsData.map(a => {
-    let score = 0;
-    const titleT = (a.titleTamil || "").toLowerCase();
-    const titleE = (a.titleEnglish || "").toLowerCase();
-    const sumT = (a.summaryTamil || "").toLowerCase();
-    const sumE = (a.summaryEnglish || "").toLowerCase();
-    const cat = (a.category || "").toLowerCase();
+  // --- SCORE & RANK ARTICLES & NEWS ---
+  const scoredArticles = [];
+  const scoredNews = [];
 
-    if (titleT.includes(q) || titleE.includes(q)) score += 130;
+  articlesPool.forEach(a => {
+    let score = 0;
+    const titleT = (a.titleTamil || a.title_ta || a.title || "").toLowerCase().trim();
+    const titleE = (a.titleEnglish || a.title_en || a.title || "").toLowerCase().trim();
+    const sumT = (a.summaryTamil || a.excerptTamil || a.excerpt_ta || a.summary || "").toLowerCase();
+    const sumE = (a.summaryEnglish || a.excerptEnglish || a.excerpt_en || a.summary || "").toLowerCase();
+    const cat = (a.category || "").toLowerCase();
+    const author = (a.authorName || a.author_name || "").toLowerCase();
+    const slug = (a.slug || "").toLowerCase();
+
+    // SEO EXACT MATCH (+350)
+    if (titleT === q || titleE === q || slug === q) score += 350;
+    else if (titleT.startsWith(q) || titleE.startsWith(q)) score += 180;
+    else if (titleT.includes(q) || titleE.includes(q)) score += 120;
+
     if (cat.includes(q) || q.includes(cat.replace('-', ' '))) score += 70;
+    if (author.includes(q)) score += 50;
 
     qTerms.forEach(term => {
-      if (titleT.includes(term) || titleE.includes(term)) score += 35;
-      if (sumT.includes(term) || sumE.includes(term)) score += 20;
+      if (titleT.includes(term) || titleE.includes(term)) score += 40;
+      if (sumT.includes(term) || sumE.includes(term)) score += 25;
+      if (cat.includes(term)) score += 15;
+    });
+
+    if (score === 0) return;
+    const isNews = cat === 'news' || a.isNews === true || (a.category && a.category.includes('news'));
+    const normalized = normalizeArticleItem(a, language);
+    const item = {
+      ...normalized,
+      contentType: isNews ? 'news' : 'article',
+      score
+    };
+
+    if (isNews) scoredNews.push(item);
+    else scoredArticles.push(item);
+  });
+
+  // --- SCORE & RANK PUBLISHER PROFILES ---
+  const scoredPublishers = publishersPool.map(p => {
+    let score = 0;
+    const nameT = (p.display_name || p.nameTamil || p.nameEnglish || "").toLowerCase().trim();
+    const nameE = (p.display_name || p.nameEnglish || p.nameTamil || "").toLowerCase().trim();
+    const titleT = (p.title || p.titleTamil || p.titleEnglish || "").toLowerCase();
+    const titleE = (p.title || p.titleEnglish || p.titleTamil || "").toLowerCase();
+    const arn = (p.arn_number || p.arnNumber || "").toLowerCase();
+    const bioT = (p.bio_ta || p.bioTamil || p.bio || "").toLowerCase();
+    const bioE = (p.bio || p.bioEnglish || "").toLowerCase();
+    const specialties = (Array.isArray(p.specialties) ? p.specialties.join(' ') : (Array.isArray(p.specializations) ? p.specializations.map(s => s.en || s.ta).join(' ') : '')).toLowerCase();
+
+    // SEO EXACT MATCH (+400 for publisher name / ARN exact hit)
+    if (nameT === q || nameE === q || arn === q) score += 400;
+    else if (nameT.startsWith(q) || nameE.startsWith(q) || arn.startsWith(q)) score += 200;
+    else if (nameT.includes(q) || nameE.includes(q)) score += 140;
+
+    if (arn.includes(q)) score += 100;
+    if (titleT.includes(q) || titleE.includes(q)) score += 80;
+    if (specialties.includes(q)) score += 70;
+
+    qTerms.forEach(term => {
+      if (nameT.includes(term) || nameE.includes(term)) score += 50;
+      if (titleT.includes(term) || titleE.includes(term)) score += 30;
+      if (specialties.includes(term)) score += 20;
+      if (bioT.includes(term) || bioE.includes(term)) score += 15;
     });
 
     if (score === 0) return null;
-    const translated = translateNewsArticle(a, language);
+
+    const displayName = p.display_name || p.nameEnglish || p.nameTamil || 'Financial Advisor';
+    const isFounder = p.id === 'fe41c6c1-647f-4f8c-81b8-c39ca3666426' || displayName.toLowerCase().includes('budget padmanaban');
+    const avatar = p.avatar_url || p.avatar || (isFounder ? 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80' : `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=f59e0b&color=0f172a&bold=true`);
+
     return {
-      ...translated,
-      contentType: 'article',
+      id: p.id || p.slug,
+      slug: p.slug || p.id,
+      title: displayName,
+      name: displayName,
+      avatar,
+      thumbnail: avatar,
+      arnNumber: p.arn_number || p.arnNumber || '',
+      designation: p.title || (language === 'ta' ? (isFounder ? 'நிறுவனர் & தலைமை நிதி ஆய்வாளர்' : 'பதிவுசெய்யப்பட்ட நிதி ஆலோசகர்') : (isFounder ? 'Founder & Chief Market Commentator' : 'AMFI Registered Mutual Fund Distributor')),
+      summary: p.bio || (language === 'ta' ? (p.bio_ta || 'முதலீட்டாளர்களுக்கு வழிகாட்டும் AMFI பதிவுபெற்ற ஆலோசகர்') : 'Certified AMFI mutual fund distributor dedicated to investor wealth creation.'),
+      category: 'publisher',
+      contentType: 'publisher',
+      articleCount: p.article_count || p.stats?.articles || 0,
+      videoCount: p.video_count || p.stats?.masterclasses || 0,
       score
     };
   }).filter(Boolean);
 
-  return [...matchedArticles, ...matchedVideos].sort((a, b) => b.score - a.score);
+  // Combine and sort by highest SEO score first
+  const allResults = [...scoredPublishers, ...scoredArticles, ...scoredNews, ...scoredVideos].sort((a, b) => b.score - a.score);
+
+  return {
+    all: allResults,
+    articles: scoredArticles.sort((a, b) => b.score - a.score),
+    videos: scoredVideos.sort((a, b) => b.score - a.score),
+    news: scoredNews.sort((a, b) => b.score - a.score),
+    publishers: scoredPublishers.sort((a, b) => b.score - a.score)
+  };
 }
 
 async function searchVideos(query, language = "ta") {
-  const all = await searchAllContent(query, language);
-  return all.filter(item => item.contentType === 'video');
+  const resultObj = await searchAllContent(query, language);
+  return resultObj.videos || [];
 }
 
 
@@ -1834,25 +1945,25 @@ function TrendingTicker() {
 function CommandPalette({ isOpen, onClose, onNavigate }) {
   const { t, language } = useLanguage();
   const [query, setQuery] = useState('');
-  const [results, setResults] = useState([]);
-  const [filterType, setFilterType] = useState('all'); // 'all' | 'video' | 'article'
+  const [resultsObj, setResultsObj] = useState({ all: [], articles: [], videos: [], news: [], publishers: [] });
+  const [filterType, setFilterType] = useState('all'); // 'all' | 'article' | 'video' | 'news' | 'publisher'
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isSearching, setIsSearching] = useState(false);
-  const debouncedQuery = useDebounce(query, 200);
+  const debouncedQuery = useDebounce(query, 350);
   const inputRef = useRef(null);
 
   useEffect(() => {
     if (isOpen) {
       setTimeout(() => inputRef.current?.focus(), 50);
       setQuery('');
-      setResults([]);
+      setResultsObj({ all: [], articles: [], videos: [], news: [], publishers: [] });
       setFilterType('all');
     }
   }, [isOpen]);
 
   useEffect(() => {
     if (!debouncedQuery.trim()) {
-      setResults([]);
+      setResultsObj({ all: [], articles: [], videos: [], news: [], publishers: [] });
       setIsSearching(false);
       return;
     }
@@ -1860,12 +1971,12 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
     let isStale = false;
     searchAllContent(debouncedQuery, language).then(data => {
       if (isStale) return;
-      setResults(data);
+      setResultsObj(data || { all: [], articles: [], videos: [], news: [], publishers: [] });
       setIsSearching(false);
       setSelectedIndex(0);
     }).catch(() => {
       if (isStale) return;
-      setResults([]);
+      setResultsObj({ all: [], articles: [], videos: [], news: [], publishers: [] });
       setIsSearching(false);
     });
     return () => { isStale = true; };
@@ -1883,117 +1994,208 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
     return () => window.removeEventListener('keydown', handleGlobalKeyDown);
   }, [isOpen, onClose, onNavigate]);
 
-  const filteredResults = useMemo(() => {
-    if (filterType === 'video') return results.filter(r => r.contentType === 'video');
-    if (filterType === 'article') return results.filter(r => r.contentType === 'article');
-    return results;
-  }, [results, filterType]);
+  const activeResults = useMemo(() => {
+    if (filterType === 'article') return resultsObj.articles || [];
+    if (filterType === 'video') return resultsObj.videos || [];
+    if (filterType === 'news') return resultsObj.news || [];
+    if (filterType === 'publisher') return resultsObj.publishers || [];
+    return resultsObj.all || [];
+  }, [resultsObj, filterType]);
+
+  const handleSelectItem = (item) => {
+    if (!item) return;
+    if (item.contentType === 'publisher') {
+      onNavigate(`#/professionals/${item.id || item.slug}`);
+    } else if (item.contentType === 'article') {
+      onNavigate(`#/articles/${item.slug || item.id}`);
+    } else if (item.contentType === 'news') {
+      onNavigate(`#/news/${item.slug || item.id}`);
+    } else {
+      onNavigate(`#/videos/${item.id}`);
+    }
+    onClose();
+  };
 
   const handleKeyDown = (e) => {
     if (e.key === 'Escape') onClose();
     else if (e.key === 'ArrowDown') {
       e.preventDefault();
-      setSelectedIndex(prev => (prev < filteredResults.length - 1 ? prev + 1 : 0));
+      setSelectedIndex(prev => (prev < activeResults.length - 1 ? prev + 1 : 0));
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
-      setSelectedIndex(prev => (prev > 0 ? prev - 1 : filteredResults.length - 1));
-    } else if (e.key === 'Enter' && filteredResults[selectedIndex]) {
+      setSelectedIndex(prev => (prev > 0 ? prev - 1 : activeResults.length - 1));
+    } else if (e.key === 'Enter' && activeResults[selectedIndex]) {
       e.preventDefault();
-      const item = filteredResults[selectedIndex];
-      if (item.contentType === 'article') {
-        onNavigate(`#/news/${item.slug || item.id}`);
-      } else {
-        onNavigate(`#/videos/${item.id}`);
-      }
-      onClose();
+      handleSelectItem(activeResults[selectedIndex]);
     }
   };
 
   if (!isOpen) return null;
 
   const popularTags = ["@budgetpadmanaban_", "SIP", "NIFTY 50", "Mutual Fund", "Tax Saving", "NPS", "SGB", "IPO"];
-  const videoCount = results.filter(r => r.contentType === 'video').length;
-  const articleCount = results.filter(r => r.contentType === 'article').length;
+  const totalCount = resultsObj.all.length;
+  const articlesCount = resultsObj.articles.length;
+  const videosCount = resultsObj.videos.length;
+  const newsCount = resultsObj.news.length;
+  const publishersCount = resultsObj.publishers.length;
+
+  const isTa = language === 'ta';
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-slate-950/80  flex items-start justify-center pt-16 sm:pt-24 px-4 animate-fadeIn"
+      className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-start justify-center pt-12 sm:pt-20 px-4 animate-fadeIn"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-2xl bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col max-h-[85vh]"
+        className="w-full max-w-3xl bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col max-h-[85vh] modal-card-unified"
         onClick={e => e.stopPropagation()}
         onKeyDown={handleKeyDown}
       >
-        {/* Search Input Bar */}
-        <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center gap-3">
-          <svg className="w-5 h-5 text-amber-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+        {/* Universal Search Input Bar */}
+        <div className="p-4 sm:p-5 border-b border-slate-200 dark:border-slate-800 flex items-center gap-3 bg-slate-50/50 dark:bg-slate-950/50">
+          <div className="w-8 h-8 rounded-xl bg-amber-500/15 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
+            {isSearching ? (
+              <svg className="w-4 h-4 animate-spin text-amber-500" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+              </svg>
+            ) : (
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            )}
+          </div>
           <input
             ref={inputRef}
             type="text"
             value={query}
             onChange={e => setQuery(e.target.value)}
-            placeholder={language === 'ta' ? "வீடியோக்கள் & கட்டுரைகளில் தேடுங்கள்... (882+ வீடியோக்கள்)" : "Search across 882+ Videos & Financial Articles..."}
-            className="w-full bg-transparent text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none text-base sm:text-lg font-semibold"
+            placeholder={isTa ? "செய்திகள், கட்டுரைகள், வீடியோக்கள், நிபுணர்களில் தேடுங்கள்..." : "Search articles, videos, news, publishers..."}
+            className="w-full bg-transparent text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none text-sm sm:text-base font-semibold"
           />
           {query && (
-            <button onClick={() => setQuery('')} className="text-xs text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 font-bold">
-              Clear
+            <button
+              onClick={() => setQuery('')}
+              className="text-xs text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 px-2.5 py-1 rounded-lg bg-slate-200/80 dark:bg-slate-800 font-bold transition-colors"
+            >
+              {isTa ? 'அழி' : 'Clear'}
             </button>
           )}
-          <button onClick={onClose} className="text-xs font-bold px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+          <button
+            onClick={onClose}
+            className="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-slate-200/80 dark:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors"
+          >
             ESC
           </button>
         </div>
 
-        {/* Filter Tabs when search query is active */}
-        {results.length > 0 && (
-          <div className="px-4 py-2 bg-slate-50 dark:bg-slate-950/60 border-b border-slate-200 dark:border-slate-800 flex items-center gap-2">
+        {/* Category Tabs with live counts */}
+        {totalCount > 0 && (
+          <div className="px-4 py-2.5 bg-slate-50 dark:bg-slate-950/70 border-b border-slate-200 dark:border-slate-800 flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar">
             <button
               onClick={() => { setFilterType('all'); setSelectedIndex(0); }}
-              className={`px-3 py-1 rounded-lg text-xs font-black transition-colors ${
-                filterType === 'all' ? 'bg-amber-500 text-slate-950' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800'
+              className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                filterType === 'all'
+                  ? 'bg-amber-500 text-slate-950 shadow-sm'
+                  : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200/80 dark:hover:bg-slate-800'
               }`}
             >
-              All Results ({results.length})
+              <span>{isTa ? 'அனைத்தும்' : 'All'}</span>
+              <span className="px-1.5 py-0.2 rounded-full bg-black/15 text-[10px]">{totalCount}</span>
             </button>
-            <button
-              onClick={() => { setFilterType('video'); setSelectedIndex(0); }}
-              className={`px-3 py-1 rounded-lg text-xs font-black transition-colors flex items-center gap-1.5 ${
-                filterType === 'video' ? 'bg-red-600 text-white' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800'
-              }`}
-            >
-              <span> Videos</span>
-              <span className="px-1.5 py-0.2 rounded-full bg-black/20 text-[10px]">{videoCount}</span>
-            </button>
-            <button
-              onClick={() => { setFilterType('article'); setSelectedIndex(0); }}
-              className={`px-3 py-1 rounded-lg text-xs font-black transition-colors flex items-center gap-1.5 ${
-                filterType === 'article' ? 'bg-blue-600 text-white' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800'
-              }`}
-            >
-              <span> Articles</span>
-              <span className="px-1.5 py-0.2 rounded-full bg-black/20 text-[10px]">{articleCount}</span>
-            </button>
+
+            {articlesCount > 0 && (
+              <button
+                onClick={() => { setFilterType('article'); setSelectedIndex(0); }}
+                className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                  filterType === 'article'
+                    ? 'bg-blue-600 text-white shadow-sm'
+                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200/80 dark:hover:bg-slate-800'
+                }`}
+              >
+                <span>{isTa ? 'கட்டுரைகள்' : 'Articles'}</span>
+                <span className="px-1.5 py-0.2 rounded-full bg-black/20 text-[10px]">{articlesCount}</span>
+              </button>
+            )}
+
+            {videosCount > 0 && (
+              <button
+                onClick={() => { setFilterType('video'); setSelectedIndex(0); }}
+                className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                  filterType === 'video'
+                    ? 'bg-red-600 text-white shadow-sm'
+                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200/80 dark:hover:bg-slate-800'
+                }`}
+              >
+                <span>{isTa ? 'வீடியோக்கள்' : 'Videos'}</span>
+                <span className="px-1.5 py-0.2 rounded-full bg-black/20 text-[10px]">{videosCount}</span>
+              </button>
+            )}
+
+            {newsCount > 0 && (
+              <button
+                onClick={() => { setFilterType('news'); setSelectedIndex(0); }}
+                className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                  filterType === 'news'
+                    ? 'bg-emerald-600 text-white shadow-sm'
+                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200/80 dark:hover:bg-slate-800'
+                }`}
+              >
+                <span>{isTa ? 'செய்திகள்' : 'News'}</span>
+                <span className="px-1.5 py-0.2 rounded-full bg-black/20 text-[10px]">{newsCount}</span>
+              </button>
+            )}
+
+            {publishersCount > 0 && (
+              <button
+                onClick={() => { setFilterType('publisher'); setSelectedIndex(0); }}
+                className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                  filterType === 'publisher'
+                    ? 'bg-amber-600 text-white shadow-sm'
+                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200/80 dark:hover:bg-slate-800'
+                }`}
+              >
+                <span>{isTa ? 'நிபுணர்கள்' : 'Publishers'}</span>
+                <span className="px-1.5 py-0.2 rounded-full bg-black/20 text-[10px]">{publishersCount}</span>
+              </button>
+            )}
           </div>
         )}
 
-        {/* Results List */}
+        {/* Results Stream */}
         <div className="overflow-y-auto p-4 space-y-2 flex-1">
-          {isSearching && <div className="py-8 text-center text-slate-400 text-sm animate-pulse font-medium">{t('searchPlaceholder')}...</div>}
-
-          {!isSearching && query.trim() && filteredResults.length === 0 && (
-            <div className="py-8 text-center text-slate-500 dark:text-slate-400 text-sm font-medium">
-              {language === 'ta' ? `"${query}" தொடர்பாக முடிவுகள் எதுவும் கிடைக்கவில்லை` : `No matching videos or articles found for "${query}"`}
+          {/* Loading Indicator */}
+          {isSearching && (
+            <div className="py-10 text-center space-y-3">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 text-xs font-bold animate-pulse">
+                <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping" />
+                <span>{isTa ? 'தகவல்கள் தேடப்படுகின்றன...' : 'Searching all articles, videos, news & publishers...'}</span>
+              </div>
             </div>
           )}
 
+          {/* No Results Fallback */}
+          {!isSearching && query.trim() && activeResults.length === 0 && (
+            <div className="py-12 text-center text-slate-500 dark:text-slate-400 text-sm font-medium space-y-2">
+              <div className="text-3xl">🔍</div>
+              <p>{isTa ? `"${query}" தொடர்பாக முடிவுகள் எதுவும் கிடைக்கவில்லை` : `No matching contents found for "${query}"`}</p>
+              <p className="text-xs text-slate-400">{isTa ? 'வேறு முக்கிய வார்த்தைகளைப் பயன்படுத்தி தேடவும்.' : 'Try searching for mutual funds, SIP, NIFTY 50, or advisor name.'}</p>
+            </div>
+          )}
+
+          {/* Trending Searches Tags */}
           {!query.trim() && (
             <div className="py-2">
-              <p className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">{t('trendingSearches')}</p>
+              <p className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">
+                {t('trendingSearches')}
+              </p>
               <div className="flex flex-wrap gap-2">
                 {popularTags.map((tag, idx) => (
-                  <button key={idx} onClick={() => setQuery(tag)} className="px-3.5 py-1.5 text-xs font-bold rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-amber-600 border border-slate-200 dark:border-slate-700 transition-colors">
+                  <button
+                    key={idx}
+                    onClick={() => setQuery(tag)}
+                    className="px-3.5 py-1.5 text-xs font-bold rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-400 border border-slate-200 dark:border-slate-700 transition-colors"
+                  >
                     #{tag}
                   </button>
                 ))}
@@ -2001,50 +2203,86 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
             </div>
           )}
 
-          {filteredResults.length > 0 && (
+          {/* Filtered & Ranked Result Cards */}
+          {!isSearching && activeResults.length > 0 && (
             <div className="space-y-2">
-              {filteredResults.map((item, idx) => {
+              {activeResults.map((item, idx) => {
+                const isSelected = idx === selectedIndex;
+                const isPub = item.contentType === 'publisher';
                 const isArticle = item.contentType === 'article';
+                const isNews = item.contentType === 'news';
+                const isVideo = item.contentType === 'video';
+
                 return (
                   <div
-                    key={`${item.contentType}-${item.id}`}
-                    onClick={() => {
-                      if (isArticle) onNavigate(`#/news/${item.slug || item.id}`);
-                      else onNavigate(`#/videos/${item.id}`);
-                      onClose();
-                    }}
+                    key={`${item.contentType}-${item.id || item.slug}-${idx}`}
+                    onClick={() => handleSelectItem(item)}
                     className={`p-3 rounded-2xl flex items-center gap-3.5 cursor-pointer transition-all ${
-                      idx === selectedIndex
-                        ? 'bg-amber-500/15 border border-amber-500/40 text-amber-700 dark:text-amber-300 shadow-sm'
+                      isSelected
+                        ? 'bg-amber-500/15 border border-amber-500/40 text-amber-800 dark:text-amber-200 shadow-sm'
                         : 'hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-transparent'
                     }`}
                   >
-                    <div className="relative w-20 h-12 shrink-0 rounded-xl overflow-hidden shadow-sm bg-slate-900">
-                      <img src={item.thumbnail} alt="" className="w-full h-full object-cover" />
-                      {item.duration && (
-                        <span className="absolute bottom-1 right-1 bg-black/85 text-white text-[9px] font-black px-1.5 py-0.2 rounded">
-                          {item.duration}
-                        </span>
-                      )}
-                    </div>
+                    {/* Visual Media / Avatar */}
+                    {isPub ? (
+                      <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-2xl overflow-hidden shadow-md shrink-0 border-2 border-amber-500/40 bg-amber-500/10 flex items-center justify-center">
+                        <img src={item.avatar || item.thumbnail} alt={item.name} className="w-full h-full object-cover" />
+                      </div>
+                    ) : (
+                      <div className="relative w-20 h-13 sm:w-24 sm:h-14 shrink-0 rounded-xl overflow-hidden shadow-sm bg-slate-900 border border-slate-200 dark:border-slate-800">
+                        <img src={item.thumbnail} alt="" className="w-full h-full object-cover" />
+                        {isVideo && item.duration && (
+                          <span className="absolute bottom-1 right-1 bg-black/85 text-white text-[9px] font-black px-1.5 py-0.2 rounded">
+                            {item.duration}
+                          </span>
+                        )}
+                      </div>
+                    )}
 
+                    {/* Result Content */}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-0.5">
-                        <span className={`text-[9px] font-black uppercase px-2 py-0.5 rounded ${
-                          isArticle ? 'bg-blue-500/20 text-blue-700 dark:text-blue-400' : 'bg-red-500/20 text-red-700 dark:text-red-400'
-                        }`}>
-                          {isArticle ? 'ARTICLE' : 'VIDEO'}
+                        <span
+                          className={`text-[9px] font-black uppercase px-2 py-0.5 rounded-full ${
+                            isPub
+                              ? 'bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/30'
+                              : isArticle
+                              ? 'bg-blue-500/20 text-blue-700 dark:text-blue-300'
+                              : isNews
+                              ? 'bg-emerald-500/20 text-emerald-700 dark:text-emerald-300'
+                              : 'bg-red-500/20 text-red-700 dark:text-red-300'
+                          }`}
+                        >
+                          {isPub ? (isTa ? 'நிபுணர்' : 'PUBLISHER') : isArticle ? (isTa ? 'கட்டுரை' : 'ARTICLE') : isNews ? (isTa ? 'செய்தி' : 'NEWS') : (isTa ? 'வீடியோ' : 'VIDEO')}
                         </span>
-                        <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase">
-                          {(item.category || '').replace('-', ' ')}
-                        </span>
+
+                        {item.arnNumber && (
+                          <span className="text-[9px] font-bold text-amber-700 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
+                            {item.arnNumber}
+                          </span>
+                        )}
+
+                        {item.category && !isPub && (
+                          <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase">
+                            {(item.category || '').replace('-', ' ')}
+                          </span>
+                        )}
                       </div>
-                      <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-slate-100 truncate">{item.title}</h4>
-                      <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">{item.summary || item.description}</p>
+
+                      <h4 className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-slate-100 truncate">
+                        {item.title || item.name}
+                      </h4>
+
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate mt-0.5">
+                        {isPub ? item.designation || item.summary : item.summary || item.description || ''}
+                      </p>
                     </div>
 
-                    <div className="shrink-0 text-slate-400">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" /></svg>
+                    {/* Navigation Arrow */}
+                    <div className="shrink-0 text-slate-400 group-hover:text-amber-500 transition-colors">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
+                      </svg>
                     </div>
                   </div>
                 );
