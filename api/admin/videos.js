@@ -1,5 +1,5 @@
 import { verifyAdminRequest } from '../../lib/auth-server.js';
-import { listVideos, getVideoByYoutubeId, updateVideoTranslation, updateVideoStatus } from '../../lib/db.js';
+import { listVideos, getVideoByYoutubeId, updateVideoTranslation, updateVideoStatus, getAdminMetrics } from '../../lib/db.js';
 import { translateVideo } from '../../lib/translate.js';
 import { supabaseAdmin } from '../../lib/supabase.js';
 
@@ -8,6 +8,17 @@ export default async function handler(req, res) {
   const auth = await verifyAdminRequest(req);
   if (!auth.authorized) {
     return res.status(auth.status).json({ error: auth.error });
+  }
+
+  // Serve admin metrics if requested
+  if (req.query?.metrics === '1' || req.query?.action === 'metrics') {
+    try {
+      const metrics = await getAdminMetrics();
+      return res.status(200).json({ status: 'success', data: metrics });
+    } catch (error) {
+      console.error('Error fetching admin metrics:', error);
+      return res.status(500).json({ error: 'Failed to fetch admin metrics', message: error.message });
+    }
   }
 
   if (req.method === 'GET') {

@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "outputDirectory": ".",
   "headers": [
     {
       "source": "/(.*)",
@@ -32,6 +31,14 @@
   ],
   "rewrites": [
     {
+      "source": "/api/translate",
+      "destination": "/api/admin/articles?action=translate"
+    },
+    {
+      "source": "/api/admin/metrics",
+      "destination": "/api/admin/videos?metrics=1"
+    },
+    {
       "source": "/api/videos/trending-preview",
       "destination": "/api/videos?preview=1"
     },
@@ -57,3 +64,4 @@
     }
   ]
 }
+

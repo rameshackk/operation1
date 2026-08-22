@@ -122,15 +122,17 @@ const server = http.createServer(async (req, res) => {
         return mod.default(req, res);
       }
 
-      // 1.5 Translation API
+      // 1.5 Translation API (Merged into Admin Articles)
       if (reqPath === '/api/translate' || reqPath === '/api/translate.js') {
-        const mod = await import(`./api/translate.js?t=${Date.now()}`);
+        req.query.action = 'translate';
+        const mod = await import(`./api/admin/articles/index.js?t=${Date.now()}`);
         return mod.default(req, res);
       }
 
       // 1.6 Admin Metrics & Videos
       if (reqPath === '/api/admin/metrics' || reqPath === '/api/admin/metrics.js') {
-        const mod = await import(`./api/admin/metrics.js?t=${Date.now()}`);
+        req.query.metrics = '1';
+        const mod = await import(`./api/admin/videos.js?t=${Date.now()}`);
         return mod.default(req, res);
       }
 
