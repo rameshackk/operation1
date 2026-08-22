@@ -7,11 +7,15 @@
   
   <meta name="description" content="பட்ஜெட் பத்மநாபன் ஃபைனான்ஷியல் - மியூச்சுவல் ஃபண்ட், பங்குச் சந்தை, தனிநபர் நிதி மற்றும் முதலீட்டு வழிகாட்டி." />
   
-  <!-- Early Theme Initialization to prevent flash of wrong theme -->
+  <!-- Early Theme Initialization to guarantee Light Mode as default -->
   <script>
     (function() {
       try {
-        var t = localStorage.getItem('dhanavriksha_theme') || 'light';
+        if (!localStorage.getItem('muthaleetu_theme_v1_light_default')) {
+          localStorage.setItem('muthaleetu_theme', 'light');
+          localStorage.setItem('muthaleetu_theme_v1_light_default', 'true');
+        }
+        var t = localStorage.getItem('muthaleetu_theme') || 'light';
         document.documentElement.setAttribute('data-theme', t);
       } catch (e) {}
     })();

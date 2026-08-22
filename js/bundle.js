@@ -4,12 +4,12 @@ const OFFICIAL_CHANNEL_URL = "https://www.youtube.com/@budgetpadmanaban_";
 const OFFICIAL_CHANNEL_HANDLE = "@budgetpadmanaban_";
 const OFFICIAL_CHANNEL_NAME = "Budget Padmanaban";
 
-// Initialize default theme to dark
-if (!localStorage.getItem("dhanavriksha_theme_v3_dark_default")) {
-  localStorage.setItem("dhanavriksha_theme", "dark");
-  localStorage.setItem("dhanavriksha_theme_v3_dark_default", "true");
+// Initialize default theme to light mode
+if (!localStorage.getItem("muthaleetu_theme_v1_light_default")) {
+  localStorage.setItem("muthaleetu_theme", "light");
+  localStorage.setItem("muthaleetu_theme_v1_light_default", "true");
 }
-document.documentElement.setAttribute("data-theme", localStorage.getItem("dhanavriksha_theme") || "dark");
+document.documentElement.setAttribute("data-theme", localStorage.getItem("muthaleetu_theme") || "light");
 
 // ==================== 1. DATA LAYER ====================
 const translations = {
@@ -742,12 +742,12 @@ const useLanguage = () => useContext(LanguageContext);
 const ThemeContext = createContext();
 
 function ThemeProvider({ children }) {
-  const [theme, setThemeState] = useState(() => localStorage.getItem("dhanavriksha_theme") || "light");
+  const [theme, setThemeState] = useState(() => localStorage.getItem("muthaleetu_theme") || "light");
 
   const toggleTheme = () => {
     const nextTheme = theme === "dark" ? "light" : "dark";
     setThemeState(nextTheme);
-    localStorage.setItem("dhanavriksha_theme", nextTheme);
+    localStorage.setItem("muthaleetu_theme", nextTheme);
   };
 
   useEffect(() => {
