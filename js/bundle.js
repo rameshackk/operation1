@@ -1410,7 +1410,7 @@ function ProfileMenu({ onNavigate }) {
         onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
         aria-label="User Profile Menu"
-        className="flex items-center gap-2 px-2.5 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800/90 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-amber-500"
+        className="flex items-center gap-2 px-2.5 py-1.5 rounded-full bg-white/90 dark:bg-slate-800/90 hover:bg-[#e6dacc] dark:hover:bg-slate-700 border border-[#cdb7a3] dark:border-slate-700 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-amber-500"
       >
         {avatarUrl ? (
           <img
@@ -1424,14 +1424,14 @@ function ProfileMenu({ onNavigate }) {
           </div>
         )}
         <div className="flex flex-col text-left leading-none max-w-[110px] sm:max-w-[150px] md:max-w-[180px]">
-          <span className="text-xs font-black text-slate-900 dark:text-white truncate">
+          <span className="text-xs font-black text-[#765b46] dark:text-white truncate">
             {displayName}
           </span>
-          <span className="text-[10px] font-medium text-slate-500 dark:text-slate-400 truncate mt-0.5">
+          <span className="text-[10px] font-medium text-[#957861] dark:text-slate-400 truncate mt-0.5">
             {email}
           </span>
         </div>
-        <svg className="w-3 h-3 text-slate-400 dark:text-slate-500 shrink-0 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-3 h-3 text-[#957861] dark:text-slate-500 shrink-0 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
         </svg>
       </button>
@@ -1631,11 +1631,11 @@ function useDebounce(value, delay = 250) {
 function LanguageSwitcher() {
   const { language, setLanguage, isTranslating } = useLanguage();
   return (
-    <div className="relative inline-flex items-center bg-slate-200 dark:bg-slate-800 p-1 rounded-full border border-slate-300 dark:border-slate-700 shadow-inner">
+    <div className="relative inline-flex items-center bg-white/80 dark:bg-slate-800 p-1 rounded-full border border-[#cdb7a3] dark:border-slate-700 shadow-inner">
       <button
         onClick={() => setLanguage('ta')}
         className={`px-3.5 py-1 text-xs font-bold rounded-full transition-all duration-300 ${
-          language === 'ta' ? 'bg-amber-600 text-white shadow-md scale-105' : 'text-slate-700 dark:text-slate-300 hover:text-amber-600'
+          language === 'ta' ? 'bg-amber-600 text-white shadow-md scale-105' : 'text-[#765b46] dark:text-slate-300 hover:text-amber-700'
         }`}
       >
         தமிழ்
@@ -1643,7 +1643,7 @@ function LanguageSwitcher() {
       <button
         onClick={() => setLanguage('en')}
         className={`px-3.5 py-1 text-xs font-bold rounded-full transition-all duration-300 ${
-          language === 'en' ? 'bg-amber-600 text-white shadow-md scale-105' : 'text-slate-700 dark:text-slate-300 hover:text-amber-600'
+          language === 'en' ? 'bg-amber-600 text-white shadow-md scale-105' : 'text-[#765b46] dark:text-slate-300 hover:text-amber-700'
         }`}
       >
         English
@@ -1662,13 +1662,13 @@ function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="p-2.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-amber-600 transition-all border border-slate-200 dark:border-slate-700 shadow-sm hover:scale-105"
+      className="p-2.5 rounded-full bg-white/90 dark:bg-slate-800 text-[#765b46] dark:text-slate-200 hover:text-amber-700 transition-all border border-[#cdb7a3] dark:border-slate-700 shadow-sm hover:scale-105"
       title="Toggle Light / Dark Theme"
     >
       {theme === 'dark' ? (
         <svg className="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
       ) : (
-        <svg className="w-4 h-4 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+        <svg className="w-4 h-4 text-[#765b46]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
       )}
     </button>
   );
@@ -1704,14 +1704,14 @@ function Header({ onOpenSearch, onNavigate }) {
   };
 
   return (
-    <header className={`w-full sticky top-0 z-50 transition-all duration-300 border-b border-white/10 bg-[#050811] text-white ${
-      isScrolled ? 'py-2 shadow-2xl' : 'py-3 shadow-lg'
+    <header className={`w-full sticky top-0 z-50 transition-all duration-300 border-b border-[#cdb7a3]/70 dark:border-white/10 bg-[#e6dacc]/95 dark:bg-[#050811] text-[#765b46] dark:text-white backdrop-blur-md ${
+      isScrolled ? 'py-2 shadow-xl shadow-stone-900/5 dark:shadow-2xl' : 'py-3 shadow-md'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
         
         {/* Left Side: Welcome Badge */}
         <div className="hidden sm:flex items-center gap-2 min-w-[140px] md:min-w-[170px] shrink-0">
-          <span className="inline-flex items-center gap-2 px-3 py-1 text-xs font-bold rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/25 shadow-sm">
+          <span className="inline-flex items-center gap-2 px-3 py-1 text-xs font-bold rounded-full bg-emerald-600/10 text-emerald-800 dark:text-emerald-400 border border-emerald-600/25 shadow-sm">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <span>{t('welcome')}</span>
           </span>
@@ -1729,15 +1729,15 @@ function Header({ onOpenSearch, onNavigate }) {
           </div>
           <div>
             <div className="flex items-center gap-2.5 justify-center sm:justify-start">
-              <h1 className="text-xl sm:text-2xl font-black tracking-tight text-white font-serif group-hover:text-amber-400 transition-colors whitespace-nowrap">
+              <h1 className="text-xl sm:text-2xl font-black tracking-tight text-[#765b46] dark:text-white font-serif group-hover:text-amber-700 dark:group-hover:text-amber-400 transition-colors whitespace-nowrap">
                 {t('siteName')}
               </h1>
-              <span className="sm:hidden inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+              <span className="sm:hidden inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider rounded-full bg-emerald-600/10 text-emerald-800 dark:text-emerald-400 border border-emerald-600/30">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 <span>{t('welcome')}</span>
               </span>
             </div>
-            <p className="text-xs text-slate-400 font-medium hidden sm:block">
+            <p className="text-xs text-[#957861] dark:text-slate-400 font-medium hidden sm:block">
               {t('tagline')}
             </p>
           </div>
@@ -1747,10 +1747,10 @@ function Header({ onOpenSearch, onNavigate }) {
         <div className="flex items-center justify-end gap-2 sm:gap-2.5 shrink-0">
           <button
             onClick={onOpenSearch}
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-slate-900 text-slate-200 hover:bg-slate-800 hover:text-white transition-all text-xs font-semibold border border-slate-700 shadow-sm hover:shadow-md"
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-white/90 dark:bg-slate-900 text-[#765b46] dark:text-slate-200 hover:bg-[#cdb7a3] dark:hover:bg-slate-800 transition-all text-xs font-semibold border border-[#cdb7a3] dark:border-slate-700 shadow-sm hover:shadow-md"
             aria-label="Search"
           >
-            <svg className="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+            <svg className="w-4 h-4 text-amber-500 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
             <span className="hidden md:inline">{t('searchTitle')}</span>
           </button>
           <LanguageSwitcher />
