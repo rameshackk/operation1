@@ -24,6 +24,10 @@
     {
       "path": "/api/cron/fetch-videos",
       "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/api/cron/fetch-news",
+      "schedule": "0 3 * * *"
     }
   ],
   "rewrites": [

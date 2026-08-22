@@ -257,3 +257,42 @@ CREATE POLICY "Admin modify article cover" ON storage.objects
         (public.is_admin(auth.uid()) OR auth.role() = 'service_role')
     );
 
+-- ============================================================
+-- 10. NEWS AGGREGATOR TABLE: news_articles
+-- ============================================================
+CREATE TABLE IF NOT EXISTS public.news_articles (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    source_url TEXT UNIQUE NOT NULL,
+    source_name TEXT NOT NULL,
+    title_en TEXT NOT NULL,
+    title_ta TEXT,
+    summary_en TEXT,
+    summary_ta TEXT,
+    image_url TEXT,
+    category TEXT DEFAULT 'general',
+    published_at TIMESTAMPTZ NOT NULL,
+    fetched_at TIMESTAMPTZ DEFAULT NOW(),
+    translated_at TIMESTAMPTZ
+);
+
+CREATE INDEX IF NOT EXISTS idx_news_articles_published_at ON public.news_articles (published_at DESC);
+CREATE INDEX IF NOT EXISTS idx_news_articles_source_url ON public.news_articles (source_url);
+CREATE INDEX IF NOT EXISTS idx_news_articles_category ON public.news_articles (category);
+
+ALTER TABLE public.news_articles ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Public can view news articles" ON public.news_articles;
+DROP POLICY IF EXISTS "Service role full access on news articles" ON public.news_articles;
+
+CREATE POLICY "Public can view news articles" 
+ON public.news_articles FOR SELECT 
+TO anon, authenticated 
+USING (true);
+
+CREATE POLICY "Service role full access on news articles" 
+ON public.news_articles FOR ALL 
+TO service_role 
+USING (true) 
+WITH CHECK (true);
+
+

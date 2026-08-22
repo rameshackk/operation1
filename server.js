@@ -158,9 +158,20 @@ const server = http.createServer(async (req, res) => {
         return mod.default(req, res);
       }
 
-      // 1.8 Cron API
+      // 1.8 News API
+      if (reqPath === '/api/news' || reqPath === '/api/news/index.js') {
+        const mod = await import(`./api/news/index.js?t=${Date.now()}`);
+        return mod.default(req, res);
+      }
+
+      // 1.9 Cron API
       if (reqPath === '/api/cron/fetch-videos' || reqPath === '/api/cron/fetch-videos.js') {
         const mod = await import(`./api/cron/fetch-videos.js?t=${Date.now()}`);
+        return mod.default(req, res);
+      }
+
+      if (reqPath === '/api/cron/fetch-news' || reqPath === '/api/cron/fetch-news.js') {
+        const mod = await import(`./api/cron/fetch-news.js?t=${Date.now()}`);
         return mod.default(req, res);
       }
 

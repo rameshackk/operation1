@@ -618,10 +618,11 @@ async function searchAllContent(query, language = "ta") {
   const qTerms = q.split(/\s+/).filter(Boolean);
 
   // Parallel asynchronous fetching across all platform resources
-  const [videosRes, articlesRes, publishersRes] = await Promise.allSettled([
+  const [videosRes, articlesRes, publishersRes, newsRes] = await Promise.allSettled([
     fetch(`/api/videos?limit=80&search=${encodeURIComponent(rawQ)}`).then(r => r.ok ? r.json() : null),
     fetch(`/api/articles?limit=50&search=${encodeURIComponent(rawQ)}`).then(r => r.ok ? r.json() : null),
-    fetch(`/api/publishers?limit=30&search=${encodeURIComponent(rawQ)}`).then(r => r.ok ? r.json() : null)
+    fetch(`/api/publishers?limit=30&search=${encodeURIComponent(rawQ)}`).then(r => r.ok ? r.json() : null),
+    fetch(`/api/news?limit=40&search=${encodeURIComponent(rawQ)}`).then(r => r.ok ? r.json() : null)
   ]);
 
   // 1. VIDEOS POOL
@@ -644,6 +645,24 @@ async function searchAllContent(query, language = "ta") {
       if (!existingSlugs.has(n.slug)) {
         articlesPool.push(n);
       }
+    });
+  }
+  if (newsRes.status === 'fulfilled' && newsRes.value?.status === 'success' && Array.isArray(newsRes.value?.data)) {
+    newsRes.value.data.forEach(n => {
+      articlesPool.push({
+        id: n.id,
+        isNews: true,
+        isExternal: true,
+        sourceUrl: n.sourceUrl,
+        sourceName: n.sourceName,
+        titleTamil: n.titleTamil,
+        titleEnglish: n.titleEnglish,
+        summaryTamil: n.summaryTamil,
+        summaryEnglish: n.summaryEnglish,
+        imageUrl: n.imageUrl,
+        category: n.category || 'news',
+        publishedAt: n.publishedAt
+      });
     });
   }
 
@@ -2004,7 +2023,9 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
 
   const handleSelectItem = (item) => {
     if (!item) return;
-    if (item.contentType === 'publisher') {
+    if (item.sourceUrl) {
+      window.open(item.sourceUrl, '_blank', 'noopener,noreferrer');
+    } else if (item.contentType === 'publisher') {
       onNavigate(`#/professionals/${item.id || item.slug}`);
     } else if (item.contentType === 'article') {
       onNavigate(`#/articles/${item.slug || item.id}`);
@@ -8378,6 +8399,115 @@ function AuthPage({ initialMode = 'login', onNavigate }) {
   );
 }
 
+function formatRelativeTime(dateString, isTamil) {
+  if (!dateString) return '';
+  const now = Date.now();
+  const past = new Date(dateString).getTime();
+  const diffSec = Math.floor((now - past) / 1000);
+
+  if (diffSec < 60) return isTamil ? 'சற்று முன்' : 'Just now';
+  const diffMin = Math.floor(diffSec / 60);
+  if (diffMin < 60) return isTamil ? `${diffMin} நிமிடங்களுக்கு முன்` : `${diffMin} min${diffMin > 1 ? 's' : ''} ago`;
+  const diffHours = Math.floor(diffMin / 60);
+  if (diffHours < 24) return isTamil ? `${diffHours} மணிநேரத்திற்கு முன்` : `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+  const diffDays = Math.floor(diffHours / 24);
+  if (diffDays < 30) return isTamil ? `${diffDays} நாட்களுக்கு முன்` : `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
+
+  return new Intl.DateTimeFormat(isTamil ? 'ta-IN' : 'en-IN', {
+    month: 'short',
+    day: 'numeric'
+  }).format(new Date(dateString));
+}
+
+function AggregatedNewsCard({ item, language }) {
+  const isTamil = language === 'ta';
+  const title = isTamil ? (item.titleTamil || item.titleEnglish) : (item.titleEnglish || item.titleTamil);
+  const summary = isTamil ? (item.summaryTamil || item.summaryEnglish) : (item.summaryEnglish || item.summaryTamil);
+  const relativeTime = formatRelativeTime(item.publishedAt, isTamil);
+  const source = item.sourceName || 'Financial News';
+  const sourceUrl = item.sourceUrl;
+
+  const handleOpenSource = (e) => {
+    if (e) e.stopPropagation();
+    if (sourceUrl) {
+      window.open(sourceUrl, '_blank', 'noopener,noreferrer');
+    }
+  };
+
+  const getSourceBadgeColor = (src) => {
+    const s = (src || '').toLowerCase();
+    if (s.includes('economic times')) return 'bg-amber-500/15 text-amber-700 dark:text-amber-300 border-amber-500/30';
+    if (s.includes('livemint') || s.includes('mint')) return 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/30';
+    if (s.includes('business standard')) return 'bg-blue-500/15 text-blue-700 dark:text-blue-300 border-blue-500/30';
+    if (s.includes('moneycontrol')) return 'bg-purple-500/15 text-purple-700 dark:text-purple-300 border-purple-500/30';
+    return 'bg-slate-500/15 text-slate-700 dark:text-slate-300 border-slate-500/30';
+  };
+
+  return (
+    <article
+      onClick={handleOpenSource}
+      className="group bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-xl hover:border-amber-500/50 transition-all duration-300 cursor-pointer flex flex-col justify-between"
+    >
+      <div className="space-y-3.5">
+        {/* Card Thumbnail / Header */}
+        <div className="relative aspect-[16/9] overflow-hidden bg-slate-950">
+          <img
+            src={item.imageUrl || "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&q=80"}
+            alt={title}
+            loading="lazy"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            onError={(e) => {
+              e.target.src = "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&q=80";
+            }}
+          />
+          {/* Source Attribution Badge */}
+          <div className="absolute top-3 left-3 flex items-center gap-1.5">
+            <span className={`px-2.5 py-1 text-[10px] font-black uppercase tracking-wider rounded-lg border backdrop-blur-md shadow-sm ${getSourceBadgeColor(source)}`}>
+              {source}
+            </span>
+          </div>
+
+          {/* Category Tag */}
+          <div className="absolute top-3 right-3">
+            <span className="px-2 py-0.5 text-[9px] font-black uppercase tracking-wider rounded-md bg-slate-950/80 text-amber-400 border border-slate-800 backdrop-blur-md">
+              {(item.category || 'MARKETS').replace('-', ' ')}
+            </span>
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="px-5 pt-1 space-y-2.5">
+          <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors font-serif leading-snug line-clamp-2">
+            {title}
+          </h3>
+          {summary && (
+            <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed font-medium">
+              {summary}
+            </p>
+          )}
+        </div>
+      </div>
+
+      {/* Footer Outbound Attribution Link */}
+      <div className="px-5 pb-5 pt-4 flex items-center justify-between border-t border-slate-100 dark:border-slate-800/80 mt-4 text-xs font-semibold">
+        <div className="flex items-center gap-2 text-slate-400 text-[11px]">
+          <span>⏱</span>
+          <span>{relativeTime || 'Recently'}</span>
+        </div>
+
+        <button
+          onClick={handleOpenSource}
+          className="inline-flex items-center gap-1 text-[11px] font-extrabold text-amber-600 dark:text-amber-400 group-hover:text-amber-500 hover:underline transition-colors"
+          title={`Open original article on ${source}`}
+        >
+          <span>{isTamil ? `${source}-ல் படிக்கவும்` : `Read on ${source}`}</span>
+          <span>→</span>
+        </button>
+      </div>
+    </article>
+  );
+}
+
 function NewsCard({ article, onSelect }) {
   const { language } = useLanguage();
   if (!article) return null;
@@ -8394,7 +8524,7 @@ function NewsCard({ article, onSelect }) {
   return (
     <article
       onClick={() => onSelect && onSelect(article)}
-      className="group bg-white/50 dark:bg-slate-900/50  rounded-2xl overflow-hidden border border-slate-200/50 dark:border-slate-800/50 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between h-full transform hover:-translate-y-1"
+      className="group bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-xl hover:border-amber-500/50 transition-all duration-300 cursor-pointer flex flex-col justify-between h-full transform hover:-translate-y-0.5"
     >
       <div className="relative aspect-[16/9] overflow-hidden bg-slate-950">
         <img
@@ -8403,24 +8533,27 @@ function NewsCard({ article, onSelect }) {
           loading="lazy"
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
-        <span className="absolute top-3 left-3 px-2.5 py-0.5 text-[10px] font-bold uppercase rounded bg-slate-950/80 text-amber-400 ">
+        <span className="absolute top-3 left-3 px-2.5 py-0.5 text-[10px] font-bold uppercase rounded-md bg-slate-950/80 text-amber-400">
           {article.category || 'FINANCE'}
+        </span>
+        <span className="absolute top-3 right-3 px-2 py-0.5 text-[9px] font-black uppercase rounded-md bg-amber-600 text-white">
+          EDITORIAL
         </span>
       </div>
 
-      <div className="p-4 space-y-3 flex-1 flex flex-col justify-between">
+      <div className="p-5 space-y-3 flex-1 flex flex-col justify-between">
         <div className="space-y-2">
-          <h3 className="text-sm font-bold text-slate-900 dark:text-white line-clamp-2 group-hover:text-amber-500 transition-colors font-serif leading-snug">
+          <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white line-clamp-2 group-hover:text-amber-500 transition-colors font-serif leading-snug">
             {article.title}
           </h3>
-          <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
+          <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed">
             {article.summary}
           </p>
         </div>
 
-        <div className="flex items-center justify-between text-[11px] text-slate-400 border-t border-slate-100/50 dark:border-slate-800/50 pt-3 font-medium">
+        <div className="flex items-center justify-between text-[11px] text-slate-400 border-t border-slate-100 dark:border-slate-800 pt-3 font-medium">
           <span>{formattedDate}</span>
-          <span className="font-mono text-amber-600 dark:text-amber-400">
+          <span className="font-mono text-amber-600 dark:text-amber-400 font-bold">
             ⏱ {article.readTimeMinutes || 4} {isTamil ? 'நிமிட வாசிப்பு' : 'min read'}
           </span>
         </div>
@@ -8432,38 +8565,216 @@ function NewsCard({ article, onSelect }) {
 function NewsPage({ onNavigate }) {
   const { language } = useLanguage();
   const isTamil = language === 'ta';
-  const articles = (newsData || []).map(item => translateNewsArticle(item, language));
+
+  // State for live aggregated investment news
+  const [liveNews, setLiveNews] = useState([]);
+  const [isLoadingLive, setIsLoadingLive] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [liveError, setLiveError] = useState(null);
+  const [activeCategory, setActiveCategory] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const categories = [
+    { id: 'all', labelTa: 'அனைத்து செய்திகள்', labelEn: 'All News' },
+    { id: 'mutual-funds', labelTa: 'மியூச்சுவல் ஃபண்ட்', labelEn: 'Mutual Funds' },
+    { id: 'markets', labelTa: 'பங்குச் சந்தை', labelEn: 'Markets & Stocks' },
+    { id: 'regulatory', labelTa: 'ஒழுங்குமுறை & SEBI', labelEn: 'Regulatory & SEBI' },
+    { id: 'general', labelTa: 'பொது நிதி & பொருளாதாரம்', labelEn: 'General & Economy' }
+  ];
+
+  const fetchLiveNews = async (isManual = false) => {
+    if (isManual) setIsRefreshing(true);
+    else setIsLoadingLive(true);
+    setLiveError(null);
+
+    try {
+      const categoryParam = activeCategory === 'all' ? '' : `&category=${activeCategory}`;
+      const res = await fetch(`/api/news?limit=40${categoryParam}`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      setLiveNews(data.data || []);
+    } catch (err) {
+      console.error('Error fetching live news:', err);
+      setLiveError(err.message || 'Failed to load news');
+    } finally {
+      setIsLoadingLive(false);
+      setIsRefreshing(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchLiveNews();
+  }, [activeCategory]);
+
+  // Filter live news based on in-page search input
+  const filteredLiveNews = useMemo(() => {
+    if (!searchQuery.trim()) return liveNews;
+    const q = searchQuery.toLowerCase().trim();
+    return liveNews.filter(item => {
+      const titleEn = (item.titleEnglish || '').toLowerCase();
+      const titleTa = (item.titleTamil || '').toLowerCase();
+      const sumEn = (item.summaryEnglish || '').toLowerCase();
+      const sumTa = (item.summaryTamil || '').toLowerCase();
+      const src = (item.sourceName || '').toLowerCase();
+      return titleEn.includes(q) || titleTa.includes(q) || sumEn.includes(q) || sumTa.includes(q) || src.includes(q);
+    });
+  }, [liveNews, searchQuery]);
+
+  const editorialArticles = (newsData || []).map(item => translateNewsArticle(item, language));
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fadeIn">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-8 animate-fadeIn">
       {/* Unified Compact Hero Header Banner (Light & Dark mode) */}
       <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 lg:p-7 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full  pointer-events-none" />
-        <div className="relative z-10 space-y-2 max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-600 dark:text-amber-400 text-[11px] font-black uppercase tracking-wider shadow-sm">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400 animate-pulse" />
-            <span>{isTamil ? 'செய்திகள் & பகுப்பாய்வு' : 'MARKET & FINANCIAL NEWS'}</span>
+        <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full pointer-events-none" />
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="space-y-2 max-w-3xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-600 dark:text-amber-400 text-[11px] font-black uppercase tracking-wider shadow-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span>{isTamil ? 'நேரடி நிதிச் செய்திகள்' : 'LIVE INVESTMENT NEWS AGGREGATOR'}</span>
+            </div>
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-slate-900 dark:text-white leading-snug">
+              {isTamil ? 'சமீபத்திய முதலீட்டு செய்திகள்' : 'Latest Investment News'}
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+              {isTamil
+                ? 'Economic Times, Livemint, Business Standard மற்றும் Moneycontrol போன்ற முதன்மையான நிதி ஊடகங்களிலிருந்து உடனுக்குடன் தொகுக்கப்படும் நம்பகமான முதலீட்டு செய்திகள்.'
+                : 'Real-time aggregated financial intelligence, mutual fund movements, SEBI regulations, and market trends curated from high-authority financial publications.'}
+            </p>
           </div>
-          <h1 className="text-xl sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-slate-900 dark:text-white leading-snug">
-            {isTamil ? 'செய்தி மையம்' : 'News Hub'}
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
-            {isTamil
-              ? 'மியூச்சுவல் ஃபண்ட், பங்குச் சந்தை மற்றும் அரசு அறிவிப்புகள் பற்றிய துல்லியமான செய்திகள்'
-              : 'Authoritative financial news, SEBI updates, and market intelligence'}
-          </p>
+
+          {/* Quick Refresh Button */}
+          <div className="shrink-0">
+            <button
+              onClick={() => fetchLiveNews(true)}
+              disabled={isRefreshing || isLoadingLive}
+              className="px-4 py-2.5 rounded-2xl bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-800 font-bold text-xs shadow-sm transition-all flex items-center gap-2 disabled:opacity-50"
+            >
+              <span className={isRefreshing ? 'animate-spin' : ''}>🔄</span>
+              <span>{isTamil ? 'செய்திகளைப் புதுப்பி' : 'Refresh Feed'}</span>
+            </button>
+          </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {articles.map(article => (
-          <NewsCard
-            key={article.id}
-            article={article}
-            onSelect={() => onNavigate && onNavigate(`#/news/${article.slug}`)}
-          />
-        ))}
+      {/* Filter Bar & In-Page Search */}
+      <div className="space-y-4">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+          {/* Category Filter Pills */}
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+            {categories.map(cat => {
+              const isActive = activeCategory === cat.id;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setActiveCategory(cat.id)}
+                  className={`px-4 py-2 rounded-full text-xs font-extrabold whitespace-nowrap transition-all duration-200 shrink-0 ${
+                    isActive
+                      ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-950 shadow-md scale-105'
+                      : 'bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200/60 dark:border-slate-800'
+                  }`}
+                >
+                  {isTamil ? cat.labelTa : cat.labelEn}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Search Box */}
+          <div className="relative min-w-[240px]">
+            <svg className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              placeholder={isTamil ? "செய்திகளில் தேடுங்கள்..." : "Filter news by keyword..."}
+              className="w-full pl-9 pr-8 py-2 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white text-xs font-medium focus:outline-none focus:border-amber-500 shadow-sm"
+            />
+            {searchQuery && (
+              <button onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 font-bold">
+                ✕
+              </button>
+            )}
+          </div>
+        </div>
       </div>
+
+      {/* Main Aggregated News Grid */}
+      <section className="space-y-6">
+        {isLoadingLive ? (
+          <div className="py-20 text-center space-y-3 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-8 shadow-sm">
+            <div className="w-10 h-10 border-4 border-amber-500 border-t-transparent rounded-full animate-spin mx-auto" />
+            <p className="text-xs font-bold text-slate-500">{isTamil ? 'சமீபத்திய நிதிச் செய்திகள் ஏற்றப்படுகின்றன...' : 'Loading latest external investment news...'}</p>
+          </div>
+        ) : liveError ? (
+          <div className="p-8 text-center bg-red-500/10 rounded-3xl border border-red-500/30 text-red-600 text-xs font-bold max-w-lg mx-auto">
+            {liveError}
+          </div>
+        ) : filteredLiveNews.length === 0 ? (
+          <div className="py-16 text-center space-y-3 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-8 shadow-sm">
+            <div className="text-4xl">📰</div>
+            <h3 className="text-base font-bold text-slate-900 dark:text-white">
+              {isTamil ? 'செய்திகள் எதுவும் கிடைக்கவில்லை' : 'No News Articles Found'}
+            </h3>
+            <p className="text-xs text-slate-500 max-w-sm mx-auto">
+              {isTamil ? 'தேடல் வார்த்தையை மாற்றவும் அல்லது பிற பிரிவுகளைத் தேர்ந்தெடுக்கவும்.' : 'Try adjusting your search criteria or switch category filters.'}
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+            {filteredLiveNews.map(item => (
+              <AggregatedNewsCard
+                key={item.id || item.sourceUrl}
+                item={item}
+                language={language}
+              />
+            ))}
+          </div>
+        )}
+
+        {/* Mandatory Editorial & External Attribution Disclaimer */}
+        <div className="p-4 sm:p-5 rounded-2xl bg-amber-500/10 dark:bg-slate-900 border border-amber-500/25 dark:border-slate-800 flex items-start gap-3 text-xs text-slate-600 dark:text-slate-300">
+          <span className="text-base shrink-0 mt-0.5">ℹ️</span>
+          <div className="space-y-1">
+            <p className="font-bold text-slate-800 dark:text-slate-200">
+              {isTamil ? 'அறிவிப்பு & மூல உரிமை:' : 'Attribution & Content Disclaimer:'}
+            </p>
+            <p className="leading-relaxed">
+              {isTamil
+                ? 'தகவல் நோக்கங்களுக்காக மட்டுமே வெளிப்புற மூலங்களிலிருந்து தொகுக்கப்பட்ட செய்திகள். முதலீட்டு ஆலோசனை அல்ல. அனைத்து செய்திகளும் அசல் வெளியீட்டாளரின் தளத்திற்கு நேரடியாக இணைக்கப்பட்டுள்ளன.'
+                : 'News curated from external financial sources for informational purposes only. Not investment advice. Every article card provides direct source attribution and links out to the publisher’s own original site.'}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Curated Editorial Insights & In-Depth Breakdowns Section */}
+      {editorialArticles && editorialArticles.length > 0 && (
+        <section className="pt-6 border-t border-slate-200 dark:border-slate-800 space-y-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="text-[10px] font-black uppercase tracking-wider text-amber-600 dark:text-amber-400">
+                {isTamil ? 'பிரத்யேக தலையங்கம்' : 'ORIGINAL EDITORIAL'}
+              </span>
+              <h2 className="text-lg sm:text-xl font-bold font-serif text-slate-900 dark:text-white">
+                {isTamil ? 'முதலீட்டுத் திசை சிறப்புக் கட்டுரைகள்' : 'Muthaleetu Thisai Special Analyses'}
+              </h2>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {editorialArticles.map(article => (
+              <NewsCard
+                key={article.id}
+                article={article}
+                onSelect={() => onNavigate && onNavigate(`#/news/${article.slug}`)}
+              />
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }
