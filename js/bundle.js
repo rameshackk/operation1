@@ -10517,15 +10517,15 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
       {/* Back Button */}
       <button
         onClick={() => onNavigate && onNavigate('#/professionals')}
-        className="btn-magnetic px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-900 hover:bg-amber-500 hover:text-slate-950 text-xs font-bold transition-all inline-flex items-center gap-1.5 border border-slate-200 dark:border-slate-800"
+        className="btn-magnetic px-4 py-2 rounded-xl bg-white/90 dark:bg-slate-900 hover:bg-[#cdb7a3] dark:hover:bg-amber-500 hover:text-slate-950 text-xs font-bold transition-all inline-flex items-center gap-1.5 border border-[#cdb7a3] dark:border-slate-800 text-[#0a1833] dark:text-slate-200 shadow-sm"
       >
         <span>←</span>
         <span>{isTamil ? 'அனைத்து நிபுணர்கள் பட்டியல்' : 'Back to Advisors Directory'}</span>
       </button>
 
       {/* 1. IDENTITY HERO BANNER */}
-      <div className="relative rounded-3xl bg-slate-950 text-white border border-slate-800 p-6 sm:p-8 shadow-2xl overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full  pointer-events-none" />
+      <div className="relative rounded-3xl bg-gradient-to-br from-[#e6dacc]/95 via-[#dfd1c3]/90 to-[#C9B29E]/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 text-[#0a1833] dark:text-white border border-[#cdb7a3] dark:border-slate-800 p-6 sm:p-8 shadow-xl dark:shadow-2xl overflow-hidden backdrop-blur-md">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/15 dark:bg-amber-500/10 rounded-full  pointer-events-none" />
 
         <div className="relative z-10 flex flex-col md:flex-row items-start gap-6 sm:gap-8">
           {/* Portrait Avatar */}
@@ -10535,11 +10535,11 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
               alt={name}
               className="w-28 h-28 sm:w-36 sm:h-36 rounded-3xl object-cover border-2 border-amber-500 shadow-2xl"
               onError={(e) => {
-                e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=f59e0b&color=0f172a&bold=true`;
+                e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=f59e0b&color=0a1833&bold=true`;
               }}
             />
             {prof.experience && (
-              <span className="absolute -bottom-2 -right-2 px-2.5 py-0.5 rounded-full bg-slate-900 border border-amber-500/40 text-[9px] font-mono font-bold text-amber-400 shadow">
+              <span className="absolute -bottom-2 -right-2 px-2.5 py-0.5 rounded-full bg-white dark:bg-slate-900 border border-amber-500/40 text-[9px] font-mono font-bold text-amber-700 dark:text-amber-400 shadow">
                 {prof.experience}
               </span>
             )}
@@ -10548,22 +10548,22 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
           {/* Details */}
           <div className="flex-1 space-y-3 text-center md:text-left">
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-2.5">
-              <h1 className="text-2xl sm:text-4xl font-extrabold font-serif">{name}</h1>
-              <span className="px-3 py-0.5 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/30 text-[10px] font-black uppercase tracking-wider">
+              <h1 className="text-2xl sm:text-4xl font-extrabold font-serif text-[#0a1833] dark:text-white">{name}</h1>
+              <span className="px-3 py-0.5 rounded-full bg-amber-500/20 text-amber-800 dark:text-amber-400 border border-amber-500/30 text-[10px] font-black uppercase tracking-wider">
                 {badge}
               </span>
             </div>
 
             <div className="space-y-1">
-              <p className="text-xs sm:text-sm font-bold text-amber-400/90 font-mono">
+              <p className="text-xs sm:text-sm font-bold text-amber-800 dark:text-amber-400/90 font-mono">
                 {title} • {prof.organization}
               </p>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-[#2d4373] dark:text-slate-400 font-medium">
                 📍 {location} {prof.arnNumber && `• AMFI Registration ARN: ${prof.arnNumber}`}
               </p>
             </div>
 
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-3xl">
+            <p className="text-xs sm:text-sm text-[#162a52] dark:text-slate-300 leading-relaxed max-w-3xl font-medium">
               {fullBio}
             </p>
 
@@ -10572,7 +10572,7 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
               {prof.specializations?.map((spec, i) => (
                 <span
                   key={i}
-                  className="px-2.5 py-1 rounded-lg bg-slate-900/90 text-amber-300 border border-amber-500/20 text-[10px] font-bold"
+                  className="px-2.5 py-1 rounded-lg bg-white/80 dark:bg-slate-900/90 text-[#0a1833] dark:text-amber-300 border border-[#cdb7a3] dark:border-amber-500/20 text-[10px] font-bold shadow-sm"
                 >
                   {isTamil ? (spec.ta || spec.en) : spec.en}
                 </span>
@@ -10586,7 +10586,7 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
                   href={`https://wa.me/${cleanWhatsApp}?text=${encodeURIComponent(`Hello ${name}, I read your profile on Muthaleetu Thisai and would like to request an investment consultation.`)}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-slate-950 font-black text-xs shadow-lg transition-all flex items-center gap-2"
+                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 text-white font-black text-xs shadow-lg transition-all flex items-center gap-2"
                 >
                   <span className="text-sm">💬</span>
                   <span>{isTamil ? 'வாட்ஸ்அப் வழியே ஆலோசனை பெறுக' : 'Direct WhatsApp Consultation'}</span>
@@ -10598,7 +10598,7 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
                   href={prof.socialLinks.website}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-amber-600 hover:text-slate-950 text-white border border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
+                  className="px-3.5 py-2 rounded-xl bg-white/90 dark:bg-slate-900 hover:bg-[#cdb7a3] dark:hover:bg-amber-600 text-[#0a1833] dark:text-white border border-[#cdb7a3] dark:border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
                 >
                   <span>🌐</span>
                   <span>{isTamil ? 'வலைத்தளம்' : 'Website'}</span>
@@ -10609,7 +10609,7 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
                   href={prof.socialLinks.youtube}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-red-600 text-white border border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
+                  className="px-3.5 py-2 rounded-xl bg-white/90 dark:bg-slate-900 hover:bg-red-600 hover:text-white text-[#0a1833] dark:text-white border border-[#cdb7a3] dark:border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
                 >
                   <span>▶</span>
                   <span>YouTube</span>
@@ -10620,7 +10620,7 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
                   href={prof.socialLinks.linkedin}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-blue-600 text-white border border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
+                  className="px-3.5 py-2 rounded-xl bg-white/90 dark:bg-slate-900 hover:bg-blue-600 hover:text-white text-[#0a1833] dark:text-white border border-[#cdb7a3] dark:border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
                 >
                   <span>in</span>
                   <span>LinkedIn</span>
@@ -10631,7 +10631,7 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
                   href={prof.socialLinks.twitter}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
+                  className="px-3.5 py-2 rounded-xl bg-white/90 dark:bg-slate-900 hover:bg-[#cdb7a3] text-[#0a1833] dark:text-slate-300 border border-[#cdb7a3] dark:border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
                 >
                   <span>𝕏</span>
                   <span>Twitter / X</span>
@@ -10655,7 +10655,7 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
           <span>✍️</span>
           <span>{isTamil ? 'கட்டுரைகள் & ஆய்வுகள்' : 'Articles & Research'}</span>
           <span className={`px-2 py-0.5 rounded-full text-[10px] font-black ${
-            activeTab === 'articles' ? 'bg-slate-950/20 text-slate-950' : 'bg-slate-800 text-amber-400'
+            activeTab === 'articles' ? 'bg-slate-950/20 text-slate-950' : 'bg-[#cdb7a3]/60 dark:bg-slate-800 text-[#0a1833] dark:text-amber-400'
           }`}>
             {publisherArticles.length}
           </span>
@@ -10673,7 +10673,7 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
             <span>🎬</span>
             <span>{isTamil ? 'முக்கிய வீடியோக்கள் (Masterclasses)' : 'Video Masterclasses'}</span>
             <span className={`px-2 py-0.5 rounded-full text-[10px] font-black ${
-              activeTab === 'videos' ? 'bg-slate-950/20 text-slate-950' : 'bg-slate-800 text-amber-400'
+              activeTab === 'videos' ? 'bg-slate-950/20 text-slate-950' : 'bg-[#cdb7a3]/60 dark:bg-slate-800 text-[#0a1833] dark:text-amber-400'
             }`}>
               {publisherVideos.length}
             </span>
