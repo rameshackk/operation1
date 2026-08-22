@@ -182,6 +182,262 @@
     })();
   </script>
 
+  <!-- Animated Financial & Market Growth Background Layer -->
+  <div id="finance-canvas-bg" aria-hidden="true">
+    <canvas id="finance-bg-canvas"></canvas>
+  </div>
+
+  <script>
+    (function() {
+      const canvas = document.getElementById('finance-bg-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d', { alpha: true });
+      let width = (canvas.width = window.innerWidth);
+      let height = (canvas.height = window.innerHeight);
+
+      let mouse = { x: width / 2, y: height / 2, targetX: width / 2, targetY: height / 2 };
+      window.addEventListener('mousemove', function(e) {
+        mouse.targetX = e.clientX;
+        mouse.targetY = e.clientY;
+      }, { passive: true });
+
+      function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resize, { passive: true });
+
+      const financialLabels = [
+        '₹ SIP ↗', 'NIFTY 50 ▲', 'CAGR +18%', '₹ 1 Crore Goal',
+        'Mutual Funds ★', 'NAV ↑', 'Stock Market', '+14.8% SIP',
+        'SENSEX ▲', 'Equity SIP', 'Growth Portfolio', 'Compounding 🚀'
+      ];
+
+      // 1. Constellation Nodes
+      const NODE_COUNT = 32;
+      const nodes = [];
+      for (let i = 0; i < NODE_COUNT; i++) {
+        nodes.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.45,
+          vy: -Math.random() * 0.35 - 0.15,
+          radius: Math.random() * 2.2 + 1.2,
+          pulse: Math.random() * Math.PI * 2,
+          pulseSpeed: 0.02 + Math.random() * 0.02
+        });
+      }
+
+      // 2. Floating Financial Badges
+      const BADGE_COUNT = 10;
+      const badges = [];
+      for (let i = 0; i < BADGE_COUNT; i++) {
+        badges.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          text: financialLabels[i % financialLabels.length],
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: -Math.random() * 0.25 - 0.1,
+          alpha: Math.random() * 0.45 + 0.35,
+          size: Math.random() * 2 + 11,
+          isPill: Math.random() > 0.4
+        });
+      }
+
+      // 3. Floating Stock Candlesticks
+      const CANDLE_COUNT = 9;
+      const candlesticks = [];
+      for (let i = 0; i < CANDLE_COUNT; i++) {
+        candlesticks.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          w: Math.random() * 8 + 7,
+          h: Math.random() * 26 + 18,
+          wickTop: Math.random() * 12 + 6,
+          wickBottom: Math.random() * 12 + 6,
+          vx: (Math.random() - 0.5) * 0.2,
+          vy: -Math.random() * 0.3 - 0.15,
+          isBullish: Math.random() > 0.25, // mostly bullish/growth
+          alpha: Math.random() * 0.4 + 0.25
+        });
+      }
+
+      let waveOffset = 0;
+
+      function render() {
+        // Smooth mouse dampening
+        mouse.x += (mouse.targetX - mouse.x) * 0.04;
+        mouse.y += (mouse.targetY - mouse.y) * 0.04;
+
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+
+        ctx.clearRect(0, 0, width, height);
+
+        // --- A. Render Dynamic Upward Growth Trendline Wave ---
+        waveOffset += 0.008;
+        ctx.beginPath();
+        const startY = height * 0.82;
+        ctx.moveTo(0, startY + Math.sin(waveOffset) * 20);
+        for (let x = 0; x <= width; x += 40) {
+          const progress = x / width;
+          const upwardSlope = -progress * (height * 0.22);
+          const wave = Math.sin(progress * 4 + waveOffset) * 22 + Math.cos(progress * 2 - waveOffset * 0.5) * 12;
+          ctx.lineTo(x, startY + upwardSlope + wave);
+        }
+        ctx.strokeStyle = isDark ? 'rgba(245, 158, 11, 0.12)' : 'rgba(217, 119, 6, 0.14)';
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+
+        // Secondary subtle green growth curve
+        ctx.beginPath();
+        ctx.moveTo(0, startY + 35 + Math.cos(waveOffset * 0.8) * 15);
+        for (let x = 0; x <= width; x += 40) {
+          const progress = x / width;
+          const upwardSlope = -progress * (height * 0.28);
+          const wave = Math.sin(progress * 3.5 - waveOffset * 0.7) * 28;
+          ctx.lineTo(x, startY + 35 + upwardSlope + wave);
+        }
+        ctx.strokeStyle = isDark ? 'rgba(16, 185, 129, 0.10)' : 'rgba(5, 150, 105, 0.12)';
+        ctx.lineWidth = 1.8;
+        ctx.stroke();
+
+        // --- B. Render Constellation Nodes & Connecting Graph Lines ---
+        const nodeColor = isDark ? 'rgba(245, 158, 11, ' : 'rgba(217, 119, 6, ';
+        const lineColor = isDark ? 'rgba(245, 158, 11, ' : 'rgba(201, 181, 156, ';
+
+        for (let i = 0; i < nodes.length; i++) {
+          const n = nodes[i];
+          n.x += n.vx;
+          n.y += n.vy;
+          n.pulse += n.pulseSpeed;
+
+          // Wrap edges
+          if (n.y < -20) { n.y = height + 20; n.x = Math.random() * width; }
+          if (n.x < -20) n.x = width + 20;
+          if (n.x > width + 20) n.x = -20;
+
+          // Draw connections between nearby nodes
+          for (let j = i + 1; j < nodes.length; j++) {
+            const n2 = nodes[j];
+            const dx = n.x - n2.x;
+            const dy = n.y - n2.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 130) {
+              const alpha = (1 - dist / 130) * (isDark ? 0.16 : 0.22);
+              ctx.beginPath();
+              ctx.moveTo(n.x, n.y);
+              ctx.lineTo(n2.x, n2.y);
+              ctx.strokeStyle = lineColor + alpha + ')';
+              ctx.lineWidth = 0.9;
+              ctx.stroke();
+            }
+          }
+
+          // Draw node orb
+          const currentRadius = n.radius + Math.sin(n.pulse) * 0.6;
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, currentRadius, 0, Math.PI * 2);
+          ctx.fillStyle = nodeColor + (isDark ? '0.45)' : '0.35)');
+          ctx.fill();
+        }
+
+        // --- C. Render Floating Stock Candlesticks ---
+        for (let i = 0; i < candlesticks.length; i++) {
+          const c = candlesticks[i];
+          c.x += c.vx;
+          c.y += c.vy;
+
+          if (c.y < -60) {
+            c.y = height + 60;
+            c.x = Math.random() * width;
+            c.isBullish = Math.random() > 0.25;
+          }
+          if (c.x < -30) c.x = width + 30;
+          if (c.x > width + 30) c.x = -30;
+
+          const color = c.isBullish
+            ? (isDark ? `rgba(16, 185, 129, ${c.alpha})` : `rgba(5, 150, 105, ${c.alpha * 0.85})`)
+            : (isDark ? `rgba(239, 68, 68, ${c.alpha * 0.7})` : `rgba(220, 38, 38, ${c.alpha * 0.65})`);
+
+          ctx.strokeStyle = color;
+          ctx.lineWidth = 1.2;
+
+          // Upper wick
+          ctx.beginPath();
+          ctx.moveTo(c.x + c.w / 2, c.y);
+          ctx.lineTo(c.x + c.w / 2, c.y - c.wickTop);
+          ctx.stroke();
+
+          // Lower wick
+          ctx.beginPath();
+          ctx.moveTo(c.x + c.w / 2, c.y + c.h);
+          ctx.lineTo(c.x + c.w / 2, c.y + c.h + c.wickBottom);
+          ctx.stroke();
+
+          // Candlestick Body
+          ctx.fillStyle = color;
+          ctx.fillRect(c.x, c.y, c.w, c.h);
+        }
+
+        // --- D. Render Floating Financial Growth Badges & Chips ---
+        for (let i = 0; i < badges.length; i++) {
+          const b = badges[i];
+          b.x += b.vx;
+          b.y += b.vy;
+
+          if (b.y < -40) {
+            b.y = height + 40;
+            b.x = Math.random() * width;
+          }
+          if (b.x < -80) b.x = width + 80;
+          if (b.x > width + 80) b.x = -80;
+
+          ctx.font = `bold ${b.size}px 'Inter', sans-serif`;
+          const textMetrics = ctx.measureText(b.text);
+          const paddingX = 8;
+          const paddingY = 4;
+          const boxW = textMetrics.width + paddingX * 2;
+          const boxH = b.size + paddingY * 2;
+
+          if (b.isPill) {
+            // Draw subtle frosted badge box
+            ctx.fillStyle = isDark ? `rgba(15, 23, 42, ${b.alpha * 0.6})` : `rgba(255, 255, 255, ${b.alpha * 0.75})`;
+            ctx.strokeStyle = isDark ? `rgba(245, 158, 11, ${b.alpha * 0.4})` : `rgba(201, 181, 156, ${b.alpha * 0.6})`;
+            ctx.lineWidth = 1;
+            
+            // Rounded rect
+            const r = 6;
+            ctx.beginPath();
+            ctx.moveTo(b.x + r, b.y - boxH / 2);
+            ctx.lineTo(b.x + boxW - r, b.y - boxH / 2);
+            ctx.quadraticCurveTo(b.x + boxW, b.y - boxH / 2, b.x + boxW, b.y - boxH / 2 + r);
+            ctx.lineTo(b.x + boxW, b.y + boxH / 2 - r);
+            ctx.quadraticCurveTo(b.x + boxW, b.y + boxH / 2, b.x + boxW - r, b.y + boxH / 2);
+            ctx.lineTo(b.x + r, b.y + boxH / 2);
+            ctx.quadraticCurveTo(b.x, b.y + boxH / 2, b.x, b.y + boxH / 2 - r);
+            ctx.lineTo(b.x, b.y - boxH / 2 + r);
+            ctx.quadraticCurveTo(b.x, b.y - boxH / 2, b.x + r, b.y - boxH / 2);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+
+            // Text
+            ctx.fillStyle = isDark ? `rgba(251, 191, 36, ${b.alpha + 0.15})` : `rgba(180, 83, 9, ${b.alpha + 0.15})`;
+            ctx.fillText(b.text, b.x + paddingX, b.y + b.size * 0.35);
+          } else {
+            // Pure text badge with soft glow
+            ctx.fillStyle = isDark ? `rgba(16, 185, 129, ${b.alpha + 0.2})` : `rgba(5, 150, 105, ${b.alpha + 0.2})`;
+            ctx.fillText(b.text, b.x, b.y);
+          }
+        }
+
+        requestAnimationFrame(render);
+      }
+
+      render();
+    })();
+  </script>
+
   <!-- Global Scroll Progress Indicator -->
   <div id="scroll-progress-indicator"></div>
 
