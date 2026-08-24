@@ -1704,8 +1704,8 @@ function Header({ onOpenSearch, onNavigate }) {
   };
 
   return (
-    <header className={`w-full sticky top-0 z-50 transition-all duration-300 border-b border-[#cdb7a3]/70 dark:border-white/10 bg-[#C9B29E]/95 dark:bg-[#0b0f19] text-[#0a1833] dark:text-white backdrop-blur-md ${
-      isScrolled ? 'py-1.5 shadow-xl shadow-stone-900/5 dark:shadow-2xl' : 'py-2 shadow-md'
+    <header className={`w-full transition-all duration-300 border-b border-[#cdb7a3]/70 dark:border-white/10 bg-[#C9B29E]/95 dark:bg-[#0b0f19] text-[#0a1833] dark:text-white backdrop-blur-md ${
+      isScrolled ? 'py-1.5 shadow-md' : 'py-2 shadow-sm'
     }`}>
       <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3">
         
@@ -4218,21 +4218,21 @@ function HomeCinemaShowcase({ onNavigate, onShowToast, language = 'ta' }) {
   const showcaseVideos = useMemo(() => {
     let list = [...allVideos];
     if (activeCategory === 'featured') {
-      return list.slice(0, 10);
+      return list.slice(0, 12);
     } else if (activeCategory === 'shorts') {
-      return list.filter(v => v.isShort || (v.tags && v.tags.includes('shorts'))).slice(0, 10);
+      return list.filter(v => v.isShort || (v.tags && v.tags.includes('shorts'))).slice(0, 12);
     } else if (activeCategory === 'personal-finance') {
-      return list.filter(v => v.category === 'personal-finance').slice(0, 10);
+      return list.filter(v => v.category === 'personal-finance').slice(0, 12);
     } else if (activeCategory === 'mutual-funds') {
-      return list.filter(v => v.category === 'mutual-funds').slice(0, 10);
+      return list.filter(v => v.category === 'mutual-funds').slice(0, 12);
     } else if (activeCategory === 'stocks') {
-      return list.filter(v => v.category === 'stocks' || v.category === 'ipo').slice(0, 10);
+      return list.filter(v => v.category === 'stocks' || v.category === 'ipo').slice(0, 12);
     } else if (activeCategory === 'tax-saving') {
-      return list.filter(v => v.category === 'tax-saving' || v.category === 'retirement').slice(0, 10);
+      return list.filter(v => v.category === 'tax-saving' || v.category === 'retirement').slice(0, 12);
     } else if (activeCategory === 'education') {
-      return list.filter(v => v.category === 'education').slice(0, 10);
+      return list.filter(v => v.category === 'education').slice(0, 12);
     }
-    return list.slice(0, 10);
+    return list.slice(0, 12);
   }, [allVideos, activeCategory]);
 
   return (
@@ -4277,11 +4277,11 @@ function HomeCinemaShowcase({ onNavigate, onShowToast, language = 'ta' }) {
         })}
       </div>
 
-      {/* 5-Column Level Responsive Grid (2 mobile, 3 sm, 4 md, 5 lg/xl) */}
+      {/* 6-Column Level Responsive Grid (2 mobile, 3 sm, 4 md, 6 lg/xl/2xl) */}
       {isLoading && showcaseVideos.length === 0 ? (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5 sm:gap-4 animate-pulse">
-          {Array.from({ length: 10 }).map((_, idx) => (
-            <div key={idx} className="rounded-2xl bg-slate-200 dark:bg-slate-800/60 aspect-[16/12] p-3 space-y-2">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 2xl:grid-cols-6 gap-3 sm:gap-3.5 animate-pulse">
+          {Array.from({ length: 12 }).map((_, idx) => (
+            <div key={idx} className="rounded-2xl bg-slate-200 dark:bg-slate-800/60 aspect-[9/13] p-3 space-y-2">
               <div className="aspect-video bg-slate-300 dark:bg-slate-700/60 rounded-xl" />
               <div className="h-3 bg-slate-300 dark:bg-slate-700/60 rounded w-3/4" />
               <div className="h-2 bg-slate-300 dark:bg-slate-700/60 rounded w-1/2" />
@@ -4289,7 +4289,7 @@ function HomeCinemaShowcase({ onNavigate, onShowToast, language = 'ta' }) {
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5 sm:gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 2xl:grid-cols-6 gap-3 sm:gap-3.5">
           {showcaseVideos.map((video, idx) => (
             <CinemaVideoCard
               key={`home-cinema-${video.id || idx}`}
@@ -10976,12 +10976,14 @@ function AppContent({ currentHash, navigate, isSearchOpen, setIsSearchOpen, toas
 
   return (
     <div className="min-h-screen flex flex-col text-slate-900 dark:text-slate-100 font-sans">
-      {/* FIXED TOP HEADER STACK (Logo Header + Navbar + Breaking News Ticker) */}
-      <div className="sticky top-0 z-40 w-full shadow-lg bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+      {/* 1. FIXED TOP HEADER & NAVBAR STACK (Stays pinned on scroll) */}
+      <div className="sticky top-0 z-40 w-full shadow-md bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
         <Header onOpenSearch={() => setIsSearchOpen(true)} onNavigate={navigate} />
         <Navbar currentPath={currentHash} onNavigate={navigate} />
-        <TrendingTicker onNavigate={navigate} />
       </div>
+
+      {/* 2. ONLY BREAKING NEWS TICKER SCROLLS WITH PAGE */}
+      <TrendingTicker onNavigate={navigate} />
 
       <main className="flex-1">{renderRoute()}</main>
       <Footer onNavigate={navigate} onShowToast={setToastMessage} />
