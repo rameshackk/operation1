@@ -4298,7 +4298,7 @@ function Home({ onNavigate, onShowToast }) {
 /**
  * VIDEOS PAGE (FULL 882 VIDEOS PORTAL)
  */
-function VideosPage({ onNavigate, onShowToast }) {
+function VideosPage({ onNavigate, onShowToast, initialVideoId }) {
   const { language } = useLanguage();
   const isTamil = language === 'ta';
 
@@ -4312,6 +4312,15 @@ function VideosPage({ onNavigate, onShowToast }) {
 
   // Live video hook — pulls directly from Supabase /api/videos with built-in fallback
   const { videos: allLiveVideos = [], isLoading: isVideosLoading } = useVideos('all', 'newest');
+
+  useEffect(() => {
+    if (initialVideoId && allLiveVideos && allLiveVideos.length > 0) {
+      const found = allLiveVideos.find(v => v.id === initialVideoId || v.youtubeId === initialVideoId || v.slug === initialVideoId);
+      if (found) {
+        setSelectedVideo(found);
+      }
+    }
+  }, [initialVideoId, allLiveVideos]);
 
   const categoriesList = [
     { id: 'all', labelTa: `அனைத்து வீடியோக்கள்${allLiveVideos.length ? ` (${allLiveVideos.length})` : ''}`, labelEn: `All Videos${allLiveVideos.length ? ` (${allLiveVideos.length})` : ''}` },
@@ -11024,85 +11033,49 @@ function App() {
       );
     }
 
-    // 3.3 Articles Routes (Protected)
+    // 3.3 Articles Routes (Public for user)
     if (currentHash.startsWith('#/articles/')) {
       const slug = currentHash.replace('#/articles/', '');
-      return (
-        <ProtectedRoute onNavigate={navigate}>
-          <ArticleDetailPage slug={slug} onNavigate={navigate} onShowToast={setToastMessage} />
-        </ProtectedRoute>
-      );
+      return <ArticleDetailPage slug={slug} onNavigate={navigate} onShowToast={setToastMessage} />;
     }
 
     if (currentHash === '#/articles') {
-      return (
-        <ProtectedRoute onNavigate={navigate}>
-          <ArticlesPage onNavigate={navigate} onShowToast={setToastMessage} />
-        </ProtectedRoute>
-      );
+      return <ArticlesPage onNavigate={navigate} onShowToast={setToastMessage} />;
     }
 
-    // 3.4 Videos Routes
+    // 3.4 Videos Routes (Public for user)
     if (currentHash.startsWith('#/videos/')) {
       const videoId = currentHash.replace('#/videos/', '');
-      return (
-        <ProtectedRoute onNavigate={navigate}>
-          <VideoDetailsPage videoId={videoId} onNavigate={navigate} onShowToast={setToastMessage} />
-        </ProtectedRoute>
-      );
+      return <VideosPage initialVideoId={videoId} onNavigate={navigate} onShowToast={setToastMessage} />;
     }
 
     if (currentHash === '#/videos') {
-      return (
-        <ProtectedRoute onNavigate={navigate}>
-          <VideosPage onNavigate={navigate} onShowToast={setToastMessage} />
-        </ProtectedRoute>
-      );
+      return <VideosPage onNavigate={navigate} onShowToast={setToastMessage} />;
     }
 
-    // 3.5 News Routes
+    // 3.5 News Routes (Public for user)
     if (currentHash.startsWith('#/news/')) {
       const slug = currentHash.replace('#/news/', '');
-      return (
-        <ProtectedRoute onNavigate={navigate}>
-          <NewsDetailsPage slug={slug} onNavigate={navigate} />
-        </ProtectedRoute>
-      );
+      return <NewsDetailsPage slug={slug} onNavigate={navigate} />;
     }
 
     if (currentHash === '#/news') {
-      return (
-        <ProtectedRoute onNavigate={navigate}>
-          <NewsPage onNavigate={navigate} />
-        </ProtectedRoute>
-      );
+      return <NewsPage onNavigate={navigate} />;
     }
 
-    // 3.6 Category Routes
+    // 3.6 Category Routes (Public for user)
     if (currentHash.startsWith('#/category/')) {
       const categoryId = currentHash.replace('#/category/', '');
-      return (
-        <ProtectedRoute onNavigate={navigate}>
-          <CategoryPage categoryId={categoryId} onNavigate={navigate} onShowToast={setToastMessage} />
-        </ProtectedRoute>
-      );
+      return <CategoryPage categoryId={categoryId} onNavigate={navigate} onShowToast={setToastMessage} />;
     }
 
-    // 3.7 Tools
+    // 3.7 Tools (Public for user)
     if (currentHash === '#/calculator') {
-      return (
-        <ProtectedRoute onNavigate={navigate}>
-          <div className="py-8"><SipCalculator /></div>
-        </ProtectedRoute>
-      );
+      return <div className="py-8"><SipCalculator /></div>;
     }
 
     if (currentHash === '#/quiz') {
-      return (
-        <ProtectedRoute onNavigate={navigate}>
-          <div className="py-8"><RiskQuizWidget /></div>
-        </ProtectedRoute>
-      );
+      return <div className="py-8"><RiskQuizWidget /></div>;
     }
 
     // 3.8 Public Professionals Directory & Publisher Profiles
