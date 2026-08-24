@@ -1898,60 +1898,114 @@ function Navbar({ currentPath, onNavigate }) {
   );
 }
 
-function TrendingTicker() {
+function TrendingTicker({ onNavigate }) {
   const { t, language } = useLanguage();
   const isTamil = language === 'ta';
 
   const tickerHeadlines = isTamil ? [
-    "@budgetpadmanaban_ புதிய வீடியோ: மியூச்சுவல் ஃபண்ட் செய்ய வேண்டியவை & செய்யக்கூடாதவை!",
-    "NIFTY 50 புதிய உச்சமான 24,850 புள்ளிகளைத் தொட்டது!",
-    "ஆர்பிஐ வட்டி விகிதத்தில் மாற்றமில்லை - ஹோம் லோன் இஎம்ஐ சுமை அதிகரிக்காது!",
-    "SIP மூலம் ₹1 கோடி நிதி இலக்கை அடைவது எப்படி? புதிய கணக்கீட்டுக் கருவியைப் பாருங்கள்!"
+    { text: "@budgetpadmanaban_ புதிய வீடியோ: மியூச்சுவல் ஃபண்ட் செய்ய வேண்டியவை & செய்யக்கூடாதவை!", link: "#/videos" },
+    { text: "NIFTY 50 புதிய உச்சமான 24,850 புள்ளிகளைத் தொட்டது! சந்தை ஏற்றம் தொடர்கிறது!", link: "#/news" },
+    { text: "ஆர்பிஐ வட்டி விகிதத்தில் மாற்றமில்லை - ஹோம் லோன் இஎம்ஐ சுமை அதிகரிக்காது!", link: "#/news" },
+    { text: "SIP மூலம் ₹1 கோடி நிதி இலக்கை அடைவது எப்படி? புதிய கணக்கீட்டுக் கருவியைப் பாருங்கள்!", link: "#/calculator" },
+    { text: "செபி புதிய மியூச்சுவல் ஃபண்ட் விதிமுறைகள் 2026: முதலீட்டாளர்கள் கவனத்திற்கு!", link: "#/articles" }
   ] : [
-    "@budgetpadmanaban_ New Video: Mutual Fund Do's & Don'ts Guide!",
-    "NIFTY 50 touches record high of 24,850 points!",
-    "RBI keeps Repo Rate unchanged at 6.50% - Fixed Deposit & EMI outlook steady!",
-    "How to reach ₹1 Crore through disciplined SIPs? Try our interactive calculator!"
+    { text: "@budgetpadmanaban_ New Video: Mutual Fund Do's & Don'ts Guide released!", link: "#/videos" },
+    { text: "NIFTY 50 touches record all-time high of 24,850 points! Bull rally expands!", link: "#/news" },
+    { text: "RBI keeps Repo Rate unchanged at 6.50% - Fixed Deposit & EMI outlook steady!", link: "#/news" },
+    { text: "How to reach ₹1 Crore through disciplined SIPs? Try our interactive calculator!", link: "#/calculator" },
+    { text: "SEBI Enforces Enhanced Transparency Regulations 2026 for Retail Mutual Funds!", link: "#/articles" }
   ];
 
-  const renderTickerTrack = (keyPrefix) => (
-    <div key={keyPrefix} className="flex items-center gap-8 shrink-0 pr-8">
-      <div className="flex items-center gap-3 border-r border-[rgba(217,207,199,0.7)] dark:border-slate-800 pr-8">
-        <span className="text-amber-700 dark:text-amber-400 font-extrabold uppercase text-[10px] tracking-wider">
-          {t('marketTitle')}:
-        </span>
-        {marketSnapshotData.map((item, idx) => (
-          <div key={`${keyPrefix}-mkt-${idx}`} className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md font-mono text-[11px] font-bold ${item.isUp ? 'market-up' : 'market-down'}`}>
-            <span>{item.symbol}</span>
-            <span className="text-slate-800 dark:text-slate-200">{item.value}</span>
-            <span className="text-[10px]">{item.isUp ? '▲' : '▼'} {item.percent}</span>
-          </div>
-        ))}
-      </div>
+  const handleHeadlineClick = (link) => {
+    if (onNavigate) {
+      onNavigate(link);
+    } else if (typeof window !== 'undefined') {
+      window.location.hash = link;
+    }
+  };
 
-      <div className="flex items-center gap-8 font-medium">
-        {tickerHeadlines.map((headline, idx) => (
-          <span key={`${keyPrefix}-hl-${idx}`} className="hover:text-amber-700 dark:hover:text-amber-400 cursor-pointer transition-colors flex items-center gap-2 text-slate-700 dark:text-slate-300 whitespace-nowrap">
-            <span className="text-amber-600 dark:text-amber-500 font-black">•</span>
-            {headline}
+  const renderHeadlinesTrack = (keyPrefix) => (
+    <div key={keyPrefix} className="flex items-center gap-6 sm:gap-8 shrink-0 pr-6 sm:pr-8">
+      {tickerHeadlines.map((item, idx) => (
+        <span
+          key={`${keyPrefix}-hl-${idx}`}
+          onClick={() => handleHeadlineClick(item.link)}
+          className="group/hl hover:text-red-900 cursor-pointer transition-all duration-150 flex items-center gap-1.5 text-[#0a1833] font-black text-xs sm:text-[12px] tracking-tight whitespace-nowrap select-none"
+          title="Click to view details"
+        >
+          <span className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-sm bg-red-600 text-white font-black text-[9px] shadow-sm animate-pulse shrink-0">
+            ⚡
           </span>
-        ))}
-      </div>
+          <span className="group-hover/hl:underline underline-offset-2 decoration-red-700 decoration-2 font-extrabold">
+            {item.text}
+          </span>
+        </span>
+      ))}
+    </div>
+  );
+
+  const renderMarketTrack = (keyPrefix) => (
+    <div key={keyPrefix} className="flex items-center gap-5 shrink-0 pr-5 font-mono text-[9px] sm:text-[10px] font-bold text-white leading-none">
+      {marketSnapshotData.map((item, idx) => (
+        <div key={`${keyPrefix}-mkt-${idx}`} className="inline-flex items-center gap-1 whitespace-nowrap">
+          <span className="text-yellow-300 font-bold">{item.symbol}:</span>
+          <span className="text-white font-black">{item.value}</span>
+          <span className={item.isUp ? 'text-emerald-400 font-extrabold' : 'text-rose-400 font-extrabold'}>
+            {item.isUp ? '▲' : '▼'} {item.percent}
+          </span>
+          <span className="text-blue-400/40 ml-1.5">•</span>
+        </div>
+      ))}
     </div>
   );
 
   return (
-    <div className="bg-[rgba(249,248,246,0.92)] dark:bg-slate-950 text-slate-800 dark:text-slate-100 border-b border-[rgba(217,207,199,0.7)] dark:border-slate-800 text-xs py-2.5 overflow-hidden select-none shadow-sm relative z-10">
-      <div className="max-w-7xl mx-auto px-4 flex items-center gap-3.5">
-        <div className="flex items-center gap-2 shrink-0 bg-red-600 text-white font-black px-3 py-1 rounded-md text-[10px] uppercase tracking-wider shadow-md z-10">
-          <span className="w-2 h-2 rounded-full bg-white animate-ping" />
-          {t('tickerLabel')}
-        </div>
+    <div className="w-full bg-[#FEFEFE] dark:bg-[#0b0f19] text-slate-900 dark:text-slate-100 border-b border-slate-200 dark:border-slate-800 shadow-sm relative z-30 select-none py-1">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4">
+        {/* Main TV Lower-Third Strip */}
+        <div className="flex items-stretch shadow-md border border-amber-600/40 rounded-sm overflow-hidden bg-slate-950">
+          {/* Left Anchor Box with BREAKING NEWS Text (No Siren) */}
+          <div className="flex items-stretch shrink-0">
+            {/* Red BREAKING Section */}
+            <div className="broadcast-red-tab text-white font-black text-[10px] sm:text-xs tracking-wider px-2 sm:px-3 py-1 uppercase flex items-center justify-center gap-1.5 font-sans border-r border-red-900 shadow-inner">
+              <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
+              <span>{isTamil ? 'முக்கிய' : 'BREAKING'}</span>
+            </div>
+            {/* Navy NEWS Section */}
+            <div className="broadcast-navy-tab text-white font-black text-[10px] sm:text-xs tracking-wider px-2 sm:px-3 py-1 uppercase flex items-center justify-center font-sans border-r-2 border-red-950 shadow-inner">
+              <span>{isTamil ? 'செய்திகள்' : 'NEWS'}</span>
+            </div>
+          </div>
 
-        <div className="overflow-hidden relative w-full flex items-center">
-          <div className="animate-marquee flex items-center whitespace-nowrap">
-            {renderTickerTrack('track-1')}
-            {renderTickerTrack('track-2')}
+          {/* Right Dual-Tier Content Frame */}
+          <div className="flex-1 min-w-0 flex flex-col justify-center">
+            {/* Upper Golden-Yellow Headline Banner */}
+            <div className="broadcast-gold-band relative overflow-hidden py-0.5 sm:py-1 px-2 border-b border-amber-600/50">
+              {/* World Map Silhouette Watermark on Gold */}
+              <svg className="absolute inset-0 w-full h-full text-amber-800/15 object-cover pointer-events-none" viewBox="0 0 400 50" fill="currentColor" preserveAspectRatio="none">
+                <path d="M30,10 Q80,5 120,25 T220,15 T310,35 T390,15 Q360,45 280,40 T150,45 T40,40 Z" opacity="0.4" />
+                <ellipse cx="90" cy="20" rx="35" ry="15" opacity="0.25" />
+                <ellipse cx="280" cy="25" rx="50" ry="18" opacity="0.25" />
+              </svg>
+
+              {/* Scrolling Headlines */}
+              <div className="overflow-hidden relative w-full flex items-center">
+                <div className="animate-marquee flex items-center whitespace-nowrap">
+                  {renderHeadlinesTrack('gold-track-1')}
+                  {renderHeadlinesTrack('gold-track-2')}
+                </div>
+              </div>
+            </div>
+
+            {/* Lower Navy Blue Market Ribbon */}
+            <div className="broadcast-navy-band relative overflow-hidden py-0.5 px-2">
+              <div className="overflow-hidden relative w-full flex items-center">
+                <div className="animate-marquee flex items-center whitespace-nowrap">
+                  {renderMarketTrack('navy-mkt-1')}
+                  {renderMarketTrack('navy-mkt-2')}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -10928,7 +10982,7 @@ function AppContent({ currentHash, navigate, isSearchOpen, setIsSearchOpen, toas
       <div className="sticky top-0 z-40 w-full shadow-lg bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
         <Header onOpenSearch={() => setIsSearchOpen(true)} onNavigate={navigate} />
         <Navbar currentPath={currentHash} onNavigate={navigate} />
-        <TrendingTicker />
+        <TrendingTicker onNavigate={navigate} />
       </div>
 
       <main className="flex-1">{renderRoute()}</main>

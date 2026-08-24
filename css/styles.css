@@ -390,11 +390,35 @@ html[data-theme="dark"],
   display: flex;
   width: max-content;
   will-change: transform;
-  animation: marquee 35s linear infinite;
+  animation: marquee 28s linear infinite;
 }
 
 .animate-marquee:hover {
   animation-play-state: paused;
+}
+
+/* Broadcast News Lower-Third Ticker Styling (Matching TV Graphic Theme) */
+.broadcast-red-tab {
+  background: linear-gradient(135deg, #b91c1c 0%, #dc2626 100%);
+}
+
+.broadcast-navy-tab {
+  background: linear-gradient(135deg, #0a1833 0%, #11224d 100%);
+}
+
+.broadcast-red-box {
+  background: linear-gradient(135deg, #881337 0%, #991b1b 50%, #b91c1c 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.broadcast-gold-band {
+  background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 35%, #f59e0b 70%, #fbbf24 100%);
+  background-size: 200% 100%;
+}
+
+.broadcast-navy-band {
+  background: linear-gradient(90deg, #071124 0%, #0a1833 40%, #0f2452 70%, #0a1833 100%);
 }
 
 /* Featured News Marquee Animation (Hero Section) */
