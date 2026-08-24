@@ -2,6 +2,30 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+Tamil:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap');
 
+/* Responsive Global Scaling - Full Screen Responsive Layout */
+html {
+  font-size: 15px;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (min-width: 640px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 1024px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 1440px) {
+  html {
+    font-size: 15.5px;
+  }
+}
+
 :root {
   /* Spacing Scale Tokens */
   --space-1: 0.25rem;
@@ -26,10 +50,10 @@
   /* 64px */
 
   /* Container & Grid Tokens */
-  --container-max: 1280px;
-  --container-px: 1rem;
+  --container-max: 1680px;
+  --container-px: 1.5rem;
   --grid-gap: 1.5rem;
-  --section-spacing-y: 2.5rem;
+  --section-spacing-y: 2.25rem;
 
   /* Typography Metrics */
   --font-sans: 'Inter', 'Noto Sans Tamil', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;

@@ -1705,22 +1705,22 @@ function Header({ onOpenSearch, onNavigate }) {
 
   return (
     <header className={`w-full sticky top-0 z-50 transition-all duration-300 border-b border-[#cdb7a3]/70 dark:border-white/10 bg-[#C9B29E]/95 dark:bg-[#0b0f19] text-[#0a1833] dark:text-white backdrop-blur-md ${
-      isScrolled ? 'py-2 shadow-xl shadow-stone-900/5 dark:shadow-2xl' : 'py-3 shadow-md'
+      isScrolled ? 'py-1.5 shadow-xl shadow-stone-900/5 dark:shadow-2xl' : 'py-2 shadow-md'
     }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
+      <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3">
         
         {/* Left Side: Welcome Badge */}
-        <div className="hidden sm:flex items-center gap-2 min-w-[140px] md:min-w-[170px] shrink-0">
-          <span className="inline-flex items-center gap-2 px-3 py-1 text-xs font-bold rounded-full bg-emerald-600/10 text-emerald-800 dark:text-emerald-400 border border-emerald-600/25 shadow-sm">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+        <div className="hidden sm:flex items-center gap-2 min-w-[130px] md:min-w-[150px] shrink-0">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-emerald-600/10 text-emerald-800 dark:text-emerald-400 border border-emerald-600/25 shadow-sm">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             <span>{t('welcome')}</span>
           </span>
         </div>
 
         {/* Center: Brand Logo & Title */}
-        <a href="#/" className="flex items-center gap-3 group mx-auto text-center sm:text-left">
-          <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-br from-amber-500 via-amber-600 to-amber-800 flex items-center justify-center text-white shadow-lg shadow-amber-500/25 group-hover:scale-105 transition-transform duration-300 border border-amber-400/40 shrink-0">
-            <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white drop-shadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <a href="#/" className="flex items-center gap-2.5 group mx-auto text-center sm:text-left">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber-500 via-amber-600 to-amber-800 flex items-center justify-center text-white shadow-md shadow-amber-500/20 group-hover:scale-105 transition-transform duration-300 border border-amber-400/40 shrink-0">
+            <svg className="w-4 h-4 sm:w-5 sm:h-5 text-white drop-shadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="12" r="9" className="opacity-35" strokeWidth="1.5" />
               <path d="M12 3v2M12 19v2M3 12h2M19 12h2" opacity="0.5" strokeWidth="1.5" />
               <path d="M16 8L8 16M16 8H10M16 8V14" stroke="#fef3c7" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -1728,16 +1728,16 @@ function Header({ onOpenSearch, onNavigate }) {
             </svg>
           </div>
           <div>
-            <div className="flex items-center gap-2.5 justify-center sm:justify-start">
-              <h1 className="text-xl sm:text-2xl font-black tracking-tight text-[#0a1833] dark:text-white font-serif group-hover:text-amber-700 dark:group-hover:text-amber-400 transition-colors whitespace-nowrap">
+            <div className="flex items-center gap-2 justify-center sm:justify-start">
+              <h1 className="text-lg sm:text-xl font-black tracking-tight text-[#0a1833] dark:text-white font-serif group-hover:text-amber-700 dark:group-hover:text-amber-400 transition-colors whitespace-nowrap">
                 {t('siteName')}
               </h1>
-              <span className="sm:hidden inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider rounded-full bg-emerald-600/10 text-emerald-800 dark:text-emerald-400 border border-emerald-600/30">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="sm:hidden inline-flex items-center gap-1 px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-wider rounded-full bg-emerald-600/10 text-emerald-800 dark:text-emerald-400 border border-emerald-600/30">
+                <span className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
                 <span>{t('welcome')}</span>
               </span>
             </div>
-            <p className="text-xs text-[#162a52] dark:text-slate-400 font-medium hidden sm:block">
+            <p className="text-[11px] text-[#162a52] dark:text-slate-400 font-medium hidden sm:block">
               {t('tagline')}
             </p>
           </div>
@@ -1824,7 +1824,7 @@ function Navbar({ currentPath, onNavigate }) {
 
   return (
     <nav className="bg-white/85 dark:bg-slate-900 text-slate-800 dark:text-slate-100 border-b border-[rgba(217,207,199,0.75)] dark:border-slate-800 shadow-sm relative z-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="hidden lg:flex items-center justify-between gap-2 py-1.5">
           <div className="flex items-center justify-between flex-1 gap-1 xl:gap-2">
             {navItems.map((item) => {
@@ -1960,50 +1960,48 @@ function TrendingTicker({ onNavigate }) {
   );
 
   return (
-    <div className="w-full bg-[#FEFEFE] dark:bg-[#0b0f19] text-slate-900 dark:text-slate-100 border-b border-slate-200 dark:border-slate-800 shadow-sm relative z-30 select-none py-1">
-      <div className="max-w-7xl mx-auto px-2 sm:px-4">
-        {/* Main TV Lower-Third Strip */}
-        <div className="flex items-stretch shadow-md border border-amber-600/40 rounded-sm overflow-hidden bg-slate-950">
-          {/* Left Anchor Box with BREAKING NEWS Text (No Siren) */}
-          <div className="flex items-stretch shrink-0">
-            {/* Red BREAKING Section */}
-            <div className="broadcast-red-tab text-white font-black text-[10px] sm:text-xs tracking-wider px-2 sm:px-3 py-1 uppercase flex items-center justify-center gap-1.5 font-sans border-r border-red-900 shadow-inner">
-              <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
-              <span>{isTamil ? 'முக்கிய' : 'BREAKING'}</span>
-            </div>
-            {/* Navy NEWS Section */}
-            <div className="broadcast-navy-tab text-white font-black text-[10px] sm:text-xs tracking-wider px-2 sm:px-3 py-1 uppercase flex items-center justify-center font-sans border-r-2 border-red-950 shadow-inner">
-              <span>{isTamil ? 'செய்திகள்' : 'NEWS'}</span>
+    <div className="w-full bg-[#FEFEFE] dark:bg-[#0b0f19] text-slate-900 dark:text-slate-100 border-y border-slate-200 dark:border-slate-800 shadow-sm relative z-30 select-none">
+      {/* Main TV Lower-Third Strip Edge-to-Edge Full Screen Length */}
+      <div className="w-full flex items-stretch border-y border-amber-600/40 bg-slate-950">
+        {/* Left Anchor Box with BREAKING NEWS Text (No Siren) */}
+        <div className="flex items-stretch shrink-0">
+          {/* Red BREAKING Section */}
+          <div className="broadcast-red-tab text-white font-black text-[11px] sm:text-xs tracking-wider px-3 sm:px-4 py-1 uppercase flex items-center justify-center gap-1.5 font-sans border-r border-red-900 shadow-inner">
+            <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
+            <span>{isTamil ? 'முக்கிய' : 'BREAKING'}</span>
+          </div>
+          {/* Navy NEWS Section */}
+          <div className="broadcast-navy-tab text-white font-black text-[11px] sm:text-xs tracking-wider px-3 sm:px-4 py-1 uppercase flex items-center justify-center font-sans border-r-2 border-red-950 shadow-inner">
+            <span>{isTamil ? 'செய்திகள்' : 'NEWS'}</span>
+          </div>
+        </div>
+
+        {/* Right Dual-Tier Content Frame Full Width */}
+        <div className="flex-1 min-w-0 flex flex-col justify-center">
+          {/* Upper Golden-Yellow Headline Banner */}
+          <div className="broadcast-gold-band relative overflow-hidden py-0.5 sm:py-1 px-3 border-b border-amber-600/50">
+            {/* World Map Silhouette Watermark on Gold */}
+            <svg className="absolute inset-0 w-full h-full text-amber-800/15 object-cover pointer-events-none" viewBox="0 0 400 50" fill="currentColor" preserveAspectRatio="none">
+              <path d="M30,10 Q80,5 120,25 T220,15 T310,35 T390,15 Q360,45 280,40 T150,45 T40,40 Z" opacity="0.4" />
+              <ellipse cx="90" cy="20" rx="35" ry="15" opacity="0.25" />
+              <ellipse cx="280" cy="25" rx="50" ry="18" opacity="0.25" />
+            </svg>
+
+            {/* Scrolling Headlines */}
+            <div className="overflow-hidden relative w-full flex items-center">
+              <div className="animate-marquee flex items-center whitespace-nowrap">
+                {renderHeadlinesTrack('gold-track-1')}
+                {renderHeadlinesTrack('gold-track-2')}
+              </div>
             </div>
           </div>
 
-          {/* Right Dual-Tier Content Frame */}
-          <div className="flex-1 min-w-0 flex flex-col justify-center">
-            {/* Upper Golden-Yellow Headline Banner */}
-            <div className="broadcast-gold-band relative overflow-hidden py-0.5 sm:py-1 px-2 border-b border-amber-600/50">
-              {/* World Map Silhouette Watermark on Gold */}
-              <svg className="absolute inset-0 w-full h-full text-amber-800/15 object-cover pointer-events-none" viewBox="0 0 400 50" fill="currentColor" preserveAspectRatio="none">
-                <path d="M30,10 Q80,5 120,25 T220,15 T310,35 T390,15 Q360,45 280,40 T150,45 T40,40 Z" opacity="0.4" />
-                <ellipse cx="90" cy="20" rx="35" ry="15" opacity="0.25" />
-                <ellipse cx="280" cy="25" rx="50" ry="18" opacity="0.25" />
-              </svg>
-
-              {/* Scrolling Headlines */}
-              <div className="overflow-hidden relative w-full flex items-center">
-                <div className="animate-marquee flex items-center whitespace-nowrap">
-                  {renderHeadlinesTrack('gold-track-1')}
-                  {renderHeadlinesTrack('gold-track-2')}
-                </div>
-              </div>
-            </div>
-
-            {/* Lower Navy Blue Market Ribbon */}
-            <div className="broadcast-navy-band relative overflow-hidden py-0.5 px-2">
-              <div className="overflow-hidden relative w-full flex items-center">
-                <div className="animate-marquee flex items-center whitespace-nowrap">
-                  {renderMarketTrack('navy-mkt-1')}
-                  {renderMarketTrack('navy-mkt-2')}
-                </div>
+          {/* Lower Navy Blue Market Ribbon */}
+          <div className="broadcast-navy-band relative overflow-hidden py-0.5 px-3">
+            <div className="overflow-hidden relative w-full flex items-center">
+              <div className="animate-marquee flex items-center whitespace-nowrap">
+                {renderMarketTrack('navy-mkt-1')}
+                {renderMarketTrack('navy-mkt-2')}
               </div>
             </div>
           </div>
@@ -2597,7 +2595,7 @@ function HeroSection({ news, onNavigate }) {
           <article
             key={`${keyPrefix}-${item.id}-${idx}`}
             onClick={() => onNavigate && onNavigate(`#/articles/${item.slug}`)}
-            className="group relative w-[250px] sm:w-[280px] md:w-[310px] h-[300px] sm:h-[330px] shrink-0 border-r border-white/10 overflow-hidden flex flex-col justify-end p-4 sm:p-5 select-none cursor-pointer bg-slate-950"
+            className="group relative w-[220px] sm:w-[250px] md:w-[270px] h-[240px] sm:h-[265px] shrink-0 border-r border-white/10 overflow-hidden flex flex-col justify-end p-3.5 sm:p-4 select-none cursor-pointer bg-slate-950"
           >
             <img
               src={item.thumbnail}
@@ -2607,25 +2605,25 @@ function HeroSection({ news, onNavigate }) {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/65 to-transparent pointer-events-none" />
 
-            <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10">
-              <span className="px-2.5 py-0.5 text-[9px] font-black uppercase tracking-wider rounded-md bg-amber-500 text-slate-950 shadow-md">
+            <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between z-10">
+              <span className="px-2 py-0.5 text-[8.5px] font-black uppercase tracking-wider rounded-md bg-amber-500 text-slate-950 shadow-md">
                 {(item.category || 'FINANCE').replace('-', ' ')}
               </span>
-              <span className="px-2 py-0.5 rounded-md bg-slate-950/85 text-slate-200 text-[9px] font-mono font-bold  border border-white/15">
+              <span className="px-1.5 py-0.5 rounded-md bg-slate-950/85 text-slate-200 text-[8.5px] font-mono font-bold border border-white/15">
                 {formattedDate}
               </span>
             </div>
 
-            <div className="relative z-10 space-y-2">
-              <h3 className="text-sm sm:text-base font-black text-white leading-snug font-serif group-hover:text-amber-400 transition-colors drop-shadow-md line-clamp-2">
+            <div className="relative z-10 space-y-1.5">
+              <h3 className="text-xs sm:text-sm font-black text-white leading-snug font-serif group-hover:text-amber-400 transition-colors drop-shadow-md line-clamp-2">
                 {item.title}
               </h3>
               {item.summary && (
-                <p className="text-xs text-slate-300/95 line-clamp-2 font-sans leading-relaxed drop-shadow">
+                <p className="text-[11px] text-slate-300/95 line-clamp-2 font-sans leading-relaxed drop-shadow">
                   {item.summary}
                 </p>
               )}
-              <div className="pt-1 flex items-center justify-between text-xs text-amber-400 font-extrabold">
+              <div className="pt-0.5 flex items-center justify-between text-[11px] text-amber-400 font-extrabold">
                 <span className="flex items-center gap-1">
                   <span>{t('readArticle') || 'Read Article'}</span>
                   <span className="group-hover:translate-x-1.5 transition-transform">→</span>
@@ -2639,22 +2637,22 @@ function HeroSection({ news, onNavigate }) {
   );
 
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-4 select-none">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
-        <div className="lg:col-span-7 flex flex-col justify-between bg-white/90 dark:bg-slate-950 rounded-3xl border border-[rgba(201,181,156,0.5)] dark:border-slate-800 shadow-xl overflow-hidden p-4 sm:p-5 text-slate-900 dark:text-white">
-          <div className="flex items-center justify-between border-b border-[rgba(217,207,199,0.7)] dark:border-slate-800 pb-3 mb-3">
+    <section className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-4 select-none">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+        <div className="lg:col-span-7 flex flex-col justify-between bg-white/90 dark:bg-slate-950 rounded-2xl border border-[rgba(201,181,156,0.5)] dark:border-slate-800 shadow-lg overflow-hidden p-3.5 sm:p-4 text-slate-900 dark:text-white">
+          <div className="flex items-center justify-between border-b border-[rgba(217,207,199,0.7)] dark:border-slate-800 pb-2.5 mb-2.5">
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-red-600 animate-ping" />
+              <span className="w-2 h-2 rounded-full bg-red-600 animate-ping" />
               <h2 className="text-xs sm:text-sm font-black tracking-wider uppercase text-slate-900 dark:text-white font-serif flex items-center gap-1.5">
                 <span>{t('featuredNews') || 'சிறப்புச் செய்திகள் & ஆய்வுகள்'}</span>
               </h2>
             </div>
-            <span className="text-[10px] font-mono text-amber-700 dark:text-amber-400/90 font-bold bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
+            <span className="text-[9px] font-mono text-amber-700 dark:text-amber-400/90 font-bold bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
               LIVE NEWS TICKER
             </span>
           </div>
 
-          <div className="featured-marquee-wrapper overflow-hidden rounded-2xl border border-[rgba(217,207,199,0.7)] dark:border-slate-800 bg-[rgba(239,233,227,0.5)] dark:bg-slate-950 my-auto">
+          <div className="featured-marquee-wrapper overflow-hidden rounded-xl border border-[rgba(217,207,199,0.7)] dark:border-slate-800 bg-[rgba(239,233,227,0.5)] dark:bg-slate-950 my-auto">
             <div className="animate-featured-marquee flex items-stretch gap-0 whitespace-normal">
               {renderFeaturedTrack('ftrack-1')}
               {renderFeaturedTrack('ftrack-2')}
@@ -2662,49 +2660,49 @@ function HeroSection({ news, onNavigate }) {
           </div>
         </div>
 
-        <div className="lg:col-span-5 flex flex-col justify-between bg-white/90 dark:bg-slate-950 text-slate-900 dark:text-white rounded-3xl border border-[rgba(201,181,156,0.5)] dark:border-slate-800 shadow-xl p-4 sm:p-5">
-          <div className="flex items-center justify-between border-b border-[rgba(217,207,199,0.7)] dark:border-slate-800 pb-3 mb-3">
+        <div className="lg:col-span-5 flex flex-col justify-between bg-white/90 dark:bg-slate-950 text-slate-900 dark:text-white rounded-2xl border border-[rgba(201,181,156,0.5)] dark:border-slate-800 shadow-lg p-3.5 sm:p-4">
+          <div className="flex items-center justify-between border-b border-[rgba(217,207,199,0.7)] dark:border-slate-800 pb-2.5 mb-2.5">
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+              <span className="w-2 h-2 rounded-full bg-amber-500" />
               <h3 className="text-xs sm:text-sm font-black uppercase tracking-wider text-slate-900 dark:text-white font-serif">
                 {isTamil ? 'சமீபத்திய கட்டுரைகள்' : 'Latest Articles'}
               </h3>
             </div>
-            <span className="text-[10px] font-mono font-bold text-amber-700 dark:text-amber-400/90 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
+            <span className="text-[9px] font-mono font-bold text-amber-700 dark:text-amber-400/90 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
               Latest
             </span>
           </div>
 
-          <div className="space-y-2.5 flex-1 flex flex-col justify-between">
+          <div className="space-y-1.5 flex-1 flex flex-col justify-between">
             {latestStories.map((article, idx) => (
               <div
                 key={article.id || `latest-${idx}`}
                 role="button"
                 tabIndex={0}
                 onClick={() => onNavigate && onNavigate(`#/articles/${article.slug}`)}
-                className="btn-magnetic group flex items-center gap-3 p-2 rounded-2xl hover:bg-[rgba(239,233,227,0.8)] dark:hover:bg-slate-900/80 transition-all cursor-pointer border border-transparent hover:border-[rgba(201,181,156,0.4)] dark:hover:border-slate-800"
+                className="btn-magnetic group flex items-center gap-2.5 p-1.5 rounded-xl hover:bg-[rgba(239,233,227,0.8)] dark:hover:bg-slate-900/80 transition-all cursor-pointer border border-transparent hover:border-[rgba(201,181,156,0.4)] dark:hover:border-slate-800"
               >
                 {article.thumbnail && (
                   <img
                     src={article.thumbnail}
                     alt=""
-                    className="w-14 h-14 rounded-xl object-cover shrink-0 border border-[rgba(217,207,199,0.8)] dark:border-slate-800"
+                    className="w-11 h-11 rounded-lg object-cover shrink-0 border border-[rgba(217,207,199,0.8)] dark:border-slate-800"
                   />
                 )}
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-0.5">
-                    <span className="text-[9px] font-black uppercase text-amber-700 dark:text-amber-400 tracking-wider">
+                  <div className="flex items-center gap-1.5 mb-0.5">
+                    <span className="text-[8.5px] font-black uppercase text-amber-700 dark:text-amber-400 tracking-wider">
                       {(article.category || 'FINANCE').replace('-', ' ')}
                     </span>
-                    <span className="text-[9px] text-slate-500 dark:text-slate-400 font-mono">
+                    <span className="text-[8.5px] text-slate-500 dark:text-slate-400 font-mono">
                       • {new Date(article.publishedAt).toLocaleDateString([], { month: 'short', day: 'numeric' })}
                     </span>
                   </div>
-                  <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100 line-clamp-2 group-hover:text-amber-700 dark:group-hover:text-amber-400 transition-colors font-serif leading-snug">
+                  <h4 className="text-[11px] font-bold text-slate-900 dark:text-slate-100 line-clamp-2 group-hover:text-amber-700 dark:group-hover:text-amber-400 transition-colors font-serif leading-snug">
                     {article.title}
                   </h4>
                 </div>
-                <span className="text-xs text-slate-400 group-hover:text-amber-700 dark:group-hover:text-amber-400 group-hover:translate-x-1 transition-all shrink-0">
+                <span className="text-[11px] text-slate-400 group-hover:text-amber-700 dark:group-hover:text-amber-400 group-hover:translate-x-1 transition-all shrink-0">
                   →
                 </span>
               </div>
@@ -2745,7 +2743,7 @@ function TrendingArticlesSection({ onNavigate }) {
   }, [liveArticles, language]);
 
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-4">
+    <section className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-4">
       <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
         <div className="flex items-center gap-2">
           <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
@@ -2907,7 +2905,7 @@ function SipCalculator() {
   ];
 
   return (
-    <section id="financial-calculators" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 select-none animate-fadeIn">
+    <section id="financial-calculators" className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 select-none animate-fadeIn">
       {/* Unified Compact Hero Header Banner (Light & Dark mode) */}
       <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 lg:p-7 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
         <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full  pointer-events-none" />
@@ -3255,7 +3253,7 @@ function RiskQuizWidget() {
   };
 
   return (
-    <section id="quiz" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fadeIn">
+    <section id="quiz" className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fadeIn">
       {/* Unified Compact Hero Header Banner (Light & Dark mode) */}
       <div className="relative rounded-3xl bg-gradient-to-br from-white via-emerald-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-emerald-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 lg:p-7 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
         <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 dark:bg-emerald-500/10 rounded-full  pointer-events-none" />
@@ -3309,7 +3307,7 @@ function SignInCtaBanner({ onNavigate }) {
 
   if (session) {
     return (
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-6 animate-fadeIn">
+      <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 my-6 animate-fadeIn">
         <div className="flex items-center justify-between p-4 sm:p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 dark:text-emerald-300 shadow-sm">
           <div className="flex items-center gap-3">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
@@ -3331,7 +3329,7 @@ function SignInCtaBanner({ onNavigate }) {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-6 animate-fadeIn">
+    <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 my-6 animate-fadeIn">
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-slate-900 to-amber-950/80 border border-amber-500/30 dark:border-amber-500/20 p-6 sm:p-8 shadow-2xl text-white">
         <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-amber-500/15  pointer-events-none" />
 
@@ -3411,7 +3409,7 @@ function Footer({ onNavigate, onShowToast }) {
 
   return (
     <footer className="bg-[rgba(239,233,227,0.85)] dark:bg-slate-950 text-slate-700 dark:text-slate-300 border-t border-[rgba(201,181,156,0.6)] dark:border-slate-800 pt-12 pb-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         {/* Top Grid: Newsletter + Quick Links */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 pb-12 border-b border-[rgba(217,207,199,0.7)] dark:border-slate-800">
           {/* Brand & Newsletter */}
@@ -4238,7 +4236,7 @@ function HomeCinemaShowcase({ onNavigate, onShowToast, language = 'ta' }) {
   }, [allVideos, activeCategory]);
 
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 select-none space-y-4">
+    <section className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-4 select-none space-y-4">
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-amber-500/15 via-slate-100/80 to-amber-500/5 dark:from-slate-900/90 dark:via-slate-900/95 dark:to-amber-950/40 border border-amber-500/20 dark:border-amber-500/30 p-4 sm:p-6 shadow-md backdrop-blur-md flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
         <div className="relative z-10 space-y-1.5 max-w-2xl">
@@ -4473,7 +4471,7 @@ function VideosPage({ onNavigate, onShowToast, initialVideoId }) {
   return (
     <div className="min-h-screen pb-24 space-y-6 text-slate-900 dark:text-white animate-fadeIn">
       {/* 1. CINEMA SPOTLIGHT HERO */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+      <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 pt-6">
         <CinemaSpotlightHero
           spotlightVideos={spotlightVideos}
           onWatchVideo={(v) => setSelectedVideo(v)}
@@ -4483,7 +4481,7 @@ function VideosPage({ onNavigate, onShowToast, initialVideoId }) {
 
       {/* 2. CATEGORY & SEARCH CONTROLS BAR */}
       <div className="bg-white/95 dark:bg-slate-950/95  border-y border-slate-200 dark:border-slate-800/80 shadow-sm py-3">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-2.5">
+        <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-2.5">
           <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1">
             {categoriesList.map(cat => {
               const isActive = activeCategory === cat.id;
@@ -4573,7 +4571,7 @@ function VideosPage({ onNavigate, onShowToast, initialVideoId }) {
       </div>
 
       {/* 3. MAIN CONTENT: CINEMATIC RAILS OR FULL 882 GRID */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         {isFiltering || viewMode === 'grid' ? (
           <div className="space-y-6">
             <div className="flex items-center justify-between">
@@ -4773,7 +4771,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
   return (
     <div className="min-h-screen pb-20 space-y-6 animate-fadeIn">
       {/* Unified Compact Hero Header Banner (Light & Dark mode) */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+      <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 pt-6">
         <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 lg:p-7 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
           <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full  pointer-events-none" />
           <div className="relative z-10 space-y-2 max-w-3xl">
@@ -4794,7 +4792,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
       </div>
 
       <div className="sticky top-16 z-30 bg-white/95 dark:bg-slate-950/95  border-b border-slate-200 dark:border-slate-800 shadow-sm py-3">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
             {categories.map(cat => {
               const isActive = activeCategory === cat.id;
@@ -4816,7 +4814,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
           <div className="relative flex-1">
             <svg className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
@@ -4847,7 +4845,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         {isLoading ? (
           <div className="py-20 text-center space-y-3">
             <div className="w-10 h-10 border-4 border-amber-500 border-t-transparent rounded-full animate-spin mx-auto" />
@@ -5647,7 +5645,7 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
   });
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fadeIn">
+    <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fadeIn">
       {/* Unified Compact Hero Header Banner (Light & Dark mode) */}
       <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 lg:p-7 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
         <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full  pointer-events-none" />
@@ -8675,7 +8673,7 @@ function NewsPage({ onNavigate }) {
   const editorialArticles = (newsData || []).map(item => translateNewsArticle(item, language));
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-8 animate-fadeIn">
+    <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-8 animate-fadeIn">
       {/* Unified Compact Hero Header Banner (Light & Dark mode) */}
       <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 lg:p-7 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
         <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full pointer-events-none" />
@@ -9758,7 +9756,7 @@ function CategoryPage({ categoryId, onNavigate, onShowToast }) {
   }, [filtered, visibleCount]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fadeIn">
+    <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fadeIn">
       {/* Unified Compact Hero Header Banner (Light & Dark mode) */}
       <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 lg:p-7 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
         <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full  pointer-events-none" />
@@ -10050,7 +10048,7 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
   }, [allPublishers, selectedCategory, searchQuery]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fadeIn">
+    <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fadeIn">
       {/* Compact Hero Header Banner (Dark & Light mode supported) */}
       <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 lg:p-7 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
         {/* Ambient Decorative Lighting */}
