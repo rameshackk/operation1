@@ -8966,7 +8966,7 @@ function ProfilePage({ onNavigate, onShowToast }) {
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 animate-fadeIn">
       {/* Header Banner */}
-      <div className="relative rounded-3xl bg-gradient-to-r from-slate-900 via-slate-900 to-amber-950/70 border border-slate-800 p-6 sm:p-8 shadow-2xl overflow-hidden text-white">
+      <div className="relative rounded-3xl bg-gradient-to-r from-[#03529A] via-[#023b70] to-[#4A9E2C] border border-white/20 p-6 sm:p-8 shadow-2xl overflow-hidden text-white">
         <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 relative z-10">
           <div
             onClick={() => isPublisher ? setIsEditingPublisherModalOpen(true) : null}
@@ -8977,16 +8977,16 @@ function ProfilePage({ onNavigate, onShowToast }) {
               <img
                 src={avatarUrl}
                 alt={displayName}
-                className="w-20 h-20 rounded-full object-cover border-2 border-amber-500 shadow-xl shrink-0 group-hover/avatar:opacity-85 transition-opacity"
-                onError={(e) => { e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName || 'User')}&background=f59e0b&color=0f172a&bold=true`; }}
+                className="w-20 h-20 rounded-full object-cover border-2 border-white/80 shadow-xl shrink-0 group-hover/avatar:opacity-85 transition-opacity"
+                onError={(e) => { e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName || 'User')}&background=03529a&color=ffffff&bold=true`; }}
               />
             ) : (
-              <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-amber-600 to-amber-400 text-slate-950 font-black text-2xl flex items-center justify-center border-2 border-amber-400 shadow-xl shrink-0">
+              <div className="w-20 h-20 rounded-full bg-white/20 text-white font-black text-2xl flex items-center justify-center border-2 border-white/80 shadow-xl shrink-0 backdrop-blur-md">
                 {initials}
               </div>
             )}
             {isPublisher && (
-              <div className="absolute inset-0 rounded-full bg-slate-950/70 opacity-0 group-hover/avatar:opacity-100 flex flex-col items-center justify-center text-amber-300 text-[10px] font-black transition-opacity">
+              <div className="absolute inset-0 rounded-full bg-slate-950/70 opacity-0 group-hover/avatar:opacity-100 flex flex-col items-center justify-center text-emerald-300 text-[10px] font-black transition-opacity">
                 <span className="text-sm">📷</span>
                 <span>{isTamil ? 'புகைப்படம்' : 'Change'}</span>
               </div>
@@ -8994,19 +8994,19 @@ function ProfilePage({ onNavigate, onShowToast }) {
           </div>
           <div className="space-y-1.5 text-center sm:text-left flex-1">
             <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
-              <h1 className="text-2xl sm:text-3xl font-extrabold font-serif">{displayName || 'Investor'}</h1>
+              <h1 className="text-2xl sm:text-3xl font-extrabold font-serif text-white">{displayName || 'Investor'}</h1>
               <span className={`px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider rounded-full border ${
                 role === 'admin'
-                  ? 'bg-red-500/20 text-red-400 border-red-500/30'
+                  ? 'bg-red-500/30 text-white border-red-400/50'
                   : role === 'publisher'
-                  ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
-                  : 'bg-slate-500/20 text-slate-300 border-slate-500/30'
+                  ? 'bg-white/20 text-white border-white/40'
+                  : 'bg-white/15 text-white border-white/30'
               }`}>
                 {role === 'admin' ? 'Administrator' : (role === 'publisher' ? 'AMFI Publisher / Advisor' : 'Investor')}
               </span>
             </div>
-            <p className="text-xs text-slate-400 font-mono">{email}</p>
-            <p className="text-[11px] text-amber-400/90 font-medium">
+            <p className="text-xs text-white/80 font-mono">{email}</p>
+            <p className="text-[11px] text-emerald-200 font-medium">
               {profile?.title || (isTamil ? 'முதலீட்டு திசை நிதி தளத்தின் உறுப்பினர்' : 'Muthaleetu Thisai Certified Member')}
             </p>
           </div>
@@ -9015,7 +9015,7 @@ function ProfilePage({ onNavigate, onShowToast }) {
             {isPublisher && (
               <button
                 onClick={() => setIsEditingPublisherModalOpen(true)}
-                className="btn-magnetic px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs shadow-md transition-all flex items-center gap-1.5"
+                className="btn-magnetic px-4 py-2 rounded-xl bg-white text-[#03529A] hover:bg-slate-100 font-black text-xs shadow-md transition-all flex items-center gap-1.5"
               >
                 <span>✏️</span>
                 <span>{isTamil ? 'சான்றுகளை திருத்து' : 'Edit Credentials'}</span>
@@ -9023,7 +9023,7 @@ function ProfilePage({ onNavigate, onShowToast }) {
             )}
             <button
               onClick={signOut}
-              className="btn-magnetic px-4 py-2 rounded-xl bg-red-600/20 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/30 text-xs font-bold transition-all shrink-0"
+              className="btn-magnetic px-4 py-2 rounded-xl bg-red-600/30 hover:bg-red-600 text-white border border-red-400/40 text-xs font-bold transition-all shrink-0"
             >
               {isTamil ? 'வெளியேறு (Logout)' : 'Logout'}
             </button>
@@ -9326,55 +9326,55 @@ function ProfilePage({ onNavigate, onShowToast }) {
           {/* Right Column: Publisher Credentials Card or Quick Actions */}
           <div className="space-y-6">
             {isPublisher && (
-              <div className="bg-gradient-to-br from-slate-900 via-slate-950 to-amber-950/50 rounded-3xl p-6 border border-amber-500/30 shadow-md text-white space-y-4">
+              <div className="bg-gradient-to-br from-[#03529A] via-[#023b70] to-[#4A9E2C] rounded-3xl p-6 border border-white/20 shadow-xl text-white space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="text-base">💼</span>
-                    <h3 className="text-sm font-black uppercase tracking-wider text-amber-400 font-serif">
+                    <h3 className="text-sm font-black uppercase tracking-wider text-emerald-300 font-serif">
                       {isTamil ? 'வெளியீட்டாளர் & AMFI சான்றுகள்' : 'Publisher & AMFI Credentials'}
                     </h3>
                   </div>
                   <button
                     onClick={() => setIsEditingPublisherModalOpen(true)}
-                    className="text-xs font-bold text-amber-400 hover:underline flex items-center gap-1"
+                    className="text-xs font-bold text-white hover:underline flex items-center gap-1 bg-white/20 px-2.5 py-1 rounded-lg transition-colors"
                   >
                     <span>✏️</span>
                     <span>{isTamil ? 'திருத்து' : 'Edit'}</span>
                   </button>
                 </div>
 
-                <div className="space-y-2.5 text-xs text-slate-300">
-                  <div className="flex justify-between py-1 border-b border-slate-800">
-                    <span className="text-slate-400">{isTamil ? 'பதவி / பதவிப்பெயர்:' : 'Designation:'}</span>
+                <div className="space-y-2.5 text-xs text-white/90">
+                  <div className="flex justify-between py-1 border-b border-white/15">
+                    <span className="text-white/70">{isTamil ? 'பதவி / பதவிப்பெயர்:' : 'Designation:'}</span>
                     <span className="font-bold text-white text-right">{profile?.title || 'AMFI Registered MFD'}</span>
                   </div>
-                  <div className="flex justify-between py-1 border-b border-slate-800">
-                    <span className="text-slate-400">{isTamil ? 'AMFI ARN எண்:' : 'ARN License:'}</span>
-                    <span className="font-mono font-bold text-amber-400">{profile?.arn_number || 'Not Set'}</span>
+                  <div className="flex justify-between py-1 border-b border-white/15">
+                    <span className="text-white/70">{isTamil ? 'AMFI ARN எண்:' : 'ARN License:'}</span>
+                    <span className="font-mono font-bold text-emerald-200">{profile?.arn_number || 'Not Set'}</span>
                   </div>
-                  <div className="flex justify-between items-center py-1 border-b border-slate-800">
-                    <span className="text-slate-400">{isTamil ? 'அதிகாரப்பூர்வ வலைத்தளம்:' : 'Official Website:'}</span>
+                  <div className="flex justify-between items-center py-1 border-b border-white/15">
+                    <span className="text-white/70">{isTamil ? 'அதிகாரப்பூர்வ வலைத்தளம்:' : 'Official Website:'}</span>
                     <div className="text-right">
                       {profile?.website_url ? (
                         <a
                           href={profile.website_url.startsWith('http') ? profile.website_url : `https://${profile.website_url}`}
                           target="_blank"
                           rel="noreferrer"
-                          className="font-bold text-amber-400 hover:underline text-xs truncate max-w-[180px] block"
+                          className="font-bold text-emerald-200 hover:underline text-xs truncate max-w-[180px] block"
                         >
                           {profile.website_url.replace(/^https?:\/\//, '')} ↗
                         </a>
                       ) : (
-                        <span className="text-slate-500 text-[11px] italic">Not Set</span>
+                        <span className="text-white/50 text-[11px] italic">Not Set</span>
                       )}
                     </div>
                   </div>
-                  <div className="flex justify-between py-1 border-b border-slate-800">
-                    <span className="text-slate-400">{isTamil ? 'வாட்ஸ்அப் ஆலோசனை:' : 'WhatsApp:'}</span>
+                  <div className="flex justify-between py-1 border-b border-white/15">
+                    <span className="text-white/70">{isTamil ? 'வாட்ஸ்அப் ஆலோசனை:' : 'WhatsApp:'}</span>
                     <span className="font-mono text-white">{profile?.whatsapp_number || profile?.phone || 'Not Set'}</span>
                   </div>
-                  <div className="py-1 border-b border-slate-800">
-                    <span className="text-slate-400 block mb-1">{isTamil ? 'சிறப்புத் துறைகள்:' : 'Specialties:'}</span>
+                  <div className="py-1 border-b border-white/15">
+                    <span className="text-white/70 block mb-1">{isTamil ? 'சிறப்புத் துறைகள்:' : 'Specialties:'}</span>
                     <div className="flex flex-wrap gap-1">
                       {profile?.specialties && Array.isArray(profile.specialties) ? (
                         profile.specialties.map((s, idx) => (
