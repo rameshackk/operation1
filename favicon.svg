@@ -1,30 +1,51 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <defs>
-    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#f59e0b"/>
-      <stop offset="50%" stop-color="#d97706"/>
-      <stop offset="100%" stop-color="#92400e"/>
+    <linearGradient id="blueSwooshGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00c8ff"/>
+      <stop offset="50%" stop-color="#0080ff"/>
+      <stop offset="100%" stop-color="#0040c0"/>
     </linearGradient>
-    <linearGradient id="arrowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="100%" stop-color="#fef3c7"/>
+    <linearGradient id="greenArrowGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="60%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="#84cc16"/>
     </linearGradient>
+    <linearGradient id="bar1Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00b4d8"/>
+      <stop offset="100%" stop-color="#0077b6"/>
+    </linearGradient>
+    <linearGradient id="bar2Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0096c7"/>
+      <stop offset="100%" stop-color="#03045e"/>
+    </linearGradient>
+    <linearGradient id="bar3Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0077b6"/>
+      <stop offset="100%" stop-color="#023e8a"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#0080ff" flood-opacity="0.3"/>
+    </filter>
   </defs>
-  <!-- Background Rounded Shield / Tile -->
-  <rect width="512" height="512" rx="128" fill="url(#brandGrad)"/>
-  <rect x="12" y="12" width="488" height="488" rx="116" fill="none" stroke="#fef3c7" stroke-width="8" stroke-opacity="0.25"/>
+
+  <!-- Dark Background Circle -->
+  <circle cx="256" cy="256" r="250" fill="#020617"/>
+
+  <!-- Left Blue Circular Swoosh Arc -->
+  <path d="M 230 70 C 120 85 45 175 45 285 C 45 375 110 445 195 465 C 130 435 85 370 85 295 C 85 200 150 120 250 95 C 330 75 395 120 425 175 C 400 130 330 70 230 70 Z" fill="url(#blueSwooshGrad)" filter="url(#glow)"/>
+
+  <!-- Inner Chart Bars -->
+  <!-- Bar 1 (Left - Shortest) -->
+  <rect x="160" y="250" width="52" height="110" rx="10" fill="url(#bar1Grad)"/>
   
-  <!-- Outer Compass Ring -->
-  <circle cx="256" cy="256" r="170" fill="none" stroke="#fef3c7" stroke-width="16" stroke-opacity="0.4"/>
+  <!-- Bar 2 (Middle) -->
+  <rect x="226" y="200" width="52" height="160" rx="10" fill="url(#bar2Grad)"/>
   
-  <!-- Compass Cardinal Ticks -->
-  <path d="M256 60v32M256 420v32M60 256h32M420 256h32" stroke="#fef3c7" stroke-width="16" stroke-linecap="round" stroke-opacity="0.6"/>
+  <!-- Bar 3 (Right - Tallest) -->
+  <rect x="292" y="145" width="52" height="215" rx="10" fill="url(#bar3Grad)"/>
+
+  <!-- Ascending Green Growth Arrow Arc -->
+  <path d="M 85 390 C 130 460 215 480 295 460 C 375 440 435 370 445 270 C 430 350 370 410 290 425 C 220 440 145 420 100 370 Z" fill="url(#greenArrowGrad)"/>
   
-  <!-- Rising Investment Arrow -->
-  <path d="M340 172L172 340" stroke="#fef3c7" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M220 172h120v120" stroke="url(#arrowGrad)" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"/>
-  
-  <!-- Center Core Pivot -->
-  <circle cx="256" cy="256" r="30" fill="#ffffff"/>
-  <circle cx="256" cy="256" r="14" fill="#d97706"/>
+  <!-- Green Arrow Head -->
+  <path d="M 400 200 L 490 185 L 450 275 L 430 235 Z" fill="url(#greenArrowGrad)" filter="url(#glow)"/>
 </svg>

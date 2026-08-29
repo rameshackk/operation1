@@ -1037,29 +1037,29 @@ function AuthProvider({ children }) {
   }, []);
 
   const signInAsDemoPadmanaban = async () => {
-    const demoUser = {
-      id: 'demo-padmanaban-uid',
-      email: 'padmanaban@fispl.in',
-      user_metadata: { full_name: 'B. Padmanaban (Budget Padmanaban)' }
+    const adminUser = {
+      id: 'admin-main-uid',
+      email: 'admin@gmail.com',
+      user_metadata: { full_name: 'Admin' }
     };
-    const demoProfile = {
-      id: 'demo-padmanaban-uid',
-      email: 'padmanaban@fispl.in',
-      display_name: 'B. Padmanaban (Budget Padmanaban)',
+    const adminProfile = {
+      id: 'admin-main-uid',
+      email: 'admin@gmail.com',
+      display_name: 'Admin',
       role: 'admin'
     };
-    const demoSession = {
-      access_token: 'demo-padmanaban-token-2026',
-      user: demoUser
+    const adminSession = {
+      access_token: 'admin-access-token-2026',
+      user: adminUser
     };
-    setSession(demoSession);
-    setUser(demoUser);
-    setProfile(demoProfile);
+    setSession(adminSession);
+    setUser(adminUser);
+    setProfile(adminProfile);
     setRole('admin');
     try {
-      localStorage.setItem('demo_auth_session', JSON.stringify({ user: demoUser, profile: demoProfile }));
+      localStorage.setItem('demo_auth_session', JSON.stringify({ user: adminUser, profile: adminProfile }));
     } catch (e) {}
-    return { user: demoUser, profile: demoProfile };
+    return { user: adminUser, profile: adminProfile };
   };
 
   const handleSignOut = async () => {
@@ -1087,10 +1087,10 @@ function AuthProvider({ children }) {
 
   const signInWithPassword = async (email, password) => {
     const trimmedEmail = (email || '').trim().toLowerCase();
-    // Fixed Demo Credentials Check for B. Padmanaban (Budget Padmanaban)
+    // Admin Credentials Check (admin@gmail.com / admin@123)
     if (
-      (trimmedEmail === 'padmanaban@fispl.in' || trimmedEmail === 'budgetpadmanaban@gmail.com' || trimmedEmail.includes('padmanaban')) &&
-      (password === 'Padmanaban@2026' || password === 'demo' || password === 'padmanaban' || password === 'Padmanaban123' || !password)
+      (trimmedEmail === 'admin@gmail.com' || trimmedEmail === 'admin' || trimmedEmail === 'padmanaban@fispl.in' || trimmedEmail === 'budgetpadmanaban@gmail.com') &&
+      (password === 'admin@123' || password === 'admin' || password === 'Padmanaban@2026' || password === 'demo' || !password)
     ) {
       return await signInAsDemoPadmanaban();
     }
@@ -1183,8 +1183,8 @@ function AuthProvider({ children }) {
     if (!user || !user.email) throw new Error('No user logged in');
     const trimmedEmail = (user.email || '').trim().toLowerCase();
 
-    // Support demo publisher / admin account
-    if (trimmedEmail.includes('padmanaban') || user.id === 'demo-padmanaban-uid') {
+    // Support admin account
+    if (trimmedEmail === 'admin@gmail.com' || trimmedEmail.includes('admin') || trimmedEmail.includes('padmanaban') || user.id === 'admin-main-uid' || user.id === 'demo-padmanaban-uid') {
       try {
         const savedDemo = localStorage.getItem('demo_auth_session');
         if (savedDemo) {
@@ -1195,10 +1195,11 @@ function AuthProvider({ children }) {
         }
       } catch (e) {}
       if (
+        currentPassword === 'admin@123' ||
+        currentPassword === 'admin' ||
         currentPassword === 'Padmanaban@2026' ||
         currentPassword === 'demo' ||
-        currentPassword === 'padmanaban' ||
-        currentPassword === 'Padmanaban123'
+        currentPassword === 'padmanaban'
       ) {
         return true;
       }
@@ -1222,7 +1223,7 @@ function AuthProvider({ children }) {
     if (!user) throw new Error('No user logged in');
     const trimmedEmail = (user.email || '').trim().toLowerCase();
 
-    if (trimmedEmail.includes('padmanaban') || user.id === 'demo-padmanaban-uid') {
+    if (trimmedEmail === 'admin@gmail.com' || trimmedEmail.includes('admin') || trimmedEmail.includes('padmanaban') || user.id === 'admin-main-uid' || user.id === 'demo-padmanaban-uid') {
       try {
         const savedDemo = localStorage.getItem('demo_auth_session') || '{}';
         const parsed = JSON.parse(savedDemo);
@@ -1246,13 +1247,18 @@ function AuthProvider({ children }) {
     return (
       <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-slate-950 text-white p-6 select-none">
         <div className="relative flex items-center justify-center mb-6">
-          <div className="w-16 h-16 rounded-3xl bg-gradient-to-tr from-amber-600 via-amber-500 to-yellow-400 animate-spin opacity-80 " />
-          <div className="absolute w-12 h-12 rounded-2xl bg-amber-500 flex items-center justify-center shadow-xl">
-            <span className="text-xl font-black text-slate-950">DV</span>
-          </div>
+          <img
+            src="/assets/logo.png"
+            alt="Muthaleetu Thisai"
+            className="w-20 h-20 object-contain drop-shadow-2xl animate-pulse"
+          />
         </div>
-        <h1 className="text-lg font-extrabold tracking-wide font-serif text-amber-400 mb-2">
-          முதலீட்டு திசை | Muthaleetu Thisai
+        <h1 className="text-xl sm:text-2xl font-black tracking-wide font-serif mb-2">
+          <span className="text-[#38bdf8]">முதலீட்டு </span>
+          <span className="text-[#4ade80]">திசை</span>
+          <span className="text-slate-500 mx-2 font-normal text-base">|</span>
+          <span className="text-[#38bdf8]">Muthaleetu </span>
+          <span className="text-[#4ade80]">Thisai</span>
         </h1>
         <p className="text-xs text-slate-400 font-medium animate-pulse">
           Loading Auth Session...
@@ -1410,7 +1416,7 @@ function ProfileMenu({ onNavigate }) {
         onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
         aria-label="User Profile Menu"
-        className="flex items-center gap-2 px-2.5 py-1.5 rounded-full bg-white/90 dark:bg-slate-800/90 hover:bg-[#e6dacc] dark:hover:bg-slate-700 border border-[#cdb7a3] dark:border-slate-700 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-amber-500"
+        className="flex items-center gap-2 px-2.5 py-1.5 rounded-full bg-white/90 dark:bg-slate-800/90 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-amber-500"
       >
         {avatarUrl ? (
           <img
@@ -1631,11 +1637,11 @@ function useDebounce(value, delay = 250) {
 function LanguageSwitcher() {
   const { language, setLanguage, isTranslating } = useLanguage();
   return (
-    <div className="relative inline-flex items-center bg-white/80 dark:bg-slate-800 p-1 rounded-full border border-[#cdb7a3] dark:border-slate-700 shadow-inner">
+    <div className="relative inline-flex items-center bg-white/80 dark:bg-slate-800 p-1 rounded-full border border-slate-200 dark:border-slate-700 shadow-inner">
       <button
         onClick={() => setLanguage('ta')}
         className={`px-3.5 py-1 text-xs font-bold rounded-full transition-all duration-300 ${
-          language === 'ta' ? 'bg-amber-600 text-white shadow-md scale-105' : 'text-[#0a1833] dark:text-slate-300 hover:text-amber-700'
+          language === 'ta' ? 'bg-amber-600 text-white shadow-md scale-105' : 'text-slate-700 dark:text-slate-300 hover:text-amber-700'
         }`}
       >
         தமிழ்
@@ -1643,7 +1649,7 @@ function LanguageSwitcher() {
       <button
         onClick={() => setLanguage('en')}
         className={`px-3.5 py-1 text-xs font-bold rounded-full transition-all duration-300 ${
-          language === 'en' ? 'bg-amber-600 text-white shadow-md scale-105' : 'text-[#0a1833] dark:text-slate-300 hover:text-amber-700'
+          language === 'en' ? 'bg-amber-600 text-white shadow-md scale-105' : 'text-slate-700 dark:text-slate-300 hover:text-amber-700'
         }`}
       >
         English
@@ -1662,13 +1668,13 @@ function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="p-2.5 rounded-full bg-white/90 dark:bg-slate-800 text-[#0a1833] dark:text-slate-200 hover:text-amber-700 transition-all border border-[#cdb7a3] dark:border-slate-700 shadow-sm hover:scale-105"
+      className="p-2.5 rounded-full bg-white/90 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-amber-700 transition-all border border-slate-200 dark:border-slate-700 shadow-sm hover:scale-105"
       title="Toggle Light / Dark Theme"
     >
       {theme === 'dark' ? (
         <svg className="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
       ) : (
-        <svg className="w-4 h-4 text-[#0a1833]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+        <svg className="w-4 h-4 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
       )}
     </button>
   );
@@ -1704,8 +1710,8 @@ function Header({ onOpenSearch, onNavigate }) {
   };
 
   return (
-    <header className={`w-full transition-all duration-300 border-b border-[#cdb7a3]/70 dark:border-white/10 bg-[#C9B29E]/95 dark:bg-[#0b0f19] text-[#0a1833] dark:text-white backdrop-blur-md ${
-      isScrolled ? 'py-1.5 shadow-md' : 'py-2 shadow-sm'
+    <header className={`w-full transition-all duration-200 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-900 dark:text-white ${
+      isScrolled ? 'py-1.5 shadow-sm' : 'py-2 shadow-sm'
     }`}>
       <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3">
         
@@ -1718,26 +1724,33 @@ function Header({ onOpenSearch, onNavigate }) {
         </div>
 
         {/* Center: Brand Logo & Title */}
-        <a href="#/" className="flex items-center gap-2.5 group mx-auto text-center sm:text-left">
-          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber-500 via-amber-600 to-amber-800 flex items-center justify-center text-white shadow-md shadow-amber-500/20 group-hover:scale-105 transition-transform duration-300 border border-amber-400/40 shrink-0">
-            <svg className="w-4 h-4 sm:w-5 sm:h-5 text-white drop-shadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="12" cy="12" r="9" className="opacity-35" strokeWidth="1.5" />
-              <path d="M12 3v2M12 19v2M3 12h2M19 12h2" opacity="0.5" strokeWidth="1.5" />
-              <path d="M16 8L8 16M16 8H10M16 8V14" stroke="#fef3c7" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-              <circle cx="12" cy="12" r="2" fill="currentColor" />
-            </svg>
-          </div>
+        <a href="#/" className="flex items-center gap-3 group mx-auto text-center sm:text-left">
+          <img
+            src="/assets/logo.png"
+            alt="Muthaleetu Thisai"
+            className="w-11 h-11 sm:w-13 sm:h-13 md:w-14 md:h-14 object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-300 shrink-0"
+          />
           <div>
             <div className="flex items-center gap-2 justify-center sm:justify-start">
-              <h1 className="text-lg sm:text-xl font-black tracking-tight text-[#0a1833] dark:text-white font-serif group-hover:text-amber-700 dark:group-hover:text-amber-400 transition-colors whitespace-nowrap">
-                {t('siteName')}
+              <h1 className="text-xl sm:text-2xl md:text-[1.7rem] font-black tracking-tight font-serif whitespace-nowrap">
+                {language === 'ta' ? (
+                  <>
+                    <span className="text-[#03529A] dark:text-[#38bdf8]">முதலீட்டு </span>
+                    <span className="text-[#4A9E2C] dark:text-[#4ade80]">திசை</span>
+                  </>
+                ) : (
+                  <>
+                    <span className="text-[#03529A] dark:text-[#38bdf8]">Muthaleetu </span>
+                    <span className="text-[#4A9E2C] dark:text-[#4ade80]">Thisai</span>
+                  </>
+                )}
               </h1>
-              <span className="sm:hidden inline-flex items-center gap-1 px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-wider rounded-full bg-emerald-600/10 text-emerald-800 dark:text-emerald-400 border border-emerald-600/30">
-                <span className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="sm:hidden inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider rounded-full bg-emerald-600/10 text-emerald-800 dark:text-emerald-400 border border-emerald-600/30">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 <span>{t('welcome')}</span>
               </span>
             </div>
-            <p className="text-[11px] text-[#162a52] dark:text-slate-400 font-medium hidden sm:block">
+            <p className="text-xs sm:text-[13px] text-slate-500 dark:text-slate-400 font-semibold hidden sm:block">
               {t('tagline')}
             </p>
           </div>
@@ -1747,7 +1760,7 @@ function Header({ onOpenSearch, onNavigate }) {
         <div className="flex items-center justify-end gap-2 sm:gap-2.5 shrink-0">
           <button
             onClick={onOpenSearch}
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-white/90 dark:bg-slate-900 text-[#0a1833] dark:text-slate-200 hover:bg-[#cdb7a3] dark:hover:bg-slate-800 transition-all text-xs font-semibold border border-[#cdb7a3] dark:border-slate-700 shadow-sm hover:shadow-md"
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-800 transition-all text-xs font-semibold border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md"
             aria-label="Search"
           >
             <svg className="w-4 h-4 text-amber-500 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
@@ -1782,9 +1795,8 @@ function Header({ onOpenSearch, onNavigate }) {
                 if (onNavigate) onNavigate('#/login');
                 else if (typeof window !== 'undefined') window.location.hash = '#/login';
               }}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-amber-600 hover:bg-amber-500 text-white font-extrabold text-xs shadow-md hover:scale-105 transition-all shrink-0"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full btn-brand-blue text-white font-extrabold text-xs shadow-md transition-all shrink-0"
             >
-              <span></span>
               <span>{language === 'ta' ? 'உள்நுழைக' : 'Sign In'}</span>
             </button>
           )}
@@ -1823,31 +1835,40 @@ function Navbar({ currentPath, onNavigate }) {
   const navItems = [...baseNavItems, ...authNavItems];
 
   return (
-    <nav className="bg-white/85 dark:bg-slate-900 text-slate-800 dark:text-slate-100 border-b border-[rgba(217,207,199,0.75)] dark:border-slate-800 shadow-sm relative z-20">
+    <nav className="bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 border-b border-slate-200 dark:border-slate-800 shadow-sm relative z-20">
       <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="hidden lg:flex items-center justify-between gap-2 py-1.5">
           <div className="flex items-center justify-between flex-1 gap-1 xl:gap-2">
-            {navItems.map((item) => {
+            {navItems.map((item, index) => {
               if (item.isAction) {
                 return (
                   <button
                     key={item.id}
                     onClick={() => item.action && item.action()}
-                    className="relative px-3 py-2 text-xs font-extrabold transition-all rounded-lg whitespace-nowrap text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-white hover:bg-red-500/10 border border-red-500/20"
+                    className="relative px-3.5 py-2 text-[13px] xl:text-[14px] font-extrabold transition-all rounded-lg whitespace-nowrap text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-white hover:bg-red-500/10 border border-red-500/20"
                   >
                     {item.label}
                   </button>
                 );
               }
               const isActive = currentPath === item.hash || (item.hash === '#/' && currentPath === '');
+              const isEven = index % 2 === 0;
+              const hoverStyle = isEven
+                ? 'hover:text-[#03529A] hover:bg-[#03529A]/10 hover:border-[#03529A]/30 dark:hover:text-[#38bdf8] dark:hover:bg-[#38bdf8]/15'
+                : 'hover:text-[#4A9E2C] hover:bg-[#4A9E2C]/10 hover:border-[#4A9E2C]/30 dark:hover:text-[#4ade80] dark:hover:bg-[#4ade80]/15';
+              const activeStyle = isEven
+                ? 'bg-[#03529A]/10 text-[#03529A] dark:text-[#38bdf8] shadow-sm border border-[#03529A]/30'
+                : 'bg-[#4A9E2C]/10 text-[#4A9E2C] dark:text-[#4ade80] shadow-sm border border-[#4A9E2C]/30';
+              const indicatorBg = isEven ? 'bg-[#03529A]' : 'bg-[#4A9E2C]';
+
               return (
                 <button
                   key={item.id}
                   onClick={() => onNavigate(item.hash)}
-                  className={`relative px-3 py-2 text-xs font-extrabold transition-all rounded-lg whitespace-nowrap ${isActive ? 'bg-amber-500/15 text-amber-700 dark:text-amber-400 shadow-sm border border-amber-500/30' : 'text-slate-700 dark:text-slate-300 hover:text-amber-700 dark:hover:text-white hover:bg-[rgba(239,233,227,0.7)] dark:hover:bg-slate-800/80'}`}
+                  className={`relative px-3.5 py-2 text-[13px] xl:text-[14px] font-extrabold transition-all rounded-lg whitespace-nowrap border border-transparent ${isActive ? activeStyle : `text-slate-700 dark:text-slate-300 ${hoverStyle}`}`}
                 >
                   {item.label}
-                  {isActive && <span className="absolute bottom-0 left-2.5 right-2.5 h-0.5 bg-amber-500 rounded-full" />}
+                  {isActive && <span className={`absolute bottom-0 left-2.5 right-2.5 h-0.5 ${indicatorBg} rounded-full`} />}
                 </button>
               );
             })}
@@ -1930,7 +1951,7 @@ function TrendingTicker({ onNavigate }) {
         <span
           key={`${keyPrefix}-hl-${idx}`}
           onClick={() => handleHeadlineClick(item.link)}
-          className="group/hl hover:text-red-900 cursor-pointer transition-all duration-150 flex items-center gap-1.5 text-[#0a1833] font-black text-xs sm:text-[12px] tracking-tight whitespace-nowrap select-none"
+          className="group/hl hover:text-red-900 dark:hover:text-amber-400 cursor-pointer transition-all duration-150 flex items-center gap-1.5 text-slate-900 dark:text-slate-100 font-black text-xs sm:text-[12px] tracking-tight whitespace-nowrap select-none"
           title="Click to view details"
         >
           <span className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-sm bg-red-600 text-white font-black text-[9px] shadow-sm animate-pulse shrink-0">
@@ -2759,13 +2780,18 @@ function TrendingArticlesSection({ onNavigate }) {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {allArticles.map((article, idx) => {
           const rankStr = `0${idx + 1}`;
+          const isEven = idx % 2 === 0;
+          const brandColor = isEven ? 'text-[#03529A] dark:text-[#38bdf8]' : 'text-[#4A9E2C] dark:text-[#4ade80]';
+          const hoverBorder = isEven ? 'hover:border-[#03529A]/50' : 'hover:border-[#4A9E2C]/50';
+          const hoverTitle = isEven ? 'group-hover:text-[#03529A] dark:group-hover:text-[#38bdf8]' : 'group-hover:text-[#4A9E2C] dark:group-hover:text-[#4ade80]';
+
           return (
             <div
               key={article.id || `trend-${idx}`}
               onClick={() => onNavigate && onNavigate(`#/articles/${article.slug}`)}
-              className="group flex items-center gap-3 p-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md hover:border-amber-500/50 transition-all cursor-pointer select-none"
+              className={`group flex items-center gap-3 p-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md ${hoverBorder} transition-all cursor-pointer select-none`}
             >
-              <span className="text-xl font-black text-amber-600 dark:text-amber-400 font-serif w-7 shrink-0 text-center">
+              <span className={`text-xl font-black ${brandColor} font-serif w-7 shrink-0 text-center`}>
                 {rankStr}
               </span>
 
@@ -2784,14 +2810,14 @@ function TrendingArticlesSection({ onNavigate }) {
 
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-0.5">
-                  <span className="text-[9px] font-black uppercase text-amber-600 dark:text-amber-400 tracking-wider">
+                  <span className={`text-[9px] font-black uppercase ${brandColor} tracking-wider`}>
                     {article.category.replace('-', ' ')}
                   </span>
                   <span className="text-[9px] text-slate-400 font-medium">
                     • {new Date(article.publishedAt).toLocaleDateString(isTamil ? 'ta-IN' : 'en-IN', { month: 'short', day: 'numeric' })}
                   </span>
                 </div>
-                <h4 className="text-xs font-bold text-slate-900 dark:text-white line-clamp-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors font-serif leading-snug">
+                <h4 className={`text-xs font-bold text-slate-900 dark:text-white line-clamp-2 ${hoverTitle} transition-colors font-serif leading-snug`}>
                   {article.title}
                 </h4>
                 {article.authorName && (
@@ -3330,16 +3356,17 @@ function SignInCtaBanner({ onNavigate }) {
 
   return (
     <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 my-6 animate-fadeIn">
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-slate-900 to-amber-950/80 border border-amber-500/30 dark:border-amber-500/20 p-6 sm:p-8 shadow-2xl text-white">
-        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-amber-500/15  pointer-events-none" />
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#03529A] via-[#0a3f6d] to-[#4A9E2C] border border-white/20 p-6 sm:p-8 shadow-2xl text-white">
+        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-72 h-72 rounded-full bg-[#4A9E2C]/30 blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-72 h-72 rounded-full bg-[#03529A]/40 blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="space-y-2 max-w-2xl">
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-0.5 rounded-full bg-amber-500 text-slate-950 font-black text-[10px] tracking-wider uppercase shadow">
+              <span className="px-2.5 py-0.5 rounded-full bg-white text-[#03529A] font-black text-[10px] tracking-wider uppercase shadow">
                  {isTamil ? 'உறுப்பினர் அணுகல்' : 'MEMBER ACCESS'}
               </span>
-              <span className="text-[11px] font-mono text-amber-300/80 font-bold">
+              <span className="text-[11px] font-mono text-emerald-200 font-bold">
                 {isTamil ? 'இலவச கணக்கு' : 'FREE ACCOUNT'}
               </span>
             </div>
@@ -3350,7 +3377,7 @@ function SignInCtaBanner({ onNavigate }) {
                 : 'Sign in to watch the full library & in-depth research'}
             </h3>
 
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans">
+            <p className="text-xs sm:text-sm text-slate-100/90 leading-relaxed font-sans font-medium">
               {isTamil
                 ? 'இலவசமாக பதிவு செய்து பட்ஜெட் பத்மநாபனின் அனைத்து பிரத்தியேக நிதி வழிகாட்டிகள், மியூச்சுவல் ஃபண்ட் பகுப்பாய்வுகள் மற்றும் கண்காணிப்பு வரலாற்றை உடனே அணுகவும்.'
                 : 'Register free to unlock the entire video archive, detailed mutual fund analysis, stock market strategies, and personalized watch history.'}
@@ -3360,13 +3387,13 @@ function SignInCtaBanner({ onNavigate }) {
           <div className="flex items-center gap-3 w-full md:w-auto shrink-0">
             <button
               onClick={() => onNavigate && onNavigate('#/login')}
-              className="flex-1 md:flex-none px-6 py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs sm:text-sm shadow-lg hover:shadow-amber-500/25 transition-all transform hover:-translate-y-0.5 active:translate-y-0 text-center"
+              className="flex-1 md:flex-none px-6 py-3 rounded-2xl bg-white hover:bg-slate-100 text-[#03529A] font-extrabold text-xs sm:text-sm shadow-xl hover:scale-105 active:scale-95 transition-all text-center"
             >
               {isTamil ? 'உள்நுழைக' : 'Sign In'}
             </button>
             <button
               onClick={() => onNavigate && onNavigate('#/signup')}
-              className="flex-1 md:flex-none px-6 py-3 rounded-2xl bg-slate-800/90 hover:bg-slate-700 text-white font-extrabold text-xs sm:text-sm border border-slate-700 hover:border-amber-500/40 transition-all text-center"
+              className="flex-1 md:flex-none px-6 py-3 rounded-2xl bg-slate-950/40 hover:bg-slate-950/60 text-white font-extrabold text-xs sm:text-sm border border-white/30 hover:border-white transition-all text-center"
             >
               {isTamil ? 'இலவச பதிவு' : 'Register Free'}
             </button>
@@ -3397,7 +3424,7 @@ function Toast({ message, onClose }) {
 }
 
 function Footer({ onNavigate, onShowToast }) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [email, setEmail] = useState('');
 
   const handleSubscribe = (e) => {
@@ -3415,15 +3442,27 @@ function Footer({ onNavigate, onShowToast }) {
           {/* Brand & Newsletter */}
           <div className="lg:col-span-6 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-amber-500 text-slate-950 font-bold flex items-center justify-center text-lg shadow-lg">
-                தன
-              </div>
-              <span className="text-xl font-extrabold text-slate-900 dark:text-white font-serif">
-                {t('siteName')}
+              <img
+                src="/assets/logo.png"
+                alt="Muthaleetu Thisai"
+                className="w-12 h-12 sm:w-14 sm:h-14 object-contain drop-shadow-md shrink-0"
+              />
+              <span className="text-2xl sm:text-3xl font-black font-serif">
+                {language === 'ta' ? (
+                  <>
+                    <span className="text-[#03529A] dark:text-[#38bdf8]">முதலீட்டு </span>
+                    <span className="text-[#4A9E2C] dark:text-[#4ade80]">திசை</span>
+                  </>
+                ) : (
+                  <>
+                    <span className="text-[#03529A] dark:text-[#38bdf8]">Muthaleetu </span>
+                    <span className="text-[#4A9E2C] dark:text-[#4ade80]">Thisai</span>
+                  </>
+                )}
               </span>
             </div>
             
-            <p className="text-xs text-slate-600 dark:text-slate-400 max-w-md leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-md leading-relaxed">
               {t('newsLetterDesc')}
             </p>
 
@@ -4236,38 +4275,22 @@ function HomeCinemaShowcase({ onNavigate, onShowToast, language = 'ta' }) {
   }, [allVideos, activeCategory]);
 
   return (
-    <section className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-4 select-none space-y-4">
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-amber-500/15 via-slate-100/80 to-amber-500/5 dark:from-slate-900/90 dark:via-slate-900/95 dark:to-amber-950/40 border border-amber-500/20 dark:border-amber-500/30 p-4 sm:p-6 shadow-md backdrop-blur-md flex flex-col md:flex-row md:items-end justify-between gap-4">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="relative z-10 space-y-1.5 max-w-2xl">
-          <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse shadow-sm shadow-amber-500/50" />
-            <span className="px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider rounded-full bg-amber-500 text-slate-950 shadow-sm">
-              {isTamil ? 'நேரலை யூடியூப் வீடியோக்கள்' : 'LIVE YOUTUBE MASTERCLASSES'}
-            </span>
-          </div>
-          <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 dark:text-white font-serif tracking-tight leading-tight">
-            {isTamil ? 'சிறப்புக் காணொளிகள் & வழிகாட்டிகள்' : 'Featured Videos'}
-          </h2>
-          <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 font-medium leading-relaxed">
-            {isTamil
-              ? 'பட்ஜெட் பத்மநாபன் CFP® மற்றும் சரிபார்க்கப்பட்ட நிபுணர்களின் நேரடி வீடியோ வழிகாட்டிகள்'
-              : 'Live video masterclasses & financial insights by Padmanaban B. CFP® & certified advisors'}
-          </p>
-        </div>
-      </div>
-
+    <section className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-2 select-none space-y-4">
       {/* Category Tabs */}
       <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1">
-        {categories.map((cat) => {
+        {categories.map((cat, idx) => {
           const isActive = activeCategory === cat.id;
+          const isEven = idx % 2 === 0;
+          const activeBg = isEven
+            ? 'bg-[#03529A] text-white shadow-md shadow-[#03529A]/25 scale-105'
+            : 'bg-[#4A9E2C] text-white shadow-md shadow-[#4A9E2C]/25 scale-105';
           return (
             <button
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
               className={`btn-magnetic px-3.5 py-1.5 rounded-full text-xs font-black whitespace-nowrap transition-all duration-200 shrink-0 ${
                 isActive
-                  ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20 scale-105'
+                  ? activeBg
                   : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800'
               }`}
             >
@@ -4338,10 +4361,7 @@ function Home({ onNavigate, onShowToast }) {
       {/* 3. TRENDING ARTICLES SECTION (DYNAMIC DB SYNC) */}
       <TrendingArticlesSection onNavigate={onNavigate} />
 
-      {/* 4. SIGN IN / REGISTER CALL TO ACTION BANNER */}
-      <SignInCtaBanner onNavigate={onNavigate} />
-
-      {/* 5. FINANCIAL CALCULATOR */}
+      {/* 4. FINANCIAL CALCULATOR */}
       <SipCalculator />
     </div>
   );
@@ -4769,48 +4789,30 @@ function ArticlesPage({ onNavigate, onShowToast }) {
   }, [session, activeCategory, searchQuery, sortBy]);
 
   return (
-    <div className="min-h-screen pb-20 space-y-6 animate-fadeIn">
-      {/* Unified Compact Hero Header Banner (Light & Dark mode) */}
-      <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-        <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 lg:p-7 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full  pointer-events-none" />
-          <div className="relative z-10 space-y-2 max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 text-[11px] font-black uppercase tracking-wider rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-600 dark:text-amber-400 shadow-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400 animate-pulse" />
-              <span>{isTamil ? 'செய்திக் கட்டுரைகள்' : 'EDITORIAL & ARTICLES'}</span>
-            </div>
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-slate-900 dark:text-white leading-snug">
-              {isTamil ? 'முதலீட்டு ஆய்வுக் கட்டுரைகள்' : 'In-Depth Investment Articles'}
-            </h1>
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
-              {isTamil
-                ? 'பட்ஜெட் பத்மநாபன் CFP® மற்றும் நிபுணர்களின் பிரத்யேக மியூச்சுவல் ஃபண்ட், பங்குச் சந்தை மற்றும் தனிநபர் நிதி ஆழமான ஆய்வுக் கட்டுரைகள்.'
-                : 'Exclusive original investment insights, mutual fund analyses, tax-saving strategies, and financial guidance written directly by Certified Financial Planner Padmanaban B.'}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div className="sticky top-16 z-30 bg-white/95 dark:bg-slate-950/95  border-b border-slate-200 dark:border-slate-800 shadow-sm py-3">
-        <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
-            {categories.map(cat => {
-              const isActive = activeCategory === cat.id;
-              return (
-                <button
-                  key={cat.id}
-                  onClick={() => setActiveCategory(cat.id)}
-                  className={`px-4 py-2 rounded-full text-xs font-extrabold whitespace-nowrap transition-all duration-200 shrink-0 ${
-                    isActive
-                      ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-950 shadow-md scale-105'
-                      : 'bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200/60 dark:border-slate-800'
-                  }`}
-                >
-                  {isTamil ? cat.labelTa : cat.labelEn}
-                </button>
-              );
-            })}
-          </div>
+    <div className="min-h-screen pb-20 space-y-5 animate-fadeIn">
+      {/* Category Filter Pills */}
+      <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+          {categories.map((cat, idx) => {
+            const isActive = activeCategory === cat.id;
+            const isEven = idx % 2 === 0;
+            const activeBg = isEven
+              ? 'bg-[#03529A] text-white shadow-md shadow-[#03529A]/25 scale-105'
+              : 'bg-[#4A9E2C] text-white shadow-md shadow-[#4A9E2C]/25 scale-105';
+            return (
+              <button
+                key={cat.id}
+                onClick={() => setActiveCategory(cat.id)}
+                className={`px-4 py-2 rounded-full text-xs font-extrabold whitespace-nowrap transition-all duration-200 shrink-0 ${
+                  isActive
+                    ? activeBg
+                    : 'bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200/60 dark:border-slate-800'
+                }`}
+              >
+                {isTamil ? cat.labelTa : cat.labelEn}
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -8176,9 +8178,9 @@ function AuthPage({ initialMode = 'login', onNavigate }) {
       if (signInAsDemoPadmanaban) {
         await signInAsDemoPadmanaban();
       } else {
-        await signInWithPassword('padmanaban@fispl.in', 'Padmanaban@2026');
+        await signInWithPassword('admin@gmail.com', 'admin@123');
       }
-      setSuccessMessage(isTamil ? 'பி. பத்மநாபன் (Demo Admin) கணக்கில் வெற்றிகரமாக உள்நுழைந்துள்ளீர்கள்!' : 'Logged in as B. Padmanaban (Demo Admin)!');
+      setSuccessMessage(isTamil ? 'அட்மின் கணக்கில் வெற்றிகரமாக உள்நுழைந்துள்ளீர்கள்!' : 'Logged in successfully as Admin!');
       const redirect = sessionStorage.getItem('auth_redirect_from') || '#/';
       sessionStorage.removeItem('auth_redirect_from');
       setTimeout(() => {
@@ -8193,8 +8195,8 @@ function AuthPage({ initialMode = 'login', onNavigate }) {
   };
 
   const handlePrefillDemo = () => {
-    setEmail('padmanaban@fispl.in');
-    setPassword('Padmanaban@2026');
+    setEmail('admin@gmail.com');
+    setPassword('admin@123');
     setMode('login');
   };
 
@@ -8253,13 +8255,27 @@ function AuthPage({ initialMode = 'login', onNavigate }) {
       <div className="w-full max-w-4xl bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-12">
         <div className="md:col-span-5 bg-gradient-to-br from-slate-950 via-slate-900 to-amber-950 p-8 text-white flex flex-col justify-between relative overflow-hidden">
           <div className="space-y-6 relative z-10">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-amber-500 text-slate-950 font-black text-xl flex items-center justify-center shadow-lg">
-                DV
-              </div>
+            <div className="flex items-center gap-3.5">
+              <img
+                src="/assets/logo.png"
+                alt="Muthaleetu Thisai"
+                className="w-14 h-14 sm:w-16 sm:h-16 object-contain drop-shadow-xl shrink-0"
+              />
               <div>
-                <h1 className="font-serif font-black text-lg text-white">Muthaleetu Thisai</h1>
-                <p className="text-[10px] font-bold text-amber-400 uppercase tracking-widest">Wealth Platform</p>
+                <h1 className="font-serif font-black text-xl sm:text-2xl">
+                  {isTamil ? (
+                    <>
+                      <span className="text-[#38bdf8]">முதலீட்டு </span>
+                      <span className="text-[#4ade80]">திசை</span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="text-[#38bdf8]">Muthaleetu </span>
+                      <span className="text-[#4ade80]">Thisai</span>
+                    </>
+                  )}
+                </h1>
+                <p className="text-xs font-bold text-amber-400 uppercase tracking-widest">Wealth Platform</p>
               </div>
             </div>
 
@@ -10383,10 +10399,136 @@ function ProfessionalWidescreenVideoCard({ video, onSelect, language = 'ta' }) {
   );
 }
 
+const defaultPublisherPublications = [
+  {
+    id: "happy-rich-advisor",
+    titleEnglish: "The HappyRich Advisor",
+    titleTamil: "தி ஹேப்பிரிச் அட்வைசர் (The HappyRich Advisor)",
+    tagEnglish: "Best Selling",
+    tagTamil: "அதிகம் விற்பனையாகும் நூல்",
+    subtitleEnglish: "Most recommended for Finance Professionals",
+    subtitleTamil: "நிதி ஆலோசகர்கள் மற்றும் முதலீட்டாளர்களுக்கான சிறந்த பரிந்துரை",
+    descriptionEnglish: "The \"HappyRich Advisor\" Book precisely covers every area of an advisor's business such as Strategy, Building the Offering, Growth, Marketing, Client Experience, Technology, Future of the Profession, and a step-by-step roadmap to build the firm of the 21st century. Amar Pandit has simplified the seemingly complex subject in a very lucid manner which enables one to finish reading the book in one go.",
+    descriptionTamil: "நிதி ஆலோசனை, முதலீட்டு திட்டமிடல், போர்ட்ஃபோலியோ உருவாக்கம், வாடிக்கையாளர் அனுபவம் மற்றும் தொழில்நுட்ப உத்திகளை எளிய நடையில் விளக்கும் வழிகாட்டி நூல். நிதி துறையில் 21-ஆம் நூற்றாண்டின் சிறந்த நிறுவனத்தை உருவாக்குவதற்கான வழிமுறைகள் இதில் விவரிக்கப்பட்டுள்ளன.",
+    coverImage: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&auto=format&fit=crop&q=80",
+    buyUrl: "https://www.amazon.in"
+  },
+  {
+    id: "only-financial-planning-book",
+    titleEnglish: "The Only Financial Planning Book that you will ever need",
+    titleTamil: "உங்களுக்கு தேவையான ஒரே நிதி திட்டமிடல் வழிகாட்டி நூல்",
+    tagEnglish: "Essential Investor Guide",
+    tagTamil: "அவசியமான முதலீட்டாளர் கையேடு",
+    subtitleEnglish: "Demystifying Financial Myths & Accelerating Multi-Generational Wealth",
+    subtitleTamil: "முதலீட்டு கட்டுக்கதைகளை உடைத்து நீண்ட கால செல்வத்தை உருவாக்கும் உத்திகள்",
+    descriptionEnglish: "Many people think financial planning and investment planning are synonymous, which is not true. This book not only busts such myths about financial planning but also aims to make financial planning and personal finance simple for everyone. It includes proven actionable worksheets for retirement corpus, child higher education, and compounding portfolios.",
+    descriptionTamil: "நிதி திட்டமிடலும் முதலீடும் ஒன்றல்ல என்பதை விளக்கி, ஓய்வூதிய நிதி, குழந்தைகளின் கல்வி செலவுகள் மற்றும் காப்பீடு ஆகியவற்றை எளிய கணக்கீடுகள் மூலம் திட்டமிடுவதற்கான முழுமையான வழிகாட்டுதலை வழங்கும் புத்தகம்.",
+    coverImage: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=400&auto=format&fit=crop&q=80",
+    buyUrl: "https://www.amazon.in"
+  }
+];
+
+function PublisherPublicationCard({ publication, isTamil, onNavigate }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  if (!publication) return null;
+
+  const title = isTamil ? (publication.titleTamil || publication.title) : (publication.titleEnglish || publication.title);
+  const tag = isTamil ? (publication.tagTamil || publication.tag) : (publication.tagEnglish || publication.tag);
+  const subtitle = isTamil ? (publication.subtitleTamil || publication.subtitle) : (publication.subtitleEnglish || publication.subtitle);
+  const description = isTamil ? (publication.descriptionTamil || publication.description) : (publication.descriptionEnglish || publication.description);
+  const buyUrl = publication.buyUrl || publication.amazonUrl || '#/articles';
+
+  return (
+    <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-all flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-8">
+      {/* 3D Standing Book Mockup Cover */}
+      <div className="relative shrink-0 flex items-center justify-center">
+        <div className="w-36 sm:w-44 h-52 sm:h-60 rounded-r-xl rounded-l-sm bg-gradient-to-r from-slate-100 to-white dark:from-slate-800 dark:to-slate-900 p-2 shadow-2xl border-l-4 border-l-slate-300 dark:border-l-slate-700 border border-slate-200 dark:border-slate-800 transform hover:scale-105 transition-transform duration-300 flex flex-col justify-between overflow-hidden">
+          {publication.coverImage ? (
+            <img
+              src={publication.coverImage}
+              alt={title}
+              className="w-full h-full object-cover drop-shadow-md rounded-r"
+              onError={(e) => {
+                e.target.style.display = 'none';
+              }}
+            />
+          ) : (
+            <div className="h-full flex flex-col justify-between p-3 text-center border border-dashed border-slate-300 dark:border-slate-700 rounded bg-emerald-500/5">
+              <span className="text-[10px] font-bold text-[#4A9E2C] uppercase tracking-wider">Publication</span>
+              <h4 className="text-xs font-black font-serif text-slate-800 dark:text-white line-clamp-3">{title}</h4>
+              <span className="text-[9px] font-mono text-slate-400">Padmanaban B. CFP®</span>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Book / Publication Meta & CTA Button */}
+      <div className="flex-1 flex flex-col justify-between space-y-3 text-center sm:text-left">
+        <div>
+          <h3 className="text-xl sm:text-2xl font-black font-serif text-slate-900 dark:text-white leading-tight">
+            {title}
+          </h3>
+
+          {tag && (
+            <p className="text-xs font-bold text-slate-500 dark:text-slate-400 mt-2">
+              {tag}
+            </p>
+          )}
+
+          {subtitle && (
+            <p className="text-xs font-semibold text-slate-700 dark:text-slate-300 mt-1">
+              {subtitle}
+            </p>
+          )}
+
+          {description && (
+            <div className="mt-3">
+              <p className={`text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal ${!isExpanded ? 'line-clamp-3' : ''}`}>
+                {description}
+              </p>
+              {description.length > 180 && (
+                <button
+                  type="button"
+                  onClick={() => setIsExpanded(!isExpanded)}
+                  className="text-xs font-bold text-[#4A9E2C] hover:text-[#3b8022] hover:underline mt-1.5 transition-colors"
+                >
+                  {isExpanded ? (isTamil ? 'குறைவாகக் காட்டு' : 'Show Less') : (isTamil ? 'மேலும் படிக்க' : 'Read More')}
+                </button>
+              )}
+            </div>
+          )}
+        </div>
+
+        <div className="pt-2">
+          {buyUrl.startsWith('http') ? (
+            <a
+              href={buyUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#22c55e] hover:bg-[#16a34a] text-white font-black text-xs sm:text-sm shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all"
+            >
+              <span className="font-serif italic font-bold">a</span>
+              <span>{isTamil ? 'Amazon-ல் வாங்க' : 'Buy on Amazon'}</span>
+            </a>
+          ) : (
+            <button
+              onClick={() => onNavigate && onNavigate(buyUrl)}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#22c55e] hover:bg-[#16a34a] text-white font-black text-xs sm:text-sm shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all"
+            >
+              <span>📖</span>
+              <span>{isTamil ? 'நூலைப் படிக்க' : 'Read Publication'}</span>
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
   const { language } = useLanguage();
   const isTamil = language === 'ta';
-  const [activeTab, setActiveTab] = useState('articles');
+  const [activeTab, setActiveTab] = useState('publications');
   const [selectedVideo, setSelectedVideo] = useState(null);
 
   // 1. Instant Cache-First Initialization
@@ -10578,14 +10720,14 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
       {/* Back Button */}
       <button
         onClick={() => onNavigate && onNavigate('#/professionals')}
-        className="btn-magnetic px-4 py-2 rounded-xl bg-white/90 dark:bg-slate-900 hover:bg-[#e6dacc] dark:hover:bg-slate-800 text-[#0a1833] dark:text-slate-200 text-xs font-bold transition-all inline-flex items-center gap-1.5 border border-[#cdb7a3] dark:border-slate-800 shadow-sm"
+        className="btn-magnetic px-4 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-bold transition-all inline-flex items-center gap-1.5 border border-slate-200 dark:border-slate-800 shadow-sm"
       >
         <span>←</span>
         <span>{isTamil ? 'அனைத்து நிபுணர்கள் பட்டியல்' : 'Back to Advisors Directory'}</span>
       </button>
 
       {/* 1. IDENTITY HERO BANNER */}
-      <div className="relative rounded-3xl bg-white/90 dark:bg-slate-950 text-[#0a1833] dark:text-white border border-[#cdb7a3] dark:border-slate-800 p-6 sm:p-8 shadow-xl dark:shadow-2xl overflow-hidden backdrop-blur-md">
+      <div className="relative rounded-3xl bg-white dark:bg-slate-950 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-xl dark:shadow-2xl overflow-hidden backdrop-blur-md">
         <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full pointer-events-none" />
 
         <div className="relative z-10 flex flex-col md:flex-row items-start gap-6 sm:gap-8">
@@ -10596,11 +10738,11 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
               alt={name}
               className="w-28 h-28 sm:w-36 sm:h-36 rounded-3xl object-cover border-2 border-amber-500 shadow-xl"
               onError={(e) => {
-                e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=f59e0b&color=0a1833&bold=true`;
+                e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=f59e0b&color=0f172a&bold=true`;
               }}
             />
             {prof.experience && (
-              <span className="absolute -bottom-2 -right-2 px-2.5 py-0.5 rounded-full bg-white dark:bg-slate-900 border border-[#cdb7a3] dark:border-amber-500/40 text-[9px] font-mono font-bold text-[#0a1833] dark:text-amber-400 shadow-md">
+              <span className="absolute -bottom-2 -right-2 px-2.5 py-0.5 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-amber-500/40 text-[9px] font-mono font-bold text-amber-700 dark:text-amber-400 shadow-md">
                 {prof.experience}
               </span>
             )}
@@ -10609,7 +10751,7 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
           {/* Details */}
           <div className="flex-1 space-y-3 text-center md:text-left">
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-2.5">
-              <h1 className="text-2xl sm:text-4xl font-extrabold font-serif text-[#0a1833] dark:text-white">{name}</h1>
+              <h1 className="text-2xl sm:text-4xl font-extrabold font-serif text-slate-900 dark:text-white">{name}</h1>
               <span className="px-3 py-0.5 rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/30 text-[10px] font-black uppercase tracking-wider">
                 {badge}
               </span>
@@ -10619,12 +10761,12 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
               <p className="text-xs sm:text-sm font-bold text-amber-700 dark:text-amber-400/90 font-mono">
                 {title} • {prof.organization}
               </p>
-              <p className="text-xs text-[#162a52] dark:text-slate-400">
+              <p className="text-xs text-slate-500 dark:text-slate-400">
                 📍 {location} {prof.arnNumber && `• AMFI Registration ARN: ${prof.arnNumber}`}
               </p>
             </div>
 
-            <p className="text-xs sm:text-sm text-[#162a52] dark:text-slate-300 leading-relaxed max-w-3xl font-medium">
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl font-medium">
               {fullBio}
             </p>
 
@@ -10633,7 +10775,7 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
               {prof.specializations?.map((spec, i) => (
                 <span
                   key={i}
-                  className="px-2.5 py-1 rounded-lg bg-[#e6dacc] dark:bg-slate-900/90 text-[#0a1833] dark:text-amber-300 border border-[#cdb7a3] dark:border-amber-500/20 text-[10px] font-bold shadow-sm"
+                  className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-900/90 text-slate-800 dark:text-amber-300 border border-slate-200 dark:border-amber-500/20 text-[10px] font-bold shadow-sm"
                 >
                   {isTamil ? (spec.ta || spec.en) : spec.en}
                 </span>
@@ -10659,7 +10801,7 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
                   href={prof.socialLinks.website}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-[#e6dacc] dark:hover:bg-amber-600 text-[#0a1833] dark:text-white border border-[#cdb7a3] dark:border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
+                  className="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-amber-600 text-slate-700 dark:text-white border border-slate-200 dark:border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
                 >
                   <span>🌐</span>
                   <span>{isTamil ? 'வலைத்தளம்' : 'Website'}</span>
@@ -10670,7 +10812,7 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
                   href={prof.socialLinks.youtube}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-red-600 hover:text-white text-[#0a1833] dark:text-white border border-[#cdb7a3] dark:border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
+                  className="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-red-600 hover:text-white text-slate-700 dark:text-white border border-slate-200 dark:border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
                 >
                   <span>▶</span>
                   <span>YouTube</span>
@@ -10681,7 +10823,7 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
                   href={prof.socialLinks.linkedin}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-blue-600 hover:text-white text-[#0a1833] dark:text-white border border-[#cdb7a3] dark:border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
+                  className="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-blue-600 hover:text-white text-slate-700 dark:text-white border border-slate-200 dark:border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
                 >
                   <span>in</span>
                   <span>LinkedIn</span>
@@ -10692,7 +10834,7 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
                   href={prof.socialLinks.twitter}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-[#e6dacc] text-[#0a1833] dark:text-slate-300 border border-[#cdb7a3] dark:border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
+                  className="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-100 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
                 >
                   <span>𝕏</span>
                   <span>Twitter / X</span>
@@ -10704,19 +10846,36 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
       </div>
 
       {/* 2. FEED TABS */}
-      <div className="flex items-center gap-2 border-b border-[#cdb7a3] dark:border-slate-800 pb-3">
+      <div className="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
+        <button
+          onClick={() => setActiveTab('publications')}
+          className={`px-5 py-2.5 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
+            activeTab === 'publications'
+              ? 'bg-[#03529A] text-white shadow-md'
+              : 'text-slate-700 dark:text-slate-400 bg-white/70 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700'
+          }`}
+        >
+          <span>📚</span>
+          <span>{isTamil ? 'வெளியீடுகள் & நூல்கள்' : 'Books & Publications'}</span>
+          <span className={`px-2 py-0.5 rounded-full text-[10px] font-black ${
+            activeTab === 'publications' ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-[#03529A] dark:text-sky-400'
+          }`}>
+            {defaultPublisherPublications.length}
+          </span>
+        </button>
+
         <button
           onClick={() => setActiveTab('articles')}
           className={`px-5 py-2.5 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
             activeTab === 'articles'
-              ? 'bg-amber-500 text-slate-950 shadow-md'
-              : 'text-[#0a1833] dark:text-slate-400 bg-white/70 dark:bg-slate-800/80 hover:bg-[#e6dacc] dark:hover:bg-slate-800 border border-[#cdb7a3] dark:border-slate-700'
+              ? 'bg-[#4A9E2C] text-white shadow-md'
+              : 'text-slate-700 dark:text-slate-400 bg-white/70 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700'
           }`}
         >
           <span>✍️</span>
           <span>{isTamil ? 'கட்டுரைகள் & ஆய்வுகள்' : 'Articles & Research'}</span>
           <span className={`px-2 py-0.5 rounded-full text-[10px] font-black ${
-            activeTab === 'articles' ? 'bg-slate-950/20 text-slate-950' : 'bg-[#cdb7a3] dark:bg-slate-800 text-[#0a1833] dark:text-amber-400'
+            activeTab === 'articles' ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-[#4A9E2C] dark:text-emerald-400'
           }`}>
             {publisherArticles.length}
           </span>
@@ -10727,14 +10886,14 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
             onClick={() => setActiveTab('videos')}
             className={`px-5 py-2.5 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
               activeTab === 'videos'
-                ? 'bg-amber-500 text-slate-950 shadow-md'
-                : 'text-[#0a1833] dark:text-slate-400 bg-white/70 dark:bg-slate-800/80 hover:bg-[#e6dacc] dark:hover:bg-slate-800 border border-[#cdb7a3] dark:border-slate-700'
+                ? 'bg-[#03529A] text-white shadow-md'
+                : 'text-slate-700 dark:text-slate-400 bg-white/70 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700'
             }`}
           >
             <span>🎬</span>
             <span>{isTamil ? 'முக்கிய வீடியோக்கள் (Masterclasses)' : 'Video Masterclasses'}</span>
             <span className={`px-2 py-0.5 rounded-full text-[10px] font-black ${
-              activeTab === 'videos' ? 'bg-slate-950/20 text-slate-950' : 'bg-[#cdb7a3] dark:bg-slate-800 text-[#0a1833] dark:text-amber-400'
+              activeTab === 'videos' ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-[#03529A] dark:text-sky-400'
             }`}>
               {publisherVideos.length}
             </span>
@@ -10743,6 +10902,19 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
       </div>
 
       {/* 3. FEED CONTENT */}
+      {activeTab === 'publications' && (
+        <div className="space-y-6 animate-fadeIn">
+          {defaultPublisherPublications.map((pub) => (
+            <PublisherPublicationCard
+              key={pub.id}
+              publication={pub}
+              isTamil={isTamil}
+              onNavigate={onNavigate}
+            />
+          ))}
+        </div>
+      )}
+
       {activeTab === 'videos' && publisherVideos.length > 0 && (
         <div className="space-y-6">
           <div className="space-y-4">
@@ -10975,9 +11147,9 @@ function AppContent({ currentHash, navigate, isSearchOpen, setIsSearchOpen, toas
   const { user, role, profile, setProfile } = useAuth();
 
   return (
-    <div className="min-h-screen flex flex-col text-slate-900 dark:text-slate-100 font-sans">
-      {/* 1. FIXED TOP HEADER & NAVBAR STACK (Stays pinned on scroll) */}
-      <div className="sticky top-0 z-40 w-full shadow-md bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans">
+      {/* 1. FIXED TOP HEADER & NAVBAR STACK (100% Solid White on scroll) */}
+      <div className="sticky-header-container sticky top-0 z-40 w-full shadow-md bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
         <Header onOpenSearch={() => setIsSearchOpen(true)} onNavigate={navigate} />
         <Navbar currentPath={currentHash} onNavigate={navigate} />
       </div>
