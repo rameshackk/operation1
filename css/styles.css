@@ -1,6 +1,6 @@
 /* Modern Design System, Unified Layout & UI Tokens for Muthaleetu Thisai */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+Tamil:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Tamil:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 /* Responsive Global Scaling - Full Screen Responsive Layout with Enhanced Readability */
 html {
@@ -55,9 +55,9 @@ html {
   --grid-gap: 1.5rem;
   --section-spacing-y: 2.25rem;
 
-  /* Typography Metrics */
-  --font-sans: 'Inter', 'Noto Sans Tamil', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-serif: 'Playfair Display', Georgia, serif;
+  /* Typography Metrics - Universal Book Antiqua Font System */
+  --font-sans: 'Book Antiqua', Palatino, 'Palatino Linotype', 'Palatino LT STD', Georgia, 'Noto Serif Tamil', serif;
+  --font-serif: 'Book Antiqua', Palatino, 'Palatino Linotype', 'Palatino LT STD', Georgia, 'Noto Serif Tamil', serif;
   --line-height-body: 1.5;
   --line-height-heading: 1.25;
   --line-height-tight: 1.15;
@@ -131,6 +131,10 @@ body,
 
 * {
   box-sizing: border-box;
+}
+
+html, body, button, input, select, textarea, h1, h2, h3, h4, h5, h6, p, span, a, label, strong, b, em, i {
+  font-family: var(--font-sans);
 }
 
 body {
