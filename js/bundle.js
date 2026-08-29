@@ -10417,18 +10417,18 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
       return liveArticles.map(a => ({
         id: a.id,
         slug: a.slug,
-        title: isTamil && a.title_ta ? a.title_ta : a.title,
-        titleTa: a.title_ta,
-        summary: isTamil && a.summary_ta ? a.summary_ta : (a.summary || ''),
-        summaryTa: a.summary_ta,
-        coverImage: a.cover_image || 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&auto=format&fit=crop&q=80',
-        category: a.category || 'MARKETS',
-        readTimeMinutes: a.read_time_minutes || 4,
-        publishedAt: a.published_at || a.created_at,
-        author: a.author_name || name,
-        authorName: a.author_name || name,
-        authorAvatar: a.author_avatar || prof.avatar,
-        authorArn: a.author_arn || prof.arnNumber
+        title: isTamil && (a.title_ta || a.titleTa) ? (a.title_ta || a.titleTa) : (a.title || a.titleEnglish),
+        titleTa: a.title_ta || a.titleTa,
+        summary: isTamil && (a.summary_ta || a.summaryTa) ? (a.summary_ta || a.summaryTa) : (a.summary || a.summaryEnglish || a.excerpt || a.excerptEnglish || ''),
+        summaryTa: a.summary_ta || a.summaryTa,
+        coverImage: a.coverImage || a.cover_image_url || a.cover_image || a.thumbnail || a.image_url || '/favicon.svg',
+        category: a.category || 'mutual-fund',
+        readTimeMinutes: a.read_time_minutes || a.readTimeMinutes || 4,
+        publishedAt: a.published_at || a.publishedAt || a.created_at,
+        author: a.author_name || a.authorName || name,
+        authorName: a.author_name || a.authorName || name,
+        authorAvatar: a.author_avatar || a.authorAvatar || prof.avatar,
+        authorArn: a.author_arn || a.authorArn || prof.arnNumber
       }));
     }
     return [];
@@ -10681,39 +10681,42 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
                 <div
                   key={article.id || article.slug}
                   onClick={() => onNavigate && onNavigate(`#/articles/${article.slug}`)}
-                  className="group bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl hover:border-amber-500/50 transition-all cursor-pointer flex flex-col"
+                  className="group bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:shadow-xl hover:border-amber-500/40 transition-all duration-300 cursor-pointer flex flex-col justify-between"
                 >
-                  <div className="relative h-48 overflow-hidden">
-                    <img
-                      src={article.coverImage}
-                      alt={article.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute top-3 left-3">
-                      <span className="px-3 py-1 text-[10px] font-black uppercase rounded-full bg-slate-950/80  text-amber-400 border border-amber-500/30">
-                        {article.category}
+                  <div className="space-y-3">
+                    <div className="relative aspect-[16/9] overflow-hidden bg-slate-950">
+                      <img
+                        src={article.coverImage || '/favicon.svg'}
+                        alt={article.title}
+                        loading="lazy"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        onError={(e) => { e.target.src = '/favicon.svg'; }}
+                      />
+                      <span className="absolute top-3 left-3 px-2.5 py-0.5 text-[10px] font-extrabold uppercase rounded-md bg-slate-950/85 text-amber-400">
+                        {(article.category || 'FINANCE').replace('-', ' ')}
+                      </span>
+                      <span className="absolute top-3 right-3 px-2 py-0.5 text-[9px] font-black uppercase rounded-md bg-amber-600 text-white">
+                        ORIGINAL
                       </span>
                     </div>
-                  </div>
 
-                  <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
-                    <div className="space-y-2">
-                      <h3 className="text-base font-bold font-serif text-slate-900 dark:text-white group-hover:text-amber-500 transition-colors line-clamp-2 leading-snug">
+                    <div className="p-5 space-y-2">
+                      <h3 className="text-base font-bold font-serif text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors line-clamp-2 leading-snug">
                         {article.title}
                       </h3>
                       {article.summary && (
-                        <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed">
+                        <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed font-medium">
                           {article.summary}
                         </p>
                       )}
                     </div>
+                  </div>
 
-                    <div className="flex items-center justify-between text-[11px] font-bold text-slate-400 pt-3 border-t border-slate-100 dark:border-slate-800">
-                      <span>⏱ {article.readTimeMinutes} min read</span>
-                      <span className="text-amber-500 group-hover:translate-x-1 transition-transform">
-                        {isTamil ? 'படிக்க →' : 'Read Article →'}
-                      </span>
-                    </div>
+                  <div className="px-5 pb-5 pt-2 flex items-center justify-between border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-500 dark:text-slate-400 font-semibold">
+                    <span>⏱ {article.readTimeMinutes} min read</span>
+                    <span className="text-amber-600 dark:text-amber-400 group-hover:translate-x-1 transition-transform inline-flex items-center gap-1 font-bold">
+                      {isTamil ? 'படிக்க' : 'Read Article'} →
+                    </span>
                   </div>
                 </div>
               ))}
