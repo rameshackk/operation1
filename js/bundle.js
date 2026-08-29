@@ -10267,197 +10267,199 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
   }, [allPublishers, selectedCategory, searchQuery]);
 
   return (
-    <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fadeIn">
-      {/* Controls & Search Bar */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-        {/* Category Pills */}
-        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
-          {categories.map((cat) => {
-            const isActive = selectedCategory === cat.id;
-            return (
-              <button
-                key={cat.id}
-                onClick={() => setSelectedCategory(cat.id)}
-                className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
-                  isActive
-                    ? 'bg-amber-500 text-slate-950 font-black shadow-md'
-                    : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800'
-                }`}
-              >
-                {isTamil ? cat.labelTa : cat.labelEn}
-              </button>
-            );
-          })}
-        </div>
+    <div className="w-full min-h-[calc(100vh-140px)] bg-[#008060] py-6 sm:py-8 transition-colors duration-300">
+      <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-6 animate-fadeIn">
+        {/* Controls & Search Bar */}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+          {/* Category Pills */}
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+            {categories.map((cat) => {
+              const isActive = selectedCategory === cat.id;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setSelectedCategory(cat.id)}
+                  className={`px-4 py-2 rounded-xl text-xs font-black whitespace-nowrap transition-all ${
+                    isActive
+                      ? 'bg-white text-[#008060] shadow-md border-2 border-white'
+                      : 'bg-white/15 hover:bg-white/25 text-white border border-white/25 backdrop-blur-sm'
+                  }`}
+                >
+                  {isTamil ? cat.labelTa : cat.labelEn}
+                </button>
+              );
+            })}
+          </div>
 
-        {/* Compact Search Bar */}
-        <div className="w-full sm:w-72 lg:w-80 shrink-0">
-          <div className="relative group">
-            <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-amber-500 dark:group-focus-within:text-amber-400 transition-colors pointer-events-none">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-            </span>
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={isTamil ? 'நிபுணர் பெயர், ARN தேடுக...' : 'Search specialists...'}
-              className="w-full pl-9 pr-8 py-2 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 focus:border-amber-500 text-xs sm:text-sm font-bold text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none shadow-sm transition-all"
-            />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 dark:hover:text-white text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 w-5 h-5 rounded-full flex items-center justify-center transition-colors"
-              >
-                ✕
-              </button>
-            )}
+          {/* Compact Search Bar */}
+          <div className="w-full sm:w-72 lg:w-80 shrink-0">
+            <div className="relative group">
+              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-emerald-800 group-focus-within:text-[#008060] transition-colors pointer-events-none">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </span>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder={isTamil ? 'நிபுணர் பெயர், ARN தேடுக...' : 'Search specialists...'}
+                className="w-full pl-9 pr-8 py-2 rounded-2xl bg-white/95 text-slate-900 border-2 border-white/40 hover:border-white focus:border-white placeholder-slate-500 text-xs sm:text-sm font-bold focus:outline-none shadow-md transition-all"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-900 text-xs font-bold bg-slate-100 hover:bg-slate-200 w-5 h-5 rounded-full flex items-center justify-center transition-colors"
+                >
+                  ✕
+                </button>
+              )}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Grid of Professionals Cards or Skeleton Loaders */}
-      {isLoading && livePublishers.length === 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[1, 2, 3, 4, 5, 6].map((n) => (
-            <div
-              key={n}
-              className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-5 animate-pulse"
-            >
-              <div className="flex items-start justify-between">
-                <div className="w-16 h-16 rounded-2xl bg-slate-200 dark:bg-slate-800" />
-                <div className="w-28 h-6 rounded-full bg-slate-200 dark:bg-slate-800" />
-              </div>
-              <div className="space-y-2">
-                <div className="w-3/4 h-5 rounded-lg bg-slate-200 dark:bg-slate-800" />
-                <div className="w-1/2 h-4 rounded-lg bg-slate-200 dark:bg-slate-800" />
-              </div>
-              <div className="space-y-2 pt-2">
-                <div className="w-full h-3 rounded bg-slate-200 dark:bg-slate-800" />
-                <div className="w-5/6 h-3 rounded bg-slate-200 dark:bg-slate-800" />
-              </div>
-              <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex justify-between">
-                <div className="w-20 h-4 rounded bg-slate-200 dark:bg-slate-800" />
-                <div className="w-20 h-4 rounded bg-slate-200 dark:bg-slate-800" />
-              </div>
-            </div>
-          ))}
-        </div>
-      ) : filteredProfessionals.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProfessionals.map((prof) => {
-            const name = isTamil ? prof.nameTamil : prof.nameEnglish;
-            const title = isTamil ? prof.titleTamil : prof.titleEnglish;
-            const bio = isTamil ? prof.bioTamil : prof.bioEnglish;
-            const badge = isTamil ? prof.badgeTamil : prof.badgeEnglish;
-
-            return (
+        {/* Grid of Professionals Cards or Skeleton Loaders */}
+        {isLoading && livePublishers.length === 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[1, 2, 3, 4, 5, 6].map((n) => (
               <div
-                key={prof.id}
-                onClick={() => onNavigate && onNavigate(`#/professionals/${prof.id}`)}
-                className="group bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm hover:border-amber-500/50 hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer flex flex-col justify-between space-y-5 relative overflow-hidden"
+                key={n}
+                className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-white/30 shadow-xl space-y-5 animate-pulse"
               >
-                <div className="space-y-4">
-                  {/* Avatar & Badges Header */}
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="relative">
-                      <img
-                        src={prof.avatar || '/assets/padmanaban.jpg'}
-                        alt={name}
-                        className="w-16 h-16 rounded-2xl object-cover border-2 border-amber-500/40 group-hover:border-amber-500 shadow-md transition-colors"
-                        onError={(e) => {
-                          e.target.src = '/assets/padmanaban.jpg';
-                        }}
-                      />
-                      <span className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-white dark:border-slate-900" title="Active Publisher" />
-                    </div>
-
-                    <div className="flex flex-col items-end gap-1">
-                      <span className="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/20 text-right">
-                        {badge}
-                      </span>
-                      {prof.arnNumber && (
-                        <span className="px-2 py-0.5 rounded-md text-[9px] font-mono font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
-                          {prof.arnNumber}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Identity */}
-                  <div>
-                    <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white font-serif group-hover:text-amber-500 transition-colors leading-snug">
-                      {name}
-                    </h3>
-                    <p className="text-xs font-bold text-amber-600 dark:text-amber-400/90 mt-0.5">
-                      {title}
-                    </p>
-                    <p className="text-[11px] text-slate-400 font-medium">
-                      {prof.organization}
-                    </p>
-                  </div>
-
-                  {/* Short Bio */}
-                  <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed">
-                    {bio}
-                  </p>
-
-                  {/* Specialties Pills */}
-                  {prof.specialties && Array.isArray(prof.specialties) && prof.specialties.length > 0 && (
-                    <div className="flex flex-wrap gap-1 pt-1">
-                      {prof.specialties.slice(0, 3).map((spec, sIdx) => (
-                        <span key={sIdx} className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 text-[10px] font-semibold">
-                          {spec}
-                        </span>
-                      ))}
-                    </div>
-                  )}
+                <div className="flex items-start justify-between">
+                  <div className="w-16 h-16 rounded-2xl bg-slate-200 dark:bg-slate-800" />
+                  <div className="w-28 h-6 rounded-full bg-slate-200 dark:bg-slate-800" />
                 </div>
+                <div className="space-y-2">
+                  <div className="w-3/4 h-5 rounded-lg bg-slate-200 dark:bg-slate-800" />
+                  <div className="w-1/2 h-4 rounded-lg bg-slate-200 dark:bg-slate-800" />
+                </div>
+                <div className="space-y-2 pt-2">
+                  <div className="w-full h-3 rounded bg-slate-200 dark:bg-slate-800" />
+                  <div className="w-5/6 h-3 rounded bg-slate-200 dark:bg-slate-800" />
+                </div>
+                <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex justify-between">
+                  <div className="w-20 h-4 rounded bg-slate-200 dark:bg-slate-800" />
+                  <div className="w-20 h-4 rounded bg-slate-200 dark:bg-slate-800" />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : filteredProfessionals.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredProfessionals.map((prof) => {
+              const name = isTamil ? prof.nameTamil : prof.nameEnglish;
+              const title = isTamil ? prof.titleTamil : prof.titleEnglish;
+              const bio = isTamil ? prof.bioTamil : prof.bioEnglish;
+              const badge = isTamil ? prof.badgeTamil : prof.badgeEnglish;
 
-                {/* Metrics & Action Link */}
-                <div className="space-y-3 pt-4 border-t border-slate-100 dark:border-slate-800">
-                  <div className="flex items-center justify-between text-[11px] font-bold text-slate-500 dark:text-slate-400">
-                    <span className="flex items-center gap-1">
-                      <span className="text-amber-500">🎬</span> {prof.stats?.masterclasses || 0}+ {isTamil ? 'வீடியோக்கள்' : 'Masterclasses'}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <span className="text-blue-500">✍️</span> {prof.articleCount || prof.stats?.articles || 0}+ {isTamil ? 'கட்டுரைகள்' : 'Articles'}
-                    </span>
-                    {prof.whatsapp && (
-                      <span
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          const clean = prof.whatsapp.replace(/[^0-9]/g, '');
-                          window.open(`https://wa.me/${clean}?text=${encodeURIComponent('Hello! I came across your profile on Muthaleetu Thisai and would like to connect.')}`, '_blank');
-                        }}
-                        className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 hover:underline cursor-pointer"
-                      >
-                        <span>💬</span> WhatsApp
-                      </span>
+              return (
+                <div
+                  key={prof.id}
+                  onClick={() => onNavigate && onNavigate(`#/professionals/${prof.id}`)}
+                  className="group bg-white dark:bg-slate-900 rounded-3xl p-6 border border-white/40 dark:border-slate-800 shadow-xl hover:border-amber-500/50 hover:shadow-2xl hover:-translate-y-1 transition-all cursor-pointer flex flex-col justify-between space-y-5 relative overflow-hidden"
+                >
+                  <div className="space-y-4">
+                    {/* Avatar & Badges Header */}
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="relative">
+                        <img
+                          src={prof.avatar || '/assets/padmanaban.jpg'}
+                          alt={name}
+                          className="w-16 h-16 rounded-2xl object-cover border-2 border-amber-500/40 group-hover:border-amber-500 shadow-md transition-colors"
+                          onError={(e) => {
+                            e.target.src = '/assets/padmanaban.jpg';
+                          }}
+                        />
+                        <span className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-white dark:border-slate-900" title="Active Publisher" />
+                      </div>
+
+                      <div className="flex flex-col items-end gap-1">
+                        <span className="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 text-right">
+                          {badge}
+                        </span>
+                        {prof.arnNumber && (
+                          <span className="px-2 py-0.5 rounded-md text-[9px] font-mono font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+                            {prof.arnNumber}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Identity */}
+                    <div>
+                      <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white font-serif group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors leading-snug">
+                        {name}
+                      </h3>
+                      <p className="text-xs font-bold text-amber-700 dark:text-amber-400/90 mt-0.5">
+                        {title}
+                      </p>
+                      <p className="text-[11px] text-slate-400 font-medium">
+                        {prof.organization}
+                      </p>
+                    </div>
+
+                    {/* Short Bio */}
+                    <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed">
+                      {bio}
+                    </p>
+
+                    {/* Specialties Pills */}
+                    {prof.specialties && Array.isArray(prof.specialties) && prof.specialties.length > 0 && (
+                      <div className="flex flex-wrap gap-1 pt-1">
+                        {prof.specialties.slice(0, 3).map((spec, sIdx) => (
+                          <span key={sIdx} className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 text-[10px] font-semibold">
+                            {spec}
+                          </span>
+                        ))}
+                      </div>
                     )}
                   </div>
 
-                  <div className="flex items-center justify-between text-xs font-black text-amber-500 group-hover:text-amber-400 transition-colors pt-1">
-                    <span>{isTamil ? 'சுயவிவரம் & கட்டுரைகளைக் காண்க' : 'View Insights & Feed'}</span>
-                    <span className="group-hover:translate-x-1 transition-transform">→</span>
+                  {/* Metrics & Action Link */}
+                  <div className="space-y-3 pt-4 border-t border-slate-100 dark:border-slate-800">
+                    <div className="flex items-center justify-between text-[11px] font-bold text-slate-500 dark:text-slate-400">
+                      <span className="flex items-center gap-1">
+                        <span className="text-amber-500">🎬</span> {prof.stats?.masterclasses || 0}+ {isTamil ? 'வீடியோக்கள்' : 'Masterclasses'}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <span className="text-blue-500">✍️</span> {prof.articleCount || prof.stats?.articles || 0}+ {isTamil ? 'கட்டுரைகள்' : 'Articles'}
+                      </span>
+                      {prof.whatsapp && (
+                        <span
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const clean = prof.whatsapp.replace(/[^0-9]/g, '');
+                            window.open(`https://wa.me/${clean}?text=${encodeURIComponent('Hello! I came across your profile on Muthaleetu Thisai and would like to connect.')}`, '_blank');
+                          }}
+                          className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 hover:underline cursor-pointer"
+                        >
+                          <span>💬</span> WhatsApp
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="flex items-center justify-between text-xs font-black text-amber-600 dark:text-amber-400 group-hover:text-amber-500 transition-colors pt-1">
+                      <span>{isTamil ? 'சுயவிவரம் & கட்டுரைகளைக் காண்க' : 'View Insights & Feed'}</span>
+                      <span className="group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
-      ) : (
-        <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-3">
-          <div className="text-3xl">🔍</div>
-          <h3 className="text-base font-black text-slate-900 dark:text-white font-serif">
-            {isTamil ? 'நிபுணர்கள் யாரும் பொருந்தவில்லை' : 'No specialists matched your search'}
-          </h3>
-          <p className="text-xs text-slate-500">
-            {isTamil ? 'வேறு வார்த்தைகளை பயன்படுத்தி தேடவும்.' : 'Try adjusting your search terms or filter.'}
-          </p>
-        </div>
-      )}
+              );
+            })}
+          </div>
+        ) : (
+          <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-3xl border border-white/40 shadow-xl space-y-3">
+            <div className="text-3xl">🔍</div>
+            <h3 className="text-base font-black text-slate-900 dark:text-white font-serif">
+              {isTamil ? 'நிபுணர்கள் யாரும் பொருந்தவில்லை' : 'No specialists matched your search'}
+            </h3>
+            <p className="text-xs text-slate-500">
+              {isTamil ? 'வேறு வார்த்தைகளை பயன்படுத்தி தேடவும்.' : 'Try adjusting your search terms or filter.'}
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
