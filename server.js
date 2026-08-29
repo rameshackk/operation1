@@ -64,6 +64,12 @@ const server = http.createServer(async (req, res) => {
     }
 
     try {
+      // 1.0 Auth API (Instant verified signups)
+      if (reqPath === '/api/auth' || reqPath === '/api/auth/signup' || reqPath === '/api/auth/index.js') {
+        const mod = await import(`./api/auth/index.js?t=${Date.now()}`);
+        return mod.default(req, res);
+      }
+
       // 1.1 Articles API
       if (reqPath === '/api/articles' || reqPath === '/api/articles/index.js') {
         const mod = await import(`./api/articles/index.js?t=${Date.now()}`);

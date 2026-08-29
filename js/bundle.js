@@ -1107,15 +1107,41 @@ function AuthProvider({ children }) {
   };
 
   const signUp = async (email, password, displayName) => {
-    const client = getSupabaseClient();
-    if (!client) throw new Error('Supabase client not initialized');
-    const { data, error } = await client.auth.signUp({
-      email,
-      password,
-      options: { data: { full_name: displayName } }
-    });
-    if (error) throw error;
-    return data;
+    try {
+      // 1. Instant pre-confirmed account creation via Supabase Admin API
+      const res = await fetch('/api/auth?action=signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password, displayName })
+      });
+      const json = await res.json();
+      if (!res.ok) {
+        throw new Error(json.error || 'Failed to create account');
+      }
+
+      // 2. Automatically log the user in immediately without waiting for email
+      const signInRes = await signInWithPassword(email, password);
+      return signInRes;
+    } catch (apiErr) {
+      if (apiErr.message && (apiErr.message.toLowerCase().includes('already') || apiErr.message.includes('Password'))) {
+        throw apiErr;
+      }
+      // Fallback to client signup
+      const client = getSupabaseClient();
+      if (!client) throw apiErr;
+      const { data, error } = await client.auth.signUp({
+        email,
+        password,
+        options: { data: { full_name: displayName } }
+      });
+      if (error) throw error;
+      if (data?.session) {
+        setSession(data.session);
+        setUser(data.session.user);
+        await fetchUserProfile(data.session.user?.id, data.session.user?.email);
+      }
+      return data;
+    }
   };
 
   const sendPasswordReset = async (email) => {
@@ -8967,7 +8993,13 @@ function AuthPage({ initialMode = 'login', onNavigate }) {
       } else if (mode === 'signup') {
         if (!password || password.length < 6) throw new Error(isTamil ? 'கடவுச்சொல் குறைந்தது 6 எழுத்துகள் இருக்க வேண்டும்.' : 'Password must be at least 6 characters.');
         await signUp(email, password, fullName);
-        setSuccessMessage(isTamil ? 'கணக்கு உருவாக்கப்பட்டது! உங்கள் மின்னஞ்சலை சரிபார்க்கவும்.' : 'Account created successfully! Check your email.');
+        setSuccessMessage(isTamil ? 'கணக்கு வெற்றிகரமாக உருவாக்கப்பட்டு உள்நுழைந்துள்ளீர்கள்!' : 'Account created and logged in successfully!');
+        const redirect = sessionStorage.getItem('auth_redirect_from') || '#/';
+        sessionStorage.removeItem('auth_redirect_from');
+        setTimeout(() => {
+          if (onNavigate) onNavigate(redirect);
+          else window.location.hash = redirect;
+        }, 500);
       } else if (mode === 'forgot') {
         await sendPasswordReset(email);
         setSuccessMessage(isTamil ? 'கடவுச்சொல் மீட்டமைப்பு இணைப்பு அனுப்பப்பட்டது.' : 'Password reset link sent to your email.');
