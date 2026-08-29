@@ -137,6 +137,22 @@ html, body, button, input, select, textarea, h1, h2, h3, h4, h5, h6, p, span, a,
   font-family: var(--font-sans);
 }
 
+/* Enforce bold text across all buttons universally */
+button,
+[role="button"],
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+.btn,
+[class*="btn-"],
+nav button,
+header button,
+dialog button,
+button *,
+[role="button"] * {
+  font-weight: 700 !important;
+}
+
 body {
   font-family: var(--font-sans);
   line-height: var(--line-height-body);
