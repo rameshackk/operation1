@@ -1087,41 +1087,22 @@ function AuthProvider({ children }) {
 
   const signInWithPassword = async (email, password) => {
     const trimmedEmail = (email || '').trim().toLowerCase();
-    // Admin Credentials Check (admin@gmail.com / admin@123)
-    if (
-      (trimmedEmail === 'admin@gmail.com' || trimmedEmail === 'admin' || trimmedEmail === 'padmanaban@fispl.in' || trimmedEmail === 'budgetpadmanaban@gmail.com') &&
-      (password === 'admin@123' || password === 'admin' || password === 'Padmanaban@2026' || password === 'demo' || !password)
-    ) {
-      return await signInAsDemoPadmanaban();
-    }
-
     const client = getSupabaseClient();
     if (!client) {
-      if (trimmedEmail.includes('padmanaban')) {
-        return await signInAsDemoPadmanaban();
-      }
       throw new Error('Supabase client not initialized');
     }
-    try {
-      const { data, error } = await client.auth.signInWithPassword({ email, password });
-      if (error) {
-        if (trimmedEmail.includes('padmanaban')) {
-          return await signInAsDemoPadmanaban();
-        }
-        throw error;
-      }
-      if (data?.session) {
-        setSession(data.session);
-        setUser(data.session.user);
-        await fetchUserProfile(data.session.user?.id, data.session.user?.email);
-      }
-      return data;
-    } catch (err) {
-      if (trimmedEmail.includes('padmanaban')) {
-        return await signInAsDemoPadmanaban();
-      }
-      throw err;
+
+    const { data, error } = await client.auth.signInWithPassword({ email: trimmedEmail, password });
+    if (error) {
+      throw error;
     }
+
+    if (data?.session) {
+      setSession(data.session);
+      setUser(data.session.user);
+      await fetchUserProfile(data.session.user?.id, data.session.user?.email);
+    }
+    return data;
   };
 
   const signUp = async (email, password, displayName) => {
