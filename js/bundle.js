@@ -2849,6 +2849,8 @@ function SipCalculator() {
   const [timeYears, setTimeYears] = useState(15);
   const [stepUpPercent, setStepUpPercent] = useState(10);
   const [inflationRate, setInflationRate] = useState(6);
+  const [activeTab, setActiveTab] = useState('growth'); // 'growth' | 'donut' | 'milestones' | 'table'
+  const [hoveredYear, setHoveredYear] = useState(null);
 
   const isTamil = language === 'ta';
 
@@ -2903,6 +2905,62 @@ function SipCalculator() {
   const investedPercent = futureValue > 0 ? Math.round((totalInvested / futureValue) * 100) : 50;
   const gainPercent = 100 - investedPercent;
 
+  // Year by Year calculation trajectory
+  const yearlyData = useMemo(() => {
+    const data = [];
+    const stepYears = Math.min(timeYears, 30);
+    let mInvest = monthlyInvest;
+
+    for (let y = 1; y <= stepYears; y++) {
+      let cumInvested = 0;
+      let cumFutureVal = 0;
+
+      if (calcMode === 'sip') {
+        const ny = y * 12;
+        cumInvested = monthlyInvest * ny;
+        cumFutureVal = Math.round(monthlyInvest * ((Math.pow(1 + i, ny) - 1) / i) * (1 + i));
+      } else if (calcMode === 'stepup') {
+        let acc = 0;
+        let paid = 0;
+        let curM = monthlyInvest;
+        for (let yr = 1; yr <= y; yr++) {
+          for (let m = 1; m <= 12; m++) {
+            paid += curM;
+            acc = (acc + curM) * (1 + i);
+          }
+          curM = curM * (1 + stepUpPercent / 100);
+        }
+        cumInvested = Math.round(paid);
+        cumFutureVal = Math.round(acc);
+      } else {
+        cumInvested = monthlyInvest;
+        cumFutureVal = Math.round(monthlyInvest * Math.pow(1 + r, y));
+      }
+
+      const gain = Math.max(0, cumFutureVal - cumInvested);
+      data.push({
+        year: y,
+        invested: cumInvested,
+        futureValue: cumFutureVal,
+        gain,
+        ratio: cumInvested > 0 ? (cumFutureVal / cumInvested).toFixed(1) : '1.0'
+      });
+    }
+    return data;
+  }, [monthlyInvest, returnRate, timeYears, stepUpPercent, calcMode, i, r]);
+
+  const maxVal = Math.max(...yearlyData.map(d => d.futureValue), 1);
+  const activeInspectItem = hoveredYear !== null ? yearlyData.find(d => d.year === hoveredYear) : yearlyData[yearlyData.length - 1];
+
+  const milestones = [
+    { target: 1000000, label: '₹10 Lakhs', tamilLabel: '₹10 லட்சம்' },
+    { target: 2500000, label: '₹25 Lakhs', tamilLabel: '₹25 லட்சம்' },
+    { target: 5000000, label: '₹50 Lakhs', tamilLabel: '₹50 லட்சம்' },
+    { target: 10000000, label: '₹1 Crore', tamilLabel: '₹1 கோடி' },
+    { target: 20000000, label: '₹2 Crores', tamilLabel: '₹2 கோடி' },
+    { target: 50000000, label: '₹5 Crores', tamilLabel: '₹5 கோடி' }
+  ];
+
   const calculatorCards = [
     {
       id: 'sip',
@@ -2940,6 +2998,7 @@ function SipCalculator() {
 
   return (
     <section id="financial-calculators" className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 select-none animate-fadeIn">
+      {/* Top 4 Mode Selector Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {calculatorCards.map((card) => {
           const isActive = calcMode === card.id;
@@ -2989,7 +3048,9 @@ function SipCalculator() {
         })}
       </div>
 
+      {/* Main SIP Wealth Studio Outer Container */}
       <div className="bg-[#008060] text-white rounded-3xl p-6 sm:p-10 border-2 border-white/25 shadow-2xl space-y-8 transition-colors duration-300">
+        {/* Studio Header & Preset Quick Goals */}
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-white/20 pb-6">
           <div className="space-y-1">
             <h3 className="text-xl sm:text-2xl font-black font-serif text-white flex items-center gap-2">
@@ -3003,8 +3064,8 @@ function SipCalculator() {
             </h3>
             <p className="text-xs text-emerald-100/90 font-medium">
               {isTamil
-                ? 'உங்கள் நீண்ட கால முதலீட்டு இலக்கை அடைய துல்லியமான கூட்டு வட்டி கணிப்பு'
-                : 'Interactive asset compounding and inflation-adjusted growth projections'}
+                ? 'உங்கள் நீண்ட கால முதலீட்டு இலக்கை அடைய துல்லியமான கூட்டு வட்டி கணிப்பு & வரைபடங்கள்'
+                : 'Interactive asset compounding, inflation-adjusted growth projections & visual charts'}
             </p>
           </div>
 
@@ -3033,8 +3094,9 @@ function SipCalculator() {
           </div>
         </div>
 
+        {/* 2-Column Controls & Results */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          {/* Left Column (Input Sliders): White Card Background */}
+          {/* Left Column (Input Sliders): Pure White Card */}
           <div className="lg:col-span-6 space-y-6 bg-white text-slate-900 p-6 sm:p-8 rounded-3xl border border-white/40 shadow-xl flex flex-col justify-between">
             <div className="space-y-5">
               <div className="space-y-2">
@@ -3160,7 +3222,7 @@ function SipCalculator() {
             </div>
           </div>
 
-          {/* Right Column (Results / Projections): White Card Background */}
+          {/* Right Column (Results Summary): Pure White Card */}
           <div className="lg:col-span-6 space-y-6 bg-white text-slate-900 p-6 sm:p-8 rounded-3xl border border-white/40 shadow-xl flex flex-col justify-between">
             <div className="space-y-5">
               <div className="flex items-center justify-between border-b border-slate-200 pb-4">
@@ -3211,11 +3273,367 @@ function SipCalculator() {
             <div className="pt-2 flex items-center justify-between text-[11px] text-slate-500 font-bold border-t border-slate-200">
               <span className="text-[#008060] flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-[#008060] animate-pulse" />
-                <span>CFP Verified Math</span>
+                <span>CFP Verified Compounding Math</span>
               </span>
               <span className="text-slate-600 font-semibold">Padmanaban B. Financial</span>
             </div>
           </div>
+        </div>
+
+        {/* Interactive Charts & Graphs Section */}
+        <div className="bg-white text-slate-900 p-6 sm:p-8 rounded-3xl border border-white/40 shadow-xl space-y-6">
+          {/* Chart Header & Navigation Tabs */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800 pb-5">
+            <div>
+              <h4 className="text-base sm:text-lg font-black font-serif text-slate-900 dark:text-white flex items-center gap-2">
+                <span>📈</span>
+                <span>{isTamil ? 'முதலீட்டு வளர்ச்சி வரைபடங்கள் & கணிப்புகள்' : 'Visual Growth Charts & Wealth Analytics'}</span>
+              </h4>
+              <p className="text-xs text-slate-500 dark:text-slate-400">
+                {isTamil ? 'ஆண்டுதோறும் கூட்டு வட்டியின் அபார வளர்ச்சி மற்றும் மைல்கற்கள்' : 'Yearly compounding breakdown, asset distribution & wealth milestones'}
+              </p>
+            </div>
+
+            {/* Tab Buttons */}
+            <div className="flex flex-wrap items-center gap-1.5 p-1 bg-slate-100 dark:bg-slate-800 rounded-2xl text-xs font-bold">
+              <button
+                onClick={() => setActiveTab('growth')}
+                className={`px-3.5 py-1.5 rounded-xl transition-all ${
+                  activeTab === 'growth'
+                    ? 'bg-[#008060] text-white shadow-sm font-black'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                }`}
+              >
+                📊 {isTamil ? 'வளர்ச்சி வரைபடம்' : 'Growth Chart'}
+              </button>
+              <button
+                onClick={() => setActiveTab('donut')}
+                className={`px-3.5 py-1.5 rounded-xl transition-all ${
+                  activeTab === 'donut'
+                    ? 'bg-[#008060] text-white shadow-sm font-black'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                }`}
+              >
+                🥧 {isTamil ? 'பங்குப் பிரிவு' : 'Asset Share'}
+              </button>
+              <button
+                onClick={() => setActiveTab('milestones')}
+                className={`px-3.5 py-1.5 rounded-xl transition-all ${
+                  activeTab === 'milestones'
+                    ? 'bg-[#008060] text-white shadow-sm font-black'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                }`}
+              >
+                🏆 {isTamil ? 'மைல்கற்கள்' : 'Milestones'}
+              </button>
+              <button
+                onClick={() => setActiveTab('table')}
+                className={`px-3.5 py-1.5 rounded-xl transition-all ${
+                  activeTab === 'table'
+                    ? 'bg-[#008060] text-white shadow-sm font-black'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                }`}
+              >
+                📋 {isTamil ? 'அட்டவணை' : 'Schedule'}
+              </button>
+            </div>
+          </div>
+
+          {/* TAB 1: Year-by-Year Growth Chart */}
+          {activeTab === 'growth' && (
+            <div className="space-y-4 animate-fadeIn">
+              {/* Dynamic Inspector Header */}
+              <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800 text-xs">
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">
+                    {isTamil ? 'ஆய்வு நிலை' : 'Inspecting'}:
+                  </span>
+                  <span className="font-black font-mono text-[#008060] bg-[#008060]/10 px-2 py-0.5 rounded-md">
+                    {isTamil ? `ஆண்டு ${activeInspectItem?.year}` : `Year ${activeInspectItem?.year}`}
+                  </span>
+                </div>
+                <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+                  <div>
+                    <span className="text-[10px] text-slate-400">{isTamil ? 'முதலீடு' : 'Invested'}: </span>
+                    <span className="font-mono font-bold text-slate-800 dark:text-slate-200">{formatCurrency(activeInspectItem?.invested || 0)}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-slate-400">{isTamil ? 'வட்டி லாபம்' : 'Growth'}: </span>
+                    <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">+{formatCurrency(activeInspectItem?.gain || 0)}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-slate-400">{isTamil ? 'மொத்த செல்வம்' : 'Total Wealth'}: </span>
+                    <span className="font-mono font-black text-[#008060] text-sm">{formatCurrency(activeInspectItem?.futureValue || 0)}</span>
+                  </div>
+                  <div className="hidden sm:block">
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-black bg-[#008060] text-white">
+                      {activeInspectItem?.ratio}x
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Stacked Growth Bars */}
+              <div className="h-56 sm:h-64 w-full flex items-end justify-between gap-1 sm:gap-2 px-3 pt-8 pb-2 bg-slate-50 dark:bg-slate-950/40 rounded-2xl border border-slate-200 dark:border-slate-800 relative">
+                {/* Background Guide Lines */}
+                <div className="absolute inset-x-3 top-6 border-b border-dashed border-slate-200 dark:border-slate-800" />
+                <div className="absolute inset-x-3 top-1/2 border-b border-dashed border-slate-200 dark:border-slate-800" />
+
+                {yearlyData.map((d) => {
+                  const totalHeightPct = Math.min(100, Math.max(8, Math.round((d.futureValue / maxVal) * 100)));
+                  const investedHeightPct = Math.min(totalHeightPct, Math.max(4, Math.round((d.invested / maxVal) * 100)));
+                  const gainHeightPct = Math.max(0, totalHeightPct - investedHeightPct);
+                  const isSelected = activeInspectItem?.year === d.year;
+
+                  return (
+                    <div
+                      key={d.year}
+                      onMouseEnter={() => setHoveredYear(d.year)}
+                      onMouseLeave={() => setHoveredYear(null)}
+                      className="flex-1 h-full flex flex-col justify-end items-center group cursor-pointer relative"
+                    >
+                      {/* Tooltip on Hover */}
+                      {isSelected && (
+                        <div className="absolute -top-7 px-2.5 py-0.5 rounded-md bg-slate-900 text-white text-[10px] font-mono font-bold shadow-xl z-20 whitespace-nowrap pointer-events-none animate-fadeIn border border-slate-700">
+                          {formatCurrency(d.futureValue)}
+                        </div>
+                      )}
+
+                      {/* Stacked Bar */}
+                      <div
+                        style={{ height: `${totalHeightPct}%` }}
+                        className={`w-full max-w-[26px] rounded-t-lg overflow-hidden flex flex-col justify-end transition-all duration-300 shadow-sm ${
+                          isSelected ? 'ring-2 ring-amber-400 scale-105 shadow-lg' : 'hover:opacity-90'
+                        }`}
+                      >
+                        {/* Top (Gain) */}
+                        <div
+                          style={{ height: `${(gainHeightPct / totalHeightPct) * 100}%` }}
+                          className="w-full bg-gradient-to-t from-[#008060] to-emerald-400"
+                        />
+                        {/* Bottom (Invested) */}
+                        <div
+                          style={{ height: `${(investedHeightPct / totalHeightPct) * 100}%` }}
+                          className="w-full bg-slate-400 dark:bg-slate-600"
+                        />
+                      </div>
+
+                      {/* X-Axis Label */}
+                      <span className={`text-[9px] font-mono font-bold mt-1.5 transition-colors ${
+                        isSelected ? 'text-[#008060] font-black scale-110' : 'text-slate-400'
+                      }`}>
+                        Y{d.year}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Legend & Guide */}
+              <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-bold text-slate-500 pt-1">
+                <div className="flex items-center gap-4">
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-3 h-3 rounded-md bg-slate-400" />
+                    <span>{isTamil ? 'அசல் முதலீடு (Invested)' : 'Invested Capital'}</span>
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-3 h-3 rounded-md bg-gradient-to-r from-[#008060] to-emerald-400" />
+                    <span>{isTamil ? 'கூட்டு வட்டி லாபம் (Compound Gain)' : 'Compounded Returns'}</span>
+                  </span>
+                </div>
+                <span className="text-[11px] text-slate-400 italic">
+                  💡 {isTamil ? 'ஆண்டுகள் மீது மவுஸ் வைத்து கணிப்புகளைப் பாருங்கள்' : 'Hover over any year bar to inspect breakdown'}
+                </span>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 2: Asset Share Donut Chart */}
+          {activeTab === 'donut' && (
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center py-4 animate-fadeIn">
+              <div className="md:col-span-5 flex justify-center">
+                {/* SVG Donut */}
+                <div className="relative w-[210px] h-[210px] flex items-center justify-center">
+                  {(() => {
+                    const size = 210;
+                    const strokeWidth = 30;
+                    const radius = (size - strokeWidth) / 2;
+                    const circumference = 2 * Math.PI * radius;
+                    const investedDash = (investedPercent / 100) * circumference;
+                    const gainDash = (gainPercent / 100) * circumference;
+                    const gainOffset = -investedDash;
+
+                    return (
+                      <>
+                        <svg width={size} height={size} className="rotate-[-90deg] drop-shadow-md">
+                          <circle
+                            cx={size / 2}
+                            cy={size / 2}
+                            r={radius}
+                            fill="transparent"
+                            stroke="currentColor"
+                            className="text-slate-100 dark:text-slate-800"
+                            strokeWidth={strokeWidth}
+                          />
+                          <circle
+                            cx={size / 2}
+                            cy={size / 2}
+                            r={radius}
+                            fill="transparent"
+                            stroke="#64748b"
+                            strokeWidth={strokeWidth}
+                            strokeDasharray={`${investedDash} ${circumference}`}
+                            strokeDashoffset={0}
+                            strokeLinecap="round"
+                            className="transition-all duration-700"
+                          />
+                          <circle
+                            cx={size / 2}
+                            cy={size / 2}
+                            r={radius}
+                            fill="transparent"
+                            stroke="#008060"
+                            strokeWidth={strokeWidth}
+                            strokeDasharray={`${gainDash} ${circumference}`}
+                            strokeDashoffset={gainOffset}
+                            strokeLinecap="round"
+                            className="transition-all duration-700"
+                          />
+                        </svg>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
+                          <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">
+                            {isTamil ? 'வட்டி லாபப் பங்கு' : 'Wealth Share'}
+                          </span>
+                          <span className="text-3xl font-black font-mono text-[#008060]">
+                            {gainPercent}%
+                          </span>
+                          <span className="text-[10px] text-slate-500 font-bold">
+                            {wealthMultiplier}x Growth
+                          </span>
+                        </div>
+                      </>
+                    );
+                  })()}
+                </div>
+              </div>
+
+              <div className="md:col-span-7 space-y-4">
+                <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-4 h-4 rounded-full bg-slate-500 shrink-0" />
+                    <div>
+                      <h5 className="font-bold text-xs text-slate-800 dark:text-slate-200">
+                        {isTamil ? 'உங்கள் அசல் முதலீட்டுத் தொகை' : 'Principal Invested Capital'}
+                      </h5>
+                      <p className="text-[11px] text-slate-400">
+                        {isTamil ? `${timeYears} ஆண்டுகளில் நீங்கள் கட்டிய மொத்தத் தொகை` : `Cumulative amount saved over ${timeYears} years`}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="font-black font-mono text-sm text-slate-900 dark:text-white">
+                      {formatCurrency(totalInvested)}
+                    </div>
+                    <span className="text-[10px] font-bold text-slate-500">{investedPercent}%</span>
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-4 h-4 rounded-full bg-[#008060] shrink-0" />
+                    <div>
+                      <h5 className="font-bold text-xs text-[#008060]">
+                        {isTamil ? 'கூட்டு வட்டி மூலம் ஈட்டிய லாபம்' : 'Compound Growth Returns (Profit)'}
+                      </h5>
+                      <p className="text-[11px] text-emerald-700/80 dark:text-emerald-400">
+                        {isTamil ? `ஆண்டுக்கு ${returnRate}% வட்டி மூலம் உருவான அசாத்திய லாபம்` : `Wealth generated at ${returnRate}% annual compounding`}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="font-black font-mono text-sm text-[#008060]">
+                      +{formatCurrency(estimatedGain)}
+                    </div>
+                    <span className="text-[10px] font-bold text-[#008060]">{gainPercent}%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 3: Milestones Roadmap */}
+          {activeTab === 'milestones' && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 py-2 animate-fadeIn">
+              {milestones.map((m, idx) => {
+                const matchYear = yearlyData.find(d => d.futureValue >= m.target);
+                const isReached = Boolean(matchYear);
+
+                return (
+                  <div
+                    key={idx}
+                    className={`p-4 rounded-2xl border transition-all ${
+                      isReached
+                        ? 'bg-gradient-to-br from-emerald-500/15 via-emerald-500/5 to-transparent border-emerald-500/35 shadow-sm'
+                        : 'bg-slate-50 dark:bg-slate-900/40 border-slate-200 dark:border-slate-800 opacity-55'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-black font-serif text-slate-900 dark:text-white flex items-center gap-1.5">
+                        <span>{isReached ? '🎯' : '⏳'}</span>
+                        <span>{isTamil ? m.tamilLabel : m.label}</span>
+                      </span>
+                      <span className={`text-[10px] font-black px-2.5 py-0.5 rounded-full ${
+                        isReached ? 'bg-[#008060] text-white shadow-sm' : 'bg-slate-200 dark:bg-slate-800 text-slate-500'
+                      }`}>
+                        {isReached ? (isTamil ? `ஆண்டு ${matchYear.year}` : `Year ${matchYear.year}`) : (isTamil ? 'இலக்கு தாண்டி' : 'Beyond Horizon')}
+                      </span>
+                    </div>
+                    {isReached ? (
+                      <p className="text-[11px] text-emerald-800 dark:text-emerald-300 font-medium mt-2 leading-relaxed">
+                        {isTamil
+                          ? `ஆண்டு ${matchYear.year}-ல் அசல் முதலீடு ${formatCurrency(matchYear.invested)} ஆக இருக்கும் போது உங்கள் செல்வம் ${m.tamilLabel}-ஐ அடையும்.`
+                          : `Crossed at Year ${matchYear.year} with ${formatCurrency(matchYear.invested)} total invested.`}
+                      </p>
+                    ) : (
+                      <p className="text-[11px] text-slate-400 mt-2">
+                        {isTamil
+                          ? 'காலத்தை அல்லது மாதாந்திர முதலீட்டை அதிகரித்தால் இந்த இலக்கை அடையலாம்.'
+                          : 'Increase duration or monthly SIP to unlock this milestone.'}
+                      </p>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          {/* TAB 4: Yearly Schedule Table */}
+          {activeTab === 'table' && (
+            <div className="overflow-x-auto max-h-72 overflow-y-auto rounded-2xl border border-slate-200 dark:border-slate-800 animate-fadeIn">
+              <table className="w-full text-left text-xs">
+                <thead className="sticky top-0 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-black border-b border-slate-200 dark:border-slate-700">
+                  <tr>
+                    <th className="p-3">{isTamil ? 'ஆண்டு' : 'Year'}</th>
+                    <th className="p-3">{isTamil ? 'மொத்த முதலீடு' : 'Total Invested'}</th>
+                    <th className="p-3">{isTamil ? 'வட்டி லாபம்' : 'Growth Returns'}</th>
+                    <th className="p-3">{isTamil ? 'எதிர்பார்க்கும் முதிர்வு மதிப்பு' : 'Future Value'}</th>
+                    <th className="p-3">{isTamil ? 'வளர்ச்சி மடங்கு' : 'Multiplier'}</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-mono">
+                  {yearlyData.map((d) => (
+                    <tr key={d.year} className="hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors">
+                      <td className="p-3 font-bold text-slate-900 dark:text-white">Year {d.year}</td>
+                      <td className="p-3 text-slate-600 dark:text-slate-400">{formatCurrency(d.invested)}</td>
+                      <td className="p-3 text-emerald-600 dark:text-emerald-400 font-semibold">+{formatCurrency(d.gain)}</td>
+                      <td className="p-3 font-black text-[#008060] text-sm">{formatCurrency(d.futureValue)}</td>
+                      <td className="p-3"><span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-[#008060]/15 text-[#008060]">{d.ratio}x</span></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </div>
     </section>
