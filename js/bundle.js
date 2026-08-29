@@ -10278,136 +10278,10 @@ function ProfessionalWidescreenVideoCard({ video, onSelect, language = 'ta' }) {
   );
 }
 
-const defaultPublisherPublications = [
-  {
-    id: "happy-rich-advisor",
-    titleEnglish: "The HappyRich Advisor",
-    titleTamil: "தி ஹேப்பிரிச் அட்வைசர் (The HappyRich Advisor)",
-    tagEnglish: "Best Selling",
-    tagTamil: "அதிகம் விற்பனையாகும் நூல்",
-    subtitleEnglish: "Most recommended for Finance Professionals",
-    subtitleTamil: "நிதி ஆலோசகர்கள் மற்றும் முதலீட்டாளர்களுக்கான சிறந்த பரிந்துரை",
-    descriptionEnglish: "The \"HappyRich Advisor\" Book precisely covers every area of an advisor's business such as Strategy, Building the Offering, Growth, Marketing, Client Experience, Technology, Future of the Profession, and a step-by-step roadmap to build the firm of the 21st century. Amar Pandit has simplified the seemingly complex subject in a very lucid manner which enables one to finish reading the book in one go.",
-    descriptionTamil: "நிதி ஆலோசனை, முதலீட்டு திட்டமிடல், போர்ட்ஃபோலியோ உருவாக்கம், வாடிக்கையாளர் அனுபவம் மற்றும் தொழில்நுட்ப உத்திகளை எளிய நடையில் விளக்கும் வழிகாட்டி நூல். நிதி துறையில் 21-ஆம் நூற்றாண்டின் சிறந்த நிறுவனத்தை உருவாக்குவதற்கான வழிமுறைகள் இதில் விவரிக்கப்பட்டுள்ளன.",
-    coverImage: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&auto=format&fit=crop&q=80",
-    buyUrl: "https://www.amazon.in"
-  },
-  {
-    id: "only-financial-planning-book",
-    titleEnglish: "The Only Financial Planning Book that you will ever need",
-    titleTamil: "உங்களுக்கு தேவையான ஒரே நிதி திட்டமிடல் வழிகாட்டி நூல்",
-    tagEnglish: "Essential Investor Guide",
-    tagTamil: "அவசியமான முதலீட்டாளர் கையேடு",
-    subtitleEnglish: "Demystifying Financial Myths & Accelerating Multi-Generational Wealth",
-    subtitleTamil: "முதலீட்டு கட்டுக்கதைகளை உடைத்து நீண்ட கால செல்வத்தை உருவாக்கும் உத்திகள்",
-    descriptionEnglish: "Many people think financial planning and investment planning are synonymous, which is not true. This book not only busts such myths about financial planning but also aims to make financial planning and personal finance simple for everyone. It includes proven actionable worksheets for retirement corpus, child higher education, and compounding portfolios.",
-    descriptionTamil: "நிதி திட்டமிடலும் முதலீடும் ஒன்றல்ல என்பதை விளக்கி, ஓய்வூதிய நிதி, குழந்தைகளின் கல்வி செலவுகள் மற்றும் காப்பீடு ஆகியவற்றை எளிய கணக்கீடுகள் மூலம் திட்டமிடுவதற்கான முழுமையான வழிகாட்டுதலை வழங்கும் புத்தகம்.",
-    coverImage: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=400&auto=format&fit=crop&q=80",
-    buyUrl: "https://www.amazon.in"
-  }
-];
-
-function PublisherPublicationCard({ publication, isTamil, onNavigate }) {
-  const [isExpanded, setIsExpanded] = useState(false);
-  if (!publication) return null;
-
-  const title = isTamil ? (publication.titleTamil || publication.title) : (publication.titleEnglish || publication.title);
-  const tag = isTamil ? (publication.tagTamil || publication.tag) : (publication.tagEnglish || publication.tag);
-  const subtitle = isTamil ? (publication.subtitleTamil || publication.subtitle) : (publication.subtitleEnglish || publication.subtitle);
-  const description = isTamil ? (publication.descriptionTamil || publication.description) : (publication.descriptionEnglish || publication.description);
-  const buyUrl = publication.buyUrl || publication.amazonUrl || '#/articles';
-
-  return (
-    <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-all flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-8">
-      {/* 3D Standing Book Mockup Cover */}
-      <div className="relative shrink-0 flex items-center justify-center">
-        <div className="w-36 sm:w-44 h-52 sm:h-60 rounded-r-xl rounded-l-sm bg-gradient-to-r from-slate-100 to-white dark:from-slate-800 dark:to-slate-900 p-2 shadow-2xl border-l-4 border-l-slate-300 dark:border-l-slate-700 border border-slate-200 dark:border-slate-800 transform hover:scale-105 transition-transform duration-300 flex flex-col justify-between overflow-hidden">
-          {publication.coverImage ? (
-            <img
-              src={publication.coverImage}
-              alt={title}
-              className="w-full h-full object-cover drop-shadow-md rounded-r"
-              onError={(e) => {
-                e.target.style.display = 'none';
-              }}
-            />
-          ) : (
-            <div className="h-full flex flex-col justify-between p-3 text-center border border-dashed border-slate-300 dark:border-slate-700 rounded bg-emerald-500/5">
-              <span className="text-[10px] font-bold text-[#4A9E2C] uppercase tracking-wider">Publication</span>
-              <h4 className="text-xs font-black font-serif text-slate-800 dark:text-white line-clamp-3">{title}</h4>
-              <span className="text-[9px] font-mono text-slate-400">Padmanaban B. CFP®</span>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Book / Publication Meta & CTA Button */}
-      <div className="flex-1 flex flex-col justify-between space-y-3 text-center sm:text-left">
-        <div>
-          <h3 className="text-xl sm:text-2xl font-black font-serif text-slate-900 dark:text-white leading-tight">
-            {title}
-          </h3>
-
-          {tag && (
-            <p className="text-xs font-bold text-slate-500 dark:text-slate-400 mt-2">
-              {tag}
-            </p>
-          )}
-
-          {subtitle && (
-            <p className="text-xs font-semibold text-slate-700 dark:text-slate-300 mt-1">
-              {subtitle}
-            </p>
-          )}
-
-          {description && (
-            <div className="mt-3">
-              <p className={`text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal ${!isExpanded ? 'line-clamp-3' : ''}`}>
-                {description}
-              </p>
-              {description.length > 180 && (
-                <button
-                  type="button"
-                  onClick={() => setIsExpanded(!isExpanded)}
-                  className="text-xs font-bold text-[#4A9E2C] hover:text-[#3b8022] hover:underline mt-1.5 transition-colors"
-                >
-                  {isExpanded ? (isTamil ? 'குறைவாகக் காட்டு' : 'Show Less') : (isTamil ? 'மேலும் படிக்க' : 'Read More')}
-                </button>
-              )}
-            </div>
-          )}
-        </div>
-
-        <div className="pt-2">
-          {buyUrl.startsWith('http') ? (
-            <a
-              href={buyUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#22c55e] hover:bg-[#16a34a] text-white font-black text-xs sm:text-sm shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all"
-            >
-              <span className="font-serif italic font-bold">a</span>
-              <span>{isTamil ? 'Amazon-ல் வாங்க' : 'Buy on Amazon'}</span>
-            </a>
-          ) : (
-            <button
-              onClick={() => onNavigate && onNavigate(buyUrl)}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#22c55e] hover:bg-[#16a34a] text-white font-black text-xs sm:text-sm shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all"
-            >
-              <span>📖</span>
-              <span>{isTamil ? 'நூலைப் படிக்க' : 'Read Publication'}</span>
-            </button>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
   const { language } = useLanguage();
   const isTamil = language === 'ta';
-  const [activeTab, setActiveTab] = useState('publications');
+  const [activeTab, setActiveTab] = useState('articles');
   const [selectedVideo, setSelectedVideo] = useState(null);
 
   // 1. Instant Cache-First Initialization
@@ -10727,23 +10601,6 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
       {/* 2. FEED TABS */}
       <div className="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
         <button
-          onClick={() => setActiveTab('publications')}
-          className={`px-5 py-2.5 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
-            activeTab === 'publications'
-              ? 'bg-[#03529A] text-white shadow-md'
-              : 'text-slate-700 dark:text-slate-400 bg-white/70 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700'
-          }`}
-        >
-          <span>📚</span>
-          <span>{isTamil ? 'வெளியீடுகள் & நூல்கள்' : 'Books & Publications'}</span>
-          <span className={`px-2 py-0.5 rounded-full text-[10px] font-black ${
-            activeTab === 'publications' ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-[#03529A] dark:text-sky-400'
-          }`}>
-            {defaultPublisherPublications.length}
-          </span>
-        </button>
-
-        <button
           onClick={() => setActiveTab('articles')}
           className={`px-5 py-2.5 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
             activeTab === 'articles'
@@ -10781,18 +10638,6 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
       </div>
 
       {/* 3. FEED CONTENT */}
-      {activeTab === 'publications' && (
-        <div className="space-y-6 animate-fadeIn">
-          {defaultPublisherPublications.map((pub) => (
-            <PublisherPublicationCard
-              key={pub.id}
-              publication={pub}
-              isTamil={isTamil}
-              onNavigate={onNavigate}
-            />
-          ))}
-        </div>
-      )}
 
       {activeTab === 'videos' && publisherVideos.length > 0 && (
         <div className="space-y-6">
