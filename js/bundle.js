@@ -1622,22 +1622,22 @@ function LanguageSwitcher() {
     <div className="relative inline-flex items-center bg-white/80 dark:bg-slate-800 p-1 rounded-full border border-slate-200 dark:border-slate-700 shadow-inner">
       <button
         onClick={() => setLanguage('ta')}
-        className={`px-3.5 py-1 text-xs font-bold rounded-full transition-all duration-300 ${
-          language === 'ta' ? 'bg-amber-600 text-white shadow-md scale-105' : 'text-slate-700 dark:text-slate-300 hover:text-amber-700'
+        className={`px-3.5 py-1 text-xs font-black rounded-full transition-all duration-300 ${
+          language === 'ta' ? 'bg-[#03529A] text-white shadow-md scale-105' : 'text-slate-700 dark:text-slate-300 hover:text-[#03529A]'
         }`}
       >
         தமிழ்
       </button>
       <button
         onClick={() => setLanguage('en')}
-        className={`px-3.5 py-1 text-xs font-bold rounded-full transition-all duration-300 ${
-          language === 'en' ? 'bg-amber-600 text-white shadow-md scale-105' : 'text-slate-700 dark:text-slate-300 hover:text-amber-700'
+        className={`px-3.5 py-1 text-xs font-black rounded-full transition-all duration-300 ${
+          language === 'en' ? 'bg-[#03529A] text-white shadow-md scale-105' : 'text-slate-700 dark:text-slate-300 hover:text-[#03529A]'
         }`}
       >
         English
       </button>
       {isTranslating && (
-        <span className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[10px] text-amber-600 font-bold whitespace-nowrap animate-pulse">
+        <span className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[10px] text-[#03529A] font-black whitespace-nowrap animate-pulse">
           Translating...
         </span>
       )}
@@ -1699,7 +1699,7 @@ function Header({ onOpenSearch, onNavigate }) {
         
         {/* Left Side: Welcome Badge */}
         <div className="hidden sm:flex items-center gap-2 min-w-[130px] md:min-w-[150px] shrink-0">
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-emerald-600/10 text-emerald-800 dark:text-emerald-400 border border-emerald-600/25 shadow-sm">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[11px] font-black rounded-full bg-emerald-600/10 text-emerald-800 dark:text-emerald-400 border border-emerald-600/25 shadow-sm">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             <span>{t('welcome')}</span>
           </span>
@@ -1727,12 +1727,12 @@ function Header({ onOpenSearch, onNavigate }) {
                   </>
                 )}
               </h1>
-              <span className="sm:hidden inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider rounded-full bg-emerald-600/10 text-emerald-800 dark:text-emerald-400 border border-emerald-600/30">
+              <span className="sm:hidden inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider rounded-full bg-emerald-600/10 text-emerald-800 dark:text-emerald-400 border border-emerald-600/30">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 <span>{t('welcome')}</span>
               </span>
             </div>
-            <p className="text-xs sm:text-[13px] text-slate-500 dark:text-slate-400 font-semibold hidden sm:block">
+            <p className="text-xs sm:text-[13px] text-slate-500 dark:text-slate-400 font-bold hidden sm:block">
               {t('tagline')}
             </p>
           </div>
@@ -1742,11 +1742,11 @@ function Header({ onOpenSearch, onNavigate }) {
         <div className="flex items-center justify-end gap-2 sm:gap-2.5 shrink-0">
           <button
             onClick={onOpenSearch}
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-800 transition-all text-xs font-semibold border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md"
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-800 transition-all text-xs font-black border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md"
             aria-label="Search"
           >
-            <svg className="w-4 h-4 text-amber-500 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-            <span className="hidden md:inline">{t('searchTitle')}</span>
+            <svg className="w-4 h-4 text-[#03529A] dark:text-[#38bdf8]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+            <span className="hidden md:inline font-black">{t('searchTitle')}</span>
           </button>
           <LanguageSwitcher />
           <ThemeToggle />
