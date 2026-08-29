@@ -5121,10 +5121,12 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
           </div>
         )}
 
-        <div
-          className="prose prose-slate dark:prose-invert lg:prose-lg max-w-none text-slate-800 dark:text-slate-200 leading-relaxed font-normal text-base sm:text-lg selection:bg-amber-500 selection:text-white"
-          dangerouslySetInnerHTML={{ __html: body }}
-        />
+        <div className="article-blue-card rounded-3xl border-2 border-white/25 bg-[#1E65A4] shadow-2xl p-6 sm:p-8 md:p-10 my-4 text-white">
+          <div
+            className="prose prose-invert lg:prose-lg max-w-none text-white leading-relaxed font-normal text-base sm:text-lg selection:bg-amber-400 selection:text-slate-950"
+            dangerouslySetInnerHTML={{ __html: body }}
+          />
+        </div>
 
         {article.tags && article.tags.length > 0 && (
           <div className="pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-wrap items-center gap-2">
@@ -9120,10 +9122,12 @@ function NewsDetailsPage({ slug, onNavigate }) {
         />
       </div>
 
-      <div
-        className="prose dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 text-sm sm:text-base leading-relaxed space-y-4"
-        dangerouslySetInnerHTML={{ __html: article.content }}
-      />
+      <div className="article-blue-card rounded-3xl border-2 border-white/25 bg-[#1E65A4] shadow-2xl p-6 sm:p-8 my-4 text-white">
+        <div
+          className="prose prose-invert max-w-none text-white text-sm sm:text-base leading-relaxed space-y-4"
+          dangerouslySetInnerHTML={{ __html: article.content }}
+        />
+      </div>
     </div>
   );
 }

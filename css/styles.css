@@ -1103,3 +1103,62 @@ html:not([data-theme="dark"]) table tbody tr:hover,
 [data-theme="dark"] .prose a {
   color: #38bdf8;
 }
+
+/* Article Body Content Container (#1E65A4 with White Text) */
+.article-blue-card {
+  background-color: #1E65A4 !important;
+  color: #ffffff !important;
+  border: 2px solid rgba(255, 255, 255, 0.25) !important;
+  border-radius: 1.5rem !important;
+  padding: 1.75rem !important;
+  box-shadow: 0 10px 30px -5px rgba(30, 101, 164, 0.35), 0 4px 12px -2px rgba(30, 101, 164, 0.2) !important;
+}
+
+@media (min-width: 640px) {
+  .article-blue-card {
+    padding: 2.5rem 3rem !important;
+  }
+}
+
+.article-blue-card p,
+.article-blue-card span,
+.article-blue-card h1,
+.article-blue-card h2,
+.article-blue-card h3,
+.article-blue-card h4,
+.article-blue-card h5,
+.article-blue-card h6,
+.article-blue-card li,
+.article-blue-card strong,
+.article-blue-card b,
+.article-blue-card em,
+.article-blue-card i,
+.article-blue-card div {
+  color: #ffffff !important;
+}
+
+.article-blue-card a {
+  color: #86efac !important;
+  text-decoration: underline !important;
+  font-weight: 700 !important;
+}
+
+.article-blue-card blockquote {
+  border-left: 4px solid #ffffff !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+  border-radius: 0 0.75rem 0.75rem 0 !important;
+  padding: 1rem 1.25rem !important;
+  margin: 1.25rem 0 !important;
+}
+
+.article-blue-card hr {
+  border: none !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.3) !important;
+  margin: 1.75rem 0 !important;
+}
+
+.article-blue-card img {
+  border: 2px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 1rem !important;
+}
