@@ -1041,3 +1041,54 @@ html:not([data-theme="dark"]) table tbody tr:hover,
 [data-theme="light"] table tbody tr:hover {
   background-color: #f8fafc !important;
 }
+
+/* Editorial Suite & Rich Content Styles */
+.editor-rich-content blockquote,
+.prose blockquote {
+  border-left: 4px solid #03529A;
+  padding: 0.75rem 1.25rem;
+  margin: 1rem 0;
+  background: rgba(3, 82, 154, 0.06);
+  border-radius: 0 0.75rem 0.75rem 0;
+  font-style: italic;
+}
+
+[data-theme="dark"] .editor-rich-content blockquote,
+[data-theme="dark"] .prose blockquote {
+  border-left-color: #38bdf8;
+  background: rgba(56, 189, 248, 0.08);
+}
+
+.editor-rich-content hr,
+.prose hr {
+  border: none;
+  border-top: 2px solid #e2e8f0;
+  margin: 1.5rem 0;
+}
+
+[data-theme="dark"] .editor-rich-content hr,
+[data-theme="dark"] .prose hr {
+  border-top-color: #334155;
+}
+
+.editor-rich-content img,
+.prose img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 1rem;
+  margin: 1rem auto;
+  display: block;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.editor-rich-content a,
+.prose a {
+  color: #03529A;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+[data-theme="dark"] .editor-rich-content a,
+[data-theme="dark"] .prose a {
+  color: #38bdf8;
+}
