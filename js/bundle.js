@@ -367,6 +367,7 @@ const professionalsData = [
     slug: "budget-padmanaban",
     nameTamil: "பி. பத்மநாபன் (பட்ஜெட் பத்மநாபன்)",
     nameEnglish: "B. Padmanaban (Budget Padmanaban)",
+    avatar: "/assets/padmanaban.jpg",
     titleTamil: "நிறுவனர் & தலைமை நிதி வர்ணனையாளர்",
     titleEnglish: "Founder & Chief Market Commentator",
     badgeTamil: "AMFI பதிவுபெற்ற விநியோகஸ்தர் (MFD)",
@@ -9874,10 +9875,17 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
     (livePublishers || []).forEach(p => {
       const displayName = p.display_name || p.email?.split('@')[0] || 'Advisor';
       const cleanName = displayName.trim();
+      if (cleanName.toLowerCase() === 'admin' && !p.avatar_url && !p.article_count) {
+        return; // Skip internal system admin entry
+      }
       seenIds.add(p.id);
       seenNames.add(cleanName.toLowerCase());
 
-      const isFounder = p.id === 'fe41c6c1-647f-4f8c-81b8-c39ca3666426' || cleanName.toLowerCase().includes('budget padmanaban');
+      const isFounder = p.id === 'fe41c6c1-647f-4f8c-81b8-c39ca3666426' || cleanName.toLowerCase().includes('padmanaban');
+      if (isFounder) {
+        seenIds.add('budget-padmanaban');
+        seenNames.add('b. padmanaban (budget padmanaban)');
+      }
       const arn = p.arn_number || '';
       const badgeEn = isFounder
         ? 'AMFI-REGISTERED MFD | FOUNDER'
@@ -9887,15 +9895,15 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
         : (arn ? `AMFI பதிவுசெய்த ஆலோசகர் | ${arn}` : 'AMFI பதிவுசெய்த ஆலோசகர்');
 
       list.push({
-        id: p.id,
+        id: isFounder ? 'budget-padmanaban' : p.id,
         isLive: true,
-        nameEnglish: cleanName,
-        nameTamil: cleanName,
+        nameEnglish: isFounder ? 'B. Padmanaban (Budget Padmanaban)' : cleanName,
+        nameTamil: isFounder ? 'பி. பத்மநாபன் (பட்ஜெட் பத்மநாபன்)' : cleanName,
         titleEnglish: p.title || (isFounder ? 'Founder & Chief Market Commentator' : 'AMFI Registered Mutual Fund Distributor'),
         titleTamil: p.title || (isFounder ? 'நிறுவனர் & தலைமை சந்தை ஆய்வாளர்' : 'பதிவுசெய்யப்பட்ட நிதி ஆலோசகர்'),
         organization: isFounder ? 'Fortune Investment Services (FISPL)' : 'Fortune Investment Services (FISPL Partner)',
         arnNumber: arn,
-        avatar: p.avatar_url || (isFounder ? 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80' : `https://ui-avatars.com/api/?name=${encodeURIComponent(cleanName)}&background=f59e0b&color=0f172a&bold=true`),
+        avatar: p.avatar_url || (isFounder ? '/assets/padmanaban.jpg' : `https://ui-avatars.com/api/?name=${encodeURIComponent(cleanName)}&background=03529a&color=ffffff&bold=true`),
         badgeEnglish: badgeEn,
         badgeTamil: badgeTa,
         bioEnglish: p.bio || (isFounder
@@ -9930,6 +9938,7 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
         seenIds.add(seed.id);
         list.push({
           ...seed,
+          avatar: seed.avatar || '/assets/padmanaban.jpg',
           isLive: false,
           stats: {
             masterclasses: seed.stats?.masterclasses || 0,
@@ -10065,11 +10074,11 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
                   <div className="flex items-start justify-between gap-4">
                     <div className="relative">
                       <img
-                        src={prof.avatar}
+                        src={prof.avatar || '/assets/padmanaban.jpg'}
                         alt={name}
                         className="w-16 h-16 rounded-2xl object-cover border-2 border-amber-500/40 group-hover:border-amber-500 shadow-md transition-colors"
                         onError={(e) => {
-                          e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=f59e0b&color=0f172a&bold=true`;
+                          e.target.src = '/assets/padmanaban.jpg';
                         }}
                       />
                       <span className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-white dark:border-slate-900" title="Active Publisher" />
