@@ -5121,7 +5121,7 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
           </div>
         )}
 
-        <div className="article-blue-card rounded-3xl border-2 border-white/25 bg-[#1E65A4] shadow-2xl p-6 sm:p-8 md:p-10 my-4 text-white">
+        <div className="article-blue-card rounded-3xl border-2 border-white/25 bg-[#03529A] shadow-2xl p-6 sm:p-8 md:p-10 my-4 text-white">
           <div
             className="prose prose-invert lg:prose-lg max-w-none text-white leading-relaxed font-normal text-base sm:text-lg selection:bg-amber-400 selection:text-slate-950"
             dangerouslySetInnerHTML={{ __html: body }}
@@ -9122,7 +9122,7 @@ function NewsDetailsPage({ slug, onNavigate }) {
         />
       </div>
 
-      <div className="article-blue-card rounded-3xl border-2 border-white/25 bg-[#1E65A4] shadow-2xl p-6 sm:p-8 my-4 text-white">
+      <div className="article-blue-card rounded-3xl border-2 border-white/25 bg-[#03529A] shadow-2xl p-6 sm:p-8 my-4 text-white">
         <div
           className="prose prose-invert max-w-none text-white text-sm sm:text-base leading-relaxed space-y-4"
           dangerouslySetInnerHTML={{ __html: article.content }}
