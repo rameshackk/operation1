@@ -2913,25 +2913,6 @@ function SipCalculator() {
 
   return (
     <section id="financial-calculators" className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 select-none animate-fadeIn">
-      {/* Unified Compact Hero Header Banner (Light & Dark mode) */}
-      <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 lg:p-7 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full  pointer-events-none" />
-        <div className="relative z-10 space-y-2 max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 text-[11px] font-black uppercase tracking-wider rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-600 dark:text-amber-400 shadow-sm">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400 animate-pulse" />
-            <span>{isTamil ? 'நிதி கணக்கீட்டுக் கருவிகள்' : 'FINANCIAL WEALTH STUDIO'}</span>
-          </div>
-          <h2 className="text-xl sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-slate-900 dark:text-white leading-snug">
-            {isTamil ? 'நிதி கணக்கீட்டுக் கருவிகள்' : 'Interactive Wealth Studio'}
-          </h2>
-          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
-            {isTamil
-              ? 'SIP, ஒரே முறை முதலீடு, முதலீட்டு வருவாய் மற்றும் கூட்டு வட்டி ஆகியவற்றைக் கணக்கிட உதவும் சாதனங்கள்.'
-              : 'Plan SIPs, Lump Sum investments, returns, and compound interest growth with real-time analytics.'}
-          </p>
-        </div>
-      </div>
-
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {calculatorCards.map((card) => {
           const isActive = calcMode === card.id;
@@ -8670,40 +8651,7 @@ function NewsPage({ onNavigate }) {
   const editorialArticles = (newsData || []).map(item => translateNewsArticle(item, language));
 
   return (
-    <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-8 animate-fadeIn">
-      {/* Unified Compact Hero Header Banner (Light & Dark mode) */}
-      <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 lg:p-7 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full pointer-events-none" />
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="space-y-2 max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-600 dark:text-amber-400 text-[11px] font-black uppercase tracking-wider shadow-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span>{isTamil ? 'நேரடி நிதிச் செய்திகள்' : 'LIVE INVESTMENT NEWS AGGREGATOR'}</span>
-            </div>
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-slate-900 dark:text-white leading-snug">
-              {isTamil ? 'சமீபத்திய முதலீட்டு செய்திகள்' : 'Latest Investment News'}
-            </h1>
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
-              {isTamil
-                ? 'Economic Times, Livemint, Business Standard மற்றும் Moneycontrol போன்ற முதன்மையான நிதி ஊடகங்களிலிருந்து உடனுக்குடன் தொகுக்கப்படும் நம்பகமான முதலீட்டு செய்திகள்.'
-                : 'Real-time aggregated financial intelligence, mutual fund movements, SEBI regulations, and market trends curated from high-authority financial publications.'}
-            </p>
-          </div>
-
-          {/* Quick Refresh Button */}
-          <div className="shrink-0">
-            <button
-              onClick={() => fetchLiveNews(true)}
-              disabled={isRefreshing || isLoadingLive}
-              className="px-4 py-2.5 rounded-2xl bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-800 font-bold text-xs shadow-sm transition-all flex items-center gap-2 disabled:opacity-50"
-            >
-              <span className={isRefreshing ? 'animate-spin' : ''}>🔄</span>
-              <span>{isTamil ? 'செய்திகளைப் புதுப்பி' : 'Refresh Feed'}</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
+    <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fadeIn">
       {/* Filter Bar & In-Page Search */}
       <div className="space-y-4">
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
@@ -9754,30 +9702,6 @@ function CategoryPage({ categoryId, onNavigate, onShowToast }) {
 
   return (
     <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fadeIn">
-      {/* Unified Compact Hero Header Banner (Light & Dark mode) */}
-      <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 lg:p-7 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full  pointer-events-none" />
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5">
-          <div className="space-y-2 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-600 dark:text-amber-400 text-[11px] font-black uppercase tracking-wider shadow-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400 animate-pulse" />
-              <span>{isTamil ? 'பிரிவு வாரியான அலசல்' : 'CATEGORY HUB'}</span>
-            </div>
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-slate-900 dark:text-white leading-snug">
-              {title}
-            </h1>
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
-              {isTamil
-                ? 'பிரத்யேக வீடியோக்கள், ஆழமான பகுப்பாய்வு மற்றும் முதலீட்டு வழிகாட்டுதல்கள்.'
-                : 'Specialized video masterclasses, curated insights, and expert investor guidance.'}
-            </p>
-          </div>
-          <div className="px-4 py-2 rounded-2xl bg-white/80 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 text-xs font-mono font-bold text-slate-700 dark:text-slate-300 shadow-sm shrink-0">
-            {filtered.length} {isTamil ? 'வீடியோக்கள் உள்ளன' : 'videos available'}
-          </div>
-        </div>
-      </div>
-
       {/* Search & Sort Controls */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white/80 dark:bg-slate-900/80 p-3 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
         <div className="relative flex-1">
@@ -10046,79 +9970,53 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
 
   return (
     <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fadeIn">
-      {/* Compact Hero Header Banner (Dark & Light mode supported) */}
-      <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 lg:p-7 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
-        {/* Ambient Decorative Lighting */}
-        <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full  pointer-events-none" />
+      {/* Controls & Search Bar */}
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+        {/* Category Pills */}
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+          {categories.map((cat) => {
+            const isActive = selectedCategory === cat.id;
+            return (
+              <button
+                key={cat.id}
+                onClick={() => setSelectedCategory(cat.id)}
+                className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
+                  isActive
+                    ? 'bg-amber-500 text-slate-950 font-black shadow-md'
+                    : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800'
+                }`}
+              >
+                {isTamil ? cat.labelTa : cat.labelEn}
+              </button>
+            );
+          })}
+        </div>
 
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5 md:gap-8">
-          {/* Header Text Block */}
-          <div className="space-y-2 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-600 dark:text-amber-400 text-[11px] font-black uppercase tracking-wider shadow-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400 animate-pulse" />
-              <span>{isTamil ? 'அங்கீகரிக்கப்பட்ட முதலீட்டு நிபுணர்கள்' : 'PUBLIC PROFESSIONALS DIRECTORY'}</span>
-            </div>
-
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-black font-serif tracking-tight text-slate-900 dark:text-white leading-snug">
-              {isTamil ? 'முதலீட்டு நிபுணர்கள் & எழுத்தாளர்கள்' : 'Investment Specialists & Commentators'}
-            </h1>
-
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-              {isTamil
-                ? 'AMFI பதிவுசெய்த ஆலோசகர்கள், நிதி எழுத்தாளர்கள் மற்றும் பார்ச்சூன் இன்வெஸ்ட்மென்ட் சர்வீசஸ் (FISPL) நிறுவன நிபுணர்களின் விவரங்கள் & படைப்புகள்.'
-                : 'Discover insights, masterclasses, and research commentary published by FISPL market commentators and financial specialists.'}
-            </p>
-          </div>
-
-          {/* Compact Search Bar */}
-          <div className="w-full md:w-72 lg:w-80 shrink-0">
-            <div className="relative group">
-              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-amber-500 dark:group-focus-within:text-amber-400 transition-colors pointer-events-none">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-              </span>
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={isTamil ? 'நிபுணர் பெயர், ARN தேடுக...' : 'Search specialists...'}
-                className="w-full pl-9 pr-8 py-2.5 sm:py-3 rounded-2xl bg-white dark:bg-slate-950/90 border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 focus:border-amber-500 text-xs sm:text-sm font-bold text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none shadow-sm dark:shadow-md transition-all"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 dark:hover:text-white text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 w-5 h-5 rounded-full flex items-center justify-center transition-colors"
-                >
-                  ✕
-                </button>
-              )}
-            </div>
-            <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1.5 px-1 font-mono">
-              {filteredProfessionals.length} {isTamil ? 'நிபுணர்கள்' : 'specialists available'}
-            </p>
+        {/* Compact Search Bar */}
+        <div className="w-full sm:w-72 lg:w-80 shrink-0">
+          <div className="relative group">
+            <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-amber-500 dark:group-focus-within:text-amber-400 transition-colors pointer-events-none">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </span>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder={isTamil ? 'நிபுணர் பெயர், ARN தேடுக...' : 'Search specialists...'}
+              className="w-full pl-9 pr-8 py-2 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 focus:border-amber-500 text-xs sm:text-sm font-bold text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none shadow-sm transition-all"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 dark:hover:text-white text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 w-5 h-5 rounded-full flex items-center justify-center transition-colors"
+              >
+                ✕
+              </button>
+            )}
           </div>
         </div>
-      </div>
-
-      {/* Category Pills */}
-      <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
-        {categories.map((cat) => {
-          const isActive = selectedCategory === cat.id;
-          return (
-            <button
-              key={cat.id}
-              onClick={() => setSelectedCategory(cat.id)}
-              className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
-                isActive
-                  ? 'bg-amber-500 text-slate-950 font-black shadow-md'
-                  : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800'
-              }`}
-            >
-              {isTamil ? cat.labelTa : cat.labelEn}
-            </button>
-          );
-        })}
       </div>
 
       {/* Grid of Professionals Cards or Skeleton Loaders */}
