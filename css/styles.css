@@ -153,6 +153,15 @@ button *,
   font-weight: 700 !important;
 }
 
+/* Extra prominent bold for main navigation bar items */
+nav button,
+nav a,
+header nav button,
+.sticky-header-container nav button,
+nav button span {
+  font-weight: 800 !important;
+}
+
 body {
   font-family: var(--font-sans);
   line-height: var(--line-height-body);

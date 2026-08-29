@@ -1827,7 +1827,7 @@ function Navbar({ currentPath, onNavigate }) {
                   <button
                     key={item.id}
                     onClick={() => item.action && item.action()}
-                    className="relative px-3.5 py-2 text-[13px] xl:text-[14px] font-extrabold transition-all rounded-lg whitespace-nowrap text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-white hover:bg-red-500/10 border border-red-500/20"
+                    className="relative px-3.5 py-2 text-[13.5px] xl:text-[14.5px] font-black transition-all rounded-lg whitespace-nowrap text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-white hover:bg-red-500/10 border border-red-500/20"
                   >
                     {item.label}
                   </button>
@@ -1839,15 +1839,15 @@ function Navbar({ currentPath, onNavigate }) {
                 ? 'hover:text-[#03529A] hover:bg-[#03529A]/10 hover:border-[#03529A]/30 dark:hover:text-[#38bdf8] dark:hover:bg-[#38bdf8]/15'
                 : 'hover:text-[#4A9E2C] hover:bg-[#4A9E2C]/10 hover:border-[#4A9E2C]/30 dark:hover:text-[#4ade80] dark:hover:bg-[#4ade80]/15';
               const activeStyle = isEven
-                ? 'bg-[#03529A]/10 text-[#03529A] dark:text-[#38bdf8] shadow-sm border border-[#03529A]/30'
-                : 'bg-[#4A9E2C]/10 text-[#4A9E2C] dark:text-[#4ade80] shadow-sm border border-[#4A9E2C]/30';
+                ? 'bg-[#03529A]/10 text-[#03529A] dark:text-[#38bdf8] shadow-sm border border-[#03529A]/30 font-black'
+                : 'bg-[#4A9E2C]/10 text-[#4A9E2C] dark:text-[#4ade80] shadow-sm border border-[#4A9E2C]/30 font-black';
               const indicatorBg = isEven ? 'bg-[#03529A]' : 'bg-[#4A9E2C]';
 
               return (
                 <button
                   key={item.id}
                   onClick={() => onNavigate(item.hash)}
-                  className={`relative px-3.5 py-2 text-[13px] xl:text-[14px] font-extrabold transition-all rounded-lg whitespace-nowrap border border-transparent ${isActive ? activeStyle : `text-slate-700 dark:text-slate-300 ${hoverStyle}`}`}
+                  className={`relative px-3.5 py-2 text-[13.5px] xl:text-[14.5px] font-black transition-all rounded-lg whitespace-nowrap border border-transparent ${isActive ? activeStyle : `text-slate-800 dark:text-slate-200 ${hoverStyle}`}`}
                 >
                   {item.label}
                   {isActive && <span className={`absolute bottom-0 left-2.5 right-2.5 h-0.5 ${indicatorBg} rounded-full`} />}
@@ -1884,12 +1884,12 @@ function Navbar({ currentPath, onNavigate }) {
                 }
                 setMobileOpen(false);
               }}
-              className={`block w-full text-left px-3.5 py-2.5 rounded-lg text-sm font-bold transition-colors ${
+              className={`block w-full text-left px-3.5 py-2.5 rounded-lg text-sm font-black transition-colors ${
                 item.isAction
                   ? 'text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40'
                   : currentPath === item.hash
                     ? 'bg-amber-500/10 text-amber-700 dark:text-amber-400 border-l-4 border-amber-500'
-                    : 'text-slate-700 dark:text-slate-300 hover:bg-[rgba(239,233,227,0.7)] dark:hover:bg-slate-800'
+                    : 'text-slate-800 dark:text-slate-200 hover:bg-[rgba(239,233,227,0.7)] dark:hover:bg-slate-800'
               }`}
             >
               {item.label}
