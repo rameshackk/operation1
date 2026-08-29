@@ -5266,7 +5266,7 @@ function ArticleCommentsSection({ slug, article, isTamil, onShowToast }) {
   const loadComments = useCallback(async () => {
     if (!slug) return;
     try {
-      const res = await fetch(`/api/articles/${encodeURIComponent(slug)}/comments`);
+      const res = await fetch(`/api/articles?slug=${encodeURIComponent(slug)}&action=comments`);
       const json = await res.json();
       if (json && json.data) {
         setComments(json.data);
@@ -5292,13 +5292,14 @@ function ArticleCommentsSection({ slug, article, isTamil, onShowToast }) {
       const currentUserAvatar = profile?.avatar_url || user?.user_metadata?.avatar_url || null;
       const isPublisherOrAdvisor = role === 'admin' || role === 'publisher' || role === 'advisor' || (article && user?.id === article.authorId);
 
-      const res = await fetch(`/api/articles/${encodeURIComponent(slug)}/comments`, {
+      const res = await fetch(`/api/articles?slug=${encodeURIComponent(slug)}&action=add_comment`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           ...(session?.access_token ? { 'Authorization': `Bearer ${session.access_token}` } : {})
         },
         body: JSON.stringify({
+          slug,
           content: newComment.trim(),
           userId: user?.id || 'guest',
           userName: currentUserName,
@@ -5332,13 +5333,14 @@ function ArticleCommentsSection({ slug, article, isTamil, onShowToast }) {
       const currentUserAvatar = profile?.avatar_url || user?.user_metadata?.avatar_url || null;
       const isPublisherOrAdvisor = role === 'admin' || role === 'publisher' || role === 'advisor' || (article && user?.id === article.authorId);
 
-      const res = await fetch(`/api/articles/${encodeURIComponent(slug)}/comments`, {
+      const res = await fetch(`/api/articles?slug=${encodeURIComponent(slug)}&action=add_comment`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           ...(session?.access_token ? { 'Authorization': `Bearer ${session.access_token}` } : {})
         },
         body: JSON.stringify({
+          slug,
           content: replyText.trim(),
           parentId,
           userId: user?.id || 'guest',
@@ -5367,7 +5369,7 @@ function ArticleCommentsSection({ slug, article, isTamil, onShowToast }) {
 
   const handleLike = async (commentId) => {
     try {
-      const res = await fetch(`/api/articles/${encodeURIComponent(slug)}/comments/${commentId}/like`, {
+      const res = await fetch(`/api/articles?slug=${encodeURIComponent(slug)}&action=like_comment&commentId=${commentId}`, {
         method: 'POST'
       });
       if (res.ok) {
@@ -5382,7 +5384,7 @@ function ArticleCommentsSection({ slug, article, isTamil, onShowToast }) {
   const handleDelete = async (commentId) => {
     if (!window.confirm(isTamil ? 'இந்தக் கருத்தை நிச்சயமாக நீக்க விரும்புகிறீர்களா?' : 'Are you sure you want to delete this comment?')) return;
     try {
-      const res = await fetch(`/api/articles/${encodeURIComponent(slug)}/comments/${commentId}`, {
+      const res = await fetch(`/api/articles?slug=${encodeURIComponent(slug)}&action=delete_comment&commentId=${commentId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

@@ -61,6 +61,22 @@
       "destination": "/api/videos?id=:id"
     },
     {
+      "source": "/api/articles/:slug/comments/:commentId/like",
+      "destination": "/api/articles?slug=:slug&action=like_comment&commentId=:commentId"
+    },
+    {
+      "source": "/api/articles/:slug/comments/:commentId",
+      "destination": "/api/articles?slug=:slug&action=delete_comment&commentId=:commentId"
+    },
+    {
+      "source": "/api/articles/:slug/comments",
+      "destination": "/api/articles?slug=:slug&action=comments"
+    },
+    {
+      "source": "/api/articles/:slug/view",
+      "destination": "/api/articles?slug=:slug&action=view"
+    },
+    {
       "source": "/api/articles/:slug",
       "destination": "/api/articles?slug=:slug"
     },
