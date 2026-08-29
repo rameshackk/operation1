@@ -1,11 +1,29 @@
-import { listArticles, getArticleBySlug } from '../../lib/db.js';
+import { listArticles, getArticleBySlug, incrementArticleViews } from '../../lib/db.js';
 
 export default async function handler(req, res) {
+  const { slug, action } = req.query || {};
+  const targetSlug = (slug || req.body?.slug || '').toString().trim();
+  const isViewAction = action === 'view' || req.body?.action === 'view' || req.query?.increment === '1';
+
+  // ================= VIEW COUNT INCREMENT (POST or GET with action=view) =================
+  if (isViewAction && targetSlug) {
+    try {
+      const nextViews = await incrementArticleViews(targetSlug);
+      res.setHeader('Content-Type', 'application/json');
+      return res.status(200).json({
+        status: 'success',
+        slug: targetSlug,
+        views: nextViews
+      });
+    } catch (error) {
+      console.error(`Error incrementing views for article ${targetSlug}:`, error);
+      return res.status(500).json({ error: 'Failed to increment view count', message: error.message });
+    }
+  }
+
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
-
-  const { slug } = req.query || {};
 
   // ================= SINGLE ARTICLE BY SLUG =================
   if (slug) {

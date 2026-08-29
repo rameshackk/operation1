@@ -4885,9 +4885,12 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                       )}
                       <span className="truncate max-w-[130px]">{article.authorName || 'Budget Padmanaban'}</span>
                     </div>
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2.5 sm:gap-3 shrink-0 font-mono">
                       <span>{formattedDate}</span>
-                      <span className="font-mono text-amber-600 dark:text-amber-400 font-bold">
+                      <span className="text-blue-600 dark:text-blue-400 font-bold flex items-center gap-1">
+                        👁 {(article.views || article.viewCount || 0).toLocaleString()}
+                      </span>
+                      <span className="text-amber-600 dark:text-amber-400 font-bold">
                          {article.readTimeMinutes} {isTamil ? 'நிமிடம்' : 'min'}
                       </span>
                     </div>
@@ -4953,6 +4956,23 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
     fetchArticle();
     return () => { isMounted = false; };
   }, [slug, session, isTamil]);
+
+  // Track & Increment Live View Count (with anti-spam session lock)
+  useEffect(() => {
+    if (!slug) return;
+    const sessionKey = `muthaleetu_art_view_${slug}`;
+    if (!sessionStorage.getItem(sessionKey)) {
+      sessionStorage.setItem(sessionKey, '1');
+      fetch(`/api/articles/${encodeURIComponent(slug)}/view`, { method: 'POST' })
+        .then(r => r.json())
+        .then(json => {
+          if (json && typeof json.views === 'number') {
+            setArticle(prev => prev ? { ...prev, views: json.views, viewCount: json.views } : prev);
+          }
+        })
+        .catch(() => {});
+    }
+  }, [slug]);
 
   useEffect(() => {
     if (!article) return;
@@ -5105,10 +5125,13 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
                 </div>
               </div>
 
-              <div className="flex items-center gap-4 text-xs font-semibold">
+              <div className="flex items-center gap-3 sm:gap-4 text-xs font-semibold flex-wrap">
                 <span>🗓 {formattedDate}</span>
                 <span className="font-mono text-amber-600 dark:text-amber-400 font-bold">
                   ⏱ {article.readTimeMinutes} {isTamil ? 'நிமிடம் வாசிக்க' : 'min read'}
+                </span>
+                <span className="font-mono text-blue-600 dark:text-blue-400 font-bold flex items-center gap-1">
+                  👁 {(article.views || article.viewCount || 0).toLocaleString()} {isTamil ? 'பார்வைகள்' : 'views'}
                 </span>
               </div>
             </div>
@@ -8869,9 +8892,14 @@ function NewsCard({ article, onSelect }) {
 
         <div className="flex items-center justify-between text-[11px] text-slate-400 border-t border-slate-100 dark:border-slate-800 pt-3 font-medium">
           <span>{formattedDate}</span>
-          <span className="font-mono text-amber-600 dark:text-amber-400 font-bold">
-            ⏱ {article.readTimeMinutes || 4} {isTamil ? 'நிமிட வாசிப்பு' : 'min read'}
-          </span>
+          <div className="flex items-center gap-2.5 font-bold font-mono">
+            <span className="text-blue-600 dark:text-blue-400 flex items-center gap-1">
+              👁 {(article.views || article.viewCount || 0).toLocaleString()}
+            </span>
+            <span className="text-amber-600 dark:text-amber-400">
+              ⏱ {article.readTimeMinutes || 4} {isTamil ? 'நிமிட வாசிப்பு' : 'min read'}
+            </span>
+          </div>
         </div>
       </div>
     </article>
@@ -10723,6 +10751,7 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
         summaryTa: a.summary_ta || a.summaryTa,
         coverImage: a.coverImage || a.cover_image_url || a.cover_image || a.thumbnail || a.image_url || '/favicon.svg',
         category: a.category || 'mutual-fund',
+        views: a.views || a.view_count || a.viewCount || 0,
         readTimeMinutes: a.read_time_minutes || a.readTimeMinutes || 4,
         publishedAt: a.published_at || a.publishedAt || a.created_at,
         author: a.author_name || a.authorName || name,
@@ -11013,7 +11042,12 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
                   </div>
 
                   <div className="px-5 pb-5 pt-2 flex items-center justify-between border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-500 dark:text-slate-400 font-semibold">
-                    <span>⏱ {article.readTimeMinutes} min read</span>
+                    <div className="flex items-center gap-2.5 font-mono">
+                      <span className="text-blue-600 dark:text-blue-400 font-bold flex items-center gap-1">
+                        👁 {(article.views || article.viewCount || 0).toLocaleString()}
+                      </span>
+                      <span>⏱ {article.readTimeMinutes} min read</span>
+                    </div>
                     <span className="text-amber-600 dark:text-amber-400 group-hover:translate-x-1 transition-transform inline-flex items-center gap-1 font-bold">
                       {isTamil ? 'படிக்க' : 'Read Article'} →
                     </span>
