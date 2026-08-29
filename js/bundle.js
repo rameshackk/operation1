@@ -11135,8 +11135,10 @@ function AppContent({ currentHash, navigate, isSearchOpen, setIsSearchOpen, toas
         <Navbar currentPath={currentHash} onNavigate={navigate} />
       </div>
 
-      {/* 2. ONLY BREAKING NEWS TICKER SCROLLS WITH PAGE */}
-      <TrendingTicker onNavigate={navigate} />
+      {/* 2. BREAKING NEWS TICKER ONLY ON HOMEPAGE */}
+      {(currentHash === '#/' || currentHash === '' || currentHash === '#' || currentHash === '#/home') && (
+        <TrendingTicker onNavigate={navigate} />
+      )}
 
       <main className="flex-1">{renderRoute()}</main>
       <Footer onNavigate={navigate} onShowToast={setToastMessage} />
