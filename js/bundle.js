@@ -3008,16 +3008,17 @@ function SipCalculator() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          <div className="lg:col-span-6 space-y-6 bg-white/10 p-6 rounded-3xl border border-white/20 backdrop-blur-sm flex flex-col justify-between shadow-lg">
+          {/* Left Column (Input Sliders): White Card Background */}
+          <div className="lg:col-span-6 space-y-6 bg-white text-slate-900 p-6 sm:p-8 rounded-3xl border border-white/40 shadow-xl flex flex-col justify-between">
             <div className="space-y-5">
               <div className="space-y-2">
                 <div className="flex justify-between items-center text-xs font-bold">
-                  <label className="text-white font-black">
+                  <label className="text-slate-800 font-black">
                     {calcMode === 'lumpsum' || calcMode === 'compound'
                       ? (isTamil ? 'தொடக்க முதலீட்டுத் தொகை (₹)' : 'Initial Investment (₹)')
                       : (isTamil ? 'மாதாந்திர SIP தொகை (₹)' : 'Monthly SIP Amount (₹)')}
                   </label>
-                  <span className="text-amber-300 font-mono text-sm font-black drop-shadow-sm">
+                  <span className="text-[#008060] font-mono text-sm font-black">
                     {formatCurrency(monthlyInvest)}
                   </span>
                 </div>
@@ -3028,17 +3029,17 @@ function SipCalculator() {
                   step={calcMode === 'lumpsum' || calcMode === 'compound' ? '5000' : '500'}
                   value={monthlyInvest}
                   onChange={(e) => setMonthlyInvest(Number(e.target.value))}
-                  className="w-full h-2.5 bg-white/25 rounded-lg appearance-none cursor-pointer accent-amber-400"
+                  className="w-full h-2.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#008060]"
                 />
               </div>
 
               {calcMode === 'stepup' && (
                 <div className="space-y-2">
                   <div className="flex justify-between items-center text-xs font-bold">
-                    <label className="text-white font-black">
+                    <label className="text-slate-800 font-black">
                       {isTamil ? 'ஆண்டு முதலீட்டு உயர்வு (%)' : 'Annual Step-Up Increase (%)'}
                     </label>
-                    <span className="text-amber-300 font-mono text-sm font-black drop-shadow-sm">
+                    <span className="text-[#008060] font-mono text-sm font-black">
                       +{stepUpPercent}% / {isTamil ? 'ஆண்டுக்கு' : 'Year'}
                     </span>
                   </div>
@@ -3049,17 +3050,17 @@ function SipCalculator() {
                     step="1"
                     value={stepUpPercent}
                     onChange={(e) => setStepUpPercent(Number(e.target.value))}
-                    className="w-full h-2.5 bg-white/25 rounded-lg appearance-none cursor-pointer accent-amber-400"
+                    className="w-full h-2.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#008060]"
                   />
                 </div>
               )}
 
               <div className="space-y-2">
                 <div className="flex justify-between items-center text-xs font-bold">
-                  <label className="text-white font-black">
+                  <label className="text-slate-800 font-black">
                     {isTamil ? 'எதிர்பார்க்கும் ஆண்டு வட்டி விகிதம் (%)' : 'Expected Annual Return Rate (%)'}
                   </label>
-                  <span className="text-amber-300 font-mono text-sm font-black drop-shadow-sm">
+                  <span className="text-[#008060] font-mono text-sm font-black">
                     {returnRate}% / {isTamil ? 'ஆண்டுக்கு' : 'Year'}
                   </span>
                 </div>
@@ -3070,16 +3071,16 @@ function SipCalculator() {
                   step="0.5"
                   value={returnRate}
                   onChange={(e) => setReturnRate(Number(e.target.value))}
-                  className="w-full h-2.5 bg-white/25 rounded-lg appearance-none cursor-pointer accent-amber-400"
+                  className="w-full h-2.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#008060]"
                 />
               </div>
 
               <div className="space-y-2">
                 <div className="flex justify-between items-center text-xs font-bold">
-                  <label className="text-white font-black">
+                  <label className="text-slate-800 font-black">
                     {isTamil ? 'முதலீட்டுக் காலம் (ஆண்டுகள்)' : 'Time Horizon (Years)'}
                   </label>
-                  <span className="text-amber-300 font-mono text-sm font-black drop-shadow-sm">
+                  <span className="text-[#008060] font-mono text-sm font-black">
                     {timeYears} {isTamil ? 'ஆண்டுகள்' : 'Years'}
                   </span>
                 </div>
@@ -3090,16 +3091,16 @@ function SipCalculator() {
                   step="1"
                   value={timeYears}
                   onChange={(e) => setTimeYears(Number(e.target.value))}
-                  className="w-full h-2.5 bg-white/25 rounded-lg appearance-none cursor-pointer accent-amber-400"
+                  className="w-full h-2.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#008060]"
                 />
               </div>
 
-              <div className="space-y-2 pt-2 border-t border-white/20">
+              <div className="space-y-2 pt-2 border-t border-slate-200">
                 <div className="flex justify-between items-center text-xs font-bold">
-                  <label className="text-emerald-100 font-black">
+                  <label className="text-slate-600 font-bold">
                     {isTamil ? 'எதிர்பார்க்கப்படும் பணவீக்கம் (%)' : 'Expected Inflation Rate (%)'}
                   </label>
-                  <span className="text-white font-mono text-xs font-black">
+                  <span className="text-slate-900 font-mono text-xs font-black">
                     {inflationRate}%
                   </span>
                 </div>
@@ -3110,69 +3111,70 @@ function SipCalculator() {
                   step="0.5"
                   value={inflationRate}
                   onChange={(e) => setInflationRate(Number(e.target.value))}
-                  className="w-full h-2 bg-white/25 rounded-lg appearance-none cursor-pointer accent-amber-300"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-slate-500"
                 />
               </div>
             </div>
 
-            <div className="space-y-2 pt-4 border-t border-white/20">
-              <div className="flex items-center justify-between text-[11px] font-bold text-emerald-100">
+            <div className="space-y-2 pt-4 border-t border-slate-200">
+              <div className="flex items-center justify-between text-[11px] font-bold text-slate-600">
                 <span className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-white/60" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-slate-400" />
                   <span>{isTamil ? 'முதலீடு' : 'Invested'}: {investedPercent}%</span>
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-amber-400" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#008060]" />
                   <span>{isTamil ? 'வட்டி லாபம்' : 'Wealth Gain'}: {gainPercent}%</span>
                 </span>
               </div>
-              <div className="h-3 w-full rounded-full bg-black/25 overflow-hidden flex border border-white/20">
-                <div style={{ width: `${investedPercent}%` }} className="bg-white/40 transition-all duration-300" />
-                <div style={{ width: `${gainPercent}%` }} className="bg-gradient-to-r from-amber-400 to-amber-300 transition-all duration-300 shadow-lg shadow-amber-400/50" />
+              <div className="h-3 w-full rounded-full bg-slate-200 overflow-hidden flex border border-slate-300">
+                <div style={{ width: `${investedPercent}%` }} className="bg-slate-400 transition-all duration-300" />
+                <div style={{ width: `${gainPercent}%` }} className="bg-gradient-to-r from-[#008060] to-emerald-500 transition-all duration-300 shadow-lg" />
               </div>
             </div>
           </div>
 
-          <div className="lg:col-span-6 space-y-6 bg-white/10 p-6 sm:p-8 rounded-3xl border border-white/20 shadow-xl flex flex-col justify-between backdrop-blur-sm">
+          {/* Right Column (Results / Projections): White Card Background */}
+          <div className="lg:col-span-6 space-y-6 bg-white text-slate-900 p-6 sm:p-8 rounded-3xl border border-white/40 shadow-xl flex flex-col justify-between">
             <div className="space-y-5">
-              <div className="flex items-center justify-between border-b border-white/20 pb-4">
-                <span className="text-xs font-black uppercase tracking-widest text-emerald-100">
+              <div className="flex items-center justify-between border-b border-slate-200 pb-4">
+                <span className="text-xs font-black uppercase tracking-widest text-slate-500">
                   {isTamil ? 'மொத்த முதலீடு' : 'Total Invested'}
                 </span>
-                <span className="text-lg font-black font-mono text-white">
+                <span className="text-lg font-black font-mono text-slate-900">
                   {formatCurrency(totalInvested)}
                 </span>
               </div>
 
-              <div className="flex items-center justify-between border-b border-white/20 pb-4">
-                <span className="text-xs font-black uppercase tracking-widest text-emerald-100">
+              <div className="flex items-center justify-between border-b border-slate-200 pb-4">
+                <span className="text-xs font-black uppercase tracking-widest text-slate-500">
                   {isTamil ? 'மதிப்பிடப்பட்ட வட்டி லாபம்' : 'Estimated Growth Returns'}
                 </span>
-                <span className="text-lg font-black font-mono text-amber-300">
+                <span className="text-lg font-black font-mono text-[#008060]">
                   +{formatCurrency(estimatedGain)}
                 </span>
               </div>
 
-              <div className="p-5 rounded-2xl bg-gradient-to-br from-amber-400/30 via-amber-400/15 to-transparent border border-amber-300/40 space-y-2 shadow-inner">
+              <div className="p-5 rounded-2xl bg-gradient-to-br from-[#008060]/10 via-[#008060]/5 to-transparent border border-[#008060]/20 space-y-2 shadow-sm">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-black uppercase tracking-wider text-amber-200">
+                  <span className="text-xs font-black uppercase tracking-wider text-[#008060]">
                     {isTamil ? 'மொத்த முதிர்வுத் தொகை' : 'Projected Wealth Corpus'}
                   </span>
-                  <span className="px-2.5 py-0.5 text-[10px] font-black uppercase rounded-full bg-amber-400 text-slate-950 shadow-sm">
+                  <span className="px-2.5 py-0.5 text-[10px] font-black uppercase rounded-full bg-[#008060] text-white shadow-sm">
                     {wealthMultiplier}x Wealth
                   </span>
                 </div>
-                <div className="text-3xl sm:text-4xl font-black font-mono text-white tracking-tight drop-shadow-md">
+                <div className="text-3xl sm:text-4xl font-black font-mono text-[#008060] tracking-tight">
                   {formatCurrency(futureValue)}
                 </div>
               </div>
 
-              <div className="p-4 rounded-2xl bg-black/30 border border-white/20 space-y-1 shadow-inner">
-                <div className="flex items-center justify-between text-xs font-bold text-emerald-100">
+              <div className="p-4 rounded-2xl bg-slate-900 text-white border border-slate-800 space-y-1 shadow-inner">
+                <div className="flex items-center justify-between text-xs font-bold text-slate-200">
                   <span className="font-black">{isTamil ? 'பணவீக்கத்திற்குப் பின் உண்மையான மதிப்பு' : 'Inflation-Adjusted Purchasing Value'}</span>
                   <span className="font-mono font-black text-white">{formatCurrency(realPurchasingPower)}</span>
                 </div>
-                <p className="text-[10px] text-emerald-100/80 leading-tight">
+                <p className="text-[10px] text-slate-400 leading-tight">
                   {isTamil
                     ? `${inflationRate}% பணவீக்கத்தைக் கணக்கிடும் போது உங்கள் ₹${(futureValue / 100000).toFixed(1)} லட்சத்தின் உண்மையான மதிப்பு.`
                     : `Purchasing power equivalent in today's money at ${inflationRate}% average inflation rate.`}
@@ -3180,12 +3182,12 @@ function SipCalculator() {
               </div>
             </div>
 
-            <div className="pt-2 flex items-center justify-between text-[11px] text-emerald-100 font-bold border-t border-white/20">
-              <span className="text-white flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+            <div className="pt-2 flex items-center justify-between text-[11px] text-slate-500 font-bold border-t border-slate-200">
+              <span className="text-[#008060] flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-[#008060] animate-pulse" />
                 <span>CFP Verified Math</span>
               </span>
-              <span className="text-emerald-100">Padmanaban B. Financial</span>
+              <span className="text-slate-600 font-semibold">Padmanaban B. Financial</span>
             </div>
           </div>
         </div>
