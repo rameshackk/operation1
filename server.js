@@ -70,10 +70,16 @@ const server = http.createServer(async (req, res) => {
         return mod.default(req, res);
       }
 
-      const matchArticleSlug = reqPath.match(/^\/api\/articles\/([^/?#]+)(\/view)?$/);
+      const matchArticleSlug = reqPath.match(/^\/api\/articles\/([^/?#]+)(\/view|\/comments(\/([0-9]+))?(\/like)?)?$/);
       if (matchArticleSlug && matchArticleSlug[1] !== 'index.js') {
         req.query.slug = decodeURIComponent(matchArticleSlug[1]);
-        if (matchArticleSlug[2] === '/view') req.query.action = 'view';
+        if (matchArticleSlug[2] === '/view') {
+          req.query.action = 'view';
+        } else if (matchArticleSlug[2] && matchArticleSlug[2].startsWith('/comments')) {
+          req.query.action = 'comments';
+          if (matchArticleSlug[4]) req.query.commentId = matchArticleSlug[4];
+          if (matchArticleSlug[5] === '/like') req.query.action = 'like_comment';
+        }
         const mod = await import(`./api/articles/index.js?t=${Date.now()}`);
         return mod.default(req, res);
       }
