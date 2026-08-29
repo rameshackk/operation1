@@ -5262,6 +5262,15 @@ function ArticleCommentsSection({ slug, article, isTamil, onShowToast }) {
   const [replyingTo, setReplyingTo] = useState(null);
   const [replyText, setReplyText] = useState('');
   const [isSubmittingReply, setIsSubmittingReply] = useState(false);
+  
+  // Track liked comments to enforce exactly 1 like per user
+  const [likedMap, setLikedMap] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('muthaleetu_liked_comments') || '{}');
+    } catch {
+      return {};
+    }
+  });
 
   const loadComments = useCallback(async () => {
     if (!slug) return;
@@ -5367,9 +5376,35 @@ function ArticleCommentsSection({ slug, article, isTamil, onShowToast }) {
     }
   };
 
+  // Strictly 1-like-per-user with persistent lock & toggle
   const handleLike = async (commentId) => {
+    const isAlreadyLiked = Boolean(likedMap[commentId]);
+    const nextLikedMap = { ...likedMap };
+    
+    if (isAlreadyLiked) {
+      delete nextLikedMap[commentId];
+    } else {
+      nextLikedMap[commentId] = true;
+    }
+    setLikedMap(nextLikedMap);
+    
     try {
-      const res = await fetch(`/api/articles?slug=${encodeURIComponent(slug)}&action=like_comment&commentId=${commentId}`, {
+      localStorage.setItem('muthaleetu_liked_comments', JSON.stringify(nextLikedMap));
+    } catch {}
+
+    // Optimistic UI update
+    setComments(prev => prev.map(c => {
+      if (c.id === commentId) {
+        const nextCount = isAlreadyLiked 
+          ? Math.max(0, (c.likesCount || 0) - 1) 
+          : (c.likesCount || 0) + 1;
+        return { ...c, likesCount: nextCount };
+      }
+      return c;
+    }));
+
+    try {
+      const res = await fetch(`/api/articles?slug=${encodeURIComponent(slug)}&action=like_comment&commentId=${commentId}&unlike=${isAlreadyLiked ? '1' : '0'}`, {
         method: 'POST'
       });
       if (res.ok) {
@@ -5377,7 +5412,7 @@ function ArticleCommentsSection({ slug, article, isTamil, onShowToast }) {
         setComments(prev => prev.map(c => c.id === commentId ? { ...c, likesCount: json.likes } : c));
       }
     } catch (err) {
-      console.error('Error liking comment:', err);
+      console.error('Error updating like status:', err);
     }
   };
 
@@ -5544,9 +5579,14 @@ function ArticleCommentsSection({ slug, article, isTamil, onShowToast }) {
                   <div className="flex items-center gap-4 mt-3 pt-3 border-t border-slate-200/60 dark:border-slate-800 text-xs font-bold">
                     <button
                       onClick={() => handleLike(comment.id)}
-                      className="flex items-center gap-1.5 text-slate-500 hover:text-red-500 transition-colors"
+                      className={`flex items-center gap-1.5 transition-colors px-2 py-1 rounded-lg ${
+                        likedMap[comment.id] 
+                          ? 'text-red-500 bg-red-500/10 font-black' 
+                          : 'text-slate-500 hover:text-red-500 hover:bg-slate-100 dark:hover:bg-slate-800'
+                      }`}
+                      title={likedMap[comment.id] ? (isTamil ? 'விருப்பத்தை நீக்குக' : 'Unlike') : (isTamil ? 'விருப்பம்' : 'Like')}
                     >
-                      <span>❤️</span>
+                      <span className={likedMap[comment.id] ? 'scale-110' : ''}>{likedMap[comment.id] ? '❤️' : '🤍'}</span>
                       <span>{comment.likesCount || 0}</span>
                     </button>
                     <button
@@ -5554,7 +5594,7 @@ function ArticleCommentsSection({ slug, article, isTamil, onShowToast }) {
                         setReplyingTo(replyingTo === comment.id ? null : comment.id);
                         setReplyText('');
                       }}
-                      className="text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1"
+                      className="text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1 px-2 py-1 rounded-lg hover:bg-amber-500/10"
                     >
                       <span>↩</span>
                       <span>{isTamil ? 'பதிலளி' : 'Reply'}</span>
@@ -5653,9 +5693,14 @@ function ArticleCommentsSection({ slug, article, isTamil, onShowToast }) {
                           <div className="flex items-center gap-4 mt-2.5 pt-2 border-t border-slate-200/50 dark:border-slate-800 text-[11px] font-bold">
                             <button
                               onClick={() => handleLike(reply.id)}
-                              className="flex items-center gap-1 text-slate-500 hover:text-red-500 transition-colors"
+                              className={`flex items-center gap-1 transition-colors px-2 py-1 rounded-lg ${
+                                likedMap[reply.id] 
+                                  ? 'text-red-500 bg-red-500/10 font-black' 
+                                  : 'text-slate-500 hover:text-red-500 hover:bg-slate-100 dark:hover:bg-slate-800'
+                              }`}
+                              title={likedMap[reply.id] ? (isTamil ? 'விருப்பத்தை நீக்குக' : 'Unlike') : (isTamil ? 'விருப்பம்' : 'Like')}
                             >
-                              <span>❤️</span>
+                              <span className={likedMap[reply.id] ? 'scale-110' : ''}>{likedMap[reply.id] ? '❤️' : '🤍'}</span>
                               <span>{reply.likesCount || 0}</span>
                             </button>
                           </div>

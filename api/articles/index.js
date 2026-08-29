@@ -72,17 +72,18 @@ export default async function handler(req, res) {
       }
     }
 
-    // 3. POST Like Comment
-    if (action === 'like_comment' || (req.method === 'POST' && req.body?.action === 'like')) {
+    // 3. POST Like / Unlike Comment
+    if (action === 'like_comment' || (req.method === 'POST' && (req.body?.action === 'like' || req.body?.action === 'unlike'))) {
       try {
         const targetId = parseInt(commentId || req.body?.commentId || req.body?.id, 10);
         if (!targetId) return res.status(400).json({ error: 'Comment ID is required' });
 
-        const likesCount = await likeArticleComment(targetId);
-        return res.status(200).json({ status: 'success', commentId: targetId, likes: likesCount });
+        const isUnlike = req.query?.unlike === '1' || req.body?.action === 'unlike' || req.body?.unlike === true;
+        const likesCount = await likeArticleComment(targetId, isUnlike);
+        return res.status(200).json({ status: 'success', commentId: targetId, likes: likesCount, unliked: isUnlike });
       } catch (error) {
         console.error(`Error liking comment:`, error);
-        return res.status(500).json({ error: 'Failed to like comment', message: error.message });
+        return res.status(500).json({ error: 'Failed to update like status', message: error.message });
       }
     }
 
