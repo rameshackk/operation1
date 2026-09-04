@@ -6004,28 +6004,28 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                         </a>
                       </h2>
 
-                      {/* Row 3: Byline Row: Publisher's Name + small ARN badge */}
-                      <div className="flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-300">
-                        <div className="flex items-center gap-2 min-w-0">
+                      {/* Row 3: Byline Row: Publisher's Profile Avatar, Name & Credential badge */}
+                      <div className="flex items-center gap-3 text-sm font-semibold text-slate-700 dark:text-slate-200 my-0.5">
+                        <div className="flex items-center gap-2.5 min-w-0">
                           {article.authorAvatar ? (
                             <img
                               src={article.authorAvatar}
-                              alt=""
-                              className="w-5 h-5 rounded-full object-cover border border-slate-200 dark:border-slate-700 shrink-0"
+                              alt={authorName}
+                              className="w-8 h-8 rounded-full object-cover border-2 border-slate-200 dark:border-slate-700 shadow-sm shrink-0"
                               onError={(e) => { e.target.style.display = 'none'; }}
                             />
                           ) : (
-                            <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-brandBlue-600 to-brandGreen-600 text-white font-black text-[9px] flex items-center justify-center shrink-0">
+                            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-brandBlue-600 via-brandBlue-500 to-brandGreen-600 text-white font-black text-xs flex items-center justify-center shadow-sm shrink-0">
                               {authorName.charAt(0)}
                             </div>
                           )}
-                          <span className="font-bold text-slate-800 dark:text-slate-200 truncate">
+                          <span className="font-extrabold text-sm sm:text-[14.5px] text-slate-900 dark:text-slate-100 truncate">
                             {authorName}
                           </span>
                         </div>
 
                         {arnNumber && (
-                          <span className="inline-flex items-center gap-1 text-[9.5px] font-bold font-mono px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-800 dark:text-amber-300 border border-amber-500/20 shrink-0">
+                          <span className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-bold font-mono px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-800 dark:text-amber-300 border border-amber-500/25 shrink-0">
                             <span>🛡️</span>
                             <span>{arnNumber}</span>
                           </span>
