@@ -6234,6 +6234,15 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
   const [showStickyBar, setShowStickyBar] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
+  // Audio Player State (Google Cloud WaveNet + Web Speech fallback)
+  const [showAudioPlayer, setShowAudioPlayer] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [audioCurrentTime, setAudioCurrentTime] = useState(0);
+  const [audioDuration, setAudioDuration] = useState(0);
+  const [playbackSpeed, setPlaybackSpeed] = useState(1.0);
+  const [isAudioLoading, setIsAudioLoading] = useState(false);
+  const audioRef = useRef(null);
+
   // Floating toolbar interactive states
   const [isReadingMode, setIsReadingMode] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
@@ -6412,27 +6421,25 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
     return null;
   };
 
-  // Text-To-Speech Playback with direct Tamil / English language switching
-  const handleToggleListen = (forcedLang) => {
+  const formatAudioTime = (sec) => {
+    if (!sec || isNaN(sec) || !isFinite(sec)) return '0:00';
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return `${m}:${s < 10 ? '0' : ''}${s}`;
+  };
+
+  // Client-side Web Speech Synthesis (Seamless zero-cost fallback)
+  const playSpeechSynthesis = (targetLang) => {
     if (typeof window === 'undefined' || !window.speechSynthesis) {
-      if (onShowToast) onShowToast(isTamil ? 'உங்கள் உலாவியில் ஆடியோ வசதி இல்லை.' : 'Text-to-speech is not supported in your browser.');
-      return;
-    }
-
-    const targetLang = forcedLang || audioVoiceLang;
-    const isTargetTamil = targetLang === 'ta';
-
-    if (isSpeaking && !forcedLang) {
-      window.speechSynthesis.cancel();
+      if (onShowToast) onShowToast(targetLang === 'ta' ? 'உங்கள் உலாவியில் ஆடியோ வசதி இல்லை.' : 'Text-to-speech is not supported in your browser.');
+      setIsPlaying(false);
       setIsSpeaking(false);
-      if (onShowToast) onShowToast(isTamil ? 'ஆடியோ வாசிப்பு நிறுத்தப்பட்டது.' : 'Audio playback stopped.');
       return;
     }
 
+    const isTargetTamil = targetLang === 'ta';
     window.speechSynthesis.cancel();
-    setAudioVoiceLang(targetLang);
 
-    // Strictly extract Tamil content when target is Tamil, and English when English
     const titleToRead = isTargetTamil
       ? (article.titleTamil || article.title_ta || article.title || '')
       : (article.titleEnglish || article.title_en || article.title || '');
@@ -6445,7 +6452,6 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
       ? (article.bodyTamil || article.body_ta || article.body || '')
       : (article.bodyEnglish || article.body_en || article.body || '');
 
-    // Clean HTML tags, decode entities, and normalize whitespace
     const cleanBody = rawBody
       .replace(/<h[1-6][^>]*>(.*?)<\/h[1-6]>/gi, '$1. ')
       .replace(/<li[^>]*>(.*?)<\/li>/gi, '$1. ')
@@ -6462,11 +6468,12 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
     const fullText = `${titleToRead}. ${excerptToRead ? excerptToRead + '.' : ''} ${cleanBody}`.trim();
 
     if (!fullText) {
-      if (onShowToast) onShowToast(isTargetTamil ? 'வாசிக்க தமிழ் உரை எதுவும் இல்லை.' : 'No English text content available to read.');
+      if (onShowToast) onShowToast(isTargetTamil ? 'வாசிக்க தமிழ் உரை எதுவும் இல்லை.' : 'No text content available to read.');
+      setIsPlaying(false);
+      setIsSpeaking(false);
       return;
     }
 
-    // Split text into chunks to prevent browser speech synthesis timeouts
     const sentences = fullText.match(/[^.!?\n]+[.!?\n]+/g) || [fullText];
     const chunks = [];
     let currentChunk = '';
@@ -6481,24 +6488,34 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
     }
     if (currentChunk.trim()) chunks.push(currentChunk.trim());
 
+    // Estimate total reading duration for timeline scrubber (~130 wpm for Tamil, 160 wpm for English)
+    const wordCount = fullText.split(/\s+/).length;
+    const estimatedSecs = Math.max(15, Math.ceil((wordCount / (isTargetTamil ? 130 : 160)) * 60));
+    setAudioDuration(estimatedSecs);
+    setAudioCurrentTime(0);
+
     const matchedVoice = getVoiceForLanguage(isTargetTamil);
     let chunkIndex = 0;
 
     const speakNextChunk = () => {
       if (chunkIndex >= chunks.length) {
+        setIsPlaying(false);
         setIsSpeaking(false);
+        setAudioCurrentTime(estimatedSecs);
         return;
       }
 
       const chunkText = chunks[chunkIndex];
       chunkIndex++;
 
+      setAudioCurrentTime(Math.min(estimatedSecs, Math.ceil((chunkIndex / chunks.length) * estimatedSecs)));
+
       const utterance = new SpeechSynthesisUtterance(chunkText);
       utterance.lang = isTargetTamil ? 'ta-IN' : 'en-IN';
       if (matchedVoice) {
         utterance.voice = matchedVoice;
       }
-      utterance.rate = isTargetTamil ? 0.88 : 0.95;
+      utterance.rate = (isTargetTamil ? 0.88 : 0.95) * playbackSpeed;
       utterance.pitch = 1.0;
 
       utterance.onend = () => {
@@ -6506,18 +6523,117 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
       };
       utterance.onerror = (e) => {
         console.warn('TTS playback error:', e);
+        setIsPlaying(false);
         setIsSpeaking(false);
       };
 
       window.speechSynthesis.speak(utterance);
     };
 
+    setIsPlaying(true);
     setIsSpeaking(true);
     speakNextChunk();
 
     if (onShowToast) {
-      onShowToast(isTargetTamil ? '🔊 தமிழில் கட்டுரை வாசிக்கப்படுகிறது...' : '🔊 Reading article aloud in English...');
+      onShowToast(isTargetTamil ? '🔊 WaveNet தமிழில் கட்டுரை வாசிக்கப்படுகிறது...' : '🔊 Reading article aloud in English...');
     }
+  };
+
+  // Main Audio Listener Trigger: Handles Cloud MP3 and SpeechSynthesis seamlessly
+  const handleToggleListen = (forcedLang) => {
+    const targetLang = forcedLang || audioVoiceLang;
+    const isTargetTamil = targetLang === 'ta';
+    setAudioVoiceLang(targetLang);
+    setShowAudioPlayer(true);
+
+    const activeAudioUrl = isTargetTamil
+      ? (article?.audioUrlTa || article?.audio_url_ta)
+      : (article?.audioUrlEn || article?.audio_url_en);
+
+    // If pre-generated Google Cloud WaveNet MP3 exists in Supabase Storage, stream directly
+    if (activeAudioUrl) {
+      if (typeof window !== 'undefined' && window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+      }
+      setIsSpeaking(false);
+
+      if (audioRef.current) {
+        if (audioRef.current.src !== activeAudioUrl) {
+          audioRef.current.src = activeAudioUrl;
+          audioRef.current.playbackRate = playbackSpeed;
+          audioRef.current.load();
+        }
+
+        if (isPlaying && !forcedLang) {
+          audioRef.current.pause();
+          setIsPlaying(false);
+          if (onShowToast) onShowToast(isTargetTamil ? 'ஆடியோ இடைநிறுத்தப்பட்டது.' : 'Audio paused.');
+        } else {
+          setIsAudioLoading(true);
+          audioRef.current.play()
+            .then(() => {
+              setIsPlaying(true);
+              setIsAudioLoading(false);
+              if (onShowToast) onShowToast(isTargetTamil ? '🔊 Google WaveNet தமிழ் ஆடியோ இயங்குகிறது...' : '🔊 Streaming Google WaveNet English audio...');
+            })
+            .catch(() => {
+              setIsAudioLoading(false);
+              playSpeechSynthesis(targetLang);
+            });
+        }
+      }
+      return;
+    }
+
+    // Fallback: If cloud audio is not yet generated, use client-side SpeechSynthesis
+    if (isPlaying && !forcedLang) {
+      if (typeof window !== 'undefined' && window.speechSynthesis) window.speechSynthesis.cancel();
+      setIsPlaying(false);
+      setIsSpeaking(false);
+      if (onShowToast) onShowToast(isTargetTamil ? 'ஆடியோ நிறுத்தப்பட்டது.' : 'Audio playback stopped.');
+      return;
+    }
+
+    playSpeechSynthesis(targetLang);
+  };
+
+  const handleSeek = (newTime) => {
+    const time = parseFloat(newTime);
+    setAudioCurrentTime(time);
+    if (audioRef.current && !isNaN(audioRef.current.duration)) {
+      audioRef.current.currentTime = time;
+    }
+  };
+
+  const handleSkip = (deltaSeconds) => {
+    if (audioRef.current && !isNaN(audioRef.current.duration)) {
+      const nextTime = Math.max(0, Math.min(audioRef.current.duration, audioRef.current.currentTime + deltaSeconds));
+      audioRef.current.currentTime = nextTime;
+      setAudioCurrentTime(nextTime);
+    } else {
+      const nextTime = Math.max(0, Math.min(audioDuration || 60, audioCurrentTime + deltaSeconds));
+      setAudioCurrentTime(nextTime);
+    }
+  };
+
+  const handleChangeSpeed = (newSpeed) => {
+    setPlaybackSpeed(newSpeed);
+    if (audioRef.current) {
+      audioRef.current.playbackRate = newSpeed;
+    }
+    if (onShowToast) onShowToast(isTamil ? `வேகம்: ${newSpeed}x` : `Playback speed: ${newSpeed}x`);
+  };
+
+  const handleClosePlayer = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
+    if (typeof window !== 'undefined' && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+    setIsPlaying(false);
+    setIsSpeaking(false);
+    setShowAudioPlayer(false);
   };
 
   // Share handler
@@ -7203,30 +7319,174 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
         )}
       </div>
 
-      {/* ================= 9. FLOATING LIVE AUDIO PLAYER CONTROLLER ================= */}
-      {isSpeaking && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-full bg-slate-950/95 text-white backdrop-blur-md border border-amber-500/60 shadow-2xl flex items-center gap-3 animate-fadeIn">
-          <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping" />
-            <span className="text-xs font-black text-amber-300">
-              {audioVoiceLang === 'ta' ? '🔊 தமிழில் வாசிக்கப்படுகிறது' : '🔊 Reading in English'}
-            </span>
-          </div>
-          <div className="flex items-center gap-1.5 pl-2 border-l border-slate-700">
-            <button
-              type="button"
-              onClick={() => handleToggleListen(audioVoiceLang === 'ta' ? 'en' : 'ta')}
-              className="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors"
-            >
-              {audioVoiceLang === 'ta' ? 'English' : 'தமிழ்'}
-            </button>
-            <button
-              type="button"
-              onClick={() => handleToggleListen()}
-              className="px-2.5 py-1 rounded-full text-[10px] font-black bg-red-600/90 hover:bg-red-600 text-white transition-colors"
-            >
-              {isTamil ? 'நிறுத்து' : 'Stop'}
-            </button>
+      {/* ================= 9. FLOATING LIVE AUDIO PLAYER CONTROLLER & STICKY BOTTOM BAR ================= */}
+      <audio
+        ref={audioRef}
+        onTimeUpdate={() => {
+          if (audioRef.current) setAudioCurrentTime(audioRef.current.currentTime);
+        }}
+        onLoadedMetadata={() => {
+          if (audioRef.current) setAudioDuration(audioRef.current.duration);
+        }}
+        onEnded={() => {
+          setIsPlaying(false);
+          setIsSpeaking(false);
+          setAudioCurrentTime(0);
+        }}
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
+      />
+
+      {showAudioPlayer && (
+        <div className="fixed bottom-0 left-0 right-0 z-50 bg-slate-950/95 text-white backdrop-blur-xl border-t border-amber-500/40 shadow-[0_-10px_30px_rgba(0,0,0,0.5)] px-4 py-3 sm:py-3.5 transition-all animate-fadeIn">
+          <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4">
+            
+            {/* Left: Voice Status & Language Switcher */}
+            <div className="flex items-center justify-between w-full md:w-auto gap-3">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400">
+                  {isPlaying ? (
+                    <span className="flex items-center gap-0.5">
+                      <span className="w-1 h-3 bg-amber-400 rounded animate-pulse" />
+                      <span className="w-1 h-4 bg-amber-300 rounded animate-pulse" style={{ animationDelay: '150ms' }} />
+                      <span className="w-1 h-2 bg-amber-400 rounded animate-pulse" style={{ animationDelay: '300ms' }} />
+                    </span>
+                  ) : (
+                    <span>🔊</span>
+                  )}
+                </div>
+                <div>
+                  <div className="text-[10px] font-mono text-amber-400 uppercase tracking-wider flex items-center gap-1.5 font-bold">
+                    <span>Google WaveNet AI</span>
+                    <span className="text-[9px] px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300">Female</span>
+                  </div>
+                  <div className="text-xs font-bold text-slate-200 truncate max-w-[180px] sm:max-w-[240px]">
+                    {audioVoiceLang === 'ta' ? 'தமிழ் ஆடியோ' : 'English Audio'}
+                  </div>
+                </div>
+              </div>
+
+              {/* Language Switch Pills */}
+              <div className="flex items-center gap-1 bg-slate-900 p-1 rounded-full border border-slate-800">
+                <button
+                  type="button"
+                  onClick={() => handleToggleListen('ta')}
+                  className={`px-2.5 py-0.5 rounded-full text-[10px] font-black transition-all ${
+                    audioVoiceLang === 'ta'
+                      ? 'bg-amber-500 text-slate-950 shadow'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  தமிழ்
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleToggleListen('en')}
+                  className={`px-2.5 py-0.5 rounded-full text-[10px] font-black transition-all ${
+                    audioVoiceLang === 'en'
+                      ? 'bg-amber-500 text-slate-950 shadow'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  English
+                </button>
+              </div>
+            </div>
+
+            {/* Center: Controls & Scrubber Timeline */}
+            <div className="flex-1 w-full max-w-xl flex flex-col gap-1">
+              <div className="flex items-center justify-center gap-3">
+                {/* Skip Back 10s */}
+                <button
+                  type="button"
+                  onClick={() => handleSkip(-10)}
+                  className="text-slate-400 hover:text-white text-xs font-bold p-1 rounded hover:bg-slate-800 transition-colors"
+                  title={isTamil ? '10 வினாடி பின்செல்க' : 'Replay 10 seconds'}
+                >
+                  ↺ 10s
+                </button>
+
+                {/* Play / Pause / Loading Button */}
+                <button
+                  type="button"
+                  onClick={() => handleToggleListen()}
+                  disabled={isAudioLoading}
+                  className="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-500 to-amber-400 text-slate-950 font-black flex items-center justify-center shadow-lg shadow-amber-500/30 hover:scale-105 active:scale-95 transition-all disabled:opacity-50"
+                  title={isPlaying ? (isTamil ? 'இடைநிறுத்து' : 'Pause') : (isTamil ? 'இயக்கு' : 'Play')}
+                >
+                  {isAudioLoading ? (
+                    <span className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
+                  ) : isPlaying ? (
+                    <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                      <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
+                    </svg>
+                  ) : (
+                    <svg className="w-4 h-4 fill-current ml-0.5" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  )}
+                </button>
+
+                {/* Skip Forward 10s */}
+                <button
+                  type="button"
+                  onClick={() => handleSkip(10)}
+                  className="text-slate-400 hover:text-white text-xs font-bold p-1 rounded hover:bg-slate-800 transition-colors"
+                  title={isTamil ? '10 வினாடி முன்செல்க' : 'Forward 10 seconds'}
+                >
+                  10s ↻
+                </button>
+              </div>
+
+              {/* Scrubber Bar */}
+              <div className="flex items-center gap-2.5 text-[11px] font-mono text-slate-400">
+                <span>{formatAudioTime(audioCurrentTime)}</span>
+                <div className="flex-1 relative flex items-center">
+                  <input
+                    type="range"
+                    min="0"
+                    max={audioDuration || 100}
+                    step="0.5"
+                    value={audioCurrentTime}
+                    onChange={(e) => handleSeek(e.target.value)}
+                    className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-400 hover:h-2 transition-all"
+                  />
+                </div>
+                <span>{formatAudioTime(audioDuration)}</span>
+              </div>
+            </div>
+
+            {/* Right: Playback Speed & Close */}
+            <div className="flex items-center gap-2">
+              {/* Speed Selector */}
+              <div className="flex items-center bg-slate-900 rounded-lg p-0.5 border border-slate-800 text-[10px] font-bold">
+                {[0.75, 1.0, 1.25, 1.5].map((spd) => (
+                  <button
+                    key={spd}
+                    type="button"
+                    onClick={() => handleChangeSpeed(spd)}
+                    className={`px-1.5 py-0.5 rounded transition-all ${
+                      playbackSpeed === spd
+                        ? 'bg-amber-500 text-slate-950 font-black'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    {spd}x
+                  </button>
+                ))}
+              </div>
+
+              {/* Close Button */}
+              <button
+                type="button"
+                onClick={handleClosePlayer}
+                className="p-1.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white text-xs transition-colors"
+                title={isTamil ? 'மூடு' : 'Close Player'}
+              >
+                ✕
+              </button>
+            </div>
+
           </div>
         </div>
       )}
