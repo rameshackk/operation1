@@ -6357,13 +6357,16 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
     return items;
   }, [article, isTamil]);
 
-  // Stop speech when component unmounts or language changes
+  const [audioVoiceLang, setAudioVoiceLang] = useState(() => isTamil ? 'ta' : 'en');
+
+  // Keep audioVoiceLang in sync when user toggles site language
   useEffect(() => {
+    setAudioVoiceLang(isTamil ? 'ta' : 'en');
     if (typeof window !== 'undefined' && window.speechSynthesis) {
       window.speechSynthesis.cancel();
       setIsSpeaking(false);
     }
-  }, [language]);
+  }, [isTamil, language]);
 
   // Pre-warm and register voices for Tamil (ta-IN) and Indian English (en-IN)
   useEffect(() => {
@@ -6388,7 +6391,7 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
     if (voices.length === 0) return null;
 
     if (isTa) {
-      // 1. Exact Tamil matches (e.g. ta-IN, ta_IN, Google தமிழ், Microsoft Valluvar/Pallavi/Latha)
+      // Prioritize explicit Tamil voices (ta-IN, Google தமிழ், Microsoft Valluvar/Pallavi/Latha, Apple Tamil)
       const exactTa = voices.find(v => v.lang && (v.lang.toLowerCase() === 'ta-in' || v.lang.toLowerCase() === 'ta_in'));
       if (exactTa) return exactTa;
       
@@ -6399,7 +6402,7 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
       });
       if (anyTa) return anyTa;
     } else {
-      // 2. English matches (Indian English en-IN or standard English)
+      // English: Indian English en-IN or standard English
       const enIn = voices.find(v => v.lang && (v.lang.toLowerCase() === 'en-in' || v.lang.toLowerCase() === 'en_in' || (v.name || '').toLowerCase().includes('india')));
       if (enIn) return enIn;
       
@@ -6409,14 +6412,17 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
     return null;
   };
 
-  // Text-To-Speech Playback with full Tamil & English dual-mode support
-  const handleToggleListen = () => {
+  // Text-To-Speech Playback with direct Tamil / English language switching
+  const handleToggleListen = (forcedLang) => {
     if (typeof window === 'undefined' || !window.speechSynthesis) {
       if (onShowToast) onShowToast(isTamil ? 'உங்கள் உலாவியில் ஆடியோ வசதி இல்லை.' : 'Text-to-speech is not supported in your browser.');
       return;
     }
 
-    if (isSpeaking) {
+    const targetLang = forcedLang || audioVoiceLang;
+    const isTargetTamil = targetLang === 'ta';
+
+    if (isSpeaking && !forcedLang) {
       window.speechSynthesis.cancel();
       setIsSpeaking(false);
       if (onShowToast) onShowToast(isTamil ? 'ஆடியோ வாசிப்பு நிறுத்தப்பட்டது.' : 'Audio playback stopped.');
@@ -6424,14 +6430,25 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
     }
 
     window.speechSynthesis.cancel();
+    setAudioVoiceLang(targetLang);
 
-    // Select content based on current active language mode
-    const titleToRead = (isTamil ? (article.titleTamil || article.titleEnglish) : (article.titleEnglish || article.titleTamil)) || '';
-    const excerptToRead = (isTamil ? (article.excerptTamil || article.excerptEnglish) : (article.excerptEnglish || article.excerptTamil)) || '';
-    const rawBody = (isTamil ? (article.bodyTamil || article.bodyEnglish) : (article.bodyEnglish || article.bodyTamil)) || '';
+    // Strictly extract Tamil content when target is Tamil, and English when English
+    const titleToRead = isTargetTamil
+      ? (article.titleTamil || article.title_ta || article.title || '')
+      : (article.titleEnglish || article.title_en || article.title || '');
+
+    const excerptToRead = isTargetTamil
+      ? (article.excerptTamil || article.excerpt_ta || article.summary || article.excerpt || '')
+      : (article.excerptEnglish || article.excerpt_en || article.summary || article.excerpt || '');
+
+    const rawBody = isTargetTamil
+      ? (article.bodyTamil || article.body_ta || article.body || '')
+      : (article.bodyEnglish || article.body_en || article.body || '');
 
     // Clean HTML tags, decode entities, and normalize whitespace
     const cleanBody = rawBody
+      .replace(/<h[1-6][^>]*>(.*?)<\/h[1-6]>/gi, '$1. ')
+      .replace(/<li[^>]*>(.*?)<\/li>/gi, '$1. ')
       .replace(/<[^>]+>/g, ' ')
       .replace(/&nbsp;/g, ' ')
       .replace(/&amp;/g, '&')
@@ -6445,7 +6462,7 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
     const fullText = `${titleToRead}. ${excerptToRead ? excerptToRead + '.' : ''} ${cleanBody}`.trim();
 
     if (!fullText) {
-      if (onShowToast) onShowToast(isTamil ? 'வாசிக்க உரை எதுவும் இல்லை.' : 'No text content available to read.');
+      if (onShowToast) onShowToast(isTargetTamil ? 'வாசிக்க தமிழ் உரை எதுவும் இல்லை.' : 'No English text content available to read.');
       return;
     }
 
@@ -6464,7 +6481,7 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
     }
     if (currentChunk.trim()) chunks.push(currentChunk.trim());
 
-    const matchedVoice = getVoiceForLanguage(isTamil);
+    const matchedVoice = getVoiceForLanguage(isTargetTamil);
     let chunkIndex = 0;
 
     const speakNextChunk = () => {
@@ -6477,11 +6494,11 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
       chunkIndex++;
 
       const utterance = new SpeechSynthesisUtterance(chunkText);
-      utterance.lang = isTamil ? 'ta-IN' : 'en-IN';
+      utterance.lang = isTargetTamil ? 'ta-IN' : 'en-IN';
       if (matchedVoice) {
         utterance.voice = matchedVoice;
       }
-      utterance.rate = isTamil ? 0.90 : 0.95;
+      utterance.rate = isTargetTamil ? 0.88 : 0.95;
       utterance.pitch = 1.0;
 
       utterance.onend = () => {
@@ -6499,7 +6516,7 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
     speakNextChunk();
 
     if (onShowToast) {
-      onShowToast(isTamil ? '🔊 தமிழில் கட்டுரை வாசிக்கப்படுகிறது...' : '🔊 Reading article aloud in English...');
+      onShowToast(isTargetTamil ? '🔊 தமிழில் கட்டுரை வாசிக்கப்படுகிறது...' : '🔊 Reading article aloud in English...');
     }
   };
 
@@ -6901,19 +6918,38 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
               </p>
             </div>
             <div className="pt-2.5 border-t border-brandBlue-500/15 flex items-center justify-between gap-2 flex-wrap">
-              <button
-                type="button"
-                onClick={handleToggleListen}
-                className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-extrabold transition-all ${
-                  isSpeaking
-                    ? 'bg-amber-500 text-slate-950 animate-pulse shadow'
-                    : 'bg-brandBlue-600/10 hover:bg-brandBlue-600/20 text-brandBlue-700 dark:text-brandBlue-300 border border-brandBlue-500/30'
-                }`}
-                title={isSpeaking ? (isTamil ? 'ஆடியோவை நிறுத்து' : 'Stop Audio') : (isTamil ? 'தமிழில் ஆடியோவாக கேள்' : 'Listen in Audio')}
-              >
-                <span>{isSpeaking ? '⏹' : '🔊'}</span>
-                <span>{isSpeaking ? (isTamil ? 'நிறுத்து' : 'Stop') : (isTamil ? 'கேட்கவும் (Audio)' : 'Listen')}</span>
-              </button>
+              <div className="flex items-center gap-1.5">
+                {/* Play in Tamil Voice */}
+                <button
+                  type="button"
+                  onClick={() => handleToggleListen('ta')}
+                  className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-extrabold transition-all ${
+                    isSpeaking && audioVoiceLang === 'ta'
+                      ? 'bg-amber-500 text-slate-950 animate-pulse shadow font-black ring-2 ring-amber-400'
+                      : 'bg-brandBlue-600/10 hover:bg-brandBlue-600/20 text-brandBlue-700 dark:text-brandBlue-300 border border-brandBlue-500/30'
+                  }`}
+                  title="தமிழில் ஆடியோவாக கேள் (Tamil Audio)"
+                >
+                  <span>{isSpeaking && audioVoiceLang === 'ta' ? '⏹' : '🔊'}</span>
+                  <span>{isSpeaking && audioVoiceLang === 'ta' ? 'நிறுத்து' : 'தமிழில் கேள்'}</span>
+                </button>
+
+                {/* Play in English Voice */}
+                <button
+                  type="button"
+                  onClick={() => handleToggleListen('en')}
+                  className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-extrabold transition-all ${
+                    isSpeaking && audioVoiceLang === 'en'
+                      ? 'bg-amber-500 text-slate-950 animate-pulse shadow font-black ring-2 ring-amber-400'
+                      : 'bg-slate-200/80 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700'
+                  }`}
+                  title="Listen in English Audio"
+                >
+                  <span>{isSpeaking && audioVoiceLang === 'en' ? '⏹' : '🔊'}</span>
+                  <span>{isSpeaking && audioVoiceLang === 'en' ? 'Stop' : 'English'}</span>
+                </button>
+              </div>
+
               <button
                 type="button"
                 onClick={() => setShowAiModal(true)}
@@ -7167,7 +7203,35 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
         )}
       </div>
 
-      {/* ================= 9. FLOATING SCROLL-TO-TOP BUTTON ================= */}
+      {/* ================= 9. FLOATING LIVE AUDIO PLAYER CONTROLLER ================= */}
+      {isSpeaking && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-full bg-slate-950/95 text-white backdrop-blur-md border border-amber-500/60 shadow-2xl flex items-center gap-3 animate-fadeIn">
+          <div className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping" />
+            <span className="text-xs font-black text-amber-300">
+              {audioVoiceLang === 'ta' ? '🔊 தமிழில் வாசிக்கப்படுகிறது' : '🔊 Reading in English'}
+            </span>
+          </div>
+          <div className="flex items-center gap-1.5 pl-2 border-l border-slate-700">
+            <button
+              type="button"
+              onClick={() => handleToggleListen(audioVoiceLang === 'ta' ? 'en' : 'ta')}
+              className="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors"
+            >
+              {audioVoiceLang === 'ta' ? 'English' : 'தமிழ்'}
+            </button>
+            <button
+              type="button"
+              onClick={() => handleToggleListen()}
+              className="px-2.5 py-1 rounded-full text-[10px] font-black bg-red-600/90 hover:bg-red-600 text-white transition-colors"
+            >
+              {isTamil ? 'நிறுத்து' : 'Stop'}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* ================= 10. FLOATING SCROLL-TO-TOP BUTTON ================= */}
       {showScrollTop && (
         <button
           type="button"
