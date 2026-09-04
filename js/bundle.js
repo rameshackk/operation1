@@ -6223,25 +6223,46 @@ function ArticlesPage({ onNavigate, onShowToast }) {
 function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
   const { language } = useLanguage();
   const { session } = useAuth();
+  const { bookmarks, toggleBookmark, isSaved } = useBookmarks();
   const isTamil = language === 'ta';
 
   const [article, setArticle] = useState(null);
+  const [categoryArticles, setCategoryArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [showStickyBar, setShowStickyBar] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
+  // Floating toolbar interactive states
+  const [isReadingMode, setIsReadingMode] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [showInfoModal, setShowInfoModal] = useState(false);
+  const [showTocModal, setShowTocModal] = useState(false);
+  const [showAiModal, setShowAiModal] = useState(false);
+  const [carouselIndex, setCarouselIndex] = useState(0);
+
+  // Scroll listener for sticky bar, progress, and scroll-to-top
   useEffect(() => {
     const handleScroll = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
       const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
       if (totalHeight > 0) {
-        const progress = Math.min(100, Math.max(0, (window.scrollY / totalHeight) * 100));
+        const progress = Math.min(100, Math.max(0, (scrollTop / totalHeight) * 100));
         setScrollProgress(progress);
       }
+      setShowStickyBar(scrollTop > 260);
+      setShowScrollTop(scrollTop > 380);
     };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
+    };
   }, []);
 
+  // Fetch current article data
   useEffect(() => {
     let isMounted = true;
     const fetchArticle = async () => {
@@ -6259,7 +6280,20 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
         }
 
         const data = await res.json();
-        if (isMounted) setArticle(data.data);
+        if (isMounted) {
+          setArticle(data.data);
+          // Also fetch sibling articles in the same category for prev/next and sidebar
+          if (data.data?.category) {
+            fetch(`/api/articles?category=${encodeURIComponent(data.data.category)}&limit=15`)
+              .then(r => r.ok ? r.json() : null)
+              .then(catJson => {
+                if (isMounted && catJson?.data) {
+                  setCategoryArticles(catJson.data);
+                }
+              })
+              .catch(() => {});
+          }
+        }
       } catch (err) {
         console.error('Error loading article:', err);
         if (isMounted) setError(err.message);
@@ -6272,7 +6306,7 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
     return () => { isMounted = false; };
   }, [slug, session, isTamil]);
 
-  // Track & Increment Live View Count (with anti-spam session lock)
+  // Track & Increment Live View Count
   useEffect(() => {
     if (!slug) return;
     const sessionKey = `muthaleetu_art_view_${slug}`;
@@ -6289,65 +6323,110 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
     }
   }, [slug]);
 
-  useEffect(() => {
-    if (!article) return;
-
-    const title = isTamil ? article.titleTamil : (article.titleEnglish || article.titleTamil);
-    const excerpt = isTamil ? article.excerptTamil : (article.excerptEnglish || article.excerptTamil);
-
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.id = `jsonld-article-${article.slug}`;
-    script.text = JSON.stringify({
-      '@context': 'https://schema.org',
-      '@type': 'NewsArticle',
-      'headline': title,
-      'description': excerpt,
-      'image': [article.coverImage || `${window.location.origin}/favicon.svg`],
-      'datePublished': article.publishedAt,
-      'dateModified': article.updatedAt || article.publishedAt,
-      'author': [{
-        '@type': 'Person',
-        'name': article.authorName || 'Budget Padmanaban',
-        'jobTitle': 'Certified Financial Planner (CFP®)',
-        'url': 'https://www.youtube.com/@budgetpadmanaban_'
-      }],
-      'publisher': {
-        '@type': 'Organization',
-        'name': 'Muthaleetu Thisai',
-        'logo': { '@type': 'ImageObject', 'url': `${window.location.origin}/favicon.svg` }
-      },
-      'mainEntityOfPage': { '@type': 'WebPage', '@id': `${window.location.origin}/#/articles/${article.slug}` }
-    });
-
-    document.head.appendChild(script);
-    return () => {
-      const existing = document.getElementById(`jsonld-article-${article.slug}`);
-      if (existing) existing.remove();
+  // Sibling articles for Previous / Next in the same category
+  const { prevArticle, nextArticle } = useMemo(() => {
+    if (!article || categoryArticles.length === 0) return { prevArticle: null, nextArticle: null };
+    const idx = categoryArticles.findIndex(a => a.slug === article.slug || a.id === article.id);
+    if (idx === -1) {
+      return {
+        prevArticle: categoryArticles[0] && categoryArticles[0].slug !== article.slug ? categoryArticles[0] : null,
+        nextArticle: categoryArticles[1] && categoryArticles[1].slug !== article.slug ? categoryArticles[1] : null
+      };
+    }
+    return {
+      prevArticle: idx > 0 ? categoryArticles[idx - 1] : null,
+      nextArticle: idx < categoryArticles.length - 1 ? categoryArticles[idx + 1] : null
     };
+  }, [article, categoryArticles]);
+
+  // Extract H2 headings for Table of Contents
+  const tableOfContents = useMemo(() => {
+    if (!article) return [];
+    const bodyText = isTamil ? (article.bodyTamil || article.bodyEnglish || '') : (article.bodyEnglish || article.bodyTamil || '');
+    const h2Regex = /<h2[^>]*>(.*?)<\/h2>/gi;
+    const items = [];
+    let match;
+    let index = 0;
+    while ((match = h2Regex.exec(bodyText)) !== null) {
+      const cleanTitle = match[1].replace(/<[^>]+>/g, '').trim();
+      if (cleanTitle) {
+        items.push({ id: `section-h2-${index}`, title: cleanTitle });
+        index++;
+      }
+    }
+    return items;
   }, [article, isTamil]);
 
-  const handleShare = (platform) => {
-    const url = window.location.href;
-    const title = article ? (isTamil ? article.titleTamil : article.titleEnglish) : 'Muthaleetu Thisai';
-
-    if (platform === 'copy') {
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(url);
-        if (onShowToast) onShowToast(isTamil ? 'லிங்க் நகலெடுக்கப்பட்டது!' : 'Article link copied to clipboard!');
-      }
-    } else if (platform === 'whatsapp') {
-      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(`${title} - ${url}`)}`, '_blank');
-    } else if (platform === 'twitter') {
-      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`, '_blank');
+  // Text-To-Speech Playback
+  const handleToggleListen = () => {
+    if (typeof window === 'undefined' || !window.speechSynthesis) {
+      if (onShowToast) onShowToast(isTamil ? 'உங்கள் உலாவியில் ஆடியோ வசதி இல்லை.' : 'Text-to-speech is not supported in your browser.');
+      return;
     }
+
+    if (isSpeaking) {
+      window.speechSynthesis.cancel();
+      setIsSpeaking(false);
+      if (onShowToast) onShowToast(isTamil ? 'ஆடியோ வாசிப்பு நிறுத்தப்பட்டது.' : 'Audio playback stopped.');
+    } else {
+      window.speechSynthesis.cancel();
+      const titleToRead = isTamil ? article.titleTamil : (article.titleEnglish || article.titleTamil);
+      const excerptToRead = isTamil ? article.excerptTamil : (article.excerptEnglish || article.excerptTamil);
+      const bodyClean = (isTamil ? (article.bodyTamil || article.bodyEnglish) : (article.bodyEnglish || article.bodyTamil) || '').replace(/<[^>]+>/g, ' ');
+      const textToSpeak = `${titleToRead}. ${excerptToRead || ''}. ${bodyClean}`.slice(0, 3000);
+
+      const utterance = new SpeechSynthesisUtterance(textToSpeak);
+      utterance.lang = isTamil ? 'ta-IN' : 'en-IN';
+      utterance.rate = 0.95;
+      utterance.onend = () => setIsSpeaking(false);
+      utterance.onerror = () => setIsSpeaking(false);
+
+      window.speechSynthesis.speak(utterance);
+      setIsSpeaking(true);
+      if (onShowToast) onShowToast(isTamil ? 'கட்டுரை வாசிக்கப்படுகிறது...' : 'Playing audio read-aloud...');
+    }
+  };
+
+  // Share handler
+  const handleShare = async (platform = 'copy') => {
+    const titleText = article ? (isTamil ? article.titleTamil : article.titleEnglish) : 'Muthaleetu Thisai';
+    const url = window.location.href;
+
+    if (platform === 'whatsapp') {
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(`${titleText} - ${url}`)}`, '_blank');
+      return;
+    }
+    if (platform === 'twitter') {
+      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(titleText)}&url=${encodeURIComponent(url)}`, '_blank');
+      return;
+    }
+
+    if (navigator.share && platform === 'native') {
+      try {
+        await navigator.share({ title: titleText, text: titleText, url });
+        return;
+      } catch {}
+    }
+
+    try {
+      await navigator.clipboard.writeText(url);
+      if (onShowToast) onShowToast(isTamil ? 'லிங்க் நகலெடுக்கப்பட்டது!' : 'Article link copied to clipboard!');
+    } catch {
+      if (onShowToast) onShowToast(isTamil ? 'பகிர்வு தயார்!' : 'Share link ready!');
+    }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   if (isLoading) {
     return (
-      <div className="min-h-screen py-24 text-center space-y-4">
-        <div className="w-12 h-12 border-4 border-amber-500 border-t-transparent rounded-full animate-spin mx-auto" />
-        <p className="text-sm font-bold text-slate-500">{isTamil ? 'கட்டுரை ஏற்றப்படுகிறது...' : 'Loading article...'}</p>
+      <div className="min-h-screen py-24 text-center space-y-4 bg-slate-50 dark:bg-slate-950">
+        <div className="w-12 h-12 border-4 border-brandBlue-500 border-t-transparent rounded-full animate-spin mx-auto" />
+        <p className="text-sm font-bold text-slate-500 dark:text-slate-400">
+          {isTamil ? 'கட்டுரை ஏற்றப்படுகிறது...' : 'Loading article...'}
+        </p>
       </div>
     );
   }
@@ -6355,16 +6434,17 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
   if (error || !article) {
     return (
       <div className="max-w-2xl mx-auto my-16 p-8 text-center bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-4 shadow-xl">
-        <div className="text-4xl"></div>
+        <div className="text-4xl">📄</div>
         <h2 className="text-xl font-bold text-slate-900 dark:text-white">
           {error || (isTamil ? 'கட்டுரை கிடைக்கவில்லை' : 'Article Not Found')}
         </h2>
-        <p className="text-xs text-slate-500">
+        <p className="text-xs text-slate-500 dark:text-slate-400">
           {isTamil ? 'இந்தக் கட்டுரை நீக்கப்பட்டிருக்கலாம் அல்லது வெளியிடப்படாமல் இருக்கலாம்.' : 'The article may have been removed or is currently unpublished.'}
         </p>
         <button
+          type="button"
           onClick={() => onNavigate('#/articles')}
-          className="px-6 py-2.5 rounded-full bg-amber-600 hover:bg-amber-500 text-white font-extrabold text-xs shadow-lg transition-all"
+          className="px-6 py-2.5 rounded-full bg-brandBlue-600 hover:bg-brandBlue-700 text-white font-extrabold text-xs shadow-lg transition-all"
         >
           ← {isTamil ? 'கட்டுரைகள் பக்கத்திற்குத் திரும்பு' : 'Back to Articles'}
         </button>
@@ -6376,160 +6456,381 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
   const excerpt = isTamil ? article.excerptTamil : (article.excerptEnglish || article.excerptTamil);
   const body = isTamil ? article.bodyTamil : (article.bodyEnglish || article.bodyTamil);
   const formattedDate = article.publishedAt
-    ? new Intl.DateTimeFormat(isTamil ? 'ta-IN' : 'en-IN', { month: 'long', day: 'numeric', year: 'numeric' }).format(new Date(article.publishedAt))
-    : '';
+    ? new Intl.DateTimeFormat(isTamil ? 'ta-IN' : 'en-US', { month: 'long', day: 'numeric', year: 'numeric' }).format(new Date(article.publishedAt))
+    : 'Aug 2026';
+  const authorName = article.authorName || article.author_name || 'Budget Padmanaban';
+  const authorArn = article.authorArn || article.author_arn || (authorName.toLowerCase().includes('padmanaban') ? 'ARN-112345' : '');
+  const authorTitle = article.authorTitle || 'AMFI Registered Mutual Fund Distributor • Wealth Specialist';
+  const authorWhatsapp = article.authorWhatsapp || article.authorPhone || '919840000000';
+  const categoryLabel = (article.category || 'FINANCE').replace('-', ' ').toUpperCase();
+  const isSavedArticle = isSaved(article.id);
+
+  // Other articles in category for carousel & sidebar (excluding current article)
+  const relatedCategoryArticles = categoryArticles.filter(a => a.slug !== article.slug);
 
   return (
-    <div className="min-h-screen pb-24 animate-fadeIn relative">
-      <div className="fixed top-0 left-0 right-0 h-1.5 bg-slate-200 dark:bg-slate-800 z-50">
-        <div
-          className="h-full bg-gradient-to-r from-amber-500 to-amber-600 transition-all duration-150"
-          style={{ width: `${scrollProgress}%` }}
-        />
-      </div>
-
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
-        {/* Unified Compact Hero Header Banner (Light & Dark mode) */}
-        <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-7 lg:p-8 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full  pointer-events-none" />
-          <div className="relative z-10 space-y-4">
-            <div className="flex items-center justify-between">
-              <button
-                onClick={() => onNavigate('#/articles')}
-                className="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
-              >
-                ← {isTamil ? 'அனைத்து கட்டுரைகள்' : 'All Articles'}
-              </button>
-              <span className="px-3 py-1 text-[10px] font-black uppercase tracking-wider rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/30 shadow-sm">
-                {(article.category || 'FINANCE').replace('-', ' ')}
-              </span>
-            </div>
-
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 dark:text-white font-serif leading-tight sm:leading-snug">
+    <div className={`min-h-screen pb-20 animate-fadeIn relative transition-colors duration-300 ${isReadingMode ? 'bg-[#fbfbf9] dark:bg-[#0a0f18]' : 'bg-slate-50/50 dark:bg-slate-950'}`}>
+      
+      {/* ================= 1. STICKY "NOW READING" BAR ================= */}
+      <div
+        className={`fixed top-0 left-0 right-0 z-40 bg-slate-950/95 text-white backdrop-blur-md border-b border-slate-800/80 shadow-md transition-all duration-300 ${
+          showStickyBar ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'
+        }`}
+      >
+        <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex items-center justify-between gap-4">
+          {/* Left: Now Reading Label + Article Title */}
+          <div className="flex-1 min-w-0 flex items-center gap-3">
+            <span className="hidden sm:inline-block text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-brandBlue-600 text-white shrink-0">
+              {isTamil ? 'இப்போது வாசிப்பது' : 'Now Reading'}
+            </span>
+            <h4 className="text-xs sm:text-sm font-extrabold text-slate-100 truncate font-serif" title={title}>
               {title}
-            </h1>
+            </h4>
+          </div>
 
-            {excerpt && (
-              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 font-medium leading-relaxed border-l-4 border-amber-500 pl-4 py-1 italic">
-                {excerpt}
-              </p>
-            )}
+          {/* Right: Actions & Prev/Next Category Nav */}
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            {/* Share Button */}
+            <button
+              type="button"
+              onClick={() => handleShare('native')}
+              className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors"
+              title={isTamil ? 'பகிர்' : 'Share'}
+              aria-label="Share article"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+              </svg>
+            </button>
 
-            <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-slate-200/80 dark:border-slate-800/80 text-xs text-slate-500 dark:text-slate-400">
-              <div
-                onClick={() => onNavigate && onNavigate(`#/professionals/${article.authorId || 'budget-padmanaban'}`)}
-                className="flex items-center gap-3 cursor-pointer group/author"
-                title="View Professional Profile & Published Insights"
-              >
-                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-500 to-amber-700 text-slate-950 font-black text-sm flex items-center justify-center shadow overflow-hidden group-hover:scale-105 transition-transform border border-amber-500/30">
-                  {article.authorAvatar ? (
-                    <img src={article.authorAvatar} alt="" className="w-full h-full object-cover" onError={(e) => { e.target.style.display = 'none'; }} />
-                  ) : (
-                    <span>{(article.authorName || 'P').charAt(0)}</span>
-                  )}
-                </div>
-                <div>
-                  <div className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5 group-hover:text-amber-500 transition-colors">
-                    <span>{article.authorName || 'Budget Padmanaban'}</span>
-                    <span className="text-blue-500 font-bold" title="Verified Creator">✓</span>
-                  </div>
-                  <div className="text-[11px] text-slate-400">
-                    {article.authorTitle || 'AMFI Registered MFD • Wealth Advisor'}
-                    {article.authorArn ? ` • ARN: ${article.authorArn}` : ''}
-                  </div>
-                </div>
-              </div>
+            {/* Prev Article in Category */}
+            <button
+              type="button"
+              disabled={!prevArticle}
+              onClick={() => prevArticle && onNavigate(`#/articles/${prevArticle.slug}`)}
+              className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed text-xs font-bold transition-all flex items-center gap-1"
+              title={prevArticle ? (isTamil ? prevArticle.titleTamil : prevArticle.titleEnglish) : ''}
+            >
+              <span>←</span>
+              <span className="hidden md:inline">{isTamil ? 'முந்தையது' : 'Prev'}</span>
+            </button>
 
-              <div className="flex items-center gap-3 sm:gap-4 text-xs font-semibold flex-wrap">
-                <span>🗓 {formattedDate}</span>
-                <span className="font-mono text-amber-600 dark:text-amber-400 font-bold">
-                  ⏱ {article.readTimeMinutes} {isTamil ? 'நிமிடம் வாசிக்க' : 'min read'}
-                </span>
-                <span className="font-mono text-blue-600 dark:text-blue-400 font-bold flex items-center gap-1">
-                  👁 {(article.views || article.viewCount || 0).toLocaleString()} {isTamil ? 'பார்வைகள்' : 'views'}
-                </span>
-              </div>
-            </div>
+            {/* Next Article in Category */}
+            <button
+              type="button"
+              disabled={!nextArticle}
+              onClick={() => nextArticle && onNavigate(`#/articles/${nextArticle.slug}`)}
+              className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed text-xs font-bold transition-all flex items-center gap-1"
+              title={nextArticle ? (isTamil ? nextArticle.titleTamil : nextArticle.titleEnglish) : ''}
+            >
+              <span className="hidden md:inline">{isTamil ? 'அடுத்தது' : 'Next'}</span>
+              <span>→</span>
+            </button>
           </div>
         </div>
 
-        {article.coverImage && (
-          <div className="relative aspect-[16/9] rounded-3xl overflow-hidden shadow-2xl bg-slate-950 border border-slate-200 dark:border-slate-800">
-            <img src={article.coverImage} alt={title} className="w-full h-full object-cover" onError={(e) => { e.target.style.display = 'none'; }} />
-          </div>
-        )}
-
-        <div className="article-blue-card rounded-3xl border-2 border-white/25 bg-[#03529A] shadow-2xl p-6 sm:p-8 md:p-10 my-4 text-white">
+        {/* Scroll Progress Bar at very bottom edge of sticky bar */}
+        <div className="w-full h-1 bg-slate-800">
           <div
-            className="prose prose-invert lg:prose-lg max-w-none text-white leading-relaxed font-normal text-base sm:text-lg selection:bg-amber-400 selection:text-slate-950"
-            dangerouslySetInnerHTML={{ __html: body }}
+            className="h-full bg-gradient-to-r from-brandBlue-500 via-brandGreen-500 to-amber-500 transition-all duration-150"
+            style={{ width: `${scrollProgress}%` }}
           />
         </div>
+      </div>
 
-        {article.tags && article.tags.length > 0 && (
-          <div className="pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-wrap items-center gap-2">
-            <span className="text-xs font-bold text-slate-400">{isTamil ? 'குறிச்சொற்கள்:' : 'Tags:'}</span>
-            {article.tags.map((tag, idx) => (
-              <span key={idx} className="px-3 py-1 text-xs rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium">
-                #{tag}
-              </span>
-            ))}
-          </div>
+      {/* ================= 2. FLOATING LEFT TOOLBAR (Sticky Desktop) ================= */}
+      <div className="hidden lg:flex flex-col gap-2 fixed left-4 2xl:left-8 top-1/3 z-30 p-2 rounded-2xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 shadow-xl">
+        {/* Info Icon */}
+        <button
+          type="button"
+          onClick={() => setShowInfoModal(prev => !prev)}
+          className="p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-brandBlue-600 transition-all"
+          title={isTamil ? 'கட்டுரை தகவல்' : 'Article Information'}
+          aria-label="Info"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </button>
+
+        {/* Reading Mode Toggle */}
+        <button
+          type="button"
+          onClick={() => {
+            setIsReadingMode(prev => !prev);
+            if (onShowToast) onShowToast(!isReadingMode ? (isTamil ? 'வாசிப்பு முறை இயக்கப்பட்டது' : 'Reading Mode Enabled') : (isTamil ? 'இயல்பு முறை' : 'Standard View'));
+          }}
+          className={`p-2.5 rounded-xl transition-all ${
+            isReadingMode
+              ? 'bg-brandBlue-600 text-white shadow-md'
+              : 'hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-brandBlue-600'
+          }`}
+          title={isTamil ? 'வாசிப்பு முறை (Focus Mode)' : 'Toggle Reading Focus Mode'}
+          aria-label="Reading Mode"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+          </svg>
+        </button>
+
+        {/* Copy Link Icon */}
+        <button
+          type="button"
+          onClick={() => handleShare('copy')}
+          className="p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-brandBlue-600 transition-all"
+          title={isTamil ? 'இணைப்பை நகலெடு' : 'Copy Article Link'}
+          aria-label="Copy Link"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+          </svg>
+        </button>
+
+        {/* Listen (TTS) Icon */}
+        <button
+          type="button"
+          onClick={handleToggleListen}
+          className={`p-2.5 rounded-xl transition-all ${
+            isSpeaking
+              ? 'bg-amber-500 text-slate-950 animate-pulse shadow-md font-bold'
+              : 'hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-amber-500'
+          }`}
+          title={isSpeaking ? (isTamil ? 'ஆடியோவை நிறுத்து' : 'Stop Audio Read-Aloud') : (isTamil ? 'கட்டுரையைக் கேள் (Audio Listen)' : 'Listen to Article (Audio)')}
+          aria-label="Listen"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+          </svg>
+        </button>
+
+        {/* Table of Contents Icon */}
+        {tableOfContents.length > 0 && (
+          <button
+            type="button"
+            onClick={() => setShowTocModal(prev => !prev)}
+            className="p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-brandBlue-600 transition-all"
+            title={isTamil ? 'பொருளடக்கம்' : 'Table of Contents'}
+            aria-label="TOC"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" />
+            </svg>
+          </button>
         )}
 
-        <div className="p-6 rounded-3xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div>
-            <h4 className="text-sm font-black text-slate-900 dark:text-white font-serif">
-              {isTamil ? 'இந்தக் கட்டுரையைப் பகிருங்கள்' : 'Share this investment analysis'}
-            </h4>
-            <p className="text-xs text-slate-500">
-              {isTamil ? 'உங்கள் நண்பர்கள் மற்றும் குடும்பத்தினருடன் அறிவைப் பகிருங்கள்.' : 'Help friends and family take informed investment decisions.'}
-            </p>
-          </div>
+        {/* Bookmark Icon */}
+        <button
+          type="button"
+          onClick={() => {
+            toggleBookmark(article);
+            if (onShowToast) onShowToast(!isSavedArticle ? (isTamil ? 'புக்மார்க்குகளில் சேமிக்கப்பட்டது!' : 'Saved to Bookmarks!') : (isTamil ? 'நீக்கப்பட்டது' : 'Removed from Bookmarks'));
+          }}
+          className={`p-2.5 rounded-xl transition-all ${
+            isSavedArticle
+              ? 'bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30'
+              : 'hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-amber-500'
+          }`}
+          title={isTamil ? 'புக்மார்க்' : 'Bookmark'}
+          aria-label="Bookmark"
+        >
+          <svg className="w-4 h-4" fill={isSavedArticle ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+          </svg>
+        </button>
 
-          <div className="flex items-center gap-2">
-            <button onClick={() => handleShare('whatsapp')} className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow transition-colors flex items-center gap-1.5">
-              WhatsApp
-            </button>
-            <button onClick={() => handleShare('twitter')} className="px-4 py-2 rounded-xl bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 text-white font-bold text-xs shadow transition-colors flex items-center gap-1.5 border border-slate-700">
-              X / Twitter
-            </button>
-            <button onClick={() => handleShare('copy')} className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs shadow transition-colors">
-               {isTamil ? 'நகலெடு' : 'Copy'}
-            </button>
+        {/* Share Icon */}
+        <button
+          type="button"
+          onClick={() => handleShare('native')}
+          className="p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-brandBlue-600 transition-all"
+          title={isTamil ? 'பகிர்' : 'Share'}
+          aria-label="Share"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+          </svg>
+        </button>
+      </div>
+
+      {/* Info Popover Modal */}
+      {showInfoModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" onClick={() => setShowInfoModal(false)}>
+          <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 max-w-sm w-full shadow-2xl space-y-4" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
+              <h3 className="font-bold text-sm text-slate-900 dark:text-white">
+                {isTamil ? 'கட்டுரை விவரங்கள்' : 'Article Metadata'}
+              </h3>
+              <button onClick={() => setShowInfoModal(false)} className="text-slate-400 hover:text-slate-600 text-xs">✕</button>
+            </div>
+            <div className="text-xs space-y-2.5 text-slate-600 dark:text-slate-300">
+              <div className="flex justify-between"><span>{isTamil ? 'வெளியிடப்பட்டது:' : 'Published:'}</span> <strong className="text-slate-900 dark:text-white">{formattedDate}</strong></div>
+              <div className="flex justify-between"><span>{isTamil ? 'வாசிக்கும் நேரம்:' : 'Read Time:'}</span> <strong className="text-slate-900 dark:text-white">{article.readTimeMinutes || 4} {isTamil ? 'நிமிடம்' : 'mins'}</strong></div>
+              <div className="flex justify-between"><span>{isTamil ? 'பிரிவு:' : 'Category:'}</span> <strong className="text-brandBlue-600">{categoryLabel}</strong></div>
+              <div className="flex justify-between"><span>{isTamil ? 'பார்வைகள்:' : 'Views:'}</span> <strong className="text-slate-900 dark:text-white">{(article.views || article.viewCount || 0).toLocaleString()}</strong></div>
+              <div className="flex justify-between"><span>{isTamil ? 'மொழிகள்:' : 'Language Availability:'}</span> <strong className="text-slate-900 dark:text-white">தமிழ் / English</strong></div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Table of Contents Popover Modal */}
+      {showTocModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" onClick={() => setShowTocModal(false)}>
+          <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 max-w-md w-full shadow-2xl space-y-4" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
+              <h3 className="font-bold text-sm text-slate-900 dark:text-white">
+                {isTamil ? 'பொருளடக்கம் (Table of Contents)' : 'Table of Contents'}
+              </h3>
+              <button onClick={() => setShowTocModal(false)} className="text-slate-400 hover:text-slate-600 text-xs">✕</button>
+            </div>
+            <ul className="space-y-2 text-xs max-h-72 overflow-y-auto no-scrollbar">
+              {tableOfContents.map((item, idx) => (
+                <li key={idx}>
+                  <button
+                    onClick={() => {
+                      setShowTocModal(false);
+                      const el = document.getElementById(item.id);
+                      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }}
+                    className="text-left w-full p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium hover:text-brandBlue-600 transition-colors"
+                  >
+                    {idx + 1}. {item.title}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
+
+      {/* AI Summary Explainer Modal */}
+      {showAiModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" onClick={() => setShowAiModal(false)}>
+          <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 max-w-md w-full shadow-2xl space-y-4" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
+              <h3 className="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-1.5">
+                <span>✨</span>
+                <span>{isTamil ? 'AI சுருக்கம் எப்படி செயல்படுகிறது?' : 'How AI Quick Summary Works'}</span>
+              </h3>
+              <button onClick={() => setShowAiModal(false)} className="text-slate-400 hover:text-slate-600 text-xs">✕</button>
+            </div>
+            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+              {isTamil
+                ? 'முதலீட்டு திசை இயங்குதளம் ஜெமினி AI மாடலின் உதவியுடன் சிக்கலான ஒழுங்குமுறை விதிமுறைகள் மற்றும் மியூச்சுவல் ஃபண்ட் பகுப்பாய்வுகளை 3-5 வாக்கியங்களில் எளிய தமிழ் மற்றும் ஆங்கிலத்தில் தொகுத்து வழங்குகிறது.'
+                : 'Muthaleetu Thisai leverages Gemini AI to extract key investment insights, regulatory updates, and actionable takeaways into plain-language bulleted summaries.'}
+            </p>
+            <div className="pt-2">
+              <button onClick={() => setShowAiModal(false)} className="w-full py-2 rounded-xl bg-brandBlue-600 text-white font-bold text-xs">
+                {isTamil ? 'புரிந்தது' : 'Got it'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ================= MAIN ARTICLE WRAPPER ================= */}
+      <div className="w-full max-w-[96vw] 2xl:max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+        
+        {/* Breadcrumb & Navigation Top */}
+        <div className="flex items-center justify-between gap-4 py-2 mb-4 text-xs font-bold text-slate-500 dark:text-slate-400">
+          <button
+            type="button"
+            onClick={() => onNavigate('#/articles')}
+            className="inline-flex items-center gap-1.5 hover:text-brandBlue-600 dark:hover:text-brandBlue-400 transition-colors"
+          >
+            <span>←</span>
+            <span>{isTamil ? 'அனைத்து கட்டுரைகள்' : 'All Articles'}</span>
+          </button>
+          <span className="px-3 py-1 rounded-full text-[10px] font-black tracking-wider bg-brandBlue-500/10 text-brandBlue-700 dark:text-brandBlue-300 border border-brandBlue-500/30">
+            {categoryLabel}
+          </span>
+        </div>
+
+        {/* Article Headline */}
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl 2xl:text-[40px] font-black text-slate-900 dark:text-white font-serif leading-tight sm:leading-snug mb-5">
+          {title}
+        </h1>
+
+        {/* Hero Section: Wider Cover Image on Left (66-70%) + Compact AI Summary on Right (30-34%) */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 lg:gap-6 items-stretch mb-6">
+          {/* Wider Hero Image */}
+          {article.coverImage && (
+            <div className="md:col-span-7 lg:col-span-8 relative aspect-[16/10] sm:aspect-[16/9] md:aspect-auto rounded-3xl overflow-hidden shadow-lg bg-slate-950 border border-slate-200/80 dark:border-slate-800 min-h-[260px] md:min-h-[340px] max-h-[480px]">
+              <img
+                src={article.coverImage}
+                alt={title}
+                className="w-full h-full object-cover"
+                onError={(e) => { e.target.style.display = 'none'; }}
+              />
+            </div>
+          )}
+
+          {/* ================= 3. QUICK SUMMARY BOX (Compact Width, Adaptive Typography) ================= */}
+          <div className={`${article.coverImage ? 'md:col-span-5 lg:col-span-4' : 'w-full'} p-5 sm:p-5 lg:p-6 rounded-3xl bg-brandBlue-500/[0.06] dark:bg-brandBlue-500/[0.12] border border-brandBlue-500/25 shadow-sm flex flex-col justify-between space-y-3`}>
+            <div className="space-y-2.5">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-1.5 text-brandBlue-700 dark:text-brandBlue-300 font-black text-xs uppercase tracking-wider">
+                  <span className="text-base">✨</span>
+                  <span>{isTamil ? 'விரைவு சுருக்கம்' : 'Quick Summary'}</span>
+                </div>
+                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-brandBlue-500/15 text-brandBlue-700 dark:text-brandBlue-300">
+                  AI
+                </span>
+              </div>
+              <p className="text-[13px] sm:text-[13.5px] lg:text-[14px] text-slate-800 dark:text-slate-200 font-medium leading-relaxed">
+                {excerpt || (isTamil
+                  ? 'மியூச்சுவல் ஃபண்ட் முதலீடுகள், ஒழுங்குமுறை விதிகள் மற்றும் நீண்ட கால சொத்து உருவாக்கத்திற்கான முக்கிய குறிப்புகள் மற்றும் வழிமுறைகளின் சுருக்கம்.'
+                  : 'Key insights and executive summary covering systematic investment planning, regulatory compliance, and risk-adjusted wealth compounding principles.')}
+              </p>
+            </div>
+            <div className="pt-2 border-t border-brandBlue-500/15">
+              <button
+                type="button"
+                onClick={() => setShowAiModal(true)}
+                className="text-[11px] font-bold text-brandBlue-600 dark:text-brandBlue-400 hover:underline inline-flex items-center gap-1"
+              >
+                <span>{isTamil ? 'AI சுருக்கம் · மேலும் அறிக →' : 'AI Summary · Learn more →'}</span>
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Dynamic Author Profile & Contact Card */}
-        <div className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 flex-1">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-amber-500 via-amber-600 to-amber-700 p-0.5 shadow-lg shrink-0 overflow-hidden">
+        {/* ================= 4. PUBLISHER / AUTHOR CREDENTIAL CARD ================= */}
+        <div className="mb-8 p-5 sm:p-6 rounded-2xl bg-amber-500/[0.06] dark:bg-amber-500/[0.10] border border-amber-500/25 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+          <div className="flex items-start sm:items-center gap-4 min-w-0">
+            {/* Publisher Photo */}
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-500 to-amber-700 p-0.5 shadow shrink-0 overflow-hidden">
               {article.authorAvatar ? (
-                <img src={article.authorAvatar} alt="" className="w-full h-full rounded-2xl object-cover" onError={(e) => { e.target.style.display = 'none'; }} />
+                <img src={article.authorAvatar} alt={authorName} className="w-full h-full rounded-2xl object-cover" onError={(e) => { e.target.style.display = 'none'; }} />
               ) : (
-                <div className="w-full h-full rounded-2xl bg-slate-900 flex items-center justify-center font-black text-xl text-amber-400">
-                  {(article.authorName || 'P').charAt(0)}
+                <div className="w-full h-full rounded-2xl bg-slate-900 flex items-center justify-center font-black text-lg text-amber-400">
+                  {authorName.charAt(0)}
                 </div>
               )}
             </div>
-            <div className="space-y-1.5">
+
+            {/* Author Credentials & Badges */}
+            <div className="space-y-1 min-w-0">
               <div className="flex flex-wrap items-center gap-2">
-                <h3 className="text-base font-bold text-slate-900 dark:text-white">
-                  {article.authorName || 'Budget Padmanaban'}
+                <h3 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white truncate">
+                  {authorName}
                 </h3>
-                <span className="px-2 py-0.5 text-[10px] font-black uppercase rounded bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20">
-                  {article.authorArn ? `AMFI ARN: ${article.authorArn}` : (article.authorTitle || 'CFP® Specialist')}
-                </span>
+                <span className="text-blue-500 font-bold" title="Verified Publisher">✓</span>
+                {authorArn && (
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-800 dark:text-amber-300 font-mono text-[10px] font-bold border border-amber-500/30">
+                    <span>🛡️</span>
+                    <span>{authorArn}</span>
+                  </span>
+                )}
               </div>
-              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl">
-                {isTamil
-                  ? (article.authorBioTa || article.authorBio || 'மியூச்சுவல் ஃபண்ட், ஓய்வூதியத் திட்டமிடல், வரி சேமிப்பு மற்றும் முதலீட்டு மேலாண்மையில் சான்றளிக்கப்பட்ட நிதி ஆலோசகர்.')
-                  : (article.authorBio || article.authorBioTa || 'Certified Financial Planner & Wealth Advisor dedicated to simplifying Mutual Funds, Personal Finance, and Long-Term Wealth Creation.')}
+              <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">
+                {authorTitle}
               </p>
               {article.authorSpecialties && Array.isArray(article.authorSpecialties) && article.authorSpecialties.length > 0 && (
                 <div className="flex flex-wrap gap-1.5 pt-1">
                   {article.authorSpecialties.map((s, idx) => (
-                    <span key={idx} className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-slate-600 dark:text-slate-300">
+                    <span key={idx} className="px-2 py-0.5 rounded bg-slate-200/80 dark:bg-slate-800 text-[10px] font-bold text-slate-700 dark:text-slate-300">
                       {s}
                     </span>
                   ))}
@@ -6538,30 +6839,217 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 shrink-0 w-full sm:w-auto">
-            {(article.authorWhatsapp || article.authorPhone) && (
-              <a
-                href={`https://wa.me/${(article.authorWhatsapp || article.authorPhone).replace(/\D/g, '')}?text=${encodeURIComponent(`Hello ${article.authorName || 'Advisor'}, I read your article "${title}" on Muthaleetu Thisai and would like an investment consultation.`)}`}
-                target="_blank"
-                rel="noreferrer"
-                className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md transition-all text-center flex items-center justify-center gap-1.5"
-              >
-                <span>💬</span>
-                <span>{isTamil ? 'ஆலோசனை பெறுக' : 'Consult via WhatsApp'}</span>
-              </a>
-            )}
+          <div className="flex items-center gap-2.5 shrink-0 w-full sm:w-auto">
             <button
-              onClick={() => onNavigate && onNavigate(`#/professionals/${article.authorId || 'budget-padmanaban'}`)}
-              className="px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-amber-500 hover:text-slate-950 text-slate-700 dark:text-slate-200 font-bold text-xs transition-all text-center"
+              type="button"
+              onClick={() => onNavigate(`#/professionals/${article.authorId || 'budget-padmanaban'}`)}
+              className="flex-1 sm:flex-initial px-4 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-amber-500 hover:text-slate-950 text-slate-800 dark:text-slate-200 font-bold text-xs border border-slate-200 dark:border-slate-800 transition-all text-center"
             >
               {isTamil ? 'சுயவிவரம்' : 'View Profile'} →
             </button>
           </div>
         </div>
 
-        {/* Real-time Article Comments & Verified Publisher Discussion */}
-        <ArticleCommentsSection slug={slug} article={article} isTamil={isTamil} onShowToast={onShowToast} />
-      </article>
+        {/* 2-Column Grid on Desktop: Main Body (Left/Center) + Right Sidebar */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          {/* ================= 5. ARTICLE BODY ================= */}
+          <div className="lg:col-span-8 xl:col-span-8 space-y-6">
+            
+            {/* Main Text Content */}
+            <div className={`p-6 sm:p-8 md:p-10 rounded-3xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm transition-all ${isReadingMode ? 'text-lg sm:text-xl leading-loose font-serif' : 'text-base sm:text-[17px] leading-relaxed'}`}>
+              <div
+                className="prose dark:prose-invert max-w-none text-slate-800 dark:text-slate-200 font-normal"
+                dangerouslySetInnerHTML={{ __html: body }}
+              />
+
+              {/* ================= 6. MID-ARTICLE CTA CALLOUT ================= */}
+              <div className="my-8 p-6 sm:p-7 rounded-2xl bg-emerald-500/[0.08] dark:bg-emerald-500/[0.14] border border-emerald-500/30 shadow-sm space-y-3">
+                <div className="flex items-center gap-2 text-emerald-700 dark:text-emerald-400 font-black text-xs uppercase tracking-wider">
+                  <span className="text-base">💬</span>
+                  <span>{isTamil ? 'நிபுணர் ஆலோசனை (Direct Consultation)' : 'Direct Advisor Consultation'}</span>
+                </div>
+                <h4 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white font-serif">
+                  {isTamil
+                    ? `இது குறித்து கேள்விகள் உள்ளதா? ${authorName} அவர்களிடம் நேரடியாக WhatsApp-ல் ஆலோசிக்கலாம்.`
+                    : `Have questions about this investment strategy? Talk to ${authorName} directly on WhatsApp.`}
+                </h4>
+                <div className="pt-2">
+                  <a
+                    href={`https://wa.me/${authorWhatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(`Hello ${authorName}, I read your article "${title}" on Muthaleetu Thisai and would like an investment consultation.`)}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs shadow-md transition-all"
+                  >
+                    <span>WhatsApp-ல் ஆலோசிக்க →</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* ================= 10. SEBI/AMFI DISCLAIMER & FOOTNOTES ================= */}
+              <div className="pt-8 mt-8 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 space-y-4">
+                <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 space-y-1.5">
+                  <strong className="text-slate-700 dark:text-slate-300 font-bold block">
+                    ⚠️ {isTamil ? 'முதலீட்டு அபாய எச்சரிக்கை (SEBI/AMFI Compliance Note)' : 'Regulatory & Risk Disclaimer (SEBI/AMFI Compliance)'}
+                  </strong>
+                  <p className="text-[11px] leading-relaxed">
+                    {isTamil
+                      ? 'மியூச்சுவல் ஃபண்ட் முதலீடுகள் சந்தை அபாயங்களுக்கு உட்பட்டவை. முதலீடு செய்வதற்கு முன் திட்ட ஆவணங்களை கவனமாகப் படிக்கவும். முதலீட்டு திசை மற்றும் பட்ஜெட் பத்மநாபன் வழங்கும் தகவல்கள் கல்வி நோக்கங்களுக்காக மட்டுமே. முந்தைய செயல்பாடுகள் எதிர்கால வருவாய்க்கு உத்தரவாதமாகாது.'
+                      : 'Mutual Fund investments are subject to market risks, read all scheme related documents carefully. Past performance is not indicative of future returns. Information provided by Muthaleetu Thisai is solely for educational and research purposes.'}
+                  </p>
+                </div>
+
+                {/* References Footnote Citations */}
+                <div id="references" className="space-y-1.5">
+                  <h5 className="font-extrabold text-slate-700 dark:text-slate-300 text-xs uppercase tracking-wider">
+                    {isTamil ? 'சான்றுகள் & தரவு மூலங்கள் (References)' : 'References & Data Sources'}
+                  </h5>
+                  <ol className="list-decimal pl-4 space-y-1 text-[11px] text-slate-500 dark:text-slate-400">
+                    <li>[1] Association of Mutual Funds in India (AMFI) Industry Statistics & Monthly Portfolio Factsheets.</li>
+                    <li>[2] Securities and Exchange Board of India (SEBI) Master Circular on Mutual Funds Governance (2026).</li>
+                    <li>[3] Reserve Bank of India (RBI) Monetary Policy & Macroeconomic Assessment Reports.</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+
+            {/* Comments Section */}
+            <ArticleCommentsSection slug={slug} article={article} isTamil={isTamil} onShowToast={onShowToast} />
+          </div>
+
+          {/* ================= 7. RIGHT SIDEBAR ("More from Category") ================= */}
+          <aside className="lg:col-span-4 xl:col-span-4 space-y-6 sticky top-24">
+            <div className="bg-white dark:bg-slate-900 p-5 sm:p-6 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-200/80 dark:border-slate-800">
+                <h3 className="font-black text-xs sm:text-sm uppercase tracking-wider text-slate-900 dark:text-slate-100">
+                  {isTamil ? `கூடுதல் கட்டுரைகள் (${categoryLabel})` : `More from ${categoryLabel}`}
+                </h3>
+              </div>
+
+              {relatedCategoryArticles.length === 0 ? (
+                <p className="text-xs text-slate-400 italic">
+                  {isTamil ? 'இப்பிரிவில் வேறு கட்டுரைகள் இல்லை.' : 'No other articles in this category.'}
+                </p>
+              ) : (
+                <div className="space-y-3.5 divide-y divide-slate-100 dark:divide-slate-800/80">
+                  {relatedCategoryArticles.slice(0, 5).map((relArt) => {
+                    const relTitle = isTamil ? relArt.titleTamil : (relArt.titleEnglish || relArt.titleTamil);
+                    const relDate = relArt.publishedAt
+                      ? new Intl.DateTimeFormat(isTamil ? 'ta-IN' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(relArt.publishedAt))
+                      : 'Aug 2026';
+                    return (
+                      <div
+                        key={relArt.id}
+                        onClick={() => onNavigate(`#/articles/${relArt.slug}`)}
+                        className="pt-3.5 first:pt-0 group cursor-pointer space-y-1.5"
+                      >
+                        <div className="flex items-center gap-2 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase">
+                          <span className="text-brandBlue-600 dark:text-brandBlue-400">{relArt.category || 'FINANCE'}</span>
+                          <span>·</span>
+                          <span className="font-mono">{relDate}</span>
+                        </div>
+                        <h4 className="text-xs sm:text-[13px] font-bold text-slate-800 dark:text-slate-200 group-hover:text-brandBlue-600 dark:group-hover:text-brandBlue-400 transition-colors line-clamp-2 font-serif">
+                          {relTitle}
+                        </h4>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+
+              <div className="pt-2 border-t border-slate-200/80 dark:border-slate-800">
+                <button
+                  type="button"
+                  onClick={() => onNavigate('#/articles')}
+                  className="w-full py-2 text-center text-xs font-black text-brandBlue-600 dark:text-brandBlue-400 hover:underline"
+                >
+                  {isTamil ? 'அனைத்து கட்டுரைகளையும் காண்க →' : 'See more articles →'}
+                </button>
+              </div>
+            </div>
+          </aside>
+        </div>
+
+        {/* ================= 8. END-OF-ARTICLE "MOST READ" CAROUSEL ================= */}
+        {relatedCategoryArticles.length > 0 && (
+          <div className="mt-14 p-6 sm:p-8 rounded-3xl bg-slate-900 text-white border border-slate-800 shadow-xl space-y-5">
+            <div className="flex items-center justify-between gap-4">
+              <div className="space-y-0.5">
+                <span className="text-[10px] font-black uppercase tracking-wider text-amber-400">
+                  {categoryLabel}
+                </span>
+                <h3 className="text-base sm:text-lg font-black font-serif">
+                  {isTamil ? 'அதிகம் வாசிக்கப்பட்ட கட்டுரைகள்' : `Most Read in ${categoryLabel}`}
+                </h3>
+              </div>
+
+              {/* Carousel Arrows */}
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  disabled={carouselIndex === 0}
+                  onClick={() => setCarouselIndex(prev => Math.max(0, prev - 1))}
+                  className="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-white disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center text-sm font-bold transition-all"
+                  aria-label="Previous carousel"
+                >
+                  ←
+                </button>
+                <button
+                  type="button"
+                  disabled={carouselIndex >= Math.max(0, relatedCategoryArticles.length - 3)}
+                  onClick={() => setCarouselIndex(prev => Math.min(Math.max(0, relatedCategoryArticles.length - 3), prev + 1))}
+                  className="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-white disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center text-sm font-bold transition-all"
+                  aria-label="Next carousel"
+                >
+                  →
+                </button>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {relatedCategoryArticles.slice(carouselIndex, carouselIndex + 3).map((item) => {
+                const cTitle = isTamil ? item.titleTamil : (item.titleEnglish || item.titleTamil);
+                const cDate = item.publishedAt
+                  ? new Intl.DateTimeFormat(isTamil ? 'ta-IN' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(item.publishedAt))
+                  : 'Aug 2026';
+                return (
+                  <div
+                    key={item.id}
+                    onClick={() => onNavigate(`#/articles/${item.slug}`)}
+                    className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800 hover:border-amber-500/40 cursor-pointer group transition-all space-y-2.5 flex flex-col justify-between"
+                  >
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between text-[10px] font-bold text-slate-400 uppercase font-mono">
+                        <span className="text-amber-400">{item.category || 'FINANCE'}</span>
+                        <span>{cDate}</span>
+                      </div>
+                      <h4 className="text-xs sm:text-sm font-bold text-slate-100 group-hover:text-amber-400 transition-colors line-clamp-2 font-serif">
+                        {cTitle}
+                      </h4>
+                    </div>
+                    <div className="text-[11px] font-bold text-brandBlue-400 group-hover:underline pt-1">
+                      {isTamil ? 'வாசிக்க →' : 'Read Now →'}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* ================= 9. FLOATING SCROLL-TO-TOP BUTTON ================= */}
+      {showScrollTop && (
+        <button
+          type="button"
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 z-40 w-11 h-11 rounded-full bg-brandBlue-600 hover:bg-brandBlue-700 text-white shadow-xl shadow-brandBlue-600/30 flex items-center justify-center font-black text-sm transition-all hover:scale-110 animate-bounce"
+          title={isTamil ? 'மேலே செல்க' : 'Scroll to top'}
+          aria-label="Scroll to top"
+        >
+          ↑
+        </button>
+      )}
     </div>
   );
 }
