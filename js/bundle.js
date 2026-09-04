@@ -6548,7 +6548,7 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
 
     const activeAudioUrl = (isTargetTamil
       ? (article?.audioUrlTa || article?.audio_url_ta)
-      : (article?.audioUrlEn || article?.audio_url_en)) || `/api/tts?slug=${encodeURIComponent(article?.slug || slug || '')}&lang=${targetLang}`;
+      : (article?.audioUrlEn || article?.audio_url_en)) || `/api/articles?action=tts&slug=${encodeURIComponent(article?.slug || slug || '')}&lang=${targetLang}`;
 
     if (audioRef.current) {
       if (isPlaying && (audioVoiceLang === targetLang || !forcedLang)) {
@@ -6577,8 +6577,8 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
         .catch((err) => {
           console.warn('Audio tag play failed, trying fallback stream/TTS:', err);
           setIsAudioLoading(false);
-          if (!activeAudioUrl.startsWith('/api/tts')) {
-            audioRef.current.src = `/api/tts?slug=${encodeURIComponent(article?.slug || slug || '')}&lang=${targetLang}`;
+          if (!activeAudioUrl.includes('action=tts')) {
+            audioRef.current.src = `/api/articles?action=tts&slug=${encodeURIComponent(article?.slug || slug || '')}&lang=${targetLang}`;
             audioRef.current.playbackRate = playbackSpeed;
             audioRef.current.play()
               .then(() => {
