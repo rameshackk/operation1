@@ -8,7 +8,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.join(__dirname, '../.env') });
 
-const apiKey = process.env.TRANSLATE_API_KEY || process.env.YOUTUBE_API_KEY || '';
+const rawTranslate = process.env.TRANSLATE_API_KEY || '';
+const rawYoutube = process.env.YOUTUBE_API_KEY || '';
+const apiKey = (rawTranslate && !rawTranslate.startsWith('YOUR_')) ? rawTranslate : ((rawYoutube && !rawYoutube.startsWith('YOUR_')) ? rawYoutube : '');
 
 async function run() {
   console.log('🎙️ Starting Article Audio Generation Pipeline...');

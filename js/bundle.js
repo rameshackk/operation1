@@ -6546,55 +6546,55 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
     setAudioVoiceLang(targetLang);
     setShowAudioPlayer(true);
 
-    const activeAudioUrl = isTargetTamil
+    const activeAudioUrl = (isTargetTamil
       ? (article?.audioUrlTa || article?.audio_url_ta)
-      : (article?.audioUrlEn || article?.audio_url_en);
+      : (article?.audioUrlEn || article?.audio_url_en)) || `/api/tts?slug=${encodeURIComponent(article?.slug || slug || '')}&lang=${targetLang}`;
 
-    // If pre-generated Google Cloud WaveNet MP3 exists in Supabase Storage, stream directly
-    if (activeAudioUrl) {
-      if (typeof window !== 'undefined' && window.speechSynthesis) {
-        window.speechSynthesis.cancel();
+    if (audioRef.current) {
+      if (isPlaying && (audioVoiceLang === targetLang || !forcedLang)) {
+        audioRef.current.pause();
+        if (typeof window !== 'undefined' && window.speechSynthesis) window.speechSynthesis.cancel();
+        setIsPlaying(false);
+        setIsSpeaking(false);
+        if (onShowToast) onShowToast(isTargetTamil ? 'ஆடியோ இடைநிறுத்தப்பட்டது.' : 'Audio paused.');
+        return;
       }
-      setIsSpeaking(false);
 
-      if (audioRef.current) {
-        if (audioRef.current.src !== activeAudioUrl) {
-          audioRef.current.src = activeAudioUrl;
-          audioRef.current.playbackRate = playbackSpeed;
-          audioRef.current.load();
-        }
-
-        if (isPlaying && !forcedLang) {
-          audioRef.current.pause();
-          setIsPlaying(false);
-          if (onShowToast) onShowToast(isTargetTamil ? 'ஆடியோ இடைநிறுத்தப்பட்டது.' : 'Audio paused.');
-        } else {
-          setIsAudioLoading(true);
-          audioRef.current.play()
-            .then(() => {
-              setIsPlaying(true);
-              setIsAudioLoading(false);
-              if (onShowToast) onShowToast(isTargetTamil ? '🔊 Google WaveNet தமிழ் ஆடியோ இயங்குகிறது...' : '🔊 Streaming Google WaveNet English audio...');
-            })
-            .catch(() => {
-              setIsAudioLoading(false);
-              playSpeechSynthesis(targetLang);
-            });
-        }
+      if (audioRef.current.src !== activeAudioUrl) {
+        audioRef.current.src = activeAudioUrl;
+        audioRef.current.playbackRate = playbackSpeed;
+        audioRef.current.load();
       }
-      return;
-    }
 
-    // Fallback: If cloud audio is not yet generated, use client-side SpeechSynthesis
-    if (isPlaying && !forcedLang) {
-      if (typeof window !== 'undefined' && window.speechSynthesis) window.speechSynthesis.cancel();
-      setIsPlaying(false);
-      setIsSpeaking(false);
-      if (onShowToast) onShowToast(isTargetTamil ? 'ஆடியோ நிறுத்தப்பட்டது.' : 'Audio playback stopped.');
-      return;
+      setIsAudioLoading(true);
+      audioRef.current.play()
+        .then(() => {
+          setIsPlaying(true);
+          setIsSpeaking(true);
+          setIsAudioLoading(false);
+          if (onShowToast) onShowToast(isTargetTamil ? '🔊 தமிழ் ஆடியோ இயங்குகிறது...' : '🔊 Streaming English audio...');
+        })
+        .catch((err) => {
+          console.warn('Audio tag play failed, trying fallback stream/TTS:', err);
+          setIsAudioLoading(false);
+          if (!activeAudioUrl.startsWith('/api/tts')) {
+            audioRef.current.src = `/api/tts?slug=${encodeURIComponent(article?.slug || slug || '')}&lang=${targetLang}`;
+            audioRef.current.playbackRate = playbackSpeed;
+            audioRef.current.play()
+              .then(() => {
+                setIsPlaying(true);
+                setIsSpeaking(true);
+              })
+              .catch(() => {
+                playSpeechSynthesis(targetLang);
+              });
+          } else {
+            playSpeechSynthesis(targetLang);
+          }
+        });
+    } else {
+      playSpeechSynthesis(targetLang);
     }
-
-    playSpeechSynthesis(targetLang);
   };
 
   const handleSeek = (newTime) => {
@@ -6839,13 +6839,13 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
         {/* Listen (TTS) Icon */}
         <button
           type="button"
-          onClick={handleToggleListen}
+          onClick={() => handleToggleListen()}
           className={`p-2.5 rounded-xl transition-all ${
-            isSpeaking
+            (isPlaying || isSpeaking)
               ? 'bg-amber-500 text-slate-950 animate-pulse shadow-md font-bold'
               : 'hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-amber-500'
           }`}
-          title={isSpeaking ? (isTamil ? 'ஆடியோவை நிறுத்து' : 'Stop Audio Read-Aloud') : (isTamil ? 'கட்டுரையைக் கேள் (Audio Listen)' : 'Listen to Article (Audio)')}
+          title={(isPlaying || isSpeaking) ? (isTamil ? 'ஆடியோவை நிறுத்து' : 'Stop Audio Read-Aloud') : (isTamil ? 'கட்டுரையைக் கேள் (Audio Listen)' : 'Listen to Article (Audio)')}
           aria-label="Listen"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -7039,30 +7039,30 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
                 <button
                   type="button"
                   onClick={() => handleToggleListen('ta')}
-                  className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-extrabold transition-all ${
-                    isSpeaking && audioVoiceLang === 'ta'
+                  className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-extrabold transition-all ${
+                    (isPlaying || isSpeaking) && audioVoiceLang === 'ta'
                       ? 'bg-amber-500 text-slate-950 animate-pulse shadow font-black ring-2 ring-amber-400'
                       : 'bg-brandBlue-600/10 hover:bg-brandBlue-600/20 text-brandBlue-700 dark:text-brandBlue-300 border border-brandBlue-500/30'
                   }`}
                   title="தமிழில் ஆடியோவாக கேள் (Tamil Audio)"
                 >
-                  <span>{isSpeaking && audioVoiceLang === 'ta' ? '⏹' : '🔊'}</span>
-                  <span>{isSpeaking && audioVoiceLang === 'ta' ? 'நிறுத்து' : 'தமிழில் கேள்'}</span>
+                  <span>{(isPlaying || isSpeaking) && audioVoiceLang === 'ta' ? '⏹' : '🔊'}</span>
+                  <span>{(isPlaying || isSpeaking) && audioVoiceLang === 'ta' ? 'நிறுத்து' : 'தமிழில் கேள்'}</span>
                 </button>
 
                 {/* Play in English Voice */}
                 <button
                   type="button"
                   onClick={() => handleToggleListen('en')}
-                  className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-extrabold transition-all ${
-                    isSpeaking && audioVoiceLang === 'en'
+                  className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-extrabold transition-all ${
+                    (isPlaying || isSpeaking) && audioVoiceLang === 'en'
                       ? 'bg-amber-500 text-slate-950 animate-pulse shadow font-black ring-2 ring-amber-400'
                       : 'bg-slate-200/80 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700'
                   }`}
                   title="Listen in English Audio"
                 >
-                  <span>{isSpeaking && audioVoiceLang === 'en' ? '⏹' : '🔊'}</span>
-                  <span>{isSpeaking && audioVoiceLang === 'en' ? 'Stop' : 'English'}</span>
+                  <span>{(isPlaying || isSpeaking) && audioVoiceLang === 'en' ? '⏹' : '🔊'}</span>
+                  <span>{(isPlaying || isSpeaking) && audioVoiceLang === 'en' ? 'Stop' : 'English'}</span>
                 </button>
               </div>
 
