@@ -6357,7 +6357,59 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
     return items;
   }, [article, isTamil]);
 
-  // Text-To-Speech Playback
+  // Stop speech when component unmounts or language changes
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+      setIsSpeaking(false);
+    }
+  }, [language]);
+
+  // Pre-warm and register voices for Tamil (ta-IN) and Indian English (en-IN)
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.speechSynthesis) {
+      try {
+        window.speechSynthesis.getVoices();
+        const onVoicesChanged = () => {
+          try { window.speechSynthesis.getVoices(); } catch {}
+        };
+        window.speechSynthesis.addEventListener('voiceschanged', onVoicesChanged);
+        return () => {
+          window.speechSynthesis.removeEventListener('voiceschanged', onVoicesChanged);
+        };
+      } catch {}
+    }
+  }, []);
+
+  // Helper to find optimal native voice for the selected language
+  const getVoiceForLanguage = (isTa) => {
+    if (typeof window === 'undefined' || !window.speechSynthesis) return null;
+    const voices = window.speechSynthesis.getVoices() || [];
+    if (voices.length === 0) return null;
+
+    if (isTa) {
+      // 1. Exact Tamil matches (e.g. ta-IN, ta_IN, Google தமிழ், Microsoft Valluvar/Pallavi/Latha)
+      const exactTa = voices.find(v => v.lang && (v.lang.toLowerCase() === 'ta-in' || v.lang.toLowerCase() === 'ta_in'));
+      if (exactTa) return exactTa;
+      
+      const anyTa = voices.find(v => {
+        const l = (v.lang || '').toLowerCase();
+        const n = (v.name || '').toLowerCase();
+        return l.startsWith('ta') || n.includes('tamil') || n.includes('தமிழ்') || n.includes('valluvar') || n.includes('pallavi') || n.includes('latha');
+      });
+      if (anyTa) return anyTa;
+    } else {
+      // 2. English matches (Indian English en-IN or standard English)
+      const enIn = voices.find(v => v.lang && (v.lang.toLowerCase() === 'en-in' || v.lang.toLowerCase() === 'en_in' || (v.name || '').toLowerCase().includes('india')));
+      if (enIn) return enIn;
+      
+      const anyEn = voices.find(v => (v.lang || '').toLowerCase().startsWith('en'));
+      if (anyEn) return anyEn;
+    }
+    return null;
+  };
+
+  // Text-To-Speech Playback with full Tamil & English dual-mode support
   const handleToggleListen = () => {
     if (typeof window === 'undefined' || !window.speechSynthesis) {
       if (onShowToast) onShowToast(isTamil ? 'உங்கள் உலாவியில் ஆடியோ வசதி இல்லை.' : 'Text-to-speech is not supported in your browser.');
@@ -6368,22 +6420,86 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
       window.speechSynthesis.cancel();
       setIsSpeaking(false);
       if (onShowToast) onShowToast(isTamil ? 'ஆடியோ வாசிப்பு நிறுத்தப்பட்டது.' : 'Audio playback stopped.');
-    } else {
-      window.speechSynthesis.cancel();
-      const titleToRead = isTamil ? article.titleTamil : (article.titleEnglish || article.titleTamil);
-      const excerptToRead = isTamil ? article.excerptTamil : (article.excerptEnglish || article.excerptTamil);
-      const bodyClean = (isTamil ? (article.bodyTamil || article.bodyEnglish) : (article.bodyEnglish || article.bodyTamil) || '').replace(/<[^>]+>/g, ' ');
-      const textToSpeak = `${titleToRead}. ${excerptToRead || ''}. ${bodyClean}`.slice(0, 3000);
+      return;
+    }
 
-      const utterance = new SpeechSynthesisUtterance(textToSpeak);
+    window.speechSynthesis.cancel();
+
+    // Select content based on current active language mode
+    const titleToRead = (isTamil ? (article.titleTamil || article.titleEnglish) : (article.titleEnglish || article.titleTamil)) || '';
+    const excerptToRead = (isTamil ? (article.excerptTamil || article.excerptEnglish) : (article.excerptEnglish || article.excerptTamil)) || '';
+    const rawBody = (isTamil ? (article.bodyTamil || article.bodyEnglish) : (article.bodyEnglish || article.bodyTamil)) || '';
+
+    // Clean HTML tags, decode entities, and normalize whitespace
+    const cleanBody = rawBody
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/&nbsp;/g, ' ')
+      .replace(/&amp;/g, '&')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+    const fullText = `${titleToRead}. ${excerptToRead ? excerptToRead + '.' : ''} ${cleanBody}`.trim();
+
+    if (!fullText) {
+      if (onShowToast) onShowToast(isTamil ? 'வாசிக்க உரை எதுவும் இல்லை.' : 'No text content available to read.');
+      return;
+    }
+
+    // Split text into chunks to prevent browser speech synthesis timeouts
+    const sentences = fullText.match(/[^.!?\n]+[.!?\n]+/g) || [fullText];
+    const chunks = [];
+    let currentChunk = '';
+
+    for (const sentence of sentences) {
+      if ((currentChunk + ' ' + sentence).length > 200) {
+        if (currentChunk.trim()) chunks.push(currentChunk.trim());
+        currentChunk = sentence;
+      } else {
+        currentChunk += ' ' + sentence;
+      }
+    }
+    if (currentChunk.trim()) chunks.push(currentChunk.trim());
+
+    const matchedVoice = getVoiceForLanguage(isTamil);
+    let chunkIndex = 0;
+
+    const speakNextChunk = () => {
+      if (chunkIndex >= chunks.length) {
+        setIsSpeaking(false);
+        return;
+      }
+
+      const chunkText = chunks[chunkIndex];
+      chunkIndex++;
+
+      const utterance = new SpeechSynthesisUtterance(chunkText);
       utterance.lang = isTamil ? 'ta-IN' : 'en-IN';
-      utterance.rate = 0.95;
-      utterance.onend = () => setIsSpeaking(false);
-      utterance.onerror = () => setIsSpeaking(false);
+      if (matchedVoice) {
+        utterance.voice = matchedVoice;
+      }
+      utterance.rate = isTamil ? 0.90 : 0.95;
+      utterance.pitch = 1.0;
+
+      utterance.onend = () => {
+        speakNextChunk();
+      };
+      utterance.onerror = (e) => {
+        console.warn('TTS playback error:', e);
+        setIsSpeaking(false);
+      };
 
       window.speechSynthesis.speak(utterance);
-      setIsSpeaking(true);
-      if (onShowToast) onShowToast(isTamil ? 'கட்டுரை வாசிக்கப்படுகிறது...' : 'Playing audio read-aloud...');
+    };
+
+    setIsSpeaking(true);
+    speakNextChunk();
+
+    if (onShowToast) {
+      onShowToast(isTamil ? '🔊 தமிழில் கட்டுரை வாசிக்கப்படுகிறது...' : '🔊 Reading article aloud in English...');
     }
   };
 
@@ -6784,13 +6900,26 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
                   : 'Key insights and executive summary covering systematic investment planning, regulatory compliance, and risk-adjusted wealth compounding principles.')}
               </p>
             </div>
-            <div className="pt-2 border-t border-brandBlue-500/15">
+            <div className="pt-2.5 border-t border-brandBlue-500/15 flex items-center justify-between gap-2 flex-wrap">
+              <button
+                type="button"
+                onClick={handleToggleListen}
+                className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-extrabold transition-all ${
+                  isSpeaking
+                    ? 'bg-amber-500 text-slate-950 animate-pulse shadow'
+                    : 'bg-brandBlue-600/10 hover:bg-brandBlue-600/20 text-brandBlue-700 dark:text-brandBlue-300 border border-brandBlue-500/30'
+                }`}
+                title={isSpeaking ? (isTamil ? 'ஆடியோவை நிறுத்து' : 'Stop Audio') : (isTamil ? 'தமிழில் ஆடியோவாக கேள்' : 'Listen in Audio')}
+              >
+                <span>{isSpeaking ? '⏹' : '🔊'}</span>
+                <span>{isSpeaking ? (isTamil ? 'நிறுத்து' : 'Stop') : (isTamil ? 'கேட்கவும் (Audio)' : 'Listen')}</span>
+              </button>
               <button
                 type="button"
                 onClick={() => setShowAiModal(true)}
                 className="text-[11px] font-bold text-brandBlue-600 dark:text-brandBlue-400 hover:underline inline-flex items-center gap-1"
               >
-                <span>{isTamil ? 'AI சுருக்கம் · மேலும் அறிக →' : 'AI Summary · Learn more →'}</span>
+                <span>{isTamil ? 'விவரம் →' : 'Learn more →'}</span>
               </button>
             </div>
           </div>
