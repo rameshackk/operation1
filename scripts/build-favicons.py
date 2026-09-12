@@ -1,5 +1,6 @@
 import os
 import base64
+# pyrefly: ignore [missing-import]
 from PIL import Image
 
 logo_path = 'assets/logo.png'

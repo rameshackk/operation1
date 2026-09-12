@@ -1695,7 +1695,6 @@ function Header({ onOpenSearch, onNavigate }) {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const displayName = profile?.display_name || user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'User';
-  const email = user?.email || '';
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 30);
@@ -1719,28 +1718,20 @@ function Header({ onOpenSearch, onNavigate }) {
 
   return (
     <header className={`w-full transition-all duration-200 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-900 dark:text-white ${
-      isScrolled ? 'py-1.5 shadow-sm' : 'py-2 shadow-sm'
+      isScrolled ? 'py-1.5 shadow-sm' : 'py-2 sm:py-2.5 shadow-sm'
     }`}>
-      <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3">
+      <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-2 sm:gap-4">
         
-        {/* Left Side: Welcome Badge */}
-        <div className="hidden sm:flex items-center gap-2 min-w-[130px] md:min-w-[150px] shrink-0">
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[11px] font-black rounded-full bg-emerald-600/10 text-emerald-800 dark:text-emerald-400 border border-emerald-600/25 shadow-sm">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span>{t('welcome')}</span>
-          </span>
-        </div>
-
-        {/* Center: Brand Logo & Title */}
-        <a href="#/" className="flex items-center gap-3 group mx-auto text-center sm:text-left">
+        {/* Left Side: Brand Logo & Title */}
+        <a href="#/" className="flex items-center gap-2.5 sm:gap-3.5 group shrink-0 min-w-0">
           <img
             src="/assets/logo.png"
             alt="Muthaleetu Thisai"
-            className="w-11 h-11 sm:w-13 sm:h-13 md:w-14 md:h-14 object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-300 shrink-0"
+            className="w-9 h-9 sm:w-12 sm:h-12 md:w-14 md:h-14 object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-300 shrink-0"
           />
-          <div>
-            <div className="flex items-center gap-2 justify-center sm:justify-start">
-              <h1 className="text-xl sm:text-2xl md:text-[1.7rem] font-black tracking-tight font-serif whitespace-nowrap">
+          <div className="min-w-0">
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <h1 className="text-lg sm:text-2xl md:text-[1.7rem] font-black tracking-tight font-serif whitespace-nowrap leading-none">
                 {language === 'ta' ? (
                   <>
                     <span className="text-[#03529A] dark:text-[#38bdf8]">முதலீட்டு </span>
@@ -1753,38 +1744,39 @@ function Header({ onOpenSearch, onNavigate }) {
                   </>
                 )}
               </h1>
-              <span className="sm:hidden inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider rounded-full bg-emerald-600/10 text-emerald-800 dark:text-emerald-400 border border-emerald-600/30">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                <span>{t('welcome')}</span>
-              </span>
             </div>
-            <p className="text-xs sm:text-[13px] text-slate-500 dark:text-slate-400 font-bold hidden sm:block">
+            <p className="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 font-bold hidden md:block pt-0.5 truncate">
               {t('tagline')}
             </p>
           </div>
         </a>
 
-        {/* Right Side: Search + Language + Theme + Login / User Card & Logout */}
-        <div className="flex items-center justify-end gap-2 sm:gap-2.5 shrink-0">
+        {/* Right Side Controls: Search + Language + Theme + Login / User Card */}
+        <div className="flex items-center justify-end gap-1.5 sm:gap-2.5 shrink-0">
           <button
             onClick={onOpenSearch}
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-800 transition-all text-xs font-black border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md"
+            className="inline-flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-800 transition-all text-xs font-black border border-slate-200 dark:border-slate-700 shadow-sm"
             aria-label="Search"
+            title="Search (Ctrl + K)"
           >
             <svg className="w-4 h-4 text-[#03529A] dark:text-[#38bdf8]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
             <span className="hidden md:inline font-black">{t('searchTitle')}</span>
+            <span className="hidden xl:inline-block text-[9px] px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-mono">⌘K</span>
           </button>
-          <LanguageSwitcher />
-          <ThemeToggle />
+          
+          <div className="hidden xs:flex items-center gap-1.5 sm:gap-2">
+            <LanguageSwitcher />
+            <ThemeToggle />
+          </div>
 
           {user ? (
-            <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+            <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
               <ProfileMenu onNavigate={onNavigate || ((route) => { if (typeof window !== 'undefined') window.location.hash = route; })} />
               <button
                 onClick={handleLogout}
                 disabled={isLoggingOut}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-red-600 hover:bg-red-700 active:scale-95 text-white font-black text-xs shadow-md hover:shadow-red-600/30 transition-all shrink-0 disabled:opacity-50 border border-red-500/30"
-                title={language === 'ta' ? 'கணக்கிலிருந்து வெளியேறு' : 'Log out of website'}
+                className="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full bg-red-600 hover:bg-red-700 active:scale-95 text-white font-black text-xs shadow-md transition-all shrink-0 disabled:opacity-50 border border-red-500/30"
+                title={language === 'ta' ? 'வெளியேறு' : 'Logout'}
               >
                 {isLoggingOut ? (
                   <svg className="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24">
@@ -1803,7 +1795,7 @@ function Header({ onOpenSearch, onNavigate }) {
                 if (onNavigate) onNavigate('#/login');
                 else if (typeof window !== 'undefined') window.location.hash = '#/login';
               }}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full btn-brand-blue text-white font-extrabold text-xs shadow-md transition-all shrink-0"
+              className="inline-flex items-center gap-1 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full btn-brand-blue text-white font-extrabold text-xs shadow-md transition-all shrink-0"
             >
               <span>{language === 'ta' ? 'உள்நுழைக' : 'Sign In'}</span>
             </button>
@@ -1820,31 +1812,31 @@ function Navbar({ currentPath, onNavigate }) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const baseNavItems = [
-    { id: 'home', hash: '#/', label: t('nav.home') },
-    { id: 'articles', hash: '#/articles', label: t('nav.articles') },
-    { id: 'videos', hash: '#/videos', label: t('nav.videos') },
-    { id: 'news', hash: '#/news', label: t('nav.news') },
-    { id: 'professionals', hash: '#/professionals', label: t('nav.professionals') || (language === 'ta' ? 'நிபுணர்கள்' : 'Professionals') },
-    { id: 'mutual-funds', hash: '#/category/mutual-funds', label: t('nav.mutualFunds') },
-    { id: 'calculator', hash: '#/calculator', label: t('nav.calculator') },
-    { id: 'quiz', hash: '#/quiz', label: t('nav.quiz') || 'Quiz' }
+    { id: 'home', hash: '#/', label: t('nav.home'), icon: '🏠' },
+    { id: 'articles', hash: '#/articles', label: t('nav.articles'), icon: '📰' },
+    { id: 'videos', hash: '#/videos', label: t('nav.videos'), icon: '🎥' },
+    { id: 'news', hash: '#/news', label: t('nav.news'), icon: '⚡' },
+    { id: 'professionals', hash: '#/professionals', label: t('nav.professionals') || (language === 'ta' ? 'நிபுணர்கள்' : 'Professionals'), icon: '💼' },
+    { id: 'mutual-funds', hash: '#/category/mutual-funds', label: t('nav.mutualFunds'), icon: '📈' },
+    { id: 'calculator', hash: '#/calculator', label: t('nav.calculator'), icon: '🧮' },
+    { id: 'quiz', hash: '#/quiz', label: t('nav.quiz') || 'Quiz', icon: '🎯' }
   ];
 
   const authNavItems = user ? [
-    { id: 'profile', hash: '#/profile', label: ` ${language === 'ta' ? 'சுயவிவரம்' : 'Profile'}` },
+    { id: 'profile', hash: '#/profile', label: `👤 ${language === 'ta' ? 'சுயவிவரம்' : 'Profile'}` },
     ...(role === 'admin' || role === 'publisher' ? [
       { id: 'admin-articles', hash: '#/admin/articles', label: `✍️ ${language === 'ta' ? 'கட்டுரைகள் ஸ்டுடியோ' : 'Article Studio'}` }
-    ] : []),
-
+    ] : [])
   ] : [
-    { id: 'login', hash: '#/login', label: ` ${language === 'ta' ? 'உள்நுழைக' : 'Sign In'}` }
+    { id: 'login', hash: '#/login', label: `🔐 ${language === 'ta' ? 'உள்நுழைக' : 'Sign In'}` }
   ];
 
   const navItems = [...baseNavItems, ...authNavItems];
 
   return (
     <nav className="bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 border-b border-slate-200 dark:border-slate-800 shadow-sm relative z-20">
-      <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-3 sm:px-6 lg:px-8">
+        {/* Desktop / Laptop Horizontal Bar */}
         <div className="hidden lg:flex items-center justify-between gap-2 py-1.5">
           <div className="flex items-center justify-between flex-1 gap-1 xl:gap-2">
             {navItems.map((item, index) => {
@@ -1873,7 +1865,7 @@ function Navbar({ currentPath, onNavigate }) {
                 <button
                   key={item.id}
                   onClick={() => onNavigate(item.hash)}
-                  className={`relative px-3.5 py-2 text-[13.5px] xl:text-[14.5px] font-black transition-all rounded-lg whitespace-nowrap border border-transparent ${isActive ? activeStyle : `text-slate-800 dark:text-slate-200 ${hoverStyle}`}`}
+                  className={`relative px-3 py-1.5 xl:px-3.5 xl:py-2 text-[13px] xl:text-[14px] font-black transition-all rounded-lg whitespace-nowrap border border-transparent ${isActive ? activeStyle : `text-slate-800 dark:text-slate-200 ${hoverStyle}`}`}
                 >
                   {item.label}
                   {isActive && <span className={`absolute bottom-0 left-2.5 right-2.5 h-0.5 ${indicatorBg} rounded-full`} />}
@@ -1883,44 +1875,134 @@ function Navbar({ currentPath, onNavigate }) {
           </div>
         </div>
 
-        <div className="lg:hidden flex items-center justify-between h-12">
-          <span className="text-xs font-black text-amber-600 dark:text-amber-400 uppercase tracking-wider flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-amber-500" />
-            {navItems.find(i => i.hash === currentPath)?.label || t('nav.home')}
-          </span>
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-[rgba(239,233,227,0.8)] dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-700"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
-          </button>
+        {/* Mobile & Tablet Compact Nav Trigger Header */}
+        <div className="lg:hidden flex items-center justify-between h-11 sm:h-12">
+          {/* Active section breadcrumb pill */}
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+            <span className="text-xs font-black text-[#03529A] dark:text-[#38bdf8] uppercase tracking-wider truncate">
+              {navItems.find(i => i.hash === currentPath)?.label || t('nav.home')}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-1.5">
+            <div className="xs:hidden flex items-center gap-1">
+              <LanguageSwitcher />
+              <ThemeToggle />
+            </div>
+            
+            <button
+              onClick={() => setMobileOpen(true)}
+              aria-label="Open Navigation Menu"
+              className="px-2.5 py-1.5 rounded-xl text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-1.5 text-xs font-black shadow-sm"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M4 6h16M4 12h16M4 18h16" /></svg>
+              <span>Menu</span>
+            </button>
+          </div>
         </div>
       </div>
 
+      {/* Full-Screen / Slide-Over Mobile Navigation Drawer */}
       {mobileOpen && (
-        <div className="lg:hidden bg-white dark:bg-slate-900 border-t border-[rgba(217,207,199,0.75)] dark:border-slate-800 px-4 pt-3 pb-5 space-y-1.5 shadow-2xl">
-          {navItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => {
-                if (item.isAction) {
-                  if (item.action) item.action();
-                } else {
-                  onNavigate(item.hash);
-                }
-                setMobileOpen(false);
-              }}
-              className={`block w-full text-left px-3.5 py-2.5 rounded-lg text-sm font-black transition-colors ${
-                item.isAction
-                  ? 'text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40'
-                  : currentPath === item.hash
-                    ? 'bg-amber-500/10 text-amber-700 dark:text-amber-400 border-l-4 border-amber-500'
-                    : 'text-slate-800 dark:text-slate-200 hover:bg-[rgba(239,233,227,0.7)] dark:hover:bg-slate-800'
-              }`}
-            >
-              {item.label}
-            </button>
-          ))}
+        <div className="lg:hidden fixed inset-0 z-[99999] flex" role="dialog" aria-modal="true">
+          {/* Backdrop Blur */}
+          <div
+            className="fixed inset-0 bg-slate-950/70 backdrop-blur-sm transition-opacity"
+            onClick={() => setMobileOpen(false)}
+          />
+
+          {/* Drawer Panel */}
+          <div className="relative ml-auto w-[85vw] max-w-sm h-full bg-white dark:bg-slate-950 text-slate-900 dark:text-white border-l border-slate-200 dark:border-slate-800 shadow-2xl flex flex-col justify-between overflow-y-auto animate-slideRight">
+            {/* Drawer Header */}
+            <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <img src="/assets/logo.png" alt="" className="w-7 h-7 object-contain" />
+                <span className="font-black text-sm font-serif">
+                  <span className="text-[#03529A] dark:text-[#38bdf8]">முதலீட்டு </span>
+                  <span className="text-[#4A9E2C] dark:text-[#4ade80]">திசை</span>
+                </span>
+              </div>
+
+              <button
+                onClick={() => setMobileOpen(false)}
+                className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-900 text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center justify-center font-bold text-sm"
+                aria-label="Close menu"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Navigation Links */}
+            <div className="p-4 space-y-1.5 flex-1 overflow-y-auto">
+              {navItems.map((item, index) => {
+                const isActive = currentPath === item.hash || (item.hash === '#/' && currentPath === '');
+                const isEven = index % 2 === 0;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => {
+                      if (item.isAction) {
+                        if (item.action) item.action();
+                      } else {
+                        onNavigate(item.hash);
+                      }
+                      setMobileOpen(false);
+                    }}
+                    className={`w-full text-left px-4 py-3 rounded-2xl text-sm font-black transition-all flex items-center justify-between ${
+                      item.isAction
+                        ? 'text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40'
+                        : isActive
+                          ? isEven
+                            ? 'bg-[#03529A]/15 text-[#03529A] dark:text-[#38bdf8] border border-[#03529A]/30 shadow-sm'
+                            : 'bg-[#4A9E2C]/15 text-[#4A9E2C] dark:text-[#4ade80] border border-[#4A9E2C]/30 shadow-sm'
+                          : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900'
+                    }`}
+                  >
+                    <span className="flex items-center gap-2.5">
+                      <span>{item.icon || '•'}</span>
+                      <span>{item.label}</span>
+                    </span>
+                    {isActive && <span className="w-2 h-2 rounded-full bg-emerald-500" />}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Drawer Footer with Quick Switchers & User Auth */}
+            <div className="p-4 border-t border-slate-200 dark:border-slate-800 space-y-3 bg-slate-50 dark:bg-slate-900/50">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-500 dark:text-slate-400">Settings</span>
+                <div className="flex items-center gap-2">
+                  <LanguageSwitcher />
+                  <ThemeToggle />
+                </div>
+              </div>
+
+              {user ? (
+                <button
+                  onClick={() => {
+                    signOut && signOut();
+                    setMobileOpen(false);
+                    if (onNavigate) onNavigate('#/login');
+                  }}
+                  className="w-full py-2.5 rounded-xl bg-red-600/10 hover:bg-red-600 text-red-600 hover:text-white font-bold text-xs transition-colors border border-red-500/20 text-center"
+                >
+                  {language === 'ta' ? 'கணக்கிலிருந்து வெளியேறு (Logout)' : 'Logout'}
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    setMobileOpen(false);
+                    if (onNavigate) onNavigate('#/login');
+                  }}
+                  className="w-full py-2.5 rounded-xl btn-brand-blue text-white font-black text-xs shadow text-center"
+                >
+                  {language === 'ta' ? 'உள்நுழைக (Sign In)' : 'Sign In'}
+                </button>
+              )}
+            </div>
+          </div>
         </div>
       )}
     </nav>
@@ -3095,10 +3177,10 @@ function SipCalculator() {
         </div>
 
         {/* 2-Column Controls & Results */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-stretch">
           {/* Left Column (Input Sliders): Pure White Card */}
-          <div className="lg:col-span-6 space-y-6 bg-white text-slate-900 p-6 sm:p-8 rounded-3xl border border-white/40 shadow-xl flex flex-col justify-between">
-            <div className="space-y-5">
+          <div className="lg:col-span-6 space-y-5 sm:space-y-6 bg-white text-slate-900 p-5 sm:p-8 rounded-3xl border border-white/40 shadow-xl flex flex-col justify-between">
+            <div className="space-y-4 sm:space-y-5">
               <div className="space-y-2">
                 <div className="flex justify-between items-center text-xs font-bold">
                   <label className="text-slate-800 font-black">
@@ -3106,7 +3188,7 @@ function SipCalculator() {
                       ? (isTamil ? 'தொடக்க முதலீட்டுத் தொகை (₹)' : 'Initial Investment (₹)')
                       : (isTamil ? 'மாதாந்திர SIP தொகை (₹)' : 'Monthly SIP Amount (₹)')}
                   </label>
-                  <span className="text-[#008060] font-mono text-sm font-black">
+                  <span className="text-[#008060] font-mono text-sm sm:text-base font-black">
                     {formatCurrency(monthlyInvest)}
                   </span>
                 </div>
@@ -3117,8 +3199,25 @@ function SipCalculator() {
                   step={calcMode === 'lumpsum' || calcMode === 'compound' ? '5000' : '500'}
                   value={monthlyInvest}
                   onChange={(e) => setMonthlyInvest(Number(e.target.value))}
-                  className="w-full h-2.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#008060]"
+                  className="w-full h-3 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#008060]"
                 />
+                {/* Mobile Touch Quick Chips */}
+                <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                  {[1000, 2500, 5000, 10000, 25000].map((amt) => (
+                    <button
+                      key={amt}
+                      type="button"
+                      onClick={() => setMonthlyInvest(amt)}
+                      className={`px-2.5 py-1 rounded-lg text-[10.5px] font-mono font-bold transition-all ${
+                        monthlyInvest === amt
+                          ? 'bg-[#008060] text-white shadow-sm'
+                          : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+                      }`}
+                    >
+                      ₹{(amt >= 1000 ? `${amt / 1000}k` : amt)}
+                    </button>
+                  ))}
+                </div>
               </div>
 
               {calcMode === 'stepup' && (
@@ -3138,7 +3237,7 @@ function SipCalculator() {
                     step="1"
                     value={stepUpPercent}
                     onChange={(e) => setStepUpPercent(Number(e.target.value))}
-                    className="w-full h-2.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#008060]"
+                    className="w-full h-3 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#008060]"
                   />
                 </div>
               )}
@@ -3148,7 +3247,7 @@ function SipCalculator() {
                   <label className="text-slate-800 font-black">
                     {isTamil ? 'எதிர்பார்க்கும் ஆண்டு வட்டி விகிதம் (%)' : 'Expected Annual Return Rate (%)'}
                   </label>
-                  <span className="text-[#008060] font-mono text-sm font-black">
+                  <span className="text-[#008060] font-mono text-sm sm:text-base font-black">
                     {returnRate}% / {isTamil ? 'ஆண்டுக்கு' : 'Year'}
                   </span>
                 </div>
@@ -3159,8 +3258,24 @@ function SipCalculator() {
                   step="0.5"
                   value={returnRate}
                   onChange={(e) => setReturnRate(Number(e.target.value))}
-                  className="w-full h-2.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#008060]"
+                  className="w-full h-3 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#008060]"
                 />
+                <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                  {[10, 12, 14, 15, 18].map((rate) => (
+                    <button
+                      key={rate}
+                      type="button"
+                      onClick={() => setReturnRate(rate)}
+                      className={`px-2 py-0.5 rounded-md text-[10.5px] font-mono font-bold transition-all ${
+                        returnRate === rate
+                          ? 'bg-[#008060] text-white shadow-sm'
+                          : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+                      }`}
+                    >
+                      {rate}%
+                    </button>
+                  ))}
+                </div>
               </div>
 
               <div className="space-y-2">
@@ -3168,7 +3283,7 @@ function SipCalculator() {
                   <label className="text-slate-800 font-black">
                     {isTamil ? 'முதலீட்டுக் காலம் (ஆண்டுகள்)' : 'Time Horizon (Years)'}
                   </label>
-                  <span className="text-[#008060] font-mono text-sm font-black">
+                  <span className="text-[#008060] font-mono text-sm sm:text-base font-black">
                     {timeYears} {isTamil ? 'ஆண்டுகள்' : 'Years'}
                   </span>
                 </div>
@@ -3179,8 +3294,24 @@ function SipCalculator() {
                   step="1"
                   value={timeYears}
                   onChange={(e) => setTimeYears(Number(e.target.value))}
-                  className="w-full h-2.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#008060]"
+                  className="w-full h-3 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#008060]"
                 />
+                <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                  {[3, 5, 10, 15, 20, 25].map((yr) => (
+                    <button
+                      key={yr}
+                      type="button"
+                      onClick={() => setTimeYears(yr)}
+                      className={`px-2 py-0.5 rounded-md text-[10.5px] font-mono font-bold transition-all ${
+                        timeYears === yr
+                          ? 'bg-[#008060] text-white shadow-sm'
+                          : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+                      }`}
+                    >
+                      {yr}Y
+                    </button>
+                  ))}
+                </div>
               </div>
 
               <div className="space-y-2 pt-2 border-t border-slate-200">
@@ -4299,21 +4430,12 @@ function CinemaTheaterModal({
       className="fixed inset-0 z-[999999] w-screen h-screen bg-[#070b14] flex flex-col overflow-hidden text-white animate-fadeIn"
       style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, width: '100vw', height: '100vh', zIndex: 999999 }}
     >
-      {/* 1. SITE BRAND LOGO HEADER */}
-      <Header onOpenSearch={() => {}} onNavigate={(h) => { onClose && onClose(); if (typeof onNavigate === 'function') onNavigate(h); else window.location.hash = h; }} />
-
-      {/* 2. NAVIGATION BUTTONS BAR */}
-      <Navbar currentPath="#/videos" onNavigate={(h) => { onClose && onClose(); if (typeof onNavigate === 'function') onNavigate(h); else window.location.hash = h; }} />
-
-      {/* 3. BREAKING NEWS TICKER */}
-      <TrendingTicker />
-
-      {/* 4. TOP STUDIO SUB-NAVIGATION BAR */}
-      <div className="h-12 bg-[#090e1a] border-b border-slate-800/90 flex items-center justify-between px-4 sm:px-6 shrink-0 z-20 shadow-md">
-        <div className="flex items-center gap-3 min-w-0">
+      {/* 1. CINEMA STUDIO NAVIGATION BAR */}
+      <div className="h-12 sm:h-14 bg-[#090e1a] border-b border-slate-800/90 flex items-center justify-between px-3 sm:px-6 shrink-0 z-20 shadow-md">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
           <button
             onClick={onClose}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-amber-500 hover:text-slate-950 text-slate-200 transition-all text-xs font-black border border-slate-700 shrink-0"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-amber-500 hover:text-slate-950 text-slate-200 transition-all text-xs font-black border border-slate-700 shrink-0"
           >
             <span>←</span>
             <span className="hidden sm:inline">{isTamil ? 'அனைத்து வீடியோக்கள்' : 'Back to Videos'}</span>
@@ -4321,8 +4443,8 @@ function CinemaTheaterModal({
 
           <div className="h-4 w-[1px] bg-slate-800 hidden sm:block" />
 
-          <div className="flex items-center gap-2 truncate">
-            <span className="px-2.5 py-0.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-400 text-[10px] font-black uppercase tracking-wider shrink-0">
+          <div className="flex items-center gap-2 truncate min-w-0">
+            <span className="px-2 py-0.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-400 text-[10px] font-black uppercase tracking-wider shrink-0">
               {(video.category || 'FINANCE').replace('-', ' ')}
             </span>
             <span className="text-xs text-slate-300 font-bold truncate hidden md:inline">
@@ -4331,18 +4453,18 @@ function CinemaTheaterModal({
           </div>
         </div>
 
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           <button
             onClick={handleShare}
-            className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-slate-200 hover:text-white flex items-center gap-1.5 transition-colors"
+            className="px-2.5 sm:px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-slate-200 hover:text-white flex items-center gap-1.5 transition-colors"
           >
-            <span>{copied ? '✓ Copied' : (isTamil ? 'பகிர்' : 'Share')}</span>
+            <span>{copied ? '✓' : (isTamil ? 'பகிர்' : 'Share')}</span>
           </button>
 
           <button
             onClick={onClose}
             aria-label="Exit Fullscreen"
-            className="w-8 h-8 rounded-xl bg-slate-800 hover:bg-red-600 text-slate-300 hover:text-white flex items-center justify-center transition-colors text-sm font-bold border border-slate-700 ml-1"
+            className="w-8 h-8 rounded-xl bg-slate-800 hover:bg-red-600 text-slate-300 hover:text-white flex items-center justify-center transition-colors text-sm font-bold border border-slate-700"
           >
             ✕
           </button>
@@ -4356,7 +4478,7 @@ function CinemaTheaterModal({
         <main className="lg:col-span-8 xl:col-span-9 flex flex-col min-h-0 bg-[#040711] overflow-y-auto">
           {/* 16:9 Video Canvas Frame */}
           <div className="w-full bg-black flex items-center justify-center p-0 sm:p-2 lg:p-4 shrink-0 shadow-2xl">
-            <div className="w-full max-w-5xl aspect-video max-h-[62vh] rounded-none sm:rounded-2xl overflow-hidden bg-black shadow-2xl border border-slate-900">
+            <div className="w-full max-w-5xl aspect-video max-h-[55vh] sm:max-h-[62vh] rounded-none sm:rounded-2xl overflow-hidden bg-black shadow-2xl border border-slate-900">
               {embedUrl ? (
                 <iframe
                   src={embedUrl}
@@ -7491,12 +7613,95 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
         </div>
       )}
 
-      {/* ================= 10. FLOATING SCROLL-TO-TOP BUTTON ================= */}
+      {/* ================= 10. MOBILE FLOATING ACTION TOOLBAR ================= */}
+      <div className="lg:hidden mobile-reading-toolbar flex items-center justify-around gap-1 z-40">
+        <button
+          type="button"
+          onClick={() => handleToggleListen(audioVoiceLang || 'ta')}
+          className={`px-3 py-1.5 rounded-full text-xs font-black flex items-center gap-1 transition-all ${
+            (isPlaying || isSpeaking)
+              ? 'bg-amber-500 text-slate-950 animate-pulse shadow-md font-bold'
+              : 'bg-brandBlue-600 text-white shadow-sm'
+          }`}
+          title="Audio Listen"
+        >
+          <span>{(isPlaying || isSpeaking) ? '⏹' : '🔊'}</span>
+          <span>{(isPlaying || isSpeaking) ? (isTamil ? 'நிறுத்து' : 'Stop') : (isTamil ? 'கேள்' : 'Listen')}</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => {
+            toggleBookmark(article);
+            if (onShowToast) onShowToast(!isSavedArticle ? (isTamil ? 'சேமிக்கப்பட்டது!' : 'Saved!') : (isTamil ? 'நீக்கப்பட்டது' : 'Removed'));
+          }}
+          className={`p-2 rounded-xl text-xs font-bold transition-all ${
+            isSavedArticle
+              ? 'bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30'
+              : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200'
+          }`}
+          title="Bookmark"
+          aria-label="Bookmark"
+        >
+          <span>{isSavedArticle ? '★' : '☆'}</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => handleShare('native')}
+          className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-bold transition-all"
+          title="Share"
+          aria-label="Share"
+        >
+          <span>↗</span>
+        </button>
+
+        {tableOfContents.length > 0 && (
+          <button
+            type="button"
+            onClick={() => setShowTocModal(prev => !prev)}
+            className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-bold transition-all"
+            title="TOC"
+            aria-label="Table of Contents"
+          >
+            <span>📑</span>
+          </button>
+        )}
+
+        <button
+          type="button"
+          onClick={() => {
+            setIsReadingMode(prev => !prev);
+            if (onShowToast) onShowToast(!isReadingMode ? (isTamil ? 'வாசிப்பு முறை' : 'Focus View') : (isTamil ? 'இயல்பு பார்வை' : 'Standard View'));
+          }}
+          className={`p-2 rounded-xl text-xs font-bold transition-all ${
+            isReadingMode
+              ? 'bg-brandBlue-600 text-white'
+              : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200'
+          }`}
+          title="Focus Mode"
+          aria-label="Focus Mode"
+        >
+          <span>👁️</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={scrollToTop}
+          className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-bold transition-all"
+          title="Top"
+          aria-label="Top"
+        >
+          <span>↑</span>
+        </button>
+      </div>
+
+      {/* ================= 11. DESKTOP FLOATING SCROLL-TO-TOP BUTTON ================= */}
       {showScrollTop && (
         <button
           type="button"
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-40 w-11 h-11 rounded-full bg-brandBlue-600 hover:bg-brandBlue-700 text-white shadow-xl shadow-brandBlue-600/30 flex items-center justify-center font-black text-sm transition-all hover:scale-110 animate-bounce"
+          className="hidden lg:flex fixed bottom-8 right-8 z-40 w-11 h-11 rounded-full bg-brandBlue-600 hover:bg-brandBlue-700 text-white shadow-xl shadow-brandBlue-600/30 items-center justify-center font-black text-sm transition-all hover:scale-110 animate-bounce"
           title={isTamil ? 'மேலே செல்க' : 'Scroll to top'}
           aria-label="Scroll to top"
         >

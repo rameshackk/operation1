@@ -2,10 +2,19 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Tamil:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-/* Responsive Global Scaling - Full Screen Responsive Layout with Enhanced Readability */
+/* Responsive Global Scaling - Seamless Multi-Device Scaling (Mobile, Tablet, Laptop, Desktop PC, Ultra-wide) */
 html {
-  font-size: 16px;
+  font-size: 15px;
   -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scrollbar-gutter: stable;
+  scroll-behavior: smooth;
+}
+
+@media (min-width: 480px) {
+  html {
+    font-size: 15.5px;
+  }
 }
 
 @media (min-width: 640px) {
@@ -26,53 +35,50 @@ html {
   }
 }
 
+@media (min-width: 1920px) {
+  html {
+    font-size: 17.5px;
+  }
+}
+
 :root {
-  /* Spacing Scale Tokens */
-  --space-1: 0.25rem;
-  /* 4px */
-  --space-2: 0.5rem;
-  /* 8px */
-  --space-3: 0.75rem;
-  /* 12px */
-  --space-4: 1rem;
-  /* 16px */
-  --space-5: 1.25rem;
-  /* 20px */
-  --space-6: 1.5rem;
-  /* 24px */
-  --space-8: 2rem;
-  /* 32px */
-  --space-10: 2.5rem;
-  /* 40px */
-  --space-12: 3rem;
-  /* 48px */
-  --space-16: 4rem;
-  /* 64px */
+  /* Spacing Scale Tokens - Fluid Multi-Device Architecture */
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.35rem;   /* 22px */
+  --space-6: 1.75rem;   /* 28px */
+  --space-8: 2.25rem;   /* 36px */
+  --space-10: 2.85rem;  /* 46px */
+  --space-12: 3.5rem;   /* 56px */
+  --space-16: 4.5rem;   /* 72px */
+  --space-20: 5.5rem;   /* 88px */
 
-  /* Container & Grid Tokens */
-  --container-max: 1680px;
-  --container-px: 1.5rem;
-  --grid-gap: 1.5rem;
-  --section-spacing-y: 2.25rem;
+  /* Container & Grid Tokens - Scalable & Balanced across all monitors */
+  --container-max: 1600px;
+  --container-px: clamp(1rem, 3.5vw, 2.75rem);
+  --grid-gap: clamp(1rem, 2.5vw, 2.25rem);
+  --section-spacing-y: clamp(2.25rem, 4.5vw, 4.25rem);
 
-  /* Typography Metrics - Universal Book Antiqua Font System */
+  /* Typography Metrics - Universal Book Antiqua Font System with Generous Line Spacing */
   --font-sans: 'Book Antiqua', Palatino, 'Palatino Linotype', 'Palatino LT STD', Georgia, 'Noto Serif Tamil', serif;
   --font-serif: 'Book Antiqua', Palatino, 'Palatino Linotype', 'Palatino LT STD', Georgia, 'Noto Serif Tamil', serif;
-  --line-height-body: 1.5;
-  --line-height-heading: 1.25;
-  --line-height-tight: 1.15;
+  --line-height-body: 1.72;
+  --line-height-heading: 1.32;
+  --line-height-tight: 1.20;
 
   /* Design Tokens for Cards & Elevation */
-  --radius-card: 1.25rem;
-  /* 20px */
-  --shadow-card: 0 4px 12px -2px rgba(15, 23, 42, 0.08), 0 2px 6px -2px rgba(15, 23, 42, 0.04);
-  --shadow-card-hover: 0 20px 30px -6px rgba(15, 23, 42, 0.14), 0 10px 14px -5px rgba(15, 23, 42, 0.08);
+  --radius-card: 1.5rem;
+  /* 24px */
+  --shadow-card: 0 4px 16px -2px rgba(15, 23, 42, 0.06), 0 2px 8px -2px rgba(15, 23, 42, 0.03);
+  --shadow-card-hover: 0 24px 38px -8px rgba(15, 23, 42, 0.12), 0 12px 18px -6px rgba(15, 23, 42, 0.06);
 
-  /* Global Motion Tokens */
-  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  /* Global Motion Tokens - Silky Interactive Transitions */
+  --ease-default: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-overshoot: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --duration-interactive: 200ms;
-  --duration-layout: 350ms;
+  --duration-interactive: 250ms;
+  --duration-layout: 400ms;
 
   /* Centralized Z-Index Hierarchy */
   --z-bg: 0;
@@ -82,7 +88,7 @@ html {
   --z-modal: 1000;
   --z-scroll-bar: 10000;
 
-  /* Colors - Clean Pure White Palette for Light Mode */
+  /* Colors - Clean Pure White Palette for Light Mode (Colors 100% Preserved) */
   --bg-main: #ffffff;
   --bg-card: #ffffff;
   --bg-card-hover: #ffffff;
@@ -102,9 +108,9 @@ html {
 }
 
 [data-theme="dark"] {
-  --radius-card: 1.25rem;
-  --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.7), 0 2px 8px -2px rgba(0, 0, 0, 0.5);
-  --shadow-card-hover: 0 20px 35px -6px rgba(0, 0, 0, 0.85), 0 0 24px 2px rgba(3, 82, 154, 0.25);
+  --radius-card: 1.5rem;
+  --shadow-card: 0 6px 24px -2px rgba(0, 0, 0, 0.75), 0 2px 10px -2px rgba(0, 0, 0, 0.55);
+  --shadow-card-hover: 0 24px 42px -6px rgba(0, 0, 0, 0.90), 0 0 28px 2px rgba(3, 82, 154, 0.28);
   --bg-main: #020617;
   --bg-card: rgba(11, 15, 25, 0.70);
   --bg-card-hover: rgba(17, 24, 39, 0.82);
@@ -342,31 +348,38 @@ button:not([disabled]):nth-of-type(even):hover,
   line-height: var(--line-height-heading);
 }
 
-/* Shared Max-Width Container */
+/* Shared Max-Width Container - Focused Reading Rhythm */
 .site-container {
   width: 100%;
   max-width: var(--container-max);
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
 }
 
 @media (min-width: 640px) {
-  .site-container {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-}
-
-@media (min-width: 1024px) {
   .site-container {
     padding-left: 2rem;
     padding-right: 2rem;
   }
 }
 
-/* Consistent Section Spacing Rhythm */
+@media (min-width: 1024px) {
+  .site-container {
+    padding-left: 2.75rem;
+    padding-right: 2.75rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  .site-container {
+    padding-left: 3.25rem;
+    padding-right: 3.25rem;
+  }
+}
+
+/* Consistent Spacious Section Rhythm */
 .section-rhythm {
   padding-top: var(--section-spacing-y);
   padding-bottom: var(--section-spacing-y);
@@ -374,8 +387,15 @@ button:not([disabled]):nth-of-type(even):hover,
 
 @media (min-width: 768px) {
   .section-rhythm {
-    padding-top: 3.5rem;
-    padding-bottom: 3.5rem;
+    padding-top: 4.25rem;
+    padding-bottom: 4.25rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .section-rhythm {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
   }
 }
 
@@ -496,18 +516,41 @@ button:not([disabled]):nth-of-type(even):hover,
   animation-play-state: paused;
 }
 
-/* Card Hover Elevation */
-.card-hover-glow {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+/* Card Spacing, Padding & Interactive Hover Elevation - Option 4 Spacious Minimalist */
+.card-hover-glow,
+.card-unified,
+.article-card,
+.video-card-cinema {
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s ease, border-color 0.25s ease;
+  will-change: transform, box-shadow;
 }
 
-.card-hover-glow:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+.card-hover-glow:hover,
+.card-unified:hover,
+.article-card:hover,
+.video-card-cinema:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-card-hover);
 }
 
-[data-theme="dark"] .card-hover-glow:hover {
-  box-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.4), 0 0 15px 1px rgba(217, 119, 6, 0.15);
+[data-theme="dark"] .card-hover-glow:hover,
+[data-theme="dark"] .card-unified:hover,
+[data-theme="dark"] .article-card:hover,
+[data-theme="dark"] .video-card-cinema:hover {
+  box-shadow: 0 20px 38px -6px rgba(0, 0, 0, 0.88), 0 0 24px 2px rgba(3, 82, 154, 0.25);
+}
+
+/* Category Filter Pills - Tactile Spacious Padding */
+.category-pill-unified {
+  padding: 0.65rem 1.35rem !important;
+  margin: 0.25rem 0.35rem !important;
+  border-radius: 9999px !important;
+  font-size: 0.925rem !important;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.category-pill-unified:hover {
+  transform: translateY(-2px) scale(1.03);
 }
 
 /* Live Market Indicator Badges */
@@ -1163,7 +1206,7 @@ html:not([data-theme="dark"]) table tbody tr:hover,
   border-radius: 1rem !important;
 }
 
-/* Mobile Filter Drawer Animation */
+/* Mobile Filter Drawer & Modal Animations */
 @keyframes slideRight {
   from {
     transform: translateX(-100%);
@@ -1173,6 +1216,93 @@ html:not([data-theme="dark"]) table tbody tr:hover,
   }
 }
 
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 .animate-slideRight {
   animation: slideRight 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Multi-Device Safe-Area & Touch Target Accessibility */
+.pb-safe {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom, 1rem));
+}
+
+.pt-safe {
+  padding-top: max(0.5rem, env(safe-area-inset-top, 0.5rem));
+}
+
+/* Touch-Friendly Action Buttons */
+@media (max-width: 640px) {
+  button,
+  [role="button"],
+  .btn,
+  .category-pill-unified {
+    min-height: 38px;
+    touch-action: manipulation;
+  }
+
+  .touch-target-lg {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Responsive Horizontal Rails with Scroll Snap */
+.horizontal-scroll-rail {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.horizontal-scroll-rail::-webkit-scrollbar {
+  display: none;
+}
+
+.horizontal-scroll-rail > * {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+/* Responsive Table Wrapper with Momentum Scroll */
+.table-responsive-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 1rem;
+}
+
+/* Mobile Sticky Bottom Reading Toolbar */
+.mobile-reading-toolbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 45;
+  background: rgba(255, 255, 255, 0.96);
+  border-top: 1px solid rgba(226, 232, 240, 0.9);
+  padding: 0.6rem 1rem max(0.6rem, env(safe-area-inset-bottom, 0.6rem));
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="dark"] .mobile-reading-toolbar {
+  background: rgba(2, 6, 23, 0.96);
+  border-top-color: rgba(30, 41, 59, 0.9);
+  box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.5);
 }
