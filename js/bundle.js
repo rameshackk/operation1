@@ -1717,21 +1717,21 @@ function Header({ onOpenSearch, onNavigate }) {
   };
 
   return (
-    <header className={`w-full transition-all duration-200 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-900 dark:text-white ${
+    <header className={`w-full max-w-full overflow-hidden transition-all duration-200 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-900 dark:text-white ${
       isScrolled ? 'py-1.5 shadow-sm' : 'py-2 sm:py-2.5 shadow-sm'
     }`}>
-      <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-2 sm:gap-4">
+      <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-2 sm:gap-4 min-w-0">
         
         {/* Left Side: Brand Logo & Title */}
-        <a href="#/" className="flex items-center gap-2.5 sm:gap-3.5 group shrink-0 min-w-0">
+        <a href="#/" className="flex items-center gap-2 sm:gap-3.5 group shrink min-w-0 truncate">
           <img
             src="/assets/logo.png"
             alt="Muthaleetu Thisai"
-            className="w-9 h-9 sm:w-12 sm:h-12 md:w-14 md:h-14 object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-300 shrink-0"
+            className="w-8 h-8 sm:w-11 sm:h-11 md:w-14 md:h-14 object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-300 shrink-0"
           />
-          <div className="min-w-0">
-            <div className="flex items-center gap-1.5 sm:gap-2">
-              <h1 className="text-lg sm:text-2xl md:text-[1.7rem] font-black tracking-tight font-serif whitespace-nowrap leading-none">
+          <div className="min-w-0 truncate">
+            <div className="flex items-center gap-1.5 sm:gap-2 truncate">
+              <h1 className="text-base sm:text-2xl md:text-[1.7rem] font-black tracking-tight font-serif whitespace-nowrap leading-none truncate">
                 {language === 'ta' ? (
                   <>
                     <span className="text-[#03529A] dark:text-[#38bdf8]">முதலீட்டு </span>
@@ -1764,7 +1764,7 @@ function Header({ onOpenSearch, onNavigate }) {
             <span className="hidden xl:inline-block text-[9px] px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-mono">⌘K</span>
           </button>
           
-          <div className="hidden xs:flex items-center gap-1.5 sm:gap-2">
+          <div className="hidden md:flex items-center gap-1.5 sm:gap-2">
             <LanguageSwitcher />
             <ThemeToggle />
           </div>
@@ -1876,25 +1876,20 @@ function Navbar({ currentPath, onNavigate }) {
         </div>
 
         {/* Mobile & Tablet Compact Nav Trigger Header */}
-        <div className="lg:hidden flex items-center justify-between h-11 sm:h-12">
+        <div className="lg:hidden flex items-center justify-between h-11 sm:h-12 min-w-0">
           {/* Active section breadcrumb pill */}
-          <div className="flex items-center gap-2 min-w-0">
+          <div className="flex items-center gap-2 min-w-0 truncate">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
             <span className="text-xs font-black text-[#03529A] dark:text-[#38bdf8] uppercase tracking-wider truncate">
               {navItems.find(i => i.hash === currentPath)?.label || t('nav.home')}
             </span>
           </div>
 
-          <div className="flex items-center gap-1.5">
-            <div className="xs:hidden flex items-center gap-1">
-              <LanguageSwitcher />
-              <ThemeToggle />
-            </div>
-            
+          <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={() => setMobileOpen(true)}
               aria-label="Open Navigation Menu"
-              className="px-2.5 py-1.5 rounded-xl text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-1.5 text-xs font-black shadow-sm"
+              className="px-3 py-1.5 rounded-xl text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-1.5 text-xs font-black shadow-sm active:scale-95"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M4 6h16M4 12h16M4 18h16" /></svg>
               <span>Menu</span>
@@ -2071,26 +2066,26 @@ function TrendingTicker({ onNavigate }) {
   );
 
   return (
-    <div className="w-full bg-[#FEFEFE] dark:bg-[#0b0f19] text-slate-900 dark:text-slate-100 border-y border-slate-200 dark:border-slate-800 shadow-sm relative z-30 select-none">
+    <div className="w-full max-w-full overflow-hidden min-w-0 bg-[#FEFEFE] dark:bg-[#0b0f19] text-slate-900 dark:text-slate-100 border-y border-slate-200 dark:border-slate-800 shadow-sm relative z-30 select-none">
       {/* Main TV Lower-Third Strip Edge-to-Edge Full Screen Length */}
-      <div className="w-full flex items-stretch border-y border-amber-600/40 bg-slate-950">
+      <div className="w-full max-w-full overflow-hidden min-w-0 flex items-stretch border-y border-amber-600/40 bg-slate-950">
         {/* Left Anchor Box with BREAKING NEWS Text (No Siren) */}
         <div className="flex items-stretch shrink-0">
           {/* Red BREAKING Section */}
-          <div className="broadcast-red-tab text-white font-black text-[11px] sm:text-xs tracking-wider px-3 sm:px-4 py-1 uppercase flex items-center justify-center gap-1.5 font-sans border-r border-red-900 shadow-inner">
+          <div className="broadcast-red-tab text-white font-black text-[11px] sm:text-xs tracking-wider px-2.5 sm:px-4 py-1 uppercase flex items-center justify-center gap-1.5 font-sans border-r border-red-900 shadow-inner">
             <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
             <span>{isTamil ? 'முக்கிய' : 'BREAKING'}</span>
           </div>
           {/* Navy NEWS Section */}
-          <div className="broadcast-navy-tab text-white font-black text-[11px] sm:text-xs tracking-wider px-3 sm:px-4 py-1 uppercase flex items-center justify-center font-sans border-r-2 border-red-950 shadow-inner">
+          <div className="broadcast-navy-tab text-white font-black text-[11px] sm:text-xs tracking-wider px-2.5 sm:px-4 py-1 uppercase flex items-center justify-center font-sans border-r-2 border-red-950 shadow-inner">
             <span>{isTamil ? 'செய்திகள்' : 'NEWS'}</span>
           </div>
         </div>
 
         {/* Right Dual-Tier Content Frame Full Width */}
-        <div className="flex-1 min-w-0 flex flex-col justify-center">
+        <div className="flex-1 min-w-0 max-w-full overflow-hidden flex flex-col justify-center">
           {/* Upper Golden-Yellow Headline Banner */}
-          <div className="broadcast-gold-band relative overflow-hidden py-0.5 sm:py-1 px-3 border-b border-amber-600/50">
+          <div className="broadcast-gold-band relative overflow-hidden py-0.5 sm:py-1 px-3 border-b border-amber-600/50 w-full min-w-0 max-w-full">
             {/* World Map Silhouette Watermark on Gold */}
             <svg className="absolute inset-0 w-full h-full text-amber-800/15 object-cover pointer-events-none" viewBox="0 0 400 50" fill="currentColor" preserveAspectRatio="none">
               <path d="M30,10 Q80,5 120,25 T220,15 T310,35 T390,15 Q360,45 280,40 T150,45 T40,40 Z" opacity="0.4" />
@@ -2099,7 +2094,7 @@ function TrendingTicker({ onNavigate }) {
             </svg>
 
             {/* Scrolling Headlines */}
-            <div className="overflow-hidden relative w-full flex items-center">
+            <div className="overflow-hidden relative w-full min-w-0 max-w-full flex items-center">
               <div className="animate-marquee flex items-center whitespace-nowrap">
                 {renderHeadlinesTrack('gold-track-1')}
                 {renderHeadlinesTrack('gold-track-2')}
@@ -2108,8 +2103,8 @@ function TrendingTicker({ onNavigate }) {
           </div>
 
           {/* Lower Navy Blue Market Ribbon */}
-          <div className="broadcast-navy-band relative overflow-hidden py-0.5 px-3">
-            <div className="overflow-hidden relative w-full flex items-center">
+          <div className="broadcast-navy-band relative overflow-hidden py-0.5 px-3 w-full min-w-0 max-w-full">
+            <div className="overflow-hidden relative w-full min-w-0 max-w-full flex items-center">
               <div className="animate-marquee flex items-center whitespace-nowrap">
                 {renderMarketTrack('navy-mkt-1')}
                 {renderMarketTrack('navy-mkt-2')}
@@ -2748,22 +2743,22 @@ function HeroSection({ news, onNavigate }) {
   );
 
   return (
-    <section className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-4 select-none">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
-        <div className="lg:col-span-7 flex flex-col justify-between bg-white/90 dark:bg-slate-950 rounded-2xl border border-[rgba(201,181,156,0.5)] dark:border-slate-800 shadow-lg overflow-hidden p-3.5 sm:p-4 text-slate-900 dark:text-white">
-          <div className="flex items-center justify-between border-b border-[rgba(217,207,199,0.7)] dark:border-slate-800 pb-2.5 mb-2.5">
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-red-600 animate-ping" />
-              <h2 className="text-xs sm:text-sm font-black tracking-wider uppercase text-slate-900 dark:text-white font-serif flex items-center gap-1.5">
+    <section className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-4 select-none min-w-0 overflow-hidden">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch min-w-0 max-w-full">
+        <div className="lg:col-span-7 min-w-0 max-w-full overflow-hidden flex flex-col justify-between bg-white/90 dark:bg-slate-950 rounded-2xl border border-[rgba(201,181,156,0.5)] dark:border-slate-800 shadow-lg p-3.5 sm:p-4 text-slate-900 dark:text-white">
+          <div className="flex items-center justify-between border-b border-[rgba(217,207,199,0.7)] dark:border-slate-800 pb-2.5 mb-2.5 min-w-0">
+            <div className="flex items-center gap-2 min-w-0 truncate">
+              <span className="w-2 h-2 rounded-full bg-red-600 animate-ping shrink-0" />
+              <h2 className="text-xs sm:text-sm font-black tracking-wider uppercase text-slate-900 dark:text-white font-serif flex items-center gap-1.5 truncate">
                 <span>{t('featuredNews') || 'சிறப்புச் செய்திகள் & ஆய்வுகள்'}</span>
               </h2>
             </div>
-            <span className="text-[9px] font-mono text-amber-700 dark:text-amber-400/90 font-bold bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
+            <span className="text-[9px] font-mono text-amber-700 dark:text-amber-400/90 font-bold bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20 shrink-0">
               LIVE NEWS TICKER
             </span>
           </div>
 
-          <div className="featured-marquee-wrapper overflow-hidden rounded-xl border border-[rgba(217,207,199,0.7)] dark:border-slate-800 bg-[rgba(239,233,227,0.5)] dark:bg-slate-950 my-auto">
+          <div className="featured-marquee-wrapper overflow-hidden rounded-xl border border-[rgba(217,207,199,0.7)] dark:border-slate-800 bg-[rgba(239,233,227,0.5)] dark:bg-slate-950 my-auto w-full min-w-0 max-w-full">
             <div className="animate-featured-marquee flex items-stretch gap-0 whitespace-normal">
               {renderFeaturedTrack('ftrack-1')}
               {renderFeaturedTrack('ftrack-2')}
@@ -2771,15 +2766,15 @@ function HeroSection({ news, onNavigate }) {
           </div>
         </div>
 
-        <div className="lg:col-span-5 flex flex-col justify-between bg-white/90 dark:bg-slate-950 text-slate-900 dark:text-white rounded-2xl border border-[rgba(201,181,156,0.5)] dark:border-slate-800 shadow-lg p-3.5 sm:p-4">
-          <div className="flex items-center justify-between border-b border-[rgba(217,207,199,0.7)] dark:border-slate-800 pb-2.5 mb-2.5">
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-amber-500" />
-              <h3 className="text-xs sm:text-sm font-black uppercase tracking-wider text-slate-900 dark:text-white font-serif">
+        <div className="lg:col-span-5 min-w-0 max-w-full overflow-hidden flex flex-col justify-between bg-white/90 dark:bg-slate-950 text-slate-900 dark:text-white rounded-2xl border border-[rgba(201,181,156,0.5)] dark:border-slate-800 shadow-lg p-3.5 sm:p-4">
+          <div className="flex items-center justify-between border-b border-[rgba(217,207,199,0.7)] dark:border-slate-800 pb-2.5 mb-2.5 min-w-0">
+            <div className="flex items-center gap-2 min-w-0 truncate">
+              <span className="w-2 h-2 rounded-full bg-amber-500 shrink-0" />
+              <h3 className="text-xs sm:text-sm font-black uppercase tracking-wider text-slate-900 dark:text-white font-serif truncate">
                 {isTamil ? 'சமீபத்திய கட்டுரைகள்' : 'Latest Articles'}
               </h3>
             </div>
-            <span className="text-[9px] font-mono font-bold text-amber-700 dark:text-amber-400/90 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
+            <span className="text-[9px] font-mono font-bold text-amber-700 dark:text-amber-400/90 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20 shrink-0">
               Latest
             </span>
           </div>
