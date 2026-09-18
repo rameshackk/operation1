@@ -959,49 +959,45 @@ function AuthProvider({ children }) {
         return;
       }
 
+      const applyDemoFallback = () => {
+        try {
+          const savedDemo = localStorage.getItem('demo_auth_session');
+          if (savedDemo) {
+            const parsed = JSON.parse(savedDemo);
+            if (parsed && parsed.user) {
+              setSession({ access_token: 'demo-padmanaban-token-2026', user: parsed.user });
+              setUser(parsed.user);
+              setProfile(parsed.profile);
+              setRole(parsed.profile?.role || 'admin');
+              return true;
+            }
+          }
+        } catch (e) {}
+        setSession(null);
+        setUser(null);
+        setProfile(null);
+        setRole('user');
+        return false;
+      };
+
       try {
-        const sessionPromise = client.auth.getSession();
-        const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('Auth check timeout')), 800));
-        const { data } = await Promise.race([sessionPromise, timeoutPromise]);
-        const initialSession = data?.session;
+        const sessionPromise = client.auth.getSession().catch((err) => ({ data: { session: null }, error: err }));
+        const timeoutPromise = new Promise((resolve) => setTimeout(() => resolve({ data: { session: null }, timedOut: true }), 3500));
+        const res = await Promise.race([sessionPromise, timeoutPromise]);
+        const initialSession = res?.data?.session;
         if (isMounted) {
           if (initialSession) {
             setSession(initialSession);
             setUser(initialSession.user);
             await fetchUserProfile(initialSession.user?.id, initialSession.user?.email);
           } else {
-            // Check for saved demo session
-            try {
-              const savedDemo = localStorage.getItem('demo_auth_session');
-              if (savedDemo) {
-                const parsed = JSON.parse(savedDemo);
-                if (parsed && parsed.user) {
-                  setSession({ access_token: 'demo-padmanaban-token-2026', user: parsed.user });
-                  setUser(parsed.user);
-                  setProfile(parsed.profile);
-                  setRole(parsed.profile?.role || 'admin');
-                } else {
-                  setSession(null);
-                  setUser(null);
-                  setProfile(null);
-                  setRole('user');
-                }
-              } else {
-                setSession(null);
-                setUser(null);
-                setProfile(null);
-                setRole('user');
-              }
-            } catch (e) {
-              setSession(null);
-              setUser(null);
-              setProfile(null);
-              setRole('user');
-            }
+            applyDemoFallback();
           }
         }
       } catch (err) {
-        console.error('Error during initial session check:', err);
+        if (isMounted) {
+          applyDemoFallback();
+        }
       } finally {
         if (isMounted) setIsAuthLoading(false);
       }
