@@ -1014,6 +1014,26 @@ function AuthProvider({ children }) {
       };
 
       try {
+        // 1. If PKCE code is present in URL search params, exchange it for session
+        if (typeof window !== 'undefined' && window.location.search) {
+          const searchParams = new URLSearchParams(window.location.search);
+          const code = searchParams.get('code');
+          if (code) {
+            try {
+              const { data: codeData } = await client.auth.exchangeCodeForSession(code);
+              if (codeData?.session && isMounted) {
+                setSession(codeData.session);
+                setUser(codeData.session.user);
+                await fetchUserProfile(codeData.session.user?.id, codeData.session.user?.email, codeData.session.user?.user_metadata);
+              }
+              window.history.replaceState(null, '', window.location.pathname + window.location.hash);
+            } catch (codeErr) {
+              console.warn('OAuth code exchange note:', codeErr);
+            }
+          }
+        }
+
+        // 2. Check session from local storage or URL hash
         const sessionPromise = client.auth.getSession().catch((err) => ({ data: { session: null }, error: err }));
         const timeoutPromise = new Promise((resolve) => setTimeout(() => resolve({ data: { session: null }, timedOut: true }), 3500));
         const res = await Promise.race([sessionPromise, timeoutPromise]);
@@ -1046,8 +1066,24 @@ function AuthProvider({ children }) {
           if (currentSession?.user) {
             await fetchUserProfile(currentSession.user.id, currentSession.user.email, currentSession.user.user_metadata);
           }
-          if (event === 'SIGNED_IN' && (window.location.hash.includes('access_token=') || window.location.hash.includes('refresh_token='))) {
-            window.location.hash = '#/';
+
+          // Handle automatic redirect after OAuth sign in
+          if (typeof window !== 'undefined') {
+            const rawHash = window.location.hash || '';
+            const hasTokensInHash = rawHash.includes('access_token=') || rawHash.includes('refresh_token=');
+            const isOnAuthScreen = rawHash === '#/login' || rawHash === '#/signup' || rawHash === '#/register';
+
+            if (event === 'SIGNED_IN' && (hasTokensInHash || isOnAuthScreen || window.location.search.includes('code='))) {
+              if (window.location.search.includes('code=')) {
+                try {
+                  window.history.replaceState(null, '', window.location.pathname);
+                } catch (e) {}
+              }
+              const savedTarget = sessionStorage.getItem('auth_redirect_from') || '#/';
+              sessionStorage.removeItem('auth_redirect_from');
+              const finalTarget = (savedTarget === '#/login' || savedTarget === '#/signup' || savedTarget === '#/register') ? '#/' : savedTarget;
+              window.location.hash = finalTarget;
+            }
           }
         } else if (event === 'SIGNED_OUT') {
           try {
@@ -1057,9 +1093,6 @@ function AuthProvider({ children }) {
           setUser(null);
           setProfile(null);
           setRole('user');
-          if (window.location.hash !== '#/login') {
-            window.location.hash = '#/login';
-          }
         }
       });
 
@@ -1191,6 +1224,15 @@ function AuthProvider({ children }) {
   const signInWithGoogle = async () => {
     const client = getSupabaseClient();
     if (!client) throw new Error('Supabase client not initialized');
+
+    try {
+      const current = window.location.hash || '#/';
+      if (current !== '#/login' && current !== '#/signup' && current !== '#/register') {
+        sessionStorage.setItem('auth_redirect_from', current);
+      } else if (!sessionStorage.getItem('auth_redirect_from')) {
+        sessionStorage.setItem('auth_redirect_from', '#/');
+      }
+    } catch (e) {}
 
     const redirectUrl = window.location.origin + window.location.pathname;
 
@@ -11038,7 +11080,7 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
 
 function AuthPage({ initialMode = 'login', onNavigate }) {
   const { t, language } = useLanguage();
-  const { signInWithPassword, signInAsDemoPadmanaban, signUp, signInWithGoogle, sendPasswordReset, signInWithMagicLink } = useAuth();
+  const { session, user, signInWithPassword, signInAsDemoPadmanaban, signUp, signInWithGoogle, sendPasswordReset, signInWithMagicLink } = useAuth();
   const isTamil = language === 'ta';
 
   const [mode, setMode] = useState(initialMode);
@@ -11049,6 +11091,17 @@ function AuthPage({ initialMode = 'login', onNavigate }) {
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+
+  // If already logged in, navigate away immediately
+  useEffect(() => {
+    if (user || session) {
+      const redirect = sessionStorage.getItem('auth_redirect_from') || '#/';
+      sessionStorage.removeItem('auth_redirect_from');
+      const target = (redirect === '#/login' || redirect === '#/signup' || redirect === '#/register') ? '#/' : redirect;
+      if (onNavigate) onNavigate(target);
+      else if (typeof window !== 'undefined') window.location.hash = target;
+    }
+  }, [user, session]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -13884,7 +13937,13 @@ function AppContent({ currentHash, navigate, isSearchOpen, setIsSearchOpen, toas
 }
 
 function App() {
-  const [currentHash, setCurrentHash] = useState(() => window.location.hash || '#/');
+  const [currentHash, setCurrentHash] = useState(() => {
+    const h = (typeof window !== 'undefined' ? window.location.hash : '') || '#/';
+    if (h.includes('access_token=') || h.includes('refresh_token=')) {
+      return '#/';
+    }
+    return h;
+  });
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
 
