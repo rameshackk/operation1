@@ -1,8 +1,17 @@
 import { verifyAdminRequest } from '../../../lib/auth-server.js';
 import { supabaseAdmin } from '../../../lib/supabase.js';
 import { getPgPool } from '../../../lib/db.js';
+import { 
+  isValidEmail, 
+  isSafeUrl, 
+  sanitizeText, 
+  getClientIp, 
+  logSecurityEvent 
+} from '../../../lib/security.js';
 
 export default async function handler(req, res) {
+  const clientIp = getClientIp(req);
+
   // 1. Verify admin permissions
   const auth = await verifyAdminRequest(req);
   if (!auth.authorized) {
@@ -23,7 +32,7 @@ export default async function handler(req, res) {
       try {
         const pgPool = getPgPool();
         if (pgPool) {
-          const query = `SELECT * FROM profiles WHERE id = $1 LIMIT 1;`;
+          const query = `SELECT * FROM profiles WHERE id::text = $1 LIMIT 1;`;
           const result = await pgPool.query(query, [id]);
           if (result.rows.length === 0) {
             return res.status(404).json({ error: 'Publisher not found' });
@@ -68,7 +77,15 @@ export default async function handler(req, res) {
         const cleanUpdates = {};
         allowedFields.forEach(f => {
           if (updateData[f] !== undefined) {
-            cleanUpdates[f] = updateData[f];
+            let val = updateData[f];
+            if (['linkedin_url', 'twitter_url', 'website_url', 'youtube_url', 'avatar_url'].includes(f)) {
+              val = val && isSafeUrl(val) ? val.trim() : null;
+            } else if (f === 'role') {
+              val = ['user', 'publisher', 'admin'].includes(val) ? val : 'publisher';
+            } else if (typeof val === 'string') {
+              val = sanitizeText(val, 2000);
+            }
+            cleanUpdates[f] = val;
           }
         });
         cleanUpdates.updated_at = new Date().toISOString();
@@ -82,7 +99,7 @@ export default async function handler(req, res) {
           const values = keys.map(k => cleanUpdates[k]);
           values.push(id);
 
-          const query = `UPDATE profiles SET ${setClauses} WHERE id = $${values.length} RETURNING *;`;
+          const query = `UPDATE profiles SET ${setClauses} WHERE id::text = $${values.length} RETURNING *;`;
           const result = await pgPool.query(query, values);
           if (result.rows.length === 0) {
             return res.status(404).json({ error: 'Publisher not found' });
@@ -122,7 +139,8 @@ export default async function handler(req, res) {
 
         const pgPool = getPgPool();
         if (pgPool) {
-          await pgPool.query('DELETE FROM profiles WHERE id = $1', [id]);
+          await pgPool.query('DELETE FROM profiles WHERE id::text = $1', [id]);
+          logSecurityEvent('PUBLISHER_DELETED', { ip: clientIp, adminId: auth.user.id, targetId: id });
           return res.status(200).json({
             status: 'success',
             message: 'Publisher account deleted successfully'
@@ -132,6 +150,7 @@ export default async function handler(req, res) {
         if (supabaseAdmin) {
           const { error } = await supabaseAdmin.from('profiles').delete().eq('id', id);
           if (error) throw error;
+          logSecurityEvent('PUBLISHER_DELETED', { ip: clientIp, adminId: auth.user.id, targetId: id });
           return res.status(200).json({
             status: 'success',
             message: 'Publisher account deleted successfully'
@@ -164,7 +183,7 @@ export default async function handler(req, res) {
             SELECT author_id, COUNT(*) as article_count 
             FROM articles 
             GROUP BY author_id
-          ) art ON p.id = art.author_id
+          ) art ON p.id::text = art.author_id::text
           WHERE p.role IN ('publisher', 'admin')
           ORDER BY p.created_at DESC;
         `;
@@ -216,16 +235,17 @@ export default async function handler(req, res) {
         whatsapp_number
       } = req.body || {};
 
-      if (!email || !email.trim() || !email.includes('@')) {
-        return res.status(400).json({ error: 'Valid email is required' });
+      const cleanEmail = (email || '').toString().trim().toLowerCase();
+      if (!isValidEmail(cleanEmail)) {
+        return res.status(400).json({ error: 'A valid email address is required.' });
       }
 
       if (!password || password.length < 6) {
-        return res.status(400).json({ error: 'Password must be at least 6 characters' });
+        return res.status(400).json({ error: 'Password must be at least 6 characters.' });
       }
 
       if (!display_name || !display_name.trim()) {
-        return res.status(400).json({ error: 'Publisher full name / display name is required' });
+        return res.status(400).json({ error: 'Publisher full name / display name is required.' });
       }
 
       let userId = null;
@@ -233,7 +253,7 @@ export default async function handler(req, res) {
       // 1. Create or link auth user in Supabase Auth via Admin API
       if (supabaseAdmin) {
         const { data: userRecord, error: userError } = await supabaseAdmin.auth.admin.createUser({
-          email: email.trim().toLowerCase(),
+          email: cleanEmail,
           password: password,
           email_confirm: true,
           user_metadata: {
@@ -256,14 +276,14 @@ export default async function handler(req, res) {
             const { data: existingProfile } = await supabaseAdmin
               .from('profiles')
               .select('id')
-              .eq('email', email.trim().toLowerCase())
+              .eq('email', cleanEmail)
               .maybeSingle();
 
             if (existingProfile?.id) {
               userId = existingProfile.id;
             } else {
               const { data: userList } = await supabaseAdmin.auth.admin.listUsers();
-              const foundUser = userList?.users?.find(u => u.email?.toLowerCase() === email.trim().toLowerCase());
+              const foundUser = userList?.users?.find(u => u.email?.toLowerCase() === cleanEmail);
               if (foundUser?.id) {
                 userId = foundUser.id;
               }
@@ -294,20 +314,20 @@ export default async function handler(req, res) {
       // 2. Insert/Upsert into profiles table
       const profileData = {
         id: userId,
-        email: email.trim().toLowerCase(),
-        display_name: display_name.trim(),
+        email: cleanEmail,
+        display_name: sanitizeText(display_name, 100),
         role: 'publisher',
-        title: title || 'AMFI Registered Mutual Fund Specialist',
-        arn_number: arn_number || '',
-        specialties: Array.isArray(specialties) ? specialties : (specialties ? [specialties] : ['Mutual Funds', 'Wealth Planning']),
-        bio: bio || '',
-        bio_ta: bio_ta || '',
-        linkedin_url: linkedin_url || '',
-        twitter_url: twitter_url || '',
-        website_url: website_url || '',
-        youtube_url: youtube_url || '',
-        phone: phone || '',
-        whatsapp_number: whatsapp_number || '',
+        title: sanitizeText(title || 'AMFI Registered Mutual Fund Specialist', 150),
+        arn_number: sanitizeText(arn_number || '', 50),
+        specialties: Array.isArray(specialties) ? specialties.map(s => sanitizeText(String(s), 50)) : ['Mutual Funds', 'Wealth Planning'],
+        bio: sanitizeText(bio || '', 2000),
+        bio_ta: sanitizeText(bio_ta || '', 2000),
+        linkedin_url: isSafeUrl(linkedin_url) ? linkedin_url.trim() : null,
+        twitter_url: isSafeUrl(twitter_url) ? twitter_url.trim() : null,
+        website_url: isSafeUrl(website_url) ? website_url.trim() : null,
+        youtube_url: isSafeUrl(youtube_url) ? youtube_url.trim() : null,
+        phone: sanitizeText(phone || '', 30),
+        whatsapp_number: sanitizeText(whatsapp_number || '', 30),
         is_onboarded: false,
         updated_at: new Date().toISOString()
       };
@@ -357,6 +377,8 @@ export default async function handler(req, res) {
           profileData.is_onboarded
         ]);
 
+        logSecurityEvent('PUBLISHER_CREATED', { ip: clientIp, adminId: auth.user.id, publisherId: userId, email: cleanEmail });
+
         return res.status(201).json({
           status: 'success',
           message: 'Publisher account created successfully',
@@ -372,6 +394,8 @@ export default async function handler(req, res) {
           .single();
 
         if (profileErr) throw profileErr;
+
+        logSecurityEvent('PUBLISHER_CREATED', { ip: clientIp, adminId: auth.user.id, publisherId: userId, email: cleanEmail });
 
         return res.status(201).json({
           status: 'success',
@@ -389,3 +413,4 @@ export default async function handler(req, res) {
 
   return res.status(405).json({ error: 'Method not allowed' });
 }
+

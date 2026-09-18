@@ -5,23 +5,42 @@ import {
   getArticleComments,
   addArticleComment,
   deleteArticleComment,
-  likeArticleComment
+  likeArticleComment,
+  getPgPool
 } from '../../lib/db.js';
 import { synthesizeSpeech, cleanTextForSpeech } from '../../lib/tts.js';
+import { verifyUserRequest, verifyAdminOrPublisherRequest } from '../../lib/auth-server.js';
+import { 
+  checkRateLimit, 
+  getClientIp, 
+  sanitizeSlug, 
+  sanitizeText, 
+  escapeHtml, 
+  parseSafePagination,
+  logSecurityEvent 
+} from '../../lib/security.js';
+import { supabaseAdmin, supabaseAnon } from '../../lib/supabase.js';
 
 export default async function handler(req, res) {
+  const clientIp = getClientIp(req);
   const { slug, action, commentId, lang = 'ta', text } = req.query || {};
-  const targetSlug = (slug || req.body?.slug || '').toString().trim();
+  const rawSlug = (slug || req.body?.slug || '').toString().trim();
+  const targetSlug = sanitizeSlug(rawSlug);
   const isViewAction = action === 'view' || req.body?.action === 'view' || req.query?.increment === '1';
 
-  // ================= TEXT-TO-SPEECH STREAMING API =================
+  // ================= 1. TEXT-TO-SPEECH STREAMING API =================
   if (action === 'tts' || action === 'audio' || req.query?.tts === '1' || req.query?.audio === '1') {
+    const ttsRate = checkRateLimit(clientIp, 'tts_stream', 30, 60000);
+    if (!ttsRate.allowed) {
+      return res.status(429).json({ error: 'Too many audio generation requests. Please try again in a minute.' });
+    }
+
     try {
       const isTa = lang === 'ta';
       let textToSynthesize = '';
 
       if (text) {
-        textToSynthesize = text.toString();
+        textToSynthesize = sanitizeText(text.toString(), 3000);
       } else if (targetSlug) {
         const article = await getArticleBySlug(targetSlug);
         if (!article) {
@@ -52,13 +71,14 @@ export default async function handler(req, res) {
     }
   }
 
-  // ================= COMMENTS API =================
+  // ================= 2. COMMENTS API =================
   if (action === 'comments' || action === 'add_comment' || action === 'like_comment' || action === 'delete_comment') {
     res.setHeader('Content-Type', 'application/json');
 
-    // 1. GET Comments for Article
+    // 2.1 GET Comments for Article
     if (req.method === 'GET' || action === 'get_comments') {
       try {
+        if (!targetSlug) return res.status(400).json({ error: 'Article slug is required' });
         const comments = await getArticleComments(targetSlug);
         return res.status(200).json({ status: 'success', slug: targetSlug, data: comments });
       } catch (error) {
@@ -67,31 +87,50 @@ export default async function handler(req, res) {
       }
     }
 
-    // 2. POST Add Comment / Reply
+    // 2.2 POST Add Comment / Reply
     if (req.method === 'POST' && (action === 'comments' || action === 'add_comment')) {
+      const commentRate = checkRateLimit(clientIp, 'post_comment', 10, 60000);
+      if (!commentRate.allowed) {
+        return res.status(429).json({ error: 'You are commenting too fast. Please wait a minute.' });
+      }
+
       try {
         const body = req.body || {};
-        const content = (body.content || '').toString().trim();
-        if (!content) {
+        const rawContent = (body.content || '').toString().trim();
+        if (!rawContent) {
           return res.status(400).json({ error: 'Comment content cannot be empty' });
         }
 
-        const userId = (body.userId || body.user_id || 'anonymous').toString();
-        const userName = (body.userName || body.user_name || body.name || 'Reader').toString();
-        const userAvatar = body.userAvatar || body.user_avatar || null;
-        let userRole = (body.userRole || body.user_role || body.role || 'user').toLowerCase();
-        let isVerified = Boolean(body.isVerified || body.is_verified);
+        const content = escapeHtml(sanitizeText(rawContent, 1000));
+        let userId = 'anonymous';
+        let userName = sanitizeText((body.userName || body.user_name || body.name || 'Reader').toString(), 80);
+        let userAvatar = body.userAvatar || body.user_avatar || null;
+        let userRole = 'user';
+        let isVerified = false;
 
-        // Check if publisher/advisor
-        const authHeader = req.headers?.authorization || req.headers?.Authorization || '';
-        const token = authHeader.replace('Bearer ', '').trim();
-        if (
-          token.includes('admin') || token.includes('demo') || token.includes('padmanaban') ||
-          userRole === 'publisher' || userRole === 'advisor' || userRole === 'admin' || userRole === 'author'
-        ) {
-          isVerified = true;
-          userRole = 'publisher';
+        // Verify genuine authenticated caller if token present
+        const auth = await verifyUserRequest(req);
+        if (auth.authorized && auth.user) {
+          userId = auth.user.id;
+          userName = sanitizeText(auth.user.user_metadata?.full_name || auth.user.email?.split('@')[0] || userName, 80);
+
+          // Check database profile for verified role
+          const pgPool = getPgPool();
+          if (pgPool) {
+            const roleRes = await pgPool.query('SELECT role, display_name, avatar_url FROM profiles WHERE id::text = $1', [userId]);
+            if (roleRes.rows.length > 0) {
+              const p = roleRes.rows[0];
+              userRole = p.role || 'user';
+              if (p.role === 'admin' || p.role === 'publisher') {
+                isVerified = true;
+              }
+              if (p.display_name) userName = p.display_name;
+              if (p.avatar_url) userAvatar = p.avatar_url;
+            }
+          }
         }
+
+        const parentId = body.parentId ? parseInt(body.parentId, 10) : null;
 
         const comment = await addArticleComment({
           slug: targetSlug,
@@ -101,7 +140,7 @@ export default async function handler(req, res) {
           userRole,
           isVerified,
           content,
-          parentId: body.parentId ? parseInt(body.parentId, 10) : null
+          parentId: Number.isInteger(parentId) ? parentId : null
         });
 
         return res.status(201).json({ status: 'success', data: comment });
@@ -111,11 +150,16 @@ export default async function handler(req, res) {
       }
     }
 
-    // 3. POST Like / Unlike Comment
+    // 2.3 POST Like / Unlike Comment
     if (action === 'like_comment' || (req.method === 'POST' && (req.body?.action === 'like' || req.body?.action === 'unlike'))) {
+      const likeRate = checkRateLimit(clientIp, 'like_comment', 60, 60000);
+      if (!likeRate.allowed) {
+        return res.status(429).json({ error: 'Too many requests' });
+      }
+
       try {
         const targetId = parseInt(commentId || req.body?.commentId || req.body?.id, 10);
-        if (!targetId) return res.status(400).json({ error: 'Comment ID is required' });
+        if (!targetId || isNaN(targetId)) return res.status(400).json({ error: 'Valid Comment ID is required' });
 
         const isUnlike = req.query?.unlike === '1' || req.body?.action === 'unlike' || req.body?.unlike === true;
         const likesCount = await likeArticleComment(targetId, isUnlike);
@@ -126,15 +170,32 @@ export default async function handler(req, res) {
       }
     }
 
-    // 4. DELETE Comment
+    // 2.4 DELETE Comment (Strictly authorized: Comment Owner or Admin)
     if (req.method === 'DELETE' || action === 'delete_comment') {
-      try {
-        const targetId = parseInt(commentId || req.body?.commentId || req.body?.id, 10);
-        const userId = req.body?.userId || 'anonymous';
-        const userRole = req.body?.userRole || 'user';
-        if (!targetId) return res.status(400).json({ error: 'Comment ID is required' });
+      const targetId = parseInt(commentId || req.body?.commentId || req.body?.id, 10);
+      if (!targetId || isNaN(targetId)) return res.status(400).json({ error: 'Valid Comment ID is required' });
 
-        await deleteArticleComment(targetId, userId, userRole);
+      const auth = await verifyUserRequest(req);
+      if (!auth.authorized || !auth.user) {
+        return res.status(401).json({ error: 'Authentication required to delete comment' });
+      }
+
+      try {
+        // Fetch genuine profile role from database
+        let userRole = 'user';
+        const pgPool = getPgPool();
+        if (pgPool) {
+          const profileRes = await pgPool.query('SELECT role FROM profiles WHERE id::text = $1', [auth.user.id]);
+          if (profileRes.rows.length > 0) {
+            userRole = profileRes.rows[0].role;
+          }
+        }
+
+        const success = await deleteArticleComment(targetId, auth.user.id, userRole);
+        if (!success) {
+          return res.status(403).json({ error: 'You do not have permission to delete this comment' });
+        }
+
         return res.status(200).json({ status: 'success', message: 'Comment deleted successfully' });
       } catch (error) {
         console.error(`Error deleting comment:`, error);
@@ -143,8 +204,13 @@ export default async function handler(req, res) {
     }
   }
 
-  // ================= VIEW COUNT INCREMENT (POST or GET with action=view) =================
+  // ================= 3. VIEW COUNT INCREMENT =================
   if (isViewAction && targetSlug) {
+    const viewRate = checkRateLimit(`${clientIp}:${targetSlug}`, 'article_view', 5, 60000);
+    if (!viewRate.allowed) {
+      return res.status(200).json({ status: 'ignored', message: 'View rate limited' });
+    }
+
     try {
       const nextViews = await incrementArticleViews(targetSlug);
       res.setHeader('Content-Type', 'application/json');
@@ -163,10 +229,10 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // ================= SINGLE ARTICLE BY SLUG =================
+  // ================= 4. SINGLE ARTICLE BY SLUG =================
   if (slug) {
     try {
-      const article = await getArticleBySlug(slug.toString(), false);
+      const article = await getArticleBySlug(targetSlug, false);
       if (!article) {
         return res.status(404).json({ error: 'Article not found' });
       }
@@ -179,22 +245,23 @@ export default async function handler(req, res) {
         data: article
       });
     } catch (error) {
-      console.error(`Error in GET /api/articles/${slug}:`, error);
+      console.error(`Error in GET /api/articles/${targetSlug}:`, error);
       return res.status(500).json({ error: 'Failed to fetch article', message: error.message });
     }
   }
 
-  // ================= ARTICLES LISTING =================
+  // ================= 5. ARTICLES LISTING =================
   try {
-    const { page = '1', limit = '50', category = 'all', search = '', sort = 'newest' } = req.query || {};
+    const { category = 'all', search = '', sort = 'newest' } = req.query || {};
+    const { page, limit } = parseSafePagination(req.query, 50, 100);
 
     const result = await listArticles({
-      page: parseInt(page, 10) || 1,
-      limit: parseInt(limit, 10) || 50,
-      category: category.toString(),
+      page,
+      limit,
+      category: sanitizeText(category.toString(), 50),
       status: 'published', // Always strictly published articles
-      search: search.toString(),
-      sort: sort.toString()
+      search: sanitizeText(search.toString(), 100),
+      sort: sanitizeText(sort.toString(), 20)
     });
 
     res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=300');
@@ -205,9 +272,9 @@ export default async function handler(req, res) {
       data: result.articles || [],
       pagination: {
         page: result.page || 1,
-        limit: result.limit || 50,
+        limit: result.limit || limit,
         total: result.total || (result.articles ? result.articles.length : 0),
-        totalPages: Math.ceil((result.total || 0) / (result.limit || 50)) || 1
+        totalPages: Math.ceil((result.total || 0) / (result.limit || limit)) || 1
       }
     });
 
@@ -221,3 +288,4 @@ export default async function handler(req, res) {
     });
   }
 }
+

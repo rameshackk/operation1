@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS public.watch_history (
 
 CREATE INDEX IF NOT EXISTS idx_watch_history_user ON public.watch_history (user_id, updated_at DESC);
 
--- 4. HELPER FUNCTION TO CHECK ADMIN ROLE
+-- 4. HELPER FUNCTION TO CHECK ADMIN ROLE (Hardened with fixed search_path)
 CREATE OR REPLACE FUNCTION public.is_admin(user_uid UUID)
 RETURNS BOOLEAN AS $$
 BEGIN
@@ -84,9 +84,9 @@ BEGIN
         WHERE id = user_uid AND role = 'admin'
     );
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public, pg_temp;
 
--- 5. AUTOMATIC PROFILE CREATION TRIGGER ON AUTH SIGNUP
+-- 5. AUTOMATIC PROFILE CREATION TRIGGER ON AUTH SIGNUP (Hardened with fixed search_path)
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -104,13 +104,32 @@ BEGIN
         avatar_url = COALESCE(EXCLUDED.avatar_url, profiles.avatar_url);
     RETURN NEW;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public, pg_temp;
 
 -- Attach Trigger to auth.users
 DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
 CREATE TRIGGER on_auth_user_created
     AFTER INSERT ON auth.users
     FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
+
+-- 5.1 PREVENT PRIVILEGE ESCALATION VIA PROFILE UPDATES
+CREATE OR REPLACE FUNCTION public.protect_profile_role_changes()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Prevent non-admins from changing role to admin or publisher
+    IF (OLD.role IS DISTINCT FROM NEW.role) THEN
+        IF NOT (public.is_admin(auth.uid()) OR auth.role() = 'service_role') THEN
+            NEW.role := OLD.role;
+        END IF;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public, pg_temp;
+
+DROP TRIGGER IF EXISTS trg_protect_profile_role ON public.profiles;
+CREATE TRIGGER trg_protect_profile_role
+    BEFORE UPDATE ON public.profiles
+    FOR EACH ROW EXECUTE FUNCTION public.protect_profile_role_changes();
 
 -- 6. PUBLIC HOMEPAGE PREVIEW VIEW (Non-sensitive metadata only)
 CREATE OR REPLACE VIEW public.trending_preview 
@@ -155,11 +174,15 @@ CREATE POLICY "Videos select policy" ON public.videos
     );
 
 -- PROFILES POLICIES:
--- Users can view their own profile
-CREATE POLICY "Users view own profile" ON public.profiles
-    FOR SELECT USING (auth.uid() = id OR public.is_admin(auth.uid()));
+-- Users can view their own profile or public publisher profiles
+CREATE POLICY "Users view profiles" ON public.profiles
+    FOR SELECT USING (
+        auth.uid() = id 
+        OR role IN ('publisher', 'admin') 
+        OR public.is_admin(auth.uid())
+    );
 
--- Users can update their own profile
+-- Users can update their own profile (role modifications neutralized by trigger)
 CREATE POLICY "Users update own profile" ON public.profiles
     FOR UPDATE USING (auth.uid() = id);
 
@@ -173,7 +196,7 @@ CREATE POLICY "Users manage own watch history" ON public.watch_history
     FOR ALL USING (auth.uid() = user_id);
 
 -- ============================================================
--- 8. ARTICLES TABLE (Original Written Content by Admin)
+-- 8. ARTICLES TABLE (Original Written Content by Admin & Publishers)
 -- ============================================================
 CREATE TABLE IF NOT EXISTS public.articles (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -205,28 +228,38 @@ CREATE INDEX IF NOT EXISTS idx_articles_created_at ON public.articles (created_a
 ALTER TABLE public.articles ENABLE ROW LEVEL SECURITY;
 
 -- ARTICLES POLICIES:
--- 1. SELECT: Authenticated users can view published articles, or admins can view all (including drafts)
+-- 1. SELECT: Public can view published articles; admins view all; authors view own
 DROP POLICY IF EXISTS "Articles read access" ON public.articles;
 CREATE POLICY "Articles read access" ON public.articles
     FOR SELECT USING (
         status = 'published' OR 
-        public.is_admin(auth.uid())
+        public.is_admin(auth.uid()) OR
+        (auth.uid() IS NOT NULL AND author_id = auth.uid())
     );
 
--- 2. INSERT: Admins only
+-- 2. INSERT: Admins and Publishers only
 DROP POLICY IF EXISTS "Admin insert articles" ON public.articles;
 CREATE POLICY "Admin insert articles" ON public.articles
-    FOR INSERT WITH CHECK (public.is_admin(auth.uid()));
+    FOR INSERT WITH CHECK (
+        public.is_admin(auth.uid()) OR 
+        EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'publisher')
+    );
 
--- 3. UPDATE: Admins only
+-- 3. UPDATE: Admins or Article Author only
 DROP POLICY IF EXISTS "Admin update articles" ON public.articles;
 CREATE POLICY "Admin update articles" ON public.articles
-    FOR UPDATE USING (public.is_admin(auth.uid()));
+    FOR UPDATE USING (
+        public.is_admin(auth.uid()) OR 
+        (auth.uid() IS NOT NULL AND author_id = auth.uid())
+    );
 
--- 4. DELETE: Admins only
+-- 4. DELETE: Admins or Article Author only
 DROP POLICY IF EXISTS "Admin delete articles" ON public.articles;
 CREATE POLICY "Admin delete articles" ON public.articles
-    FOR DELETE USING (public.is_admin(auth.uid()));
+    FOR DELETE USING (
+        public.is_admin(auth.uid()) OR 
+        (auth.uid() IS NOT NULL AND author_id = auth.uid())
+    );
 
 -- ============================================================
 -- 9. SUPABASE STORAGE BUCKET: article-covers
@@ -241,20 +274,20 @@ DROP POLICY IF EXISTS "Public article cover access" ON storage.objects;
 CREATE POLICY "Public article cover access" ON storage.objects
     FOR SELECT USING (bucket_id = 'article-covers');
 
--- Storage RLS: Admin upload access
+-- Storage RLS: Admin and Publisher upload access
 DROP POLICY IF EXISTS "Admin upload article cover" ON storage.objects;
 CREATE POLICY "Admin upload article cover" ON storage.objects
     FOR INSERT WITH CHECK (
         bucket_id = 'article-covers' AND
-        (public.is_admin(auth.uid()) OR auth.role() = 'service_role')
+        (public.is_admin(auth.uid()) OR EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'publisher') OR auth.role() = 'service_role')
     );
 
--- Storage RLS: Admin update/delete access
+-- Storage RLS: Admin and Publisher update/delete access
 DROP POLICY IF EXISTS "Admin modify article cover" ON storage.objects;
 CREATE POLICY "Admin modify article cover" ON storage.objects
     FOR ALL USING (
         bucket_id = 'article-covers' AND
-        (public.is_admin(auth.uid()) OR auth.role() = 'service_role')
+        (public.is_admin(auth.uid()) OR EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'publisher') OR auth.role() = 'service_role')
     );
 
 -- ============================================================
@@ -294,5 +327,40 @@ ON public.news_articles FOR ALL
 TO service_role 
 USING (true) 
 WITH CHECK (true);
+
+-- ============================================================
+-- 11. ARTICLE COMMENTS TABLE: article_comments
+-- ============================================================
+CREATE TABLE IF NOT EXISTS public.article_comments (
+    id BIGSERIAL PRIMARY KEY,
+    article_slug VARCHAR(255) NOT NULL,
+    user_id TEXT NOT NULL DEFAULT 'anonymous',
+    user_name TEXT NOT NULL DEFAULT 'Reader',
+    user_avatar TEXT,
+    user_role VARCHAR(32) DEFAULT 'user',
+    is_verified BOOLEAN DEFAULT false,
+    content TEXT NOT NULL,
+    parent_id BIGINT REFERENCES public.article_comments(id) ON DELETE CASCADE,
+    likes_count INTEGER DEFAULT 0,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_article_comments_slug ON public.article_comments (article_slug, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_article_comments_parent ON public.article_comments (parent_id);
+
+ALTER TABLE public.article_comments ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Public can view article comments" ON public.article_comments;
+CREATE POLICY "Public can view article comments" 
+ON public.article_comments FOR SELECT 
+USING (true);
+
+DROP POLICY IF EXISTS "Service role manage comments" ON public.article_comments;
+CREATE POLICY "Service role manage comments" 
+ON public.article_comments FOR ALL 
+TO service_role 
+USING (true)
+WITH CHECK (true);
+
 
 

@@ -9,8 +9,17 @@ import {
   fetchChannelVideosViaRss
 } from '../../lib/youtube.js';
 import { classifyCategory, extractSeoKeywords } from '../../lib/taxonomy.js';
+import { 
+  isSafeUrl, 
+  sanitizeText, 
+  getClientIp, 
+  checkRateLimit, 
+  logSecurityEvent 
+} from '../../lib/security.js';
 
 export default async function handler(req, res) {
+  const clientIp = getClientIp(req);
+
   // 1. Verify authenticated user
   const auth = await verifyUserRequest(req);
   if (!auth.authorized) {
@@ -24,7 +33,7 @@ export default async function handler(req, res) {
     try {
       const pgPool = getPgPool();
       if (pgPool) {
-        const query = `SELECT * FROM profiles WHERE id = $1 LIMIT 1;`;
+        const query = `SELECT * FROM profiles WHERE id::text = $1 LIMIT 1;`;
         const result = await pgPool.query(query, [userId]);
         return res.status(200).json({ status: 'success', data: result.rows[0] || null });
       }
@@ -43,6 +52,11 @@ export default async function handler(req, res) {
 
   // POST / PATCH: Submit first-time onboarding information or update profile
   if (req.method === 'POST' || req.method === 'PATCH') {
+    const rate = checkRateLimit(clientIp, 'publisher_onboard', 15, 60000);
+    if (!rate.allowed) {
+      return res.status(429).json({ error: 'Too many requests. Please wait a minute.' });
+    }
+
     try {
       const {
         display_name,
@@ -60,33 +74,33 @@ export default async function handler(req, res) {
         phone
       } = req.body || {};
 
-      if (!display_name) {
+      if (!display_name || !display_name.trim()) {
         return res.status(400).json({ error: 'Display Name is required.' });
       }
 
       const updates = {
         id: userId,
-        display_name,
+        display_name: sanitizeText(display_name, 100),
         is_onboarded: true,
         updated_at: new Date().toISOString()
       };
 
-      if (avatar_url !== undefined) updates.avatar_url = avatar_url;
-      if (title !== undefined) updates.title = title;
-      if (arn_number !== undefined) updates.arn_number = arn_number;
-      if (specialties !== undefined) updates.specialties = Array.isArray(specialties) ? specialties : [specialties];
-      if (bio !== undefined) updates.bio = bio;
-      if (bio_ta !== undefined) updates.bio_ta = bio_ta;
-      if (linkedin_url !== undefined) updates.linkedin_url = linkedin_url;
-      if (twitter_url !== undefined) updates.twitter_url = twitter_url;
-      if (website_url !== undefined) updates.website_url = website_url ? website_url.trim() : '';
-      if (whatsapp_number !== undefined) updates.whatsapp_number = whatsapp_number;
-      if (phone !== undefined) updates.phone = phone;
+      if (avatar_url !== undefined) updates.avatar_url = isSafeUrl(avatar_url) ? avatar_url.trim() : null;
+      if (title !== undefined) updates.title = sanitizeText(title, 150);
+      if (arn_number !== undefined) updates.arn_number = sanitizeText(arn_number, 50);
+      if (specialties !== undefined) updates.specialties = Array.isArray(specialties) ? specialties.map(s => sanitizeText(String(s), 50)) : [sanitizeText(String(specialties), 50)];
+      if (bio !== undefined) updates.bio = sanitizeText(bio, 2000);
+      if (bio_ta !== undefined) updates.bio_ta = sanitizeText(bio_ta, 2000);
+      if (linkedin_url !== undefined) updates.linkedin_url = isSafeUrl(linkedin_url) ? linkedin_url.trim() : null;
+      if (twitter_url !== undefined) updates.twitter_url = isSafeUrl(twitter_url) ? twitter_url.trim() : null;
+      if (website_url !== undefined) updates.website_url = isSafeUrl(website_url) ? website_url.trim() : '';
+      if (whatsapp_number !== undefined) updates.whatsapp_number = sanitizeText(whatsapp_number, 30);
+      if (phone !== undefined) updates.phone = sanitizeText(phone, 30);
 
       // Resolve YouTube Channel if youtube_url is provided
       let resolvedChannel = null;
       if (youtube_url !== undefined) {
-        updates.youtube_url = youtube_url ? youtube_url.trim() : '';
+        updates.youtube_url = isSafeUrl(youtube_url) ? youtube_url.trim() : '';
         if (updates.youtube_url) {
           const ytApiKey = process.env.YOUTUBE_API_KEY;
           if (ytApiKey) {
@@ -107,12 +121,12 @@ export default async function handler(req, res) {
 
           if (resolvedChannel && resolvedChannel.channelId) {
             updates.youtube_channel_id = resolvedChannel.channelId;
-            updates.youtube_channel_title = resolvedChannel.channelTitle;
-            updates.youtube_channel_thumbnail = resolvedChannel.channelThumbnail;
+            updates.youtube_channel_title = sanitizeText(resolvedChannel.channelTitle, 150);
+            updates.youtube_channel_thumbnail = isSafeUrl(resolvedChannel.channelThumbnail) ? resolvedChannel.channelThumbnail : null;
             updates.youtube_channel_verified = true;
           } else {
             const fallbackName = (updates.youtube_url.match(/(?:@|channel\/)([A-Za-z0-9_.-]+)/)?.[1]) || updates.youtube_url;
-            updates.youtube_channel_title = fallbackName;
+            updates.youtube_channel_title = sanitizeText(fallbackName, 150);
             updates.youtube_channel_verified = true;
           }
         } else {
@@ -240,8 +254,8 @@ export default async function handler(req, res) {
           }
 
           for (const v of videoItems) {
-            const videoTitle = v.titleTamil || v.title || '';
-            const videoDesc = v.descriptionTamil || v.description || '';
+            const videoTitle = sanitizeText(v.titleTamil || v.title || '', 300);
+            const videoDesc = sanitizeText(v.descriptionTamil || v.description || '', 5000);
             const assignedCategory = classifyCategory(videoTitle, videoDesc, v.tags || []);
             const assignedTags = extractSeoKeywords(videoTitle, videoDesc, v.tags || [], assignedCategory);
 
@@ -258,7 +272,7 @@ export default async function handler(req, res) {
               duration_seconds: v.durationSeconds || 720,
               view_count: v.viewCount || 1000,
               is_short: v.isShort || false,
-              thumbnail_url: v.thumbnailUrl,
+              thumbnail_url: isSafeUrl(v.thumbnailUrl) ? v.thumbnailUrl : null,
               category: assignedCategory,
               tags: assignedTags,
               source_publisher_id: userId,
@@ -270,6 +284,8 @@ export default async function handler(req, res) {
           console.warn('Initial video ingestion notice:', ingestErr.message);
         }
       }
+
+      logSecurityEvent('PUBLISHER_ONBOARDED', { ip: clientIp, userId });
 
       return res.status(200).json({
         status: 'success',
@@ -284,3 +300,4 @@ export default async function handler(req, res) {
 
   return res.status(405).json({ error: 'Method Not Allowed' });
 }
+

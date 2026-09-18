@@ -1,17 +1,19 @@
 import { listNewsArticles } from '../../lib/db.js';
+import { parseSafePagination, sanitizeText } from '../../lib/security.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { category = 'all', limit = '20', page = '1' } = req.query || {};
+  const { category = 'all' } = req.query || {};
+  const { page, limit } = parseSafePagination(req.query, 20, 50);
 
   try {
     const result = await listNewsArticles({
-      category: category.toString().trim(),
-      limit: parseInt(limit, 10) || 20,
-      page: parseInt(page, 10) || 1
+      category: sanitizeText(category.toString(), 50),
+      limit,
+      page
     });
 
     res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
@@ -36,3 +38,4 @@ export default async function handler(req, res) {
     });
   }
 }
+

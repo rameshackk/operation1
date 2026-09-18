@@ -2,20 +2,30 @@ import { getUploadsPlaylistId, fetchLatestUploadVideoIds, fetchAllUploadVideoIds
 import { translateVideo } from '../../lib/translate.js';
 import { getExistingYoutubeIds, upsertVideo, getVideosPendingTranslation, updateVideoTranslation, getVerifiedPublisherChannels } from '../../lib/db.js';
 import { classifyCategory, extractSeoKeywords } from '../../lib/taxonomy.js';
+import { checkRateLimit, getClientIp, logSecurityEvent, sanitizeText, isSafeUrl } from '../../lib/security.js';
 
 export default async function handler(req, res) {
+  const clientIp = getClientIp(req);
+
   // Allow GET and POST for cron job invocation
   if (req.method !== 'GET' && req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // Verify Authorization: Bearer <CRON_SECRET>
+  // Verify Authorization: Bearer <CRON_SECRET> or Vercel Internal Cron Header
   const cronSecret = process.env.CRON_SECRET;
   const authHeader = req.headers.authorization || req.headers.Authorization || '';
+  const isVercelCron = req.headers['x-vercel-cron'] === '1' || req.headers['x-vercel-cron'] === 'true';
 
-  if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
-    console.warn('Unauthorized cron invocation attempt.');
+  if (cronSecret && authHeader !== `Bearer ${cronSecret}` && !isVercelCron) {
+    logSecurityEvent('UNAUTHORIZED_CRON_INVOCATION_ATTEMPT', { ip: clientIp, path: '/api/cron/fetch-videos' });
     return res.status(401).json({ error: 'Unauthorized: Invalid or missing Bearer CRON_SECRET token' });
+  }
+
+  // Rate limit cron invocation to prevent denial of service / quota exhaustion
+  const cronRate = checkRateLimit(clientIp, 'cron_videos', 10, 60000);
+  if (!cronRate.allowed) {
+    return res.status(429).json({ error: 'Too many cron execution requests' });
   }
 
   const youtubeApiKey = process.env.YOUTUBE_API_KEY;
@@ -23,7 +33,7 @@ export default async function handler(req, res) {
   const translateApiKey = process.env.TRANSLATE_API_KEY;
 
   const isFullSync = req.query.fullSync === 'true' || req.query.fullSync === '1';
-  const maxPages = parseInt(req.query.maxPages || '50', 10);
+  const maxPages = Math.min(50, parseInt(req.query.maxPages || '50', 10));
 
   if (!youtubeApiKey) {
     return res.status(500).json({ error: 'YOUTUBE_API_KEY environment variable is missing' });
@@ -89,15 +99,18 @@ export default async function handler(req, res) {
             const detailsList = await fetchVideoDetails(chunkIds, youtubeApiKey);
 
             for (const video of detailsList) {
+              const videoTitle = sanitizeText(video.titleTamil || video.title || '', 300);
+              const videoDesc = sanitizeText(video.descriptionTamil || video.description || '', 5000);
+
               // Categorize and extract SEO tags using taxonomy engine
               const assignedCategory = classifyCategory(
-                video.titleTamil || video.title,
-                video.descriptionTamil || video.description,
+                videoTitle,
+                videoDesc,
                 video.tags || []
               );
               const assignedTags = extractSeoKeywords(
-                video.titleTamil || video.title,
-                video.descriptionTamil || video.description,
+                videoTitle,
+                videoDesc,
                 video.tags || [],
                 assignedCategory
               );
@@ -107,10 +120,13 @@ export default async function handler(req, res) {
 
               const videoToSave = {
                 ...video,
+                titleTamil: videoTitle,
+                titleEnglish: translationResult.titleEn || videoTitle,
+                descriptionTamil: videoDesc,
+                descriptionEnglish: translationResult.descriptionEn || videoDesc,
+                thumbnailUrl: isSafeUrl(video.thumbnailUrl) ? video.thumbnailUrl : null,
                 category: assignedCategory,
                 tags: assignedTags,
-                titleEnglish: translationResult.titleEn || video.titleTamil,
-                descriptionEnglish: translationResult.descriptionEn || video.descriptionTamil,
                 translatedAt: translationResult.success ? new Date().toISOString() : null,
                 sourcePublisherId: channelConfig.sourcePublisherId,
                 status: channelConfig.status
@@ -186,3 +202,4 @@ export default async function handler(req, res) {
     });
   }
 }
+

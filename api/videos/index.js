@@ -1,18 +1,30 @@
 import { listVideos, getVideoByYoutubeId, getPgPool, formatVideoRow } from '../../lib/db.js';
 import { verifyUserRequest } from '../../lib/auth-server.js';
 import { supabaseAdmin } from '../../lib/supabase.js';
+import { 
+  parseSafePagination, 
+  sanitizeText, 
+  checkRateLimit, 
+  getClientIp 
+} from '../../lib/security.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { id, preview, type, limit = '20', page = '1', category = 'all', sort = 'newest' } = req.query || {};
+  const clientIp = getClientIp(req);
+  const { id, preview, type, category = 'all', sort = 'newest' } = req.query || {};
 
   // ================= 1. PUBLIC TRENDING PREVIEW =================
   if (preview === '1' || preview === 'true' || type === 'trending-preview') {
+    const rate = checkRateLimit(clientIp, 'preview_videos', 60, 60000);
+    if (!rate.allowed) {
+      return res.status(429).json({ error: 'Too many requests' });
+    }
+
     try {
-      const l = Math.min(16, Math.max(1, parseInt(limit, 10) || 8));
+      const l = Math.min(16, Math.max(1, parseInt(req.query?.limit, 10) || 8));
       const pgPool = getPgPool();
       let previewVideos = [];
 
@@ -95,7 +107,8 @@ export default async function handler(req, res) {
   // ================= 2. SINGLE VIDEO DETAIL BY ID =================
   if (id) {
     try {
-      const video = await getVideoByYoutubeId(id.toString());
+      const cleanId = sanitizeText(id.toString(), 64);
+      const video = await getVideoByYoutubeId(cleanId);
       if (!video) {
         return res.status(404).json({ error: 'Video not found' });
       }
@@ -116,24 +129,26 @@ export default async function handler(req, res) {
   // ================= 3. FULL VIDEO LISTING =================
   try {
     const { publisherId, sourcePublisherId, search } = req.query || {};
-    const targetPublisherId = publisherId || sourcePublisherId || null;
+    const rawPublisherId = publisherId || sourcePublisherId || null;
+    const targetPublisherId = rawPublisherId ? sanitizeText(rawPublisherId.toString(), 64) : null;
+    const { page, limit } = parseSafePagination(req.query, 100, 100);
 
     // Publishers can see their own pending videos when authenticated; public users only see published videos
     let statusFilter = 'published';
     if (targetPublisherId && auth && auth.authorized && auth.user && (auth.user.id === targetPublisherId || auth.user.role === 'admin')) {
       if (req.query.status) {
-        statusFilter = req.query.status.toString();
+        statusFilter = sanitizeText(req.query.status.toString(), 20);
       }
     }
 
     const result = await listVideos({
-      page: parseInt(page, 10) || 1,
-      limit: parseInt(limit, 10) || 100,
-      category: category.toString(),
-      sort: sort.toString(),
+      page,
+      limit,
+      category: sanitizeText(category.toString(), 50),
+      sort: sanitizeText(sort.toString(), 20),
       status: statusFilter,
       sourcePublisherId: targetPublisherId,
-      search: search ? search.toString() : ''
+      search: search ? sanitizeText(search.toString(), 100) : ''
     });
 
     res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=300');
@@ -154,3 +169,4 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Failed to fetch videos from database', message: error.message });
   }
 }
+
