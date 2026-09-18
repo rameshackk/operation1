@@ -11219,11 +11219,14 @@ function AuthPage({ initialMode = 'login', onNavigate }) {
           <form onSubmit={handleSubmit} className="space-y-4">
             {mode === 'signup' && (
               <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                <label htmlFor="auth-fullName" className="text-xs font-bold text-slate-700 dark:text-slate-300">
                   {isTamil ? 'முழு பெயர்' : 'Full Name'}
                 </label>
                 <input
+                  id="auth-fullName"
+                  name="fullName"
                   type="text"
+                  autoComplete="name"
                   required
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
@@ -11234,11 +11237,14 @@ function AuthPage({ initialMode = 'login', onNavigate }) {
             )}
 
             <div className="space-y-1">
-              <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+              <label htmlFor="auth-email" className="text-xs font-bold text-slate-700 dark:text-slate-300">
                 {isTamil ? 'மின்னஞ்சல் முகவரி' : 'Email Address'}
               </label>
               <input
+                id="auth-email"
+                name="email"
                 type="email"
+                autoComplete="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -11250,7 +11256,7 @@ function AuthPage({ initialMode = 'login', onNavigate }) {
             {(mode === 'login' || mode === 'signup') && (
               <div className="space-y-1">
                 <div className="flex items-center justify-between">
-                  <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                  <label htmlFor="auth-password" className="text-xs font-bold text-slate-700 dark:text-slate-300">
                     {isTamil ? 'கடவுச்சொல்' : 'Password'}
                   </label>
                   {mode === 'login' && (
@@ -11265,7 +11271,10 @@ function AuthPage({ initialMode = 'login', onNavigate }) {
                 </div>
                 <div className="relative">
                   <input
+                    id="auth-password"
+                    name="password"
                     type={showPassword ? 'text' : 'password'}
+                    autoComplete={mode === 'signup' ? 'new-password' : 'current-password'}
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -11275,6 +11284,7 @@ function AuthPage({ initialMode = 'login', onNavigate }) {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 hover:text-slate-600"
                   >
                     {showPassword ? (isTamil ? 'மறை' : 'Hide') : (isTamil ? 'காட்டு' : 'Show')}
