@@ -10978,6 +10978,26 @@ function AuthPage({ initialMode = 'login', onNavigate }) {
   const [successMessage, setSuccessMessage] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const errorDesc = urlParams.get('error_description') || urlParams.get('error');
+        if (errorDesc) {
+          setError(decodeURIComponent(errorDesc.replace(/\+/g, ' ')));
+        }
+        if (window.location.hash.includes('error=')) {
+          const hashIndex = window.location.hash.indexOf('error=');
+          const hashParams = new URLSearchParams(window.location.hash.substring(hashIndex));
+          const hashErr = hashParams.get('error_description') || hashParams.get('error');
+          if (hashErr) {
+            setError(decodeURIComponent(hashErr.replace(/\+/g, ' ')));
+          }
+        }
+      } catch (e) {}
+    }
+  }, []);
+
   const handleDemoSignIn = async () => {
     setError('');
     setIsLoading(true);
