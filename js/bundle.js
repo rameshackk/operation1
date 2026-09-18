@@ -1832,9 +1832,9 @@ function Navbar({ currentPath, onNavigate }) {
               }
               const isActive = currentPath === item.hash || (item.hash === '#/' && currentPath === '');
               
-              // Active: filled light-blue pill (--blue-50 bg, --blue-600 text, bold)
+              // Active: filled solid blue pill (#2563EB bg, white text, bold)
               // Inactive: 8-10px border radius, subtle hover
-              const activeClass = 'bg-[#EFF6FF] dark:bg-blue-950/60 text-[#2563EB] dark:text-[#60a5fa] font-extrabold shadow-sm';
+              const activeClass = 'bg-[#2563EB] text-white font-extrabold shadow-sm shadow-blue-600/20';
               const inactiveClass = 'text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 font-semibold';
 
               return (
