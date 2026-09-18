@@ -46,7 +46,18 @@ html {
 }
 
 :root {
-  /* Design Tokens - Modern Palette */
+  /* Design Tokens - Modern Palette (Light Theme: Soft Green System) */
+  --bg-page: #F4F9F4;
+  --bg-main: #F4F9F4;
+  --bg-section: #E8F5E9;
+  --bg-card: #ffffff;
+  --bg-card-hover: #ffffff;
+  --border-color: #D5EBD9;
+  --border-subtle: #D5EBD9;
+  --border-light: #D5EBD9;
+  --nav-bg: #F4F9F4;
+  --nav-border: #D5EBD9;
+
   --navy-900: #0F172A;
   --navy-800: #1E293B;
   --blue-600: #2563EB;
@@ -56,10 +67,10 @@ html {
   --red-600: #DC2626;
   --amber-400: #FBBF24;
   --cream-50: #FBF7EF;
-  --gray-50: #F8FAFC;
-  --gray-100: #F1F5F9;
-  --gray-200: #E2E8F0;
-  --gray-500: #64748B;
+  --gray-50: #F4F9F4;
+  --gray-100: #E8F5E9;
+  --gray-200: #D5EBD9;
+  --gray-500: #475569;
 
   /* Spacing Scale Tokens - Fluid Multi-Device Architecture */
   --space-1: 0.25rem;   /* 4px */
@@ -89,14 +100,14 @@ html {
   --line-height-heading: 1.28;
   --line-height-tight: 1.18;
 
-  /* Design Tokens for Cards & Elevation - Soft Shadows */
+  /* Design Tokens for Cards & Elevation - Faint Soft Green-Tinted Shadows */
   --radius-card: 1.125rem; /* 18px */
   --radius-panel: 1.75rem; /* 28px */
   --radius-container: 2rem; /* 32px */
-  --shadow-soft-card: 0 4px 20px rgba(15, 23, 42, 0.05);
-  --shadow-feature-panel: 0 12px 40px rgba(15, 23, 42, 0.06);
-  --shadow-card: 0 4px 20px rgba(15, 23, 42, 0.05);
-  --shadow-card-hover: 0 16px 32px rgba(15, 23, 42, 0.08);
+  --shadow-soft-card: 0 4px 20px rgba(22, 163, 74, 0.07);
+  --shadow-feature-panel: 0 12px 40px rgba(22, 163, 74, 0.07);
+  --shadow-card: 0 4px 20px rgba(22, 163, 74, 0.07);
+  --shadow-card-hover: 0 16px 32px rgba(22, 163, 74, 0.10);
 
   /* Global Motion Tokens */
   --ease-default: cubic-bezier(0.16, 1, 0.3, 1);
@@ -112,22 +123,15 @@ html {
   --z-modal: 1000;
   --z-scroll-bar: 10000;
 
-  /* Colors */
-  --bg-main: #ffffff;
-  --bg-card: #ffffff;
-  --bg-card-hover: #ffffff;
-  --border-color: #e2e8f0;
-  --border-subtle: #f1f5f9;
-  --text-primary: #0f172a;
+  /* Text & Accents */
+  --text-primary: #0F172A;
   --text-secondary: #334155;
-  --text-muted: #64748b;
+  --text-muted: #475569;
   --accent-amber: #FBBF24;
   --accent-gold: #FBBF24;
   --accent-emerald: #16A34A;
   --accent-sapphire: #2563EB;
   --accent-red: #DC2626;
-  --nav-bg: #ffffff;
-  --nav-border: #e2e8f0;
 }
 
 [data-theme="dark"] {
@@ -138,11 +142,14 @@ html {
   --shadow-feature-panel: 0 12px 40px rgba(0, 0, 0, 0.55);
   --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
   --shadow-card-hover: 0 16px 32px rgba(0, 0, 0, 0.65);
+  --bg-page: #020617;
   --bg-main: #020617;
+  --bg-section: #0B132B;
   --bg-card: #0b0f19;
   --bg-card-hover: #111827;
   --border-color: #1e293b;
   --border-subtle: #0f172a;
+  --border-light: #1e293b;
   --text-primary: #f8fafc;
   --text-secondary: #cbd5e1;
   --text-muted: #94a3b8;
@@ -227,8 +234,8 @@ nav button span {
 body {
   font-family: var(--font-sans);
   line-height: var(--line-height-body);
-  background-color: #ffffff !important;
-  background: #ffffff !important;
+  background-color: var(--bg-page, #F4F9F4) !important;
+  background: var(--bg-page, #F4F9F4) !important;
   background-image: none !important;
   color: var(--text-primary);
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -280,12 +287,13 @@ html[data-theme="dark"],
   color: #f8fafc;
 }
 
-/* 100% Solid Pure White Fixed Top Header on Scroll */
+/* Seamless Header & Nav Bar Background matching Page Background (#F4F9F4 in Light, #020617 in Dark) */
 .sticky-header-container,
 .sticky-header-container header,
 .sticky-header-container nav {
-  background-color: #ffffff !important;
-  background: #ffffff !important;
+  background-color: var(--nav-bg, #F4F9F4) !important;
+  background: var(--nav-bg, #F4F9F4) !important;
+  border-color: var(--border-color, #D5EBD9) !important;
   opacity: 1 !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
@@ -296,6 +304,7 @@ html[data-theme="dark"],
 [data-theme="dark"] .sticky-header-container nav {
   background-color: #020617 !important;
   background: #020617 !important;
+  border-color: #1e293b !important;
 }
 
 .perspective-1000 {
@@ -1399,4 +1408,60 @@ html:not([data-theme="dark"]) table tbody tr:hover,
   background: rgba(2, 6, 23, 0.96);
   border-top-color: rgba(30, 41, 59, 0.9);
   box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.5);
+}
+
+/* ==========================================================================
+   LIGHT THEME DESIGN SYSTEM PALETTE OVERRIDES
+   ========================================================================== */
+
+/* Section Band Background (#E8F5E9 in light theme) */
+.section-band {
+  background-color: var(--bg-section, #E8F5E9) !important;
+  border-color: var(--border-color, #D5EBD9) !important;
+}
+
+[data-theme="dark"] .section-band {
+  background-color: var(--bg-section, #0B132B) !important;
+  border-color: var(--border-color, #1e293b) !important;
+}
+
+/* Light Theme Card Borders: #D5EBD9 (Soft Green-tinted border family) */
+html[data-theme="light"] .border-slate-200,
+html[data-theme="light"] .border-slate-100,
+html[data-theme="light"] .border-gray-200,
+html[data-theme="light"] [class*="border-slate-200"],
+html[data-theme="light"] [class*="border-slate-100"] {
+  border-color: #D5EBD9 !important;
+}
+
+/* Light Theme Header & Nav Bar Background: #F4F9F4 */
+html[data-theme="light"] header,
+html[data-theme="light"] nav {
+  background-color: #F4F9F4 !important;
+  border-bottom-color: #D5EBD9 !important;
+}
+
+/* Light Theme Faint Soft Green-Tinted Elevation Shadows: rgba(22, 163, 74, 0.07) */
+html[data-theme="light"] .shadow-sm {
+  box-shadow: 0 2px 8px 0 rgba(22, 163, 74, 0.05), 0 1px 2px -1px rgba(22, 163, 74, 0.03) !important;
+}
+
+html[data-theme="light"] .shadow,
+html[data-theme="light"] .shadow-md {
+  box-shadow: 0 4px 16px -2px rgba(22, 163, 74, 0.07), 0 2px 4px -2px rgba(22, 163, 74, 0.04) !important;
+}
+
+html[data-theme="light"] .shadow-lg,
+html[data-theme="light"] .shadow-xl,
+html[data-theme="light"] .shadow-2xl,
+html[data-theme="light"] [class*="shadow-[0_4px_20px"],
+html[data-theme="light"] [class*="shadow-[0_8px_30px"],
+html[data-theme="light"] [class*="shadow-[0_16px_32px"] {
+  box-shadow: 0 10px 28px -4px rgba(22, 163, 74, 0.07), 0 4px 8px -2px rgba(22, 163, 74, 0.03) !important;
+}
+
+/* WCAG AA High Contrast Text Polish on #E8F5E9 & #F4F9F4 */
+html[data-theme="light"] .text-slate-500,
+html[data-theme="light"] .text-slate-400 {
+  color: #475569 !important;
 }

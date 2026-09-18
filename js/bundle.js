@@ -1695,7 +1695,7 @@ function Header({ onOpenSearch, onNavigate }) {
   };
 
   return (
-    <header className={`w-full max-w-full overflow-hidden transition-all duration-200 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-900 dark:text-white ${isScrolled ? 'py-1.5 shadow-sm' : 'py-2 sm:py-2.5 shadow-sm'
+    <header className={`w-full max-w-full overflow-hidden transition-all duration-200 border-b border-[#D5EBD9] dark:border-slate-800 bg-[#F4F9F4] dark:bg-slate-950 text-slate-900 dark:text-white ${isScrolled ? 'py-1.5 shadow-sm' : 'py-2 sm:py-2.5 shadow-sm'
       }`}>
       <div className="w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 flex items-center justify-between gap-3 sm:gap-4 min-w-0">
 
@@ -1814,7 +1814,7 @@ function Navbar({ currentPath, onNavigate }) {
   const navItems = [...baseNavItems, ...authNavItems];
 
   return (
-    <nav className="bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 border-b border-slate-200 dark:border-slate-800 shadow-sm relative z-20">
+    <nav className="bg-[#F4F9F4] dark:bg-slate-950 text-slate-800 dark:text-slate-100 border-b border-[#D5EBD9] dark:border-slate-800 shadow-sm relative z-20">
       <div className="w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
         {/* Desktop / Laptop Horizontal Bar */}
         <div className="hidden lg:flex items-center justify-between gap-2 py-2">
@@ -2706,8 +2706,10 @@ function HeroSection({ news, onNavigate }) {
 
   return (
     <section className="w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 select-none min-w-0">
-      {/* Unified Full-Width White Rounded Card */}
-      <div className="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl border border-slate-100 dark:border-slate-800/80 shadow-[0_8px_30px_rgba(15,23,42,0.05)] p-5 sm:p-6 lg:p-7">
+      {/* Section Band Container: #E8F5E9 in light theme */}
+      <div className="section-band bg-[#E8F5E9] dark:bg-slate-900/40 rounded-2xl sm:rounded-3xl border border-[#D5EBD9] dark:border-slate-800 p-3.5 sm:p-5 lg:p-6 shadow-sm">
+        {/* Unified Full-Width White Rounded Card */}
+        <div className="bg-white dark:bg-slate-900 rounded-xl sm:rounded-2xl border border-[#D5EBD9] dark:border-slate-800/80 shadow-[0_8px_30px_rgba(22,163,74,0.07)] p-5 sm:p-6 lg:p-7">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch min-w-0 max-w-full">
           
           {/* Left Column: Featured News Live Ticker Stream (Marquee with Hover Pause) */}
@@ -2787,6 +2789,7 @@ function HeroSection({ news, onNavigate }) {
           </div>
         </div>
       </div>
+      </div>
     </section>
   );
 }
@@ -2820,32 +2823,33 @@ function TrendingArticlesSection({ onNavigate }) {
   }, [liveArticles, language]);
 
   return (
-    <section className="w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 space-y-4 select-none min-w-0">
-      <div className="flex items-center justify-between pb-2.5 border-b border-slate-100 dark:border-slate-800">
-        <div className="flex items-center gap-2 min-w-0 truncate">
-          <span className="w-2 h-2 rounded-full bg-[#2563EB] shrink-0" />
-          <h2 className="text-base sm:text-lg md:text-xl font-extrabold text-[#0F172A] dark:text-white font-sans truncate">
-            {t('trendingArticlesTitle') || 'டிரெண்டிங் செய்திகள் & கட்டுரைகள்'}
-          </h2>
+    <section className="w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 select-none min-w-0">
+      <div className="section-band bg-[#E8F5E9] dark:bg-slate-900/40 rounded-2xl sm:rounded-3xl border border-[#D5EBD9] dark:border-slate-800 p-4 sm:p-6 lg:p-7 shadow-sm space-y-4">
+        <div className="flex items-center justify-between pb-2.5 border-b border-[#D5EBD9] dark:border-slate-800">
+          <div className="flex items-center gap-2 min-w-0 truncate">
+            <span className="w-2 h-2 rounded-full bg-[#2563EB] shrink-0" />
+            <h2 className="text-base sm:text-lg md:text-xl font-extrabold text-[#0F172A] dark:text-white font-sans truncate">
+              {t('trendingArticlesTitle') || 'டிரெண்டிங் செய்திகள் & கட்டுரைகள்'}
+            </h2>
+          </div>
+          <span className="text-[10px] sm:text-xs font-bold text-[#2563EB] dark:text-[#60a5fa] bg-white dark:bg-blue-950/60 px-2.5 py-0.5 rounded-full font-num shrink-0 border border-[#D5EBD9] dark:border-slate-800 shadow-xs">
+            Top 6 Trending
+          </span>
         </div>
-        <span className="text-[10px] sm:text-xs font-bold text-[#2563EB] dark:text-[#60a5fa] bg-[#EFF6FF] dark:bg-blue-950/60 px-2.5 py-0.5 rounded-full font-num shrink-0">
-          Top 6 Trending
-        </span>
-      </div>
 
-      {/* 3 Columns x 2 Rows Grid with 20-24px gap */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-        {allArticles.map((article, idx) => {
-          const rankStr = `0${idx + 1}`;
+        {/* 3 Columns x 2 Rows Grid with 20-24px gap */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+          {allArticles.map((article, idx) => {
+            const rankStr = `0${idx + 1}`;
 
-          return (
-            <div
-              key={article.id || `trend-${idx}`}
-              onClick={() => onNavigate && onNavigate(`#/articles/${article.slug}`)}
-              className="group flex items-start gap-4 p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80 shadow-[0_4px_20px_rgba(15,23,42,0.05)] hover:shadow-[0_16px_32px_rgba(15,23,42,0.08)] hover:border-slate-200 dark:hover:border-slate-700 transition-all cursor-pointer select-none"
-            >
-              {/* Large Faint Number (--blue-50 / faint subtle blue, 36px bold) */}
-              <span className="text-[36px] font-extrabold text-[#DBEAFE] dark:text-slate-800 font-num shrink-0 leading-none pt-0.5 select-none">
+            return (
+              <div
+                key={article.id || `trend-${idx}`}
+                onClick={() => onNavigate && onNavigate(`#/articles/${article.slug}`)}
+                className="group flex items-start gap-4 p-5 rounded-2xl bg-white dark:bg-slate-900 border border-[#D5EBD9] dark:border-slate-800/80 shadow-[0_4px_20px_rgba(22,163,74,0.07)] hover:shadow-[0_16px_32px_rgba(22,163,74,0.10)] hover:border-[#16A34A]/40 dark:hover:border-slate-700 transition-all cursor-pointer select-none"
+              >
+              {/* Large Article Number in Deep Navy Blue */}
+              <span className="text-[36px] font-extrabold text-[#03529A] dark:text-[#60a5fa] font-num shrink-0 leading-none pt-0.5 select-none">
                 {rankStr}
               </span>
 
@@ -2880,6 +2884,7 @@ function TrendingArticlesSection({ onNavigate }) {
             </div>
           );
         })}
+      </div>
       </div>
     </section>
   );
@@ -2993,31 +2998,34 @@ function SipCalculator() {
 
   return (
     <section id="calculator" className="w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 select-none min-w-0">
-      {/* Full-width Dark Gradient Card (24-32px border-radius, scaled padding ~32-40px) */}
-      <div className="bg-gradient-to-br from-[#0F172A] to-[#1E293B] rounded-2xl sm:rounded-3xl border border-slate-800 shadow-xl p-5 sm:p-8 lg:p-10 text-white transition-all">
+      {/* Outer Container with Dark Gradient Theme */}
+      <div className="bg-gradient-to-br from-[#0F172A] via-[#111C35] to-[#1E293B] rounded-2xl sm:rounded-3xl border border-slate-800 shadow-xl p-4 sm:p-6 lg:p-7 text-white transition-all">
         
-        {/* Centered Title Header */}
-        <div className="text-center max-w-2xl mx-auto mb-8 pb-5 border-b border-slate-800/80">
-          <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-bold mb-2 font-sans">
-            <span>⚡</span>
-            <span>{isTamil ? 'முதலீட்டு திட்டமிடல்' : 'Wealth Projection Engine'}</span>
+        {/* Compact Header */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pb-4 mb-5 border-b border-slate-800/90">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center font-bold text-sm shrink-0">
+              ⚡
+            </div>
+            <div>
+              <h2 className="text-base sm:text-lg lg:text-xl font-extrabold text-white tracking-tight font-sans">
+                {isTamil ? 'முதலீட்டுக் கணிப்பான் & பகுப்பாய்வு' : 'Calculators & In-Depth Analysis'}
+              </h2>
+              <p className="text-[11px] sm:text-xs text-slate-300 font-medium font-sans">
+                {isTamil ? 'மாதாந்திர SIP / மொத்த முதலீட்டு திட்டமிடல் & விரிவான நிதி வளர்ச்சி அறிக்கை' : 'Interactive SIP & Lumpsum wealth planner with visual asset chart & statement report'}
+              </p>
+            </div>
           </div>
-          <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white tracking-tight font-sans">
-            {isTamil ? 'முதலீட்டுக் கணிப்பான் & பகுப்பாய்வு' : 'Calculators & In-Depth Analysis'}
-          </h2>
-          <p className="text-xs sm:text-sm font-medium text-slate-300 mt-1.5 font-sans max-w-xl mx-auto leading-relaxed">
-            {isTamil ? 'மாதாந்திர SIP & மொத்த முதலீட்டின் வளர்ச்சி, பை-சார்ட் மற்றும் விரிவான நிதி அறிக்கை' : 'Interactive SIP & Lumpsum wealth calculator with visual asset allocation chart and full statement report'}
-          </p>
 
-          {/* Mode Toggle: SIP Filled --green-600, Lumpsum Outlined/Ghost */}
-          <div className="inline-flex p-1.5 bg-slate-900/80 rounded-full border border-slate-700/80 mt-6 gap-2">
+          {/* Mode Switcher: SIP vs Lumpsum */}
+          <div className="inline-flex p-1 bg-slate-900/90 rounded-full border border-slate-700/80 gap-1.5 shrink-0">
             <button
               type="button"
               onClick={() => setCalcMode('sip')}
-              className={'px-6 sm:px-8 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 ' + (
+              className={'px-4 sm:px-5 py-1.5 rounded-full text-xs font-bold transition-all duration-200 ' + (
                 calcMode === 'sip'
-                  ? 'bg-[#16A34A] text-white shadow-lg shadow-green-600/30'
-                  : 'border border-transparent text-slate-300 hover:text-white'
+                  ? 'bg-[#16A34A] text-white shadow-md shadow-green-600/30'
+                  : 'text-slate-300 hover:text-white'
               )}
             >
               SIP
@@ -3025,10 +3033,10 @@ function SipCalculator() {
             <button
               type="button"
               onClick={() => setCalcMode('lumpsum')}
-              className={'px-6 sm:px-8 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 ' + (
+              className={'px-4 sm:px-5 py-1.5 rounded-full text-xs font-bold transition-all duration-200 ' + (
                 calcMode === 'lumpsum'
-                  ? 'bg-[#16A34A] text-white shadow-lg shadow-green-600/30'
-                  : 'border border-slate-600 text-slate-300 hover:text-white hover:border-slate-400'
+                  ? 'bg-[#16A34A] text-white shadow-md shadow-green-600/30'
+                  : 'text-slate-300 hover:text-white'
               )}
             >
               Lumpsum
@@ -3036,22 +3044,33 @@ function SipCalculator() {
           </div>
         </div>
 
-        {/* Nested White Rounded Card for Controls & Results for High Contrast */}
-        <div className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 shadow-2xl border border-slate-100 dark:border-slate-800">
+        {/* 2-PART SPLIT GRID: PART 1 (CALCULATION) | PART 2 (CHART & STATEMENT) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-stretch">
           
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* ================= PART 1: CALCULATION PART ================= */}
+          <div className="lg:col-span-6 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-2xl p-5 sm:p-6 shadow-xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between space-y-4">
             
-            {/* LEFT COLUMN: Controls */}
-            <div className="lg:col-span-6 flex flex-col justify-between">
-              
-              {/* Input Label & Number Box */}
-              <div className="flex items-center justify-between gap-4 mb-4">
-                <label className="text-sm md:text-base font-bold text-slate-800 dark:text-slate-100 font-sans">
+            <div>
+              {/* Part 1 Header */}
+              <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 mb-4">
+                <div className="flex items-center gap-2">
+                  <span className="text-base">🧮</span>
+                  <h3 className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 dark:text-slate-200 font-sans">
+                    {isTamil ? '1. முதலீட்டுக் கணக்கீடு (Calculation Part)' : '1. Calculation Part'}
+                  </h3>
+                </div>
+                <span className="text-[10.5px] font-bold px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-[#16A34A] dark:text-[#4ade80] font-sans">
+                  {calcMode === 'sip' ? 'Monthly SIP' : 'One-Time Lumpsum'}
+                </span>
+              </div>
+
+              {/* Amount Input & Number Box */}
+              <div className="flex items-center justify-between gap-3 mb-2">
+                <label className="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 font-sans">
                   {calcMode === 'sip' ? (isTamil ? 'மாதாந்திர முதலீடு' : 'Monthly Investment') : (isTamil ? 'முதலீட்டு தொகை' : 'Investment Amount')}
                 </label>
-
-                <div className="flex items-center bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-1.5 focus-within:ring-2 focus-within:ring-[#16A34A] transition-all">
-                  <span className="text-slate-500 font-bold text-sm md:text-base mr-1">₹</span>
+                <div className="flex items-center bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-1 focus-within:ring-2 focus-within:ring-[#16A34A] transition-all">
+                  <span className="text-slate-500 font-bold text-sm mr-1">₹</span>
                   <input
                     type="number"
                     min="150"
@@ -3062,13 +3081,13 @@ function SipCalculator() {
                       const val = Number(e.target.value);
                       setAmount(isNaN(val) ? 150 : Math.max(0, Math.min(1000000, val)));
                     }}
-                    className="w-24 md:w-28 bg-transparent text-right font-black text-slate-900 dark:text-white text-base md:text-lg outline-none font-num"
+                    className="w-20 sm:w-24 bg-transparent text-right font-black text-slate-900 dark:text-white text-sm sm:text-base outline-none font-num"
                   />
                 </div>
               </div>
 
               {/* Range Slider Track */}
-              <div className="mb-4">
+              <div className="mb-3">
                 <input
                   type="range"
                   min="150"
@@ -3076,24 +3095,24 @@ function SipCalculator() {
                   step="50"
                   value={amount}
                   onChange={(e) => setAmount(Number(e.target.value))}
-                  className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-[#16A34A]"
+                  className="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-[#16A34A]"
                 />
-                <div className="flex justify-between items-center text-xs font-bold text-slate-500 dark:text-slate-400 mt-2 font-num">
+                <div className="flex justify-between items-center text-[10.5px] font-bold text-slate-400 mt-1 font-num">
                   <span>₹ 150</span>
                   <span>₹ 10 Lakhs</span>
                 </div>
               </div>
 
-              {/* Preset Amount Chips */}
-              <div className="flex flex-wrap gap-2 mt-2 mb-6">
+              {/* Preset Quick Chips */}
+              <div className="flex flex-wrap gap-1.5 mb-4">
                 {presetAmounts.map((pVal) => (
                   <button
                     key={pVal}
                     type="button"
                     onClick={() => setAmount(pVal)}
-                    className={'px-3 py-1.5 rounded-lg text-xs font-bold font-num transition-all ' + (
+                    className={'px-2.5 py-1 rounded-lg text-[11px] font-bold font-num transition-all ' + (
                       amount === pVal
-                        ? 'bg-[#0F172A] dark:bg-white text-white dark:text-slate-900 shadow-sm'
+                        ? 'bg-[#0F172A] dark:bg-white text-white dark:text-slate-900 shadow-xs'
                         : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
                     )}
                   >
@@ -3102,44 +3121,25 @@ function SipCalculator() {
                 ))}
               </div>
 
-              {/* Total Invested & Growth Summary Mini Card */}
-              <div className="bg-slate-50 dark:bg-slate-800/60 rounded-2xl p-4 border border-slate-200/80 dark:border-slate-700/80 flex justify-between items-center text-xs md:text-sm">
-                <div>
-                  <span className="text-slate-500 dark:text-slate-400 block font-medium">{isTamil ? 'மொத்த முதலீடு' : 'Total Invested'}</span>
-                  <span className="font-extrabold text-slate-900 dark:text-white font-num text-base">{formatCurrency(totalInvested)}</span>
-                </div>
-                <div className="text-right">
-                  <span className="text-slate-500 dark:text-slate-400 block font-medium">{isTamil ? 'எதிர்பார்க்கும் வளர்ச்சி' : 'Estimated Growth'}</span>
-                  <span className="font-extrabold text-[#16A34A] dark:text-[#4ade80] font-num text-base">+{formatCurrency(estimatedGain)}</span>
-                </div>
-              </div>
-
-            </div>
-
-            {/* RIGHT COLUMN: Comparison Card */}
-            <div className="lg:col-span-6">
-              <div className="bg-slate-50/70 dark:bg-slate-800/40 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-6 shadow-sm">
-                
-                {/* Header */}
-                <h3 className="text-xs sm:text-sm font-bold text-slate-600 dark:text-slate-300 mb-3 font-sans">
-                  {isTamil ? 'கடந்த கால முதலீட்டின் மதிப்பு' : 'Worth of investments in last'}
-                </h3>
-
-                {/* Timeframe Selector Pill Bar */}
-                <div className="flex bg-slate-200/80 dark:bg-slate-800 p-1 rounded-full border border-slate-300/80 dark:border-slate-700 mb-6 gap-1 overflow-x-auto">
+              {/* Timeframe Selector Pill Bar */}
+              <div className="mb-4">
+                <label className="text-[11px] font-extrabold uppercase text-slate-400 tracking-wider block mb-1.5 font-sans">
+                  {isTamil ? 'முதலீட்டுக் காலம் (Time Horizon)' : 'Time Horizon (Years)'}
+                </label>
+                <div className="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700 gap-1 overflow-x-auto">
                   {[
-                    { id: '1Y', label: '1 Y' },
-                    { id: '3Y', label: '3 Y' },
-                    { id: '5Y', label: '5 Y' },
+                    { id: '1Y', label: '1 Year' },
+                    { id: '3Y', label: '3 Years' },
+                    { id: '5Y', label: '5 Years' },
                     { id: 'SI', label: 'Since Inception' }
                   ].map((tItem) => (
                     <button
                       key={tItem.id}
                       type="button"
                       onClick={() => setTimeframe(tItem.id)}
-                      className={'flex-1 py-1.5 px-3 rounded-full text-xs font-bold font-num whitespace-nowrap transition-all duration-200 text-center ' + (
+                      className={'flex-1 py-1 px-2 rounded-lg text-xs font-bold font-sans whitespace-nowrap transition-all duration-200 text-center ' + (
                         timeframe === tItem.id
-                          ? 'bg-[#16A34A] text-white shadow-sm'
+                          ? 'bg-[#16A34A] text-white shadow-xs'
                           : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                       )}
                     >
@@ -3147,267 +3147,257 @@ function SipCalculator() {
                     </button>
                   ))}
                 </div>
+              </div>
 
-                {/* Results List */}
-                <div className="divide-y divide-slate-200/80 dark:divide-slate-800">
-                  
-                  {/* Row 1: This Fund */}
-                  <div className="py-3.5 flex justify-between items-center">
-                    <div className="font-extrabold text-sm md:text-base text-slate-900 dark:text-white flex items-center gap-2 font-sans">
-                      <span className="w-2.5 h-2.5 rounded-full bg-[#16A34A] inline-block"></span>
-                      <span>{isTamil ? 'இந்த நிதி (SBI Arbitrage Fund)' : 'This Fund'}</span>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-lg md:text-xl font-black text-slate-900 dark:text-white font-num">
-                        {formatCurrency(fundAmount)}
-                      </div>
-                      <div className="text-xs font-bold text-[#16A34A] dark:text-[#4ade80] font-num">
-                        {currentRates.fund}%
-                      </div>
-                    </div>
+              {/* Fund Returns vs Benchmark Comparison List */}
+              <div className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-3 border border-slate-200/80 dark:border-slate-700/80 divide-y divide-slate-200/60 dark:divide-slate-700/60">
+                {/* Row 1: This Fund */}
+                <div className="pb-2 flex justify-between items-center">
+                  <div className="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white flex items-center gap-1.5 font-sans">
+                    <span className="w-2 h-2 rounded-full bg-[#16A34A] inline-block"></span>
+                    <span>{isTamil ? 'இந்த நிதி (This Fund)' : 'This Fund (SBI Arbitrage)'}</span>
                   </div>
-
-                  {/* Row 2: Benchmark */}
-                  <div className="py-3.5 flex justify-between items-center">
-                    <div className="font-bold text-xs md:text-sm text-slate-700 dark:text-slate-200 font-sans">
-                      Nifty 50 Arbitrage Index
-                    </div>
-                    <div className="text-right">
-                      <div className="text-base md:text-lg font-bold text-slate-800 dark:text-slate-100 font-num">
-                        {formatCurrency(benchAmount)}
-                      </div>
-                      <div className="text-xs font-bold text-[#16A34A] dark:text-[#4ade80] font-num">
-                        {currentRates.bench}%
-                      </div>
-                    </div>
+                  <div className="text-right">
+                    <span className="text-sm sm:text-base font-black text-slate-900 dark:text-white font-num">
+                      {formatCurrency(fundAmount)}
+                    </span>
+                    <span className="ml-1.5 text-[11px] font-bold text-[#16A34A] dark:text-[#4ade80] font-num">
+                      +{currentRates.fund}%
+                    </span>
                   </div>
-
-                  {/* Row 3: Additional Benchmark */}
-                  <div className="py-3.5 flex justify-between items-center">
-                    <div className="font-bold text-xs md:text-sm text-slate-700 dark:text-slate-200 font-sans">
-                      CRISIL 1 Year T-Bill Index
-                    </div>
-                    <div className="text-right">
-                      <div className="text-base md:text-lg font-bold text-slate-800 dark:text-slate-100 font-num">
-                        {formatCurrency(addBenchAmount)}
-                      </div>
-                      <div className="text-xs font-bold text-[#16A34A] dark:text-[#4ade80] font-num">
-                        {currentRates.addBench}%
-                      </div>
-                    </div>
-                  </div>
-
                 </div>
 
+                {/* Row 2: Nifty 50 Arbitrage */}
+                <div className="py-2 flex justify-between items-center">
+                  <span className="text-xs font-semibold text-slate-600 dark:text-slate-300 font-sans">
+                    Nifty 50 Arbitrage Index
+                  </span>
+                  <div className="text-right">
+                    <span className="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 font-num">
+                      {formatCurrency(benchAmount)}
+                    </span>
+                    <span className="ml-1.5 text-[10.5px] font-bold text-slate-500 font-num">
+                      +{currentRates.bench}%
+                    </span>
+                  </div>
+                </div>
+
+                {/* Row 3: CRISIL 1Y T-Bill */}
+                <div className="pt-2 flex justify-between items-center">
+                  <span className="text-xs font-semibold text-slate-600 dark:text-slate-300 font-sans">
+                    CRISIL 1 Year T-Bill Index
+                  </span>
+                  <div className="text-right">
+                    <span className="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 font-num">
+                      {formatCurrency(addBenchAmount)}
+                    </span>
+                    <span className="ml-1.5 text-[10.5px] font-bold text-slate-500 font-num">
+                      +{currentRates.addBench}%
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Total Invested vs Estimated Gain Mini Footer */}
+            <div className="bg-slate-100 dark:bg-slate-800 rounded-xl p-3 flex justify-between items-center text-xs font-sans">
+              <div>
+                <span className="text-slate-500 dark:text-slate-400 block text-[10.5px] font-medium">{isTamil ? 'மொத்த முதலீடு' : 'Total Capital Outlay'}</span>
+                <span className="font-black text-slate-900 dark:text-white font-num text-sm">{formatCurrency(totalInvested)}</span>
+              </div>
+              <div className="text-right">
+                <span className="text-slate-500 dark:text-slate-400 block text-[10.5px] font-medium">{isTamil ? 'மதிப்பிடப்பட்ட லாபம்' : 'Estimated Growth'}</span>
+                <span className="font-black text-[#16A34A] dark:text-[#4ade80] font-num text-sm">+{formatCurrency(estimatedGain)}</span>
               </div>
             </div>
 
           </div>
 
-          {/* Footnote */}
-          <p className="text-[11px] md:text-xs text-slate-400 mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 leading-relaxed font-sans">
-            **Past performance may or may not be sustained in future. For performance in SEBI format please refer returns section.
-          </p>
 
-          {/* IN-PAGE DETAILED ANALYSIS SECTION (PIE CHART & FINANCIAL STATEMENTS) */}
-          <div className="mt-8 pt-8 border-t border-slate-200 dark:border-slate-800">
+          {/* ================= PART 2: CHART AND STATEMENT PART ================= */}
+          <div className="lg:col-span-6 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-2xl p-5 sm:p-6 shadow-xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between space-y-4">
             
-            {/* Section Heading & Subtabs */}
-            <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-              <div>
-                <h3 className="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2 font-sans">
-                  <span>📈</span>
-                  <span>{isTamil ? 'விரிவான பகுப்பாய்வு & நிதி அறிக்கை' : 'Detailed Analysis & Financial Statement'}</span>
-                </h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 font-sans">
-                  {isTamil ? 'முதலீடு மற்றும் லாப விகித பை-சார்ட் மற்றும் விரிவான ஆண்டுவாரியான அறிக்கை' : 'Visual asset growth pie chart, corpus breakdown, and complete year-by-year statement'}
-                </p>
+            <div>
+              {/* Part 2 Header & Tabs */}
+              <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 mb-3">
+                <div className="flex items-center gap-2">
+                  <span className="text-base">📊</span>
+                  <h3 className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 dark:text-slate-200 font-sans">
+                    {isTamil ? '2. சார்ட் & நிதி அறிக்கை' : '2. Chart & Statement Part'}
+                  </h3>
+                </div>
+
+                {/* Analysis Subtab Switcher */}
+                <div className="flex bg-slate-100 dark:bg-slate-800 p-0.5 rounded-xl border border-slate-200 dark:border-slate-700">
+                  <button
+                    type="button"
+                    onClick={() => setAnalysisTab('pie')}
+                    className={'px-3 py-1 rounded-lg text-xs font-bold font-sans transition-all ' + (
+                      analysisTab === 'pie'
+                        ? 'bg-white dark:bg-slate-900 text-[#16A34A] dark:text-[#4ade80] shadow-xs'
+                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                    )}
+                  >
+                    🍩 {isTamil ? 'பை-சார்ட்' : 'Pie Chart'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setAnalysisTab('statement')}
+                    className={'px-3 py-1 rounded-lg text-xs font-bold font-sans transition-all ' + (
+                      analysisTab === 'statement'
+                        ? 'bg-white dark:bg-slate-900 text-[#16A34A] dark:text-[#4ade80] shadow-xs'
+                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                    )}
+                  >
+                    📋 {isTamil ? 'அறிக்கை' : 'Statement'}
+                  </button>
+                </div>
               </div>
 
-              {/* Analysis Subtab Switcher */}
-              <div className="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-2xl border border-slate-200 dark:border-slate-700">
-                <button
-                  type="button"
-                  onClick={() => setAnalysisTab('pie')}
-                  className={'px-4 py-1.5 rounded-xl text-xs font-bold font-sans transition-all ' + (
-                    analysisTab === 'pie'
-                      ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-sm'
-                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                  )}
-                >
-                  🍩 {isTamil ? 'பை-சார்ட் பகுப்பாய்வு' : 'Pie Chart Breakdown'}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setAnalysisTab('statement')}
-                  className={'px-4 py-1.5 rounded-xl text-xs font-bold font-sans transition-all ' + (
-                    analysisTab === 'statement'
-                      ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-sm'
-                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                  )}
-                >
-                  📋 {isTamil ? 'ஆண்டு அறிக்கை அட்டவணை' : 'Yearly Statement'}
-                </button>
-              </div>
+              {/* TAB CONTENT */}
+              {analysisTab === 'pie' ? (
+                <div className="space-y-3 animate-fadeIn">
+                  {/* Visual Donut Chart + Legend */}
+                  <div className="flex flex-col sm:flex-row items-center justify-around gap-4 bg-slate-50 dark:bg-slate-800/40 p-3 rounded-xl border border-slate-200/80 dark:border-slate-700/80">
+                    <div className="relative w-32 h-32 flex items-center justify-center shrink-0">
+                      <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                        <path
+                          className="text-slate-200 dark:text-slate-700"
+                          strokeWidth="3.8"
+                          stroke="currentColor"
+                          fill="none"
+                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                        />
+                        <path
+                          className="text-[#0F172A] dark:text-slate-400 transition-all duration-700"
+                          strokeDasharray={investedPct + ', 100'}
+                          strokeWidth="3.8"
+                          stroke="currentColor"
+                          fill="none"
+                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                        />
+                        <path
+                          className="text-[#16A34A] dark:text-[#4ade80] transition-all duration-700"
+                          strokeDasharray={gainPct + ', 100'}
+                          strokeDashoffset={'-' + investedPct}
+                          strokeWidth="3.8"
+                          stroke="currentColor"
+                          fill="none"
+                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                        />
+                      </svg>
+                      
+                      <div className="absolute flex flex-col items-center justify-center text-center p-1">
+                        <span className="text-[9px] font-extrabold text-slate-400 uppercase tracking-tight">{isTamil ? 'முதிர்வு' : 'Corpus'}</span>
+                        <span className="text-xs sm:text-sm font-black text-slate-900 dark:text-white font-num leading-tight">{formatCurrency(fundAmount)}</span>
+                        <span className="text-[9px] font-bold text-[#16A34A] dark:text-[#4ade80] bg-emerald-100 dark:bg-emerald-950/60 px-1.5 py-0.2 rounded-full mt-0.5 font-num">
+                          {multiplier}x
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="space-y-1.5 text-xs font-bold font-sans">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#0F172A] dark:bg-slate-400"></span>
+                        <span className="text-slate-700 dark:text-slate-300">{isTamil ? 'அசல் முதலீடு' : 'Invested'}: {investedPct}%</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#16A34A]"></span>
+                        <span className="text-[#16A34A] dark:text-[#4ade80]">{isTamil ? 'வளர்ச்சி லாபம்' : 'Gains'}: {gainPct}%</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 3 Executive Summary Statements */}
+                  <div className="space-y-2">
+                    {/* Statement 1 */}
+                    <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700/80 flex justify-between items-center text-xs">
+                      <div>
+                        <span className="text-[10px] font-extrabold uppercase text-slate-400 tracking-wide block font-sans">
+                          {isTamil ? '1. அசல் முதலீட்டு தொகை' : '1. Principal Capital'}
+                        </span>
+                        <span className="text-[11px] text-slate-500 font-medium">
+                          {calcMode === 'sip' ? `${years * 12} ${isTamil ? 'தவணைகள்' : 'installments'}` : (isTamil ? 'ஒரே முறை முதலீடு' : 'Lumpsum')}
+                        </span>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-sm font-bold text-slate-900 dark:text-white font-num">{formatCurrency(totalInvested)}</span>
+                        <span className="block text-[10px] text-slate-400 font-num">({investedPct}%)</span>
+                      </div>
+                    </div>
+
+                    {/* Statement 2 */}
+                    <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700/80 flex justify-between items-center text-xs">
+                      <div>
+                        <span className="text-[10px] font-extrabold uppercase text-slate-400 tracking-wide block font-sans">
+                          {isTamil ? '2. வளர்ச்சி லாபம்' : '2. Compound Growth'}
+                        </span>
+                        <span className="text-[11px] text-slate-500 font-medium">
+                          @{currentRates.fund}% CAGR
+                        </span>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-sm font-bold text-[#16A34A] dark:text-[#4ade80] font-num">+{formatCurrency(estimatedGain)}</span>
+                        <span className="block text-[10px] text-[#16A34A] dark:text-[#4ade80] font-num">({gainPct}%)</span>
+                      </div>
+                    </div>
+
+                    {/* Statement 3 Banner */}
+                    <div className="p-2.5 rounded-xl bg-gradient-to-r from-[#0F172A] to-[#1E293B] text-white border border-slate-800 flex justify-between items-center shadow-md">
+                      <div>
+                        <span className="text-[10px] font-extrabold uppercase text-emerald-400 tracking-wide block font-sans">
+                          {isTamil ? '3. எதிர்பார்க்கும் முதிர்வு நிதி' : '3. Projected Total Corpus'}
+                        </span>
+                        <span className="text-[11px] text-slate-300 font-medium">
+                          {timeframe} {isTamil ? 'கால முடிவில்' : 'horizon value'}
+                        </span>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-sm sm:text-base font-extrabold text-white font-num">{formatCurrency(fundAmount)}</span>
+                        <span className="block text-[10px] font-bold text-emerald-300 font-num">
+                          +{((estimatedGain / (totalInvested || 1)) * 100).toFixed(1)}% {isTamil ? 'வளர்ச்சி' : 'net return'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                /* VIEW 2: COMPACT YEARLY FINANCIAL STATEMENT TABLE */
+                <div className="overflow-x-auto max-h-[260px] overflow-y-auto rounded-xl border border-slate-200 dark:border-slate-800 shadow-inner animate-fadeIn">
+                  <table className="w-full text-left text-xs">
+                    <thead className="sticky top-0 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-extrabold border-b border-slate-200 dark:border-slate-700 font-sans">
+                      <tr>
+                        <th className="p-2">{isTamil ? 'ஆண்டு' : 'Period'}</th>
+                        <th className="p-2">{isTamil ? 'அசல்' : 'Capital'}</th>
+                        <th className="p-2">{isTamil ? 'லாபம்' : 'Growth'}</th>
+                        <th className="p-2">{isTamil ? 'இந்த நிதி' : 'This Fund'}</th>
+                        <th className="p-2">{isTamil ? 'மடங்கு' : 'Multiple'}</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-num">
+                      {yearlySchedule.map((d) => (
+                        <tr key={d.year} className="hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors">
+                          <td className="p-2 font-bold text-slate-900 dark:text-white font-sans">Y{d.year}</td>
+                          <td className="p-2 text-slate-600 dark:text-slate-400">{formatCurrency(d.invested)}</td>
+                          <td className="p-2 text-[#16A34A] dark:text-[#4ade80] font-semibold">+{formatCurrency(d.gain)}</td>
+                          <td className="p-2 font-bold text-slate-900 dark:text-white">{formatCurrency(d.fundValue)}</td>
+                          <td className="p-2">
+                            <span className="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400">
+                              {d.multiplier}x
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </div>
 
-            {/* VIEW 1: PIE / DONUT CHART & EXECUTIVE STATEMENTS */}
-            {analysisTab === 'pie' && (
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-slate-50/70 dark:bg-slate-800/40 p-6 md:p-8 rounded-2xl sm:rounded-3xl border border-slate-200/80 dark:border-slate-700/80">
-                
-                {/* Left: SVG Pie / Donut Chart */}
-                <div className="lg:col-span-5 flex flex-col items-center justify-center">
-                  <div className="relative w-56 h-56 flex items-center justify-center">
-                    <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-                      {/* Background Track */}
-                      <path
-                        className="text-slate-200 dark:text-slate-700"
-                        strokeWidth="3.8"
-                        stroke="currentColor"
-                        fill="none"
-                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                      />
-                      {/* Total Invested Slice (Navy) */}
-                      <path
-                        className="text-[#0F172A] dark:text-slate-400 transition-all duration-700"
-                        strokeDasharray={investedPct + ', 100'}
-                        strokeWidth="3.8"
-                        stroke="currentColor"
-                        fill="none"
-                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                      />
-                      {/* Estimated Gain Slice (Green) */}
-                      <path
-                        className="text-[#16A34A] dark:text-[#4ade80] transition-all duration-700"
-                        strokeDasharray={gainPct + ', 100'}
-                        strokeDashoffset={'-' + investedPct}
-                        strokeWidth="3.8"
-                        stroke="currentColor"
-                        fill="none"
-                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                      />
-                    </svg>
-                    
-                    {/* Center Donut Text */}
-                    <div className="absolute flex flex-col items-center justify-center text-center p-2">
-                      <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider font-sans">{isTamil ? 'மொத்த முதிர்வு' : 'Total Corpus'}</span>
-                      <span className="text-base md:text-lg font-extrabold text-slate-900 dark:text-white font-num">{formatCurrency(fundAmount)}</span>
-                      <span className="text-[10px] font-bold text-[#16A34A] dark:text-[#4ade80] bg-emerald-100 dark:bg-emerald-950/60 px-2.5 py-0.5 rounded-full mt-1 font-num">
-                        {multiplier}x {isTamil ? 'வளர்ச்சி' : 'Return'}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Pie Chart Legend */}
-                  <div className="flex items-center gap-6 mt-4 text-xs font-bold font-sans">
-                    <div className="flex items-center gap-2">
-                      <span className="w-3 h-3 rounded-full bg-[#0F172A] dark:bg-slate-400"></span>
-                      <span className="text-slate-700 dark:text-slate-300">{isTamil ? 'முதலீடு' : 'Invested'}: {investedPct}%</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="w-3 h-3 rounded-full bg-[#16A34A]"></span>
-                      <span className="text-[#16A34A] dark:text-[#4ade80]">{isTamil ? 'லாபம்' : 'Gains'}: {gainPct}%</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Right: Detailed Financial Statements */}
-                <div className="lg:col-span-7 space-y-3">
-                  
-                  {/* Statement 1: Capital Outlay */}
-                  <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 flex justify-between items-center">
-                    <div>
-                      <span className="text-[11px] font-extrabold uppercase text-slate-400 tracking-wider block font-sans">
-                        {isTamil ? '1. அசல் முதலீட்டு தொகை' : '1. Principal Capital Outlay'}
-                      </span>
-                      <span className="text-xs text-slate-500 font-medium font-sans">
-                        {calcMode === 'sip' ? (years * 12) + ' ' + (isTamil ? 'மாதாந்திர தவணைகள்' : 'Monthly installments') + ' @ ₹' + amount.toLocaleString('en-IN') : (isTamil ? 'ஒரே முறை முதலீடு' : 'One-time lumpsum investment')}
-                      </span>
-                    </div>
-                    <div className="text-right">
-                      <span className="text-base md:text-lg font-bold text-slate-900 dark:text-white font-num">
-                        {formatCurrency(totalInvested)}
-                      </span>
-                      <span className="block text-[11px] font-bold text-slate-400 font-num">({investedPct}%)</span>
-                    </div>
-                  </div>
-
-                  {/* Statement 2: Wealth Gains */}
-                  <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 flex justify-between items-center">
-                    <div>
-                      <span className="text-[11px] font-extrabold uppercase text-slate-400 tracking-wider block font-sans">
-                        {isTamil ? '2. கூட்டு வட்டி வளர்ச்சி லாபம்' : '2. Compound Growth Gains'}
-                      </span>
-                      <span className="text-xs text-slate-500 font-medium font-sans">
-                        {isTamil ? 'ஆண்டுக்கு ' + currentRates.fund + '% கூட்டு வருமானம்' : 'Compounded @ ' + currentRates.fund + '% annualized CAGR'}
-                      </span>
-                    </div>
-                    <div className="text-right">
-                      <span className="text-base md:text-lg font-bold text-[#16A34A] dark:text-[#4ade80] font-num">
-                        +{formatCurrency(estimatedGain)}
-                      </span>
-                      <span className="block text-[11px] font-bold text-[#16A34A] dark:text-[#4ade80] font-num">({gainPct}%)</span>
-                    </div>
-                  </div>
-
-                  {/* Statement 3: Net Future Corpus */}
-                  <div className="p-4 rounded-2xl bg-gradient-to-r from-[#0F172A] to-[#1E293B] text-white border border-slate-800 flex justify-between items-center shadow-lg">
-                    <div>
-                      <span className="text-[11px] font-extrabold uppercase text-emerald-400 tracking-wider block font-sans">
-                        {isTamil ? '3. எதிர்பார்க்கும் முதிர்வு நிதி' : '3. Total Projected Corpus'}
-                      </span>
-                      <span className="text-xs text-slate-300 font-medium font-sans">
-                        {isTamil ? timeframe + ' கால முடிவில் மொத்த மதிப்பு' : 'Total accumulation after ' + timeframe + ' duration'}
-                      </span>
-                    </div>
-                    <div className="text-right">
-                      <span className="text-lg md:text-xl font-bold text-white font-num">
-                        {formatCurrency(fundAmount)}
-                      </span>
-                      <span className="block text-[11px] font-bold text-emerald-300 font-num">
-                        +{((estimatedGain / (totalInvested || 1)) * 100).toFixed(1)}% {isTamil ? 'வளர்ச்சி' : 'net return'}
-                      </span>
-                    </div>
-                  </div>
-
-                </div>
-
-              </div>
-            )}
-
-            {/* VIEW 2: FULL YEARLY FINANCIAL STATEMENT TABLE */}
-            {analysisTab === 'statement' && (
-              <div className="overflow-x-auto max-h-80 overflow-y-auto rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm animate-fadeIn">
-                <table className="w-full text-left text-xs">
-                  <thead className="sticky top-0 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-extrabold border-b border-slate-200 dark:border-slate-700 font-sans">
-                    <tr>
-                      <th className="p-3.5">{isTamil ? 'ஆண்டு' : 'Period'}</th>
-                      <th className="p-3.5">{isTamil ? 'முதலீடு செய்த அசல்' : 'Capital Invested'}</th>
-                      <th className="p-3.5">{isTamil ? 'வட்டி லாபம்' : 'Growth Gains'}</th>
-                      <th className="p-3.5">{isTamil ? 'இந்த நிதி மதிப்பு' : 'This Fund Value'}</th>
-                      <th className="p-3.5">{isTamil ? 'பெஞ்ச்மார்க் மதிப்பு' : 'Nifty 50 Value'}</th>
-                      <th className="p-3.5">{isTamil ? 'வளர்ச்சி மடங்கு' : 'Multiplier'}</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-num">
-                    {yearlySchedule.map((d) => (
-                      <tr key={d.year} className="hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors">
-                        <td className="p-3.5 font-bold text-slate-900 dark:text-white font-sans">Year {d.year}</td>
-                        <td className="p-3.5 text-slate-600 dark:text-slate-400">{formatCurrency(d.invested)}</td>
-                        <td className="p-3.5 text-[#16A34A] dark:text-[#4ade80] font-semibold">+{formatCurrency(d.gain)}</td>
-                        <td className="p-3.5 font-bold text-slate-900 dark:text-white text-sm">{formatCurrency(d.fundValue)}</td>
-                        <td className="p-3.5 text-slate-500 dark:text-slate-400">{formatCurrency(d.benchValue)}</td>
-                        <td className="p-3.5">
-                          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400">
-                            {d.multiplier}x
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
+            {/* Disclaimer note */}
+            <p className="text-[10px] text-slate-400 font-sans leading-tight pt-1">
+              **Past performance may or may not be sustained in future. For performance in SEBI format refer scheme returns.
+            </p>
 
           </div>
 
@@ -4447,64 +4437,67 @@ function HomeCinemaShowcase({ onNavigate, onShowToast, language = 'ta' }) {
   }, [allVideos, activeCategory]);
 
   return (
-    <section className="w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 select-none space-y-4 min-w-0">
-      {/* Category Tabs & View All Link */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-1 border-b border-slate-100 dark:border-slate-800">
-        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
-          {categories.map((cat) => {
-            const isActive = activeCategory === cat.id;
-            return (
-              <button
-                key={cat.id}
-                onClick={() => setActiveCategory(cat.id)}
-                className={`px-4 sm:px-5 py-2 rounded-full text-xs sm:text-[12.5px] font-bold whitespace-nowrap transition-all duration-200 shrink-0 ${isActive
-                    ? 'bg-[#2563EB] text-white shadow-sm shadow-blue-600/20'
-                    : 'bg-white dark:bg-slate-900 text-[#64748B] dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-[#E2E8F0] dark:border-slate-800 hover:border-slate-300'
-                  }`}
-              >
-                {isTamil ? cat.labelTa : cat.labelEn}
-              </button>
-            );
-          })}
+    <section className="w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 select-none min-w-0">
+      {/* Section Band Container: #E8F5E9 in light theme */}
+      <div className="section-band bg-[#E8F5E9] dark:bg-slate-900/40 rounded-2xl sm:rounded-3xl border border-[#D5EBD9] dark:border-slate-800 p-4 sm:p-6 lg:p-7 shadow-sm space-y-4">
+        {/* Category Tabs & View All Link */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-1 border-b border-[#D5EBD9] dark:border-slate-800">
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+            {categories.map((cat) => {
+              const isActive = activeCategory === cat.id;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setActiveCategory(cat.id)}
+                  className={`px-4 sm:px-5 py-2 rounded-full text-xs sm:text-[12.5px] font-bold whitespace-nowrap transition-all duration-200 shrink-0 ${isActive
+                      ? 'bg-[#2563EB] text-white shadow-sm shadow-blue-600/20'
+                      : 'bg-white dark:bg-slate-900 text-[#475569] dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-[#D5EBD9] dark:border-slate-800 hover:border-emerald-300'
+                    }`}
+                >
+                  {isTamil ? cat.labelTa : cat.labelEn}
+                </button>
+              );
+            })}
+          </div>
+
+          <button
+            onClick={() => {
+              if (onNavigate) onNavigate('#/videos');
+              else if (typeof window !== 'undefined') window.location.hash = '#/videos';
+            }}
+            className="inline-flex items-center gap-1.5 text-xs sm:text-[13px] font-bold text-[#2563EB] dark:text-[#60a5fa] hover:text-blue-700 transition-colors shrink-0 self-end sm:self-center"
+          >
+            <span>{isTamil ? 'அனைத்து வீடியோக்கள் (800+)' : 'View All Videos (800+)'}</span>
+            <span className="font-bold">→</span>
+          </button>
         </div>
 
-        <button
-          onClick={() => {
-            if (onNavigate) onNavigate('#/videos');
-            else if (typeof window !== 'undefined') window.location.hash = '#/videos';
-          }}
-          className="inline-flex items-center gap-1.5 text-xs sm:text-[13px] font-bold text-[#2563EB] dark:text-[#60a5fa] hover:text-blue-700 transition-colors shrink-0 self-end sm:self-center"
-        >
-          <span>{isTamil ? 'அனைத்து வீடியோக்கள் (800+)' : 'View All Videos (800+)'}</span>
-          <span className="font-bold">→</span>
-        </button>
+        {/* Responsive Grid — Strictly ONE SINGLE ROW of video cards filling the wide screen */}
+        {isLoading && showcaseVideos.length === 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 sm:gap-6 animate-pulse">
+            {Array.from({ length: 5 }).map((_, idx) => (
+              <div key={idx} className="rounded-2xl bg-slate-200 dark:bg-slate-800/60 aspect-[9/13] p-4 space-y-3">
+                <div className="aspect-video bg-slate-300 dark:bg-slate-700/60 rounded-xl" />
+                <div className="h-4 bg-slate-300 dark:bg-slate-700/60 rounded w-3/4" />
+                <div className="h-3 bg-slate-300 dark:bg-slate-700/60 rounded w-1/2" />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 sm:gap-6">
+            {showcaseVideos.slice(0, 5).map((video, idx) => (
+              <CinemaVideoCard
+                key={`home-cinema-${video.id || idx}`}
+                video={video}
+                index={idx}
+                onSelect={(v) => setSelectedVideo(v)}
+                language={language}
+                onShowToast={onShowToast}
+              />
+            ))}
+          </div>
+        )}
       </div>
-
-      {/* Responsive Grid — Strictly ONE SINGLE ROW of video cards filling the wide screen */}
-      {isLoading && showcaseVideos.length === 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 sm:gap-6 animate-pulse">
-          {Array.from({ length: 5 }).map((_, idx) => (
-            <div key={idx} className="rounded-2xl bg-slate-200 dark:bg-slate-800/60 aspect-[9/13] p-4 space-y-3">
-              <div className="aspect-video bg-slate-300 dark:bg-slate-700/60 rounded-xl" />
-              <div className="h-4 bg-slate-300 dark:bg-slate-700/60 rounded w-3/4" />
-              <div className="h-3 bg-slate-300 dark:bg-slate-700/60 rounded w-1/2" />
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 sm:gap-6">
-          {showcaseVideos.slice(0, 5).map((video, idx) => (
-            <CinemaVideoCard
-              key={`home-cinema-${video.id || idx}`}
-              video={video}
-              index={idx}
-              onSelect={(v) => setSelectedVideo(v)}
-              language={language}
-              onShowToast={onShowToast}
-            />
-          ))}
-        </div>
-      )}
 
       {selectedVideo && (
         <CinemaTheaterModal
