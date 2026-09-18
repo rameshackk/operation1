@@ -9,6 +9,9 @@ const inputPath = path.join(__dirname, 'js', 'bundle.js');
 const outputPath = path.join(__dirname, 'js', 'bundle.compiled.js');
 
 try {
+
+
+
   // Polyfill window and self for browser UMD Babel inside Node.js
   if (typeof globalThis.window === 'undefined') globalThis.window = globalThis;
   if (typeof globalThis.self === 'undefined') globalThis.self = globalThis;

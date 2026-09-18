@@ -46,6 +46,11 @@
     }
   </script>
 
+  <!-- Typography: Plus Jakarta Sans (UI text & headings) and Manrope (Numbers & Tickers) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Noto+Serif+Tamil:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <!-- Tailwind CSS CDN — suppress built-in production warning -->
   <script>
     (function() {
@@ -71,48 +76,58 @@
             '2xl': '1536px'
           },
           fontFamily: {
-            sans: ['"Book Antiqua"', 'Palatino', '"Palatino Linotype"', '"Palatino LT STD"', 'Georgia', '"Noto Serif Tamil"', 'serif'],
-            serif: ['"Book Antiqua"', 'Palatino', '"Palatino Linotype"', '"Palatino LT STD"', 'Georgia', '"Noto Serif Tamil"', 'serif'],
-            display: ['"Book Antiqua"', 'Palatino', '"Palatino Linotype"', '"Palatino LT STD"', 'Georgia', '"Noto Serif Tamil"', 'serif']
+            sans: ['"Book Antiqua"', 'Palatino', '"Palatino Linotype"', '"URW Bookman L"', '"Noto Serif Tamil"', 'Georgia', 'serif'],
+            heading: ['"Book Antiqua"', 'Palatino', '"Palatino Linotype"', '"URW Bookman L"', '"Noto Serif Tamil"', 'Georgia', 'serif'],
+            display: ['"Book Antiqua"', 'Palatino', '"Palatino Linotype"', '"URW Bookman L"', '"Noto Serif Tamil"', 'Georgia', 'serif'],
+            serif: ['"Book Antiqua"', 'Palatino', '"Palatino Linotype"', '"URW Bookman L"', '"Noto Serif Tamil"', 'Georgia', 'serif'],
+            num: ['"Book Antiqua"', 'Palatino', '"Palatino Linotype"', '"URW Bookman L"', '"Noto Serif Tamil"', 'Georgia', 'serif'],
+            mono: ['"Book Antiqua"', 'Palatino', '"Palatino Linotype"', '"URW Bookman L"', '"Noto Serif Tamil"', 'Georgia', 'serif']
           },
           colors: {
+            navy: {
+              800: '#1E293B',
+              900: '#0F172A',
+            },
+            blue: {
+              50: '#EFF6FF',
+              600: '#2563EB',
+            },
+            green: {
+              50: '#F0FDF4',
+              600: '#16A34A',
+            },
+            red: {
+              600: '#DC2626',
+            },
+            amber: {
+              400: '#FBBF24',
+            },
+            cream: {
+              50: '#FBF7EF',
+            },
+            gray: {
+              50: '#F8FAFC',
+              100: '#F1F5F9',
+              200: '#E2E8F0',
+              500: '#64748B',
+            },
             obsidian: '#020617',
             charcoal: '#0b0f19',
             brandBlue: {
-              DEFAULT: '#03529A',
-              400: '#38bdf8',
-              500: '#03529A',
-              600: '#02407a',
-              700: '#033766',
+              DEFAULT: '#2563EB',
+              50: '#EFF6FF',
+              400: '#60a5fa',
+              500: '#2563EB',
+              600: '#1d4ed8',
+              700: '#1e40af',
             },
             brandGreen: {
-              DEFAULT: '#4A9E2C',
+              DEFAULT: '#16A34A',
+              50: '#F0FDF4',
               400: '#4ade80',
-              500: '#4A9E2C',
-              600: '#3b8022',
-              700: '#2d6319',
-            },
-            amber: {
-              400: '#38bdf8',
-              500: '#03529A',
-              600: '#03529A',
-              700: '#02407a',
-            },
-            gold: {
-              300: '#86efac',
-              400: '#4ade80',
-              500: '#4A9E2C',
-              600: '#3b8022',
-            },
-            emerald: {
-              400: '#4ade80',
-              500: '#4A9E2C',
-              600: '#3b8022',
-            },
-            sapphire: {
-              400: '#38bdf8',
-              500: '#03529A',
-              600: '#02407a',
+              500: '#16A34A',
+              600: '#15803d',
+              700: '#166534',
             }
           }
         }
@@ -123,9 +138,19 @@
   <!-- Custom Styles & Design Tokens -->
   <link rel="stylesheet" href="css/styles.css?v=7.1.0" />
 
-  <!-- React 18 & ReactDOM 18 UMD Global Scripts -->
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <!-- React 18 & ReactDOM 18 UMD Global Scripts (Local with fast CDN fallbacks) -->
+  <script src="js/vendor/react.min.js"></script>
+  <script>
+    if (typeof window.React === 'undefined') {
+      document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"><\/script>');
+    }
+  </script>
+  <script src="js/vendor/react-dom.min.js"></script>
+  <script>
+    if (typeof window.ReactDOM === 'undefined') {
+      document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"><\/script>');
+    }
+  </script>
 
   <!-- Supabase JS Client SDK (Local bundle with fallback) -->
   <script src="js/vendor/supabase.js"></script>
@@ -137,9 +162,6 @@
     window.SUPABASE_URL = "https://etanokdvfyvkidpeovdi.supabase.co";
     window.SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV0YW5va2R2Znl2a2lkcGVvdmRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY2ODUxNzUsImV4cCI6MjEwMjI2MTE3NX0.SLzp5gIZyZdB7nmDrfjvghFbAwKwAIWuf4Ys_HC4AaE";
   </script>
-
-  <!-- Babel standalone for browser JSX compilation -->
-  <script src="https://unpkg.com/@babel/standalone@7.23.6/babel.min.js"></script>
 </head>
 <body class="text-slate-900 dark:text-slate-100 antialiased relative pb-safe overflow-x-hidden w-full max-w-full">
   <script>
@@ -223,7 +245,9 @@
   <div id="root" class="relative z-10"></div>
 
   <!-- Main Application Bundle (Pre-compiled production JS) -->
-  <script src="js/bundle.compiled.js?v=4.5.0"></script>
+  <script src="js/vendor/react.min.js"></script>
+  <script src="js/vendor/react-dom.min.js"></script>
+  <script src="js/bundle.compiled.js?v=5.0.0"></script>
 
 </body>
 </html>

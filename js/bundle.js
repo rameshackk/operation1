@@ -28,7 +28,8 @@ const translations = {
       stocks: "பங்குச் சந்தை",
       personalFinance: "தனிநபர் நிதி",
       education: "நிதி அறிவு",
-      calculator: "SIP கணக்கிடுவான்"
+      calculator: "SIP கணக்கிடுவான்",
+      quiz: "வினாடி வினா"
     },
     tickerLabel: "முக்கிய செய்திகள்",
     marketTitle: "சந்தை நிலவரம்",
@@ -492,7 +493,7 @@ async function getLatestVideos(language = "ta", category = "all", sort = "newest
         if (token) {
           headers['Authorization'] = `Bearer ${token}`;
         }
-      } catch (e) {}
+      } catch (e) { }
     }
 
     const url = `/api/videos?limit=1000&category=${encodeURIComponent(category)}&sort=${encodeURIComponent(sort)}`;
@@ -959,7 +960,10 @@ function AuthProvider({ children }) {
       }
 
       try {
-        const { data: { session: initialSession } } = await client.auth.getSession();
+        const sessionPromise = client.auth.getSession();
+        const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('Auth check timeout')), 800));
+        const { data } = await Promise.race([sessionPromise, timeoutPromise]);
+        const initialSession = data?.session;
         if (isMounted) {
           if (initialSession) {
             setSession(initialSession);
@@ -1019,7 +1023,7 @@ function AuthProvider({ children }) {
         } else if (event === 'SIGNED_OUT') {
           try {
             localStorage.removeItem('demo_auth_session');
-          } catch (e) {}
+          } catch (e) { }
           setSession(null);
           setUser(null);
           setProfile(null);
@@ -1060,14 +1064,14 @@ function AuthProvider({ children }) {
     setRole('admin');
     try {
       localStorage.setItem('demo_auth_session', JSON.stringify({ user: adminUser, profile: adminProfile }));
-    } catch (e) {}
+    } catch (e) { }
     return { user: adminUser, profile: adminProfile };
   };
 
   const handleSignOut = async () => {
     try {
       localStorage.removeItem('demo_auth_session');
-    } catch (e) {}
+    } catch (e) { }
     const client = getSupabaseClient();
     try {
       if (client) {
@@ -1082,7 +1086,7 @@ function AuthProvider({ children }) {
       setRole('user');
       try {
         sessionStorage.removeItem('dhanavriksha_current_tab_progress');
-      } catch (e) {}
+      } catch (e) { }
       window.location.hash = '#/login';
     }
   };
@@ -1158,16 +1162,16 @@ function AuthProvider({ children }) {
   const signInWithGoogle = async () => {
     const client = getSupabaseClient();
     if (!client) throw new Error('Supabase client not initialized');
-    
+
     const redirectUrl = window.location.origin + window.location.pathname;
-    
+
     const { data, error } = await client.auth.signInWithOAuth({
       provider: 'google',
       options: {
         redirectTo: redirectUrl
       }
     });
-    
+
     if (error) {
       if (error.message && error.message.toLowerCase().includes('provider')) {
         throw new Error('Google Sign-In is not enabled in your Supabase Dashboard. Go to Supabase Dashboard -> Authentication -> Providers -> Google to enable it.');
@@ -1202,7 +1206,7 @@ function AuthProvider({ children }) {
             return true;
           }
         }
-      } catch (e) {}
+      } catch (e) { }
       if (
         currentPassword === 'admin@123' ||
         currentPassword === 'admin' ||
@@ -1238,7 +1242,7 @@ function AuthProvider({ children }) {
         const parsed = JSON.parse(savedDemo);
         parsed.demoPassword = newPassword;
         localStorage.setItem('demo_auth_session', JSON.stringify(parsed));
-      } catch (e) {}
+      } catch (e) { }
       return { success: true };
     }
 
@@ -1251,30 +1255,6 @@ function AuthProvider({ children }) {
     if (error) throw error;
     return data;
   };
-
-  if (isAuthLoading) {
-    return (
-      <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-slate-950 text-white p-6 select-none">
-        <div className="relative flex items-center justify-center mb-6">
-          <img
-            src="/assets/logo.png"
-            alt="Muthaleetu Thisai"
-            className="w-20 h-20 object-contain drop-shadow-2xl animate-pulse"
-          />
-        </div>
-        <h1 className="text-xl sm:text-2xl font-black tracking-wide font-serif mb-2">
-          <span className="text-[#38bdf8]">முதலீட்டு </span>
-          <span className="text-[#4ade80]">திசை</span>
-          <span className="text-slate-500 mx-2 font-normal text-base">|</span>
-          <span className="text-[#38bdf8]">Muthaleetu </span>
-          <span className="text-[#4ade80]">Thisai</span>
-        </h1>
-        <p className="text-xs text-slate-400 font-medium animate-pulse">
-          Loading Auth Session...
-        </p>
-      </div>
-    );
-  }
 
   return (
     <AuthContext.Provider
@@ -1359,7 +1339,7 @@ function useWatchHistory() {
     setHistory([]);
     try {
       localStorage.removeItem('dv_watch_history');
-    } catch {}
+    } catch { }
   };
 
   return { history, addToHistory, clearHistory };
@@ -1458,11 +1438,10 @@ function ProfileMenu({ onNavigate }) {
               <p className="text-xs font-black text-slate-900 dark:text-white truncate max-w-[140px]">
                 {displayName}
               </p>
-              <span className={`text-[9px] font-black uppercase px-2 py-0.5 rounded-full ${
-                role === 'admin'
+              <span className={`text-[9px] font-black uppercase px-2 py-0.5 rounded-full ${role === 'admin'
                   ? 'bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20'
                   : 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20'
-              }`}>
+                }`}>
                 {role}
               </span>
             </div>
@@ -1556,7 +1535,7 @@ function ProtectedRoute({ children, onNavigate }) {
       if (current !== '#/login' && current !== '#/signup' && current !== '#/register' && current !== '#/forgot-password' && current !== '#/reset-password') {
         try {
           sessionStorage.setItem('auth_redirect_from', current);
-        } catch (e) {}
+        } catch (e) { }
       }
       if (window.location.hash !== '#/login') {
         if (onNavigate) {
@@ -1585,7 +1564,7 @@ function AdminRoute({ children, onNavigate }) {
       const current = window.location.hash || '#/';
       try {
         sessionStorage.setItem('auth_redirect_from', current);
-      } catch (e) {}
+      } catch (e) { }
       if (window.location.hash !== '#/login') {
         if (onNavigate) {
           onNavigate('#/login');
@@ -1649,22 +1628,20 @@ function LanguageSwitcher() {
     <div className="relative inline-flex items-center bg-white/80 dark:bg-slate-800 p-1 rounded-full border border-slate-200 dark:border-slate-700 shadow-inner">
       <button
         onClick={() => setLanguage('ta')}
-        className={`px-3.5 py-1 text-xs font-black rounded-full transition-all duration-300 ${
-          language === 'ta' ? 'bg-[#03529A] text-white shadow-md scale-105' : 'text-slate-700 dark:text-slate-300 hover:text-[#03529A]'
-        }`}
+        className={`px-3.5 py-1 text-xs font-black rounded-full transition-all duration-300 ${language === 'ta' ? 'bg-[#4A9E2C] text-white shadow-md scale-105' : 'text-slate-700 dark:text-slate-300 hover:text-[#4A9E2C]'
+          }`}
       >
         தமிழ்
       </button>
       <button
         onClick={() => setLanguage('en')}
-        className={`px-3.5 py-1 text-xs font-black rounded-full transition-all duration-300 ${
-          language === 'en' ? 'bg-[#03529A] text-white shadow-md scale-105' : 'text-slate-700 dark:text-slate-300 hover:text-[#03529A]'
-        }`}
+        className={`px-3.5 py-1 text-xs font-black rounded-full transition-all duration-300 ${language === 'en' ? 'bg-[#4A9E2C] text-white shadow-md scale-105' : 'text-slate-700 dark:text-slate-300 hover:text-[#4A9E2C]'
+          }`}
       >
         English
       </button>
       {isTranslating && (
-        <span className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[10px] text-[#03529A] font-black whitespace-nowrap animate-pulse">
+        <span className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[10px] text-[#4A9E2C] font-black whitespace-nowrap animate-pulse">
           Translating...
         </span>
       )}
@@ -1718,65 +1695,69 @@ function Header({ onOpenSearch, onNavigate }) {
   };
 
   return (
-    <header className={`w-full max-w-full overflow-hidden transition-all duration-200 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-900 dark:text-white ${
-      isScrolled ? 'py-1.5 shadow-sm' : 'py-2 sm:py-2.5 shadow-sm'
-    }`}>
-      <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-2 sm:gap-4 min-w-0">
-        
-        {/* Left Side: Brand Logo & Title */}
-        <a href="#/" className="flex items-center gap-2 sm:gap-3.5 group shrink min-w-0 truncate">
-          <img
-            src="/assets/logo.png"
-            alt="Muthaleetu Thisai"
-            className="w-8 h-8 sm:w-11 sm:h-11 md:w-14 md:h-14 object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-300 shrink-0"
-          />
-          <div className="min-w-0 truncate">
-            <div className="flex items-center gap-1.5 sm:gap-2 truncate">
-              <h1 className="text-base sm:text-2xl md:text-[1.7rem] font-black tracking-tight font-serif whitespace-nowrap leading-none truncate">
-                {language === 'ta' ? (
-                  <>
-                    <span className="text-[#03529A] dark:text-[#38bdf8]">முதலீட்டு </span>
-                    <span className="text-[#4A9E2C] dark:text-[#4ade80]">திசை</span>
-                  </>
-                ) : (
-                  <>
-                    <span className="text-[#03529A] dark:text-[#38bdf8]">Muthaleetu </span>
-                    <span className="text-[#4A9E2C] dark:text-[#4ade80]">Thisai</span>
-                  </>
-                )}
-              </h1>
-            </div>
-            <p className="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 font-bold hidden md:block pt-0.5 truncate">
-              {t('tagline')}
-            </p>
-          </div>
-        </a>
+    <header className={`w-full max-w-full overflow-hidden transition-all duration-200 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-900 dark:text-white ${isScrolled ? 'py-1.5 shadow-sm' : 'py-2 sm:py-2.5 shadow-sm'
+      }`}>
+      <div className="w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 flex items-center justify-between gap-3 sm:gap-4 min-w-0">
 
-        {/* Right Side Controls: Search + Language + Theme + Login / User Card */}
-        <div className="flex items-center justify-end gap-1.5 sm:gap-2.5 shrink-0">
+        {/* Left Side: Search Trigger */}
+        <div className="flex items-center gap-2 sm:gap-2.5 flex-1 justify-start min-w-0">
           <button
             onClick={onOpenSearch}
-            className="inline-flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-800 transition-all text-xs font-black border border-slate-200 dark:border-slate-700 shadow-sm"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-800 transition-all text-xs font-bold border border-slate-200 dark:border-slate-700 shadow-xs shrink-0"
             aria-label="Search"
             title="Search (Ctrl + K)"
           >
-            <svg className="w-4 h-4 text-[#03529A] dark:text-[#38bdf8]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-            <span className="hidden md:inline font-black">{t('searchTitle')}</span>
-            <span className="hidden xl:inline-block text-[9px] px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-mono">⌘K</span>
+            <svg className="w-3.5 h-3.5 text-[#2563EB] dark:text-[#38bdf8]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+            <span className="hidden sm:inline font-bold">{t('searchTitle')}</span>
+            <span className="hidden md:inline-block text-[8.5px] px-1 py-0.2 rounded bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-num font-bold">⌘K</span>
           </button>
-          
-          <div className="hidden md:flex items-center gap-1.5 sm:gap-2">
+        </div>
+
+        {/* Center: Centered Brand Logo & Title */}
+        <div className="flex items-center justify-center shrink-0 mx-auto min-w-0">
+          <a href="#/" className="flex items-center gap-3 group min-w-0">
+            <img
+              src="/assets/logo.png"
+              alt="Muthaleetu Thisai"
+              className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-300 shrink-0"
+            />
+            <div className="min-w-0 text-left">
+              <div className="flex items-center gap-1 sm:gap-1.5 truncate">
+                <h1 className="text-base sm:text-lg md:text-[1.35rem] font-extrabold tracking-tight whitespace-nowrap leading-none truncate font-sans">
+                  {language === 'ta' ? (
+                    <>
+                      <span className="text-[#03529A] dark:text-[#38bdf8]">முதலீட்டு </span>
+                      <span className="text-[#4A9E2C] dark:text-[#4ade80]">திசை</span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="text-[#03529A] dark:text-[#38bdf8]">Muthaleetu </span>
+                      <span className="text-[#4A9E2C] dark:text-[#4ade80]">Thisai</span>
+                    </>
+                  )}
+                </h1>
+              </div>
+              <p className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 font-medium hidden sm:block pt-0.5 truncate leading-none">
+                {t('tagline')}
+              </p>
+            </div>
+          </a>
+        </div>
+
+        {/* Right Side Controls: Language + Theme + Login / User Card */}
+        <div className="flex items-center justify-end gap-2 sm:gap-2.5 flex-1 min-w-0">
+          <div className="hidden sm:flex items-center gap-2">
             <LanguageSwitcher />
             <ThemeToggle />
           </div>
 
           {user ? (
-            <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            <div className="flex items-center gap-2 shrink-0">
               <ProfileMenu onNavigate={onNavigate || ((route) => { if (typeof window !== 'undefined') window.location.hash = route; })} />
               <button
                 onClick={handleLogout}
                 disabled={isLoggingOut}
-                className="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full bg-red-600 hover:bg-red-700 active:scale-95 text-white font-black text-xs shadow-md transition-all shrink-0 disabled:opacity-50 border border-red-500/30"
+                className="hidden md:inline-flex items-center gap-1 px-3 py-1 rounded-full bg-red-600 hover:bg-red-700 active:scale-95 text-white font-bold text-xs shadow-xs transition-all shrink-0 disabled:opacity-50 border border-red-500/30"
                 title={language === 'ta' ? 'வெளியேறு' : 'Logout'}
               >
                 {isLoggingOut ? (
@@ -1784,9 +1765,7 @@ function Header({ onOpenSearch, onNavigate }) {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                   </svg>
-                ) : (
-                  <span></span>
-                )}
+                ) : null}
                 <span>{language === 'ta' ? 'வெளியேறு' : 'Logout'}</span>
               </button>
             </div>
@@ -1796,7 +1775,7 @@ function Header({ onOpenSearch, onNavigate }) {
                 if (onNavigate) onNavigate('#/login');
                 else if (typeof window !== 'undefined') window.location.hash = '#/login';
               }}
-              className="inline-flex items-center gap-1 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full btn-brand-blue text-white font-extrabold text-xs shadow-md transition-all shrink-0"
+              className="inline-flex items-center gap-1 px-3.5 sm:px-4 py-1.5 rounded-full bg-[#2563EB] hover:bg-blue-700 text-white font-bold text-xs shadow-xs shadow-blue-600/20 transition-all shrink-0 active:scale-95"
             >
               <span>{language === 'ta' ? 'உள்நுழைக' : 'Sign In'}</span>
             </button>
@@ -1836,40 +1815,36 @@ function Navbar({ currentPath, onNavigate }) {
 
   return (
     <nav className="bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 border-b border-slate-200 dark:border-slate-800 shadow-sm relative z-20">
-      <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-3 sm:px-6 lg:px-8">
+      <div className="w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
         {/* Desktop / Laptop Horizontal Bar */}
-        <div className="hidden lg:flex items-center justify-between gap-2 py-1.5">
-          <div className="flex items-center justify-between flex-1 gap-1 xl:gap-2">
-            {navItems.map((item, index) => {
+        <div className="hidden lg:flex items-center justify-between gap-2 py-2">
+          <div className="flex items-center justify-between flex-1 gap-1.5 xl:gap-2">
+            {navItems.map((item) => {
               if (item.isAction) {
                 return (
                   <button
                     key={item.id}
                     onClick={() => item.action && item.action()}
-                    className="relative px-3.5 py-2 text-[13.5px] xl:text-[14.5px] font-black transition-all rounded-lg whitespace-nowrap text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-white hover:bg-red-500/10 border border-red-500/20"
+                    className="relative px-4 py-2 text-[13.5px] xl:text-[14px] font-bold transition-all rounded-[10px] whitespace-nowrap text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-white hover:bg-red-50 dark:hover:bg-red-950/30 border border-red-500/20"
                   >
                     {item.label}
                   </button>
                 );
               }
               const isActive = currentPath === item.hash || (item.hash === '#/' && currentPath === '');
-              const isEven = index % 2 === 0;
-              const hoverStyle = isEven
-                ? 'hover:text-[#03529A] hover:bg-[#03529A]/10 hover:border-[#03529A]/30 dark:hover:text-[#38bdf8] dark:hover:bg-[#38bdf8]/15'
-                : 'hover:text-[#4A9E2C] hover:bg-[#4A9E2C]/10 hover:border-[#4A9E2C]/30 dark:hover:text-[#4ade80] dark:hover:bg-[#4ade80]/15';
-              const activeStyle = isEven
-                ? 'bg-[#03529A]/10 text-[#03529A] dark:text-[#38bdf8] shadow-sm border border-[#03529A]/30 font-black'
-                : 'bg-[#4A9E2C]/10 text-[#4A9E2C] dark:text-[#4ade80] shadow-sm border border-[#4A9E2C]/30 font-black';
-              const indicatorBg = isEven ? 'bg-[#03529A]' : 'bg-[#4A9E2C]';
+              
+              // Active: filled light-blue pill (--blue-50 bg, --blue-600 text, bold)
+              // Inactive: 8-10px border radius, subtle hover
+              const activeClass = 'bg-[#EFF6FF] dark:bg-blue-950/60 text-[#2563EB] dark:text-[#60a5fa] font-extrabold shadow-sm';
+              const inactiveClass = 'text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 font-semibold';
 
               return (
                 <button
                   key={item.id}
                   onClick={() => onNavigate(item.hash)}
-                  className={`relative px-3 py-1.5 xl:px-3.5 xl:py-2 text-[13px] xl:text-[14px] font-black transition-all rounded-lg whitespace-nowrap border border-transparent ${isActive ? activeStyle : `text-slate-800 dark:text-slate-200 ${hoverStyle}`}`}
+                  className={`relative px-3.5 py-2 text-[13px] xl:text-[14px] transition-all rounded-[10px] whitespace-nowrap ${isActive ? activeClass : inactiveClass}`}
                 >
                   {item.label}
-                  {isActive && <span className={`absolute bottom-0 left-2.5 right-2.5 h-0.5 ${indicatorBg} rounded-full`} />}
                 </button>
               );
             })}
@@ -1881,7 +1856,7 @@ function Navbar({ currentPath, onNavigate }) {
           {/* Active section breadcrumb pill */}
           <div className="flex items-center gap-2 min-w-0 truncate">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-            <span className="text-xs font-black text-[#03529A] dark:text-[#38bdf8] uppercase tracking-wider truncate">
+            <span className="text-xs font-black text-[#4A9E2C] dark:text-[#4ade80] uppercase tracking-wider truncate">
               {navItems.find(i => i.hash === currentPath)?.label || t('nav.home')}
             </span>
           </div>
@@ -1945,15 +1920,14 @@ function Navbar({ currentPath, onNavigate }) {
                       }
                       setMobileOpen(false);
                     }}
-                    className={`w-full text-left px-4 py-3 rounded-2xl text-sm font-black transition-all flex items-center justify-between ${
-                      item.isAction
+                    className={`w-full text-left px-4 py-3 rounded-2xl text-sm font-black transition-all flex items-center justify-between ${item.isAction
                         ? 'text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40'
                         : isActive
                           ? isEven
-                            ? 'bg-[#03529A]/15 text-[#03529A] dark:text-[#38bdf8] border border-[#03529A]/30 shadow-sm'
+                            ? 'bg-[#4A9E2C]/15 text-[#4A9E2C] dark:text-[#38bdf8] border border-[#4A9E2C]/30 shadow-sm'
                             : 'bg-[#4A9E2C]/15 text-[#4A9E2C] dark:text-[#4ade80] border border-[#4A9E2C]/30 shadow-sm'
                           : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900'
-                    }`}
+                      }`}
                   >
                     <span className="flex items-center gap-2.5">
                       <span>{item.icon || '•'}</span>
@@ -2037,13 +2011,13 @@ function TrendingTicker({ onNavigate }) {
         <span
           key={`${keyPrefix}-hl-${idx}`}
           onClick={() => handleHeadlineClick(item.link)}
-          className="group/hl hover:text-red-900 dark:hover:text-amber-400 cursor-pointer transition-all duration-150 flex items-center gap-1.5 text-slate-900 dark:text-slate-100 font-black text-xs sm:text-[12px] tracking-tight whitespace-nowrap select-none"
+          className="group/hl text-[#FBBF24] hover:text-white cursor-pointer transition-all duration-150 flex items-center gap-2 font-bold text-xs sm:text-[13px] tracking-tight whitespace-nowrap select-none"
           title="Click to view details"
         >
-          <span className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-sm bg-red-600 text-white font-black text-[9px] shadow-sm animate-pulse shrink-0">
+          <span className="inline-flex items-center justify-center w-4 h-4 rounded-sm bg-[#DC2626] text-white font-black text-[9px] shadow-sm animate-pulse shrink-0">
             ⚡
           </span>
-          <span className="group-hover/hl:underline underline-offset-2 decoration-red-700 decoration-2 font-extrabold">
+          <span className="group-hover/hl:underline underline-offset-2 decoration-amber-400 decoration-2 font-bold text-[#FBBF24]">
             {item.text}
           </span>
         </span>
@@ -2052,64 +2026,40 @@ function TrendingTicker({ onNavigate }) {
   );
 
   const renderMarketTrack = (keyPrefix) => (
-    <div key={keyPrefix} className="flex items-center gap-5 shrink-0 pr-5 font-mono text-[9px] sm:text-[10px] font-bold text-white leading-none">
+    <div key={keyPrefix} className="flex items-center gap-5 shrink-0 pr-5 font-num text-[10px] sm:text-[11px] font-bold text-white leading-none">
       {marketSnapshotData.map((item, idx) => (
-        <div key={`${keyPrefix}-mkt-${idx}`} className="inline-flex items-center gap-1 whitespace-nowrap">
-          <span className="text-yellow-300 font-bold">{item.symbol}:</span>
-          <span className="text-white font-black">{item.value}</span>
-          <span className={item.isUp ? 'text-emerald-400 font-extrabold' : 'text-rose-400 font-extrabold'}>
+        <div key={`${keyPrefix}-mkt-${idx}`} className="inline-flex items-center gap-1.5 whitespace-nowrap">
+          <span className="text-slate-400 font-semibold">{item.symbol}:</span>
+          <span className="text-white font-bold">{item.value}</span>
+          <span className={item.isUp ? 'text-[#16A34A] font-bold' : 'text-[#DC2626] font-bold'}>
             {item.isUp ? '▲' : '▼'} {item.percent}
           </span>
-          <span className="text-blue-400/40 ml-1.5">•</span>
+          <span className="text-slate-600 ml-1">•</span>
         </div>
       ))}
     </div>
   );
 
   return (
-    <div className="w-full max-w-full overflow-hidden min-w-0 bg-[#FEFEFE] dark:bg-[#0b0f19] text-slate-900 dark:text-slate-100 border-y border-slate-200 dark:border-slate-800 shadow-sm relative z-30 select-none">
-      {/* Main TV Lower-Third Strip Edge-to-Edge Full Screen Length */}
-      <div className="w-full max-w-full overflow-hidden min-w-0 flex items-stretch border-y border-amber-600/40 bg-slate-950">
-        {/* Left Anchor Box with BREAKING NEWS Text (No Siren) */}
-        <div className="flex items-stretch shrink-0">
-          {/* Red BREAKING Section */}
-          <div className="broadcast-red-tab text-white font-black text-[11px] sm:text-xs tracking-wider px-2.5 sm:px-4 py-1 uppercase flex items-center justify-center gap-1.5 font-sans border-r border-red-900 shadow-inner">
+    <div className="w-full max-w-full overflow-hidden min-w-0 bg-[#0F172A] text-white border-y border-slate-800 shadow-sm relative z-30 select-none">
+      {/* Main Strip with 12px vertical padding and dark navy background */}
+      <div className="w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 py-2.5 sm:py-3 flex items-center justify-between min-w-0">
+        {/* Left Anchor Box with BREAKING NEWS Red Badge */}
+        <div className="flex items-center shrink-0 pr-3 sm:pr-4">
+          <div className="bg-[#DC2626] text-white font-extrabold text-[10.5px] sm:text-[11.5px] tracking-wider px-2.5 sm:px-3.5 py-1 rounded-md uppercase flex items-center justify-center gap-1.5 font-sans shadow-sm shrink-0">
             <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
-            <span>{isTamil ? 'முக்கிய' : 'BREAKING'}</span>
-          </div>
-          {/* Navy NEWS Section */}
-          <div className="broadcast-navy-tab text-white font-black text-[11px] sm:text-xs tracking-wider px-2.5 sm:px-4 py-1 uppercase flex items-center justify-center font-sans border-r-2 border-red-950 shadow-inner">
-            <span>{isTamil ? 'செய்திகள்' : 'NEWS'}</span>
+            <span>{isTamil ? 'முக்கிய செய்திகள்' : 'BREAKING NEWS'}</span>
           </div>
         </div>
 
-        {/* Right Dual-Tier Content Frame Full Width */}
-        <div className="flex-1 min-w-0 max-w-full overflow-hidden flex flex-col justify-center">
-          {/* Upper Golden-Yellow Headline Banner */}
-          <div className="broadcast-gold-band relative overflow-hidden py-0.5 sm:py-1 px-3 border-b border-amber-600/50 w-full min-w-0 max-w-full">
-            {/* World Map Silhouette Watermark on Gold */}
-            <svg className="absolute inset-0 w-full h-full text-amber-800/15 object-cover pointer-events-none" viewBox="0 0 400 50" fill="currentColor" preserveAspectRatio="none">
-              <path d="M30,10 Q80,5 120,25 T220,15 T310,35 T390,15 Q360,45 280,40 T150,45 T40,40 Z" opacity="0.4" />
-              <ellipse cx="90" cy="20" rx="35" ry="15" opacity="0.25" />
-              <ellipse cx="280" cy="25" rx="50" ry="18" opacity="0.25" />
-            </svg>
-
-            {/* Scrolling Headlines */}
-            <div className="overflow-hidden relative w-full min-w-0 max-w-full flex items-center">
-              <div className="animate-marquee flex items-center whitespace-nowrap">
-                {renderHeadlinesTrack('gold-track-1')}
-                {renderHeadlinesTrack('gold-track-2')}
-              </div>
-            </div>
-          </div>
-
-          {/* Lower Navy Blue Market Ribbon */}
-          <div className="broadcast-navy-band relative overflow-hidden py-0.5 px-3 w-full min-w-0 max-w-full">
-            <div className="overflow-hidden relative w-full min-w-0 max-w-full flex items-center">
-              <div className="animate-marquee flex items-center whitespace-nowrap">
-                {renderMarketTrack('navy-mkt-1')}
-                {renderMarketTrack('navy-mkt-2')}
-              </div>
+        {/* Right Scrolling Content in Amber-400 & Live Market Indicators */}
+        <div className="flex-1 min-w-0 max-w-full overflow-hidden flex items-center pl-2">
+          <div className="overflow-hidden relative w-full min-w-0 max-w-full flex items-center">
+            <div className="animate-marquee flex items-center whitespace-nowrap">
+              {renderHeadlinesTrack('navy-hl-1')}
+              {renderMarketTrack('navy-mkt-1')}
+              {renderHeadlinesTrack('navy-hl-2')}
+              {renderMarketTrack('navy-mkt-2')}
             </div>
           </div>
         </div>
@@ -2272,11 +2222,10 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
           <div className="px-4 py-2.5 bg-slate-50 dark:bg-slate-950/70 border-b border-slate-200 dark:border-slate-800 flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar">
             <button
               onClick={() => { setFilterType('all'); setSelectedIndex(0); }}
-              className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 whitespace-nowrap ${
-                filterType === 'all'
+              className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 whitespace-nowrap ${filterType === 'all'
                   ? 'bg-amber-500 text-slate-950 shadow-sm'
                   : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200/80 dark:hover:bg-slate-800'
-              }`}
+                }`}
             >
               <span>{isTa ? 'அனைத்தும்' : 'All'}</span>
               <span className="px-1.5 py-0.2 rounded-full bg-black/15 text-[10px]">{totalCount}</span>
@@ -2285,11 +2234,10 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
             {articlesCount > 0 && (
               <button
                 onClick={() => { setFilterType('article'); setSelectedIndex(0); }}
-                className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 whitespace-nowrap ${
-                  filterType === 'article'
+                className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 whitespace-nowrap ${filterType === 'article'
                     ? 'bg-blue-600 text-white shadow-sm'
                     : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200/80 dark:hover:bg-slate-800'
-                }`}
+                  }`}
               >
                 <span>{isTa ? 'கட்டுரைகள்' : 'Articles'}</span>
                 <span className="px-1.5 py-0.2 rounded-full bg-black/20 text-[10px]">{articlesCount}</span>
@@ -2299,11 +2247,10 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
             {videosCount > 0 && (
               <button
                 onClick={() => { setFilterType('video'); setSelectedIndex(0); }}
-                className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 whitespace-nowrap ${
-                  filterType === 'video'
+                className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 whitespace-nowrap ${filterType === 'video'
                     ? 'bg-red-600 text-white shadow-sm'
                     : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200/80 dark:hover:bg-slate-800'
-                }`}
+                  }`}
               >
                 <span>{isTa ? 'வீடியோக்கள்' : 'Videos'}</span>
                 <span className="px-1.5 py-0.2 rounded-full bg-black/20 text-[10px]">{videosCount}</span>
@@ -2313,11 +2260,10 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
             {newsCount > 0 && (
               <button
                 onClick={() => { setFilterType('news'); setSelectedIndex(0); }}
-                className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 whitespace-nowrap ${
-                  filterType === 'news'
+                className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 whitespace-nowrap ${filterType === 'news'
                     ? 'bg-emerald-600 text-white shadow-sm'
                     : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200/80 dark:hover:bg-slate-800'
-                }`}
+                  }`}
               >
                 <span>{isTa ? 'செய்திகள்' : 'News'}</span>
                 <span className="px-1.5 py-0.2 rounded-full bg-black/20 text-[10px]">{newsCount}</span>
@@ -2327,11 +2273,10 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
             {publishersCount > 0 && (
               <button
                 onClick={() => { setFilterType('publisher'); setSelectedIndex(0); }}
-                className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 whitespace-nowrap ${
-                  filterType === 'publisher'
+                className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 whitespace-nowrap ${filterType === 'publisher'
                     ? 'bg-amber-600 text-white shadow-sm'
                     : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200/80 dark:hover:bg-slate-800'
-                }`}
+                  }`}
               >
                 <span>{isTa ? 'நிபுணர்கள்' : 'Publishers'}</span>
                 <span className="px-1.5 py-0.2 rounded-full bg-black/20 text-[10px]">{publishersCount}</span>
@@ -2395,11 +2340,10 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
                   <div
                     key={`${item.contentType}-${item.id || item.slug}-${idx}`}
                     onClick={() => handleSelectItem(item)}
-                    className={`p-3 rounded-2xl flex items-center gap-3.5 cursor-pointer transition-all ${
-                      isSelected
+                    className={`p-3 rounded-2xl flex items-center gap-3.5 cursor-pointer transition-all ${isSelected
                         ? 'bg-amber-500/15 border border-amber-500/40 text-amber-800 dark:text-amber-200 shadow-sm'
                         : 'hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-transparent'
-                    }`}
+                      }`}
                   >
                     {/* Visual Media / Avatar */}
                     {isPub ? (
@@ -2421,15 +2365,14 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-0.5">
                         <span
-                          className={`text-[9px] font-black uppercase px-2 py-0.5 rounded-full ${
-                            isPub
+                          className={`text-[9px] font-black uppercase px-2 py-0.5 rounded-full ${isPub
                               ? 'bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/30'
                               : isArticle
-                              ? 'bg-blue-500/20 text-blue-700 dark:text-blue-300'
-                              : isNews
-                              ? 'bg-emerald-500/20 text-emerald-700 dark:text-emerald-300'
-                              : 'bg-red-500/20 text-red-700 dark:text-red-300'
-                          }`}
+                                ? 'bg-blue-500/20 text-blue-700 dark:text-blue-300'
+                                : isNews
+                                  ? 'bg-emerald-500/20 text-emerald-700 dark:text-emerald-300'
+                                  : 'bg-red-500/20 text-red-700 dark:text-red-300'
+                            }`}
                         >
                           {isPub ? (isTa ? 'நிபுணர்' : 'PUBLISHER') : isArticle ? (isTa ? 'கட்டுரை' : 'ARTICLE') : isNews ? (isTa ? 'செய்தி' : 'NEWS') : (isTa ? 'வீடியோ' : 'VIDEO')}
                         </span>
@@ -2502,7 +2445,7 @@ function VideoCard({ video, onSelect, onShowToast }) {
     >
       <div className="relative aspect-video overflow-hidden bg-slate-950">
         <img src={video.thumbnail} alt={video.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500" />
-        
+
         <div className="absolute inset-0 bg-slate-950/30 group-hover:bg-slate-950/15 transition-colors flex items-center justify-center">
           <div className="w-13 h-13 rounded-full bg-amber-600 text-white flex items-center justify-center shadow-xl play-button-ripple group-hover:scale-110 transition-transform">
             <svg className="w-6 h-6 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
@@ -2582,7 +2525,7 @@ function useLiveArticles() {
         const parsed = JSON.parse(cached);
         if (Array.isArray(parsed) && parsed.length > 0) return parsed;
       }
-    } catch (_) {}
+    } catch (_) { }
     return [];
   });
   const [isLoading, setIsLoading] = useState(liveArticles.length === 0);
@@ -2599,7 +2542,7 @@ function useLiveArticles() {
             setLiveArticles(list);
             try {
               localStorage.setItem('muthaleetu_articles_cache', JSON.stringify(list));
-            } catch (_) {}
+            } catch (_) { }
           }
         }
       } catch (err) {
@@ -2669,7 +2612,7 @@ function HeroSection({ news, onNavigate }) {
   const combinedArticles = useMemo(() => {
     const liveList = (liveArticles || []).map(a => normalizeArticleItem(a, language)).filter(Boolean);
     const passedList = (news || newsData || []).map(a => normalizeArticleItem(a, language)).filter(Boolean);
-    
+
     const seen = new Set();
     const merged = [];
     for (const a of liveList) {
@@ -2687,11 +2630,28 @@ function HeroSection({ news, onNavigate }) {
     return merged;
   }, [liveArticles, news, language]);
 
-  const featuredStories = combinedArticles.slice(0, 10);
+  const featuredStories = combinedArticles.slice(0, 8);
   const latestStories = combinedArticles.slice(0, 4);
 
+  const getCategoryStyle = (cat = '') => {
+    const c = (cat || '').toLowerCase();
+    if (c.includes('mutual') || c.includes('sip')) {
+      return { bg: 'bg-[#F0FDF4] dark:bg-emerald-950/50', text: 'text-[#16A34A] dark:text-[#4ade80]', border: 'border-emerald-100 dark:border-emerald-900/40', icon: '📈' };
+    }
+    if (c.includes('stock') || c.includes('market') || c.includes('ipo')) {
+      return { bg: 'bg-[#EFF6FF] dark:bg-blue-950/50', text: 'text-[#2563EB] dark:text-[#60a5fa]', border: 'border-blue-100 dark:border-blue-900/40', icon: '📊' };
+    }
+    if (c.includes('personal') || c.includes('finance') || c.includes('saving')) {
+      return { bg: 'bg-[#FBF7EF] dark:bg-amber-950/40', text: 'text-[#D97706] dark:text-[#fbbf24]', border: 'border-amber-100 dark:border-amber-900/40', icon: '💰' };
+    }
+    if (c.includes('tax') || c.includes('retire')) {
+      return { bg: 'bg-purple-50 dark:bg-purple-950/40', text: 'text-purple-600 dark:text-purple-400', border: 'border-purple-100 dark:border-purple-900/40', icon: '🛡️' };
+    }
+    return { bg: 'bg-[#EFF6FF] dark:bg-slate-800/60', text: 'text-[#2563EB] dark:text-[#60a5fa]', border: 'border-blue-100 dark:border-slate-700', icon: '📰' };
+  };
+
   const renderFeaturedTrack = (keyPrefix) => (
-    <div key={keyPrefix} className="flex items-stretch gap-0 shrink-0 h-full">
+    <div key={keyPrefix} className="flex items-stretch shrink-0 gap-4 pr-4">
       {featuredStories.map((item, idx) => {
         const formattedDate = new Intl.DateTimeFormat(
           language === 'ta' ? 'ta-IN' : 'en-IN',
@@ -2700,41 +2660,42 @@ function HeroSection({ news, onNavigate }) {
 
         return (
           <article
-            key={`${keyPrefix}-${item.id}-${idx}`}
+            key={`${keyPrefix}-${item.id || idx}`}
             onClick={() => onNavigate && onNavigate(`#/articles/${item.slug}`)}
-            className="group relative w-[220px] sm:w-[250px] md:w-[270px] h-[240px] sm:h-[265px] shrink-0 border-r border-white/10 overflow-hidden flex flex-col justify-end p-3.5 sm:p-4 select-none cursor-pointer bg-slate-950"
+            className="group/item relative w-[260px] sm:w-[290px] md:w-[320px] h-[255px] sm:h-[275px] shrink-0 rounded-2xl overflow-hidden flex flex-col justify-end p-4 sm:p-5 select-none cursor-pointer bg-slate-950 shadow-md border border-slate-800/60 hover:border-slate-700 transition-all hover:scale-[1.02]"
           >
             <img
               src={item.thumbnail}
               alt={item.title}
               loading="lazy"
-              className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80"
+              className="absolute inset-0 w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-700 opacity-75"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/65 to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-transparent pointer-events-none" />
 
-            <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between z-10">
-              <span className="px-2 py-0.5 text-[8.5px] font-black uppercase tracking-wider rounded-md bg-amber-500 text-slate-950 shadow-md">
+            <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10">
+              <span className="px-2.5 py-0.5 text-[9px] font-black uppercase tracking-wider rounded-md bg-amber-500 text-slate-950 shadow-sm">
                 {(item.category || 'FINANCE').replace('-', ' ')}
               </span>
-              <span className="px-1.5 py-0.5 rounded-md bg-slate-950/85 text-slate-200 text-[8.5px] font-mono font-bold border border-white/15">
+              <span className="px-2 py-0.5 rounded-md bg-slate-950/85 text-slate-200 text-[9px] font-num font-bold border border-white/15">
                 {formattedDate}
               </span>
             </div>
 
-            <div className="relative z-10 space-y-1.5">
-              <h3 className="text-xs sm:text-sm font-black text-white leading-snug font-serif group-hover:text-amber-400 transition-colors drop-shadow-md line-clamp-2">
+            <div className="relative z-10 space-y-1 mt-10">
+              <h3 className="text-xs sm:text-sm md:text-[14.5px] font-bold text-white leading-snug font-sans group-hover/item:text-amber-400 transition-colors drop-shadow line-clamp-2">
                 {item.title}
               </h3>
               {item.summary && (
-                <p className="text-[11px] text-slate-300/95 line-clamp-2 font-sans leading-relaxed drop-shadow">
+                <p className="text-[11px] text-slate-300/90 line-clamp-2 font-sans leading-relaxed">
                   {item.summary}
                 </p>
               )}
-              <div className="pt-0.5 flex items-center justify-between text-[11px] text-amber-400 font-extrabold">
-                <span className="flex items-center gap-1">
-                  <span>{t('readArticle') || 'Read Article'}</span>
-                  <span className="group-hover:translate-x-1.5 transition-transform">→</span>
+              <div className="pt-1 flex items-center justify-between text-[11px] text-amber-400 font-bold">
+                <span className="flex items-center gap-1 group-hover/item:translate-x-1 transition-transform">
+                  <span>{t('readArticle') || 'Read Full Story'}</span>
+                  <span>→</span>
                 </span>
+                <span className="text-[9px] text-slate-400 font-num">Tap to read</span>
               </div>
             </div>
           </article>
@@ -2744,76 +2705,85 @@ function HeroSection({ news, onNavigate }) {
   );
 
   return (
-    <section className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-4 select-none min-w-0 overflow-hidden">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch min-w-0 max-w-full">
-        <div className="lg:col-span-7 min-w-0 max-w-full overflow-hidden flex flex-col justify-between bg-white/90 dark:bg-slate-950 rounded-2xl border border-[rgba(201,181,156,0.5)] dark:border-slate-800 shadow-lg p-3.5 sm:p-4 text-slate-900 dark:text-white">
-          <div className="flex items-center justify-between border-b border-[rgba(217,207,199,0.7)] dark:border-slate-800 pb-2.5 mb-2.5 min-w-0">
-            <div className="flex items-center gap-2 min-w-0 truncate">
-              <span className="w-2 h-2 rounded-full bg-red-600 animate-ping shrink-0" />
-              <h2 className="text-xs sm:text-sm font-black tracking-wider uppercase text-slate-900 dark:text-white font-serif flex items-center gap-1.5 truncate">
-                <span>{t('featuredNews') || 'சிறப்புச் செய்திகள் & ஆய்வுகள்'}</span>
-              </h2>
+    <section className="w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 select-none min-w-0">
+      {/* Unified Full-Width White Rounded Card */}
+      <div className="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl border border-slate-100 dark:border-slate-800/80 shadow-[0_8px_30px_rgba(15,23,42,0.05)] p-5 sm:p-6 lg:p-7">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch min-w-0 max-w-full">
+          
+          {/* Left Column: Featured News Live Ticker Stream (Marquee with Hover Pause) */}
+          <div className="lg:col-span-7 xl:col-span-8 min-w-0 max-w-full flex flex-col justify-between overflow-hidden">
+            <div className="flex items-center justify-between pb-2.5 mb-3 border-b border-slate-100 dark:border-slate-800">
+              <div className="flex items-center gap-2 min-w-0 truncate">
+                <span className="w-2 h-2 rounded-full bg-[#DC2626] animate-ping shrink-0" />
+                <h2 className="text-xs sm:text-sm font-extrabold tracking-wide uppercase text-slate-900 dark:text-white font-sans truncate">
+                  {t('featuredNews') || 'சிறப்புச் செய்திகள் & ஆய்வுகள்'}
+                </h2>
+              </div>
+              <span className="text-[10px] font-bold text-[#2563EB] dark:text-[#60a5fa] bg-[#EFF6FF] dark:bg-blue-950/60 px-2.5 py-0.5 rounded-full shrink-0 font-num">
+                LIVE TICKER SPOTLIGHT ⚡
+              </span>
             </div>
-            <span className="text-[9px] font-mono text-amber-700 dark:text-amber-400/90 font-bold bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20 shrink-0">
-              LIVE NEWS TICKER
-            </span>
+
+            {/* Smooth Live Ticker Container */}
+            <div className="featured-marquee-wrapper overflow-hidden rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-slate-950/90 w-full min-w-0 max-w-full shadow-inner p-2.5 sm:p-3 group/marquee">
+              <div className="animate-featured-marquee flex items-stretch whitespace-normal">
+                {renderFeaturedTrack('f-track-1')}
+                {renderFeaturedTrack('f-track-2')}
+              </div>
+            </div>
           </div>
 
-          <div className="featured-marquee-wrapper overflow-hidden rounded-xl border border-[rgba(217,207,199,0.7)] dark:border-slate-800 bg-[rgba(239,233,227,0.5)] dark:bg-slate-950 my-auto w-full min-w-0 max-w-full">
-            <div className="animate-featured-marquee flex items-stretch gap-0 whitespace-normal">
-              {renderFeaturedTrack('ftrack-1')}
-              {renderFeaturedTrack('ftrack-2')}
+          {/* Right Column: Latest Articles List with 48x48 Tinted Icon Badges */}
+          <div className="lg:col-span-5 xl:col-span-4 min-w-0 max-w-full overflow-hidden flex flex-col justify-between">
+            <div className="flex items-center justify-between pb-2.5 mb-3 border-b border-slate-100 dark:border-slate-800">
+              <div className="flex items-center gap-2 min-w-0 truncate">
+                <span className="w-2 h-2 rounded-full bg-[#2563EB] shrink-0" />
+                <h3 className="text-xs sm:text-sm font-extrabold uppercase tracking-wide text-slate-900 dark:text-white font-sans truncate">
+                  {isTamil ? 'சமீபத்திய கட்டுரைகள்' : 'Latest Articles'}
+                </h3>
+              </div>
+              <span className="text-[10px] font-bold text-[#16A34A] dark:text-[#4ade80] bg-[#F0FDF4] dark:bg-emerald-950/60 px-2 py-0.5 rounded-full shrink-0 font-num">
+                Latest
+              </span>
             </div>
-          </div>
-        </div>
 
-        <div className="lg:col-span-5 min-w-0 max-w-full overflow-hidden flex flex-col justify-between bg-white/90 dark:bg-slate-950 text-slate-900 dark:text-white rounded-2xl border border-[rgba(201,181,156,0.5)] dark:border-slate-800 shadow-lg p-3.5 sm:p-4">
-          <div className="flex items-center justify-between border-b border-[rgba(217,207,199,0.7)] dark:border-slate-800 pb-2.5 mb-2.5 min-w-0">
-            <div className="flex items-center gap-2 min-w-0 truncate">
-              <span className="w-2 h-2 rounded-full bg-amber-500 shrink-0" />
-              <h3 className="text-xs sm:text-sm font-black uppercase tracking-wider text-slate-900 dark:text-white font-serif truncate">
-                {isTamil ? 'சமீபத்திய கட்டுரைகள்' : 'Latest Articles'}
-              </h3>
-            </div>
-            <span className="text-[9px] font-mono font-bold text-amber-700 dark:text-amber-400/90 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20 shrink-0">
-              Latest
-            </span>
-          </div>
+            <div className="space-y-1.5 flex-1 flex flex-col justify-between">
+              {latestStories.map((article, idx) => {
+                const style = getCategoryStyle(article.category);
+                return (
+                  <div
+                    key={article.id || `latest-${idx}`}
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => onNavigate && onNavigate(`#/articles/${article.slug}`)}
+                    className="group flex items-center gap-3 p-2 sm:p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-all cursor-pointer border border-transparent hover:border-slate-200 dark:hover:border-slate-700/60"
+                  >
+                    {/* Small 44x44px tinted category icon thumbnail */}
+                    <div className={`w-10 h-10 sm:w-11 sm:h-11 rounded-xl shrink-0 flex items-center justify-center text-lg font-bold shadow-xs ${style.bg} ${style.text} border ${style.border}`}>
+                      <span>{style.icon}</span>
+                    </div>
 
-          <div className="space-y-1.5 flex-1 flex flex-col justify-between">
-            {latestStories.map((article, idx) => (
-              <div
-                key={article.id || `latest-${idx}`}
-                role="button"
-                tabIndex={0}
-                onClick={() => onNavigate && onNavigate(`#/articles/${article.slug}`)}
-                className="btn-magnetic group flex items-center gap-2.5 p-1.5 rounded-xl hover:bg-[rgba(239,233,227,0.8)] dark:hover:bg-slate-900/80 transition-all cursor-pointer border border-transparent hover:border-[rgba(201,181,156,0.4)] dark:hover:border-slate-800"
-              >
-                {article.thumbnail && (
-                  <img
-                    src={article.thumbnail}
-                    alt=""
-                    className="w-11 h-11 rounded-lg object-cover shrink-0 border border-[rgba(217,207,199,0.8)] dark:border-slate-800"
-                  />
-                )}
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-1.5 mb-0.5">
-                    <span className="text-[8.5px] font-black uppercase text-amber-700 dark:text-amber-400 tracking-wider">
-                      {(article.category || 'FINANCE').replace('-', ' ')}
-                    </span>
-                    <span className="text-[8.5px] text-slate-500 dark:text-slate-400 font-mono">
-                      • {new Date(article.publishedAt).toLocaleDateString([], { month: 'short', day: 'numeric' })}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-1.5 mb-0.5">
+                        <span className={`text-[8.5px] font-extrabold uppercase tracking-wider ${style.text}`}>
+                          {(article.category || 'FINANCE').replace('-', ' ')}
+                        </span>
+                        <span className="text-[9.5px] text-slate-400 font-num font-medium">
+                          • {new Date(article.publishedAt).toLocaleDateString(isTamil ? 'ta-IN' : 'en-IN', { month: 'short', day: 'numeric' })}
+                        </span>
+                      </div>
+                      <h4 className="text-xs sm:text-[12.5px] font-bold text-slate-900 dark:text-slate-100 line-clamp-2 group-hover:text-[#2563EB] dark:group-hover:text-[#60a5fa] transition-colors leading-snug">
+                        {article.title}
+                      </h4>
+                    </div>
+
+                    <span className="text-slate-400 group-hover:text-[#2563EB] dark:group-hover:text-[#60a5fa] group-hover:translate-x-1 transition-all shrink-0 text-xs font-bold pr-1">
+                      →
                     </span>
                   </div>
-                  <h4 className="text-[11px] font-bold text-slate-900 dark:text-slate-100 line-clamp-2 group-hover:text-amber-700 dark:group-hover:text-amber-400 transition-colors font-serif leading-snug">
-                    {article.title}
-                  </h4>
-                </div>
-                <span className="text-[11px] text-slate-400 group-hover:text-amber-700 dark:group-hover:text-amber-400 group-hover:translate-x-1 transition-all shrink-0">
-                  →
-                </span>
-              </div>
-            ))}
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
@@ -2850,67 +2820,62 @@ function TrendingArticlesSection({ onNavigate }) {
   }, [liveArticles, language]);
 
   return (
-    <section className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-4">
-      <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
-        <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-          <h2 className="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white font-serif">
+    <section className="w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 space-y-4 select-none min-w-0">
+      <div className="flex items-center justify-between pb-2.5 border-b border-slate-100 dark:border-slate-800">
+        <div className="flex items-center gap-2 min-w-0 truncate">
+          <span className="w-2 h-2 rounded-full bg-[#2563EB] shrink-0" />
+          <h2 className="text-base sm:text-lg md:text-xl font-extrabold text-[#0F172A] dark:text-white font-sans truncate">
             {t('trendingArticlesTitle') || 'டிரெண்டிங் செய்திகள் & கட்டுரைகள்'}
           </h2>
         </div>
-        <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2.5 py-0.5 rounded-full">
-          Trending
+        <span className="text-[10px] sm:text-xs font-bold text-[#2563EB] dark:text-[#60a5fa] bg-[#EFF6FF] dark:bg-blue-950/60 px-2.5 py-0.5 rounded-full font-num shrink-0">
+          Top 6 Trending
         </span>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* 3 Columns x 2 Rows Grid with 20-24px gap */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
         {allArticles.map((article, idx) => {
           const rankStr = `0${idx + 1}`;
-          const isEven = idx % 2 === 0;
-          const brandColor = isEven ? 'text-[#03529A] dark:text-[#38bdf8]' : 'text-[#4A9E2C] dark:text-[#4ade80]';
-          const hoverBorder = isEven ? 'hover:border-[#03529A]/50' : 'hover:border-[#4A9E2C]/50';
-          const hoverTitle = isEven ? 'group-hover:text-[#03529A] dark:group-hover:text-[#38bdf8]' : 'group-hover:text-[#4A9E2C] dark:group-hover:text-[#4ade80]';
 
           return (
             <div
               key={article.id || `trend-${idx}`}
               onClick={() => onNavigate && onNavigate(`#/articles/${article.slug}`)}
-              className={`group flex items-center gap-3 p-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md ${hoverBorder} transition-all cursor-pointer select-none`}
+              className="group flex items-start gap-4 p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80 shadow-[0_4px_20px_rgba(15,23,42,0.05)] hover:shadow-[0_16px_32px_rgba(15,23,42,0.08)] hover:border-slate-200 dark:hover:border-slate-700 transition-all cursor-pointer select-none"
             >
-              <span className={`text-xl font-black ${brandColor} font-serif w-7 shrink-0 text-center`}>
+              {/* Large Faint Number (--blue-50 / faint subtle blue, 36px bold) */}
+              <span className="text-[36px] font-extrabold text-[#DBEAFE] dark:text-slate-800 font-num shrink-0 leading-none pt-0.5 select-none">
                 {rankStr}
               </span>
 
-              {article.thumbnail && (
-                <div className="relative w-14 h-14 rounded-xl overflow-hidden shrink-0 border border-slate-200 dark:border-slate-700 bg-slate-950">
-                  <img
-                    src={article.thumbnail}
-                    alt=""
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  {article.isLive && (
-                    <span className="absolute bottom-1 right-1 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-slate-950" />
-                  )}
+              <div className="flex-1 min-w-0 flex flex-col justify-between h-full">
+                <div>
+                  <div className="flex items-center gap-2 mb-1.5">
+                    {/* Category tag in --blue-600 */}
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#2563EB] dark:text-[#60a5fa] font-sans">
+                      {article.category.replace('-', ' ')}
+                    </span>
+                    <span className="text-[10px] text-[#64748B] dark:text-slate-400 font-num">
+                      • {new Date(article.publishedAt).toLocaleDateString(isTamil ? 'ta-IN' : 'en-IN', { month: 'short', day: 'numeric' })}
+                    </span>
+                  </div>
+                  
+                  {/* Headline in --navy-900 */}
+                  <h4 className="text-sm font-bold text-[#0F172A] dark:text-white line-clamp-2 group-hover:text-[#2563EB] dark:group-hover:text-[#60a5fa] transition-colors leading-snug font-sans">
+                    {article.title}
+                  </h4>
                 </div>
-              )}
 
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-0.5">
-                  <span className={`text-[9px] font-black uppercase ${brandColor} tracking-wider`}>
-                    {article.category.replace('-', ' ')}
+                {/* Byline in --gray-500 */}
+                <div className="mt-2.5 pt-2 border-t border-slate-100 dark:border-slate-800/60 flex items-center justify-between text-[11px] text-[#64748B] dark:text-slate-400">
+                  <span className="truncate max-w-[150px]">
+                    ✍️ {article.authorName || 'Budget Padmanaban'}
                   </span>
-                  <span className="text-[9px] text-slate-400 font-medium">
-                    • {new Date(article.publishedAt).toLocaleDateString(isTamil ? 'ta-IN' : 'en-IN', { month: 'short', day: 'numeric' })}
+                  <span className="text-[#2563EB] dark:text-[#60a5fa] font-bold group-hover:translate-x-1 transition-transform">
+                    →
                   </span>
                 </div>
-                <h4 className={`text-xs font-bold text-slate-900 dark:text-white line-clamp-2 ${hoverTitle} transition-colors font-serif leading-snug`}>
-                  {article.title}
-                </h4>
-                {article.authorName && (
-                  <p className="text-[10px] text-slate-400 truncate mt-0.5">
-                    ✍️ {article.authorName}
-                  </p>
-                )}
               </div>
             </div>
           );
@@ -2921,852 +2886,537 @@ function TrendingArticlesSection({ onNavigate }) {
 }
 function SipCalculator() {
   const { t, language } = useLanguage();
-  const [calcMode, setCalcMode] = useState('sip');
-  const [monthlyInvest, setMonthlyInvest] = useState(10000);
-  const [returnRate, setReturnRate] = useState(12);
-  const [timeYears, setTimeYears] = useState(15);
-  const [stepUpPercent, setStepUpPercent] = useState(10);
-  const [inflationRate, setInflationRate] = useState(6);
-  const [activeTab, setActiveTab] = useState('growth'); // 'growth' | 'donut' | 'milestones' | 'table'
-  const [hoveredYear, setHoveredYear] = useState(null);
+  const [calcMode, setCalcMode] = useState('sip'); // 'sip' | 'lumpsum'
+  const [amount, setAmount] = useState(150);
+  const [timeframe, setTimeframe] = useState('1Y'); // '1Y' | '3Y' | '5Y' | 'SI'
+  const [analysisTab, setAnalysisTab] = useState('pie'); // 'pie' | 'statement'
 
   const isTamil = language === 'ta';
 
-  const applyPresetGoal = (amount, rate, years) => {
-    setMonthlyInvest(amount);
-    setReturnRate(rate);
-    setTimeYears(years);
+  // Benchmark returns data
+  const RETURN_RATES = {
+    sip: {
+      '1Y': { years: 1, fund: 6.65, bench: 6.62, addBench: 4.28 },
+      '3Y': { years: 3, fund: 7.85, bench: 7.30, addBench: 5.95 },
+      '5Y': { years: 5, fund: 7.42, bench: 6.98, addBench: 5.82 },
+      'SI': { years: 18.5, fund: 7.42, bench: 6.98, addBench: 5.82 }
+    },
+    lumpsum: {
+      '1Y': { years: 1, fund: 6.64, bench: 7.02, addBench: 4.30 },
+      '3Y': { years: 3, fund: 7.53, bench: 7.44, addBench: 6.27 },
+      '5Y': { years: 5, fund: 6.78, bench: 6.54, addBench: 5.67 },
+      'SI': { years: 18.5, fund: 6.54, bench: 5.83, addBench: 5.80 }
+    }
   };
 
-  const r = returnRate / 100;
-  const i = r / 12;
-  const n = timeYears * 12;
+  const currentRates = RETURN_RATES[calcMode][timeframe];
+  const years = currentRates.years;
 
-  let totalInvested = 0;
-  let futureValue = 0;
-
-  if (calcMode === 'sip') {
-    totalInvested = monthlyInvest * n;
-    futureValue = Math.round(monthlyInvest * ((Math.pow(1 + i, n) - 1) / i) * (1 + i));
-  } else if (calcMode === 'stepup') {
-    let currentMonthly = monthlyInvest;
-    let accumulated = 0;
-    let totalPaid = 0;
-    for (let yr = 1; yr <= timeYears; yr++) {
-      for (let m = 1; m <= 12; m++) {
-        totalPaid += currentMonthly;
-        accumulated = (accumulated + currentMonthly) * (1 + i);
-      }
-      currentMonthly = currentMonthly * (1 + stepUpPercent / 100);
+  // Calculation formulas
+  const calculateMaturity = (rate) => {
+    const r = rate / 100;
+    if (calcMode === 'sip') {
+      const i = r / 12;
+      const n = years * 12;
+      if (i <= 0) return amount * n;
+      return Math.round(amount * ((Math.pow(1 + i, n) - 1) / i) * (1 + i));
+    } else {
+      return Math.round(amount * Math.pow(1 + r, years));
     }
-    totalInvested = Math.round(totalPaid);
-    futureValue = Math.round(accumulated);
-  } else if (calcMode === 'lumpsum' || calcMode === 'compound') {
-    totalInvested = monthlyInvest;
-    futureValue = Math.round(monthlyInvest * Math.pow(1 + r, timeYears));
-  }
+  };
 
-  const estimatedGain = Math.max(0, futureValue - totalInvested);
-  const wealthMultiplier = totalInvested > 0 ? (futureValue / totalInvested).toFixed(1) : 1;
+  const fundAmount = calculateMaturity(currentRates.fund);
+  const benchAmount = calculateMaturity(currentRates.bench);
+  const addBenchAmount = calculateMaturity(currentRates.addBench);
 
-  const inflationFactor = Math.pow(1 + inflationRate / 100, timeYears);
-  const realPurchasingPower = Math.round(futureValue / inflationFactor);
+  const totalInvested = calcMode === 'sip' ? Math.round(amount * years * 12) : amount;
+  const estimatedGain = Math.max(0, fundAmount - totalInvested);
 
   const formatCurrency = (val) => {
-    return new Intl.NumberFormat(isTamil ? 'ta-IN' : 'en-IN', {
+    return new Intl.NumberFormat('en-IN', {
       style: 'currency',
       currency: 'INR',
       maximumFractionDigits: 0
     }).format(val);
   };
 
-  const investedPercent = futureValue > 0 ? Math.round((totalInvested / futureValue) * 100) : 50;
-  const gainPercent = 100 - investedPercent;
+  const formatLakhs = (val) => {
+    if (val >= 100000) {
+      return '₹ ' + (val / 100000).toFixed(0) + ' Lakh' + (val >= 200000 ? 's' : '');
+    }
+    return '₹ ' + val.toLocaleString('en-IN');
+  };
 
-  // Year by Year calculation trajectory
-  const yearlyData = useMemo(() => {
-    const data = [];
-    const stepYears = Math.min(timeYears, 30);
-    let mInvest = monthlyInvest;
+  const presetAmounts = [150, 500, 1000, 5000, 10000, 25000, 50000, 100000];
 
-    for (let y = 1; y <= stepYears; y++) {
-      let cumInvested = 0;
-      let cumFutureVal = 0;
+  // Pie Chart calculations
+  const investedPct = fundAmount > 0 ? Math.min(100, Math.max(1, Math.round((totalInvested / fundAmount) * 100))) : 50;
+  const gainPct = Math.max(0, 100 - investedPct);
+  const multiplier = totalInvested > 0 ? (fundAmount / totalInvested).toFixed(2) : '1.00';
+
+  // Yearly Breakdown Statement Data
+  const yearlySchedule = useMemo(() => {
+    const list = [];
+    const maxYears = Math.min(Math.max(Math.ceil(years), 1), 30);
+    const rFund = currentRates.fund / 100;
+    const rBench = currentRates.bench / 100;
+    const iFund = rFund / 12;
+    const iBench = rBench / 12;
+
+    for (let y = 1; y <= maxYears; y++) {
+      const n = y * 12;
+      let curInvested = 0;
+      let curFund = 0;
+      let curBench = 0;
 
       if (calcMode === 'sip') {
-        const ny = y * 12;
-        cumInvested = monthlyInvest * ny;
-        cumFutureVal = Math.round(monthlyInvest * ((Math.pow(1 + i, ny) - 1) / i) * (1 + i));
-      } else if (calcMode === 'stepup') {
-        let acc = 0;
-        let paid = 0;
-        let curM = monthlyInvest;
-        for (let yr = 1; yr <= y; yr++) {
-          for (let m = 1; m <= 12; m++) {
-            paid += curM;
-            acc = (acc + curM) * (1 + i);
-          }
-          curM = curM * (1 + stepUpPercent / 100);
-        }
-        cumInvested = Math.round(paid);
-        cumFutureVal = Math.round(acc);
+        curInvested = amount * n;
+        curFund = iFund > 0 ? Math.round(amount * ((Math.pow(1 + iFund, n) - 1) / iFund) * (1 + iFund)) : curInvested;
+        curBench = iBench > 0 ? Math.round(amount * ((Math.pow(1 + iBench, n) - 1) / iBench) * (1 + iBench)) : curInvested;
       } else {
-        cumInvested = monthlyInvest;
-        cumFutureVal = Math.round(monthlyInvest * Math.pow(1 + r, y));
+        curInvested = amount;
+        curFund = Math.round(amount * Math.pow(1 + rFund, y));
+        curBench = Math.round(amount * Math.pow(1 + rBench, y));
       }
 
-      const gain = Math.max(0, cumFutureVal - cumInvested);
-      data.push({
+      list.push({
         year: y,
-        invested: cumInvested,
-        futureValue: cumFutureVal,
-        gain,
-        ratio: cumInvested > 0 ? (cumFutureVal / cumInvested).toFixed(1) : '1.0'
+        invested: curInvested,
+        gain: Math.max(0, curFund - curInvested),
+        fundValue: curFund,
+        benchValue: curBench,
+        multiplier: (curFund / (curInvested || 1)).toFixed(2)
       });
     }
-    return data;
-  }, [monthlyInvest, returnRate, timeYears, stepUpPercent, calcMode, i, r]);
-
-  const maxVal = Math.max(...yearlyData.map(d => d.futureValue), 1);
-  const activeInspectItem = hoveredYear !== null ? yearlyData.find(d => d.year === hoveredYear) : yearlyData[yearlyData.length - 1];
-
-  const milestones = [
-    { target: 1000000, label: '₹10 Lakhs', tamilLabel: '₹10 லட்சம்' },
-    { target: 2500000, label: '₹25 Lakhs', tamilLabel: '₹25 லட்சம்' },
-    { target: 5000000, label: '₹50 Lakhs', tamilLabel: '₹50 லட்சம்' },
-    { target: 10000000, label: '₹1 Crore', tamilLabel: '₹1 கோடி' },
-    { target: 20000000, label: '₹2 Crores', tamilLabel: '₹2 கோடி' },
-    { target: 50000000, label: '₹5 Crores', tamilLabel: '₹5 கோடி' }
-  ];
-
-  const calculatorCards = [
-    {
-      id: 'sip',
-      titleTamil: 'SIP கணக்கிடுவான்',
-      titleEnglish: 'SIP Calculator',
-      subtitleTamil: 'மாதாந்திர முறையான முதலீடு',
-      subtitleEnglish: 'Monthly Systematic Investment',
-      badge: isTamil ? 'பிரபலம்' : 'POPULAR'
-    },
-    {
-      id: 'lumpsum',
-      titleTamil: 'ஒரே முறை முதலீடு',
-      titleEnglish: 'Lump Sum Calculator',
-      subtitleTamil: 'ஒரே முறை முதலீட்டு வளர்ச்சி',
-      subtitleEnglish: 'One-Time Investment Growth',
-      badge: isTamil ? 'எளிது' : 'SIMPLE'
-    },
-    {
-      id: 'stepup',
-      titleTamil: 'முதலீட்டு வருவாய் உயர்வு',
-      titleEnglish: 'Returns Calculator',
-      subtitleTamil: 'ஆண்டு முதலீட்டு உயர்வு (+10%)',
-      subtitleEnglish: 'Step-Up Annual Incremental Growth',
-      badge: isTamil ? 'அதிவேக வளர்ச்சி' : 'HIGH GROWTH'
-    },
-    {
-      id: 'compound',
-      titleTamil: 'கூட்டு வட்டி கணக்கீடு',
-      titleEnglish: 'Compound Interest',
-      subtitleTamil: 'கூட்டு வட்டியின் அபார வளர்ச்சி',
-      subtitleEnglish: 'Power of Compounding Growth',
-      badge: isTamil ? 'செல்வ வளர்ச்சி' : 'WEALTH'
-    }
-  ];
+    return list;
+  }, [calcMode, amount, years, currentRates]);
 
   return (
-    <section id="financial-calculators" className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 select-none animate-fadeIn">
-      {/* Top 4 Mode Selector Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {calculatorCards.map((card) => {
-          const isActive = calcMode === card.id;
-          return (
-            <div
-              key={card.id}
-              role="button"
-              tabIndex={0}
-              onClick={() => setCalcMode(card.id)}
-              className={`btn-magnetic group cursor-pointer rounded-2xl p-5 border transition-all duration-300 relative overflow-hidden flex flex-col justify-between ${
-                isActive
-                  ? 'bg-slate-900 dark:bg-slate-950 text-white border-amber-500 shadow-xl ring-1 ring-amber-500/50'
-                  : 'bg-white dark:bg-slate-900/90 text-slate-900 dark:text-white border-slate-200 dark:border-slate-800 hover:border-amber-500/40 shadow-sm hover:shadow-md'
-              }`}
-            >
-              <div>
-                <div className="flex items-center justify-between mb-3">
-                  <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-                  <span
-                    className={`text-[9px] font-black tracking-wider uppercase px-2.5 py-0.5 rounded-full ${
-                      isActive
-                        ? 'bg-amber-500 text-slate-950 font-bold'
-                        : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
-                    }`}
-                  >
-                    {card.badge}
-                  </span>
-                </div>
-                <h3 className="font-bold text-sm font-serif group-hover:text-amber-500 transition-colors">
-                  {isTamil ? card.titleTamil : card.titleEnglish}
-                </h3>
-                <p className={`text-xs mt-1 ${isActive ? 'text-slate-300' : 'text-slate-500 dark:text-slate-400'}`}>
-                  {isTamil ? card.subtitleTamil : card.subtitleEnglish}
-                </p>
-              </div>
-
-              <div className="mt-4 pt-3 border-t border-slate-200/20 dark:border-slate-800 flex items-center justify-between text-xs font-bold">
-                <span className={isActive ? 'text-amber-400' : 'text-amber-600 dark:text-amber-400'}>
-                  {isActive
-                    ? (isTamil ? 'செயலில் உள்ள கணக்கீடு' : 'Active Studio')
-                    : (isTamil ? 'பயன்படுத்துக' : 'Use Calculator')}
-                </span>
-                <span>→</span>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Main SIP Wealth Studio Outer Container */}
-      <div className="bg-[#008060] text-white rounded-3xl p-6 sm:p-10 border-2 border-white/25 shadow-2xl space-y-8 transition-colors duration-300">
-        {/* Studio Header & Preset Quick Goals */}
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-white/20 pb-6">
-          <div className="space-y-1">
-            <h3 className="text-xl sm:text-2xl font-black font-serif text-white flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-amber-400 shadow-sm" />
-              <span>
-                {calcMode === 'sip' && (isTamil ? 'SIP முதலீட்டுக் கணக்கீடு' : 'SIP Wealth Studio')}
-                {calcMode === 'lumpsum' && (isTamil ? 'ஒரே முறை முதலீட்டுக் கணக்கீடு' : 'Lump Sum Wealth Studio')}
-                {calcMode === 'stepup' && (isTamil ? 'முதலீட்டு உயர்வு (Step-Up SIP) கணக்கீடு' : 'Step-Up SIP Studio')}
-                {calcMode === 'compound' && (isTamil ? 'கூட்டு வட்டி கணக்கீடு' : 'Compound Interest Studio')}
-              </span>
-            </h3>
-            <p className="text-xs text-emerald-100/90 font-medium">
-              {isTamil
-                ? 'உங்கள் நீண்ட கால முதலீட்டு இலக்கை அடைய துல்லியமான கூட்டு வட்டி கணிப்பு & வரைபடங்கள்'
-                : 'Interactive asset compounding, inflation-adjusted growth projections & visual charts'}
-            </p>
+    <section id="calculator" className="w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 select-none min-w-0">
+      {/* Full-width Dark Gradient Card (24-32px border-radius, scaled padding ~32-40px) */}
+      <div className="bg-gradient-to-br from-[#0F172A] to-[#1E293B] rounded-2xl sm:rounded-3xl border border-slate-800 shadow-xl p-5 sm:p-8 lg:p-10 text-white transition-all">
+        
+        {/* Centered Title Header */}
+        <div className="text-center max-w-2xl mx-auto mb-8 pb-5 border-b border-slate-800/80">
+          <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-bold mb-2 font-sans">
+            <span>⚡</span>
+            <span>{isTamil ? 'முதலீட்டு திட்டமிடல்' : 'Wealth Projection Engine'}</span>
           </div>
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white tracking-tight font-sans">
+            {isTamil ? 'முதலீட்டுக் கணிப்பான் & பகுப்பாய்வு' : 'Calculators & In-Depth Analysis'}
+          </h2>
+          <p className="text-xs sm:text-sm font-medium text-slate-300 mt-1.5 font-sans max-w-xl mx-auto leading-relaxed">
+            {isTamil ? 'மாதாந்திர SIP & மொத்த முதலீட்டின் வளர்ச்சி, பை-சார்ட் மற்றும் விரிவான நிதி அறிக்கை' : 'Interactive SIP & Lumpsum wealth calculator with visual asset allocation chart and full statement report'}
+          </p>
 
-          <div className="flex flex-wrap items-center gap-2 text-xs">
-            <span className="text-white/80 font-black uppercase text-[10px]">
-              {isTamil ? 'இலக்குகள்:' : 'Goals:'}
-            </span>
+          {/* Mode Toggle: SIP Filled --green-600, Lumpsum Outlined/Ghost */}
+          <div className="inline-flex p-1.5 bg-slate-900/80 rounded-full border border-slate-700/80 mt-6 gap-2">
             <button
-              onClick={() => applyPresetGoal(5000, 12, 15)}
-              className="px-3.5 py-1.5 rounded-full bg-white/15 hover:bg-white/30 active:scale-95 text-white font-bold text-xs border border-white/30 backdrop-blur-sm transition-all shadow-sm"
+              type="button"
+              onClick={() => setCalcMode('sip')}
+              className={'px-6 sm:px-8 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 ' + (
+                calcMode === 'sip'
+                  ? 'bg-[#16A34A] text-white shadow-lg shadow-green-600/30'
+                  : 'border border-transparent text-slate-300 hover:text-white'
+              )}
             >
-              {isTamil ? '₹1 கோடி இலக்கு' : '₹1 Crore Goal'}
+              SIP
             </button>
             <button
-              onClick={() => applyPresetGoal(10000, 14, 10)}
-              className="px-3.5 py-1.5 rounded-full bg-white/15 hover:bg-white/30 active:scale-95 text-white font-bold text-xs border border-white/30 backdrop-blur-sm transition-all shadow-sm"
+              type="button"
+              onClick={() => setCalcMode('lumpsum')}
+              className={'px-6 sm:px-8 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 ' + (
+                calcMode === 'lumpsum'
+                  ? 'bg-[#16A34A] text-white shadow-lg shadow-green-600/30'
+                  : 'border border-slate-600 text-slate-300 hover:text-white hover:border-slate-400'
+              )}
             >
-              {isTamil ? '₹50 லட்சம் இலக்கு' : '₹50 Lakh Goal'}
-            </button>
-            <button
-              onClick={() => applyPresetGoal(25000, 12, 5)}
-              className="px-3.5 py-1.5 rounded-full bg-white/15 hover:bg-white/30 active:scale-95 text-white font-bold text-xs border border-white/30 backdrop-blur-sm transition-all shadow-sm"
-            >
-              {isTamil ? '₹20 லட்சம் குறுகிய காலம்' : '₹20 Lakh Short Term'}
+              Lumpsum
             </button>
           </div>
         </div>
 
-        {/* 2-Column Controls & Results */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-stretch">
-          {/* Left Column (Input Sliders): Pure White Card */}
-          <div className="lg:col-span-6 space-y-5 sm:space-y-6 bg-white text-slate-900 p-5 sm:p-8 rounded-3xl border border-white/40 shadow-xl flex flex-col justify-between">
-            <div className="space-y-4 sm:space-y-5">
-              <div className="space-y-2">
-                <div className="flex justify-between items-center text-xs font-bold">
-                  <label className="text-slate-800 font-black">
-                    {calcMode === 'lumpsum' || calcMode === 'compound'
-                      ? (isTamil ? 'தொடக்க முதலீட்டுத் தொகை (₹)' : 'Initial Investment (₹)')
-                      : (isTamil ? 'மாதாந்திர SIP தொகை (₹)' : 'Monthly SIP Amount (₹)')}
-                  </label>
-                  <span className="text-[#008060] font-mono text-sm sm:text-base font-black">
-                    {formatCurrency(monthlyInvest)}
-                  </span>
-                </div>
-                <input
-                  type="range"
-                  min={calcMode === 'lumpsum' || calcMode === 'compound' ? '5000' : '500'}
-                  max={calcMode === 'lumpsum' || calcMode === 'compound' ? '2000000' : '100000'}
-                  step={calcMode === 'lumpsum' || calcMode === 'compound' ? '5000' : '500'}
-                  value={monthlyInvest}
-                  onChange={(e) => setMonthlyInvest(Number(e.target.value))}
-                  className="w-full h-3 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#008060]"
-                />
-                {/* Mobile Touch Quick Chips */}
-                <div className="flex flex-wrap items-center gap-1.5 pt-1">
-                  {[1000, 2500, 5000, 10000, 25000].map((amt) => (
-                    <button
-                      key={amt}
-                      type="button"
-                      onClick={() => setMonthlyInvest(amt)}
-                      className={`px-2.5 py-1 rounded-lg text-[10.5px] font-mono font-bold transition-all ${
-                        monthlyInvest === amt
-                          ? 'bg-[#008060] text-white shadow-sm'
-                          : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
-                      }`}
-                    >
-                      ₹{(amt >= 1000 ? `${amt / 1000}k` : amt)}
-                    </button>
-                  ))}
-                </div>
-              </div>
+        {/* Nested White Rounded Card for Controls & Results for High Contrast */}
+        <div className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 shadow-2xl border border-slate-100 dark:border-slate-800">
+          
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            {/* LEFT COLUMN: Controls */}
+            <div className="lg:col-span-6 flex flex-col justify-between">
+              
+              {/* Input Label & Number Box */}
+              <div className="flex items-center justify-between gap-4 mb-4">
+                <label className="text-sm md:text-base font-bold text-slate-800 dark:text-slate-100 font-sans">
+                  {calcMode === 'sip' ? (isTamil ? 'மாதாந்திர முதலீடு' : 'Monthly Investment') : (isTamil ? 'முதலீட்டு தொகை' : 'Investment Amount')}
+                </label>
 
-              {calcMode === 'stepup' && (
-                <div className="space-y-2">
-                  <div className="flex justify-between items-center text-xs font-bold">
-                    <label className="text-slate-800 font-black">
-                      {isTamil ? 'ஆண்டு முதலீட்டு உயர்வு (%)' : 'Annual Step-Up Increase (%)'}
-                    </label>
-                    <span className="text-[#008060] font-mono text-sm font-black">
-                      +{stepUpPercent}% / {isTamil ? 'ஆண்டுக்கு' : 'Year'}
-                    </span>
-                  </div>
+                <div className="flex items-center bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-1.5 focus-within:ring-2 focus-within:ring-[#16A34A] transition-all">
+                  <span className="text-slate-500 font-bold text-sm md:text-base mr-1">₹</span>
                   <input
-                    type="range"
-                    min="5"
-                    max="25"
-                    step="1"
-                    value={stepUpPercent}
-                    onChange={(e) => setStepUpPercent(Number(e.target.value))}
-                    className="w-full h-3 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#008060]"
+                    type="number"
+                    min="150"
+                    max="1000000"
+                    step="50"
+                    value={amount}
+                    onChange={(e) => {
+                      const val = Number(e.target.value);
+                      setAmount(isNaN(val) ? 150 : Math.max(0, Math.min(1000000, val)));
+                    }}
+                    className="w-24 md:w-28 bg-transparent text-right font-black text-slate-900 dark:text-white text-base md:text-lg outline-none font-num"
                   />
                 </div>
-              )}
+              </div>
 
-              <div className="space-y-2">
-                <div className="flex justify-between items-center text-xs font-bold">
-                  <label className="text-slate-800 font-black">
-                    {isTamil ? 'எதிர்பார்க்கும் ஆண்டு வட்டி விகிதம் (%)' : 'Expected Annual Return Rate (%)'}
-                  </label>
-                  <span className="text-[#008060] font-mono text-sm sm:text-base font-black">
-                    {returnRate}% / {isTamil ? 'ஆண்டுக்கு' : 'Year'}
-                  </span>
-                </div>
+              {/* Range Slider Track */}
+              <div className="mb-4">
                 <input
                   type="range"
-                  min="6"
-                  max="24"
-                  step="0.5"
-                  value={returnRate}
-                  onChange={(e) => setReturnRate(Number(e.target.value))}
-                  className="w-full h-3 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#008060]"
+                  min="150"
+                  max="1000000"
+                  step="50"
+                  value={amount}
+                  onChange={(e) => setAmount(Number(e.target.value))}
+                  className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-[#16A34A]"
                 />
-                <div className="flex flex-wrap items-center gap-1.5 pt-1">
-                  {[10, 12, 14, 15, 18].map((rate) => (
+                <div className="flex justify-between items-center text-xs font-bold text-slate-500 dark:text-slate-400 mt-2 font-num">
+                  <span>₹ 150</span>
+                  <span>₹ 10 Lakhs</span>
+                </div>
+              </div>
+
+              {/* Preset Amount Chips */}
+              <div className="flex flex-wrap gap-2 mt-2 mb-6">
+                {presetAmounts.map((pVal) => (
+                  <button
+                    key={pVal}
+                    type="button"
+                    onClick={() => setAmount(pVal)}
+                    className={'px-3 py-1.5 rounded-lg text-xs font-bold font-num transition-all ' + (
+                      amount === pVal
+                        ? 'bg-[#0F172A] dark:bg-white text-white dark:text-slate-900 shadow-sm'
+                        : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+                    )}
+                  >
+                    {formatLakhs(pVal)}
+                  </button>
+                ))}
+              </div>
+
+              {/* Total Invested & Growth Summary Mini Card */}
+              <div className="bg-slate-50 dark:bg-slate-800/60 rounded-2xl p-4 border border-slate-200/80 dark:border-slate-700/80 flex justify-between items-center text-xs md:text-sm">
+                <div>
+                  <span className="text-slate-500 dark:text-slate-400 block font-medium">{isTamil ? 'மொத்த முதலீடு' : 'Total Invested'}</span>
+                  <span className="font-extrabold text-slate-900 dark:text-white font-num text-base">{formatCurrency(totalInvested)}</span>
+                </div>
+                <div className="text-right">
+                  <span className="text-slate-500 dark:text-slate-400 block font-medium">{isTamil ? 'எதிர்பார்க்கும் வளர்ச்சி' : 'Estimated Growth'}</span>
+                  <span className="font-extrabold text-[#16A34A] dark:text-[#4ade80] font-num text-base">+{formatCurrency(estimatedGain)}</span>
+                </div>
+              </div>
+
+            </div>
+
+            {/* RIGHT COLUMN: Comparison Card */}
+            <div className="lg:col-span-6">
+              <div className="bg-slate-50/70 dark:bg-slate-800/40 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-6 shadow-sm">
+                
+                {/* Header */}
+                <h3 className="text-xs sm:text-sm font-bold text-slate-600 dark:text-slate-300 mb-3 font-sans">
+                  {isTamil ? 'கடந்த கால முதலீட்டின் மதிப்பு' : 'Worth of investments in last'}
+                </h3>
+
+                {/* Timeframe Selector Pill Bar */}
+                <div className="flex bg-slate-200/80 dark:bg-slate-800 p-1 rounded-full border border-slate-300/80 dark:border-slate-700 mb-6 gap-1 overflow-x-auto">
+                  {[
+                    { id: '1Y', label: '1 Y' },
+                    { id: '3Y', label: '3 Y' },
+                    { id: '5Y', label: '5 Y' },
+                    { id: 'SI', label: 'Since Inception' }
+                  ].map((tItem) => (
                     <button
-                      key={rate}
+                      key={tItem.id}
                       type="button"
-                      onClick={() => setReturnRate(rate)}
-                      className={`px-2 py-0.5 rounded-md text-[10.5px] font-mono font-bold transition-all ${
-                        returnRate === rate
-                          ? 'bg-[#008060] text-white shadow-sm'
-                          : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
-                      }`}
+                      onClick={() => setTimeframe(tItem.id)}
+                      className={'flex-1 py-1.5 px-3 rounded-full text-xs font-bold font-num whitespace-nowrap transition-all duration-200 text-center ' + (
+                        timeframe === tItem.id
+                          ? 'bg-[#16A34A] text-white shadow-sm'
+                          : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                      )}
                     >
-                      {rate}%
+                      {tItem.label}
                     </button>
                   ))}
                 </div>
-              </div>
 
-              <div className="space-y-2">
-                <div className="flex justify-between items-center text-xs font-bold">
-                  <label className="text-slate-800 font-black">
-                    {isTamil ? 'முதலீட்டுக் காலம் (ஆண்டுகள்)' : 'Time Horizon (Years)'}
-                  </label>
-                  <span className="text-[#008060] font-mono text-sm sm:text-base font-black">
-                    {timeYears} {isTamil ? 'ஆண்டுகள்' : 'Years'}
-                  </span>
-                </div>
-                <input
-                  type="range"
-                  min="1"
-                  max="30"
-                  step="1"
-                  value={timeYears}
-                  onChange={(e) => setTimeYears(Number(e.target.value))}
-                  className="w-full h-3 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#008060]"
-                />
-                <div className="flex flex-wrap items-center gap-1.5 pt-1">
-                  {[3, 5, 10, 15, 20, 25].map((yr) => (
-                    <button
-                      key={yr}
-                      type="button"
-                      onClick={() => setTimeYears(yr)}
-                      className={`px-2 py-0.5 rounded-md text-[10.5px] font-mono font-bold transition-all ${
-                        timeYears === yr
-                          ? 'bg-[#008060] text-white shadow-sm'
-                          : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
-                      }`}
-                    >
-                      {yr}Y
-                    </button>
-                  ))}
-                </div>
-              </div>
+                {/* Results List */}
+                <div className="divide-y divide-slate-200/80 dark:divide-slate-800">
+                  
+                  {/* Row 1: This Fund */}
+                  <div className="py-3.5 flex justify-between items-center">
+                    <div className="font-extrabold text-sm md:text-base text-slate-900 dark:text-white flex items-center gap-2 font-sans">
+                      <span className="w-2.5 h-2.5 rounded-full bg-[#16A34A] inline-block"></span>
+                      <span>{isTamil ? 'இந்த நிதி (SBI Arbitrage Fund)' : 'This Fund'}</span>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-lg md:text-xl font-black text-slate-900 dark:text-white font-num">
+                        {formatCurrency(fundAmount)}
+                      </div>
+                      <div className="text-xs font-bold text-[#16A34A] dark:text-[#4ade80] font-num">
+                        {currentRates.fund}%
+                      </div>
+                    </div>
+                  </div>
 
-              <div className="space-y-2 pt-2 border-t border-slate-200">
-                <div className="flex justify-between items-center text-xs font-bold">
-                  <label className="text-slate-600 font-bold">
-                    {isTamil ? 'எதிர்பார்க்கப்படும் பணவீக்கம் (%)' : 'Expected Inflation Rate (%)'}
-                  </label>
-                  <span className="text-slate-900 font-mono text-xs font-black">
-                    {inflationRate}%
-                  </span>
+                  {/* Row 2: Benchmark */}
+                  <div className="py-3.5 flex justify-between items-center">
+                    <div className="font-bold text-xs md:text-sm text-slate-700 dark:text-slate-200 font-sans">
+                      Nifty 50 Arbitrage Index
+                    </div>
+                    <div className="text-right">
+                      <div className="text-base md:text-lg font-bold text-slate-800 dark:text-slate-100 font-num">
+                        {formatCurrency(benchAmount)}
+                      </div>
+                      <div className="text-xs font-bold text-[#16A34A] dark:text-[#4ade80] font-num">
+                        {currentRates.bench}%
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Row 3: Additional Benchmark */}
+                  <div className="py-3.5 flex justify-between items-center">
+                    <div className="font-bold text-xs md:text-sm text-slate-700 dark:text-slate-200 font-sans">
+                      CRISIL 1 Year T-Bill Index
+                    </div>
+                    <div className="text-right">
+                      <div className="text-base md:text-lg font-bold text-slate-800 dark:text-slate-100 font-num">
+                        {formatCurrency(addBenchAmount)}
+                      </div>
+                      <div className="text-xs font-bold text-[#16A34A] dark:text-[#4ade80] font-num">
+                        {currentRates.addBench}%
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
-                <input
-                  type="range"
-                  min="3"
-                  max="10"
-                  step="0.5"
-                  value={inflationRate}
-                  onChange={(e) => setInflationRate(Number(e.target.value))}
-                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-slate-500"
-                />
+
               </div>
             </div>
 
-            <div className="space-y-2 pt-4 border-t border-slate-200">
-              <div className="flex items-center justify-between text-[11px] font-bold text-slate-600">
-                <span className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-slate-400" />
-                  <span>{isTamil ? 'முதலீடு' : 'Invested'}: {investedPercent}%</span>
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#008060]" />
-                  <span>{isTamil ? 'வட்டி லாபம்' : 'Wealth Gain'}: {gainPercent}%</span>
-                </span>
-              </div>
-              <div className="h-3 w-full rounded-full bg-slate-200 overflow-hidden flex border border-slate-300">
-                <div style={{ width: `${investedPercent}%` }} className="bg-slate-400 transition-all duration-300" />
-                <div style={{ width: `${gainPercent}%` }} className="bg-gradient-to-r from-[#008060] to-emerald-500 transition-all duration-300 shadow-lg" />
-              </div>
-            </div>
           </div>
 
-          {/* Right Column (Results Summary): Pure White Card */}
-          <div className="lg:col-span-6 space-y-6 bg-white text-slate-900 p-6 sm:p-8 rounded-3xl border border-white/40 shadow-xl flex flex-col justify-between">
-            <div className="space-y-5">
-              <div className="flex items-center justify-between border-b border-slate-200 pb-4">
-                <span className="text-xs font-black uppercase tracking-widest text-slate-500">
-                  {isTamil ? 'மொத்த முதலீடு' : 'Total Invested'}
-                </span>
-                <span className="text-lg font-black font-mono text-slate-900">
-                  {formatCurrency(totalInvested)}
-                </span>
-              </div>
+          {/* Footnote */}
+          <p className="text-[11px] md:text-xs text-slate-400 mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 leading-relaxed font-sans">
+            **Past performance may or may not be sustained in future. For performance in SEBI format please refer returns section.
+          </p>
 
-              <div className="flex items-center justify-between border-b border-slate-200 pb-4">
-                <span className="text-xs font-black uppercase tracking-widest text-slate-500">
-                  {isTamil ? 'மதிப்பிடப்பட்ட வட்டி லாபம்' : 'Estimated Growth Returns'}
-                </span>
-                <span className="text-lg font-black font-mono text-[#008060]">
-                  +{formatCurrency(estimatedGain)}
-                </span>
-              </div>
-
-              <div className="p-5 rounded-2xl bg-gradient-to-br from-[#008060]/10 via-[#008060]/5 to-transparent border border-[#008060]/20 space-y-2 shadow-sm">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-black uppercase tracking-wider text-[#008060]">
-                    {isTamil ? 'மொத்த முதிர்வுத் தொகை' : 'Projected Wealth Corpus'}
-                  </span>
-                  <span className="px-2.5 py-0.5 text-[10px] font-black uppercase rounded-full bg-[#008060] text-white shadow-sm">
-                    {wealthMultiplier}x Wealth
-                  </span>
-                </div>
-                <div className="text-3xl sm:text-4xl font-black font-mono text-[#008060] tracking-tight">
-                  {formatCurrency(futureValue)}
-                </div>
-              </div>
-
-              <div className="p-4 rounded-2xl bg-slate-900 text-white border border-slate-800 space-y-1 shadow-inner">
-                <div className="flex items-center justify-between text-xs font-bold text-slate-200">
-                  <span className="font-black">{isTamil ? 'பணவீக்கத்திற்குப் பின் உண்மையான மதிப்பு' : 'Inflation-Adjusted Purchasing Value'}</span>
-                  <span className="font-mono font-black text-white">{formatCurrency(realPurchasingPower)}</span>
-                </div>
-                <p className="text-[10px] text-slate-400 leading-tight">
-                  {isTamil
-                    ? `${inflationRate}% பணவீக்கத்தைக் கணக்கிடும் போது உங்கள் ₹${(futureValue / 100000).toFixed(1)} லட்சத்தின் உண்மையான மதிப்பு.`
-                    : `Purchasing power equivalent in today's money at ${inflationRate}% average inflation rate.`}
+          {/* IN-PAGE DETAILED ANALYSIS SECTION (PIE CHART & FINANCIAL STATEMENTS) */}
+          <div className="mt-8 pt-8 border-t border-slate-200 dark:border-slate-800">
+            
+            {/* Section Heading & Subtabs */}
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+              <div>
+                <h3 className="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2 font-sans">
+                  <span>📈</span>
+                  <span>{isTamil ? 'விரிவான பகுப்பாய்வு & நிதி அறிக்கை' : 'Detailed Analysis & Financial Statement'}</span>
+                </h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 font-sans">
+                  {isTamil ? 'முதலீடு மற்றும் லாப விகித பை-சார்ட் மற்றும் விரிவான ஆண்டுவாரியான அறிக்கை' : 'Visual asset growth pie chart, corpus breakdown, and complete year-by-year statement'}
                 </p>
               </div>
-            </div>
 
-            <div className="pt-2 flex items-center justify-between text-[11px] text-slate-500 font-bold border-t border-slate-200">
-              <span className="text-[#008060] flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-[#008060] animate-pulse" />
-                <span>CFP Verified Compounding Math</span>
-              </span>
-              <span className="text-slate-600 font-semibold">Padmanaban B. Financial</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Interactive Charts & Graphs Section */}
-        <div className="bg-white text-slate-900 p-6 sm:p-8 rounded-3xl border border-white/40 shadow-xl space-y-6">
-          {/* Chart Header & Navigation Tabs */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800 pb-5">
-            <div>
-              <h4 className="text-base sm:text-lg font-black font-serif text-slate-900 dark:text-white flex items-center gap-2">
-                <span>📈</span>
-                <span>{isTamil ? 'முதலீட்டு வளர்ச்சி வரைபடங்கள் & கணிப்புகள்' : 'Visual Growth Charts & Wealth Analytics'}</span>
-              </h4>
-              <p className="text-xs text-slate-500 dark:text-slate-400">
-                {isTamil ? 'ஆண்டுதோறும் கூட்டு வட்டியின் அபார வளர்ச்சி மற்றும் மைல்கற்கள்' : 'Yearly compounding breakdown, asset distribution & wealth milestones'}
-              </p>
-            </div>
-
-            {/* Tab Buttons */}
-            <div className="flex flex-wrap items-center gap-1.5 p-1 bg-slate-100 dark:bg-slate-800 rounded-2xl text-xs font-bold">
-              <button
-                onClick={() => setActiveTab('growth')}
-                className={`px-3.5 py-1.5 rounded-xl transition-all ${
-                  activeTab === 'growth'
-                    ? 'bg-[#008060] text-white shadow-sm font-black'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                }`}
-              >
-                📊 {isTamil ? 'வளர்ச்சி வரைபடம்' : 'Growth Chart'}
-              </button>
-              <button
-                onClick={() => setActiveTab('donut')}
-                className={`px-3.5 py-1.5 rounded-xl transition-all ${
-                  activeTab === 'donut'
-                    ? 'bg-[#008060] text-white shadow-sm font-black'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                }`}
-              >
-                🥧 {isTamil ? 'பங்குப் பிரிவு' : 'Asset Share'}
-              </button>
-              <button
-                onClick={() => setActiveTab('milestones')}
-                className={`px-3.5 py-1.5 rounded-xl transition-all ${
-                  activeTab === 'milestones'
-                    ? 'bg-[#008060] text-white shadow-sm font-black'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                }`}
-              >
-                🏆 {isTamil ? 'மைல்கற்கள்' : 'Milestones'}
-              </button>
-              <button
-                onClick={() => setActiveTab('table')}
-                className={`px-3.5 py-1.5 rounded-xl transition-all ${
-                  activeTab === 'table'
-                    ? 'bg-[#008060] text-white shadow-sm font-black'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                }`}
-              >
-                📋 {isTamil ? 'அட்டவணை' : 'Schedule'}
-              </button>
-            </div>
-          </div>
-
-          {/* TAB 1: Year-by-Year Growth Chart */}
-          {activeTab === 'growth' && (
-            <div className="space-y-4 animate-fadeIn">
-              {/* Dynamic Inspector Header */}
-              <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800 text-xs">
-                <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">
-                    {isTamil ? 'ஆய்வு நிலை' : 'Inspecting'}:
-                  </span>
-                  <span className="font-black font-mono text-[#008060] bg-[#008060]/10 px-2 py-0.5 rounded-md">
-                    {isTamil ? `ஆண்டு ${activeInspectItem?.year}` : `Year ${activeInspectItem?.year}`}
-                  </span>
-                </div>
-                <div className="flex flex-wrap items-center gap-4 sm:gap-6">
-                  <div>
-                    <span className="text-[10px] text-slate-400">{isTamil ? 'முதலீடு' : 'Invested'}: </span>
-                    <span className="font-mono font-bold text-slate-800 dark:text-slate-200">{formatCurrency(activeInspectItem?.invested || 0)}</span>
-                  </div>
-                  <div>
-                    <span className="text-[10px] text-slate-400">{isTamil ? 'வட்டி லாபம்' : 'Growth'}: </span>
-                    <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">+{formatCurrency(activeInspectItem?.gain || 0)}</span>
-                  </div>
-                  <div>
-                    <span className="text-[10px] text-slate-400">{isTamil ? 'மொத்த செல்வம்' : 'Total Wealth'}: </span>
-                    <span className="font-mono font-black text-[#008060] text-sm">{formatCurrency(activeInspectItem?.futureValue || 0)}</span>
-                  </div>
-                  <div className="hidden sm:block">
-                    <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-black bg-[#008060] text-white">
-                      {activeInspectItem?.ratio}x
-                    </span>
-                  </div>
-                </div>
+              {/* Analysis Subtab Switcher */}
+              <div className="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-2xl border border-slate-200 dark:border-slate-700">
+                <button
+                  type="button"
+                  onClick={() => setAnalysisTab('pie')}
+                  className={'px-4 py-1.5 rounded-xl text-xs font-bold font-sans transition-all ' + (
+                    analysisTab === 'pie'
+                      ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-sm'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  )}
+                >
+                  🍩 {isTamil ? 'பை-சார்ட் பகுப்பாய்வு' : 'Pie Chart Breakdown'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setAnalysisTab('statement')}
+                  className={'px-4 py-1.5 rounded-xl text-xs font-bold font-sans transition-all ' + (
+                    analysisTab === 'statement'
+                      ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-sm'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  )}
+                >
+                  📋 {isTamil ? 'ஆண்டு அறிக்கை அட்டவணை' : 'Yearly Statement'}
+                </button>
               </div>
+            </div>
 
-              {/* Stacked Growth Bars */}
-              <div className="h-56 sm:h-64 w-full flex items-end justify-between gap-1 sm:gap-2 px-3 pt-8 pb-2 bg-slate-50 dark:bg-slate-950/40 rounded-2xl border border-slate-200 dark:border-slate-800 relative">
-                {/* Background Guide Lines */}
-                <div className="absolute inset-x-3 top-6 border-b border-dashed border-slate-200 dark:border-slate-800" />
-                <div className="absolute inset-x-3 top-1/2 border-b border-dashed border-slate-200 dark:border-slate-800" />
-
-                {yearlyData.map((d) => {
-                  const totalHeightPct = Math.min(100, Math.max(8, Math.round((d.futureValue / maxVal) * 100)));
-                  const investedHeightPct = Math.min(totalHeightPct, Math.max(4, Math.round((d.invested / maxVal) * 100)));
-                  const gainHeightPct = Math.max(0, totalHeightPct - investedHeightPct);
-                  const isSelected = activeInspectItem?.year === d.year;
-
-                  return (
-                    <div
-                      key={d.year}
-                      onMouseEnter={() => setHoveredYear(d.year)}
-                      onMouseLeave={() => setHoveredYear(null)}
-                      className="flex-1 h-full flex flex-col justify-end items-center group cursor-pointer relative"
-                    >
-                      {/* Tooltip on Hover */}
-                      {isSelected && (
-                        <div className="absolute -top-7 px-2.5 py-0.5 rounded-md bg-slate-900 text-white text-[10px] font-mono font-bold shadow-xl z-20 whitespace-nowrap pointer-events-none animate-fadeIn border border-slate-700">
-                          {formatCurrency(d.futureValue)}
-                        </div>
-                      )}
-
-                      {/* Stacked Bar */}
-                      <div
-                        style={{ height: `${totalHeightPct}%` }}
-                        className={`w-full max-w-[26px] rounded-t-lg overflow-hidden flex flex-col justify-end transition-all duration-300 shadow-sm ${
-                          isSelected ? 'ring-2 ring-amber-400 scale-105 shadow-lg' : 'hover:opacity-90'
-                        }`}
-                      >
-                        {/* Top (Gain) */}
-                        <div
-                          style={{ height: `${(gainHeightPct / totalHeightPct) * 100}%` }}
-                          className="w-full bg-gradient-to-t from-[#008060] to-emerald-400"
-                        />
-                        {/* Bottom (Invested) */}
-                        <div
-                          style={{ height: `${(investedHeightPct / totalHeightPct) * 100}%` }}
-                          className="w-full bg-slate-400 dark:bg-slate-600"
-                        />
-                      </div>
-
-                      {/* X-Axis Label */}
-                      <span className={`text-[9px] font-mono font-bold mt-1.5 transition-colors ${
-                        isSelected ? 'text-[#008060] font-black scale-110' : 'text-slate-400'
-                      }`}>
-                        Y{d.year}
+            {/* VIEW 1: PIE / DONUT CHART & EXECUTIVE STATEMENTS */}
+            {analysisTab === 'pie' && (
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-slate-50/70 dark:bg-slate-800/40 p-6 md:p-8 rounded-2xl sm:rounded-3xl border border-slate-200/80 dark:border-slate-700/80">
+                
+                {/* Left: SVG Pie / Donut Chart */}
+                <div className="lg:col-span-5 flex flex-col items-center justify-center">
+                  <div className="relative w-56 h-56 flex items-center justify-center">
+                    <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                      {/* Background Track */}
+                      <path
+                        className="text-slate-200 dark:text-slate-700"
+                        strokeWidth="3.8"
+                        stroke="currentColor"
+                        fill="none"
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                      />
+                      {/* Total Invested Slice (Navy) */}
+                      <path
+                        className="text-[#0F172A] dark:text-slate-400 transition-all duration-700"
+                        strokeDasharray={investedPct + ', 100'}
+                        strokeWidth="3.8"
+                        stroke="currentColor"
+                        fill="none"
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                      />
+                      {/* Estimated Gain Slice (Green) */}
+                      <path
+                        className="text-[#16A34A] dark:text-[#4ade80] transition-all duration-700"
+                        strokeDasharray={gainPct + ', 100'}
+                        strokeDashoffset={'-' + investedPct}
+                        strokeWidth="3.8"
+                        stroke="currentColor"
+                        fill="none"
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                      />
+                    </svg>
+                    
+                    {/* Center Donut Text */}
+                    <div className="absolute flex flex-col items-center justify-center text-center p-2">
+                      <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider font-sans">{isTamil ? 'மொத்த முதிர்வு' : 'Total Corpus'}</span>
+                      <span className="text-base md:text-lg font-extrabold text-slate-900 dark:text-white font-num">{formatCurrency(fundAmount)}</span>
+                      <span className="text-[10px] font-bold text-[#16A34A] dark:text-[#4ade80] bg-emerald-100 dark:bg-emerald-950/60 px-2.5 py-0.5 rounded-full mt-1 font-num">
+                        {multiplier}x {isTamil ? 'வளர்ச்சி' : 'Return'}
                       </span>
                     </div>
-                  );
-                })}
-              </div>
+                  </div>
 
-              {/* Legend & Guide */}
-              <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-bold text-slate-500 pt-1">
-                <div className="flex items-center gap-4">
-                  <span className="flex items-center gap-1.5">
-                    <span className="w-3 h-3 rounded-md bg-slate-400" />
-                    <span>{isTamil ? 'அசல் முதலீடு (Invested)' : 'Invested Capital'}</span>
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <span className="w-3 h-3 rounded-md bg-gradient-to-r from-[#008060] to-emerald-400" />
-                    <span>{isTamil ? 'கூட்டு வட்டி லாபம் (Compound Gain)' : 'Compounded Returns'}</span>
-                  </span>
+                  {/* Pie Chart Legend */}
+                  <div className="flex items-center gap-6 mt-4 text-xs font-bold font-sans">
+                    <div className="flex items-center gap-2">
+                      <span className="w-3 h-3 rounded-full bg-[#0F172A] dark:bg-slate-400"></span>
+                      <span className="text-slate-700 dark:text-slate-300">{isTamil ? 'முதலீடு' : 'Invested'}: {investedPct}%</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="w-3 h-3 rounded-full bg-[#16A34A]"></span>
+                      <span className="text-[#16A34A] dark:text-[#4ade80]">{isTamil ? 'லாபம்' : 'Gains'}: {gainPct}%</span>
+                    </div>
+                  </div>
                 </div>
-                <span className="text-[11px] text-slate-400 italic">
-                  💡 {isTamil ? 'ஆண்டுகள் மீது மவுஸ் வைத்து கணிப்புகளைப் பாருங்கள்' : 'Hover over any year bar to inspect breakdown'}
-                </span>
-              </div>
-            </div>
-          )}
 
-          {/* TAB 2: Asset Share Donut Chart */}
-          {activeTab === 'donut' && (
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center py-4 animate-fadeIn">
-              <div className="md:col-span-5 flex justify-center">
-                {/* SVG Donut */}
-                <div className="relative w-[210px] h-[210px] flex items-center justify-center">
-                  {(() => {
-                    const size = 210;
-                    const strokeWidth = 30;
-                    const radius = (size - strokeWidth) / 2;
-                    const circumference = 2 * Math.PI * radius;
-                    const investedDash = (investedPercent / 100) * circumference;
-                    const gainDash = (gainPercent / 100) * circumference;
-                    const gainOffset = -investedDash;
-
-                    return (
-                      <>
-                        <svg width={size} height={size} className="rotate-[-90deg] drop-shadow-md">
-                          <circle
-                            cx={size / 2}
-                            cy={size / 2}
-                            r={radius}
-                            fill="transparent"
-                            stroke="currentColor"
-                            className="text-slate-100 dark:text-slate-800"
-                            strokeWidth={strokeWidth}
-                          />
-                          <circle
-                            cx={size / 2}
-                            cy={size / 2}
-                            r={radius}
-                            fill="transparent"
-                            stroke="#64748b"
-                            strokeWidth={strokeWidth}
-                            strokeDasharray={`${investedDash} ${circumference}`}
-                            strokeDashoffset={0}
-                            strokeLinecap="round"
-                            className="transition-all duration-700"
-                          />
-                          <circle
-                            cx={size / 2}
-                            cy={size / 2}
-                            r={radius}
-                            fill="transparent"
-                            stroke="#008060"
-                            strokeWidth={strokeWidth}
-                            strokeDasharray={`${gainDash} ${circumference}`}
-                            strokeDashoffset={gainOffset}
-                            strokeLinecap="round"
-                            className="transition-all duration-700"
-                          />
-                        </svg>
-                        <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
-                          <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">
-                            {isTamil ? 'வட்டி லாபப் பங்கு' : 'Wealth Share'}
-                          </span>
-                          <span className="text-3xl font-black font-mono text-[#008060]">
-                            {gainPercent}%
-                          </span>
-                          <span className="text-[10px] text-slate-500 font-bold">
-                            {wealthMultiplier}x Growth
-                          </span>
-                        </div>
-                      </>
-                    );
-                  })()}
-                </div>
-              </div>
-
-              <div className="md:col-span-7 space-y-4">
-                <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-4 h-4 rounded-full bg-slate-500 shrink-0" />
+                {/* Right: Detailed Financial Statements */}
+                <div className="lg:col-span-7 space-y-3">
+                  
+                  {/* Statement 1: Capital Outlay */}
+                  <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 flex justify-between items-center">
                     <div>
-                      <h5 className="font-bold text-xs text-slate-800 dark:text-slate-200">
-                        {isTamil ? 'உங்கள் அசல் முதலீட்டுத் தொகை' : 'Principal Invested Capital'}
-                      </h5>
-                      <p className="text-[11px] text-slate-400">
-                        {isTamil ? `${timeYears} ஆண்டுகளில் நீங்கள் கட்டிய மொத்தத் தொகை` : `Cumulative amount saved over ${timeYears} years`}
-                      </p>
+                      <span className="text-[11px] font-extrabold uppercase text-slate-400 tracking-wider block font-sans">
+                        {isTamil ? '1. அசல் முதலீட்டு தொகை' : '1. Principal Capital Outlay'}
+                      </span>
+                      <span className="text-xs text-slate-500 font-medium font-sans">
+                        {calcMode === 'sip' ? (years * 12) + ' ' + (isTamil ? 'மாதாந்திர தவணைகள்' : 'Monthly installments') + ' @ ₹' + amount.toLocaleString('en-IN') : (isTamil ? 'ஒரே முறை முதலீடு' : 'One-time lumpsum investment')}
+                      </span>
+                    </div>
+                    <div className="text-right">
+                      <span className="text-base md:text-lg font-bold text-slate-900 dark:text-white font-num">
+                        {formatCurrency(totalInvested)}
+                      </span>
+                      <span className="block text-[11px] font-bold text-slate-400 font-num">({investedPct}%)</span>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="font-black font-mono text-sm text-slate-900 dark:text-white">
-                      {formatCurrency(totalInvested)}
-                    </div>
-                    <span className="text-[10px] font-bold text-slate-500">{investedPercent}%</span>
-                  </div>
-                </div>
 
-                <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-4 h-4 rounded-full bg-[#008060] shrink-0" />
+                  {/* Statement 2: Wealth Gains */}
+                  <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 flex justify-between items-center">
                     <div>
-                      <h5 className="font-bold text-xs text-[#008060]">
-                        {isTamil ? 'கூட்டு வட்டி மூலம் ஈட்டிய லாபம்' : 'Compound Growth Returns (Profit)'}
-                      </h5>
-                      <p className="text-[11px] text-emerald-700/80 dark:text-emerald-400">
-                        {isTamil ? `ஆண்டுக்கு ${returnRate}% வட்டி மூலம் உருவான அசாத்திய லாபம்` : `Wealth generated at ${returnRate}% annual compounding`}
-                      </p>
+                      <span className="text-[11px] font-extrabold uppercase text-slate-400 tracking-wider block font-sans">
+                        {isTamil ? '2. கூட்டு வட்டி வளர்ச்சி லாபம்' : '2. Compound Growth Gains'}
+                      </span>
+                      <span className="text-xs text-slate-500 font-medium font-sans">
+                        {isTamil ? 'ஆண்டுக்கு ' + currentRates.fund + '% கூட்டு வருமானம்' : 'Compounded @ ' + currentRates.fund + '% annualized CAGR'}
+                      </span>
+                    </div>
+                    <div className="text-right">
+                      <span className="text-base md:text-lg font-bold text-[#16A34A] dark:text-[#4ade80] font-num">
+                        +{formatCurrency(estimatedGain)}
+                      </span>
+                      <span className="block text-[11px] font-bold text-[#16A34A] dark:text-[#4ade80] font-num">({gainPct}%)</span>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="font-black font-mono text-sm text-[#008060]">
-                      +{formatCurrency(estimatedGain)}
+
+                  {/* Statement 3: Net Future Corpus */}
+                  <div className="p-4 rounded-2xl bg-gradient-to-r from-[#0F172A] to-[#1E293B] text-white border border-slate-800 flex justify-between items-center shadow-lg">
+                    <div>
+                      <span className="text-[11px] font-extrabold uppercase text-emerald-400 tracking-wider block font-sans">
+                        {isTamil ? '3. எதிர்பார்க்கும் முதிர்வு நிதி' : '3. Total Projected Corpus'}
+                      </span>
+                      <span className="text-xs text-slate-300 font-medium font-sans">
+                        {isTamil ? timeframe + ' கால முடிவில் மொத்த மதிப்பு' : 'Total accumulation after ' + timeframe + ' duration'}
+                      </span>
                     </div>
-                    <span className="text-[10px] font-bold text-[#008060]">{gainPercent}%</span>
+                    <div className="text-right">
+                      <span className="text-lg md:text-xl font-bold text-white font-num">
+                        {formatCurrency(fundAmount)}
+                      </span>
+                      <span className="block text-[11px] font-bold text-emerald-300 font-num">
+                        +{((estimatedGain / (totalInvested || 1)) * 100).toFixed(1)}% {isTamil ? 'வளர்ச்சி' : 'net return'}
+                      </span>
+                    </div>
                   </div>
+
                 </div>
+
               </div>
-            </div>
-          )}
+            )}
 
-          {/* TAB 3: Milestones Roadmap */}
-          {activeTab === 'milestones' && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 py-2 animate-fadeIn">
-              {milestones.map((m, idx) => {
-                const matchYear = yearlyData.find(d => d.futureValue >= m.target);
-                const isReached = Boolean(matchYear);
-
-                return (
-                  <div
-                    key={idx}
-                    className={`p-4 rounded-2xl border transition-all ${
-                      isReached
-                        ? 'bg-gradient-to-br from-emerald-500/15 via-emerald-500/5 to-transparent border-emerald-500/35 shadow-sm'
-                        : 'bg-slate-50 dark:bg-slate-900/40 border-slate-200 dark:border-slate-800 opacity-55'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-black font-serif text-slate-900 dark:text-white flex items-center gap-1.5">
-                        <span>{isReached ? '🎯' : '⏳'}</span>
-                        <span>{isTamil ? m.tamilLabel : m.label}</span>
-                      </span>
-                      <span className={`text-[10px] font-black px-2.5 py-0.5 rounded-full ${
-                        isReached ? 'bg-[#008060] text-white shadow-sm' : 'bg-slate-200 dark:bg-slate-800 text-slate-500'
-                      }`}>
-                        {isReached ? (isTamil ? `ஆண்டு ${matchYear.year}` : `Year ${matchYear.year}`) : (isTamil ? 'இலக்கு தாண்டி' : 'Beyond Horizon')}
-                      </span>
-                    </div>
-                    {isReached ? (
-                      <p className="text-[11px] text-emerald-800 dark:text-emerald-300 font-medium mt-2 leading-relaxed">
-                        {isTamil
-                          ? `ஆண்டு ${matchYear.year}-ல் அசல் முதலீடு ${formatCurrency(matchYear.invested)} ஆக இருக்கும் போது உங்கள் செல்வம் ${m.tamilLabel}-ஐ அடையும்.`
-                          : `Crossed at Year ${matchYear.year} with ${formatCurrency(matchYear.invested)} total invested.`}
-                      </p>
-                    ) : (
-                      <p className="text-[11px] text-slate-400 mt-2">
-                        {isTamil
-                          ? 'காலத்தை அல்லது மாதாந்திர முதலீட்டை அதிகரித்தால் இந்த இலக்கை அடையலாம்.'
-                          : 'Increase duration or monthly SIP to unlock this milestone.'}
-                      </p>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          )}
-
-          {/* TAB 4: Yearly Schedule Table */}
-          {activeTab === 'table' && (
-            <div className="overflow-x-auto max-h-72 overflow-y-auto rounded-2xl border border-slate-200 dark:border-slate-800 animate-fadeIn">
-              <table className="w-full text-left text-xs">
-                <thead className="sticky top-0 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-black border-b border-slate-200 dark:border-slate-700">
-                  <tr>
-                    <th className="p-3">{isTamil ? 'ஆண்டு' : 'Year'}</th>
-                    <th className="p-3">{isTamil ? 'மொத்த முதலீடு' : 'Total Invested'}</th>
-                    <th className="p-3">{isTamil ? 'வட்டி லாபம்' : 'Growth Returns'}</th>
-                    <th className="p-3">{isTamil ? 'எதிர்பார்க்கும் முதிர்வு மதிப்பு' : 'Future Value'}</th>
-                    <th className="p-3">{isTamil ? 'வளர்ச்சி மடங்கு' : 'Multiplier'}</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-mono">
-                  {yearlyData.map((d) => (
-                    <tr key={d.year} className="hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors">
-                      <td className="p-3 font-bold text-slate-900 dark:text-white">Year {d.year}</td>
-                      <td className="p-3 text-slate-600 dark:text-slate-400">{formatCurrency(d.invested)}</td>
-                      <td className="p-3 text-emerald-600 dark:text-emerald-400 font-semibold">+{formatCurrency(d.gain)}</td>
-                      <td className="p-3 font-black text-[#008060] text-sm">{formatCurrency(d.futureValue)}</td>
-                      <td className="p-3"><span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-[#008060]/15 text-[#008060]">{d.ratio}x</span></td>
+            {/* VIEW 2: FULL YEARLY FINANCIAL STATEMENT TABLE */}
+            {analysisTab === 'statement' && (
+              <div className="overflow-x-auto max-h-80 overflow-y-auto rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm animate-fadeIn">
+                <table className="w-full text-left text-xs">
+                  <thead className="sticky top-0 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-extrabold border-b border-slate-200 dark:border-slate-700 font-sans">
+                    <tr>
+                      <th className="p-3.5">{isTamil ? 'ஆண்டு' : 'Period'}</th>
+                      <th className="p-3.5">{isTamil ? 'முதலீடு செய்த அசல்' : 'Capital Invested'}</th>
+                      <th className="p-3.5">{isTamil ? 'வட்டி லாபம்' : 'Growth Gains'}</th>
+                      <th className="p-3.5">{isTamil ? 'இந்த நிதி மதிப்பு' : 'This Fund Value'}</th>
+                      <th className="p-3.5">{isTamil ? 'பெஞ்ச்மார்க் மதிப்பு' : 'Nifty 50 Value'}</th>
+                      <th className="p-3.5">{isTamil ? 'வளர்ச்சி மடங்கு' : 'Multiplier'}</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+                  </thead>
+                  <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-num">
+                    {yearlySchedule.map((d) => (
+                      <tr key={d.year} className="hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors">
+                        <td className="p-3.5 font-bold text-slate-900 dark:text-white font-sans">Year {d.year}</td>
+                        <td className="p-3.5 text-slate-600 dark:text-slate-400">{formatCurrency(d.invested)}</td>
+                        <td className="p-3.5 text-[#16A34A] dark:text-[#4ade80] font-semibold">+{formatCurrency(d.gain)}</td>
+                        <td className="p-3.5 font-bold text-slate-900 dark:text-white text-sm">{formatCurrency(d.fundValue)}</td>
+                        <td className="p-3.5 text-slate-500 dark:text-slate-400">{formatCurrency(d.benchValue)}</td>
+                        <td className="p-3.5">
+                          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400">
+                            {d.multiplier}x
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+
+          </div>
+
         </div>
+
       </div>
     </section>
   );
 }
-
 
 function RiskQuizWidget() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -3874,8 +3524,8 @@ function SignInCtaBanner({ onNavigate }) {
           <div className="flex items-center gap-3">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
             <p className="text-xs sm:text-sm font-bold font-sans">
-              {isTamil 
-                ? 'உறுப்பினர் கணக்கு செயலில் உள்ளது — முழு வீடியோ தொகுப்பு மற்றும் ஆராய்ச்சியை நீங்கள் அணுகலாம்.' 
+              {isTamil
+                ? 'உறுப்பினர் கணக்கு செயலில் உள்ளது — முழு வீடியோ தொகுப்பு மற்றும் ஆராய்ச்சியை நீங்கள் அணுகலாம்.'
                 : 'Member Account Active — Full investment library and insights unlocked.'}
             </p>
           </div>
@@ -3892,15 +3542,15 @@ function SignInCtaBanner({ onNavigate }) {
 
   return (
     <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 my-6 animate-fadeIn">
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#03529A] via-[#0a3f6d] to-[#4A9E2C] border border-white/20 p-6 sm:p-8 shadow-2xl text-white">
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#4A9E2C] via-[#3b8022] to-[#2d6319] border border-white/20 p-6 sm:p-8 shadow-2xl text-white">
         <div className="absolute top-0 right-0 -mr-16 -mt-16 w-72 h-72 rounded-full bg-[#4A9E2C]/30 blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-72 h-72 rounded-full bg-[#03529A]/40 blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-72 h-72 rounded-full bg-[#4A9E2C]/40 blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="space-y-2 max-w-2xl">
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-0.5 rounded-full bg-white text-[#03529A] font-black text-[10px] tracking-wider uppercase shadow">
-                 {isTamil ? 'உறுப்பினர் அணுகல்' : 'MEMBER ACCESS'}
+              <span className="px-2.5 py-0.5 rounded-full bg-white text-[#4A9E2C] font-black text-[10px] tracking-wider uppercase shadow">
+                {isTamil ? 'உறுப்பினர் அணுகல்' : 'MEMBER ACCESS'}
               </span>
               <span className="text-[11px] font-mono text-emerald-200 font-bold">
                 {isTamil ? 'இலவச கணக்கு' : 'FREE ACCOUNT'}
@@ -3923,7 +3573,7 @@ function SignInCtaBanner({ onNavigate }) {
           <div className="flex items-center gap-3 w-full md:w-auto shrink-0">
             <button
               onClick={() => onNavigate && onNavigate('#/login')}
-              className="flex-1 md:flex-none px-6 py-3 rounded-2xl bg-white hover:bg-slate-100 text-[#03529A] font-extrabold text-xs sm:text-sm shadow-xl hover:scale-105 active:scale-95 transition-all text-center"
+              className="flex-1 md:flex-none px-6 py-3 rounded-2xl bg-white hover:bg-slate-100 text-[#4A9E2C] font-extrabold text-xs sm:text-sm shadow-xl hover:scale-105 active:scale-95 transition-all text-center"
             >
               {isTamil ? 'உள்நுழைக' : 'Sign In'}
             </button>
@@ -3971,10 +3621,10 @@ function Footer({ onNavigate, onShowToast }) {
   };
 
   return (
-    <footer className="bg-[rgba(239,233,227,0.85)] dark:bg-slate-950 text-slate-700 dark:text-slate-300 border-t border-[rgba(201,181,156,0.6)] dark:border-slate-800 pt-12 pb-8">
-      <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+    <footer className="bg-[rgba(239,233,227,0.85)] dark:bg-slate-950 text-slate-700 dark:text-slate-300 border-t border-[rgba(201,181,156,0.6)] dark:border-slate-800 pt-10 pb-8">
+      <div className="w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 space-y-10">
         {/* Top Grid: Newsletter + Quick Links */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 pb-12 border-b border-[rgba(217,207,199,0.7)] dark:border-slate-800">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 pb-10 border-b border-[rgba(217,207,199,0.7)] dark:border-slate-800">
           {/* Brand & Newsletter */}
           <div className="lg:col-span-6 space-y-4">
             <div className="flex items-center gap-3">
@@ -3997,7 +3647,7 @@ function Footer({ onNavigate, onShowToast }) {
                 )}
               </span>
             </div>
-            
+
             <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-md leading-relaxed">
               {t('newsLetterDesc')}
             </p>
@@ -4097,11 +3747,11 @@ function CinemaVideoCard({
           onSelect && onSelect(video);
         }
       }}
-      className="group relative select-none cursor-pointer rounded-xl sm:rounded-2xl overflow-hidden
+      className="group relative select-none cursor-pointer rounded-2xl overflow-hidden
         w-full aspect-[9/13]
-        bg-slate-900 border border-slate-800 hover:border-amber-500
-        shadow-md hover:shadow-xl hover:shadow-amber-500/10
-        transition-all duration-150 shrink-0"
+        bg-slate-900 border border-slate-800/80 hover:border-[#2563EB]/60
+        shadow-[0_4px_20px_rgba(15,23,42,0.05)] hover:shadow-[0_16px_32px_rgba(15,23,42,0.12)]
+        transition-all duration-300 shrink-0"
     >
       <div className="absolute inset-0 w-full h-full overflow-hidden bg-slate-950">
         {thumbnail && (
@@ -4110,39 +3760,41 @@ function CinemaVideoCard({
             alt={title}
             loading="lazy"
             decoding="async"
-            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-200"
+            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent opacity-90" />
       </div>
 
-      <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between z-20 pointer-events-none">
-        <span className="px-2 py-0.5 text-[8.5px] font-black uppercase tracking-wider rounded-full bg-slate-950/85 text-amber-400 border border-amber-400/20">
+      {/* Dark semi-transparent pills over thumbnail */}
+      <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-20 pointer-events-none">
+        <span className="px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-wider rounded-full bg-slate-950/80 backdrop-blur-md text-white border border-white/10 font-sans">
           {category}
         </span>
-        <span className="px-1.5 py-0.5 text-[8.5px] font-mono font-bold rounded-full bg-slate-950/85 text-slate-200 border border-white/10">
+        <span className="px-2 py-1 text-[9px] font-num font-bold rounded-full bg-slate-950/80 backdrop-blur-md text-slate-200 border border-white/10">
           {duration}
         </span>
       </div>
 
+      {/* Centered Play-Icon Circle Overlay */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
-        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-amber-500 text-slate-950 flex items-center justify-center opacity-0 group-hover:opacity-100 transform scale-90 group-hover:scale-100 transition-all duration-150 shadow-lg">
-          <svg className="w-4 h-4 fill-current ml-0.5" viewBox="0 0 24 24">
+        <div className="w-12 h-12 rounded-full bg-black/50 backdrop-blur-md border border-white/30 text-white flex items-center justify-center group-hover:bg-[#2563EB] group-hover:border-[#2563EB] group-hover:scale-110 transition-all duration-300 shadow-xl">
+          <svg className="w-5 h-5 fill-current ml-0.5" viewBox="0 0 24 24">
             <polygon points="5 3 19 12 5 21 5 3" />
           </svg>
         </div>
       </div>
 
-      <div className="absolute bottom-0 inset-x-0 p-3 pt-8 bg-gradient-to-t from-slate-950 via-slate-950/95 to-transparent z-20 flex flex-col justify-end gap-1.5">
-        <h3 className="text-[11px] sm:text-xs font-bold text-white font-serif line-clamp-2 leading-tight group-hover:text-amber-400 transition-colors">
+      <div className="absolute bottom-0 inset-x-0 p-4 pt-10 bg-gradient-to-t from-slate-950 via-slate-950/95 to-transparent z-20 flex flex-col justify-end gap-2">
+        <h3 className="text-xs sm:text-sm font-bold text-white font-sans line-clamp-2 leading-snug group-hover:text-blue-300 transition-colors">
           {title}
         </h3>
 
-        <div className="flex items-center justify-between pt-0.5 opacity-80 group-hover:opacity-100">
-          <span className="text-[9px] text-slate-400 font-medium truncate max-w-[100px]">
+        <div className="flex items-center justify-between pt-1 opacity-80 group-hover:opacity-100">
+          <span className="text-[10px] text-slate-400 font-medium truncate max-w-[120px]">
             {video.channelName || 'Budget Padmanaban'}
           </span>
-          <span className="text-[9px] font-bold text-amber-400 group-hover:underline shrink-0 flex items-center gap-0.5">
+          <span className="text-[10px] font-bold text-[#60a5fa] group-hover:underline shrink-0 flex items-center gap-1 font-sans">
             <span>{isTamil ? 'பார்க்க' : 'Watch'}</span>
             <span>→</span>
           </span>
@@ -4236,11 +3888,10 @@ function CinemaSpotlightHero({
                 <button
                   key={vid.id || idx}
                   onClick={() => setCurrentIndex(idx)}
-                  className={`flex-1 min-w-[65px] sm:min-w-[75px] p-1.5 rounded-xl border transition-all text-left ${
-                    isActive
+                  className={`flex-1 min-w-[65px] sm:min-w-[75px] p-1.5 rounded-xl border transition-all text-left ${isActive
                       ? 'bg-amber-500/20 border-amber-500 ring-1 ring-amber-500/50 text-amber-900 dark:text-amber-300'
                       : 'bg-[rgba(239,233,227,0.7)] dark:bg-slate-900/80 border-[rgba(201,181,156,0.4)] dark:border-slate-800 hover:border-amber-500 text-slate-700 dark:text-slate-300'
-                  }`}
+                    }`}
                 >
                   <div className="text-[9px] font-bold truncate">
                     0${idx + 1} • ${vid.duration || 'Video'}
@@ -4395,7 +4046,7 @@ function CinemaTheaterModal({
     }
     if (sidebarSearch.trim()) {
       const q = sidebarSearch.toLowerCase();
-      list = list.filter(v => 
+      list = list.filter(v =>
         (v.titleTamil && v.titleTamil.toLowerCase().includes(q)) ||
         (v.titleEnglish && v.titleEnglish.toLowerCase().includes(q)) ||
         (v.title && v.title.toLowerCase().includes(q)) ||
@@ -4469,7 +4120,7 @@ function CinemaTheaterModal({
 
       {/* 2. STUDIO SPLIT VIEW (LEFT STAGE + RIGHT PLAYLIST) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 flex-1 min-h-0 overflow-hidden divide-y lg:divide-y-0 lg:divide-x divide-slate-800/80">
-        
+
         {/* LEFT COLUMN: Large HD Cinema Stage & Interactive Tabs (8 Cols on LG, 9 on XL) */}
         <main className="lg:col-span-8 xl:col-span-9 flex flex-col min-h-0 bg-[#040711] overflow-y-auto">
           {/* 16:9 Video Canvas Frame */}
@@ -4539,33 +4190,30 @@ function CinemaTheaterModal({
             <div className="flex items-center gap-2 border-b border-slate-800 pb-2">
               <button
                 onClick={() => setActiveTab('overview')}
-                className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all ${
-                  activeTab === 'overview'
+                className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all ${activeTab === 'overview'
                     ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
                     : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
-                }`}
+                  }`}
               >
                 {isTamil ? '📖 விளக்கம் & விவரங்கள்' : '📖 Overview & Details'}
               </button>
 
               <button
                 onClick={() => setActiveTab('takeaways')}
-                className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all ${
-                  activeTab === 'takeaways'
+                className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all ${activeTab === 'takeaways'
                     ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
                     : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
-                }`}
+                  }`}
               >
                 {isTamil ? '💡 முக்கிய ஆலோசனைகள்' : '💡 Key Takeaways'}
               </button>
 
               <button
                 onClick={() => setActiveTab('tools')}
-                className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all ${
-                  activeTab === 'tools'
+                className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all ${activeTab === 'tools'
                     ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
                     : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
-                }`}
+                  }`}
               >
                 {isTamil ? '🧮 SIP கால்குலேட்டர்' : '🧮 SIP Calculator'}
               </button>
@@ -4656,31 +4304,28 @@ function CinemaTheaterModal({
             <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
               <button
                 onClick={() => setSidebarFilter('all')}
-                className={`px-2.5 py-1 rounded-lg text-[10px] font-extrabold whitespace-nowrap transition-all ${
-                  sidebarFilter === 'all'
+                className={`px-2.5 py-1 rounded-lg text-[10px] font-extrabold whitespace-nowrap transition-all ${sidebarFilter === 'all'
                     ? 'bg-amber-500 text-slate-950 shadow'
                     : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
-                }`}
+                  }`}
               >
                 {isTamil ? 'அனைத்தும்' : 'All'}
               </button>
               <button
                 onClick={() => setSidebarFilter('category')}
-                className={`px-2.5 py-1 rounded-lg text-[10px] font-extrabold whitespace-nowrap transition-all ${
-                  sidebarFilter === 'category'
+                className={`px-2.5 py-1 rounded-lg text-[10px] font-extrabold whitespace-nowrap transition-all ${sidebarFilter === 'category'
                     ? 'bg-amber-500 text-slate-950 shadow'
                     : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
-                }`}
+                  }`}
               >
                 {isTamil ? 'இதே பிரிவு' : 'Same Category'}
               </button>
               <button
                 onClick={() => setSidebarFilter('shorts')}
-                className={`px-2.5 py-1 rounded-lg text-[10px] font-extrabold whitespace-nowrap transition-all ${
-                  sidebarFilter === 'shorts'
+                className={`px-2.5 py-1 rounded-lg text-[10px] font-extrabold whitespace-nowrap transition-all ${sidebarFilter === 'shorts'
                     ? 'bg-amber-500 text-slate-950 shadow'
                     : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
-                }`}
+                  }`}
               >
                 Shorts
               </button>
@@ -4802,45 +4447,53 @@ function HomeCinemaShowcase({ onNavigate, onShowToast, language = 'ta' }) {
   }, [allVideos, activeCategory]);
 
   return (
-    <section className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-2 select-none space-y-4">
-      {/* Category Tabs */}
-      <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1">
-        {categories.map((cat, idx) => {
-          const isActive = activeCategory === cat.id;
-          const isEven = idx % 2 === 0;
-          const activeBg = isEven
-            ? 'bg-[#03529A] text-white shadow-md shadow-[#03529A]/25 scale-105'
-            : 'bg-[#4A9E2C] text-white shadow-md shadow-[#4A9E2C]/25 scale-105';
-          return (
-            <button
-              key={cat.id}
-              onClick={() => setActiveCategory(cat.id)}
-              className={`btn-magnetic px-3.5 py-1.5 rounded-full text-xs font-black whitespace-nowrap transition-all duration-200 shrink-0 ${
-                isActive
-                  ? activeBg
-                  : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800'
-              }`}
-            >
-              {isTamil ? cat.labelTa : cat.labelEn}
-            </button>
-          );
-        })}
+    <section className="w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 select-none space-y-4 min-w-0">
+      {/* Category Tabs & View All Link */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-1 border-b border-slate-100 dark:border-slate-800">
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+          {categories.map((cat) => {
+            const isActive = activeCategory === cat.id;
+            return (
+              <button
+                key={cat.id}
+                onClick={() => setActiveCategory(cat.id)}
+                className={`px-4 sm:px-5 py-2 rounded-full text-xs sm:text-[12.5px] font-bold whitespace-nowrap transition-all duration-200 shrink-0 ${isActive
+                    ? 'bg-[#2563EB] text-white shadow-sm shadow-blue-600/20'
+                    : 'bg-white dark:bg-slate-900 text-[#64748B] dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-[#E2E8F0] dark:border-slate-800 hover:border-slate-300'
+                  }`}
+              >
+                {isTamil ? cat.labelTa : cat.labelEn}
+              </button>
+            );
+          })}
+        </div>
+
+        <button
+          onClick={() => {
+            if (onNavigate) onNavigate('#/videos');
+            else if (typeof window !== 'undefined') window.location.hash = '#/videos';
+          }}
+          className="inline-flex items-center gap-1.5 text-xs sm:text-[13px] font-bold text-[#2563EB] dark:text-[#60a5fa] hover:text-blue-700 transition-colors shrink-0 self-end sm:self-center"
+        >
+          <span>{isTamil ? 'அனைத்து வீடியோக்கள் (800+)' : 'View All Videos (800+)'}</span>
+          <span className="font-bold">→</span>
+        </button>
       </div>
 
-      {/* 6-Column Level Responsive Grid (2 mobile, 3 sm, 4 md, 6 lg/xl/2xl) */}
+      {/* Responsive Grid — Strictly ONE SINGLE ROW of video cards filling the wide screen */}
       {isLoading && showcaseVideos.length === 0 ? (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 2xl:grid-cols-6 gap-3 sm:gap-3.5 animate-pulse">
-          {Array.from({ length: 12 }).map((_, idx) => (
-            <div key={idx} className="rounded-2xl bg-slate-200 dark:bg-slate-800/60 aspect-[9/13] p-3 space-y-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 sm:gap-6 animate-pulse">
+          {Array.from({ length: 5 }).map((_, idx) => (
+            <div key={idx} className="rounded-2xl bg-slate-200 dark:bg-slate-800/60 aspect-[9/13] p-4 space-y-3">
               <div className="aspect-video bg-slate-300 dark:bg-slate-700/60 rounded-xl" />
-              <div className="h-3 bg-slate-300 dark:bg-slate-700/60 rounded w-3/4" />
-              <div className="h-2 bg-slate-300 dark:bg-slate-700/60 rounded w-1/2" />
+              <div className="h-4 bg-slate-300 dark:bg-slate-700/60 rounded w-3/4" />
+              <div className="h-3 bg-slate-300 dark:bg-slate-700/60 rounded w-1/2" />
             </div>
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 2xl:grid-cols-6 gap-3 sm:gap-3.5">
-          {showcaseVideos.map((video, idx) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 sm:gap-6">
+          {showcaseVideos.slice(0, 5).map((video, idx) => (
             <CinemaVideoCard
               key={`home-cinema-${video.id || idx}`}
               video={video}
@@ -4874,7 +4527,7 @@ function Home({ onNavigate, onShowToast }) {
   const { t, language } = useLanguage();
 
   return (
-    <div className="space-y-8 pb-16 animate-fadeIn">
+    <div className="space-y-12 sm:space-y-14 pb-16 sm:pb-20 pt-4 sm:pt-6 animate-fadeIn">
       {/* 1. FEATURED NEWS TICKER ON LEFT + LATEST ARTICLES ON RIGHT */}
       <HeroSection onNavigate={onNavigate} />
 
@@ -4888,7 +4541,7 @@ function Home({ onNavigate, onShowToast }) {
       {/* 3. TRENDING ARTICLES SECTION (DYNAMIC DB SYNC) */}
       <TrendingArticlesSection onNavigate={onNavigate} />
 
-      {/* 4. FINANCIAL CALCULATOR */}
+      {/* 4. FINANCIAL CALCULATOR & IN-DEPTH ANALYSIS */}
       <SipCalculator />
     </div>
   );
@@ -5039,11 +4692,10 @@ function VideosPage({ onNavigate, onShowToast, initialVideoId }) {
                     setActiveCategory(cat.id);
                     setVisibleGridCount(48);
                   }}
-                  className={`btn-magnetic px-3.5 py-1.5 rounded-full text-xs font-black whitespace-nowrap transition-all duration-200 shrink-0 ${
-                    isActive
+                  className={`btn-magnetic px-3.5 py-1.5 rounded-full text-xs font-black whitespace-nowrap transition-all duration-200 shrink-0 ${isActive
                       ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20 scale-105'
                       : 'bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800'
-                  }`}
+                    }`}
                 >
                   {isTamil ? cat.labelTa : cat.labelEn}
                 </button>
@@ -5093,21 +4745,19 @@ function VideosPage({ onNavigate, onShowToast, initialVideoId }) {
               <div className="inline-flex p-0.5 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
                 <button
                   onClick={() => setViewMode('rails')}
-                  className={`btn-magnetic px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                    viewMode === 'rails' && !isFiltering
+                  className={`btn-magnetic px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${viewMode === 'rails' && !isFiltering
                       ? 'bg-amber-500 text-slate-950 font-black shadow'
                       : 'text-slate-500 dark:text-slate-400 hover:text-white'
-                  }`}
+                    }`}
                 >
                   {isTamil ? 'தனித்தனி வரிசைகள்' : 'Cinematic Rails'}
                 </button>
                 <button
                   onClick={() => setViewMode('grid')}
-                  className={`btn-magnetic px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                    viewMode === 'grid' || isFiltering
+                  className={`btn-magnetic px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${viewMode === 'grid' || isFiltering
                       ? 'bg-amber-500 text-slate-950 font-black shadow'
                       : 'text-slate-500 dark:text-slate-400 hover:text-white'
-                  }`}
+                    }`}
                 >
                   {isTamil ? 'முழு கட்டம்' : 'Full Grid'}
                 </button>
@@ -5649,9 +5299,9 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                       type="checkbox"
                       checked={checked}
                       onChange={() => toggleCategoryFilter(cat.id)}
-                      className="w-4 h-4 rounded text-brandBlue-600 focus:ring-brandBlue-500/30 border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:checked:bg-brandBlue-500 cursor-pointer transition-all"
+                      className="w-4 h-4 rounded text-[#4A9E2C] focus:ring-[#4A9E2C]/30 border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:checked:bg-brandBlue-500 cursor-pointer transition-all"
                     />
-                    <span className={`text-[13px] truncate transition-colors ${checked ? 'font-black text-brandBlue-600 dark:text-brandBlue-400' : 'font-medium text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white'}`}>
+                    <span className={`text-[13px] truncate transition-colors ${checked ? 'font-black text-[#4A9E2C] dark:text-[#4ade80]' : 'font-medium text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white'}`}>
                       {isTamil ? cat.labelTa : cat.labelEn}
                     </span>
                   </div>
@@ -5700,9 +5350,9 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                         type="checkbox"
                         checked={checked}
                         onChange={() => togglePublisherFilter(pub.id)}
-                        className="w-4 h-4 rounded text-brandBlue-600 focus:ring-brandBlue-500/30 border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:checked:bg-brandBlue-500 cursor-pointer transition-all"
+                        className="w-4 h-4 rounded text-[#4A9E2C] focus:ring-[#4A9E2C]/30 border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:checked:bg-brandBlue-500 cursor-pointer transition-all"
                       />
-                      <span className={`text-[13px] truncate transition-colors ${checked ? 'font-black text-brandBlue-600 dark:text-brandBlue-400' : 'font-medium text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white'}`} title={pub.name}>
+                      <span className={`text-[13px] truncate transition-colors ${checked ? 'font-black text-[#4A9E2C] dark:text-[#4ade80]' : 'font-medium text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white'}`} title={pub.name}>
                         {pub.name}
                       </span>
                     </div>
@@ -5756,9 +5406,9 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                       name="dateRangeFilter"
                       checked={active}
                       onChange={() => { setDateRange(opt.id); setCurrentPage(1); }}
-                      className="w-4 h-4 text-brandBlue-600 focus:ring-brandBlue-500/30 border-slate-300 dark:border-slate-700 dark:bg-slate-900 cursor-pointer"
+                      className="w-4 h-4 text-[#4A9E2C] focus:ring-[#4A9E2C]/30 border-slate-300 dark:border-slate-700 dark:bg-slate-900 cursor-pointer"
                     />
-                    <span className={`text-[13px] truncate ${active ? 'font-black text-brandBlue-600 dark:text-brandBlue-400' : 'font-medium text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white'}`}>
+                    <span className={`text-[13px] truncate ${active ? 'font-black text-[#4A9E2C] dark:text-[#4ade80]' : 'font-medium text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white'}`}>
                       {isTamil ? opt.labelTa : opt.labelEn}
                     </span>
                   </div>
@@ -5810,9 +5460,9 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                       name="languageFilter"
                       checked={active}
                       onChange={() => { setSelectedLanguage(langOpt.id); setCurrentPage(1); }}
-                      className="w-4 h-4 text-brandBlue-600 focus:ring-brandBlue-500/30 border-slate-300 dark:border-slate-700 dark:bg-slate-900 cursor-pointer"
+                      className="w-4 h-4 text-[#4A9E2C] focus:ring-[#4A9E2C]/30 border-slate-300 dark:border-slate-700 dark:bg-slate-900 cursor-pointer"
                     />
-                    <span className={`text-[13px] truncate ${active ? 'font-black text-brandBlue-600 dark:text-brandBlue-400' : 'font-medium text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white'}`}>
+                    <span className={`text-[13px] truncate ${active ? 'font-black text-[#4A9E2C] dark:text-[#4ade80]' : 'font-medium text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white'}`}>
                       {isTamil ? langOpt.labelTa : langOpt.labelEn}
                     </span>
                   </div>
@@ -5841,10 +5491,17 @@ function ArticlesPage({ onNavigate, onShowToast }) {
   );
 
   return (
-    <div className="min-h-screen pb-20 pt-4 animate-fadeIn">
-      {/* Top Search & Filter Bar */}
-      <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 mb-6">
-        <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 sm:gap-4">
+    <div
+      className="w-full lg:h-[calc(100vh-120px)] lg:overflow-hidden pb-4 pt-3 flex flex-col animate-fadeIn bg-cover bg-center bg-no-repeat relative"
+      style={{
+        backgroundImage: "url('https://png.pngtree.com/thumb_back/fh260/background/20231227/pngtree-hand-drawn-aquarelle-texture-light-green-gradient-watercolor-vector-background-with-image_13880407.png')",
+        backgroundAttachment: 'fixed',
+        backgroundColor: '#eaf4ee'
+      }}
+    >
+      {/* Top Search & Filter Bar (Fixed / Pinned) */}
+      <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 mb-3 shrink-0">
+        <div className="p-3.5 sm:p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 sm:gap-4">
           {/* Keyword Search Input */}
           <div className="relative flex-1">
             <svg className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -5855,7 +5512,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
               value={searchQuery}
               onChange={e => { setSearchQuery(e.target.value); setCurrentPage(1); }}
               placeholder={isTamil ? "கட்டுரைகளில் தலைப்பு, ஆசிரியர், முக்கிய சொல் தேடுக (Ctrl + K)..." : "Search articles by title, author, keyword, or ARN..."}
-              className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white placeholder-slate-400 text-xs sm:text-sm font-medium focus:outline-none focus:border-brandBlue-500 transition-colors"
+              className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white placeholder-slate-400 text-xs sm:text-sm font-medium focus:outline-none focus:border-[#4A9E2C] transition-colors"
             />
             {searchQuery && (
               <button
@@ -5874,14 +5531,14 @@ function ArticlesPage({ onNavigate, onShowToast }) {
             <button
               type="button"
               onClick={() => setIsMobileFiltersOpen(true)}
-              className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-brandBlue-500/10 text-brandBlue-600 dark:text-brandBlue-400 border border-brandBlue-500/30 text-xs font-extrabold shadow-sm transition-all"
+              className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-brandBlue-500/10 text-[#4A9E2C] dark:text-[#4ade80] border border-[#4A9E2C]/30 text-xs font-extrabold shadow-sm transition-all"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
               </svg>
               <span>{isTamil ? 'வடிகட்டிகள்' : 'Filters'}</span>
               {(selectedCategories.length > 0 || selectedPublishers.length > 0 || dateRange !== 'all' || selectedLanguage !== 'both') && (
-                <span className="w-5 h-5 rounded-full bg-brandBlue-600 text-white text-[10px] font-black flex items-center justify-center">
+                <span className="w-5 h-5 rounded-full bg-[#4A9E2C] text-white text-[10px] font-black flex items-center justify-center">
                   {selectedCategories.length + selectedPublishers.length + (dateRange !== 'all' ? 1 : 0) + (selectedLanguage !== 'both' ? 1 : 0)}
                 </span>
               )}
@@ -5891,15 +5548,15 @@ function ArticlesPage({ onNavigate, onShowToast }) {
       </div>
 
       {/* Main Grid: Left Sidebar Filters + Main Results Column */}
-      <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
+      <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 flex-1 min-h-0 lg:overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:h-full lg:overflow-hidden items-stretch">
+
           {/* ================= LEFT SIDEBAR — FILTERS (Sticky on Desktop) ================= */}
-          <aside className="hidden lg:block lg:col-span-3 xl:col-span-3 sticky top-24 z-10 space-y-6">
-            <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm max-h-[calc(100vh-120px)] overflow-y-auto no-scrollbar">
+          <aside className="hidden lg:flex lg:flex-col lg:col-span-3 xl:col-span-3 lg:h-full shrink-0 space-y-4">
+            <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm h-full overflow-y-auto no-scrollbar">
               <div className="flex items-center justify-between pb-3 mb-4 border-b border-slate-200/80 dark:border-slate-800">
                 <div className="flex items-center gap-2">
-                  <svg className="w-4 h-4 text-brandBlue-600 dark:text-brandBlue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 text-[#4A9E2C] dark:text-[#4ade80]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                   </svg>
                   <h3 className="text-sm font-black text-slate-900 dark:text-slate-100 uppercase tracking-wider">
@@ -5910,7 +5567,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                   <button
                     type="button"
                     onClick={resetAllFilters}
-                    className="text-[11px] font-black text-brandBlue-600 dark:text-brandBlue-400 hover:underline"
+                    className="text-[11px] font-black text-[#4A9E2C] dark:text-[#4ade80] hover:underline"
                   >
                     {isTamil ? 'மீட்டமை' : 'Reset'}
                   </button>
@@ -5922,8 +5579,8 @@ function ArticlesPage({ onNavigate, onShowToast }) {
           </aside>
 
           {/* ================= MAIN COLUMN — RESULTS LIST ================= */}
-          <main className="lg:col-span-9 xl:col-span-9 space-y-4" ref={resultsTopRef}>
-            
+          <main className="lg:col-span-9 xl:col-span-9 lg:h-full lg:overflow-y-auto space-y-4 pr-1 scroll-smooth" ref={resultsTopRef}>
+
             {/* Main Column Top Control Bar: Results Count & Sort Dropdown */}
             <div className="p-3.5 sm:p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center gap-2">
@@ -5947,7 +5604,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                   id="articlesSortDropdown"
                   value={sortBy}
                   onChange={e => { setSortBy(e.target.value); setCurrentPage(1); }}
-                  className="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 text-xs font-bold focus:outline-none focus:border-brandBlue-500 cursor-pointer"
+                  className="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 text-xs font-bold focus:outline-none focus:border-[#4A9E2C] cursor-pointer"
                 >
                   <option value="newest">{isTamil ? 'சமீபத்தியவை (Newest first)' : 'Newest first'}</option>
                   <option value="views">{isTamil ? 'அதிகம் வாசிக்கப்பட்டவை (Most read)' : 'Most read'}</option>
@@ -5965,7 +5622,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                   return (
                     <span
                       key={catId}
-                      className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-brandBlue-500/10 text-brandBlue-700 dark:text-brandBlue-300 border border-brandBlue-500/30"
+                      className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#4A9E2C]/10 text-[#4A9E2C] dark:text-brandBlue-300 border border-[#4A9E2C]/30"
                     >
                       <span>{isTamil ? catObj?.labelTa : catObj?.labelEn}</span>
                       <button
@@ -6074,7 +5731,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                   <button
                     type="button"
                     onClick={resetAllFilters}
-                    className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-brandBlue-600 text-white text-xs font-black shadow-md hover:bg-brandBlue-700 transition-all"
+                    className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-[#4A9E2C] text-white text-xs font-black shadow-md hover:bg-brandBlue-700 transition-all"
                   >
                     <span>{isTamil ? 'வடிகட்டிகளை மீட்டமை' : 'Reset All Filters'}</span>
                   </button>
@@ -6102,7 +5759,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                     >
                       {/* Row 1: Small Category Badge + Publish Date */}
                       <div className="flex items-center gap-2 text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                        <span className="px-2.5 py-0.5 rounded-md bg-brandBlue-500/10 text-brandBlue-700 dark:text-brandBlue-300 font-black text-[10px]">
+                        <span className="px-2.5 py-0.5 rounded-md bg-[#4A9E2C]/10 text-[#4A9E2C] dark:text-brandBlue-300 font-black text-[10px]">
                           {categoryName}
                         </span>
                         <span>·</span>
@@ -6154,7 +5811,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                       {excerpt && (
                         <p className="text-xs sm:text-[13px] text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed font-normal">
                           {excerpt}
-                          <span className="inline-flex items-center ml-1 font-bold text-brandBlue-600 dark:text-brandBlue-400 group-hover:underline">
+                          <span className="inline-flex items-center ml-1 font-bold text-[#4A9E2C] dark:text-[#4ade80] group-hover:underline">
                             {isTamil ? 'மேலும் படிக்க →' : 'Read More →'}
                           </span>
                         </p>
@@ -6179,11 +5836,10 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                             type="button"
                             onClick={(e) => handleBookmarkClick(e, article)}
                             title={isArticleSaved ? (isTamil ? 'புக்மார்க்கிலிருந்து நீக்கு' : 'Remove Bookmark') : (isTamil ? 'புக்மார்க் செய்' : 'Bookmark Article')}
-                            className={`p-1.5 rounded-lg border transition-all ${
-                              isArticleSaved
+                            className={`p-1.5 rounded-lg border transition-all ${isArticleSaved
                                 ? 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30'
                                 : 'bg-slate-50 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 hover:text-amber-600 hover:border-amber-500/30 border-slate-200/80 dark:border-slate-700'
-                            }`}
+                              }`}
                             aria-label="Bookmark"
                           >
                             <svg className="w-3.5 h-3.5" fill={isArticleSaved ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24">
@@ -6196,7 +5852,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                             type="button"
                             onClick={(e) => handleShareArticle(e, article)}
                             title={isTamil ? 'பகிர்' : 'Share Article'}
-                            className="p-1.5 rounded-lg bg-slate-50 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 hover:text-brandBlue-600 hover:border-brandBlue-500/30 border border-slate-200/80 dark:border-slate-700 transition-all"
+                            className="p-1.5 rounded-lg bg-slate-50 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 hover:text-brandBlue-600 hover:border-[#4A9E2C]/30 border border-slate-200/80 dark:border-slate-700 transition-all"
                             aria-label="Share"
                           >
                             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -6257,11 +5913,10 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                           key={pageNum}
                           type="button"
                           onClick={() => handlePageChange(pageNum)}
-                          className={`w-8 h-8 rounded-xl text-xs font-black transition-all ${
-                            isCur
-                              ? 'bg-brandBlue-600 text-white shadow-md shadow-brandBlue-600/30 scale-105'
+                          className={`w-8 h-8 rounded-xl text-xs font-black transition-all ${isCur
+                              ? 'bg-[#4A9E2C] text-white shadow-md shadow-brandBlue-600/30 scale-105'
                               : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800'
-                          }`}
+                            }`}
                         >
                           {pageNum}
                         </button>
@@ -6300,7 +5955,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
               {/* Drawer Header */}
               <div className="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-800">
                 <div className="flex items-center gap-2">
-                  <svg className="w-5 h-5 text-brandBlue-600 dark:text-brandBlue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 text-[#4A9E2C] dark:text-[#4ade80]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                   </svg>
                   <h3 className="text-base font-black text-slate-900 dark:text-white uppercase tracking-wider">
@@ -6418,7 +6073,7 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
                   setCategoryArticles(catJson.data);
                 }
               })
-              .catch(() => {});
+              .catch(() => { });
           }
         }
       } catch (err) {
@@ -6446,7 +6101,7 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
             setArticle(prev => prev ? { ...prev, views: json.views, viewCount: json.views } : prev);
           }
         })
-        .catch(() => {});
+        .catch(() => { });
     }
   }, [slug]);
 
@@ -6501,13 +6156,13 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
       try {
         window.speechSynthesis.getVoices();
         const onVoicesChanged = () => {
-          try { window.speechSynthesis.getVoices(); } catch {}
+          try { window.speechSynthesis.getVoices(); } catch { }
         };
         window.speechSynthesis.addEventListener('voiceschanged', onVoicesChanged);
         return () => {
           window.speechSynthesis.removeEventListener('voiceschanged', onVoicesChanged);
         };
-      } catch {}
+      } catch { }
     }
   }, []);
 
@@ -6521,7 +6176,7 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
       // Prioritize explicit Tamil voices (ta-IN, Google தமிழ், Microsoft Valluvar/Pallavi/Latha, Apple Tamil)
       const exactTa = voices.find(v => v.lang && (v.lang.toLowerCase() === 'ta-in' || v.lang.toLowerCase() === 'ta_in'));
       if (exactTa) return exactTa;
-      
+
       const anyTa = voices.find(v => {
         const l = (v.lang || '').toLowerCase();
         const n = (v.name || '').toLowerCase();
@@ -6532,7 +6187,7 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
       // English: Indian English en-IN or standard English
       const enIn = voices.find(v => v.lang && (v.lang.toLowerCase() === 'en-in' || v.lang.toLowerCase() === 'en_in' || (v.name || '').toLowerCase().includes('india')));
       if (enIn) return enIn;
-      
+
       const anyEn = voices.find(v => (v.lang || '').toLowerCase().startsWith('en'));
       if (anyEn) return anyEn;
     }
@@ -6579,6 +6234,7 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
       .replace(/&quot;/g, '"')
       .replace(/&#39;/g, "'")
       .replace(/&lt;/g, '<')
+
       .replace(/&gt;/g, '>')
       .replace(/\s+/g, ' ')
       .trim();
@@ -6772,7 +6428,7 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
       try {
         await navigator.share({ title: titleText, text: titleText, url });
         return;
-      } catch {}
+      } catch { }
     }
 
     try {
@@ -6837,17 +6493,16 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
 
   return (
     <div className={`min-h-screen pb-20 animate-fadeIn relative transition-colors duration-300 ${isReadingMode ? 'bg-[#fbfbf9] dark:bg-[#0a0f18]' : 'bg-slate-50/50 dark:bg-slate-950'}`}>
-      
+
       {/* ================= 1. STICKY "NOW READING" BAR ================= */}
       <div
-        className={`fixed top-0 left-0 right-0 z-40 bg-slate-950/95 text-white backdrop-blur-md border-b border-slate-800/80 shadow-md transition-all duration-300 ${
-          showStickyBar ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'
-        }`}
+        className={`fixed top-0 left-0 right-0 z-40 bg-slate-950/95 text-white backdrop-blur-md border-b border-slate-800/80 shadow-md transition-all duration-300 ${showStickyBar ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'
+          }`}
       >
         <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex items-center justify-between gap-4">
           {/* Left: Now Reading Label + Article Title */}
           <div className="flex-1 min-w-0 flex items-center gap-3">
-            <span className="hidden sm:inline-block text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-brandBlue-600 text-white shrink-0">
+            <span className="hidden sm:inline-block text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-[#4A9E2C] text-white shrink-0">
               {isTamil ? 'இப்போது வாசிப்பது' : 'Now Reading'}
             </span>
             <h4 className="text-xs sm:text-sm font-extrabold text-slate-100 truncate font-serif" title={title}>
@@ -6927,11 +6582,10 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
             setIsReadingMode(prev => !prev);
             if (onShowToast) onShowToast(!isReadingMode ? (isTamil ? 'வாசிப்பு முறை இயக்கப்பட்டது' : 'Reading Mode Enabled') : (isTamil ? 'இயல்பு முறை' : 'Standard View'));
           }}
-          className={`p-2.5 rounded-xl transition-all ${
-            isReadingMode
-              ? 'bg-brandBlue-600 text-white shadow-md'
+          className={`p-2.5 rounded-xl transition-all ${isReadingMode
+              ? 'bg-[#4A9E2C] text-white shadow-md'
               : 'hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-brandBlue-600'
-          }`}
+            }`}
           title={isTamil ? 'வாசிப்பு முறை (Focus Mode)' : 'Toggle Reading Focus Mode'}
           aria-label="Reading Mode"
         >
@@ -6958,11 +6612,10 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
         <button
           type="button"
           onClick={() => handleToggleListen()}
-          className={`p-2.5 rounded-xl transition-all ${
-            (isPlaying || isSpeaking)
+          className={`p-2.5 rounded-xl transition-all ${(isPlaying || isSpeaking)
               ? 'bg-amber-500 text-slate-950 animate-pulse shadow-md font-bold'
               : 'hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-amber-500'
-          }`}
+            }`}
           title={(isPlaying || isSpeaking) ? (isTamil ? 'ஆடியோவை நிறுத்து' : 'Stop Audio Read-Aloud') : (isTamil ? 'கட்டுரையைக் கேள் (Audio Listen)' : 'Listen to Article (Audio)')}
           aria-label="Listen"
         >
@@ -6993,11 +6646,10 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
             toggleBookmark(article);
             if (onShowToast) onShowToast(!isSavedArticle ? (isTamil ? 'புக்மார்க்குகளில் சேமிக்கப்பட்டது!' : 'Saved to Bookmarks!') : (isTamil ? 'நீக்கப்பட்டது' : 'Removed from Bookmarks'));
           }}
-          className={`p-2.5 rounded-xl transition-all ${
-            isSavedArticle
+          className={`p-2.5 rounded-xl transition-all ${isSavedArticle
               ? 'bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30'
               : 'hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-amber-500'
-          }`}
+            }`}
           title={isTamil ? 'புக்மார்க்' : 'Bookmark'}
           aria-label="Bookmark"
         >
@@ -7088,7 +6740,7 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
                 : 'Muthaleetu Thisai leverages Gemini AI to extract key investment insights, regulatory updates, and actionable takeaways into plain-language bulleted summaries.'}
             </p>
             <div className="pt-2">
-              <button onClick={() => setShowAiModal(false)} className="w-full py-2 rounded-xl bg-brandBlue-600 text-white font-bold text-xs">
+              <button onClick={() => setShowAiModal(false)} className="w-full py-2 rounded-xl bg-[#4A9E2C] text-white font-bold text-xs">
                 {isTamil ? 'புரிந்தது' : 'Got it'}
               </button>
             </div>
@@ -7098,7 +6750,7 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
 
       {/* ================= MAIN ARTICLE WRAPPER ================= */}
       <div className="w-full max-w-[96vw] 2xl:max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 pt-4">
-        
+
         {/* Breadcrumb & Navigation Top */}
         <div className="flex items-center justify-between gap-4 py-2 mb-4 text-xs font-bold text-slate-500 dark:text-slate-400">
           <button
@@ -7109,7 +6761,7 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
             <span>←</span>
             <span>{isTamil ? 'அனைத்து கட்டுரைகள்' : 'All Articles'}</span>
           </button>
-          <span className="px-3 py-1 rounded-full text-[10px] font-black tracking-wider bg-brandBlue-500/10 text-brandBlue-700 dark:text-brandBlue-300 border border-brandBlue-500/30">
+          <span className="px-3 py-1 rounded-full text-[10px] font-black tracking-wider bg-[#4A9E2C]/10 text-[#4A9E2C] dark:text-brandBlue-300 border border-[#4A9E2C]/30">
             {categoryLabel}
           </span>
         </div>
@@ -7157,11 +6809,10 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
                 <button
                   type="button"
                   onClick={() => handleToggleListen('ta')}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-extrabold transition-all ${
-                    (isPlaying || isSpeaking) && audioVoiceLang === 'ta'
+                  className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-extrabold transition-all ${(isPlaying || isSpeaking) && audioVoiceLang === 'ta'
                       ? 'bg-amber-500 text-slate-950 animate-pulse shadow font-black ring-2 ring-amber-400'
-                      : 'bg-brandBlue-600/10 hover:bg-brandBlue-600/20 text-brandBlue-700 dark:text-brandBlue-300 border border-brandBlue-500/30'
-                  }`}
+                      : 'bg-brandBlue-600/10 hover:bg-brandBlue-600/20 text-brandBlue-700 dark:text-brandBlue-300 border border-[#4A9E2C]/30'
+                    }`}
                   title="தமிழில் ஆடியோவாக கேள் (Tamil Audio)"
                 >
                   <span>{(isPlaying || isSpeaking) && audioVoiceLang === 'ta' ? '⏹' : '🔊'}</span>
@@ -7172,11 +6823,10 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
                 <button
                   type="button"
                   onClick={() => handleToggleListen('en')}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-extrabold transition-all ${
-                    (isPlaying || isSpeaking) && audioVoiceLang === 'en'
+                  className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-extrabold transition-all ${(isPlaying || isSpeaking) && audioVoiceLang === 'en'
                       ? 'bg-amber-500 text-slate-950 animate-pulse shadow font-black ring-2 ring-amber-400'
                       : 'bg-slate-200/80 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700'
-                  }`}
+                    }`}
                   title="Listen in English Audio"
                 >
                   <span>{(isPlaying || isSpeaking) && audioVoiceLang === 'en' ? '⏹' : '🔊'}</span>
@@ -7187,7 +6837,7 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
               <button
                 type="button"
                 onClick={() => setShowAiModal(true)}
-                className="text-[11px] font-bold text-brandBlue-600 dark:text-brandBlue-400 hover:underline inline-flex items-center gap-1"
+                className="text-[11px] font-bold text-[#4A9E2C] dark:text-[#4ade80] hover:underline inline-flex items-center gap-1"
               >
                 <span>{isTamil ? 'விவரம் →' : 'Learn more →'}</span>
               </button>
@@ -7251,10 +6901,10 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
 
         {/* 2-Column Grid on Desktop: Main Body (Left/Center) + Right Sidebar */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
+
           {/* ================= 5. ARTICLE BODY ================= */}
           <div className="lg:col-span-8 xl:col-span-8 space-y-6">
-            
+
             {/* Main Text Content */}
             <div className={`p-6 sm:p-8 md:p-10 rounded-3xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm transition-all ${isReadingMode ? 'text-lg sm:text-xl leading-loose font-serif' : 'text-base sm:text-[17px] leading-relaxed'}`}>
               <div
@@ -7343,7 +6993,7 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
                         className="pt-3.5 first:pt-0 group cursor-pointer space-y-1.5"
                       >
                         <div className="flex items-center gap-2 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase">
-                          <span className="text-brandBlue-600 dark:text-brandBlue-400">{relArt.category || 'FINANCE'}</span>
+                          <span className="text-[#4A9E2C] dark:text-[#4ade80]">{relArt.category || 'FINANCE'}</span>
                           <span>·</span>
                           <span className="font-mono">{relDate}</span>
                         </div>
@@ -7360,7 +7010,7 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
                 <button
                   type="button"
                   onClick={() => onNavigate('#/articles')}
-                  className="w-full py-2 text-center text-xs font-black text-brandBlue-600 dark:text-brandBlue-400 hover:underline"
+                  className="w-full py-2 text-center text-xs font-black text-[#4A9E2C] dark:text-[#4ade80] hover:underline"
                 >
                   {isTamil ? 'அனைத்து கட்டுரைகளையும் காண்க →' : 'See more articles →'}
                 </button>
@@ -7458,7 +7108,7 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
       {showAudioPlayer && (
         <div className="fixed bottom-0 left-0 right-0 z-50 bg-slate-950/95 text-white backdrop-blur-xl border-t border-amber-500/40 shadow-[0_-10px_30px_rgba(0,0,0,0.5)] px-4 py-3 sm:py-3.5 transition-all animate-fadeIn">
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4">
-            
+
             {/* Left: Voice Status & Language Switcher */}
             <div className="flex items-center justify-between w-full md:w-auto gap-3">
               <div className="flex items-center gap-2.5">
@@ -7489,22 +7139,20 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
                 <button
                   type="button"
                   onClick={() => handleToggleListen('ta')}
-                  className={`px-2.5 py-0.5 rounded-full text-[10px] font-black transition-all ${
-                    audioVoiceLang === 'ta'
+                  className={`px-2.5 py-0.5 rounded-full text-[10px] font-black transition-all ${audioVoiceLang === 'ta'
                       ? 'bg-amber-500 text-slate-950 shadow'
                       : 'text-slate-400 hover:text-white'
-                  }`}
+                    }`}
                 >
                   தமிழ்
                 </button>
                 <button
                   type="button"
                   onClick={() => handleToggleListen('en')}
-                  className={`px-2.5 py-0.5 rounded-full text-[10px] font-black transition-all ${
-                    audioVoiceLang === 'en'
+                  className={`px-2.5 py-0.5 rounded-full text-[10px] font-black transition-all ${audioVoiceLang === 'en'
                       ? 'bg-amber-500 text-slate-950 shadow'
                       : 'text-slate-400 hover:text-white'
-                  }`}
+                    }`}
                 >
                   English
                 </button>
@@ -7583,11 +7231,10 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
                     key={spd}
                     type="button"
                     onClick={() => handleChangeSpeed(spd)}
-                    className={`px-1.5 py-0.5 rounded transition-all ${
-                      playbackSpeed === spd
+                    className={`px-1.5 py-0.5 rounded transition-all ${playbackSpeed === spd
                         ? 'bg-amber-500 text-slate-950 font-black'
                         : 'text-slate-400 hover:text-white'
-                    }`}
+                      }`}
                   >
                     {spd}x
                   </button>
@@ -7614,11 +7261,10 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
         <button
           type="button"
           onClick={() => handleToggleListen(audioVoiceLang || 'ta')}
-          className={`px-3 py-1.5 rounded-full text-xs font-black flex items-center gap-1 transition-all ${
-            (isPlaying || isSpeaking)
+          className={`px-3 py-1.5 rounded-full text-xs font-black flex items-center gap-1 transition-all ${(isPlaying || isSpeaking)
               ? 'bg-amber-500 text-slate-950 animate-pulse shadow-md font-bold'
-              : 'bg-brandBlue-600 text-white shadow-sm'
-          }`}
+              : 'bg-[#4A9E2C] text-white shadow-sm'
+            }`}
           title="Audio Listen"
         >
           <span>{(isPlaying || isSpeaking) ? '⏹' : '🔊'}</span>
@@ -7631,11 +7277,10 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
             toggleBookmark(article);
             if (onShowToast) onShowToast(!isSavedArticle ? (isTamil ? 'சேமிக்கப்பட்டது!' : 'Saved!') : (isTamil ? 'நீக்கப்பட்டது' : 'Removed'));
           }}
-          className={`p-2 rounded-xl text-xs font-bold transition-all ${
-            isSavedArticle
+          className={`p-2 rounded-xl text-xs font-bold transition-all ${isSavedArticle
               ? 'bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30'
               : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200'
-          }`}
+            }`}
           title="Bookmark"
           aria-label="Bookmark"
         >
@@ -7670,11 +7315,10 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
             setIsReadingMode(prev => !prev);
             if (onShowToast) onShowToast(!isReadingMode ? (isTamil ? 'வாசிப்பு முறை' : 'Focus View') : (isTamil ? 'இயல்பு பார்வை' : 'Standard View'));
           }}
-          className={`p-2 rounded-xl text-xs font-bold transition-all ${
-            isReadingMode
-              ? 'bg-brandBlue-600 text-white'
+          className={`p-2 rounded-xl text-xs font-bold transition-all ${isReadingMode
+              ? 'bg-[#4A9E2C] text-white'
               : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200'
-          }`}
+            }`}
           title="Focus Mode"
           aria-label="Focus Mode"
         >
@@ -7717,7 +7361,7 @@ function ArticleCommentsSection({ slug, article, isTamil, onShowToast }) {
   const [replyingTo, setReplyingTo] = useState(null);
   const [replyText, setReplyText] = useState('');
   const [isSubmittingReply, setIsSubmittingReply] = useState(false);
-  
+
   // Track liked comments to enforce exactly 1 like per user
   const [likedMap, setLikedMap] = useState(() => {
     try {
@@ -7835,23 +7479,23 @@ function ArticleCommentsSection({ slug, article, isTamil, onShowToast }) {
   const handleLike = async (commentId) => {
     const isAlreadyLiked = Boolean(likedMap[commentId]);
     const nextLikedMap = { ...likedMap };
-    
+
     if (isAlreadyLiked) {
       delete nextLikedMap[commentId];
     } else {
       nextLikedMap[commentId] = true;
     }
     setLikedMap(nextLikedMap);
-    
+
     try {
       localStorage.setItem('muthaleetu_liked_comments', JSON.stringify(nextLikedMap));
-    } catch {}
+    } catch { }
 
     // Optimistic UI update
     setComments(prev => prev.map(c => {
       if (c.id === commentId) {
-        const nextCount = isAlreadyLiked 
-          ? Math.max(0, (c.likesCount || 0) - 1) 
+        const nextCount = isAlreadyLiked
+          ? Math.max(0, (c.likesCount || 0) - 1)
           : (c.likesCount || 0) + 1;
         return { ...c, likesCount: nextCount };
       }
@@ -7983,19 +7627,17 @@ function ArticleCommentsSection({ slug, article, isTamil, onShowToast }) {
             return (
               <div key={comment.id} className="space-y-3">
                 {/* Single Comment Card */}
-                <div className={`p-5 rounded-2xl border transition-all ${
-                  isPublisher 
-                    ? 'bg-gradient-to-r from-emerald-500/10 via-emerald-500/5 to-transparent border-emerald-500/30 dark:border-emerald-500/30' 
+                <div className={`p-5 rounded-2xl border transition-all ${isPublisher
+                    ? 'bg-gradient-to-r from-emerald-500/10 via-emerald-500/5 to-transparent border-emerald-500/30 dark:border-emerald-500/30'
                     : 'bg-slate-50 dark:bg-slate-950/70 border-slate-200 dark:border-slate-800'
-                }`}>
+                  }`}>
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-3">
                       {comment.userAvatar ? (
                         <img src={comment.userAvatar} alt="" className="w-9 h-9 rounded-xl object-cover border border-amber-500/30 shrink-0" onError={(e) => { e.target.style.display = 'none'; }} />
                       ) : (
-                        <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-black text-xs shrink-0 ${
-                          isPublisher ? 'bg-emerald-600 text-white shadow-md' : 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
-                        }`}>
+                        <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-black text-xs shrink-0 ${isPublisher ? 'bg-emerald-600 text-white shadow-md' : 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
+                          }`}>
                           {(comment.userName || 'R').charAt(0).toUpperCase()}
                         </div>
                       )}
@@ -8034,11 +7676,10 @@ function ArticleCommentsSection({ slug, article, isTamil, onShowToast }) {
                   <div className="flex items-center gap-4 mt-3 pt-3 border-t border-slate-200/60 dark:border-slate-800 text-xs font-bold">
                     <button
                       onClick={() => handleLike(comment.id)}
-                      className={`flex items-center gap-1.5 transition-colors px-2 py-1 rounded-lg ${
-                        likedMap[comment.id] 
-                          ? 'text-red-500 bg-red-500/10 font-black' 
+                      className={`flex items-center gap-1.5 transition-colors px-2 py-1 rounded-lg ${likedMap[comment.id]
+                          ? 'text-red-500 bg-red-500/10 font-black'
                           : 'text-slate-500 hover:text-red-500 hover:bg-slate-100 dark:hover:bg-slate-800'
-                      }`}
+                        }`}
                       title={likedMap[comment.id] ? (isTamil ? 'விருப்பத்தை நீக்குக' : 'Unlike') : (isTamil ? 'விருப்பம்' : 'Like')}
                     >
                       <span className={likedMap[comment.id] ? 'scale-110' : ''}>{likedMap[comment.id] ? '❤️' : '🤍'}</span>
@@ -8096,20 +7737,18 @@ function ArticleCommentsSection({ slug, article, isTamil, onShowToast }) {
                       return (
                         <div
                           key={reply.id}
-                          className={`p-4 rounded-xl border text-xs sm:text-sm ${
-                            isReplyPublisher
+                          className={`p-4 rounded-xl border text-xs sm:text-sm ${isReplyPublisher
                               ? 'bg-gradient-to-r from-emerald-500/15 via-emerald-500/5 to-transparent border-emerald-500/30'
                               : 'bg-slate-50 dark:bg-slate-950/70 border-slate-200 dark:border-slate-800'
-                          }`}
+                            }`}
                         >
                           <div className="flex items-start justify-between gap-3">
                             <div className="flex items-center gap-2.5">
                               {reply.userAvatar ? (
                                 <img src={reply.userAvatar} alt="" className="w-7 h-7 rounded-lg object-cover border border-amber-500/30 shrink-0" onError={(e) => { e.target.style.display = 'none'; }} />
                               ) : (
-                                <div className={`w-7 h-7 rounded-lg flex items-center justify-center font-black text-[10px] shrink-0 ${
-                                  isReplyPublisher ? 'bg-emerald-600 text-white' : 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
-                                }`}>
+                                <div className={`w-7 h-7 rounded-lg flex items-center justify-center font-black text-[10px] shrink-0 ${isReplyPublisher ? 'bg-emerald-600 text-white' : 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
+                                  }`}>
                                   {(reply.userName || 'R').charAt(0).toUpperCase()}
                                 </div>
                               )}
@@ -8148,11 +7787,10 @@ function ArticleCommentsSection({ slug, article, isTamil, onShowToast }) {
                           <div className="flex items-center gap-4 mt-2.5 pt-2 border-t border-slate-200/50 dark:border-slate-800 text-[11px] font-bold">
                             <button
                               onClick={() => handleLike(reply.id)}
-                              className={`flex items-center gap-1 transition-colors px-2 py-1 rounded-lg ${
-                                likedMap[reply.id] 
-                                  ? 'text-red-500 bg-red-500/10 font-black' 
+                              className={`flex items-center gap-1 transition-colors px-2 py-1 rounded-lg ${likedMap[reply.id]
+                                  ? 'text-red-500 bg-red-500/10 font-black'
                                   : 'text-slate-500 hover:text-red-500 hover:bg-slate-100 dark:hover:bg-slate-800'
-                              }`}
+                                }`}
                               title={likedMap[reply.id] ? (isTamil ? 'விருப்பத்தை நீக்குக' : 'Unlike') : (isTamil ? 'விருப்பம்' : 'Like')}
                             >
                               <span className={likedMap[reply.id] ? 'scale-110' : ''}>{likedMap[reply.id] ? '❤️' : '🤍'}</span>
@@ -8554,9 +8192,9 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
     if (!publisherSearch.trim()) return true;
     const q = publisherSearch.toLowerCase();
     return (p.display_name && p.display_name.toLowerCase().includes(q)) ||
-           (p.email && p.email.toLowerCase().includes(q)) ||
-           (p.arn_number && p.arn_number.toLowerCase().includes(q)) ||
-           (p.title && p.title.toLowerCase().includes(q));
+      (p.email && p.email.toLowerCase().includes(q)) ||
+      (p.arn_number && p.arn_number.toLowerCase().includes(q)) ||
+      (p.title && p.title.toLowerCase().includes(q));
   });
 
   return (
@@ -8578,41 +8216,41 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
               </button>
             </div>
             <h1 className="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 dark:text-white font-serif tracking-tight leading-snug">
-              {isAdmin 
+              {isAdmin
                 ? (isTamil ? 'நிர்வாகம் & வெளியீட்டாளர் மேலாண்மை' : 'Admin & Content Management')
                 : (isTamil ? 'வெளியீட்டாளர் கட்டுரை அரங்கம்' : 'Publisher Article Studio')}
             </h1>
             <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
-              {isTamil 
-                ? 'கட்டுரைகளை எழுதுங்கள், திருத்துங்கள், வெளியீட்டாளர்களை நிர்வகியுங்கள்.' 
+              {isTamil
+                ? 'கட்டுரைகளை எழுதுங்கள், திருத்துங்கள், வெளியீட்டாளர்களை நிர்வகியுங்கள்.'
                 : 'Create articles, manage certified financial publishers, and curate investor content.'}
             </p>
           </div>
 
           <div className="flex items-center gap-3 shrink-0">
-          {isAdmin && (
-            <button
-              onClick={() => {
-                setCreatedCredentials(null);
-                generateStrongPassword();
-                setIsCreateModalOpen(true);
-              }}
-              className="px-5 py-3 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100 font-black text-xs sm:text-sm shadow-md transition-all flex items-center gap-2 shrink-0"
-            >
-              <span>👥</span>
-              <span>{isTamil ? '+ புதிய வெளியீட்டாளர்' : '+ Create Publisher'}</span>
-            </button>
-          )}
+            {isAdmin && (
+              <button
+                onClick={() => {
+                  setCreatedCredentials(null);
+                  generateStrongPassword();
+                  setIsCreateModalOpen(true);
+                }}
+                className="px-5 py-3 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100 font-black text-xs sm:text-sm shadow-md transition-all flex items-center gap-2 shrink-0"
+              >
+                <span>👥</span>
+                <span>{isTamil ? '+ புதிய வெளியீட்டாளர்' : '+ Create Publisher'}</span>
+              </button>
+            )}
 
-          <button
-            onClick={() => onNavigate('#/admin/articles/new')}
-            className="px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs sm:text-sm shadow-xl hover:scale-105 transition-all flex items-center gap-2 shrink-0"
-          >
-            <span>✍️</span>
-            <span>{isTamil ? 'புதிய கட்டுரை எழுதுக' : '+ Write New Article'}</span>
-          </button>
+            <button
+              onClick={() => onNavigate('#/admin/articles/new')}
+              className="px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs sm:text-sm shadow-xl hover:scale-105 transition-all flex items-center gap-2 shrink-0"
+            >
+              <span>✍️</span>
+              <span>{isTamil ? 'புதிய கட்டுரை எழுதுக' : '+ Write New Article'}</span>
+            </button>
+          </div>
         </div>
-      </div>
       </div>
 
       {/* Main Tab Navigation (Admin Only) */}
@@ -8620,11 +8258,10 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
         <div className="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-2 overflow-x-auto">
           <button
             onClick={() => setActiveTab('articles')}
-            className={`px-5 py-2.5 rounded-2xl text-xs font-black transition-all flex items-center gap-2 shrink-0 ${
-              activeTab === 'articles'
+            className={`px-5 py-2.5 rounded-2xl text-xs font-black transition-all flex items-center gap-2 shrink-0 ${activeTab === 'articles'
                 ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
                 : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
-            }`}
+              }`}
           >
             <span>✍️</span>
             <span>{isTamil ? 'கட்டுரைகள் ஸ்டுடியோ' : 'Articles Studio'} ({articles.length})</span>
@@ -8632,11 +8269,10 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
 
           <button
             onClick={() => setActiveTab('publishers')}
-            className={`px-5 py-2.5 rounded-2xl text-xs font-black transition-all flex items-center gap-2 shrink-0 ${
-              activeTab === 'publishers'
+            className={`px-5 py-2.5 rounded-2xl text-xs font-black transition-all flex items-center gap-2 shrink-0 ${activeTab === 'publishers'
                 ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
                 : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
-            }`}
+              }`}
           >
             <span>👥</span>
             <span>{isTamil ? 'வெளியீட்டாளர்கள் & நிபுணர்கள்' : 'Publishers & Advisors'} ({publishers.length})</span>
@@ -8644,11 +8280,10 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
 
           <button
             onClick={() => setActiveTab('channels')}
-            className={`px-5 py-2.5 rounded-2xl text-xs font-black transition-all flex items-center gap-2 shrink-0 ${
-              activeTab === 'channels'
+            className={`px-5 py-2.5 rounded-2xl text-xs font-black transition-all flex items-center gap-2 shrink-0 ${activeTab === 'channels'
                 ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
                 : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
-            }`}
+              }`}
           >
             <span>🎬</span>
             <span>{isTamil ? 'சேனல் ஒப்புதல் வரிசை' : 'Channel Approvals'} ({channels.length})</span>
@@ -8656,11 +8291,10 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
 
           <button
             onClick={() => setActiveTab('videos')}
-            className={`px-5 py-2.5 rounded-2xl text-xs font-black transition-all flex items-center gap-2 shrink-0 ${
-              activeTab === 'videos'
+            className={`px-5 py-2.5 rounded-2xl text-xs font-black transition-all flex items-center gap-2 shrink-0 ${activeTab === 'videos'
                 ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
                 : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
-            }`}
+              }`}
           >
             <span>📹</span>
             <span>{isTamil ? 'வீடியோக்கள் மதிப்பாய்வு' : 'Video Moderation'} ({adminVideos.filter(v => v.status === 'pending').length})</span>
@@ -8784,11 +8418,10 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                           <button
                             onClick={() => handleTogglePublish(article)}
                             title="Click to toggle publish/draft status"
-                            className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider transition-all ${
-                              article.status === 'published'
+                            className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider transition-all ${article.status === 'published'
                                 ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/25'
                                 : 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 hover:bg-amber-500/25'
-                            }`}
+                              }`}
                           >
                             {article.status === 'published' ? '● Published' : '○ Draft'}
                           </button>
@@ -8969,11 +8602,10 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
 
                         {/* Role */}
                         <td className="px-6 py-4">
-                          <span className={`px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${
-                            pub.role === 'admin'
+                          <span className={`px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${pub.role === 'admin'
                               ? 'bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/30'
                               : 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30'
-                          }`}>
+                            }`}>
                             {pub.role || 'publisher'}
                           </span>
                         </td>
@@ -9255,31 +8887,28 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
               <span className="text-xs font-bold text-slate-500">{isTamil ? 'நிலை:' : 'Status:'}</span>
               <button
                 onClick={() => setChannelStatusFilter('pending')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${
-                  channelStatusFilter === 'pending'
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${channelStatusFilter === 'pending'
                     ? 'bg-amber-600 text-white'
                     : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
-                }`}
+                  }`}
               >
                 Pending Review
               </button>
               <button
                 onClick={() => setChannelStatusFilter('verified')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${
-                  channelStatusFilter === 'verified'
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${channelStatusFilter === 'verified'
                     ? 'bg-emerald-600 text-white'
                     : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
-                }`}
+                  }`}
               >
                 Verified Channels
               </button>
               <button
                 onClick={() => setChannelStatusFilter('all')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${
-                  channelStatusFilter === 'all'
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${channelStatusFilter === 'all'
                     ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-950'
                     : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
-                }`}
+                  }`}
               >
                 All Linked Channels
               </button>
@@ -9478,41 +9107,37 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
               <span className="text-xs font-bold text-slate-500">{isTamil ? 'நிலை:' : 'Status:'}</span>
               <button
                 onClick={() => setVideoStatusFilter('pending')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${
-                  videoStatusFilter === 'pending'
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${videoStatusFilter === 'pending'
                     ? 'bg-amber-600 text-white'
                     : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
-                }`}
+                  }`}
               >
                 Pending Review
               </button>
               <button
                 onClick={() => setVideoStatusFilter('published')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${
-                  videoStatusFilter === 'published'
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${videoStatusFilter === 'published'
                     ? 'bg-emerald-600 text-white'
                     : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
-                }`}
+                  }`}
               >
                 Published Live
               </button>
               <button
                 onClick={() => setVideoStatusFilter('rejected')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${
-                  videoStatusFilter === 'rejected'
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${videoStatusFilter === 'rejected'
                     ? 'bg-red-600 text-white'
                     : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
-                }`}
+                  }`}
               >
                 Rejected
               </button>
               <button
                 onClick={() => setVideoStatusFilter('all')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${
-                  videoStatusFilter === 'all'
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${videoStatusFilter === 'all'
                     ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-950'
                     : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
-                }`}
+                  }`}
               >
                 All Videos
               </button>
@@ -9999,9 +9624,8 @@ function PublisherOnboardingModal({ profile, onComplete, onClose }) {
             <button
               type="button"
               onClick={() => setStep(1)}
-              className={`flex-1 py-1.5 px-2 rounded-lg text-[11px] font-black transition-all flex items-center justify-center gap-1.5 ${
-                step === 1 ? 'bg-amber-500 text-slate-950 shadow' : 'bg-slate-900 text-slate-400 hover:text-slate-200'
-              }`}
+              className={`flex-1 py-1.5 px-2 rounded-lg text-[11px] font-black transition-all flex items-center justify-center gap-1.5 ${step === 1 ? 'bg-amber-500 text-slate-950 shadow' : 'bg-slate-900 text-slate-400 hover:text-slate-200'
+                }`}
             >
               <span>👤</span>
               <span className="truncate">1. Photo & Identity</span>
@@ -10009,9 +9633,8 @@ function PublisherOnboardingModal({ profile, onComplete, onClose }) {
             <button
               type="button"
               onClick={() => setStep(2)}
-              className={`flex-1 py-1.5 px-2 rounded-lg text-[11px] font-black transition-all flex items-center justify-center gap-1.5 ${
-                step === 2 ? 'bg-amber-500 text-slate-950 shadow' : 'bg-slate-900 text-slate-400 hover:text-slate-200'
-              }`}
+              className={`flex-1 py-1.5 px-2 rounded-lg text-[11px] font-black transition-all flex items-center justify-center gap-1.5 ${step === 2 ? 'bg-amber-500 text-slate-950 shadow' : 'bg-slate-900 text-slate-400 hover:text-slate-200'
+                }`}
             >
               <span>📝</span>
               <span className="truncate">2. Bio & Specialties</span>
@@ -10019,9 +9642,8 @@ function PublisherOnboardingModal({ profile, onComplete, onClose }) {
             <button
               type="button"
               onClick={() => setStep(3)}
-              className={`flex-1 py-1.5 px-2 rounded-lg text-[11px] font-black transition-all flex items-center justify-center gap-1.5 ${
-                step === 3 ? 'bg-amber-500 text-slate-950 shadow' : 'bg-slate-900 text-slate-400 hover:text-slate-200'
-              }`}
+              className={`flex-1 py-1.5 px-2 rounded-lg text-[11px] font-black transition-all flex items-center justify-center gap-1.5 ${step === 3 ? 'bg-amber-500 text-slate-950 shadow' : 'bg-slate-900 text-slate-400 hover:text-slate-200'
+                }`}
             >
               <span>📱</span>
               <span className="truncate">3. Social & Contact</span>
@@ -10138,11 +9760,10 @@ function PublisherOnboardingModal({ profile, onComplete, onClose }) {
                               key={idx}
                               type="button"
                               onClick={() => setAvatarUrl(preset)}
-                              className={`w-7 h-7 rounded-full overflow-hidden border transition-all ${
-                                avatarUrl === preset
+                              className={`w-7 h-7 rounded-full overflow-hidden border transition-all ${avatarUrl === preset
                                   ? 'border-amber-500 scale-110 shadow-md ring-2 ring-amber-500/40'
                                   : 'border-slate-300 dark:border-slate-700 opacity-70 hover:opacity-100 hover:scale-105'
-                              }`}
+                                }`}
                             >
                               <img src={preset} alt="" className="w-full h-full object-cover" />
                             </button>
@@ -10455,7 +10076,7 @@ function RichTextEditor({ value, onChange, placeholder, language = 'ta', minHeig
 
       {/* Toolbar */}
       <div className="p-2 border-b border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900/90 flex flex-wrap items-center gap-1.5 text-xs select-none">
-        
+
         {/* 1. History (Undo / Redo) */}
         <div className="flex items-center gap-0.5 bg-white dark:bg-slate-800 rounded-lg p-0.5 border border-slate-200/80 dark:border-slate-700/80">
           <button
@@ -10670,7 +10291,7 @@ function RichTextEditor({ value, onChange, placeholder, language = 'ta', minHeig
             onMouseDown={e => { e.preventDefault(); exec('insertUnorderedList'); }}
             className="w-7 h-7 rounded text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors flex items-center justify-center"
           >
-            <svg viewBox="0 0 16 16" className="w-3.5 h-3.5 fill-current"><circle cx="2" cy="4" r="1.5"/><rect x="5" y="3" width="10" height="2"/><circle cx="2" cy="8" r="1.5"/><rect x="5" y="7" width="10" height="2"/><circle cx="2" cy="12" r="1.5"/><rect x="5" y="11" width="10" height="2"/></svg>
+            <svg viewBox="0 0 16 16" className="w-3.5 h-3.5 fill-current"><circle cx="2" cy="4" r="1.5" /><rect x="5" y="3" width="10" height="2" /><circle cx="2" cy="8" r="1.5" /><rect x="5" y="7" width="10" height="2" /><circle cx="2" cy="12" r="1.5" /><rect x="5" y="11" width="10" height="2" /></svg>
           </button>
           <button
             type="button"
@@ -10678,7 +10299,7 @@ function RichTextEditor({ value, onChange, placeholder, language = 'ta', minHeig
             onMouseDown={e => { e.preventDefault(); exec('insertOrderedList'); }}
             className="w-7 h-7 rounded text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors flex items-center justify-center font-bold"
           >
-            <svg viewBox="0 0 16 16" className="w-3.5 h-3.5 fill-current"><text x="0" y="5" fontSize="5" fontFamily="monospace">1.</text><rect x="5" y="3" width="10" height="2"/><text x="0" y="10" fontSize="5" fontFamily="monospace">2.</text><rect x="5" y="7" width="10" height="2"/><text x="0" y="15" fontSize="5" fontFamily="monospace">3.</text><rect x="5" y="11" width="10" height="2"/></svg>
+            <svg viewBox="0 0 16 16" className="w-3.5 h-3.5 fill-current"><text x="0" y="5" fontSize="5" fontFamily="monospace">1.</text><rect x="5" y="3" width="10" height="2" /><text x="0" y="10" fontSize="5" fontFamily="monospace">2.</text><rect x="5" y="7" width="10" height="2" /><text x="0" y="15" fontSize="5" fontFamily="monospace">3.</text><rect x="5" y="11" width="10" height="2" /></svg>
           </button>
           <button
             type="button"
@@ -10725,8 +10346,8 @@ function RichTextEditor({ value, onChange, placeholder, language = 'ta', minHeig
             className="w-7 h-7 rounded text-slate-700 dark:text-slate-200 hover:bg-amber-500 hover:text-white transition-colors flex items-center justify-center"
           >
             <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-none stroke-current" strokeWidth="2.5" strokeLinecap="round">
-              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
-              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
             </svg>
           </button>
           <button
@@ -10736,9 +10357,9 @@ function RichTextEditor({ value, onChange, placeholder, language = 'ta', minHeig
             className="w-7 h-7 rounded text-slate-700 dark:text-slate-200 hover:bg-emerald-500 hover:text-white transition-colors flex items-center justify-center"
           >
             <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-none stroke-current" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-              <circle cx="8.5" cy="8.5" r="1.5"/>
-              <polyline points="21 15 16 10 5 21"/>
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+              <circle cx="8.5" cy="8.5" r="1.5" />
+              <polyline points="21 15 16 10 5 21" />
             </svg>
           </button>
           <button
@@ -10748,7 +10369,7 @@ function RichTextEditor({ value, onChange, placeholder, language = 'ta', minHeig
             className="w-7 h-7 rounded text-slate-700 dark:text-slate-200 hover:bg-red-500 hover:text-white transition-colors flex items-center justify-center"
           >
             <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-none stroke-current" strokeWidth="2.5" strokeLinecap="round">
-              <path d="M6 6l12 12M6 18L18 6"/>
+              <path d="M6 6l12 12M6 18L18 6" />
             </svg>
           </button>
         </div>
@@ -11013,7 +10634,7 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
       try {
         localStorage.removeItem('muthaleetu_articles_cache');
         window.dispatchEvent(new CustomEvent('articles_updated'));
-      } catch (_) {}
+      } catch (_) { }
 
       if (onShowToast) {
         onShowToast(publishNow ? (isTamil ? 'கட்டுரை உடனடியாக வெளியிடப்பட்டது! ' : 'Article published live! ') : (isTamil ? 'வரைவு சேமிக்கப்பட்டது.' : 'Article draft saved.'));
@@ -11214,7 +10835,7 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
                 onClick={() => setCoverImageUrl('')}
                 className="absolute top-2 right-2 px-2 py-1 rounded-lg bg-red-600 text-white font-bold text-[10px] shadow"
               >
-                 Remove
+                Remove
               </button>
             </div>
           )}
@@ -11279,14 +10900,14 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
                 onClick={() => setActiveTab('ta')}
                 className={`px-4 py-2 rounded-xl text-xs font-black transition-all ${activeTab === 'ta' ? 'bg-amber-500 text-slate-950 shadow-md' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`}
               >
-                 தமிழ் உள்ளடக்கம் (Tamil Body) *
+                தமிழ் உள்ளடக்கம் (Tamil Body) *
               </button>
               <button
                 type="button"
                 onClick={() => setActiveTab('en')}
                 className={`px-4 py-2 rounded-xl text-xs font-black transition-all ${activeTab === 'en' ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`}
               >
-                 English Body (Reviewed)
+                English Body (Reviewed)
               </button>
             </div>
             <span className="text-[11px] font-bold text-slate-400 hidden sm:inline">Rich Text HTML Engine</span>
@@ -11335,7 +10956,7 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
             disabled={isLoading}
             className="px-6 py-3 rounded-2xl bg-slate-900 dark:bg-slate-800 text-white font-bold text-xs shadow hover:bg-slate-800 transition-all disabled:opacity-50"
           >
-             {isTamil ? 'வரைவாகச் சேமி (Save Draft)' : 'Save Draft'}
+            {isTamil ? 'வரைவாகச் சேமி (Save Draft)' : 'Save Draft'}
           </button>
           <button
             type="button"
@@ -11537,10 +11158,10 @@ function AuthPage({ initialMode = 'login', onNavigate }) {
               className="btn-magnetic w-full py-2.5 px-4 rounded-2xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-200 font-bold text-xs flex items-center justify-center gap-3 transition-colors shadow-sm"
             >
               <svg className="w-4 h-4" viewBox="0 0 24 24">
-                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" />
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
               </svg>
               <span>{isTamil ? 'கூகிள் மூலம் தொடர்க' : 'Continue with Google'}</span>
             </button>
@@ -11629,12 +11250,12 @@ function AuthPage({ initialMode = 'login', onNavigate }) {
               {isLoading
                 ? (isTamil ? 'செயலாக்குகிறது...' : 'Processing...')
                 : mode === 'login'
-                ? (isTamil ? 'உள்நுழைக' : 'Sign In')
-                : mode === 'signup'
-                ? (isTamil ? 'கணக்கு தொடங்கு' : 'Create Account')
-                : mode === 'forgot'
-                ? (isTamil ? 'இணைப்பு அனுப்புக' : 'Send Reset Link')
-                : (isTamil ? 'மேஜிக் லிங்க் அனுப்புக' : 'Send Magic Link')}
+                  ? (isTamil ? 'உள்நுழைக' : 'Sign In')
+                  : mode === 'signup'
+                    ? (isTamil ? 'கணக்கு தொடங்கு' : 'Create Account')
+                    : mode === 'forgot'
+                      ? (isTamil ? 'இணைப்பு அனுப்புக' : 'Send Reset Link')
+                      : (isTamil ? 'மேஜிக் லிங்க் அனுப்புக' : 'Send Magic Link')}
             </button>
           </form>
 
@@ -11785,10 +11406,10 @@ function NewsCard({ article, onSelect }) {
   const isTamil = language === 'ta';
   const formattedDate = article.publishedAt
     ? new Intl.DateTimeFormat(isTamil ? 'ta-IN' : 'en-IN', {
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric'
-      }).format(new Date(article.publishedAt))
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    }).format(new Date(article.publishedAt))
     : '';
 
   return (
@@ -11910,11 +11531,10 @@ function NewsPage({ onNavigate }) {
                 <button
                   key={cat.id}
                   onClick={() => setActiveCategory(cat.id)}
-                  className={`px-4 py-2 rounded-full text-xs font-extrabold whitespace-nowrap transition-all duration-200 shrink-0 ${
-                    isActive
+                  className={`px-4 py-2 rounded-full text-xs font-extrabold whitespace-nowrap transition-all duration-200 shrink-0 ${isActive
                       ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-950 shadow-md scale-105'
                       : 'bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200/60 dark:border-slate-800'
-                  }`}
+                    }`}
                 >
                   {isTamil ? cat.labelTa : cat.labelEn}
                 </button>
@@ -12031,10 +11651,10 @@ function NewsDetailsPage({ slug, onNavigate }) {
 
   const formattedDate = article.publishedAt
     ? new Intl.DateTimeFormat(isTamil ? 'ta-IN' : 'en-IN', {
-        month: 'long',
-        day: 'numeric',
-        year: 'numeric'
-      }).format(new Date(article.publishedAt))
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric'
+    }).format(new Date(article.publishedAt))
     : '';
 
   return (
@@ -12081,7 +11701,7 @@ function NewsDetailsPage({ slug, onNavigate }) {
         />
       </div>
 
-      <div className="article-blue-card rounded-3xl border-2 border-white/25 bg-[#03529A] shadow-2xl p-6 sm:p-8 my-4 text-white">
+      <div className="article-blue-card rounded-3xl border-2 border-white/25 bg-[#4A9E2C] shadow-2xl p-6 sm:p-8 my-4 text-white">
         <div
           className="prose prose-invert max-w-none text-white text-sm sm:text-base leading-relaxed space-y-4"
           dangerouslySetInnerHTML={{ __html: article.content }}
@@ -12215,7 +11835,7 @@ function ProfilePage({ onNavigate, onShowToast }) {
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 animate-fadeIn">
       {/* Header Banner */}
-      <div className="relative rounded-3xl bg-gradient-to-r from-[#03529A] via-[#023b70] to-[#4A9E2C] border border-white/20 p-6 sm:p-8 shadow-2xl overflow-hidden text-white">
+      <div className="relative rounded-3xl bg-gradient-to-r from-[#4A9E2C] via-[#3b8022] to-[#2d6319] border border-white/20 p-6 sm:p-8 shadow-2xl overflow-hidden text-white">
         <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 relative z-10">
           <div
             onClick={() => isPublisher ? setIsEditingPublisherModalOpen(true) : null}
@@ -12227,7 +11847,7 @@ function ProfilePage({ onNavigate, onShowToast }) {
                 src={avatarUrl}
                 alt={displayName}
                 className="w-20 h-20 rounded-full object-cover border-2 border-white/80 shadow-xl shrink-0 group-hover/avatar:opacity-85 transition-opacity"
-                onError={(e) => { e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName || 'User')}&background=03529a&color=ffffff&bold=true`; }}
+                onError={(e) => { e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName || 'User')}&background=4a9e2c&color=ffffff&bold=true`; }}
               />
             ) : (
               <div className="w-20 h-20 rounded-full bg-white/20 text-white font-black text-2xl flex items-center justify-center border-2 border-white/80 shadow-xl shrink-0 backdrop-blur-md">
@@ -12244,13 +11864,12 @@ function ProfilePage({ onNavigate, onShowToast }) {
           <div className="space-y-1.5 text-center sm:text-left flex-1">
             <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
               <h1 className="text-2xl sm:text-3xl font-extrabold font-serif text-white">{displayName || 'Investor'}</h1>
-              <span className={`px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider rounded-full border ${
-                role === 'admin'
+              <span className={`px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider rounded-full border ${role === 'admin'
                   ? 'bg-red-500/30 text-white border-red-400/50'
                   : role === 'publisher'
-                  ? 'bg-white/20 text-white border-white/40'
-                  : 'bg-white/15 text-white border-white/30'
-              }`}>
+                    ? 'bg-white/20 text-white border-white/40'
+                    : 'bg-white/15 text-white border-white/30'
+                }`}>
                 {role === 'admin' ? 'Administrator' : (role === 'publisher' ? 'AMFI Publisher / Advisor' : 'Investor')}
               </span>
             </div>
@@ -12264,7 +11883,7 @@ function ProfilePage({ onNavigate, onShowToast }) {
             {isPublisher && (
               <button
                 onClick={() => setIsEditingPublisherModalOpen(true)}
-                className="btn-magnetic px-4 py-2 rounded-xl bg-white text-[#03529A] hover:bg-slate-100 font-black text-xs shadow-md transition-all flex items-center gap-1.5"
+                className="btn-magnetic px-4 py-2 rounded-xl bg-white text-[#4A9E2C] hover:bg-slate-100 font-black text-xs shadow-md transition-all flex items-center gap-1.5"
               >
                 <span>✏️</span>
                 <span>{isTamil ? 'சான்றுகளை திருத்து' : 'Edit Credentials'}</span>
@@ -12284,21 +11903,19 @@ function ProfilePage({ onNavigate, onShowToast }) {
       <div className="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
         <button
           onClick={() => setActiveTab('overview')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-            activeTab === 'overview'
+          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === 'overview'
               ? 'bg-amber-500 text-slate-950 shadow-md'
               : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
-          }`}
+            }`}
         >
           {isTamil ? 'சுயவிவர விவரங்கள்' : 'Profile Settings'}
         </button>
         <button
           onClick={() => setActiveTab('bookmarks')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-            activeTab === 'bookmarks'
+          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === 'bookmarks'
               ? 'bg-amber-500 text-slate-950 shadow-md'
               : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
-          }`}
+            }`}
         >
           {isTamil ? `சேமிக்கப்பட்டவை (${bookmarks.length})` : `Saved Bookmarks (${bookmarks.length})`}
         </button>
@@ -12418,11 +12035,10 @@ function ProfilePage({ onNavigate, onShowToast }) {
                         if (pwError) setPwError('');
                       }}
                       placeholder={isTamil ? "தற்போதைய கடவுச்சொல்லை உள்ளிடவும்" : "Enter current password"}
-                      className={`w-full px-4 py-2.5 rounded-xl border text-xs font-medium focus:outline-none transition-all pr-10 ${
-                        isPasswordVerified
+                      className={`w-full px-4 py-2.5 rounded-xl border text-xs font-medium focus:outline-none transition-all pr-10 ${isPasswordVerified
                           ? 'bg-emerald-500/5 border-emerald-500/40 text-slate-600 dark:text-slate-300 cursor-not-allowed'
                           : 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white focus:border-amber-500'
-                      }`}
+                        }`}
                     />
                     <button
                       type="button"
@@ -12521,18 +12137,16 @@ function ProfilePage({ onNavigate, onShowToast }) {
 
                     {/* Realtime Requirements Checklist */}
                     <div className="flex flex-wrap gap-2 text-[10px] font-bold">
-                      <span className={`px-2 py-0.5 rounded-md ${
-                        newPassword.length >= 6
+                      <span className={`px-2 py-0.5 rounded-md ${newPassword.length >= 6
                           ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20'
                           : 'bg-slate-100 dark:bg-slate-800 text-slate-400'
-                      }`}>
+                        }`}>
                         {newPassword.length >= 6 ? '✓ ' : '• '} {isTamil ? 'குறைந்தது 6 எழுத்துகள்' : 'At least 6 chars'}
                       </span>
-                      <span className={`px-2 py-0.5 rounded-md ${
-                        newPassword && confirmPassword && newPassword === confirmPassword
+                      <span className={`px-2 py-0.5 rounded-md ${newPassword && confirmPassword && newPassword === confirmPassword
                           ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20'
                           : 'bg-slate-100 dark:bg-slate-800 text-slate-400'
-                      }`}>
+                        }`}>
                         {newPassword && confirmPassword && newPassword === confirmPassword ? '✓ ' : '• '} {isTamil ? 'கடவுச்சொற்கள் பொருந்துகின்றன' : 'Passwords match'}
                       </span>
                     </div>
@@ -12575,7 +12189,7 @@ function ProfilePage({ onNavigate, onShowToast }) {
           {/* Right Column: Publisher Credentials Card or Quick Actions */}
           <div className="space-y-6">
             {isPublisher && (
-              <div className="bg-gradient-to-br from-[#03529A] via-[#023b70] to-[#4A9E2C] rounded-3xl p-6 border border-white/20 shadow-xl text-white space-y-4">
+              <div className="bg-gradient-to-br from-[#4A9E2C] via-[#3b8022] to-[#2d6319] rounded-3xl p-6 border border-white/20 shadow-xl text-white space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="text-base">💼</span>
@@ -13068,7 +12682,7 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
         const parsed = JSON.parse(cached);
         if (Array.isArray(parsed) && parsed.length > 0) return parsed;
       }
-    } catch (_) {}
+    } catch (_) { }
     return [];
   });
   const [isLoading, setIsLoading] = useState(() => livePublishers.length === 0);
@@ -13086,7 +12700,7 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
             setLivePublishers(json.data);
             try {
               localStorage.setItem('muthaleetu_publishers_cache', JSON.stringify(json.data));
-            } catch (_) {}
+            } catch (_) { }
           }
         }
       } catch (err) {
@@ -13151,7 +12765,7 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
         titleTamil: p.title || (isFounder ? 'நிறுவனர் & தலைமை சந்தை ஆய்வாளர்' : 'பதிவுசெய்யப்பட்ட நிதி ஆலோசகர்'),
         organization: isFounder ? 'Fortune Investment Services (FISPL)' : 'Fortune Investment Services (FISPL Partner)',
         arnNumber: arn,
-        avatar: p.avatar_url || (isFounder ? '/assets/padmanaban.jpg' : `https://ui-avatars.com/api/?name=${encodeURIComponent(cleanName)}&background=03529a&color=ffffff&bold=true`),
+        avatar: p.avatar_url || (isFounder ? '/assets/padmanaban.jpg' : `https://ui-avatars.com/api/?name=${encodeURIComponent(cleanName)}&background=4a9e2c&color=ffffff&bold=true`),
         badgeEnglish: badgeEn,
         badgeTamil: badgeTa,
         bioEnglish: p.bio || (isFounder
@@ -13226,7 +12840,14 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
   }, [allPublishers, selectedCategory, searchQuery]);
 
   return (
-    <div className="w-full min-h-[calc(100vh-140px)] bg-[#008060] py-6 sm:py-8 transition-colors duration-300">
+    <div
+      className="w-full min-h-[calc(100vh-140px)] py-6 sm:py-8 transition-colors duration-300 bg-cover bg-center bg-no-repeat relative"
+      style={{
+        backgroundImage: "url('https://png.pngtree.com/thumb_back/fh260/background/20231227/pngtree-hand-drawn-aquarelle-texture-light-green-gradient-watercolor-vector-background-with-image_13880407.png')",
+        backgroundAttachment: 'fixed',
+        backgroundColor: '#eaf4ee'
+      }}
+    >
       <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-6 animate-fadeIn">
         {/* Controls & Search Bar */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
@@ -13238,11 +12859,10 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
                 <button
                   key={cat.id}
                   onClick={() => setSelectedCategory(cat.id)}
-                  className={`px-4 py-2 rounded-xl text-xs font-black whitespace-nowrap transition-all ${
-                    isActive
-                      ? 'bg-white text-[#008060] shadow-md border-2 border-white'
-                      : 'bg-white/15 hover:bg-white/25 text-white border border-white/25 backdrop-blur-sm'
-                  }`}
+                  className={`px-4 py-2 rounded-xl text-xs font-black whitespace-nowrap transition-all ${isActive
+                      ? 'bg-[#107040] text-white shadow-md border-2 border-white scale-105'
+                      : 'bg-white/80 hover:bg-white text-slate-800 dark:text-slate-200 dark:bg-slate-900/80 border border-slate-300/80 dark:border-slate-700 shadow-sm backdrop-blur-sm'
+                    }`}
                 >
                   {isTamil ? cat.labelTa : cat.labelEn}
                 </button>
@@ -13464,8 +13084,8 @@ function ProfessionalWidescreenVideoCard({ video, onSelect, language = 'ta' }) {
     : (video.titleEnglish || video.title_en || video.title || 'Masterclass Video');
   const category = (video.category || 'MUTUAL-FUNDS').replace('-', ' ').toUpperCase();
   const duration = video.duration || (video.isShort ? 'Short' : '10:00');
-  const dateStr = video.publishedAt || video.published_at 
-    ? new Date(video.publishedAt || video.published_at).toLocaleDateString(isTamil ? 'ta-IN' : 'en-IN', { month: 'short', day: 'numeric', year: 'numeric' }) 
+  const dateStr = video.publishedAt || video.published_at
+    ? new Date(video.publishedAt || video.published_at).toLocaleDateString(isTamil ? 'ta-IN' : 'en-IN', { month: 'short', day: 'numeric', year: 'numeric' })
     : '';
 
   return (
@@ -13554,7 +13174,7 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
           if (match) return match;
         }
       }
-    } catch (_) {}
+    } catch (_) { }
     return null;
   });
   const [liveArticles, setLiveArticles] = useState([]);
@@ -13862,17 +13482,15 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
       <div className="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
         <button
           onClick={() => setActiveTab('articles')}
-          className={`px-5 py-2.5 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
-            activeTab === 'articles'
+          className={`px-5 py-2.5 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${activeTab === 'articles'
               ? 'bg-[#4A9E2C] text-white shadow-md'
               : 'text-slate-700 dark:text-slate-400 bg-white/70 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700'
-          }`}
+            }`}
         >
           <span>✍️</span>
           <span>{isTamil ? 'கட்டுரைகள் & ஆய்வுகள்' : 'Articles & Research'}</span>
-          <span className={`px-2 py-0.5 rounded-full text-[10px] font-black ${
-            activeTab === 'articles' ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-[#4A9E2C] dark:text-emerald-400'
-          }`}>
+          <span className={`px-2 py-0.5 rounded-full text-[10px] font-black ${activeTab === 'articles' ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-[#4A9E2C] dark:text-emerald-400'
+            }`}>
             {publisherArticles.length}
           </span>
         </button>
@@ -13880,17 +13498,15 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
         {publisherVideos.length > 0 && (
           <button
             onClick={() => setActiveTab('videos')}
-            className={`px-5 py-2.5 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
-              activeTab === 'videos'
+            className={`px-5 py-2.5 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${activeTab === 'videos'
                 ? 'bg-[#03529A] text-white shadow-md'
                 : 'text-slate-700 dark:text-slate-400 bg-white/70 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700'
-            }`}
+              }`}
           >
             <span>🎬</span>
             <span>{isTamil ? 'முக்கிய வீடியோக்கள் (Masterclasses)' : 'Video Masterclasses'}</span>
-            <span className={`px-2 py-0.5 rounded-full text-[10px] font-black ${
-              activeTab === 'videos' ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-[#03529A] dark:text-sky-400'
-            }`}>
+            <span className={`px-2 py-0.5 rounded-full text-[10px] font-black ${activeTab === 'videos' ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-[#4A9E2C] dark:text-emerald-400'
+              }`}>
               {publisherVideos.length}
             </span>
           </button>
@@ -14041,7 +13657,7 @@ function LoginReminderModal({ currentHash, onNavigate }) {
       if (sessionStorage.getItem('login_reminder_dismissed') === 'true') {
         return;
       }
-    } catch (e) {}
+    } catch (e) { }
 
     // Popup after 30 seconds for new visitors (optional login reminder)
     const popupTimer = setTimeout(() => {
@@ -14069,7 +13685,7 @@ function LoginReminderModal({ currentHash, onNavigate }) {
     setIsOpen(false);
     try {
       sessionStorage.setItem('login_reminder_dismissed', 'true');
-    } catch (e) {}
+    } catch (e) { }
   };
 
   const handleGoToLogin = () => {
@@ -14082,7 +13698,7 @@ function LoginReminderModal({ currentHash, onNavigate }) {
   const isTa = language === 'ta';
 
   return (
-    <div 
+    <div
       className="notification-banner-right w-[calc(100vw-2rem)] sm:w-auto max-w-[340px] bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200/90 dark:border-slate-800/90 rounded-2xl p-2.5 sm:p-3 shadow-2xl shadow-slate-900/15 dark:shadow-black/60 text-slate-900 dark:text-slate-100 overflow-hidden"
       role="alert"
     >

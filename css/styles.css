@@ -11,7 +11,7 @@ html {
   scroll-behavior: smooth;
   width: 100%;
   max-width: 100vw;
-  overflow-x: hidden !important;
+  overflow-x: clip;
   position: relative;
 }
 
@@ -46,6 +46,21 @@ html {
 }
 
 :root {
+  /* Design Tokens - Modern Palette */
+  --navy-900: #0F172A;
+  --navy-800: #1E293B;
+  --blue-600: #2563EB;
+  --blue-50: #EFF6FF;
+  --green-600: #16A34A;
+  --green-50: #F0FDF4;
+  --red-600: #DC2626;
+  --amber-400: #FBBF24;
+  --cream-50: #FBF7EF;
+  --gray-50: #F8FAFC;
+  --gray-100: #F1F5F9;
+  --gray-200: #E2E8F0;
+  --gray-500: #64748B;
+
   /* Spacing Scale Tokens - Fluid Multi-Device Architecture */
   --space-1: 0.25rem;   /* 4px */
   --space-2: 0.5rem;    /* 8px */
@@ -59,30 +74,35 @@ html {
   --space-16: 4.5rem;   /* 72px */
   --space-20: 5.5rem;   /* 88px */
 
-  /* Container & Grid Tokens - Scalable & Balanced across all monitors */
+  /* Container & Grid Tokens */
   --container-max: 1600px;
-  --container-px: clamp(1rem, 3.5vw, 2.75rem);
-  --grid-gap: clamp(1rem, 2.5vw, 2.25rem);
-  --section-spacing-y: clamp(2.25rem, 4.5vw, 4.25rem);
+  --container-px: clamp(1.25rem, 4.5vw, 4rem);
+  --grid-gap: clamp(1.25rem, 2.5vw, 2rem);
+  --section-spacing-y: clamp(4.5rem, 6.5vw, 6rem);
 
-  /* Typography Metrics - Universal Book Antiqua Font System with Generous Line Spacing */
-  --font-sans: 'Book Antiqua', Palatino, 'Palatino Linotype', 'Palatino LT STD', Georgia, 'Noto Serif Tamil', serif;
-  --font-serif: 'Book Antiqua', Palatino, 'Palatino Linotype', 'Palatino LT STD', Georgia, 'Noto Serif Tamil', serif;
-  --line-height-body: 1.72;
-  --line-height-heading: 1.32;
-  --line-height-tight: 1.20;
+  /* Typography Metrics - Book Antiqua Palette */
+  --font-sans: 'Book Antiqua', Palatino, 'Palatino Linotype', 'URW Bookman L', 'Noto Serif Tamil', Georgia, serif;
+  --font-serif: 'Book Antiqua', Palatino, 'Palatino Linotype', 'URW Bookman L', 'Noto Serif Tamil', Georgia, serif;
+  --font-heading: 'Book Antiqua', Palatino, 'Palatino Linotype', 'URW Bookman L', 'Noto Serif Tamil', Georgia, serif;
+  --font-num: 'Book Antiqua', Palatino, 'Palatino Linotype', 'URW Bookman L', 'Noto Serif Tamil', Georgia, serif;
+  --line-height-body: 1.65;
+  --line-height-heading: 1.28;
+  --line-height-tight: 1.18;
 
-  /* Design Tokens for Cards & Elevation */
-  --radius-card: 1.5rem;
-  /* 24px */
-  --shadow-card: 0 4px 16px -2px rgba(15, 23, 42, 0.06), 0 2px 8px -2px rgba(15, 23, 42, 0.03);
-  --shadow-card-hover: 0 24px 38px -8px rgba(15, 23, 42, 0.12), 0 12px 18px -6px rgba(15, 23, 42, 0.06);
+  /* Design Tokens for Cards & Elevation - Soft Shadows */
+  --radius-card: 1.125rem; /* 18px */
+  --radius-panel: 1.75rem; /* 28px */
+  --radius-container: 2rem; /* 32px */
+  --shadow-soft-card: 0 4px 20px rgba(15, 23, 42, 0.05);
+  --shadow-feature-panel: 0 12px 40px rgba(15, 23, 42, 0.06);
+  --shadow-card: 0 4px 20px rgba(15, 23, 42, 0.05);
+  --shadow-card-hover: 0 16px 32px rgba(15, 23, 42, 0.08);
 
-  /* Global Motion Tokens - Silky Interactive Transitions */
+  /* Global Motion Tokens */
   --ease-default: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-overshoot: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --duration-interactive: 250ms;
-  --duration-layout: 400ms;
+  --duration-interactive: 200ms;
+  --duration-layout: 350ms;
 
   /* Centralized Z-Index Hierarchy */
   --z-bg: 0;
@@ -92,7 +112,7 @@ html {
   --z-modal: 1000;
   --z-scroll-bar: 10000;
 
-  /* Colors - Clean Pure White Palette for Light Mode (Colors 100% Preserved) */
+  /* Colors */
   --bg-main: #ffffff;
   --bg-card: #ffffff;
   --bg-card-hover: #ffffff;
@@ -101,36 +121,38 @@ html {
   --text-primary: #0f172a;
   --text-secondary: #334155;
   --text-muted: #64748b;
-  --accent-amber: #03529A;
-  --accent-gold: #4A9E2C;
-  --accent-gold-light: #4ade80;
-  --accent-emerald: #4A9E2C;
-  --accent-sapphire: #03529A;
-  --accent-red: #dc2626;
+  --accent-amber: #FBBF24;
+  --accent-gold: #FBBF24;
+  --accent-emerald: #16A34A;
+  --accent-sapphire: #2563EB;
+  --accent-red: #DC2626;
   --nav-bg: #ffffff;
   --nav-border: #e2e8f0;
 }
 
 [data-theme="dark"] {
-  --radius-card: 1.5rem;
-  --shadow-card: 0 6px 24px -2px rgba(0, 0, 0, 0.75), 0 2px 10px -2px rgba(0, 0, 0, 0.55);
-  --shadow-card-hover: 0 24px 42px -6px rgba(0, 0, 0, 0.90), 0 0 28px 2px rgba(3, 82, 154, 0.28);
+  --radius-card: 1.125rem;
+  --radius-panel: 1.75rem;
+  --radius-container: 2rem;
+  --shadow-soft-card: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --shadow-feature-panel: 0 12px 40px rgba(0, 0, 0, 0.55);
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --shadow-card-hover: 0 16px 32px rgba(0, 0, 0, 0.65);
   --bg-main: #020617;
-  --bg-card: rgba(11, 15, 25, 0.70);
-  --bg-card-hover: rgba(17, 24, 39, 0.82);
-  --border-color: rgba(30, 41, 59, 0.70);
-  --border-subtle: rgba(15, 23, 42, 0.70);
+  --bg-card: #0b0f19;
+  --bg-card-hover: #111827;
+  --border-color: #1e293b;
+  --border-subtle: #0f172a;
   --text-primary: #f8fafc;
   --text-secondary: #cbd5e1;
   --text-muted: #94a3b8;
-  --accent-amber: #38bdf8;
-  --accent-gold: #4ade80;
-  --accent-gold-light: #86efac;
+  --accent-amber: #FBBF24;
+  --accent-gold: #FBBF24;
   --accent-emerald: #4ade80;
   --accent-sapphire: #38bdf8;
   --accent-red: #ef4444;
-  --nav-bg: rgba(3, 7, 18, 0.70);
-  --nav-border: rgba(30, 41, 59, 0.70);
+  --nav-bg: rgba(3, 7, 18, 0.85);
+  --nav-border: #1e293b;
 }
 
 html,
@@ -139,7 +161,7 @@ body,
   transition: background-color 0.3s ease, color 0.3s ease;
   width: 100%;
   max-width: 100vw;
-  overflow-x: hidden !important;
+  overflow-x: clip;
   position: relative;
 }
 
@@ -212,11 +234,41 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
   width: 100%;
   max-width: 100vw;
-  overflow-x: hidden !important;
+  overflow-x: clip;
   margin: 0;
   padding: 0;
   position: relative;
   min-height: 100vh;
+}
+
+/* Typography & Soft Card Utilities */
+.font-num, .num-font, [data-font="num"] {
+  font-family: var(--font-num) !important;
+  font-feature-settings: "tnum" 1, "cv01" 1;
+}
+
+.font-ui, .font-sans {
+  font-family: var(--font-sans) !important;
+}
+
+.soft-card {
+  box-shadow: var(--shadow-soft-card) !important;
+  border-radius: var(--radius-card);
+}
+
+.feature-panel {
+  box-shadow: var(--shadow-feature-panel) !important;
+  border-radius: var(--radius-panel);
+}
+
+/* Sticky Filter Sidebar Utility */
+.sticky-filter-sidebar {
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: 6.5rem !important;
+  max-height: calc(100vh - 7.5rem) !important;
+  overflow-y: auto !important;
+  z-index: 25 !important;
 }
 
 html[data-theme="dark"],
@@ -348,14 +400,14 @@ button:not([disabled]):nth-of-type(even):hover,
   box-shadow: 0 4px 16px -2px rgba(74, 222, 128, 0.25) !important;
 }
 
-/* Primary Brand Action Buttons Alternating Hover Glow */
+/* Primary Brand Action Buttons */
 .btn-brand-blue {
-  background-color: #03529A !important;
+  background-color: #4A9E2C !important;
   color: #ffffff !important;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 .btn-brand-blue:hover {
-  background-color: #4A9E2C !important;
+  background-color: #3b8022 !important;
   transform: translateY(-1px) scale(1.02);
   box-shadow: 0 8px 20px -2px rgba(74, 158, 44, 0.35) !important;
 }
@@ -366,9 +418,9 @@ button:not([disabled]):nth-of-type(even):hover,
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 .btn-brand-green:hover {
-  background-color: #03529A !important;
+  background-color: #3b8022 !important;
   transform: translateY(-1px) scale(1.02);
-  box-shadow: 0 8px 20px -2px rgba(3, 82, 154, 0.35) !important;
+  box-shadow: 0 8px 20px -2px rgba(74, 158, 44, 0.35) !important;
 }
 
 /* Tabular figures for numbers, timers, prices, and metrics */
