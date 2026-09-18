@@ -33,6 +33,8 @@ export default async function handler(req, res) {
   }
 
   const { id } = req.query || {};
+  const isSuperAdmin = auth.profile?.role === 'admin';
+  const currentUserId = auth.user?.id;
 
   // ================= SINGLE ARTICLE BY ID =================
   if (id) {
@@ -43,6 +45,15 @@ export default async function handler(req, res) {
         if (!article) {
           return res.status(404).json({ error: 'Article not found' });
         }
+
+        // Publisher check: Can only access their own article in the admin/editor context
+        if (!isSuperAdmin) {
+          const articleAuthorId = article.authorId || article.author_id;
+          if (articleAuthorId && articleAuthorId !== currentUserId) {
+            return res.status(403).json({ error: 'Access denied: Publishers can only view and edit their own articles.' });
+          }
+        }
+
         return res.status(200).json({ status: 'success', data: article });
       } catch (error) {
         return res.status(500).json({ error: error.message });
@@ -52,7 +63,25 @@ export default async function handler(req, res) {
     // PUT / PATCH: Update article
     if (req.method === 'PUT' || req.method === 'PATCH') {
       try {
+        const existingArticle = await getArticleById(id);
+        if (!existingArticle) {
+          return res.status(404).json({ error: 'Article not found' });
+        }
+
+        // Strict Publisher Ownership Check: Only allow editing if the article belongs to this publisher
+        if (!isSuperAdmin) {
+          const articleAuthorId = existingArticle.authorId || existingArticle.author_id;
+          if (articleAuthorId && articleAuthorId !== currentUserId) {
+            return res.status(403).json({ error: 'Access denied: You do not have permission to edit another publisher\'s article.' });
+          }
+        }
+
         const updateData = req.body || {};
+        // If publisher is updating, preserve their author_id
+        if (!isSuperAdmin) {
+          updateData.author_id = currentUserId;
+        }
+
         const updated = await updateArticle(id, updateData);
 
         return res.status(200).json({
@@ -72,6 +101,19 @@ export default async function handler(req, res) {
     // DELETE: Remove article
     if (req.method === 'DELETE') {
       try {
+        const existingArticle = await getArticleById(id);
+        if (!existingArticle) {
+          return res.status(404).json({ error: 'Article not found' });
+        }
+
+        // Strict Publisher Ownership Check: Only allow deleting own articles
+        if (!isSuperAdmin) {
+          const articleAuthorId = existingArticle.authorId || existingArticle.author_id;
+          if (articleAuthorId && articleAuthorId !== currentUserId) {
+            return res.status(403).json({ error: 'Access denied: You do not have permission to delete another publisher\'s article.' });
+          }
+        }
+
         const success = await deleteArticle(id);
         if (!success) {
           return res.status(404).json({ error: 'Article not found or could not be deleted' });
@@ -90,17 +132,19 @@ export default async function handler(req, res) {
 
   // ================= COLLECTION OPERATIONS =================
 
-  // GET: List all articles (drafts and published)
+  // GET: List articles (Filtered to own articles for publishers, all for admins)
   if (req.method === 'GET') {
     try {
       const { page = '1', limit = '50', category = 'all', status = 'all', search = '', sort = 'newest' } = req.query || {};
+      
       const result = await listArticles({
         page: parseInt(page, 10),
         limit: parseInt(limit, 10),
         category: category.toString(),
         status: status.toString(),
         search: search.toString(),
-        sort: sort.toString()
+        sort: sort.toString(),
+        authorId: isSuperAdmin ? null : currentUserId
       });
 
       return res.status(200).json({

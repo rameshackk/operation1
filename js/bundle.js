@@ -8399,89 +8399,111 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-medium">
-                    {articles.map(article => (
-                      <tr key={article.id} className="hover:bg-slate-50/60 dark:hover:bg-slate-800/40 transition-colors">
-                        <td className="px-6 py-4">
-                          <div className="flex items-center gap-3">
-                            <img
-                              src={article.coverImage || '/favicon.svg'}
-                              alt=""
-                              className="w-12 h-12 rounded-xl object-cover bg-slate-950 shrink-0 border border-slate-200 dark:border-slate-800"
-                              onError={(e) => { e.target.src = '/favicon.svg'; }}
-                            />
-                            <div className="min-w-0 max-w-md">
-                              <div className="font-bold text-slate-900 dark:text-white truncate font-serif text-sm">
-                                {article.titleTamil}
-                              </div>
-                              {article.titleEnglish && (
-                                <div className="text-[11px] text-slate-400 truncate">
-                                  EN: {article.titleEnglish}
+                    {articles.map(article => {
+                      const articleAuthorId = article.authorId || article.author_id;
+                      const currentUserId = user?.id || session?.user?.id || profile?.id;
+                      const isOwner = !articleAuthorId || (currentUserId && articleAuthorId === currentUserId);
+                      const canManage = isAdmin || isOwner;
+
+                      return (
+                        <tr key={article.id} className="hover:bg-slate-50/60 dark:hover:bg-slate-800/40 transition-colors">
+                          <td className="px-6 py-4">
+                            <div className="flex items-center gap-3">
+                              <img
+                                src={article.coverImage || '/favicon.svg'}
+                                alt=""
+                                className="w-12 h-12 rounded-xl object-cover bg-slate-950 shrink-0 border border-slate-200 dark:border-slate-800"
+                                onError={(e) => { e.target.src = '/favicon.svg'; }}
+                              />
+                              <div className="min-w-0 max-w-md">
+                                <div className="font-bold text-slate-900 dark:text-white truncate font-serif text-sm">
+                                  {article.titleTamil}
                                 </div>
-                              )}
-                              <div className="text-[10px] font-mono text-slate-400 mt-0.5">
-                                /{article.slug}
+                                {article.titleEnglish && (
+                                  <div className="text-[11px] text-slate-400 truncate">
+                                    EN: {article.titleEnglish}
+                                  </div>
+                                )}
+                                <div className="text-[10px] font-mono text-slate-400 mt-0.5">
+                                  /{article.slug}
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </td>
+                          </td>
 
-                        <td className="px-6 py-4">
-                          <span className="px-2.5 py-1 rounded-md text-[10px] font-extrabold uppercase bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
-                            {article.category}
-                          </span>
-                        </td>
+                          <td className="px-6 py-4">
+                            <span className="px-2.5 py-1 rounded-md text-[10px] font-extrabold uppercase bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                              {article.category}
+                            </span>
+                          </td>
 
-                        <td className="px-6 py-4 font-mono text-slate-500 dark:text-slate-400">
-                          ⏱ {article.readTimeMinutes} min
-                        </td>
+                          <td className="px-6 py-4 font-mono text-slate-500 dark:text-slate-400">
+                            ⏱ {article.readTimeMinutes} min
+                          </td>
 
-                        <td className="px-6 py-4">
-                          <button
-                            onClick={() => handleTogglePublish(article)}
-                            title="Click to toggle publish/draft status"
-                            className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider transition-all ${article.status === 'published'
-                                ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/25'
-                                : 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 hover:bg-amber-500/25'
-                              }`}
-                          >
-                            {article.status === 'published' ? '● Published' : '○ Draft'}
-                          </button>
-                        </td>
-
-                        <td className="px-6 py-4 text-slate-500 text-[11px] whitespace-nowrap">
-                          {article.publishedAt ? new Date(article.publishedAt).toLocaleDateString() : 'Unpublished'}
-                        </td>
-
-                        <td className="px-6 py-4 text-right">
-                          <div className="flex items-center justify-end gap-2">
-                            {article.status === 'published' && (
+                          <td className="px-6 py-4">
+                            {canManage ? (
                               <button
-                                onClick={() => onNavigate(`#/articles/${article.slug}`)}
-                                title="View live article"
-                                className="p-2 rounded-xl text-slate-400 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                                onClick={() => handleTogglePublish(article)}
+                                title="Click to toggle publish/draft status"
+                                className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider transition-all ${article.status === 'published'
+                                    ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/25'
+                                    : 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 hover:bg-amber-500/25'
+                                  }`}
                               >
-                                👁️
+                                {article.status === 'published' ? '● Published' : '○ Draft'}
                               </button>
+                            ) : (
+                              <span
+                                className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider inline-block ${article.status === 'published'
+                                    ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30'
+                                    : 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30'
+                                  }`}
+                              >
+                                {article.status === 'published' ? '● Published' : '○ Draft'}
+                              </span>
                             )}
-                            <button
-                              onClick={() => onNavigate(`#/admin/articles/edit/${article.id}`)}
-                              title="Edit article"
-                              className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-amber-600 hover:text-white text-slate-700 dark:text-slate-300 font-bold transition-all"
-                            >
-                              ✏️ Edit
-                            </button>
-                            <button
-                              onClick={() => handleDeleteArticle(article.id, article.titleTamil)}
-                              disabled={deletingId === article.id}
-                              title="Delete article"
-                              className="p-2 rounded-xl text-red-500 hover:bg-red-500/10 transition-colors disabled:opacity-50"
-                            >
-                              🗑️
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
+                          </td>
+
+                          <td className="px-6 py-4 text-slate-500 text-[11px] whitespace-nowrap">
+                            {article.publishedAt ? new Date(article.publishedAt).toLocaleDateString() : 'Unpublished'}
+                          </td>
+
+                          <td className="px-6 py-4 text-right">
+                            <div className="flex items-center justify-end gap-2">
+                              {article.status === 'published' && (
+                                <button
+                                  onClick={() => onNavigate(`#/articles/${article.slug}`)}
+                                  title="View live article"
+                                  className="p-2 rounded-xl text-slate-400 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                                >
+                                  👁️
+                                </button>
+                              )}
+                              {canManage && (
+                                <button
+                                  onClick={() => onNavigate(`#/admin/articles/edit/${article.id}`)}
+                                  title="Edit article"
+                                  className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-amber-600 hover:text-white text-slate-700 dark:text-slate-300 font-bold transition-all"
+                                >
+                                  ✏️ Edit
+                                </button>
+                              )}
+                              {canManage && (
+                                <button
+                                  onClick={() => handleDeleteArticle(article.id, article.titleTamil)}
+                                  disabled={deletingId === article.id}
+                                  title="Delete article"
+                                  className="p-2 rounded-xl text-red-500 hover:bg-red-500/10 transition-colors disabled:opacity-50"
+                                >
+                                  🗑️
+                                </button>
+                              )}
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}}
                   </tbody>
                 </table>
               </div>
@@ -10414,10 +10436,11 @@ function RichTextEditor({ value, onChange, placeholder, language = 'ta', minHeig
 
 function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
   const { language } = useLanguage();
-  const { session, role, supabase } = useAuth();
+  const { session, role, user, profile, supabase } = useAuth();
   const isTamil = language === 'ta';
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isReadOnly, setIsReadOnly] = useState(false);
   const [isTranslating, setIsTranslating] = useState(false);
   const [isUploadingImage, setIsUploadingImage] = useState(false);
   const [error, setError] = useState('');
@@ -10474,11 +10497,22 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
         const res = await fetch(`/api/admin/articles/${articleId}`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
-        if (!res.ok) throw new Error('Failed to load article details');
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.error || 'Failed to load article details');
+        }
         const data = await res.json();
         const a = data.data;
 
         if (isMounted && a) {
+          const currentUserId = user?.id || session?.user?.id || profile?.id;
+          const isSuperAdmin = role === 'admin';
+          const authorId = a.author_id || a.authorId;
+          if (!isSuperAdmin && authorId && currentUserId && authorId !== currentUserId) {
+            setError(isTamil ? 'அனுமதி மறுக்கப்பட்டது: நீங்கள் உங்கள் சொந்த கட்டுரைகளை மட்டுமே திருத்த முடியும்.' : 'Access denied: You can only edit your own articles.');
+            setIsReadOnly(true);
+          }
+
           setTitleTa(a.title_ta || a.titleTamil || '');
           setTitleEn(a.title_en || a.titleEnglish || '');
           setSlug(a.slug || '');
@@ -10600,6 +10634,11 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
   const handleSave = async (publishNow = false) => {
     setError('');
 
+    if (isReadOnly) {
+      setError(isTamil ? 'அனுமதி மறுக்கப்பட்டது: நீங்கள் உங்கள் சொந்த கட்டுரைகளை மட்டுமே திருத்த முடியும்.' : 'Access denied: You can only edit your own articles.');
+      return;
+    }
+
     if (!titleTa || !titleTa.trim()) {
       setError(isTamil ? 'தமிழ் தலைப்பு அவசியம்.' : 'Tamil Title is required.');
       return;
@@ -10704,7 +10743,7 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
             <button
               type="button"
               onClick={() => handleSave(false)}
-              disabled={isLoading}
+              disabled={isLoading || isReadOnly}
               className="px-5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs transition-all shadow-sm disabled:opacity-50"
             >
               {isTamil ? 'வரைவாகச் சேமி (Draft)' : 'Save Draft'}
@@ -10712,7 +10751,7 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
             <button
               type="button"
               onClick={() => handleSave(true)}
-              disabled={isLoading}
+              disabled={isLoading || isReadOnly}
               className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs shadow-lg hover:scale-105 transition-all disabled:opacity-50 flex items-center gap-1.5"
             >
               <span>✍️</span>
