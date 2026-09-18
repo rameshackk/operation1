@@ -1,0 +1,2175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>SBI Arbitrage Opportunities Fund - Mutual Fund Scheme Details</title>
+  
+  <!-- Google Fonts: DM Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Chart.js from cdnjs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" integrity="sha512-CQBWl4fJHWbryGE+X7NWxStvnWwJWqmZdkgwCb61PSpMHUScj7z5ULQRKOUJ0GuvVgLnv0PIYoJxTEU929Kn0g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <style>
+    /* ==========================================================================
+       GLOBAL CSS VARIABLES & RESETS
+       ========================================================================== */
+    :root {
+      --bg-gradient: linear-gradient(135deg, #e8f6ea 0%, #dcecf2 100%);
+      --brand-gradient: linear-gradient(90deg, #3bb56c 0%, #1a9c9c 50%, #0b74c4 100%);
+      --brand-green: #3bb54a;
+      --brand-green-dark: #2e9e3c;
+      --navy-dark: #0f1f3d;
+      --navy-medium: #1e3a8a;
+      --body-text: #1f2937;
+      --muted-text: #64748b;
+      --card-bg: #ffffff;
+      --card-border: #e6ecf2;
+      --card-radius: 20px;
+      --card-shadow: 0 4px 20px -2px rgba(15, 31, 61, 0.05), 0 2px 6px -1px rgba(15, 31, 61, 0.02);
+      --card-shadow-hover: 0 12px 32px -4px rgba(15, 31, 61, 0.08);
+      --font-family: 'DM Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --stripe-lavender: #f3f4fb;
+      --row-label-bg: #f4f4f5;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      color: var(--body-text);
+      background: var(--bg-gradient);
+      min-height: 100vh;
+    }
+
+    body {
+      font-family: var(--font-family);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      position: relative;
+      overflow-x: hidden;
+      padding-bottom: 4rem;
+    }
+
+    /* Top Green Gradient Strip */
+    .top-gradient-strip {
+      height: 4px;
+      width: 100%;
+      background: var(--brand-gradient);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 100;
+    }
+
+    /* Container Layout */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem;
+    }
+
+    /* ==========================================================================
+       TOP HEADER & BRANDING BAR
+       ========================================================================== */
+    .header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      padding-top: 0.5rem;
+    }
+
+    .brand-logo-area {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--navy-dark);
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: var(--brand-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 1.25rem;
+      box-shadow: 0 4px 12px rgba(26, 156, 156, 0.25);
+    }
+
+    .brand-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--navy-dark);
+    }
+
+    .brand-subtitle {
+      font-size: 0.75rem;
+      color: var(--muted-text);
+      font-weight: 500;
+    }
+
+    .back-home-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      background: #ffffff;
+      border: 1px solid var(--card-border);
+      color: var(--navy-dark);
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      box-shadow: var(--card-shadow);
+      transition: all 0.2s ease;
+    }
+    .back-home-btn:hover {
+      border-color: #3bb56c;
+      color: #3bb56c;
+      transform: translateY(-1px);
+    }
+
+    /* ==========================================================================
+       CARDS & GRID SYSTEM
+       ========================================================================== */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--card-radius);
+      border: 1px solid var(--card-border);
+      padding: 24px;
+      box-shadow: var(--card-shadow);
+      margin-bottom: 24px;
+      transition: box-shadow 0.25s ease;
+    }
+    .card:hover {
+      box-shadow: var(--card-shadow-hover);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 860px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .section-title {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--navy-dark);
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+
+    .section-subtitle {
+      font-size: 0.875rem;
+      color: var(--muted-text);
+      font-weight: 500;
+    }
+
+    .card-heading {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--navy-dark);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* ==========================================================================
+       1. STICKY TAB NAVIGATION
+       ========================================================================== */
+    .sticky-nav-wrapper {
+      position: sticky;
+      top: 16px;
+      z-index: 50;
+      margin-bottom: 24px;
+    }
+
+    .nav-pill-bar {
+      background: #ffffff;
+      border-radius: 999px;
+      padding: 6px 8px;
+      box-shadow: 0 8px 28px rgba(15, 31, 61, 0.08), 0 2px 8px rgba(15, 31, 61, 0.04);
+      border: 1px solid rgba(230, 236, 242, 0.9);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      position: relative;
+    }
+
+    .nav-scroll-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      background: #ffffff;
+      color: #374151;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+    .nav-scroll-btn:hover:not(:disabled) {
+      border-color: #0b74c4;
+      color: #0b74c4;
+      background: #f8fafc;
+    }
+    .nav-scroll-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      border-color: #e5e7eb;
+      color: #9ca3af;
+    }
+
+    .tabs-track {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE */
+      flex: 1;
+      padding: 2px 4px;
+    }
+    .tabs-track::-webkit-scrollbar {
+      display: none; /* Chrome, Safari */
+    }
+
+    .tab-pill {
+      white-space: nowrap;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #4b5563;
+      text-decoration: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      outline: none;
+    }
+
+    .tab-pill:hover {
+      color: var(--navy-dark);
+      background: #f3f4f6;
+    }
+
+    .tab-pill.active {
+      background: var(--brand-gradient);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(26, 156, 156, 0.3);
+    }
+
+    /* ==========================================================================
+       SCHEME HEADER (OVERVIEW)
+       ========================================================================== */
+    .scheme-hero {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .scheme-title-group h1 {
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: var(--navy-dark);
+      margin-bottom: 0.35rem;
+    }
+
+    .tag-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .badge-primary { background: #e0f2fe; color: #0369a1; }
+    .badge-risk { background: #fef3c7; color: #b45309; }
+    .badge-rating { background: #dcfce7; color: #15803d; }
+
+    .nav-box {
+      background: #f8fafc;
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+    .nav-value {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--navy-dark);
+    }
+    .nav-change {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--brand-green);
+    }
+
+    .quick-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+      margin-top: 1.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--card-border);
+    }
+    .quick-stat-item {
+      display: flex;
+      flex-direction: column;
+    }
+    .quick-stat-label {
+      font-size: 0.75rem;
+      color: var(--muted-text);
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 0.2rem;
+    }
+    .quick-stat-val {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy-dark);
+    }
+
+    /* ==========================================================================
+       2. HOLDING ANALYSIS SECTION
+       ========================================================================== */
+    .chart-container-wrapper {
+      position: relative;
+      height: 240px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .legend-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px 12px;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .legend-grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      font-size: 0.75rem;
+      color: var(--body-text);
+      line-height: 1.3;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .legend-label {
+      font-weight: 600;
+      color: #374151;
+    }
+    .legend-pct {
+      color: var(--muted-text);
+      font-weight: 500;
+    }
+
+    /* Collapsible Key Measures Card */
+    .toggle-caret-btn {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--navy-dark);
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 0;
+    }
+
+    .caret-icon {
+      transition: transform 0.25s ease;
+      display: inline-block;
+    }
+    .caret-icon.collapsed {
+      transform: rotate(180deg);
+    }
+
+    .collapsible-body {
+      transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+      overflow: hidden;
+      max-height: 800px;
+      opacity: 1;
+    }
+    .collapsible-body.collapsed {
+      max-height: 0;
+      opacity: 0;
+    }
+
+    /* Key Measures Table */
+    .measures-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+    .measures-table th {
+      text-align: left;
+      font-size: 0.75rem;
+      color: var(--muted-text);
+      font-weight: 600;
+      padding: 6px 10px;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .measures-table th:last-child,
+    .measures-table td:last-child,
+    .measures-table th:nth-child(2),
+    .measures-table td:nth-child(2) {
+      text-align: right;
+    }
+    .measures-table tr:nth-child(even) {
+      background: var(--stripe-lavender);
+    }
+    .measures-table td {
+      padding: 6px 10px;
+      color: var(--body-text);
+      font-weight: 500;
+      transition: background 0.15s ease;
+    }
+    .measures-table tr:hover td {
+      background: #e9eaf7;
+    }
+
+    /* Key Duration Stats List */
+    .two-col-metrics {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px 16px;
+      background: #f8fafc;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 0.8rem;
+    }
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+    .metric-name {
+      color: var(--muted-text);
+      font-weight: 500;
+    }
+    .metric-val {
+      color: var(--navy-dark);
+      font-weight: 700;
+    }
+
+    .footnote-text {
+      font-size: 0.72rem;
+      color: var(--muted-text);
+      margin-top: 0.6rem;
+      line-height: 1.35;
+    }
+
+    /* Top Holdings & Sectors Horizontal Bars */
+    .bar-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .bar-item {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .bar-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 0.825rem;
+    }
+    .bar-name {
+      font-weight: 600;
+      color: var(--navy-dark);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 75%;
+    }
+    .bar-pct {
+      font-weight: 700;
+      color: var(--brand-green-dark);
+      font-size: 0.8rem;
+    }
+    .bar-track {
+      height: 6px;
+      background: #f1f5f9;
+      border-radius: 999px;
+      overflow: hidden;
+      width: 100%;
+    }
+    .bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #3bb56c, #1a9c9c);
+      border-radius: 999px;
+      transition: width 0.6s ease;
+    }
+
+    /* ==========================================================================
+       3. RETURNS SECTION
+       ========================================================================== */
+    .subtabs-bar {
+      display: flex;
+      gap: 1.5rem;
+      border-bottom: 2px solid #e2e8f0;
+      margin-bottom: 1.25rem;
+    }
+    .subtab-btn {
+      background: transparent;
+      border: none;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #64748b;
+      padding: 0.5rem 0.25rem 0.75rem;
+      cursor: pointer;
+      position: relative;
+      transition: color 0.2s ease;
+    }
+    .subtab-btn:hover {
+      color: var(--navy-dark);
+    }
+    .subtab-btn.active {
+      color: #0b74c4;
+    }
+    .subtab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: #0b74c4;
+    }
+
+    .table-scroll-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: 14px;
+      border: 1px solid var(--card-border);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+    }
+
+    .returns-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 0.85rem;
+      min-width: 780px;
+    }
+
+    .returns-table thead tr:first-child th {
+      background: var(--brand-gradient);
+      color: #ffffff;
+      font-weight: 700;
+      text-align: center;
+      padding: 10px 12px;
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .returns-table thead tr:nth-child(2) th {
+      background: var(--brand-gradient);
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 0.78rem;
+      text-align: center;
+      padding: 8px 10px;
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .returns-table thead th:last-child {
+      border-right: none !important;
+    }
+
+    .returns-table tbody tr td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #edf2f7;
+      border-right: 1px solid #edf2f7;
+      text-align: right;
+      color: #1f2937;
+      font-weight: 500;
+    }
+    .returns-table tbody tr td:last-child {
+      border-right: none;
+    }
+
+    .returns-table tbody tr:hover td {
+      background: #f8fafc;
+    }
+
+    /* Sticky first column */
+    .returns-table th:first-child,
+    .returns-table td:first-child {
+      position: sticky;
+      left: 0;
+      z-index: 5;
+      text-align: left;
+      font-weight: 600;
+    }
+    .returns-table tbody td:first-child {
+      background: var(--row-label-bg);
+      color: var(--navy-dark);
+      border-right: 2px solid #e2e8f0;
+    }
+
+    .positive-val {
+      color: var(--brand-green-dark) !important;
+      font-weight: 700 !important;
+    }
+
+    .disclaimer-box {
+      margin-top: 0.85rem;
+      font-size: 0.75rem;
+      color: var(--muted-text);
+      line-height: 1.4;
+    }
+    .disclaimer-link {
+      color: #0b74c4;
+      text-decoration: underline;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* ==========================================================================
+       4. FUND MANAGERS SECTION
+       ========================================================================== */
+    .manager-card {
+      background: #fdfefe;
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+      transition: all 0.25s ease;
+    }
+    .manager-card:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 4px 14px rgba(15, 31, 61, 0.04);
+    }
+
+    .manager-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .manager-profile {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .manager-avatar {
+      width: 74px;
+      height: 74px;
+      border-radius: 50%;
+      background: #eef2ff;
+      border: 3px solid #e0e7ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--navy-dark);
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(99, 102, 241, 0.12);
+    }
+
+    .manager-info h4 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--navy-dark);
+      margin-bottom: 2px;
+    }
+    .manager-info p {
+      font-size: 0.825rem;
+      color: var(--muted-text);
+      font-weight: 500;
+    }
+
+    .manager-toggle-btn {
+      background: transparent;
+      border: 1px solid #e2e8f0;
+      border-radius: 999px;
+      padding: 6px 14px;
+      color: var(--navy-dark);
+      font-size: 0.825rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .manager-toggle-btn:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+    .manager-toggle-btn .chevron {
+      width: 14px;
+      height: 14px;
+      transition: transform 0.25s ease;
+    }
+    .manager-toggle-btn.expanded .chevron {
+      transform: rotate(180deg);
+    }
+
+    .manager-accordion-content {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid #f1f5f9;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+      font-size: 0.825rem;
+      transition: all 0.3s ease;
+    }
+    .manager-detail-block strong {
+      display: block;
+      color: var(--navy-dark);
+      margin-bottom: 2px;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+    .manager-detail-block span {
+      color: #4b5563;
+      line-height: 1.4;
+    }
+
+    /* ==========================================================================
+       PLACEHOLDER & EXTRA SECTIONS (NAV, SUMMARY, CALCULATOR)
+       ========================================================================== */
+    .range-selector-bar {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .range-pill {
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      border: 1px solid var(--card-border);
+      background: #f8fafc;
+      color: #475569;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .range-pill:hover,
+    .range-pill.active {
+      background: var(--navy-dark);
+      color: white;
+      border-color: var(--navy-dark);
+    }
+
+    /* ==========================================================================
+       CALCULATORS SECTION (NEW UI DESIGN)
+       ========================================================================== */
+    .calc-main-card {
+      padding: 28px 24px;
+    }
+
+    .calc-mode-pill-bar {
+      display: inline-flex;
+      background: #f1f5f9;
+      border-radius: 999px;
+      padding: 3px;
+      margin-bottom: 1.5rem;
+      border: 1px solid #e2e8f0;
+    }
+
+    .calc-mode-btn {
+      padding: 6px 18px;
+      border-radius: 999px;
+      border: none;
+      background: transparent;
+      color: #64748b;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .calc-mode-btn.active {
+      background: var(--brand-gradient);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(26, 156, 156, 0.25);
+    }
+
+    .calc-input-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .calc-input-label {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #4b5563;
+    }
+
+    .calc-number-box {
+      display: flex;
+      align-items: center;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 6px 12px;
+      gap: 8px;
+    }
+
+    .calc-currency-symbol {
+      color: #64748b;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .calc-number-input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--navy-dark);
+      text-align: right;
+      width: 100px;
+      font-family: var(--font-family);
+    }
+
+    .calc-slider-wrapper {
+      margin-bottom: 0.5rem;
+    }
+
+    .calc-range-track {
+      width: 100%;
+      height: 6px;
+      border-radius: 999px;
+      background: #e2e8f0;
+      outline: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+    }
+
+    .calc-range-track::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 2px solid #0b74c4;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+    .calc-range-track::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+    }
+
+    .calc-range-limits {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.825rem;
+      font-weight: 600;
+      color: #4b5563;
+      margin-top: 0.5rem;
+    }
+
+    /* Comparison Card on the Right */
+    .calc-comparison-card {
+      background: #ffffff;
+      border: 1px solid #e6ecf2;
+      border-radius: 16px;
+      padding: 20px 24px;
+      box-shadow: 0 2px 8px rgba(15, 31, 61, 0.02);
+    }
+
+    .calc-comparison-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #4b5563;
+      margin-bottom: 12px;
+    }
+
+    .calc-timeframe-track {
+      display: flex;
+      background: #f1f5f9;
+      border-radius: 999px;
+      padding: 3px;
+      margin-bottom: 18px;
+      gap: 2px;
+      overflow-x: auto;
+    }
+
+    .calc-timeframe-btn {
+      flex: 1;
+      white-space: nowrap;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: none;
+      background: transparent;
+      color: #4b5563;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+
+    .calc-timeframe-btn.active {
+      background: var(--brand-gradient);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(26, 156, 156, 0.25);
+    }
+
+    .calc-result-rows {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .calc-result-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .calc-result-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .calc-row-name {
+      font-size: 0.925rem;
+      font-weight: 700;
+      color: var(--navy-dark);
+    }
+
+    .calc-row-values {
+      text-align: right;
+    }
+
+    .calc-row-amount {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--navy-dark);
+      line-height: 1.2;
+    }
+
+    .calc-row-pct {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--brand-green-dark);
+    }
+
+    .calc-footnote {
+      font-size: 0.72rem;
+      color: var(--muted-text);
+      margin-top: 1.5rem;
+      line-height: 1.4;
+    }
+
+    /* Explore More Cards */
+    .explore-more-section {
+      margin-top: 1.5rem;
+    }
+
+    .explore-more-heading {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--navy-dark);
+      margin-bottom: 12px;
+    }
+
+    .explore-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    @media (max-width: 640px) {
+      .explore-cards-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .explore-card {
+      background: #ffffff;
+      border: 1px solid #e6ecf2;
+      border-radius: 14px;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-decoration: none;
+      color: #0b74c4;
+      font-weight: 700;
+      font-size: 0.95rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+    .explore-card:hover {
+      border-color: #0b74c4;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(11, 116, 196, 0.1);
+    }
+
+    .explore-chevron-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1.5px solid #0b74c4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #0b74c4;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+    .explore-card:hover .explore-chevron-btn {
+      background: #0b74c4;
+      color: #ffffff;
+    }
+
+    /* Read More Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 31, 61, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      padding: 1rem;
+    }
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-card {
+      background: #ffffff;
+      border-radius: 20px;
+      max-width: 550px;
+      width: 100%;
+      padding: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      position: relative;
+    }
+    .modal-close-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: #f1f5f9;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Green Gradient Strip -->
+  <div class="top-gradient-strip"></div>
+
+  <div class="container">
+    
+    <!-- Top Header -->
+    <header class="header-bar">
+      <a href="index.html" class="brand-logo-area">
+        <div class="brand-icon">M</div>
+        <div>
+          <div class="brand-title">முதலீட்டு திசை | Muthaleetu Thisai</div>
+          <div class="brand-subtitle">Mutual Fund & Investment Intelligence</div>
+        </div>
+      </a>
+      <a href="index.html" class="back-home-btn">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+        <span>Back to Portal</span>
+      </a>
+    </header>
+
+    <!-- 1. STICKY TAB NAVIGATION -->
+    <div class="sticky-nav-wrapper">
+      <nav class="nav-pill-bar" aria-label="Scheme Navigation Tabs">
+        <button id="navLeftBtn" class="nav-scroll-btn" title="Scroll Left" aria-label="Scroll Tabs Left" disabled>&lt;</button>
+        <div id="tabsTrack" class="tabs-track">
+          <button class="tab-pill active" data-target="overview">Overview</button>
+          <button class="tab-pill" data-target="nav-section">NAV</button>
+          <button class="tab-pill" data-target="summary">Summary</button>
+          <button class="tab-pill" data-target="calculator">Calculator</button>
+          <button class="tab-pill" data-target="holding-analysis">Holding Analysis</button>
+          <button class="tab-pill" data-target="returns">Returns</button>
+          <button class="tab-pill" data-target="fund-managers">Fund Managers</button>
+        </div>
+        <button id="navRightBtn" class="nav-scroll-btn" title="Scroll Right" aria-label="Scroll Tabs Right">&gt;</button>
+      </nav>
+    </div>
+
+    <!-- SECTION: OVERVIEW -->
+    <section id="overview" class="card scroll-section">
+      <div class="scheme-hero">
+        <div class="scheme-title-group">
+          <div class="tag-group" style="margin-bottom: 0.5rem;">
+            <span class="badge badge-primary">Arbitrage Fund</span>
+            <span class="badge badge-risk">Low to Moderate Risk</span>
+            <span class="badge badge-rating">★ ★ ★ ★ ☆ (4 Star)</span>
+          </div>
+          <h1 id="schemeName">SBI Arbitrage Opportunities Fund</h1>
+          <p class="section-subtitle">Direct Plan - Growth | Benchmark: Nifty 50 Arbitrage Index</p>
+        </div>
+        <div class="nav-box">
+          <div style="font-size: 0.75rem; color: var(--muted-text); font-weight: 600; text-transform: uppercase;">Current NAV (31 Aug 2026)</div>
+          <div class="nav-value">₹32.4820</div>
+          <div class="nav-change">+₹0.0450 (+0.14%) today</div>
+        </div>
+      </div>
+
+      <div class="quick-stats-grid">
+        <div class="quick-stat-item">
+          <span class="quick-stat-label">Fund Size (AUM)</span>
+          <span class="quick-stat-val">₹9,842.15 Cr</span>
+        </div>
+        <div class="quick-stat-item">
+          <span class="quick-stat-label">Expense Ratio</span>
+          <span class="quick-stat-val">0.38% (Direct)</span>
+        </div>
+        <div class="quick-stat-item">
+          <span class="quick-stat-label">Min. SIP / Lump Sum</span>
+          <span class="quick-stat-val">₹500 / ₹5,000</span>
+        </div>
+        <div class="quick-stat-item">
+          <span class="quick-stat-label">Lock-in Period</span>
+          <span class="quick-stat-val">No Lock-in</span>
+        </div>
+        <div class="quick-stat-item">
+          <span class="quick-stat-label">Exit Load</span>
+          <span class="quick-stat-val">0.25% if &lt; 30 Days</span>
+        </div>
+        <div class="quick-stat-item">
+          <span class="quick-stat-label">Launch Date</span>
+          <span class="quick-stat-val">18 Dec 2018</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: NAV (INTERACTIVE CHART) -->
+    <section id="nav-section" class="card scroll-section">
+      <div class="card-heading">
+        <span>NAV Movement History</span>
+        <div class="range-selector-bar">
+          <button class="range-pill" data-range="1M">1M</button>
+          <button class="range-pill" data-range="3M">3M</button>
+          <button class="range-pill" data-range="6M">6M</button>
+          <button class="range-pill active" data-range="1Y">1Y</button>
+          <button class="range-pill" data-range="3Y">3Y</button>
+          <button class="range-pill" data-range="5Y">5Y</button>
+          <button class="range-pill" data-range="MAX">MAX</button>
+        </div>
+      </div>
+      <div style="height: 280px; width: 100%;">
+        <canvas id="navLineChart"></canvas>
+      </div>
+    </section>
+
+    <!-- SECTION: SUMMARY -->
+    <section id="summary" class="card scroll-section">
+      <h2 class="card-heading">Scheme Summary & Investment Objective</h2>
+      <p style="font-size: 0.925rem; color: #374151; margin-bottom: 1rem; line-height: 1.6;">
+        The investment objective of <strong>SBI Arbitrage Opportunities Fund</strong> is to provide capital appreciation and regular income for investors through arbitrage opportunities in the cash and derivatives segments of the equity market alongside investments in debt securities and money market instruments.
+      </p>
+      <div class="grid-2" style="margin-bottom: 0;">
+        <div style="background: #f8fafc; border: 1px solid var(--card-border); border-radius: 14px; padding: 16px;">
+          <h4 style="font-size: 0.9rem; font-weight: 700; color: var(--navy-dark); margin-bottom: 6px;">Who Should Invest?</h4>
+          <ul style="font-size: 0.825rem; color: #4b5563; padding-left: 1.2rem; line-height: 1.5;">
+            <li>Investors seeking low risk returns similar to short term debt funds.</li>
+            <li>Ideal for parking surplus funds for a 3 to 12 months horizon.</li>
+            <li>Tax advantage of Equity funds with debt-like stability.</li>
+          </ul>
+        </div>
+        <div style="background: #f8fafc; border: 1px solid var(--card-border); border-radius: 14px; padding: 16px;">
+          <h4 style="font-size: 0.9rem; font-weight: 700; color: var(--navy-dark); margin-bottom: 6px;">Taxation Guide (Equity Oriented)</h4>
+          <ul style="font-size: 0.825rem; color: #4b5563; padding-left: 1.2rem; line-height: 1.5;">
+            <li><strong>STCG:</strong> 20% if redeemed before 12 months.</li>
+            <li><strong>LTCG:</strong> 12.5% for gains above ₹1.25 Lakh per financial year.</li>
+            <li>Treated as Equity fund because equity holding > 65%.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: CALCULATORS -->
+    <section id="calculator" class="card scroll-section calc-main-card">
+      <h2 class="section-title" style="margin-bottom: 1.5rem;">Calculators</h2>
+
+      <div class="grid-2" style="margin-bottom: 0; align-items: start;">
+        
+        <!-- Left Column: SIP / Lumpsum Mode & Investment Amount Slider -->
+        <div>
+          <!-- SIP / Lumpsum Mode Toggle -->
+          <div class="calc-mode-pill-bar">
+            <button id="calcModeSIP" class="calc-mode-btn active" data-mode="sip">SIP</button>
+            <button id="calcModeLumpsum" class="calc-mode-btn" data-mode="lumpsum">Lumpsum</button>
+          </div>
+
+          <!-- Input Row -->
+          <div class="calc-input-row">
+            <label id="calcInputLabel" class="calc-input-label" for="calcAmountInput">Monthly Investment</label>
+            <div class="calc-number-box">
+              <span class="calc-currency-symbol">₹</span>
+              <input type="number" id="calcAmountInput" class="calc-number-input" value="150" min="150" max="1000000" step="50">
+            </div>
+          </div>
+
+          <!-- Slider -->
+          <div class="calc-slider-wrapper">
+            <input type="range" id="calcAmountSlider" class="calc-range-track" min="150" max="1000000" step="50" value="150">
+            <div class="calc-range-limits">
+              <span id="calcMinLimit">₹ 150</span>
+              <span id="calcMaxLimit">₹ 10 Lakhs</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Worth of investments comparison card -->
+        <div class="calc-comparison-card">
+          <div class="calc-comparison-title">Worth of investments in last</div>
+
+          <!-- Timeframe Selector -->
+          <div class="calc-timeframe-track">
+            <button class="calc-timeframe-btn active" data-period="1Y">1 Y</button>
+            <button class="calc-timeframe-btn" data-period="3Y">3 Y</button>
+            <button class="calc-timeframe-btn" data-period="5Y">5 Y</button>
+            <button class="calc-timeframe-btn" data-period="SI">Since Inception</button>
+          </div>
+
+          <!-- Result Rows -->
+          <div class="calc-result-rows">
+            
+            <!-- Row 1: This Fund -->
+            <div class="calc-result-row">
+              <div class="calc-row-name">This Fund</div>
+              <div class="calc-row-values">
+                <div id="resThisFundAmount" class="calc-row-amount">₹1,862</div>
+                <div id="resThisFundPct" class="calc-row-pct">6.65%</div>
+              </div>
+            </div>
+
+            <!-- Row 2: Nifty 50 Arbitrage Index -->
+            <div class="calc-result-row">
+              <div class="calc-row-name">Nifty 50 Arbitrage Index</div>
+              <div class="calc-row-values">
+                <div id="resBenchAmount" class="calc-row-amount">₹1,862</div>
+                <div id="resBenchPct" class="calc-row-pct">6.62%</div>
+              </div>
+            </div>
+
+            <!-- Row 3: CRISIL 1 Year T-Bill Index -->
+            <div class="calc-result-row">
+              <div class="calc-row-name">CRISIL 1 Year T-Bill Index</div>
+              <div class="calc-row-values">
+                <div id="resAddBenchAmount" class="calc-row-amount">₹1,840</div>
+                <div id="resAddBenchPct" class="calc-row-pct">4.28%</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footnote -->
+      <p class="calc-footnote">
+        **Past performance may or may not be sustained in future. For performance in SEBI format please refer returns section.
+      </p>
+
+      <!-- Explore More Cards -->
+      <div class="explore-more-section">
+        <h3 class="explore-more-heading">Explore More</h3>
+        <div class="explore-cards-grid">
+          <a class="explore-card" onclick="document.querySelector('.tab-pill[data-target=\'returns\']')?.click()">
+            <span>Rolling Return Calculator</span>
+            <span class="explore-chevron-btn">&gt;</span>
+          </a>
+          <a class="explore-card" onclick="document.querySelector('.tab-pill[data-target=\'returns\']')?.click()">
+            <span>Point to Point Calculator</span>
+            <span class="explore-chevron-btn">&gt;</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         2. HOLDING ANALYSIS SECTION
+         ======================================================================== -->
+    <div id="holding-analysis" class="scroll-section">
+      <h2 class="section-title">Holding Analysis</h2>
+
+      <!-- Top Two Cards: Asset Allocation & Key Measures -->
+      <div class="grid-2">
+        
+        <!-- Left Card: Asset Allocation -->
+        <div class="card" style="margin-bottom: 0;">
+          <h3 class="card-heading">Asset Allocation</h3>
+          
+          <div class="chart-container-wrapper">
+            <canvas id="assetAllocationChart"></canvas>
+          </div>
+
+          <!-- Custom Legend Below (wrapping in 3 columns) -->
+          <div id="assetLegendGrid" class="legend-grid-3">
+            <!-- Injected by JavaScript from FUND_DATA -->
+          </div>
+        </div>
+
+        <!-- Right Card: Key Measures (Collapsible) -->
+        <div class="card" style="margin-bottom: 0;">
+          <div class="card-heading">
+            <button id="toggleMeasuresBtn" class="toggle-caret-btn" aria-expanded="true">
+              <span>Key Measures**</span>
+              <span id="caretIcon" class="caret-icon">▲</span>
+            </button>
+          </div>
+
+          <div id="measuresCollapsibleBody" class="collapsible-body">
+            <table class="measures-table">
+              <thead>
+                <tr>
+                  <th>Key Measures**</th>
+                  <th>Fund</th>
+                  <th>Benchmark</th>
+                </tr>
+              </thead>
+              <tbody id="measuresTableBody">
+                <!-- Injected by JS -->
+              </tbody>
+            </table>
+
+            <!-- Two Column Metrics List Below -->
+            <div class="two-col-metrics">
+              <div class="metric-row">
+                <span class="metric-name">Portfolio Macauley Duration</span>
+                <span class="metric-val">0.42 Years</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-name">Modified Duration</span>
+                <span class="metric-val">0.41 Years</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-name">Average Maturity</span>
+                <span class="metric-val">0.42 Years</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-name">YTM*</span>
+                <span class="metric-val">6.83%</span>
+              </div>
+            </div>
+
+            <p class="footnote-text">
+              *Past performance may or may not be sustained in future. Different plans have different expense structure.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Two Cards: Top Holdings & Sectors -->
+      <div class="grid-2" style="margin-top: 24px;">
+        
+        <!-- Top Holdings as on 31 Aug 2026 -->
+        <div class="card" style="margin-bottom: 0;">
+          <div class="card-heading">
+            <span>Holdings</span>
+            <span class="section-subtitle">as on 31 Aug 2026</span>
+          </div>
+          <div id="holdingsBarList" class="bar-list">
+            <!-- Top 10 holdings with horizontal bars -->
+          </div>
+        </div>
+
+        <!-- Sectors as on 31 Aug 2026 -->
+        <div class="card" style="margin-bottom: 0;">
+          <div class="card-heading">
+            <span>Sectors</span>
+            <span class="section-subtitle">as on 31 Aug 2026</span>
+          </div>
+          <div id="sectorsBarList" class="bar-list">
+            <!-- Top 10 sectors with horizontal bars -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ========================================================================
+         3. RETURNS SECTION
+         ======================================================================== -->
+    <section id="returns" class="card scroll-section" style="margin-top: 24px;">
+      <h2 class="section-title">
+        <span>Returns over the years</span>
+        <span class="section-subtitle">as on 31 Aug 2026</span>
+      </h2>
+
+      <!-- Subtabs: Returns over the years & Performance of SIP -->
+      <div class="subtabs-bar">
+        <button id="subtabReturns" class="subtab-btn active" data-subtab="lumpsum">Returns over the years</button>
+        <button id="subtabSIP" class="subtab-btn" data-subtab="sip">Performance of SIP</button>
+      </div>
+
+      <!-- Returns Comparison Table with Grouped Header -->
+      <div class="table-scroll-wrapper">
+        <table class="returns-table">
+          <thead>
+            <tr>
+              <th rowspan="2" style="vertical-align: middle; min-width: 160px;">Period</th>
+              <th rowspan="2" style="vertical-align: middle;">Annualized (%)</th>
+              <th rowspan="2" style="vertical-align: middle; max-width: 140px;">Nifty 50 Arbitrage Index Benchmark (%)</th>
+              <th rowspan="2" style="vertical-align: middle; max-width: 140px;">CRISIL 1 Year T-Bill Index Additional Benchmark (%)</th>
+              <th colspan="3" id="groupedHeaderTitle" style="border-bottom: 1px solid rgba(255,255,255,0.3);">
+                Current value of ₹10,000 invested
+              </th>
+            </tr>
+            <tr>
+              <th style="min-width: 90px;">Scheme</th>
+              <th style="min-width: 110px;">Nifty 50 Arbitrage Index Benchmark</th>
+              <th style="min-width: 110px;">CRISIL 1 Year T-Bill Index Additional Benchmark</th>
+            </tr>
+          </thead>
+          <tbody id="returnsTableBody">
+            <!-- Injected by JavaScript based on active subtab -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Disclaimer Line -->
+      <div class="disclaimer-box">
+        Disclaimer: Past performance may or may not be sustained in future. Different plans have different expense structure. 
+        <a id="openDisclaimerModal" class="disclaimer-link">Read More</a>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         4. FUND MANAGERS SECTION
+         ======================================================================== -->
+    <section id="fund-managers" class="card scroll-section">
+      <h2 class="section-title">Fund Managers</h2>
+      
+      <div id="fundManagersContainer">
+        <!-- Rendered by JS from FUND_DATA -->
+      </div>
+    </section>
+
+  </div> <!-- End Container -->
+
+  <!-- Read More Disclaimer Modal -->
+  <div id="disclaimerModal" class="modal-overlay">
+    <div class="modal-card">
+      <button id="closeDisclaimerModal" class="modal-close-btn" aria-label="Close Modal">&times;</button>
+      <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--navy-dark); margin-bottom: 0.75rem;">Important Fund Disclaimers</h3>
+      <div style="font-size: 0.85rem; color: #4b5563; line-height: 1.6; max-height: 320px; overflow-y: auto;">
+        <p style="margin-bottom: 0.75rem;">
+          1. Mutual fund investments are subject to market risks, read all scheme related documents carefully.
+        </p>
+        <p style="margin-bottom: 0.75rem;">
+          2. The returns represented are historical calculations based on NAV appreciation assuming reinvestment of dividends. Past performance is no guarantee of future returns.
+        </p>
+        <p style="margin-bottom: 0.75rem;">
+          3. Returns greater than 1 year period are Compounded Annualized Growth Rates (CAGR). Standard deviation, Sharpe ratio, and Beta are annualized and calculated using monthly returns for the last 3-year period.
+        </p>
+        <p>
+          4. Different plans like Direct and Regular plans have distinct expense structures. Direct plan results in lower expense ratios and comparatively higher returns.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       CENTRAL JAVASCRIPT & DATA STORE
+       ========================================================================== -->
+  <script>
+    /**
+     * CENTRAL SCHEME DATA OBJECT (Easily replaceable by REST API / Backend)
+     */
+    const FUND_DATA = {
+      name: "SBI Arbitrage Opportunities Fund",
+      asOfDate: "31 Aug 2026",
+      
+      // 1. Asset Allocation Data (Chart.js Doughnut)
+      assetAllocation: [
+        { label: "Equity Shares", percentage: 64.5, color: "#f5c242" },
+        { label: "Certificate Of Deposit", percentage: 18.4, color: "#dfc7ad" },
+        { label: "Mutual Fund Units - Open Ended Debt", percentage: 12.2, color: "#7b2f98" },
+        { label: "Ncd - Non Convertible Debt", percentage: 2.6, color: "#1ee3e8" },
+        { label: "Commercial Papers", percentage: 0.5, color: "#6ef58a" },
+        { label: "Mutual Fund Unit-open Ended Liquid", percentage: 0.9, color: "#c8e89a" },
+        { label: "Cash & Cash Equivalents", percentage: 0.9, color: "#f5a623" }
+      ],
+
+      // 2. Key Measures
+      keyMeasures: [
+        { name: "Standard Deviation", fund: "0.50", benchmark: "1.07" },
+        { name: "Sharpe Ratio", fund: "2.53", benchmark: "1.84" },
+        { name: "Portfolio Beta", fund: "0.21", benchmark: "NA" },
+        { name: "R Squared", fund: "0.22", benchmark: "NA" },
+        { name: "Treynor", fund: "0.53", benchmark: "NA" },
+        { name: "Jenson", fund: "0.08", benchmark: "NA" }
+      ],
+
+      // 3. Top 10 Holdings
+      holdings: [
+        { name: "Reliance Industries Ltd.", sector: "Energy", percentage: 8.42 },
+        { name: "HDFC Bank Ltd.", sector: "Financials", percentage: 7.85 },
+        { name: "ICICI Bank Ltd.", sector: "Financials", percentage: 6.90 },
+        { name: "Infosys Ltd.", sector: "Technology", percentage: 5.75 },
+        { name: "Tata Consultancy Services Ltd.", sector: "Technology", percentage: 4.80 },
+        { name: "ITC Ltd.", sector: "Consumer Staples", percentage: 4.25 },
+        { name: "Larsen & Toubro Ltd.", sector: "Capital Goods", percentage: 3.90 },
+        { name: "Axis Bank Ltd.", sector: "Financials", percentage: 3.65 },
+        { name: "State Bank of India", sector: "Financials", percentage: 3.40 },
+        { name: "Bharti Airtel Ltd.", sector: "Telecom", percentage: 3.10 }
+      ],
+
+      // 4. Top 10 Sectors
+      sectors: [
+        { name: "Financial Services", percentage: 28.4 },
+        { name: "Information Technology", percentage: 14.2 },
+        { name: "Oil, Gas & Consumable Fuels", percentage: 11.5 },
+        { name: "Fast Moving Consumer Goods", percentage: 9.8 },
+        { name: "Healthcare & Pharmaceuticals", percentage: 8.3 },
+        { name: "Automobile & Auto Components", percentage: 7.1 },
+        { name: "Construction & Infrastructure", percentage: 6.2 },
+        { name: "Metals & Mining", percentage: 5.5 },
+        { name: "Telecommunication", percentage: 4.9 },
+        { name: "Power & Utilities", percentage: 4.1 }
+      ],
+
+      // 5. Returns Data (Lump Sum vs SIP)
+      returns: {
+        lumpsum: [
+          { period: "Since Inception 18 Dec 2018", annualized: "6.54%", benchmark1: "5.83%", benchmark2: "5.80%", schemeVal: "₹16,293", bench1Val: "₹15,480", bench2Val: "₹15,445" },
+          { period: "Last 1 Year", annualized: "6.64%", benchmark1: "7.02%", benchmark2: "4.30%", schemeVal: "₹10,668", bench1Val: "₹10,706", bench2Val: "₹10,432" },
+          { period: "Last 3 Years", annualized: "7.53%", benchmark1: "7.44%", benchmark2: "6.27%", schemeVal: "₹12,436", bench1Val: "₹12,405", bench2Val: "₹12,004" },
+          { period: "Last 5 Years", annualized: "6.78%", benchmark1: "6.54%", benchmark2: "5.67%", schemeVal: "₹13,884", bench1Val: "₹13,727", bench2Val: "₹13,177" }
+        ],
+        sip: [
+          { period: "Since Inception SIP", annualized: "7.42%", benchmark1: "6.98%", benchmark2: "5.82%", schemeVal: "₹11,45,620", bench1Val: "₹11,10,300", bench2Val: "₹10,42,150" },
+          { period: "Last 1 Year SIP (₹1.2L Invested)", annualized: "7.12%", benchmark1: "6.85%", benchmark2: "5.10%", schemeVal: "₹1,24,650", bench1Val: "₹1,24,480", bench2Val: "₹1,23,200" },
+          { period: "Last 3 Years SIP (₹3.6L Invested)", annualized: "7.85%", benchmark1: "7.30%", benchmark2: "5.95%", schemeVal: "₹4,05,210", bench1Val: "₹4,01,840", bench2Val: "₹3,94,150" },
+          { period: "Last 5 Years SIP (₹6.0L Invested)", annualized: "7.42%", benchmark1: "6.98%", benchmark2: "5.82%", schemeVal: "₹7,25,840", bench1Val: "₹7,17,300", bench2Val: "₹6,96,400" }
+        ]
+      },
+
+      // 6. Fund Managers
+      managers: [
+        {
+          name: "Mr. Anand Sharma",
+          role: "Senior Fund Manager - Arbitrage & Equity Derivatives",
+          since: "Managing since 10 Dec 2018",
+          initials: "AS",
+          experience: "Over 18 years of comprehensive experience in Indian Equity Markets, Quantitative Trading, and Derivative Arbitrage strategies.",
+          qualification: "B.Com (Hons), MMS (Finance) - Mumbai University, CFA Charterholder.",
+          otherFunds: "SBI Equity Hybrid Fund, SBI Balanced Advantage Fund, SBI Multi Asset Allocation Fund."
+        },
+        {
+          name: "Ms. Priya Venkatesh",
+          role: "Co-Fund Manager - Fixed Income & Money Markets",
+          since: "Managing since 15 Jul 2021",
+          initials: "PV",
+          experience: "Over 14 years in Fixed Income Portfolio Management, Yield Curve Modeling, and Sovereign Debt Trading.",
+          qualification: "B.Tech, MBA (Finance) from IIM Bangalore, FRM Certified.",
+          otherFunds: "SBI Liquid Fund, SBI Savings Fund, SBI Overnight Fund."
+        }
+      ]
+    };
+
+    /**
+     * INITIALIZATION & RENDER PIPELINE
+     */
+    document.addEventListener('DOMContentLoaded', () => {
+      initStickyNavigation();
+      initAssetAllocationChart();
+      initKeyMeasuresTable();
+      initHoldingsAndSectors();
+      initReturnsSection();
+      initFundManagers();
+      initNavLineChart();
+      initSipCalculator();
+      initDisclaimerModal();
+    });
+
+    /**
+     * 1. STICKY TAB NAVIGATION & SCROLL-SPY
+     */
+    function initStickyNavigation() {
+      const track = document.getElementById('tabsTrack');
+      const leftBtn = document.getElementById('navLeftBtn');
+      const rightBtn = document.getElementById('navRightBtn');
+      const tabPills = document.querySelectorAll('.tab-pill');
+      const sections = document.querySelectorAll('.scroll-section');
+
+      // Update arrow states
+      function updateArrowStates() {
+        leftBtn.disabled = track.scrollLeft <= 4;
+        rightBtn.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+      }
+
+      leftBtn.addEventListener('click', () => {
+        track.scrollBy({ left: -180, behavior: 'smooth' });
+      });
+
+      rightBtn.addEventListener('click', () => {
+        track.scrollBy({ left: 180, behavior: 'smooth' });
+      });
+
+      track.addEventListener('scroll', updateArrowStates);
+      window.addEventListener('resize', updateArrowStates);
+      updateArrowStates();
+
+      // Click tab pill -> Smooth scroll to section
+      tabPills.forEach(pill => {
+        pill.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetId = pill.getAttribute('data-target');
+          const targetEl = document.getElementById(targetId);
+          if (targetEl) {
+            const yOffset = -80; // Account for sticky pill bar
+            const y = targetEl.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+          }
+        });
+      });
+
+      // IntersectionObserver for Scroll-Spy
+      const observerOptions = {
+        root: null,
+        rootMargin: '-20% 0px -60% 0px',
+        threshold: 0
+      };
+
+      const scrollSpy = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            tabPills.forEach(pill => {
+              if (pill.getAttribute('data-target') === id) {
+                pill.classList.add('active');
+                // Auto scroll tab pill into view if needed
+                pill.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+              } else {
+                pill.classList.remove('active');
+              }
+            });
+          }
+        });
+      }, observerOptions);
+
+      sections.forEach(sec => scrollSpy.observe(sec));
+    }
+
+    /**
+     * 2. ASSET ALLOCATION DOUGHNUT CHART & LEGEND
+     */
+    function initAssetAllocationChart() {
+      const ctx = document.getElementById('assetAllocationChart').getContext('2d');
+      const data = FUND_DATA.assetAllocation;
+
+      new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: data.map(d => d.label),
+          datasets: [{
+            data: data.map(d => d.percentage),
+            backgroundColor: data.map(d => d.color),
+            borderColor: '#ffffff',
+            borderWidth: 1.5,
+            hoverOffset: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '52%',
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: '#0f1f3d',
+              titleFont: { family: 'DM Sans', size: 12, weight: '700' },
+              bodyFont: { family: 'DM Sans', size: 12 },
+              padding: 10,
+              cornerRadius: 8,
+              callbacks: {
+                label: function(context) {
+                  return ` ${context.label}: ${context.raw}%`;
+                }
+              }
+            }
+          }
+        }
+      });
+
+      // Render custom 3-column legend
+      const legendGrid = document.getElementById('assetLegendGrid');
+      legendGrid.innerHTML = data.map(item => `
+        <div class="legend-item">
+          <span class="legend-dot" style="background-color: ${item.color};"></span>
+          <div>
+            <div class="legend-label">${item.label}</div>
+            <div class="legend-pct">${item.percentage}%</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    /**
+     * 3. KEY MEASURES COLLAPSIBLE TABLE
+     */
+    function initKeyMeasuresTable() {
+      const tbody = document.getElementById('measuresTableBody');
+      tbody.innerHTML = FUND_DATA.keyMeasures.map(row => `
+        <tr>
+          <td>${row.name}</td>
+          <td><strong>${row.fund}</strong></td>
+          <td style="color: var(--muted-text);">${row.benchmark}</td>
+        </tr>
+      `).join('');
+
+      // Toggle collapsible caret
+      const toggleBtn = document.getElementById('toggleMeasuresBtn');
+      const body = document.getElementById('measuresCollapsibleBody');
+      const caret = document.getElementById('caretIcon');
+
+      toggleBtn.addEventListener('click', () => {
+        const isCollapsed = body.classList.toggle('collapsed');
+        caret.classList.toggle('collapsed', isCollapsed);
+        toggleBtn.setAttribute('aria-expanded', !isCollapsed);
+      });
+    }
+
+    /**
+     * 4. TOP HOLDINGS & SECTORS HORIZONTAL BARS
+     */
+    function initHoldingsAndSectors() {
+      // Render Top 10 Holdings
+      const holdingsContainer = document.getElementById('holdingsBarList');
+      const maxHolding = Math.max(...FUND_DATA.holdings.map(h => h.percentage));
+      holdingsContainer.innerHTML = FUND_DATA.holdings.map(h => `
+        <div class="bar-item">
+          <div class="bar-info">
+            <span class="bar-name" title="${h.name}">${h.name} <small style="color: var(--muted-text); font-weight: 500;">(${h.sector})</small></span>
+            <span class="bar-pct">${h.percentage}%</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width: ${(h.percentage / maxHolding) * 100}%;"></div>
+          </div>
+        </div>
+      `).join('');
+
+      // Render Top 10 Sectors
+      const sectorsContainer = document.getElementById('sectorsBarList');
+      const maxSector = Math.max(...FUND_DATA.sectors.map(s => s.percentage));
+      sectorsContainer.innerHTML = FUND_DATA.sectors.map(s => `
+        <div class="bar-item">
+          <div class="bar-info">
+            <span class="bar-name">${s.name}</span>
+            <span class="bar-pct">${s.percentage}%</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width: ${(s.percentage / maxSector) * 100}%;"></div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    /**
+     * 5. RETURNS SECTION (SUBTABS & TABLE SWAP)
+     */
+    function initReturnsSection() {
+      const subtabReturns = document.getElementById('subtabReturns');
+      const subtabSIP = document.getElementById('subtabSIP');
+      const tbody = document.getElementById('returnsTableBody');
+      const groupedHeaderTitle = document.getElementById('groupedHeaderTitle');
+
+      function renderReturnsTable(type) {
+        const rows = FUND_DATA.returns[type];
+        if (type === 'sip') {
+          groupedHeaderTitle.textContent = "Current Value of ₹10,000/Month SIP";
+        } else {
+          groupedHeaderTitle.textContent = "Current value of ₹10,000 invested";
+        }
+
+        tbody.innerHTML = rows.map(r => `
+          <tr>
+            <td>${r.period}</td>
+            <td class="positive-val">${r.annualized}</td>
+            <td>${r.benchmark1}</td>
+            <td>${r.benchmark2}</td>
+            <td class="positive-val">${r.schemeVal}</td>
+            <td>${r.bench1Val}</td>
+            <td>${r.bench2Val}</td>
+          </tr>
+        `).join('');
+      }
+
+      // Initial render: lumpsum
+      renderReturnsTable('lumpsum');
+
+      subtabReturns.addEventListener('click', () => {
+        subtabReturns.classList.add('active');
+        subtabSIP.classList.remove('active');
+        renderReturnsTable('lumpsum');
+      });
+
+      subtabSIP.addEventListener('click', () => {
+        subtabSIP.classList.add('active');
+        subtabReturns.classList.remove('active');
+        renderReturnsTable('sip');
+      });
+    }
+
+    /**
+     * 6. FUND MANAGERS ACCORDION
+     */
+    function initFundManagers() {
+      const container = document.getElementById('fundManagersContainer');
+      container.innerHTML = FUND_DATA.managers.map((mgr, index) => `
+        <div class="manager-card">
+          <div class="manager-header">
+            <div class="manager-profile">
+              <div class="manager-avatar">${mgr.initials}</div>
+              <div class="manager-info">
+                <h4>${mgr.name}</h4>
+                <p>${mgr.role} • <span style="color: #0b74c4; font-weight: 600;">${mgr.since}</span></p>
+              </div>
+            </div>
+            <button class="manager-toggle-btn" data-index="${index}" aria-expanded="false">
+              <span>Show Details</span>
+              <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+            </button>
+          </div>
+          <div id="mgrAccordion-${index}" class="manager-accordion-content" style="display: none;">
+            <div class="manager-detail-block">
+              <strong>Experience & Background</strong>
+              <span>${mgr.experience}</span>
+            </div>
+            <div class="manager-detail-block">
+              <strong>Educational Qualification</strong>
+              <span>${mgr.qualification}</span>
+            </div>
+            <div class="manager-detail-block">
+              <strong>Other Funds Managed</strong>
+              <span>${mgr.otherFunds}</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      // Accordion Event Handlers
+      container.querySelectorAll('.manager-toggle-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const idx = btn.getAttribute('data-index');
+          const panel = document.getElementById(`mgrAccordion-${idx}`);
+          const isExpanded = btn.classList.toggle('expanded');
+          panel.style.display = isExpanded ? 'grid' : 'none';
+          btn.querySelector('span').textContent = isExpanded ? 'Hide Details' : 'Show Details';
+          btn.setAttribute('aria-expanded', isExpanded);
+        });
+      });
+    }
+
+    /**
+     * 7. NAV LINE CHART WITH RANGE FILTERS
+     */
+    function initNavLineChart() {
+      const ctx = document.getElementById('navLineChart').getContext('2d');
+      
+      // Sample mock series generator for NAV
+      const generateNavData = (points, startVal, trend) => {
+        const labels = [];
+        const values = [];
+        let cur = startVal;
+        const now = new Date(2026, 7, 31);
+        for (let i = points; i >= 0; i--) {
+          const d = new Date(now.getTime() - i * 24 * 60 * 60 * 1000 * (365 / points));
+          labels.push(d.toLocaleDateString('en-GB', { month: 'short', year: '2-digit' }));
+          cur = cur + (Math.random() * 0.12 - 0.04) + trend;
+          values.push(parseFloat(cur.toFixed(4)));
+        }
+        return { labels, values };
+      };
+
+      const defaultData = generateNavData(12, 30.5, 0.15);
+
+      const navChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: defaultData.labels,
+          datasets: [{
+            label: 'NAV (₹)',
+            data: defaultData.values,
+            borderColor: '#0b74c4',
+            backgroundColor: 'rgba(11, 116, 196, 0.06)',
+            fill: true,
+            tension: 0.35,
+            borderWidth: 2.5,
+            pointRadius: 2,
+            pointHoverRadius: 6,
+            pointHoverBackgroundColor: '#3bb56c'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: '#0f1f3d',
+              titleFont: { family: 'DM Sans', size: 12, weight: '700' },
+              bodyFont: { family: 'DM Sans', size: 12 },
+              padding: 10,
+              cornerRadius: 8,
+              callbacks: {
+                label: (ctx) => ` NAV: ₹${ctx.raw}`
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: { font: { family: 'DM Sans', size: 11 }, color: '#64748b' }
+            },
+            y: {
+              grid: { color: '#f1f5f9' },
+              ticks: { font: { family: 'DM Sans', size: 11 }, color: '#64748b' }
+            }
+          }
+        }
+      });
+
+      // Range button clicks
+      document.querySelectorAll('.range-pill').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.range-pill').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const range = btn.getAttribute('data-range');
+          let points = 12;
+          if (range === '1M') points = 6;
+          else if (range === '3M') points = 8;
+          else if (range === '6M') points = 10;
+          else if (range === '3Y') points = 18;
+          else if (range === '5Y' || range === 'MAX') points = 24;
+
+          const newData = generateNavData(points, 27.5, 0.18);
+          navChart.data.labels = newData.labels;
+          navChart.data.datasets[0].data = newData.values;
+          navChart.update();
+        });
+      });
+    }
+
+    /**
+     * 8. CALCULATORS (MATCHING EXACT UI DESIGN & HISTORICAL RATES)
+     */
+    function initSipCalculator() {
+      const modeSIP = document.getElementById('calcModeSIP');
+      const modeLumpsum = document.getElementById('calcModeLumpsum');
+      const inputLabel = document.getElementById('calcInputLabel');
+      const amountInput = document.getElementById('calcAmountInput');
+      const amountSlider = document.getElementById('calcAmountSlider');
+
+      const resThisFundAmount = document.getElementById('resThisFundAmount');
+      const resThisFundPct = document.getElementById('resThisFundPct');
+      const resBenchAmount = document.getElementById('resBenchAmount');
+      const resBenchPct = document.getElementById('resBenchPct');
+      const resAddBenchAmount = document.getElementById('resAddBenchAmount');
+      const resAddBenchPct = document.getElementById('resAddBenchPct');
+
+      const timeframeBtns = document.querySelectorAll('.calc-timeframe-btn');
+
+      let currentMode = 'sip'; // 'sip' | 'lumpsum'
+      let currentPeriod = '1Y'; // '1Y' | '3Y' | '5Y' | 'SI'
+
+      // Exact historical performance rates based on fund returns & screenshot
+      const RATES_TABLE = {
+        sip: {
+          '1Y': { years: 1, thisFund: 6.65, bench: 6.62, addBench: 4.28 },
+          '3Y': { years: 3, thisFund: 7.85, bench: 7.30, addBench: 5.95 },
+          '5Y': { years: 5, thisFund: 7.42, bench: 6.98, addBench: 5.82 },
+          'SI': { years: 7.7, thisFund: 7.42, bench: 6.98, addBench: 5.82 }
+        },
+        lumpsum: {
+          '1Y': { years: 1, thisFund: 6.64, bench: 7.02, addBench: 4.30 },
+          '3Y': { years: 3, thisFund: 7.53, bench: 7.44, addBench: 6.27 },
+          '5Y': { years: 5, thisFund: 6.78, bench: 6.54, addBench: 5.67 },
+          'SI': { years: 7.7, thisFund: 6.54, bench: 5.83, addBench: 5.80 }
+        }
+      };
+
+      function calculateMaturity(principal, annualRate, years, mode) {
+        if (mode === 'sip') {
+          const monthlyRate = (annualRate / 100) / 12;
+          const months = Math.round(years * 12);
+          if (monthlyRate === 0) return principal * months;
+          return principal * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) * (1 + monthlyRate);
+        } else {
+          return principal * Math.pow(1 + (annualRate / 100), years);
+        }
+      }
+
+      function updateCalculation() {
+        let p = parseFloat(amountInput.value) || 0;
+        if (p < 0) p = 0;
+
+        const rateObj = RATES_TABLE[currentMode][currentPeriod];
+        const valThisFund = calculateMaturity(p, rateObj.thisFund, rateObj.years, currentMode);
+        const valBench = calculateMaturity(p, rateObj.bench, rateObj.years, currentMode);
+        const valAddBench = calculateMaturity(p, rateObj.addBench, rateObj.years, currentMode);
+
+        resThisFundAmount.textContent = `₹${Math.round(valThisFund).toLocaleString('en-IN')}`;
+        resThisFundPct.textContent = `${rateObj.thisFund}%`;
+
+        resBenchAmount.textContent = `₹${Math.round(valBench).toLocaleString('en-IN')}`;
+        resBenchPct.textContent = `${rateObj.bench}%`;
+
+        resAddBenchAmount.textContent = `₹${Math.round(valAddBench).toLocaleString('en-IN')}`;
+        resAddBenchPct.textContent = `${rateObj.addBench}%`;
+      }
+
+      // Mode toggles
+      if (modeSIP && modeLumpsum) {
+        modeSIP.addEventListener('click', () => {
+          currentMode = 'sip';
+          modeSIP.classList.add('active');
+          modeLumpsum.classList.remove('active');
+          inputLabel.textContent = 'Monthly Investment';
+          updateCalculation();
+        });
+
+        modeLumpsum.addEventListener('click', () => {
+          currentMode = 'lumpsum';
+          modeLumpsum.classList.add('active');
+          modeSIP.classList.remove('active');
+          inputLabel.textContent = 'Lumpsum Investment';
+          updateCalculation();
+        });
+      }
+
+      // Timeframe buttons
+      timeframeBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          timeframeBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentPeriod = btn.getAttribute('data-period');
+          updateCalculation();
+        });
+      });
+
+      // Amount Input & Slider Sync
+      if (amountSlider && amountInput) {
+        amountSlider.addEventListener('input', (e) => {
+          amountInput.value = e.target.value;
+          updateCalculation();
+        });
+
+        amountInput.addEventListener('input', (e) => {
+          const val = parseFloat(e.target.value) || 0;
+          amountSlider.value = Math.min(1000000, Math.max(150, val));
+          updateCalculation();
+        });
+      }
+
+      updateCalculation();
+    }
+
+    /**
+     * 9. DISCLAIMER MODAL
+     */
+    function initDisclaimerModal() {
+      const modal = document.getElementById('disclaimerModal');
+      const openBtn = document.getElementById('openDisclaimerModal');
+      const closeBtn = document.getElementById('closeDisclaimerModal');
+
+      openBtn.addEventListener('click', () => modal.classList.add('open'));
+      closeBtn.addEventListener('click', () => modal.classList.remove('open'));
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.remove('open');
+      });
+    }
+  </script>
+</body>
+</html>

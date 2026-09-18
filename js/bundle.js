@@ -902,8 +902,9 @@ const getSupabaseClient = () => {
   if (window.supabaseClient) return window.supabaseClient;
   const url = window.SUPABASE_URL || localStorage.getItem("SUPABASE_URL") || DEFAULT_SUPABASE_URL;
   const key = window.SUPABASE_ANON_KEY || localStorage.getItem("SUPABASE_ANON_KEY") || DEFAULT_SUPABASE_ANON_KEY;
-  if (url && key && window.supabase) {
-    window.supabaseClient = window.supabase.createClient(url, key);
+  const sb = window.supabase || (typeof supabase !== 'undefined' ? supabase : null);
+  if (url && key && sb && typeof sb.createClient === 'function') {
+    window.supabaseClient = sb.createClient(url, key);
     return window.supabaseClient;
   }
   return null;
@@ -14042,16 +14043,27 @@ function LoginReminderModal({ currentHash, onNavigate }) {
       }
     } catch (e) {}
 
-    // Start 15-second timer
-    const timer = setTimeout(() => {
+    // Popup after 30 seconds for new visitors (optional login reminder)
+    const popupTimer = setTimeout(() => {
       const currentlyOnAuthPage = ['#/login', '#/signup', '#/register', '#/forgot-password', '#/reset-password'].includes(window.location.hash);
       if (!currentlyOnAuthPage) {
         setIsOpen(true);
       }
-    }, 15000);
+    }, 30000);
 
-    return () => clearTimeout(timer);
+    return () => clearTimeout(popupTimer);
   }, [user, currentHash]);
+
+  // Once popped up, automatically close in 5 seconds
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const autoCloseTimer = setTimeout(() => {
+      setIsOpen(false);
+    }, 5000);
+
+    return () => clearTimeout(autoCloseTimer);
+  }, [isOpen]);
 
   const handleDismiss = () => {
     setIsOpen(false);
@@ -14071,64 +14083,57 @@ function LoginReminderModal({ currentHash, onNavigate }) {
 
   return (
     <div 
-      className="notification-banner-top w-[94vw] max-w-xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl border-2 border-amber-500/50 rounded-2xl sm:rounded-3xl p-3 sm:p-4 shadow-2xl shadow-amber-500/25 text-slate-900 dark:text-slate-100 flex items-center justify-between gap-3 sm:gap-4 overflow-hidden"
+      className="notification-banner-right w-[calc(100vw-2rem)] sm:w-auto max-w-[340px] bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200/90 dark:border-slate-800/90 rounded-2xl p-2.5 sm:p-3 shadow-2xl shadow-slate-900/15 dark:shadow-black/60 text-slate-900 dark:text-slate-100 overflow-hidden"
       role="alert"
     >
-      {/* Background Accent Shimmer */}
-      <div className="absolute -top-12 -left-12 w-28 h-28 bg-amber-500/20 rounded-full blur-2xl pointer-events-none" />
-      <div className="absolute -bottom-12 -right-12 w-28 h-28 bg-emerald-500/15 rounded-full blur-2xl pointer-events-none" />
-
-      {/* Left: Animated Ringing Bell Icon */}
-      <div className="relative shrink-0">
-        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-amber-500 via-amber-600 to-amber-700 flex items-center justify-center text-white shadow-lg shadow-amber-500/35 border border-amber-300/40">
-          <svg className="w-5 h-5 sm:w-6 sm:h-6 bell-ring-anim text-white drop-shadow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-          </svg>
-        </div>
-        <span className="absolute -top-1 -right-1 flex h-3 w-3">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-3 w-3 bg-amber-500"></span>
-        </span>
-      </div>
-
-      {/* Center: Notification Details */}
-      <div className="flex-1 min-w-0 pr-1">
-        <div className="flex items-center gap-2 mb-0.5">
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/30">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
-            {isTa ? 'தினசரி செய்திகள்' : 'Daily Updates'}
-          </span>
-        </div>
-        <h4 className="text-xs sm:text-sm font-black tracking-tight text-slate-900 dark:text-white truncate">
-          {isTa ? 'தினசரி செய்திகளுக்கு உள்நுழைக!' : 'Login for Daily Updates!'}
-        </h4>
-        <p className="text-[11px] sm:text-xs text-slate-600 dark:text-slate-300 truncate hidden xs:block">
-          {isTa ? 'மியூச்சுவல் ஃபண்ட், பங்குச் சந்தை & நிபுணர் கட்டுரைகள்' : 'Get live mutual fund analysis & market updates'}
-        </p>
-      </div>
-
-      {/* Right: Sign In Button & Dismiss Icon */}
-      <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-        <button
-          onClick={handleGoToLogin}
-          className="py-2 px-3 sm:px-4 rounded-xl bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white font-extrabold text-xs shadow-md shadow-amber-500/25 hover:scale-105 active:scale-95 transition-all flex items-center gap-1 sm:gap-1.5"
-        >
-          <span>{isTa ? 'உள்நுழைக' : 'Sign In'}</span>
-          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-          </svg>
-        </button>
-
-        <button
-          onClick={handleDismiss}
-          className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-          title={isTa ? 'மூடுக' : 'Close'}
-          aria-label="Dismiss notification"
-        >
+      <div className="flex items-center gap-2.5">
+        {/* Minimal Icon */}
+        <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-brandBlue-500 to-blue-700 flex items-center justify-center text-white shrink-0 shadow-md shadow-brandBlue-500/25">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" d="M6 18L18 6M6 6l12 12" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
           </svg>
-        </button>
+        </div>
+
+        {/* Minimal Content */}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-1.5">
+            <h4 className="text-xs font-bold text-slate-900 dark:text-white truncate">
+              {isTa ? 'உள்நுழைக' : 'Sign In'}
+            </h4>
+            <span className="text-[10px] text-slate-400 dark:text-slate-500 font-medium">
+              {isTa ? '(விருப்பமானது)' : '(Optional)'}
+            </span>
+          </div>
+          <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">
+            {isTa ? 'தினசரி அறிவிப்புகள் பெற' : 'For updates & features'}
+          </p>
+        </div>
+
+        {/* Minimal Action & Close */}
+        <div className="flex items-center gap-1 shrink-0">
+          <button
+            onClick={handleGoToLogin}
+            className="py-1 px-2.5 rounded-lg bg-brandBlue-500 hover:bg-brandBlue-600 active:scale-95 text-white font-bold text-[11px] shadow-sm transition-all"
+          >
+            {isTa ? 'உள்நுழைக' : 'Sign In'}
+          </button>
+
+          <button
+            onClick={handleDismiss}
+            className="p-1 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            title={isTa ? 'மூடுக' : 'Close'}
+            aria-label="Dismiss"
+          >
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      {/* 5-second auto-close animated progress bar */}
+      <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-slate-100 dark:bg-slate-800 overflow-hidden">
+        <div className="h-full bg-brandBlue-500/80 animate-shrink-5s origin-left" />
       </div>
     </div>
   );
