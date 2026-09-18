@@ -13753,10 +13753,9 @@ function AppContent({ currentHash, navigate, isSearchOpen, setIsSearchOpen, toas
 
   return (
     <div className="min-h-screen flex flex-col bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans">
-      {/* 1. FIXED TOP HEADER & NAVBAR STACK (100% Solid White on scroll) */}
-      <div className="sticky-header-container sticky top-0 z-40 w-full shadow-md bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+      {/* 1. FIXED TOP HEADER (Clean single bar) */}
+      <div className="sticky-header-container sticky top-0 z-40 w-full shadow-sm bg-white dark:bg-slate-950 border-b border-[#D5EBD9] dark:border-slate-800">
         <Header onOpenSearch={() => setIsSearchOpen(true)} onNavigate={navigate} />
-        <Navbar currentPath={currentHash} onNavigate={navigate} />
       </div>
 
       {/* 2. BREAKING NEWS TICKER ONLY ON HOMEPAGE */}
