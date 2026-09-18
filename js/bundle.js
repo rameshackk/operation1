@@ -1695,7 +1695,7 @@ function Header({ onOpenSearch, onNavigate }) {
   };
 
   return (
-    <header className={`w-full max-w-full overflow-hidden transition-all duration-200 border-b border-[#D5EBD9] dark:border-slate-800 bg-[#F4F9F4] dark:bg-slate-950 text-slate-900 dark:text-white ${isScrolled ? 'py-1.5 shadow-sm' : 'py-2 sm:py-2.5 shadow-sm'
+    <header className={`w-full max-w-full overflow-hidden transition-all duration-200 border-b border-[#D5EBD9] dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-900 dark:text-white ${isScrolled ? 'py-1.5 shadow-sm' : 'py-2 sm:py-2.5 shadow-sm'
       }`}>
       <div className="w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 flex items-center justify-between gap-3 sm:gap-4 min-w-0">
 
