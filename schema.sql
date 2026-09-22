@@ -317,16 +317,23 @@ ALTER TABLE public.news_articles ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "Public can view news articles" ON public.news_articles;
 DROP POLICY IF EXISTS "Service role full access on news articles" ON public.news_articles;
 
-CREATE POLICY "Public can view news articles" 
-ON public.news_articles FOR SELECT 
-TO anon, authenticated 
-USING (true);
+CREATE POLICY "Service role full access on news articles"
+    ON public.news_articles
+    FOR ALL
+    USING (auth.role() = 'service_role')
+    WITH CHECK (auth.role() = 'service_role');
 
-CREATE POLICY "Service role full access on news articles" 
-ON public.news_articles FOR ALL 
-TO service_role 
-USING (true) 
-WITH CHECK (true);
+-- ============================================================
+-- 11. HIGH-PERFORMANCE TRIGRAM GIN SEARCH INDEXES
+-- ============================================================
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+
+CREATE INDEX IF NOT EXISTS idx_videos_title_en_trgm ON public.videos USING gin (title_en gin_trgm_ops);
+CREATE INDEX IF NOT EXISTS idx_videos_title_ta_trgm ON public.videos USING gin (title_ta gin_trgm_ops);
+CREATE INDEX IF NOT EXISTS idx_articles_title_en_trgm ON public.articles USING gin (title_en gin_trgm_ops);
+CREATE INDEX IF NOT EXISTS idx_articles_title_ta_trgm ON public.articles USING gin (title_ta gin_trgm_ops);
+CREATE INDEX IF NOT EXISTS idx_articles_slug ON public.articles (slug);
+
 
 -- ============================================================
 -- 11. ARTICLE COMMENTS TABLE: article_comments

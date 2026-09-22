@@ -1,0 +1,9 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Allow: /api/sitemap.xml
+
+# XML Sitemap
+Sitemap: https://muthaleetuthisai-rho.vercel.app/sitemap.xml

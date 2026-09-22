@@ -1,0 +1,150 @@
+{
+    "metrics": {
+        "vus_max": {
+            "value": 1000,
+            "min": 1000,
+            "max": 1000
+        },
+        "http_reqs": {
+            "rate": 242.24050227001646,
+            "count": 14536
+        },
+        "http_req_sending": {
+            "p(90)": 0,
+            "p(95)": 0,
+            "avg": 0.09530795266923504,
+            "min": 0,
+            "med": 0,
+            "max": 91.4283
+        },
+        "iteration_duration": {
+            "min": 100.0133,
+            "med": 112.21100000000001,
+            "max": 58603.2783,
+            "p(90)": 17777.448190000025,
+            "p(95)": 24557.88192499999,
+            "avg": 4586.194546325383
+        },
+        "vus": {
+            "max": 1000,
+            "value": 276,
+            "min": 276
+        },
+        "data_received": {
+            "rate": 14751046.70611194,
+            "count": 885158398
+        },
+        "checks": {
+            "passes": 2294,
+            "fails": 12242,
+            "value": 0.1578150798018712
+        },
+        "iterations": {
+            "count": 7130,
+            "rate": 118.82049953117897
+        },
+        "http_req_tls_handshaking": {
+            "avg": 0,
+            "min": 0,
+            "med": 0,
+            "max": 0,
+            "p(90)": 0,
+            "p(95)": 0
+        },
+        "http_req_failed": {
+            "passes": 12242,
+            "fails": 2294,
+            "value": 0.8421849201981287
+        },
+        "http_req_connecting": {
+            "p(95)": 0,
+            "avg": 2.1949238029719296,
+            "min": 0,
+            "med": 0,
+            "max": 159.3722,
+            "p(90)": 0
+        },
+        "http_req_duration{expected_response:true}": {
+            "p(90)": 29836.655220000008,
+            "p(95)": 38905.77087999999,
+            "avg": 12689.656687053168,
+            "min": 134.0806,
+            "med": 9983.47955,
+            "max": 52809.0586
+        },
+        "http_req_duration": {
+            "p(95)": 12768.311925,
+            "avg": 2294.046574552835,
+            "min": 0,
+            "med": 0,
+            "max": 52809.0586,
+            "p(90)": 6082.003049999999
+        },
+        "data_sent": {
+            "count": 458858,
+            "rate": 7646.807401665879
+        },
+        "http_req_waiting": {
+            "p(90)": 6082.003049999999,
+            "p(95)": 12761.5404,
+            "avg": 2293.5500759149677,
+            "min": 0,
+            "med": 0,
+            "max": 52807.4646
+        },
+        "group_duration": {
+            "p(90)": 17676.97928000002,
+            "p(95)": 24457.533089999994,
+            "avg": 4483.731323562411,
+            "min": 0,
+            "med": 10.382549999999998,
+            "max": 58502.698
+        },
+        "http_req_blocked": {
+            "p(95)": 0,
+            "avg": 2.2135458654375317,
+            "min": 0,
+            "med": 0,
+            "max": 168.3489,
+            "p(90)": 0
+        },
+        "http_req_receiving": {
+            "avg": 0.401190685195377,
+            "min": 0,
+            "med": 0,
+            "max": 24.6127,
+            "p(90)": 0.5581,
+            "p(95)": 2.78135
+        }
+    },
+    "root_group": {
+        "checks": {},
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {
+                "Core Data Endpoints": {
+                    "name": "Core Data Endpoints",
+                    "path": "::Core Data Endpoints",
+                    "id": "427ff86ff4d743303ed13abd7b1d5451",
+                    "groups": {},
+                    "checks": {
+                            "videos status is 200": {
+                                "fails": 6530,
+                                "name": "videos status is 200",
+                                "path": "::Core Data Endpoints::videos status is 200",
+                                "id": "f65f53a54d5603f87efb387d0b9f787b",
+                                "passes": 876
+                            },
+                            "articles status is 200": {
+                                "name": "articles status is 200",
+                                "path": "::Core Data Endpoints::articles status is 200",
+                                "id": "729522957ec346702afa8387e797573e",
+                                "passes": 1418,
+                                "fails": 5712
+                            }
+                        }
+                }
+            }
+    }
+}

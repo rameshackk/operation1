@@ -73,6 +73,14 @@
   ],
   "rewrites": [
     {
+      "source": "/sitemap.xml",
+      "destination": "/api/render"
+    },
+    {
+      "source": "/robots.txt",
+      "destination": "/robots.txt"
+    },
+    {
       "source": "/api/auth/signup",
       "destination": "/api/auth?action=signup"
     },
@@ -89,12 +97,24 @@
       "destination": "/api/admin/videos?metrics=1"
     },
     {
+      "source": "/api/admin/channels",
+      "destination": "/api/admin/publishers?type=channels"
+    },
+    {
       "source": "/api/videos/trending-preview",
       "destination": "/api/videos?preview=1"
     },
     {
       "source": "/api/videos/:id",
       "destination": "/api/videos?id=:id"
+    },
+    {
+      "source": "/api/news/:slug",
+      "destination": "/api/articles?slug=:slug"
+    },
+    {
+      "source": "/api/news",
+      "destination": "/api/articles?news=1"
     },
     {
       "source": "/api/articles/:slug/comments/:commentId/like",
@@ -117,6 +137,10 @@
       "destination": "/api/articles?slug=:slug"
     },
     {
+      "source": "/api/publisher/onboarding",
+      "destination": "/api/publishers"
+    },
+    {
       "source": "/api/publishers/:id",
       "destination": "/api/publishers?id=:id"
     },
@@ -127,6 +151,78 @@
     {
       "source": "/api/admin/publishers/:id",
       "destination": "/api/admin/publishers?id=:id"
+    },
+    {
+      "source": "/",
+      "destination": "/api/render"
+    },
+    {
+      "source": "/videos",
+      "destination": "/api/render"
+    },
+    {
+      "source": "/videos/:slug*",
+      "destination": "/api/render"
+    },
+    {
+      "source": "/articles",
+      "destination": "/api/render"
+    },
+    {
+      "source": "/articles/:slug*",
+      "destination": "/api/render"
+    },
+    {
+      "source": "/news",
+      "destination": "/api/render"
+    },
+    {
+      "source": "/news/:slug*",
+      "destination": "/api/render"
+    },
+    {
+      "source": "/category/:id*",
+      "destination": "/api/render"
+    },
+    {
+      "source": "/professionals/:id*",
+      "destination": "/api/render"
+    },
+    {
+      "source": "/publishers/:id*",
+      "destination": "/api/render"
+    },
+    {
+      "source": "/calculator",
+      "destination": "/api/render"
+    },
+    {
+      "source": "/quiz",
+      "destination": "/api/render"
+    },
+    {
+      "source": "/login",
+      "destination": "/api/render"
+    },
+    {
+      "source": "/signup",
+      "destination": "/api/render"
+    },
+    {
+      "source": "/profile",
+      "destination": "/api/render"
+    },
+    {
+      "source": "/history",
+      "destination": "/api/render"
+    },
+    {
+      "source": "/admin",
+      "destination": "/api/render"
+    },
+    {
+      "source": "/admin/:path*",
+      "destination": "/api/render"
     }
   ]
 }

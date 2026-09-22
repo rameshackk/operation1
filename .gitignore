@@ -14,3 +14,6 @@ node_modules/
 .idea/
 
 .vercel
+k6_dist/
+k6.exe
+scratch/

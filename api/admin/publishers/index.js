@@ -1,6 +1,11 @@
 import { verifyAdminRequest } from '../../../lib/auth-server.js';
 import { supabaseAdmin } from '../../../lib/supabase.js';
-import { getPgPool } from '../../../lib/db.js';
+import { 
+  getPgPool, 
+  getPendingPublisherChannels, 
+  getVerifiedPublisherChannels, 
+  verifyPublisherChannel 
+} from '../../../lib/db.js';
 import { 
   isValidEmail, 
   isSafeUrl, 
@@ -18,7 +23,57 @@ export default async function handler(req, res) {
     return res.status(auth.status).json({ error: auth.error });
   }
 
-  const { id } = req.query || {};
+  const { id, type, action, channels } = req.query || {};
+
+  // ================= CHANNELS VERIFICATION QUEUE =================
+  if (type === 'channels' || action === 'channels' || channels === '1' || req.url?.includes('/channels')) {
+    if (req.method === 'GET') {
+      try {
+        const { status = 'pending' } = req.query || {};
+        if (status === 'verified') {
+          const verified = await getVerifiedPublisherChannels();
+          return res.status(200).json({ status: 'success', data: verified });
+        }
+        if (status === 'all') {
+          const pgPool = getPgPool();
+          if (pgPool) {
+            const query = `
+              SELECT 
+                id, display_name, email, arn_number, avatar_url,
+                youtube_url, youtube_channel_id, youtube_channel_title, youtube_channel_thumbnail,
+                youtube_channel_verified, created_at, updated_at
+              FROM profiles
+              WHERE youtube_channel_id IS NOT NULL AND youtube_channel_id <> ''
+              ORDER BY youtube_channel_verified ASC, updated_at DESC;
+            `;
+            const result = await pgPool.query(query);
+            return res.status(200).json({ status: 'success', data: result.rows });
+          }
+        }
+        const pending = await getPendingPublisherChannels();
+        return res.status(200).json({ status: 'success', data: pending });
+      } catch (error) {
+        return res.status(500).json({ error: error.message });
+      }
+    }
+
+    if (req.method === 'PATCH' || req.method === 'POST') {
+      try {
+        const { publisherId, action: act } = req.body || {};
+        if (!publisherId) return res.status(400).json({ error: 'publisherId is required' });
+        const isApprove = act === 'approve' || act === true;
+        const updated = await verifyPublisherChannel(publisherId, isApprove);
+        return res.status(200).json({
+          status: 'success',
+          message: isApprove ? 'Publisher YouTube channel approved!' : 'Publisher YouTube channel rejected.',
+          data: updated
+        });
+      } catch (error) {
+        return res.status(500).json({ error: error.message });
+      }
+    }
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
 
   // ================= SINGLE PUBLISHER OPERATIONS (WHEN ID IS PRESENT) =================
   if (id) {

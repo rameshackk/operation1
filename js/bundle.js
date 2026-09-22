@@ -1862,26 +1862,33 @@ function Navbar({ currentPath, onNavigate }) {
   const { user, role, signOut } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  const cleanCurrent = (currentPath || '/').toLowerCase().replace(/\/+$/, '') || '/';
+
   const baseNavItems = [
-    { id: 'home', hash: '#/', label: t('nav.home'), icon: '🏠' },
-    { id: 'articles', hash: '#/articles', label: t('nav.articles'), icon: '📰' },
-    { id: 'videos', hash: '#/videos', label: t('nav.videos'), icon: '🎥' },
-    { id: 'news', hash: '#/news', label: t('nav.news'), icon: '⚡' },
-    { id: 'professionals', hash: '#/professionals', label: t('nav.professionals') || (language === 'ta' ? 'நிபுணர்கள்' : 'Professionals'), icon: '💼' },
-    { id: 'calculator', hash: '#/calculator', label: t('nav.calculator'), icon: '🧮' },
-    { id: 'quiz', hash: '#/quiz', label: t('nav.quiz') || 'Quiz', icon: '🎯' }
+    { id: 'home', path: '/', hash: '/', label: t('nav.home'), icon: '🏠' },
+    { id: 'articles', path: '/articles', hash: '/articles', label: t('nav.articles'), icon: '📰' },
+    { id: 'videos', path: '/videos', hash: '/videos', label: t('nav.videos'), icon: '🎥' },
+    { id: 'news', path: '/news', hash: '/news', label: t('nav.news'), icon: '⚡' },
+    { id: 'professionals', path: '/professionals', hash: '/professionals', label: t('nav.professionals') || (language === 'ta' ? 'நிபுணர்கள்' : 'Professionals'), icon: '💼' },
+    { id: 'calculator', path: '/calculator', hash: '/calculator', label: t('nav.calculator'), icon: '🧮' },
+    { id: 'quiz', path: '/quiz', hash: '/quiz', label: t('nav.quiz') || 'Quiz', icon: '🎯' }
   ];
 
   const authNavItems = user ? [
-    { id: 'profile', hash: '#/profile', label: `👤 ${language === 'ta' ? 'சுயவிவரம்' : 'Profile'}` },
+    { id: 'profile', path: '/profile', hash: '/profile', label: `👤 ${language === 'ta' ? 'சுயவிவரம்' : 'Profile'}` },
     ...(role === 'admin' || role === 'publisher' ? [
-      { id: 'admin-articles', hash: '#/admin/articles', label: `✍️ ${language === 'ta' ? 'கட்டுரைகள் ஸ்டுடியோ' : 'Article Studio'}` }
+      { id: 'admin-articles', path: '/admin/articles', hash: '/admin/articles', label: `✍️ ${language === 'ta' ? 'கட்டுரைகள் ஸ்டுடியோ' : 'Article Studio'}` }
     ] : [])
   ] : [
-    { id: 'login', hash: '#/login', label: `🔐 ${language === 'ta' ? 'உள்நுழைக' : 'Sign In'}` }
+    { id: 'login', path: '/login', hash: '/login', label: `🔐 ${language === 'ta' ? 'உள்நுழைக' : 'Sign In'}` }
   ];
 
   const navItems = [...baseNavItems, ...authNavItems];
+
+  const activeItem = navItems.find(i => {
+    const ci = (i.path || i.hash || '/').replace(/^#/, '').toLowerCase().replace(/\/+$/, '') || '/';
+    return cleanCurrent === ci || (ci === '/' && (cleanCurrent === '' || cleanCurrent === '/home'));
+  });
 
   return (
     <nav className="bg-[#F4F9F4] dark:bg-slate-950 text-slate-800 dark:text-slate-100 border-b border-[#D5EBD9] dark:border-slate-800 shadow-sm relative z-20">
@@ -1901,17 +1908,18 @@ function Navbar({ currentPath, onNavigate }) {
                   </button>
                 );
               }
-              const isActive = currentPath === item.hash || (item.hash === '#/' && currentPath === '');
+              const cleanItem = (item.path || item.hash || '/').replace(/^#/, '').toLowerCase().replace(/\/+$/, '') || '/';
+              const isActive = cleanCurrent === cleanItem || (cleanItem === '/' && (cleanCurrent === '' || cleanCurrent === '/home'));
               
-              // Active: filled solid blue pill (#2563EB bg, white text, bold)
-              // Inactive: 8-10px border radius, subtle hover
-              const activeClass = 'bg-[#2563EB] text-white font-extrabold shadow-sm shadow-blue-600/20';
-              const inactiveClass = 'text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 font-semibold';
+              // Active: filled solid blue (#2563EB bg, white text, bold)
+              // Inactive: subtle hover
+              const activeClass = 'bg-[#2563EB] text-white font-extrabold shadow-md shadow-blue-600/30 ring-2 ring-blue-500/20';
+              const inactiveClass = 'text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-slate-900 font-semibold';
 
               return (
                 <button
                   key={item.id}
-                  onClick={() => onNavigate(item.hash)}
+                  onClick={() => onNavigate(item.path || item.hash)}
                   className={`relative px-3.5 py-2 text-[13px] xl:text-[14px] transition-all rounded-[10px] whitespace-nowrap ${isActive ? activeClass : inactiveClass}`}
                 >
                   {item.label}
@@ -1925,9 +1933,9 @@ function Navbar({ currentPath, onNavigate }) {
         <div className="lg:hidden flex items-center justify-between h-11 sm:h-12 min-w-0">
           {/* Active section breadcrumb pill */}
           <div className="flex items-center gap-2 min-w-0 truncate">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-            <span className="text-xs font-black text-[#4A9E2C] dark:text-[#4ade80] uppercase tracking-wider truncate">
-              {navItems.find(i => i.hash === currentPath)?.label || t('nav.home')}
+            <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse shrink-0" />
+            <span className="text-xs font-black text-[#2563EB] dark:text-[#60a5fa] uppercase tracking-wider truncate">
+              {activeItem?.label || t('nav.home')}
             </span>
           </div>
 
@@ -1976,9 +1984,9 @@ function Navbar({ currentPath, onNavigate }) {
 
             {/* Navigation Links */}
             <div className="p-4 space-y-1.5 flex-1 overflow-y-auto">
-              {navItems.map((item, index) => {
-                const isActive = currentPath === item.hash || (item.hash === '#/' && currentPath === '');
-                const isEven = index % 2 === 0;
+              {navItems.map((item) => {
+                const cleanItem = (item.path || item.hash || '/').replace(/^#/, '').toLowerCase().replace(/\/+$/, '') || '/';
+                const isActive = cleanCurrent === cleanItem || (cleanItem === '/' && (cleanCurrent === '' || cleanCurrent === '/home'));
                 return (
                   <button
                     key={item.id}
@@ -1986,24 +1994,22 @@ function Navbar({ currentPath, onNavigate }) {
                       if (item.isAction) {
                         if (item.action) item.action();
                       } else {
-                        onNavigate(item.hash);
+                        onNavigate(item.path || item.hash);
                       }
                       setMobileOpen(false);
                     }}
                     className={`w-full text-left px-4 py-3 rounded-2xl text-sm font-black transition-all flex items-center justify-between ${item.isAction
                         ? 'text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40'
                         : isActive
-                          ? isEven
-                            ? 'bg-[#4A9E2C]/15 text-[#4A9E2C] dark:text-[#38bdf8] border border-[#4A9E2C]/30 shadow-sm'
-                            : 'bg-[#4A9E2C]/15 text-[#4A9E2C] dark:text-[#4ade80] border border-[#4A9E2C]/30 shadow-sm'
-                          : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900'
+                          ? 'bg-[#2563EB] text-white shadow-md border border-blue-500'
+                          : 'text-slate-700 dark:text-slate-300 hover:bg-blue-50 dark:hover:bg-slate-900'
                       }`}
                   >
                     <span className="flex items-center gap-2.5">
                       <span>{item.icon || '•'}</span>
                       <span>{item.label}</span>
                     </span>
-                    {isActive && <span className="w-2 h-2 rounded-full bg-emerald-500" />}
+                    {isActive && <span className="w-2 h-2 rounded-full bg-white animate-pulse" />}
                   </button>
                 );
               })}
@@ -2024,21 +2030,20 @@ function Navbar({ currentPath, onNavigate }) {
                   onClick={() => {
                     signOut && signOut();
                     setMobileOpen(false);
-                    if (onNavigate) onNavigate('#/login');
                   }}
-                  className="w-full py-2.5 rounded-xl bg-red-600/10 hover:bg-red-600 text-red-600 hover:text-white font-bold text-xs transition-colors border border-red-500/20 text-center"
+                  className="w-full py-2.5 px-4 rounded-xl bg-red-50 dark:bg-red-950/40 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900 text-xs font-bold hover:bg-red-100 transition-colors"
                 >
-                  {language === 'ta' ? 'கணக்கிலிருந்து வெளியேறு (Logout)' : 'Logout'}
+                  {language === 'ta' ? 'வெளியேறுக' : 'Sign Out'}
                 </button>
               ) : (
                 <button
                   onClick={() => {
+                    onNavigate('/login');
                     setMobileOpen(false);
-                    if (onNavigate) onNavigate('#/login');
                   }}
-                  className="w-full py-2.5 rounded-xl btn-brand-blue text-white font-black text-xs shadow text-center"
+                  className="w-full py-2.5 px-4 rounded-xl bg-[#2563EB] text-white text-xs font-bold hover:bg-blue-700 transition-colors shadow-sm"
                 >
-                  {language === 'ta' ? 'உள்நுழைக (Sign In)' : 'Sign In'}
+                  {language === 'ta' ? 'உள்நுழைக' : 'Sign In'}
                 </button>
               )}
             </div>
@@ -13898,19 +13903,72 @@ function LoginReminderModal({ currentHash, onNavigate }) {
   );
 }
 
-function AppContent({ currentHash, navigate, isSearchOpen, setIsSearchOpen, toastMessage, setToastMessage, renderRoute }) {
+function getCurrentAppPath() {
+  if (typeof window === 'undefined') return '/';
+  const hash = window.location.hash || '';
+  const pathname = window.location.pathname || '/';
+
+  // Legacy hash links e.g. #/videos/xyz or #/articles/abc -> upgrade to clean path
+  if (hash.startsWith('#/')) {
+    const clean = hash.replace(/^#/, '');
+    try {
+      window.history.replaceState(null, '', clean + window.location.search);
+    } catch (e) {}
+    return clean;
+  }
+
+  // OAuth token fragments in hash (Supabase auth redirect) -> stay on path
+  if (hash.includes('access_token=') || hash.includes('refresh_token=')) {
+    return pathname === '/' ? '/' : pathname;
+  }
+
+  return pathname;
+}
+
+function updateDocumentSEO(path) {
+  if (typeof document === 'undefined') return;
+  const clean = (path || '/').toLowerCase().replace(/\/+$/, '') || '/';
+  
+  if (clean === '/' || clean === '/home') {
+    document.title = 'முதலீட்டு திசை | Tamil Mutual Fund & Investment Guide - Budget Padmanaban';
+  } else if (clean === '/videos') {
+    document.title = 'வீடியோக்கள் | Investment Videos - முதலீட்டு திசை';
+  } else if (clean === '/articles') {
+    document.title = 'செய்திக் கட்டுரைகள் | Mutual Fund Articles - முதலீட்டு திசை';
+  } else if (clean === '/news') {
+    document.title = 'சந்தை செய்திகள் | Live Market News - முதலீட்டு திசை';
+  } else if (clean === '/calculator') {
+    document.title = 'SIP & Return Calculator (தமிழ்) | முதலீட்டு திசை';
+  } else if (clean === '/quiz') {
+    document.title = 'Investment & Risk Profile Quiz | முதலீட்டு திசை';
+  } else if (clean === '/professionals') {
+    document.title = 'AMFI Registered Advisors Directory | முதலீட்டு திசை';
+  } else if (clean === '/profile') {
+    document.title = 'My Profile | முதலீட்டு திசை';
+  } else if (clean === '/history') {
+    document.title = 'Watch History | முதலீட்டு திசை';
+  } else if (clean === '/login') {
+    document.title = 'Sign In | முதலீட்டு திசை';
+  } else if (clean === '/signup') {
+    document.title = 'Register | முதலீட்டு திசை';
+  }
+}
+
+function AppContent({ currentPath, navigate, isSearchOpen, setIsSearchOpen, toastMessage, setToastMessage, renderRoute }) {
   const { user, role, profile, setProfile } = useAuth();
+  const cleanPath = (currentPath || '/').toLowerCase().replace(/\/+$/, '') || '/';
+  const isHome = cleanPath === '/' || cleanPath === '/home' || cleanPath === '#/' || cleanPath === '#';
 
   return (
     <div className="min-h-screen flex flex-col bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans">
       {/* 1. FIXED TOP HEADER & NAVBAR STACK (100% Solid White on scroll) */}
       <div className="sticky-header-container sticky top-0 z-40 w-full shadow-md bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
         <Header onOpenSearch={() => setIsSearchOpen(true)} onNavigate={navigate} />
-        <Navbar currentPath={currentHash} onNavigate={navigate} />
+        <Navbar currentPath={currentPath} onNavigate={navigate} />
       </div>
 
       {/* 2. BREAKING NEWS TICKER ONLY ON HOMEPAGE */}
-      {(currentHash === '#/' || currentHash === '' || currentHash === '#' || currentHash === '#/home') && (
+      {isHome && (
         <TrendingTicker onNavigate={navigate} />
       )}
 
@@ -13920,7 +13978,7 @@ function AppContent({ currentHash, navigate, isSearchOpen, setIsSearchOpen, toas
       <Toast message={toastMessage} onClose={() => setToastMessage('')} />
 
       {/* 15-Second Visitor Login Reminder Popup */}
-      <LoginReminderModal currentHash={currentHash} onNavigate={navigate} />
+      <LoginReminderModal currentHash={currentPath} onNavigate={navigate} />
 
       {/* Automatic First-Time Publisher Onboarding Modal */}
       {user && (role === 'publisher' || profile?.role === 'publisher') && (!profile?.is_onboarded || profile?.is_onboarded === false) && (
@@ -13937,50 +13995,58 @@ function AppContent({ currentHash, navigate, isSearchOpen, setIsSearchOpen, toas
 }
 
 function App() {
-  const [currentHash, setCurrentHash] = useState(() => {
-    const h = (typeof window !== 'undefined' ? window.location.hash : '') || '#/';
-    if (h.includes('access_token=') || h.includes('refresh_token=')) {
-      return '#/';
-    }
-    return h;
-  });
+  const [currentPath, setCurrentPath] = useState(() => getCurrentAppPath());
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
 
   useEffect(() => {
-    const handleHashChange = () => {
-      const h = window.location.hash || '#/';
-      if (h.includes('access_token=') || h.includes('refresh_token=')) {
-        return;
-      }
-      setCurrentHash(h);
+    const handleLocationChange = () => {
+      const p = getCurrentAppPath();
+      setCurrentPath(p);
       window.scrollTo(0, 0);
+      updateDocumentSEO(p);
     };
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+
+    window.addEventListener('popstate', handleLocationChange);
+    window.addEventListener('hashchange', handleLocationChange);
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange);
+      window.removeEventListener('hashchange', handleLocationChange);
+    };
   }, []);
 
-  const navigate = (hash) => {
-    window.location.hash = hash;
-    setCurrentHash(hash);
+  const navigate = (toPath) => {
+    if (!toPath) return;
+    let clean = toPath.toString().trim();
+    if (clean.startsWith('#/')) clean = clean.replace(/^#/, '');
+    else if (clean === '#') clean = '/';
+    else if (!clean.startsWith('/')) clean = '/' + clean;
+
+    if (window.location.pathname !== clean) {
+      window.history.pushState(null, '', clean);
+    }
+    setCurrentPath(clean);
+    window.scrollTo(0, 0);
+    updateDocumentSEO(clean);
   };
 
   const renderRoute = () => {
+    const p = (currentPath || '/').toLowerCase().replace(/\/+$/, '') || '/';
+
     // 1. PUBLIC LANDING PAGE (Fully visible without login)
-    if (currentHash === '#/' || currentHash === '' || currentHash === '#') {
+    if (p === '/' || p === '/home' || p === '#/' || p === '#') {
       return <Home onNavigate={navigate} onShowToast={setToastMessage} />;
     }
 
     // 2. PUBLIC AUTHENTICATION ROUTES
-    if (currentHash === '#/login') return <AuthPage initialMode="login" onNavigate={navigate} />;
-    if (currentHash === '#/signup' || currentHash === '#/register') return <AuthPage initialMode="signup" onNavigate={navigate} />;
-    if (currentHash === '#/forgot-password') return <AuthPage initialMode="forgot" onNavigate={navigate} />;
-    if (currentHash === '#/reset-password') return <AuthPage initialMode="magic-link" onNavigate={navigate} />;
+    if (p === '/login' || p === '#/login') return <AuthPage initialMode="login" onNavigate={navigate} />;
+    if (p === '/signup' || p === '/register' || p === '#/signup' || p === '#/register') return <AuthPage initialMode="signup" onNavigate={navigate} />;
+    if (p === '/forgot-password' || p === '#/forgot-password') return <AuthPage initialMode="forgot" onNavigate={navigate} />;
+    if (p === '/reset-password' || p === '#/reset-password') return <AuthPage initialMode="magic-link" onNavigate={navigate} />;
 
     // 3. PROTECTED USER & ADMIN ROUTES
-
     // 3.1 Profile & Watch History
-    if (currentHash === '#/profile') {
+    if (p === '/profile' || p === '#/profile') {
       return (
         <ProtectedRoute onNavigate={navigate}>
           <ProfilePage onNavigate={navigate} onShowToast={setToastMessage} />
@@ -13988,7 +14054,7 @@ function App() {
       );
     }
 
-    if (currentHash === '#/history' || currentHash === '#/watch-history') {
+    if (p === '/history' || p === '/watch-history' || p === '#/history' || p === '#/watch-history') {
       return (
         <ProtectedRoute onNavigate={navigate}>
           <WatchHistoryPage onNavigate={navigate} onShowToast={setToastMessage} />
@@ -13997,8 +14063,8 @@ function App() {
     }
 
     // 3.2 Admin & Publisher Studio Routes
-    if (currentHash.startsWith('#/admin/articles/edit/')) {
-      const articleId = currentHash.replace('#/admin/articles/edit/', '');
+    if (p.startsWith('/admin/articles/edit/') || p.startsWith('#/admin/articles/edit/')) {
+      const articleId = p.replace('/admin/articles/edit/', '').replace('#/admin/articles/edit/', '');
       return (
         <AdminRoute onNavigate={navigate}>
           <ArticleEditorPage articleId={articleId} onNavigate={navigate} onShowToast={setToastMessage} />
@@ -14006,7 +14072,7 @@ function App() {
       );
     }
 
-    if (currentHash === '#/admin/articles/new') {
+    if (p === '/admin/articles/new' || p === '#/admin/articles/new') {
       return (
         <AdminRoute onNavigate={navigate}>
           <ArticleEditorPage articleId="new" onNavigate={navigate} onShowToast={setToastMessage} />
@@ -14014,7 +14080,7 @@ function App() {
       );
     }
 
-    if (currentHash === '#/admin/articles' || currentHash === '#/admin') {
+    if (p === '/admin/articles' || p === '/admin' || p === '#/admin/articles' || p === '#/admin') {
       return (
         <AdminRoute onNavigate={navigate}>
           <AdminArticlesPage onNavigate={navigate} onShowToast={setToastMessage} />
@@ -14023,57 +14089,57 @@ function App() {
     }
 
     // 3.3 Articles Routes (Public for user)
-    if (currentHash.startsWith('#/articles/')) {
-      const slug = currentHash.replace('#/articles/', '');
+    if (p.startsWith('/articles/') || p.startsWith('#/articles/')) {
+      const slug = p.replace('/articles/', '').replace('#/articles/', '');
       return <ArticleDetailPage slug={slug} onNavigate={navigate} onShowToast={setToastMessage} />;
     }
 
-    if (currentHash === '#/articles') {
+    if (p === '/articles' || p === '#/articles') {
       return <ArticlesPage onNavigate={navigate} onShowToast={setToastMessage} />;
     }
 
     // 3.4 Videos Routes (Public for user)
-    if (currentHash.startsWith('#/videos/')) {
-      const videoId = currentHash.replace('#/videos/', '');
+    if (p.startsWith('/videos/') || p.startsWith('#/videos/')) {
+      const videoId = p.replace('/videos/', '').replace('#/videos/', '');
       return <VideosPage initialVideoId={videoId} onNavigate={navigate} onShowToast={setToastMessage} />;
     }
 
-    if (currentHash === '#/videos') {
+    if (p === '/videos' || p === '#/videos') {
       return <VideosPage onNavigate={navigate} onShowToast={setToastMessage} />;
     }
 
     // 3.5 News Routes (Public for user)
-    if (currentHash.startsWith('#/news/')) {
-      const slug = currentHash.replace('#/news/', '');
+    if (p.startsWith('/news/') || p.startsWith('#/news/')) {
+      const slug = p.replace('/news/', '').replace('#/news/', '');
       return <NewsDetailsPage slug={slug} onNavigate={navigate} />;
     }
 
-    if (currentHash === '#/news') {
+    if (p === '/news' || p === '#/news') {
       return <NewsPage onNavigate={navigate} />;
     }
 
     // 3.6 Category Routes (Public for user)
-    if (currentHash.startsWith('#/category/')) {
-      const categoryId = currentHash.replace('#/category/', '');
+    if (p.startsWith('/category/') || p.startsWith('#/category/')) {
+      const categoryId = p.replace('/category/', '').replace('#/category/', '');
       return <CategoryPage categoryId={categoryId} onNavigate={navigate} onShowToast={setToastMessage} />;
     }
 
     // 3.7 Tools (Public for user)
-    if (currentHash === '#/calculator') {
+    if (p === '/calculator' || p === '#/calculator') {
       return <div className="py-8"><SipCalculator /></div>;
     }
 
-    if (currentHash === '#/quiz') {
+    if (p === '/quiz' || p === '#/quiz') {
       return <div className="py-8"><RiskQuizWidget /></div>;
     }
 
     // 3.8 Public Professionals Directory & Publisher Profiles
-    if (currentHash.startsWith('#/professionals/')) {
-      const profId = currentHash.replace('#/professionals/', '');
+    if (p.startsWith('/professionals/') || p.startsWith('#/professionals/')) {
+      const profId = p.replace('/professionals/', '').replace('#/professionals/', '');
       return <ProfessionalProfilePage professionalId={profId} onNavigate={navigate} onShowToast={setToastMessage} />;
     }
 
-    if (currentHash === '#/professionals') {
+    if (p === '/professionals' || p === '#/professionals') {
       return <ProfessionalsDirectoryPage onNavigate={navigate} onShowToast={setToastMessage} />;
     }
 
@@ -14086,7 +14152,7 @@ function App() {
       <LanguageProvider>
         <AuthProvider>
           <AppContent
-            currentHash={currentHash}
+            currentPath={currentPath}
             navigate={navigate}
             isSearchOpen={isSearchOpen}
             setIsSearchOpen={setIsSearchOpen}

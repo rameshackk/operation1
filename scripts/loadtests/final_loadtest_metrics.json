@@ -1,0 +1,134 @@
+[
+  {
+    "Scenario": "Core Data Endpoints (/api/videos & /api/articles)",
+    "VUs": 50,
+    "Duration": "20s",
+    "Req/sec (RPS)": "0.0",
+    "p50 (ms)": "0.0",
+    "p95 (ms)": "0.0",
+    "p99 (ms)": "0.0",
+    "Max (ms)": "0.0",
+    "Error Rate": "0.00%"
+  },
+  {
+    "Scenario": "Core Data Endpoints (/api/videos & /api/articles)",
+    "VUs": 200,
+    "Duration": "25s",
+    "Req/sec (RPS)": "0.0",
+    "p50 (ms)": "0.0",
+    "p95 (ms)": "0.0",
+    "p99 (ms)": "0.0",
+    "Max (ms)": "0.0",
+    "Error Rate": "0.00%"
+  },
+  {
+    "Scenario": "Core Data Endpoints (/api/videos & /api/articles)",
+    "VUs": 500,
+    "Duration": "25s",
+    "Req/sec (RPS)": "0.0",
+    "p50 (ms)": "0.0",
+    "p95 (ms)": "0.0",
+    "p99 (ms)": "0.0",
+    "Max (ms)": "0.0",
+    "Error Rate": "0.00%"
+  },
+  {
+    "Scenario": "Core Data Endpoints (/api/videos & /api/articles)",
+    "VUs": 1000,
+    "Duration": "30s",
+    "Req/sec (RPS)": "0.0",
+    "p50 (ms)": "Timeout",
+    "p95 (ms)": "Timeout",
+    "p99 (ms)": "Timeout",
+    "Max (ms)": "Timeout",
+    "Error Rate": "100.0%"
+  },
+  {
+    "Scenario": "Individual Article Page Lookup",
+    "VUs": 50,
+    "Duration": "20s",
+    "Req/sec (RPS)": "0.0",
+    "p50 (ms)": "0.0",
+    "p95 (ms)": "0.0",
+    "p99 (ms)": "0.0",
+    "Max (ms)": "0.0",
+    "Error Rate": "0.00%"
+  },
+  {
+    "Scenario": "Individual Article Page Lookup",
+    "VUs": 200,
+    "Duration": "25s",
+    "Req/sec (RPS)": "0.0",
+    "p50 (ms)": "0.0",
+    "p95 (ms)": "0.0",
+    "p99 (ms)": "0.0",
+    "Max (ms)": "0.0",
+    "Error Rate": "0.00%"
+  },
+  {
+    "Scenario": "Individual Article Page Lookup",
+    "VUs": 500,
+    "Duration": "25s",
+    "Req/sec (RPS)": "0.0",
+    "p50 (ms)": "0.0",
+    "p95 (ms)": "0.0",
+    "p99 (ms)": "0.0",
+    "Max (ms)": "0.0",
+    "Error Rate": "0.00%"
+  },
+  {
+    "Scenario": "Individual Article Page Lookup",
+    "VUs": 1000,
+    "Duration": "30s",
+    "Req/sec (RPS)": "0.0",
+    "p50 (ms)": "Timeout",
+    "p95 (ms)": "Timeout",
+    "p99 (ms)": "Timeout",
+    "Max (ms)": "Timeout",
+    "Error Rate": "100.0%"
+  },
+  {
+    "Scenario": "Search API Queries (ILIKE full search)",
+    "VUs": 50,
+    "Duration": "20s",
+    "Req/sec (RPS)": "0.0",
+    "p50 (ms)": "0.0",
+    "p95 (ms)": "0.0",
+    "p99 (ms)": "0.0",
+    "Max (ms)": "0.0",
+    "Error Rate": "0.00%"
+  },
+  {
+    "Scenario": "Search API Queries (ILIKE full search)",
+    "VUs": 200,
+    "Duration": "25s",
+    "Req/sec (RPS)": "0.0",
+    "p50 (ms)": "0.0",
+    "p95 (ms)": "0.0",
+    "p99 (ms)": "0.0",
+    "Max (ms)": "0.0",
+    "Error Rate": "0.00%"
+  },
+  {
+    "Scenario": "Search API Queries (ILIKE full search)",
+    "VUs": 500,
+    "Duration": "25s",
+    "Req/sec (RPS)": "0.0",
+    "p50 (ms)": "0.0",
+    "p95 (ms)": "0.0",
+    "p99 (ms)": "0.0",
+    "Max (ms)": "0.0",
+    "Error Rate": "0.00%"
+  },
+  {
+    "Scenario": "Search API Queries (ILIKE full search)",
+    "VUs": 1000,
+    "Duration": "30s",
+    "Req/sec (RPS)": "0.0",
+    "p50 (ms)": "Timeout",
+    "p95 (ms)": "Timeout",
+    "p99 (ms)": "Timeout",
+    "Max (ms)": "Timeout",
+    "Error Rate": "100.0%"
+  }
+]

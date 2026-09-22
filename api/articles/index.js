@@ -6,8 +6,11 @@ import {
   addArticleComment,
   deleteArticleComment,
   likeArticleComment,
+  listNewsArticles,
+  upsertNewsArticlesBatch,
   getPgPool
 } from '../../lib/db.js';
+import { fetchAllFinancialNewsFeeds } from '../../lib/news.js';
 import { synthesizeSpeech, cleanTextForSpeech } from '../../lib/tts.js';
 import { verifyUserRequest, verifyAdminOrPublisherRequest } from '../../lib/auth-server.js';
 import { 
@@ -250,6 +253,86 @@ export default async function handler(req, res) {
     }
   }
 
+  // ================= 4.5. LIVE AGGREGATED MARKET NEWS =================
+  if (req.query?.news === '1' || req.query?.is_news === '1' || req.query?.type === 'news') {
+    try {
+      const { category = 'all' } = req.query || {};
+      const { page, limit } = parseSafePagination(req.query, 40, 100);
+
+      let newsResult = await listNewsArticles({
+        category: sanitizeText(category.toString(), 50),
+        limit,
+        page
+      });
+
+      // If database has 0 news articles, auto-fetch live feeds and cache to DB
+      if (!newsResult.news || newsResult.news.length === 0) {
+        try {
+          const freshFeeds = await fetchAllFinancialNewsFeeds();
+          if (freshFeeds.length > 0) {
+            await upsertNewsArticlesBatch(freshFeeds);
+            newsResult = await listNewsArticles({
+              category: sanitizeText(category.toString(), 50),
+              limit,
+              page
+            });
+            // If DB write failed or still empty, return formatted in-memory feeds
+            if (!newsResult.news || newsResult.news.length === 0) {
+              const inMemoryNews = freshFeeds.map(item => ({
+                id: item.source_url,
+                sourceUrl: item.source_url,
+                sourceName: item.source_name,
+                titleEnglish: item.title_en,
+                titleTamil: item.title_ta || item.title_en,
+                summaryEnglish: item.summary_en || '',
+                summaryTamil: item.summary_ta || item.summary_en || '',
+                imageUrl: item.image_url || null,
+                category: item.category || 'general',
+                publishedAt: item.published_at,
+                fetchedAt: new Date().toISOString()
+              }));
+              const filtered = (category && category !== 'all') 
+                ? inMemoryNews.filter(n => n.category === category)
+                : inMemoryNews;
+              newsResult = {
+                news: filtered.slice(0, limit),
+                total: filtered.length,
+                page: 1,
+                limit,
+                totalPages: Math.ceil(filtered.length / limit) || 1
+              };
+            }
+          }
+        } catch (feedErr) {
+          console.warn('Live feed fallback warning:', feedErr.message);
+        }
+      }
+
+      res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=300');
+      res.setHeader('Content-Type', 'application/json');
+
+      return res.status(200).json({
+        status: 'success',
+        data: newsResult.news || [],
+        news: newsResult.news || [],
+        pagination: {
+          page: newsResult.page || 1,
+          limit: newsResult.limit || limit,
+          total: newsResult.total || (newsResult.news ? newsResult.news.length : 0),
+          totalPages: newsResult.totalPages || 1
+        }
+      });
+    } catch (error) {
+      console.error('Error in GET /api/news:', error);
+      return res.status(200).json({
+        status: 'success',
+        data: [],
+        error: error.message,
+        pagination: { page: 1, limit: 40, total: 0, totalPages: 1 }
+      });
+    }
+  }
+
   // ================= 5. ARTICLES LISTING =================
   try {
     const { category = 'all', search = '', sort = 'newest' } = req.query || {};
@@ -270,6 +353,7 @@ export default async function handler(req, res) {
     return res.status(200).json({
       status: 'success',
       data: result.articles || [],
+      news: result.articles || [],
       pagination: {
         page: result.page || 1,
         limit: result.limit || limit,
