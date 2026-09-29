@@ -839,9 +839,8 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                   const authorName = article.authorName || article.author_name || 'Budget Padmanaban';
                   const arnNumber = article.authorArn || article.author_arn || (authorName.toLowerCase().includes('padmanaban') ? 'ARN-112345' : '');
                   const readTime = article.readTimeMinutes || 4;
-                  const isArticleSaved = isSaved(article.id);
-                  const coverImg = cleanImageUrl(article.coverImage || article.thumbnail || article.cover_image_url, article.category, article.authorAvatar);
-                  const avatarUrl = article.authorAvatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(authorName)}&background=03529a&color=fff&bold=true`;
+                  const coverImg = cleanImageUrl(article.thumbnail || article.thumbnail_url || article.coverImage || article.cover_image_url, article.category);
+                  const avatarUrl = article.authorAvatar || article.author_avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(authorName)}&background=03529a&color=fff&bold=true`;
 
                   return (
                     <article
