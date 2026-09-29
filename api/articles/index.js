@@ -335,8 +335,8 @@ export default async function handler(req, res) {
 
   // ================= 5. ARTICLES LISTING =================
   try {
-    const { category = 'all', search = '', sort = 'newest' } = req.query || {};
-    const { page, limit } = parseSafePagination(req.query, 50, 100);
+    const { category = 'all', search = '', sort = 'newest', view = 'card' } = req.query || {};
+    const { page, limit } = parseSafePagination(req.query, 20, 100);
 
     const result = await listArticles({
       page,
@@ -344,10 +344,11 @@ export default async function handler(req, res) {
       category: sanitizeText(category.toString(), 50),
       status: 'published', // Always strictly published articles
       search: sanitizeText(search.toString(), 100),
-      sort: sanitizeText(sort.toString(), 20)
+      sort: sanitizeText(sort.toString(), 20),
+      view: sanitizeText(view.toString(), 10)
     });
 
-    res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=300');
+    res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=86400');
     res.setHeader('Content-Type', 'application/json');
 
     return res.status(200).json({
@@ -368,7 +369,7 @@ export default async function handler(req, res) {
       status: 'success',
       data: [],
       error: error.message,
-      pagination: { page: 1, limit: 50, total: 0, totalPages: 1 }
+      pagination: { page: 1, limit: 20, total: 0, totalPages: 1 }
     });
   }
 }

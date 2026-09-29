@@ -16,6 +16,42 @@
       ]
     },
     {
+      "source": "/(js|css|fonts|assets)/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(index.html)?",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/api/articles(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, s-maxage=300, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/api/videos(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, s-maxage=300, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
       "source": "/(.*)",
       "headers": [
         {
@@ -44,19 +80,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://apis.google.com https://accounts.google.com https://www.youtube.com https://s.ytimg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://cdn.tailwindcss.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; media-src 'self' blob: data: https://*.supabase.co; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://accounts.google.com; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://accounts.google.com https://www.googleapis.com https://translation.googleapis.com https://texttospeech.googleapis.com; object-src 'none'; base-uri 'self';"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "no-cache, no-store, must-revalidate"
-        },
-        {
-          "key": "Pragma",
-          "value": "no-cache"
-        },
-        {
-          "key": "Expires",
-          "value": "0"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://apis.google.com https://accounts.google.com https://www.youtube.com https://s.ytimg.com https://www.gstatic.com https://translate.google.com https://translate.googleapis.com; style-src 'self' 'unsafe-inline' https://www.gstatic.com https://fonts.googleapis.com https://translate.googleapis.com; style-src-elem 'self' 'unsafe-inline' https://www.gstatic.com https://fonts.googleapis.com https://translate.googleapis.com; font-src 'self' data: https://fonts.gstatic.com https://www.gstatic.com; img-src 'self' data: blob: https: https://i.ytimg.com https://images.unsplash.com https://www.gstatic.com https://translate.googleapis.com; media-src 'self' blob: data: https://*.supabase.co; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://accounts.google.com; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://accounts.google.com https://www.googleapis.com https://translation.googleapis.com https://texttospeech.googleapis.com https://translate.googleapis.com https://i.ytimg.com https://www.gstatic.com; object-src 'none'; base-uri 'self';"
         }
       ]
     }
@@ -64,7 +88,7 @@
   "crons": [
     {
       "path": "/api/cron/fetch-videos",
-      "schedule": "0 0 * * *"
+      "schedule": "0 6 * * *"
     },
     {
       "path": "/api/cron/fetch-news",
@@ -90,7 +114,7 @@
     },
     {
       "source": "/api/translate",
-      "destination": "/api/admin/articles?action=translate"
+      "destination": "/api/translate"
     },
     {
       "source": "/api/admin/metrics",
@@ -153,76 +177,24 @@
       "destination": "/api/admin/publishers?id=:id"
     },
     {
-      "source": "/",
+      "source": "/videos/:slug+",
       "destination": "/api/render"
     },
     {
-      "source": "/videos",
+      "source": "/articles/:slug+",
       "destination": "/api/render"
     },
     {
-      "source": "/videos/:slug*",
+      "source": "/news/:slug+",
       "destination": "/api/render"
     },
     {
-      "source": "/articles",
+      "source": "/professionals/:id+",
       "destination": "/api/render"
     },
     {
-      "source": "/articles/:slug*",
-      "destination": "/api/render"
-    },
-    {
-      "source": "/news",
-      "destination": "/api/render"
-    },
-    {
-      "source": "/news/:slug*",
-      "destination": "/api/render"
-    },
-    {
-      "source": "/category/:id*",
-      "destination": "/api/render"
-    },
-    {
-      "source": "/professionals/:id*",
-      "destination": "/api/render"
-    },
-    {
-      "source": "/publishers/:id*",
-      "destination": "/api/render"
-    },
-    {
-      "source": "/calculator",
-      "destination": "/api/render"
-    },
-    {
-      "source": "/quiz",
-      "destination": "/api/render"
-    },
-    {
-      "source": "/login",
-      "destination": "/api/render"
-    },
-    {
-      "source": "/signup",
-      "destination": "/api/render"
-    },
-    {
-      "source": "/profile",
-      "destination": "/api/render"
-    },
-    {
-      "source": "/history",
-      "destination": "/api/render"
-    },
-    {
-      "source": "/admin",
-      "destination": "/api/render"
-    },
-    {
-      "source": "/admin/:path*",
-      "destination": "/api/render"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }

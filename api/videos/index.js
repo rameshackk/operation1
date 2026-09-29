@@ -151,12 +151,33 @@ export default async function handler(req, res) {
       search: search ? sanitizeText(search.toString(), 100) : ''
     });
 
-    res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=300');
+    const isFullView = req.query?.view === 'full';
+    let videoData = (result.videos || []).map(v => {
+      if (isFullView) return v;
+      return {
+        id: v.youtubeId || v.id,
+        youtubeId: v.youtubeId || v.id,
+        slug: v.slug,
+        titleTamil: v.titleTamil,
+        titleEnglish: v.titleEnglish,
+        title: v.title,
+        thumbnail: (v.youtubeId || v.id) ? `https://i.ytimg.com/vi_webp/${v.youtubeId || v.id}/mqdefault.webp` : v.thumbnail,
+        category: v.category,
+        publishedAt: v.publishedAt,
+        duration: v.duration,
+        durationSeconds: v.durationSeconds,
+        views: v.views,
+        channelName: v.channelName,
+        trending: v.trending
+      };
+    });
+
+    res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=3600, stale-while-revalidate=86400');
     res.setHeader('Content-Type', 'application/json');
 
     return res.status(200).json({
       status: 'success',
-      data: result.videos,
+      data: videoData,
       pagination: {
         page: result.page,
         limit: result.limit,

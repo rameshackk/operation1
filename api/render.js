@@ -38,13 +38,11 @@ async function getIndexHtmlTemplate() {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>முதலீட்டு திசை | Muthaleetu Thisai</title>
-  <link rel="stylesheet" href="/css/styles.css" />
-  <script src="/js/vendor/react.min.js"></script>
-  <script src="/js/vendor/react-dom.min.js"></script>
+  <link rel="stylesheet" href="/css/app.min.css" />
 </head>
-<body class="text-slate-900 antialiased">
+<body class="text-slate-900 antialiased bg-slate-50">
   <div id="root"></div>
-  <script src="/js/bundle.compiled.js"></script>
+  <script type="module" src="/js/dist/main.js"></script>
 </body>
 </html>`;
   }
