@@ -203,16 +203,21 @@ const server = http.createServer(async (req, res) => {
     }
   }
 
-  // 2. Static File Serving
+  // 2. Static File Serving & SPA Fallback
   let filePathTarget = reqPath === '/' || reqPath === '' ? '/index.html' : reqPath;
   const safePath = path.normalize(filePathTarget).replace(/^(\.\.[\/\\])+/, '');
   let filePath = path.join(PUBLIC_DIR, safePath);
 
   fs.stat(filePath, (err, stats) => {
     if (err || !stats.isFile()) {
-      res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
-      res.end('404 Not Found');
-      return;
+      // If path has no extension, fallback to index.html for SPA routes (e.g. /articles, /videos)
+      if (!path.extname(reqPath)) {
+        filePath = path.join(PUBLIC_DIR, 'index.html');
+      } else {
+        res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
+        res.end('404 Not Found');
+        return;
+      }
     }
 
     const ext = path.extname(filePath).toLowerCase();

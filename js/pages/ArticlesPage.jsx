@@ -349,13 +349,13 @@ function ArticlesPage({ onNavigate, onShowToast }) {
 
   // Render Left Filter Content (shared between desktop sidebar and mobile drawer)
   const renderFilterContent = () => (
-    <div className="space-y-6 text-sm">
+    <div className="space-y-4 text-sm">
       {/* 1. Category Filter Group */}
-      <div className="border-b border-slate-200/80 dark:border-slate-800/80 pb-5">
+      <div className="border-b border-slate-200/80 dark:border-slate-800/80 pb-3.5">
         <button
           type="button"
           onClick={() => toggleSection('category')}
-          className="w-full flex items-center justify-between text-left font-black text-slate-900 dark:text-slate-100 text-[13.5px] uppercase tracking-wider group hover:text-brandBlue-600 dark:hover:text-brandBlue-400 transition-colors"
+          className="w-full flex items-center justify-between text-left font-black text-slate-900 dark:text-slate-100 text-[13px] uppercase tracking-wider group hover:text-brandBlue-600 dark:hover:text-brandBlue-400 transition-colors"
         >
           <span>{isTamil ? 'பிரிவு (Category)' : 'Category'}</span>
           <svg
@@ -369,27 +369,27 @@ function ArticlesPage({ onNavigate, onShowToast }) {
         </button>
 
         {!collapsedSections.category && (
-          <div className="mt-3.5 space-y-2.5">
+          <div className="mt-2.5 space-y-1.5">
             {filterCategories.map(cat => {
               const checked = selectedCategories.includes(cat.id);
               const count = categoryCounts[cat.id] || 0;
               return (
                 <label
                   key={cat.id}
-                  className="flex items-center justify-between gap-2.5 cursor-pointer group py-0.5"
+                  className="flex items-center justify-between gap-2 cursor-pointer group py-0.5"
                 >
-                  <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="flex items-center gap-2 min-w-0">
                     <input
                       type="checkbox"
                       checked={checked}
                       onChange={() => toggleCategoryFilter(cat.id)}
-                      className="w-4 h-4 rounded text-[#4A9E2C] focus:ring-[#4A9E2C]/30 border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:checked:bg-brandBlue-500 cursor-pointer transition-all"
+                      className="w-3.5 h-3.5 rounded text-[#4A9E2C] focus:ring-[#4A9E2C]/30 border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:checked:bg-brandBlue-500 cursor-pointer transition-all shrink-0"
                     />
-                    <span className={`text-[13px] truncate transition-colors ${checked ? 'font-black text-[#4A9E2C] dark:text-[#4ade80]' : 'font-medium text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white'}`}>
+                    <span className={`text-[12.5px] truncate transition-colors ${checked ? 'font-black text-[#4A9E2C] dark:text-[#4ade80]' : 'font-medium text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white'}`}>
                       {isTamil ? cat.labelTa : cat.labelEn}
                     </span>
                   </div>
-                  <span className="text-xs font-mono font-bold text-slate-500 dark:text-slate-400 px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800/80 shrink-0">
+                  <span className="text-[11px] font-mono font-bold text-slate-500 dark:text-slate-400 px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800/80 shrink-0">
                     {count}
                   </span>
                 </label>
@@ -400,11 +400,11 @@ function ArticlesPage({ onNavigate, onShowToast }) {
       </div>
 
       {/* 2. Publisher Filter Group */}
-      <div className="border-b border-slate-200/80 dark:border-slate-800/80 pb-5">
+      <div className="border-b border-slate-200/80 dark:border-slate-800/80 pb-3.5">
         <button
           type="button"
           onClick={() => toggleSection('publisher')}
-          className="w-full flex items-center justify-between text-left font-black text-slate-900 dark:text-slate-100 text-[13.5px] uppercase tracking-wider group hover:text-brandBlue-600 dark:hover:text-brandBlue-400 transition-colors"
+          className="w-full flex items-center justify-between text-left font-black text-slate-900 dark:text-slate-100 text-[13px] uppercase tracking-wider group hover:text-brandBlue-600 dark:hover:text-brandBlue-400 transition-colors"
         >
           <span>{isTamil ? 'பதிப்பாளர் / நிபுணர்' : 'Publisher'}</span>
           <svg
@@ -418,7 +418,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
         </button>
 
         {!collapsedSections.publisher && (
-          <div className="mt-3.5 space-y-2.5">
+          <div className="mt-2.5 space-y-1.5">
             {activePublishers.length === 0 ? (
               <p className="text-xs text-slate-600 dark:text-slate-400 italic">{isTamil ? 'பதிப்பாளர்கள் இல்லை' : 'No publishers listed'}</p>
             ) : (
@@ -429,18 +429,18 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                     key={pub.id}
                     className="flex items-center justify-between gap-2 cursor-pointer group py-0.5"
                   >
-                    <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="flex items-center gap-2 min-w-0">
                       <input
                         type="checkbox"
                         checked={checked}
                         onChange={() => togglePublisherFilter(pub.id)}
-                        className="w-4 h-4 rounded text-[#4A9E2C] focus:ring-[#4A9E2C]/30 border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:checked:bg-brandBlue-500 cursor-pointer transition-all"
+                        className="w-3.5 h-3.5 rounded text-[#4A9E2C] focus:ring-[#4A9E2C]/30 border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:checked:bg-brandBlue-500 cursor-pointer transition-all shrink-0"
                       />
-                      <span className={`text-[13px] truncate transition-colors ${checked ? 'font-black text-[#4A9E2C] dark:text-[#4ade80]' : 'font-medium text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white'}`} title={pub.name}>
+                      <span className={`text-[12.5px] truncate transition-colors ${checked ? 'font-black text-[#4A9E2C] dark:text-[#4ade80]' : 'font-medium text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white'}`} title={pub.name}>
                         {pub.name}
                       </span>
                     </div>
-                    <span className="text-xs font-mono font-bold text-slate-500 dark:text-slate-400 px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800/80 shrink-0">
+                    <span className="text-[11px] font-mono font-bold text-slate-500 dark:text-slate-400 px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800/80 shrink-0">
                       {pub.count}
                     </span>
                   </label>
@@ -452,11 +452,11 @@ function ArticlesPage({ onNavigate, onShowToast }) {
       </div>
 
       {/* 3. Published Date Filter Group */}
-      <div className="border-b border-slate-200/80 dark:border-slate-800/80 pb-5">
+      <div className="border-b border-slate-200/80 dark:border-slate-800/80 pb-3.5">
         <button
           type="button"
           onClick={() => toggleSection('date')}
-          className="w-full flex items-center justify-between text-left font-black text-slate-900 dark:text-slate-100 text-[13.5px] uppercase tracking-wider group hover:text-brandBlue-600 dark:hover:text-brandBlue-400 transition-colors"
+          className="w-full flex items-center justify-between text-left font-black text-slate-900 dark:text-slate-100 text-[13px] uppercase tracking-wider group hover:text-brandBlue-600 dark:hover:text-brandBlue-400 transition-colors"
         >
           <span>{isTamil ? 'வெளியிடப்பட்ட நாள்' : 'Published Date'}</span>
           <svg
@@ -470,7 +470,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
         </button>
 
         {!collapsedSections.date && (
-          <div className="mt-3.5 space-y-2">
+          <div className="mt-2.5 space-y-1.5">
             {[
               { id: 'all', labelTa: 'அனைத்து காலம்', labelEn: 'All time' },
               { id: '7days', labelTa: 'கடந்த 7 நாட்கள்', labelEn: 'Last 7 days' },
@@ -484,19 +484,19 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                   key={opt.id}
                   className="flex items-center justify-between gap-2 cursor-pointer group py-0.5"
                 >
-                  <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="flex items-center gap-2 min-w-0">
                     <input
                       type="radio"
                       name="dateRangeFilter"
                       checked={active}
                       onChange={() => { setDateRange(opt.id); setCurrentPage(1); }}
-                      className="w-4 h-4 text-[#4A9E2C] focus:ring-[#4A9E2C]/30 border-slate-300 dark:border-slate-700 dark:bg-slate-900 cursor-pointer"
+                      className="w-3.5 h-3.5 text-[#4A9E2C] focus:ring-[#4A9E2C]/30 border-slate-300 dark:border-slate-700 dark:bg-slate-900 cursor-pointer shrink-0"
                     />
-                    <span className={`text-[13px] truncate ${active ? 'font-black text-[#4A9E2C] dark:text-[#4ade80]' : 'font-medium text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white'}`}>
+                    <span className={`text-[12.5px] truncate ${active ? 'font-black text-[#4A9E2C] dark:text-[#4ade80]' : 'font-medium text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white'}`}>
                       {isTamil ? opt.labelTa : opt.labelEn}
                     </span>
                   </div>
-                  <span className="text-xs font-mono font-bold text-slate-500 dark:text-slate-400 px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800/80 shrink-0">
+                  <span className="text-[11px] font-mono font-bold text-slate-500 dark:text-slate-400 px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800/80 shrink-0">
                     {count}
                   </span>
                 </label>
@@ -507,11 +507,11 @@ function ArticlesPage({ onNavigate, onShowToast }) {
       </div>
 
       {/* 4. Language Filter Group */}
-      <div className="border-b border-slate-200/80 dark:border-slate-800/80 pb-5">
+      <div className="border-b border-slate-200/80 dark:border-slate-800/80 pb-3.5">
         <button
           type="button"
           onClick={() => toggleSection('language')}
-          className="w-full flex items-center justify-between text-left font-black text-slate-900 dark:text-slate-100 text-[13.5px] uppercase tracking-wider group hover:text-brandBlue-600 dark:hover:text-brandBlue-400 transition-colors"
+          className="w-full flex items-center justify-between text-left font-black text-slate-900 dark:text-slate-100 text-[13px] uppercase tracking-wider group hover:text-brandBlue-600 dark:hover:text-brandBlue-400 transition-colors"
         >
           <span>{isTamil ? 'மொழி (Language)' : 'Language'}</span>
           <svg
@@ -525,7 +525,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
         </button>
 
         {!collapsedSections.language && (
-          <div className="mt-3.5 space-y-2">
+          <div className="mt-2.5 space-y-1.5">
             {[
               { id: 'both', labelTa: 'இரண்டும் (All / Both)', labelEn: 'Both / All' },
               { id: 'ta', labelTa: 'தமிழ் (Tamil)', labelEn: 'Tamil' },
@@ -538,19 +538,19 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                   key={langOpt.id}
                   className="flex items-center justify-between gap-2 cursor-pointer group py-0.5"
                 >
-                  <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="flex items-center gap-2 min-w-0">
                     <input
                       type="radio"
                       name="languageFilter"
                       checked={active}
                       onChange={() => { setSelectedLanguage(langOpt.id); setCurrentPage(1); }}
-                      className="w-4 h-4 text-[#4A9E2C] focus:ring-[#4A9E2C]/30 border-slate-300 dark:border-slate-700 dark:bg-slate-900 cursor-pointer"
+                      className="w-3.5 h-3.5 text-[#4A9E2C] focus:ring-[#4A9E2C]/30 border-slate-300 dark:border-slate-700 dark:bg-slate-900 cursor-pointer shrink-0"
                     />
-                    <span className={`text-[13px] truncate ${active ? 'font-black text-[#4A9E2C] dark:text-[#4ade80]' : 'font-medium text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white'}`}>
+                    <span className={`text-[12.5px] truncate ${active ? 'font-black text-[#4A9E2C] dark:text-[#4ade80]' : 'font-medium text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white'}`}>
                       {isTamil ? langOpt.labelTa : langOpt.labelEn}
                     </span>
                   </div>
-                  <span className="text-xs font-mono font-bold text-slate-500 dark:text-slate-400 px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800/80 shrink-0">
+                  <span className="text-[11px] font-mono font-bold text-slate-500 dark:text-slate-400 px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800/80 shrink-0">
                     {count}
                   </span>
                 </label>
@@ -565,7 +565,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
         <button
           type="button"
           onClick={resetAllFilters}
-          className="w-full py-2.5 px-4 rounded-xl text-xs font-black text-red-600 dark:text-red-400 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 transition-all text-center flex items-center justify-center gap-1.5"
+          className="w-full py-2 px-3 rounded-xl text-xs font-black text-red-600 dark:text-red-400 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 transition-all text-center flex items-center justify-center gap-1.5"
         >
           <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" /></svg>
           <span>{isTamil ? 'அனைத்து வடிகட்டிகளையும் நீக்குக' : 'Clear All Filters'}</span>
@@ -576,7 +576,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
 
   return (
     <div
-      className="w-full lg:h-[calc(100vh-135px)] lg:max-h-[calc(100vh-135px)] lg:overflow-hidden pb-3 pt-2 flex flex-col animate-fadeIn bg-cover bg-center bg-no-repeat relative"
+      className="w-full min-h-[calc(100vh-120px)] pb-16 pt-3 flex flex-col animate-fadeIn bg-cover bg-center bg-no-repeat relative"
       style={{
         backgroundImage: "url('https://png.pngtree.com/thumb_back/fh260/background/20231227/pngtree-hand-drawn-aquarelle-texture-light-green-gradient-watercolor-vector-background-with-image_13880407.png')",
         backgroundAttachment: 'fixed',
@@ -584,7 +584,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
       }}
     >
       {/* Top Search & Filter Bar (Fixed / Pinned) */}
-      <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 mb-3 shrink-0">
+      <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 mb-4 shrink-0">
         <div className="p-3.5 sm:p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 sm:gap-4">
           {/* Keyword Search Input */}
           <div className="relative flex-1">
@@ -610,8 +610,8 @@ function ArticlesPage({ onNavigate, onShowToast }) {
             )}
           </div>
 
-          {/* Mobile Filter Toggle Button (Visible on screens < lg) */}
-          <div className="flex items-center gap-2 lg:hidden">
+          {/* Mobile Filter Toggle Button (Visible on mobile screens < md) */}
+          <div className="flex items-center gap-2 md:hidden">
             <button
               type="button"
               onClick={() => setIsMobileFiltersOpen(true)}
@@ -632,12 +632,12 @@ function ArticlesPage({ onNavigate, onShowToast }) {
       </div>
 
       {/* Main Grid: Left Sidebar Filters + Main Results Column */}
-      <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 flex-1 min-h-0 lg:overflow-hidden">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:h-full lg:overflow-hidden items-stretch">
+      <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 flex-1">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 lg:gap-6 items-start">
 
-          {/* ================= LEFT SIDEBAR — FILTERS (Sticky & Scrollable on Desktop) ================= */}
-          <aside className="hidden lg:flex lg:flex-col lg:col-span-3 xl:col-span-3 lg:h-full shrink-0">
-            <div className="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm h-full flex flex-col min-h-0 overflow-hidden">
+          {/* ================= LEFT SIDEBAR — FILTERS (Sticky & Scrollable on Tablet / Desktop) ================= */}
+          <aside className="hidden md:block md:col-span-4 lg:col-span-3 xl:col-span-3 md:sticky md:top-24 min-h-0">
+            <div className="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm flex flex-col max-h-[calc(100vh-125px)] overflow-hidden">
               <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-200/80 dark:border-slate-800 shrink-0">
                 <div className="flex items-center gap-2">
                   <svg className="w-4 h-4 text-[#4A9E2C] dark:text-[#4ade80]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -660,7 +660,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
 
               {/* Dedicated Scrollable Filter Body */}
               <div
-                className="flex-1 min-h-0 overflow-y-auto pr-2 pb-2 custom-scrollbar"
+                className="flex-1 min-h-0 overflow-y-auto pr-2 pb-4 custom-scrollbar"
                 style={{ overscrollBehavior: 'contain' }}
               >
                 {renderFilterContent()}
@@ -669,7 +669,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
           </aside>
 
           {/* ================= MAIN COLUMN — RESULTS LIST ================= */}
-          <main className="lg:col-span-9 xl:col-span-9 lg:h-full lg:overflow-y-auto space-y-4 pr-1 scroll-smooth" ref={resultsTopRef}>
+          <main className="col-span-12 md:col-span-8 lg:col-span-9 xl:col-span-9 space-y-4 pr-1 scroll-smooth" ref={resultsTopRef}>
 
             {/* Main Column Top Control Bar: Results Count & Sort Dropdown */}
             <div className="p-3.5 sm:p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm flex flex-wrap items-center justify-between gap-3">
