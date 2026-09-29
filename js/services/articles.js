@@ -100,7 +100,22 @@ export async function fetchCardArticles(limit = 12, sort = 'newest') {
 
   liveArticlesPromise = (async () => {
     try {
-      // Check embedded server data
+      // 1. Consume early preload promise from <head> if available
+      if (typeof window !== 'undefined' && window.__HOME__) {
+        try {
+          const homeResult = await window.__HOME__;
+          const homeList = homeResult?.data?.articles || homeResult?.articles;
+          if (Array.isArray(homeList) && homeList.length > 0) {
+            liveArticlesCache = homeList;
+            try {
+              sessionStorage.setItem('muthaleetu_articles_cache', JSON.stringify(homeList));
+            } catch (_) {}
+            return homeList;
+          }
+        } catch (_) {}
+      }
+
+      // 2. Check embedded server data or static build snapshot
       if (typeof window !== 'undefined' && window.__INITIAL_DATA__?.articles) {
         liveArticlesCache = window.__INITIAL_DATA__.articles;
         return liveArticlesCache;
@@ -113,6 +128,7 @@ export async function fetchCardArticles(limit = 12, sort = 'newest') {
         if (Array.isArray(list) && list.length > 0) {
           liveArticlesCache = list;
           try {
+            sessionStorage.setItem('muthaleetu_articles_cache', JSON.stringify(list));
             localStorage.setItem('muthaleetu_articles_cache', JSON.stringify(list));
           } catch (_) {}
           return list;

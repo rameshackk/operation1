@@ -43,6 +43,10 @@ const server = http.createServer(async (req, res) => {
       res.end(JSON.stringify(data));
       return res;
     };
+    res.send = (data) => {
+      res.end(typeof data === 'object' ? JSON.stringify(data) : data);
+      return res;
+    };
     req.query = Object.fromEntries(urlObj.searchParams.entries());
 
     // Helper to parse JSON body for POST/PUT/PATCH/DELETE
@@ -73,6 +77,12 @@ const server = http.createServer(async (req, res) => {
       // 1.05 Text-to-Speech Streaming API
       if (reqPath === '/api/tts' || reqPath === '/api/tts/index.js') {
         const mod = await import(`./api/tts/index.js?t=${Date.now()}`);
+        return mod.default(req, res);
+      }
+
+      // 1.08 Consolidated Home Feed API
+      if (reqPath === '/api/home' || reqPath === '/api/home/index.js') {
+        const mod = await import(`./api/home/index.js?t=${Date.now()}`);
         return mod.default(req, res);
       }
 

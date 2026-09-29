@@ -1033,7 +1033,8 @@ function AuthProvider({ children }) {
         signInWithGoogle,
         signInWithMagicLink,
         verifyCurrentPassword,
-        updateAccountPassword
+        updateAccountPassword,
+        supabase: typeof window !== "undefined" ? window.supabaseClient : null
       }
     },
     children
@@ -1569,6 +1570,21 @@ async function fetchCardArticles(limit = 12, sort = "newest") {
   }
   liveArticlesPromise = (async () => {
     try {
+      if (typeof window !== "undefined" && window.__HOME__) {
+        try {
+          const homeResult = await window.__HOME__;
+          const homeList = homeResult?.data?.articles || homeResult?.articles;
+          if (Array.isArray(homeList) && homeList.length > 0) {
+            liveArticlesCache = homeList;
+            try {
+              sessionStorage.setItem("muthaleetu_articles_cache", JSON.stringify(homeList));
+            } catch (_) {
+            }
+            return homeList;
+          }
+        } catch (_) {
+        }
+      }
       if (typeof window !== "undefined" && window.__INITIAL_DATA__?.articles) {
         liveArticlesCache = window.__INITIAL_DATA__.articles;
         return liveArticlesCache;
@@ -1580,6 +1596,7 @@ async function fetchCardArticles(limit = 12, sort = "newest") {
         if (Array.isArray(list) && list.length > 0) {
           liveArticlesCache = list;
           try {
+            sessionStorage.setItem("muthaleetu_articles_cache", JSON.stringify(list));
             localStorage.setItem("muthaleetu_articles_cache", JSON.stringify(list));
           } catch (_) {
           }
@@ -2135,13 +2152,25 @@ function setCachedVideos(key, list) {
     }
   }
 }
-async function fetchVideos(category = "all", sort = "newest", limit = 100, language = "ta") {
+async function fetchVideos(category = "all", sort = "newest", limit = 12, language = "ta") {
   const cacheKey = `${category}-${sort}-${limit}-${language}`;
   if (inflightPromises.has(cacheKey)) {
     return inflightPromises.get(cacheKey);
   }
   const promise = (async () => {
     try {
+      if (category === "all" && sort === "newest" && typeof window !== "undefined" && window.__HOME__) {
+        try {
+          const homeResult = await window.__HOME__;
+          const homeVids = homeResult?.data?.videos || homeResult?.videos;
+          if (Array.isArray(homeVids) && homeVids.length > 0) {
+            const list2 = homeVids.slice(0, limit).map((v) => translateVideo(normalizeVideoRow(v), language));
+            setCachedVideos(cacheKey, list2);
+            return list2;
+          }
+        } catch (_) {
+        }
+      }
       const url = `/api/videos?limit=${limit}&category=${encodeURIComponent(category)}&sort=${encodeURIComponent(sort)}`;
       const res = await fetch(url);
       if (res.ok) {
@@ -2170,7 +2199,7 @@ async function fetchVideos(category = "all", sort = "newest", limit = 100, langu
   inflightPromises.set(cacheKey, promise);
   return promise;
 }
-function useVideos(category = "all", sort = "newest", limit = 100, language = "ta") {
+function useVideos(category = "all", sort = "newest", limit = 12, language = "ta") {
   const cacheKey = `${category}-${sort}-${limit}-${language}`;
   const [videos, setVideos] = useState11(() => {
     const cached = getCachedVideos(cacheKey, language);

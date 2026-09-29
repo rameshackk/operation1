@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "regions": ["bom1"],
   "outputDirectory": ".",
   "headers": [
     {
@@ -34,6 +35,15 @@
       ]
     },
     {
+      "source": "/api/home",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, s-maxage=60, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
       "source": "/api/articles(.*)",
       "headers": [
         {
@@ -44,6 +54,15 @@
     },
     {
       "source": "/api/videos(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, s-maxage=300, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/api/publishers(.*)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -103,6 +122,10 @@
     {
       "source": "/robots.txt",
       "destination": "/robots.txt"
+    },
+    {
+      "source": "/api/home",
+      "destination": "/api/home"
     },
     {
       "source": "/api/auth/signup",

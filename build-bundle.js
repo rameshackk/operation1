@@ -181,7 +181,10 @@ async function runBuild() {
     const parsed = JSON.parse(ssrRaw);
     prerenderedHtml = parsed.html || '';
     serverData = parsed.serverData || serverData;
-    console.log(`✅ SSR Prerender successful -> (${(prerenderedHtml.length / 1024).toFixed(2)} KB HTML generated)`);
+    const dataDir = path.join(__dirname, 'data');
+    if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
+    fs.writeFileSync(path.join(dataDir, 'home.json'), JSON.stringify(serverData, null, 2), 'utf8');
+    console.log(`✅ Build snapshot written -> data/home.json (${(JSON.stringify(serverData).length / 1024).toFixed(2)} KB)`);
   } catch (e) {
     console.warn('Prerender helper note:', e.message);
   }
@@ -282,10 +285,18 @@ async function runBuild() {
   ]
   </script>
 
-  <!-- Preconnect to YouTube Thumbnail CDN -->
+  <!-- Supabase & Media CDN Preconnects -->
+  <link rel="preconnect" href="https://etanokdvfyvkidpeovdi.supabase.co" crossorigin />
+  <link rel="dns-prefetch" href="https://etanokdvfyvkidpeovdi.supabase.co" />
   <link rel="preconnect" href="https://i.ytimg.com" crossorigin />
   <link rel="dns-prefetch" href="https://i.ytimg.com" />
   <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+
+  <!-- Preload Consolidated Home Feed API (Starts before React JS boots) -->
+  <link rel="preload" href="/api/home" as="fetch" crossorigin />
+  <script>
+    window.__HOME__ = fetch('/api/home').then(function(r) { return r.ok ? r.json() : null; }).catch(function() { return null; });
+  </script>
 
   <!-- Preload Self-Hosted Critical Woff2 Fonts -->
   <link rel="preload" as="font" type="font/woff2" href="/fonts/noto-serif-tamil-400-0.woff2" crossorigin />

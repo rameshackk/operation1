@@ -490,7 +490,8 @@ function AuthProvider({ children }) {
         signInWithGoogle,
         signInWithMagicLink,
         verifyCurrentPassword,
-        updateAccountPassword
+        updateAccountPassword,
+        supabase: (typeof window !== 'undefined' ? window.supabaseClient : null)
       }}
     >
       {children}

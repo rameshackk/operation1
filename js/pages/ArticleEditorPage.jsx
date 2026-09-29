@@ -115,18 +115,18 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
 
     try {
       if (supabase && supabase.storage) {
-        const fileExt = file.name.split('.').pop();
+        const fileExt = file.name.split('.').pop() || 'jpg';
         const fileName = `cover_${Date.now()}_${Math.random().toString(36).substring(2, 8)}.${fileExt}`;
-        const filePath = `${fileName}`;
+        const filePath = `articles/covers/${fileName}`;
 
         const { data, error: uploadError } = await supabase.storage
-          .from('article-covers')
-          .upload(filePath, file, { cacheControl: '3600', upsert: true });
+          .from('media')
+          .upload(filePath, file, { cacheControl: '31536000', upsert: true });
 
         if (uploadError) throw uploadError;
 
         const { data: publicUrlData } = supabase.storage
-          .from('article-covers')
+          .from('media')
           .getPublicUrl(filePath);
 
         if (publicUrlData && publicUrlData.publicUrl) {
@@ -135,16 +135,9 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
           setIsUploadingImage(false);
           return;
         }
+      } else {
+        throw new Error('Supabase storage is not initialized. Please ensure network connectivity.');
       }
-
-      const reader = new FileReader();
-      reader.onload = () => {
-        setCoverImageUrl(reader.result);
-        if (onShowToast) onShowToast('Image loaded');
-        setIsUploadingImage(false);
-      };
-      reader.readAsDataURL(file);
-
     } catch (err) {
       console.error('Image upload failed:', err);
       setError(`Image upload error: ${err.message}`);

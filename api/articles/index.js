@@ -314,7 +314,6 @@ export default async function handler(req, res) {
       return res.status(200).json({
         status: 'success',
         data: newsResult.news || [],
-        news: newsResult.news || [],
         pagination: {
           page: newsResult.page || 1,
           limit: newsResult.limit || limit,
@@ -335,7 +334,7 @@ export default async function handler(req, res) {
 
   // ================= 5. ARTICLES LISTING =================
   try {
-    const { category = 'all', search = '', sort = 'newest', view = 'card' } = req.query || {};
+    const { category = 'all', search = '', sort = 'newest', view = 'card', cursor = null, cursorPublishedAt = null, cursorId = null } = req.query || {};
     const { page, limit } = parseSafePagination(req.query, 20, 100);
 
     const result = await listArticles({
@@ -345,7 +344,10 @@ export default async function handler(req, res) {
       status: 'published', // Always strictly published articles
       search: sanitizeText(search.toString(), 100),
       sort: sanitizeText(sort.toString(), 20),
-      view: sanitizeText(view.toString(), 10)
+      view: sanitizeText(view.toString(), 10),
+      cursor: cursor ? sanitizeText(cursor.toString(), 200) : null,
+      cursorPublishedAt: cursorPublishedAt ? sanitizeText(cursorPublishedAt.toString(), 50) : null,
+      cursorId: cursorId ? sanitizeText(cursorId.toString(), 100) : null
     });
 
     res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=86400');
@@ -354,12 +356,12 @@ export default async function handler(req, res) {
     return res.status(200).json({
       status: 'success',
       data: result.articles || [],
-      news: result.articles || [],
       pagination: {
         page: result.page || 1,
         limit: result.limit || limit,
         total: result.total || (result.articles ? result.articles.length : 0),
-        totalPages: Math.ceil((result.total || 0) / (result.limit || limit)) || 1
+        totalPages: Math.ceil((result.total || 0) / (result.limit || limit)) || 1,
+        nextCursor: result.nextCursor || null
       }
     });
 
@@ -369,7 +371,7 @@ export default async function handler(req, res) {
       status: 'success',
       data: [],
       error: error.message,
-      pagination: { page: 1, limit: 20, total: 0, totalPages: 1 }
+      pagination: { page: 1, limit: 20, total: 0, totalPages: 1, nextCursor: null }
     });
   }
 }

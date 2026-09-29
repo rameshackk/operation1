@@ -41,8 +41,8 @@ function PublisherOnboardingModal({ profile, onComplete, onClose }) {
     'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=200&auto=format&fit=crop&q=80'
   ];
 
-  // Handle local image file upload & high-performance compression via HTML5 Canvas
-  const handleImageFileChange = (e) => {
+  // Handle local image file upload directly to Supabase Storage media bucket
+  const handleImageFileChange = async (e) => {
     const file = e.target.files && e.target.files[0];
     if (!file) return;
 
@@ -54,54 +54,35 @@ function PublisherOnboardingModal({ profile, onComplete, onClose }) {
     setIsUploadingPhoto(true);
     setError('');
 
-    const reader = new FileReader();
-    reader.onload = (loadEvt) => {
-      const img = new Image();
-      img.onload = () => {
-        try {
-          const canvas = document.createElement('canvas');
-          const maxDim = 400;
-          let width = img.width;
-          let height = img.height;
+    try {
+      if (supabase && supabase.storage) {
+        const fileExt = file.name.split('.').pop() || 'jpg';
+        const userId = session?.user?.id || profile?.id || 'advisor';
+        const filePath = `avatars/${userId}_${Date.now()}.${fileExt}`;
 
-          if (width > height) {
-            if (width > maxDim) {
-              height = Math.round((height * maxDim) / width);
-              width = maxDim;
-            }
-          } else {
-            if (height > maxDim) {
-              width = Math.round((width * maxDim) / height);
-              height = maxDim;
-            }
-          }
+        const { error: uploadError } = await supabase.storage
+          .from('media')
+          .upload(filePath, file, { cacheControl: '31536000', upsert: true });
 
-          canvas.width = width;
-          canvas.height = height;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, width, height);
+        if (uploadError) throw uploadError;
 
-          // Compress to lightweight high-quality JPEG
-          const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
-          setAvatarUrl(dataUrl);
+        const { data: publicUrlData } = supabase.storage
+          .from('media')
+          .getPublicUrl(filePath);
+
+        if (publicUrlData && publicUrlData.publicUrl) {
+          setAvatarUrl(publicUrlData.publicUrl);
           setIsUploadingPhoto(false);
-        } catch (err) {
-          console.warn('Canvas compression fallback:', err);
-          setAvatarUrl(loadEvt.target.result);
-          setIsUploadingPhoto(false);
+          return;
         }
-      };
-      img.onerror = () => {
-        setError('Could not load selected image.');
-        setIsUploadingPhoto(false);
-      };
-      img.src = loadEvt.target.result;
-    };
-    reader.onerror = () => {
-      setError('Failed to read image file.');
+      } else {
+        throw new Error('Storage client unavailable.');
+      }
+    } catch (err) {
+      console.error('Avatar upload failed:', err);
+      setError(`Photo upload error: ${err.message}`);
       setIsUploadingPhoto(false);
-    };
-    reader.readAsDataURL(file);
+    }
   };
 
   const handleSubmit = async () => {

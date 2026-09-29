@@ -21,7 +21,7 @@ function VideosPage({ onNavigate, onShowToast, initialVideoId }) {
   const sentinelRef = useRef(null);
 
   // Live video hook — pulls directly from Supabase /api/videos with built-in fallback
-  const { videos: allLiveVideos = [], isLoading: isVideosLoading } = useVideos('all', sortBy, 100, language);
+  const { videos: allLiveVideos = [], isLoading: isVideosLoading } = useVideos('all', sortBy, 48, language);
 
   useEffect(() => {
     if (initialVideoId && allLiveVideos && allLiveVideos.length > 0) {

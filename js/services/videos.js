@@ -34,7 +34,7 @@ function setCachedVideos(key, list) {
   }
 }
 
-export async function fetchVideos(category = 'all', sort = 'newest', limit = 100, language = 'ta') {
+export async function fetchVideos(category = 'all', sort = 'newest', limit = 12, language = 'ta') {
   const cacheKey = `${category}-${sort}-${limit}-${language}`;
 
   if (inflightPromises.has(cacheKey)) {
@@ -43,6 +43,19 @@ export async function fetchVideos(category = 'all', sort = 'newest', limit = 100
 
   const promise = (async () => {
     try {
+      // 1. Consume early preload promise from <head> if available on home feed
+      if (category === 'all' && sort === 'newest' && typeof window !== 'undefined' && window.__HOME__) {
+        try {
+          const homeResult = await window.__HOME__;
+          const homeVids = homeResult?.data?.videos || homeResult?.videos;
+          if (Array.isArray(homeVids) && homeVids.length > 0) {
+            const list = homeVids.slice(0, limit).map(v => translateVideo(normalizeVideoRow(v), language));
+            setCachedVideos(cacheKey, list);
+            return list;
+          }
+        } catch (_) {}
+      }
+
       const url = `/api/videos?limit=${limit}&category=${encodeURIComponent(category)}&sort=${encodeURIComponent(sort)}`;
       const res = await fetch(url);
       if (res.ok) {
@@ -76,7 +89,7 @@ export async function fetchVideos(category = 'all', sort = 'newest', limit = 100
   return promise;
 }
 
-export function useVideos(category = 'all', sort = 'newest', limit = 100, language = 'ta') {
+export function useVideos(category = 'all', sort = 'newest', limit = 12, language = 'ta') {
   const cacheKey = `${category}-${sort}-${limit}-${language}`;
 
   // Instant 0ms Initial State: SWR Cache -> Initial Prerender -> Static Catalog

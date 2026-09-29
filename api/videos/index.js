@@ -172,7 +172,7 @@ export default async function handler(req, res) {
       };
     });
 
-    res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=3600, stale-while-revalidate=86400');
+    res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=86400');
     res.setHeader('Content-Type', 'application/json');
 
     return res.status(200).json({
