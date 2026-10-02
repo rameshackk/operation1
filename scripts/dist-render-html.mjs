@@ -354,13 +354,13 @@ __export(SipCalculator_exports, {
   SipCalculator: () => SipCalculator,
   default: () => SipCalculator_default
 });
-import React18, { useState as useState13, useMemo as useMemo5 } from "react";
+import React18, { useState as useState14, useMemo as useMemo5 } from "react";
 function SipCalculator() {
   const { t, language } = useLanguage();
-  const [calcMode, setCalcMode] = useState13("sip");
-  const [amount, setAmount] = useState13(150);
-  const [timeframe, setTimeframe] = useState13("1Y");
-  const [analysisTab, setAnalysisTab] = useState13("pie");
+  const [calcMode, setCalcMode] = useState14("sip");
+  const [amount, setAmount] = useState14(150);
+  const [timeframe, setTimeframe] = useState14("1Y");
+  const [analysisTab, setAnalysisTab] = useState14("pie");
   const isTamil = language === "ta";
   const RETURN_RATES = {
     sip: {
@@ -1218,18 +1218,18 @@ function Header({ onOpenSearch, onNavigate }) {
       setIsLoggingOut(false);
     }
   };
-  return /* @__PURE__ */ React7.createElement("header", { className: `relative z-40 w-full max-w-full overflow-visible transition-all duration-200 border-b border-[#D5EBD9] dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-900 dark:text-white ${isScrolled ? "py-1.5 shadow-sm" : "py-2 sm:py-2.5 shadow-sm"}` }, /* @__PURE__ */ React7.createElement("div", { className: "w-full max-w-[98vw] 2xl:max-w-[1800px] mx-auto px-3 sm:px-6 lg:px-8 xl:px-10 flex items-center justify-between gap-2 sm:gap-4" }, /* @__PURE__ */ React7.createElement("div", { className: "flex items-center gap-2 sm:gap-3 w-1/3 justify-start min-w-0 shrink-0" }, /* @__PURE__ */ React7.createElement(
+  return /* @__PURE__ */ React7.createElement("header", { className: `relative z-40 w-full max-w-full overflow-visible transition-all duration-200 border-b border-[#D5EBD9] dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-900 dark:text-white pt-[env(safe-area-inset-top,0px)] ${isScrolled ? "py-1.5 shadow-sm" : "py-2 sm:py-2.5 shadow-sm"}` }, /* @__PURE__ */ React7.createElement("div", { className: "hidden md:flex w-full max-w-[98vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 items-center justify-between gap-4" }, /* @__PURE__ */ React7.createElement("div", { className: "flex items-center gap-3 justify-start shrink-0" }, /* @__PURE__ */ React7.createElement(
     "button",
     {
       onClick: onOpenSearch,
-      className: "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-800 transition-all text-xs font-bold border border-slate-200 dark:border-slate-700 shadow-xs shrink-0 cursor-pointer",
+      className: "inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-800 transition-all text-xs font-bold border border-slate-200 dark:border-slate-700 shadow-xs shrink-0 cursor-pointer min-h-[44px]",
       "aria-label": "Search",
       title: "Search (Ctrl + K)"
     },
     /* @__PURE__ */ React7.createElement("svg", { className: "w-3.5 h-3.5 text-[#2563EB] dark:text-[#38bdf8]", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24" }, /* @__PURE__ */ React7.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2.5", d: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" })),
-    /* @__PURE__ */ React7.createElement("span", { className: "hidden sm:inline font-bold" }, t("searchTitle")),
-    /* @__PURE__ */ React7.createElement("span", { className: "hidden md:inline-block text-xs px-1 py-0.2 rounded bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-num font-bold" }, "\u2318K")
-  ), /* @__PURE__ */ React7.createElement("div", { className: "hidden sm:inline-flex shrink-0" }, /* @__PURE__ */ React7.createElement(LanguageSwitcher, null))), /* @__PURE__ */ React7.createElement("div", { className: "flex items-center justify-center shrink-0 mx-auto px-2" }, /* @__PURE__ */ React7.createElement("a", { href: "#/", className: "flex items-center gap-2.5 sm:gap-3 group shrink-0" }, /* @__PURE__ */ React7.createElement("picture", { className: "shrink-0" }, /* @__PURE__ */ React7.createElement("source", { srcSet: "/assets/logo-96.webp 2x, /assets/logo-48.webp 1x", type: "image/webp" }), /* @__PURE__ */ React7.createElement(
+    /* @__PURE__ */ React7.createElement("span", { className: "font-bold" }, t("searchTitle")),
+    /* @__PURE__ */ React7.createElement("span", { className: "text-xs px-1 py-0.2 rounded bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-num font-bold" }, "\u2318K")
+  ), /* @__PURE__ */ React7.createElement("div", { className: "shrink-0" }, /* @__PURE__ */ React7.createElement(LanguageSwitcher, null))), /* @__PURE__ */ React7.createElement("div", { className: "flex items-center justify-center shrink-0 px-2" }, /* @__PURE__ */ React7.createElement("a", { href: "#/", className: "flex items-center gap-2.5 sm:gap-3 group shrink-0" }, /* @__PURE__ */ React7.createElement("picture", { className: "shrink-0" }, /* @__PURE__ */ React7.createElement("source", { srcSet: "/assets/logo-96.webp 2x, /assets/logo-48.webp 1x", type: "image/webp" }), /* @__PURE__ */ React7.createElement(
     "img",
     {
       src: "/assets/logo-48.webp",
@@ -1238,14 +1238,14 @@ function Header({ onOpenSearch, onNavigate }) {
       height: "48",
       className: `${isScrolled ? "w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10" : "w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12"} object-contain drop-shadow-md group-hover:scale-105 transition-all duration-300 shrink-0`
     }
-  )), /* @__PURE__ */ React7.createElement("div", { className: "text-left shrink-0" }, /* @__PURE__ */ React7.createElement("div", { className: "flex items-center gap-1 sm:gap-1.5 whitespace-nowrap" }, /* @__PURE__ */ React7.createElement("h1", { className: `${isScrolled ? "text-sm sm:text-base md:text-lg" : "text-base sm:text-lg md:text-[1.35rem]"} font-extrabold tracking-tight whitespace-nowrap leading-none font-sans transition-all duration-300` }, language === "ta" ? /* @__PURE__ */ React7.createElement(React7.Fragment, null, /* @__PURE__ */ React7.createElement("span", { className: "text-[#03529A] dark:text-[#38bdf8]" }, "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 "), /* @__PURE__ */ React7.createElement("span", { className: "text-[#4A9E2C] dark:text-[#4ade80]" }, "\u0BA4\u0BBF\u0B9A\u0BC8")) : /* @__PURE__ */ React7.createElement(React7.Fragment, null, /* @__PURE__ */ React7.createElement("span", { className: "text-[#03529A] dark:text-[#38bdf8]" }, "Muthaleetu "), /* @__PURE__ */ React7.createElement("span", { className: "text-[#4A9E2C] dark:text-[#4ade80]" }, "Thisai")))), /* @__PURE__ */ React7.createElement("p", { className: "text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:block pt-0.5 whitespace-nowrap leading-none" }, t("tagline"))))), /* @__PURE__ */ React7.createElement("div", { className: "flex items-center justify-end gap-2 sm:gap-2.5 w-1/3 min-w-0 shrink-0" }, /* @__PURE__ */ React7.createElement("div", { className: "shrink-0 flex items-center gap-1.5" }, /* @__PURE__ */ React7.createElement("div", { className: "sm:hidden" }, /* @__PURE__ */ React7.createElement(LanguageSwitcher, null)), /* @__PURE__ */ React7.createElement(ThemeToggle, null)), user ? /* @__PURE__ */ React7.createElement("div", { className: "flex items-center gap-2 shrink-0 min-w-0" }, /* @__PURE__ */ React7.createElement(ProfileMenu, { onNavigate: onNavigate || ((route) => {
+  )), /* @__PURE__ */ React7.createElement("div", { className: "text-left shrink-0" }, /* @__PURE__ */ React7.createElement("div", { className: "flex items-center gap-1 sm:gap-1.5 whitespace-nowrap" }, /* @__PURE__ */ React7.createElement("h1", { className: `${isScrolled ? "text-sm sm:text-base md:text-lg" : "text-base sm:text-lg md:text-[1.35rem]"} font-extrabold tracking-tight whitespace-nowrap leading-none font-sans transition-all duration-300` }, language === "ta" ? /* @__PURE__ */ React7.createElement(React7.Fragment, null, /* @__PURE__ */ React7.createElement("span", { className: "text-[#03529A] dark:text-[#38bdf8]" }, "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 "), /* @__PURE__ */ React7.createElement("span", { className: "text-[#4A9E2C] dark:text-[#4ade80]" }, "\u0BA4\u0BBF\u0B9A\u0BC8")) : /* @__PURE__ */ React7.createElement(React7.Fragment, null, /* @__PURE__ */ React7.createElement("span", { className: "text-[#03529A] dark:text-[#38bdf8]" }, "Muthaleetu "), /* @__PURE__ */ React7.createElement("span", { className: "text-[#4A9E2C] dark:text-[#4ade80]" }, "Thisai")))), /* @__PURE__ */ React7.createElement("p", { className: "text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium pt-0.5 whitespace-nowrap leading-none" }, t("tagline"))))), /* @__PURE__ */ React7.createElement("div", { className: "flex items-center justify-end gap-2.5 shrink-0" }, /* @__PURE__ */ React7.createElement(ThemeToggle, null), user ? /* @__PURE__ */ React7.createElement("div", { className: "flex items-center gap-2 shrink-0" }, /* @__PURE__ */ React7.createElement(ProfileMenu, { onNavigate: onNavigate || ((route) => {
     if (typeof window !== "undefined") window.location.hash = route;
   }) }), /* @__PURE__ */ React7.createElement(
     "button",
     {
       onClick: handleLogout,
       disabled: isLoggingOut,
-      className: "hidden xl:inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-red-600 hover:bg-red-700 active:scale-95 text-white font-bold text-xs shadow-xs transition-all shrink-0 disabled:opacity-50 border border-red-500/30 cursor-pointer",
+      className: "hidden xl:inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-red-600 hover:bg-red-700 active:scale-95 text-white font-bold text-xs shadow-xs transition-all shrink-0 disabled:opacity-50 border border-red-500/30 cursor-pointer min-h-[44px]",
       title: language === "ta" ? "\u0BB5\u0BC6\u0BB3\u0BBF\u0BAF\u0BC7\u0BB1\u0BC1" : "Logout"
     },
     isLoggingOut ? /* @__PURE__ */ React7.createElement("svg", { className: "w-3.5 h-3.5 animate-spin", fill: "none", viewBox: "0 0 24 24" }, /* @__PURE__ */ React7.createElement("circle", { className: "opacity-25", cx: "12", cy: "12", r: "10", stroke: "currentColor", strokeWidth: "4" }), /* @__PURE__ */ React7.createElement("path", { className: "opacity-75", fill: "currentColor", d: "M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" })) : null,
@@ -1257,7 +1257,37 @@ function Header({ onOpenSearch, onNavigate }) {
         if (onNavigate) onNavigate("#/login");
         else if (typeof window !== "undefined") window.location.hash = "#/login";
       },
-      className: "inline-flex items-center gap-1 px-3.5 sm:px-4 py-1.5 rounded-full bg-[#2563EB] hover:bg-blue-700 text-white font-bold text-xs shadow-xs shadow-blue-600/20 transition-all shrink-0 active:scale-95 cursor-pointer"
+      className: "inline-flex items-center gap-1 px-4 py-1.5 rounded-full bg-[#2563EB] hover:bg-blue-700 text-white font-bold text-xs shadow-xs shadow-blue-600/20 transition-all shrink-0 active:scale-95 cursor-pointer min-h-[44px]"
+    },
+    /* @__PURE__ */ React7.createElement("span", null, language === "ta" ? "\u0B89\u0BB3\u0BCD\u0BA8\u0BC1\u0BB4\u0BC8\u0B95" : "Sign In")
+  ))), /* @__PURE__ */ React7.createElement("div", { className: "flex md:hidden w-full items-center justify-between px-3 min-h-[48px] gap-2" }, /* @__PURE__ */ React7.createElement("a", { href: "#/", className: "flex items-center gap-2 min-w-0 shrink truncate group py-1" }, /* @__PURE__ */ React7.createElement("picture", { className: "shrink-0" }, /* @__PURE__ */ React7.createElement("source", { srcSet: "/assets/logo-96.webp 2x, /assets/logo-48.webp 1x", type: "image/webp" }), /* @__PURE__ */ React7.createElement(
+    "img",
+    {
+      src: "/assets/logo-48.webp",
+      alt: "Muthaleetu Thisai",
+      width: "36",
+      height: "36",
+      className: "w-9 h-9 object-contain drop-shadow-sm shrink-0"
+    }
+  )), /* @__PURE__ */ React7.createElement("div", { className: "min-w-0 truncate" }, /* @__PURE__ */ React7.createElement("h1", { className: "text-sm font-extrabold tracking-tight whitespace-nowrap leading-none font-sans" }, language === "ta" ? /* @__PURE__ */ React7.createElement(React7.Fragment, null, /* @__PURE__ */ React7.createElement("span", { className: "text-[#03529A] dark:text-[#38bdf8]" }, "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 "), /* @__PURE__ */ React7.createElement("span", { className: "text-[#4A9E2C] dark:text-[#4ade80]" }, "\u0BA4\u0BBF\u0B9A\u0BC8")) : /* @__PURE__ */ React7.createElement(React7.Fragment, null, /* @__PURE__ */ React7.createElement("span", { className: "text-[#03529A] dark:text-[#38bdf8]" }, "Muthaleetu "), /* @__PURE__ */ React7.createElement("span", { className: "text-[#4A9E2C] dark:text-[#4ade80]" }, "Thisai"))))), /* @__PURE__ */ React7.createElement("div", { className: "flex items-center gap-2 shrink-0" }, /* @__PURE__ */ React7.createElement(
+    "button",
+    {
+      onClick: onOpenSearch,
+      className: "w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-800 flex items-center justify-center border border-slate-200 dark:border-slate-700 shadow-xs cursor-pointer active:scale-95 transition-all",
+      "aria-label": "Search",
+      title: "Search"
+    },
+    /* @__PURE__ */ React7.createElement("svg", { className: "w-5 h-5 text-[#2563EB] dark:text-[#38bdf8]", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24" }, /* @__PURE__ */ React7.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2.5", d: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" }))
+  ), user ? /* @__PURE__ */ React7.createElement(ProfileMenu, { onNavigate: onNavigate || ((route) => {
+    if (typeof window !== "undefined") window.location.hash = route;
+  }) }) : /* @__PURE__ */ React7.createElement(
+    "button",
+    {
+      onClick: () => {
+        if (onNavigate) onNavigate("#/login");
+        else if (typeof window !== "undefined") window.location.hash = "#/login";
+      },
+      className: "h-11 min-h-[44px] px-3.5 rounded-full bg-[#2563EB] hover:bg-blue-700 text-white font-bold text-xs shadow-xs transition-all shrink-0 flex items-center justify-center active:scale-95"
     },
     /* @__PURE__ */ React7.createElement("span", null, language === "ta" ? "\u0B89\u0BB3\u0BCD\u0BA8\u0BC1\u0BB4\u0BC8\u0B95" : "Sign In")
   ))));
@@ -1294,7 +1324,7 @@ function Navbar({ currentPath, onNavigate }) {
     const ci = (i.path || i.hash || "/").replace(/^#/, "").toLowerCase().replace(/\/+$/, "") || "/";
     return cleanCurrent === ci || ci === "/" && (cleanCurrent === "" || cleanCurrent === "/home");
   });
-  return /* @__PURE__ */ React8.createElement("nav", { className: "bg-[#F4F9F4] dark:bg-slate-950 text-slate-800 dark:text-slate-100 border-b border-[#D5EBD9] dark:border-slate-800 shadow-sm relative z-20" }, /* @__PURE__ */ React8.createElement("div", { className: "w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10" }, /* @__PURE__ */ React8.createElement("div", { className: "hidden lg:flex items-center justify-between gap-2 py-2" }, /* @__PURE__ */ React8.createElement("div", { className: "flex items-center justify-between flex-1 gap-1.5 xl:gap-2" }, navItems.map((item) => {
+  return /* @__PURE__ */ React8.createElement(React8.Fragment, null, /* @__PURE__ */ React8.createElement("nav", { className: "bg-[#F4F9F4] dark:bg-slate-950 text-slate-800 dark:text-slate-100 border-b border-[#D5EBD9] dark:border-slate-800 shadow-sm relative z-20" }, /* @__PURE__ */ React8.createElement("div", { className: "w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10" }, /* @__PURE__ */ React8.createElement("div", { className: "hidden md:flex items-center justify-between gap-2 py-2" }, /* @__PURE__ */ React8.createElement("div", { className: "flex items-center justify-between flex-1 gap-1.5 xl:gap-2" }, navItems.map((item) => {
     if (item.isAction) {
       return /* @__PURE__ */ React8.createElement(
         "button",
@@ -1319,30 +1349,30 @@ function Navbar({ currentPath, onNavigate }) {
       },
       item.label
     );
-  }))), /* @__PURE__ */ React8.createElement("div", { className: "lg:hidden flex items-center justify-between h-11 sm:h-12 min-w-0" }, /* @__PURE__ */ React8.createElement("div", { className: "flex items-center gap-2 min-w-0 truncate" }, /* @__PURE__ */ React8.createElement("span", { className: "w-2 h-2 rounded-full bg-blue-600 animate-pulse shrink-0" }), /* @__PURE__ */ React8.createElement("span", { className: "text-xs font-black text-[#2563EB] dark:text-[#60a5fa] uppercase tracking-wider truncate" }, activeItem?.label || t("nav.home"))), /* @__PURE__ */ React8.createElement("div", { className: "flex items-center gap-2 shrink-0" }, /* @__PURE__ */ React8.createElement(
+  }))), /* @__PURE__ */ React8.createElement("div", { className: "md:hidden flex items-center justify-between h-11 sm:h-12 min-w-0" }, /* @__PURE__ */ React8.createElement("div", { className: "flex items-center gap-2 min-w-0 truncate" }, /* @__PURE__ */ React8.createElement("span", { className: "w-2 h-2 rounded-full bg-blue-600 animate-pulse shrink-0" }), /* @__PURE__ */ React8.createElement("span", { className: "text-xs font-black text-[#2563EB] dark:text-[#60a5fa] uppercase tracking-wider truncate" }, activeItem?.label || t("nav.home"))), /* @__PURE__ */ React8.createElement("div", { className: "flex items-center gap-2 shrink-0" }, /* @__PURE__ */ React8.createElement(
     "button",
     {
       onClick: () => setMobileOpen(true),
       "aria-label": "Open Navigation Menu",
-      className: "px-3 py-1.5 rounded-xl text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-1.5 text-xs font-black shadow-sm active:scale-95"
+      className: "px-3.5 py-2 min-h-[44px] rounded-xl text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2 text-xs font-black shadow-sm active:scale-95"
     },
     /* @__PURE__ */ React8.createElement("svg", { className: "w-4 h-4", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24" }, /* @__PURE__ */ React8.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2.5", d: "M4 6h16M4 12h16M4 18h16" })),
-    /* @__PURE__ */ React8.createElement("span", null, "Menu")
-  )))), mobileOpen && /* @__PURE__ */ React8.createElement("div", { className: "lg:hidden fixed inset-0 z-[99999] flex", role: "dialog", "aria-modal": "true" }, /* @__PURE__ */ React8.createElement(
+    /* @__PURE__ */ React8.createElement("span", null, language === "ta" ? "\u0BAA\u0B9F\u0BCD\u0B9F\u0BBF\u0BAF\u0BB2\u0BCD" : "Menu")
+  )))), mobileOpen && /* @__PURE__ */ React8.createElement("div", { className: "md:hidden fixed inset-0 z-[99999] flex", role: "dialog", "aria-modal": "true" }, /* @__PURE__ */ React8.createElement(
     "div",
     {
-      className: "fixed inset-0 bg-slate-950/70 backdrop-blur-sm transition-opacity",
+      className: "fixed inset-0 bg-slate-950/75 backdrop-blur-md transition-opacity",
       onClick: () => setMobileOpen(false)
     }
-  ), /* @__PURE__ */ React8.createElement("div", { className: "relative ml-auto w-[85vw] max-w-sm h-full bg-white dark:bg-slate-950 text-slate-900 dark:text-white border-l border-slate-200 dark:border-slate-800 shadow-2xl flex flex-col justify-between overflow-y-auto animate-slideRight" }, /* @__PURE__ */ React8.createElement("div", { className: "p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between" }, /* @__PURE__ */ React8.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React8.createElement("img", { src: "/assets/logo.png", alt: "", className: "w-7 h-7 object-contain" }), /* @__PURE__ */ React8.createElement("span", { className: "font-black text-sm font-serif" }, /* @__PURE__ */ React8.createElement("span", { className: "text-[#03529A] dark:text-[#38bdf8]" }, "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 "), /* @__PURE__ */ React8.createElement("span", { className: "text-[#4A9E2C] dark:text-[#4ade80]" }, "\u0BA4\u0BBF\u0B9A\u0BC8"))), /* @__PURE__ */ React8.createElement(
+  ), /* @__PURE__ */ React8.createElement("div", { className: "relative ml-auto w-[88vw] max-w-sm h-full bg-white dark:bg-slate-950 text-slate-900 dark:text-white border-l border-slate-200 dark:border-slate-800 shadow-2xl flex flex-col justify-between overflow-y-auto animate-slideRight" }, /* @__PURE__ */ React8.createElement("div", { className: "p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between pt-[max(1rem,env(safe-area-inset-top,1rem))]" }, /* @__PURE__ */ React8.createElement("div", { className: "flex items-center gap-2.5" }, /* @__PURE__ */ React8.createElement("img", { src: "/assets/logo.png", alt: "", className: "w-8 h-8 object-contain" }), /* @__PURE__ */ React8.createElement("span", { className: "font-black text-sm font-serif" }, /* @__PURE__ */ React8.createElement("span", { className: "text-[#03529A] dark:text-[#38bdf8]" }, "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 "), /* @__PURE__ */ React8.createElement("span", { className: "text-[#4A9E2C] dark:text-[#4ade80]" }, "\u0BA4\u0BBF\u0B9A\u0BC8"))), /* @__PURE__ */ React8.createElement(
     "button",
     {
       onClick: () => setMobileOpen(false),
-      className: "w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-900 text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center justify-center font-bold text-sm",
+      className: "w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-slate-100 dark:bg-slate-900 text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white flex items-center justify-center font-bold text-base border border-slate-200 dark:border-slate-800 active:scale-95",
       "aria-label": "Close menu"
     },
     "\u2715"
-  )), /* @__PURE__ */ React8.createElement("div", { className: "p-4 space-y-1.5 flex-1 overflow-y-auto" }, navItems.map((item) => {
+  )), /* @__PURE__ */ React8.createElement("div", { className: "p-4 space-y-2 flex-1 overflow-y-auto" }, navItems.map((item) => {
     const cleanItem = (item.path || item.hash || "/").replace(/^#/, "").toLowerCase().replace(/\/+$/, "") || "/";
     const isActive = cleanCurrent === cleanItem || cleanItem === "/" && (cleanCurrent === "" || cleanCurrent === "/home");
     return /* @__PURE__ */ React8.createElement(
@@ -1357,19 +1387,19 @@ function Navbar({ currentPath, onNavigate }) {
           }
           setMobileOpen(false);
         },
-        className: `w-full text-left px-4 py-3 rounded-2xl text-sm font-black transition-all flex items-center justify-between ${item.isAction ? "text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40" : isActive ? "bg-[#2563EB] text-white shadow-md border border-blue-500" : "text-slate-700 dark:text-slate-300 hover:bg-blue-50 dark:hover:bg-slate-900"}`
+        className: `w-full text-left px-4 py-3.5 min-h-[48px] rounded-2xl text-sm font-black transition-all flex items-center justify-between ${item.isAction ? "text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40" : isActive ? "bg-[#2563EB] text-white shadow-md border border-blue-500" : "text-slate-700 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-900 border border-transparent"}`
       },
-      /* @__PURE__ */ React8.createElement("span", { className: "flex items-center gap-2.5" }, /* @__PURE__ */ React8.createElement("span", null, item.icon || "\u2022"), /* @__PURE__ */ React8.createElement("span", null, item.label)),
-      isActive && /* @__PURE__ */ React8.createElement("span", { className: "w-2 h-2 rounded-full bg-white animate-pulse" })
+      /* @__PURE__ */ React8.createElement("span", { className: "flex items-center gap-3" }, /* @__PURE__ */ React8.createElement("span", { className: "text-base" }, item.icon || "\u2022"), /* @__PURE__ */ React8.createElement("span", { className: "text-[14px]" }, item.label)),
+      isActive && /* @__PURE__ */ React8.createElement("span", { className: "w-2.5 h-2.5 rounded-full bg-white animate-pulse" })
     );
-  })), /* @__PURE__ */ React8.createElement("div", { className: "p-4 border-t border-slate-200 dark:border-slate-800 space-y-3 bg-slate-50 dark:bg-slate-900/50" }, /* @__PURE__ */ React8.createElement("div", { className: "flex items-center justify-between" }, /* @__PURE__ */ React8.createElement("span", { className: "text-xs font-bold text-slate-500 dark:text-slate-400" }, "Settings"), /* @__PURE__ */ React8.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React8.createElement(LanguageSwitcher, null), /* @__PURE__ */ React8.createElement(ThemeToggle, null))), user ? /* @__PURE__ */ React8.createElement(
+  })), /* @__PURE__ */ React8.createElement("div", { className: "p-4 border-t border-slate-200 dark:border-slate-800 space-y-3.5 bg-slate-50 dark:bg-slate-900/60 pb-[max(1.5rem,env(safe-area-inset-bottom,1.5rem))]" }, /* @__PURE__ */ React8.createElement("div", { className: "flex items-center justify-between" }, /* @__PURE__ */ React8.createElement("span", { className: "text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider" }, language === "ta" ? "\u0B85\u0BAE\u0BC8\u0BAA\u0BCD\u0BAA\u0BC1\u0B95\u0BB3\u0BCD" : "Settings"), /* @__PURE__ */ React8.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React8.createElement(LanguageSwitcher, null), /* @__PURE__ */ React8.createElement(ThemeToggle, null))), user ? /* @__PURE__ */ React8.createElement(
     "button",
     {
       onClick: () => {
         signOut && signOut();
         setMobileOpen(false);
       },
-      className: "w-full py-2.5 px-4 rounded-xl bg-red-50 dark:bg-red-950/40 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900 text-xs font-bold hover:bg-red-100 transition-colors"
+      className: "w-full min-h-[44px] py-2.5 px-4 rounded-xl bg-red-50 dark:bg-red-950/40 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900 text-xs font-extrabold hover:bg-red-100 transition-colors active:scale-95"
     },
     language === "ta" ? "\u0BB5\u0BC6\u0BB3\u0BBF\u0BAF\u0BC7\u0BB1\u0BC1\u0B95" : "Sign Out"
   ) : /* @__PURE__ */ React8.createElement(
@@ -1379,10 +1409,56 @@ function Navbar({ currentPath, onNavigate }) {
         onNavigate("/login");
         setMobileOpen(false);
       },
-      className: "w-full py-2.5 px-4 rounded-xl bg-[#2563EB] text-white text-xs font-bold hover:bg-blue-700 transition-colors shadow-sm"
+      className: "w-full min-h-[44px] py-2.5 px-4 rounded-xl bg-[#2563EB] text-white text-xs font-extrabold hover:bg-blue-700 transition-colors shadow-sm active:scale-95 flex items-center justify-center gap-1.5"
     },
-    language === "ta" ? "\u0B89\u0BB3\u0BCD\u0BA8\u0BC1\u0BB4\u0BC8\u0B95" : "Sign In"
-  )))));
+    /* @__PURE__ */ React8.createElement("span", null, "\u{1F510}"),
+    /* @__PURE__ */ React8.createElement("span", null, language === "ta" ? "\u0B89\u0BB3\u0BCD\u0BA8\u0BC1\u0BB4\u0BC8\u0B95" : "Sign In")
+  ))))), /* @__PURE__ */ React8.createElement("div", { className: "md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl border-t border-[#D5EBD9] dark:border-slate-800 shadow-[0_-4px_25px_rgba(0,0,0,0.08)] select-none" }, /* @__PURE__ */ React8.createElement("div", { className: "flex items-center justify-around px-2 pt-1.5 pb-[max(0.6rem,env(safe-area-inset-bottom,0.6rem))]" }, /* @__PURE__ */ React8.createElement(
+    "button",
+    {
+      onClick: () => onNavigate("/"),
+      className: `flex flex-col items-center justify-center flex-1 py-1 min-h-[48px] rounded-xl transition-all active:scale-95 ${cleanCurrent === "/" || cleanCurrent === "" || cleanCurrent === "/home" ? "text-[#2563EB] dark:text-[#60a5fa] font-black" : "text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white"}`,
+      "aria-label": "Home"
+    },
+    /* @__PURE__ */ React8.createElement("span", { className: "text-lg leading-none mb-1" }, "\u{1F3E0}"),
+    /* @__PURE__ */ React8.createElement("span", { className: "text-[12px] leading-none tracking-tight" }, language === "ta" ? "\u0BAE\u0BC1\u0B95\u0BAA\u0BCD\u0BAA\u0BC1" : "Home")
+  ), /* @__PURE__ */ React8.createElement(
+    "button",
+    {
+      onClick: () => onNavigate("/articles"),
+      className: `flex flex-col items-center justify-center flex-1 py-1 min-h-[48px] rounded-xl transition-all active:scale-95 ${cleanCurrent === "/articles" || cleanCurrent.startsWith("/articles/") ? "text-[#2563EB] dark:text-[#60a5fa] font-black" : "text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white"}`,
+      "aria-label": "Articles"
+    },
+    /* @__PURE__ */ React8.createElement("span", { className: "text-lg leading-none mb-1" }, "\u{1F4F0}"),
+    /* @__PURE__ */ React8.createElement("span", { className: "text-[12px] leading-none tracking-tight" }, language === "ta" ? "\u0B95\u0B9F\u0BCD\u0B9F\u0BC1\u0BB0\u0BC8\u0B95\u0BB3\u0BCD" : "Articles")
+  ), /* @__PURE__ */ React8.createElement(
+    "button",
+    {
+      onClick: () => onNavigate("/videos"),
+      className: `flex flex-col items-center justify-center flex-1 py-1 min-h-[48px] rounded-xl transition-all active:scale-95 ${cleanCurrent === "/videos" || cleanCurrent.startsWith("/videos/") ? "text-[#2563EB] dark:text-[#60a5fa] font-black" : "text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white"}`,
+      "aria-label": "Videos"
+    },
+    /* @__PURE__ */ React8.createElement("span", { className: "text-lg leading-none mb-1" }, "\u{1F3A5}"),
+    /* @__PURE__ */ React8.createElement("span", { className: "text-[12px] leading-none tracking-tight" }, language === "ta" ? "\u0BB5\u0BC0\u0B9F\u0BBF\u0BAF\u0BCB" : "Videos")
+  ), /* @__PURE__ */ React8.createElement(
+    "button",
+    {
+      onClick: () => onNavigate("/calculator"),
+      className: `flex flex-col items-center justify-center flex-1 py-1 min-h-[48px] rounded-xl transition-all active:scale-95 ${cleanCurrent === "/calculator" ? "text-[#2563EB] dark:text-[#60a5fa] font-black" : "text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white"}`,
+      "aria-label": "SIP Calculator"
+    },
+    /* @__PURE__ */ React8.createElement("span", { className: "text-lg leading-none mb-1" }, "\u{1F9EE}"),
+    /* @__PURE__ */ React8.createElement("span", { className: "text-[12px] leading-none tracking-tight" }, language === "ta" ? "SIP \u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BC0\u0B9F\u0BC1" : "Calculator")
+  ), /* @__PURE__ */ React8.createElement(
+    "button",
+    {
+      onClick: () => setMobileOpen(true),
+      className: `flex flex-col items-center justify-center flex-1 py-1 min-h-[48px] rounded-xl transition-all active:scale-95 ${mobileOpen ? "text-[#2563EB] dark:text-[#60a5fa] font-black" : "text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white"}`,
+      "aria-label": "Open full menu"
+    },
+    /* @__PURE__ */ React8.createElement("span", { className: "text-lg leading-none mb-1" }, "\u2630"),
+    /* @__PURE__ */ React8.createElement("span", { className: "text-[12px] leading-none tracking-tight" }, language === "ta" ? "\u0BAA\u0B9F\u0BCD\u0B9F\u0BBF\u0BAF\u0BB2\u0BCD" : "Menu")
+  ))));
 }
 var Navbar_default = Navbar;
 
@@ -1409,7 +1485,7 @@ function Footer({ onNavigate, onShowToast }) {
       decoding: "async",
       className: "w-12 h-12 sm:w-14 sm:h-14 object-contain drop-shadow-md shrink-0"
     }
-  )), /* @__PURE__ */ React9.createElement("span", { className: "text-2xl sm:text-3xl font-black font-serif" }, language === "ta" ? /* @__PURE__ */ React9.createElement(React9.Fragment, null, /* @__PURE__ */ React9.createElement("span", { className: "text-[#03529A] dark:text-[#38bdf8]" }, "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 "), /* @__PURE__ */ React9.createElement("span", { className: "text-[#2e7d32] dark:text-[#4ade80]" }, "\u0BA4\u0BBF\u0B9A\u0BC8")) : /* @__PURE__ */ React9.createElement(React9.Fragment, null, /* @__PURE__ */ React9.createElement("span", { className: "text-[#03529A] dark:text-[#38bdf8]" }, "Muthaleetu "), /* @__PURE__ */ React9.createElement("span", { className: "text-[#2e7d32] dark:text-[#4ade80]" }, "Thisai")))), /* @__PURE__ */ React9.createElement("p", { className: "text-xs sm:text-sm text-slate-700 dark:text-slate-300 max-w-md leading-relaxed" }, t("newsLetterDesc")), /* @__PURE__ */ React9.createElement("form", { onSubmit: handleSubscribe, className: "flex gap-2 max-w-md" }, /* @__PURE__ */ React9.createElement(
+  )), /* @__PURE__ */ React9.createElement("span", { className: "text-2xl sm:text-3xl font-black font-serif" }, language === "ta" ? /* @__PURE__ */ React9.createElement(React9.Fragment, null, /* @__PURE__ */ React9.createElement("span", { className: "text-[#03529A] dark:text-[#38bdf8]" }, "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 "), /* @__PURE__ */ React9.createElement("span", { className: "text-[#2e7d32] dark:text-[#4ade80]" }, "\u0BA4\u0BBF\u0B9A\u0BC8")) : /* @__PURE__ */ React9.createElement(React9.Fragment, null, /* @__PURE__ */ React9.createElement("span", { className: "text-[#03529A] dark:text-[#38bdf8]" }, "Muthaleetu "), /* @__PURE__ */ React9.createElement("span", { className: "text-[#2e7d32] dark:text-[#4ade80]" }, "Thisai")))), /* @__PURE__ */ React9.createElement("p", { className: "text-sm md:text-xs text-slate-700 dark:text-slate-300 max-w-md leading-relaxed" }, t("newsLetterDesc")), /* @__PURE__ */ React9.createElement("form", { onSubmit: handleSubscribe, className: "flex gap-2 max-w-md" }, /* @__PURE__ */ React9.createElement(
     "input",
     {
       type: "email",
@@ -1417,26 +1493,27 @@ function Footer({ onNavigate, onShowToast }) {
       onChange: (e) => setEmail(e.target.value),
       placeholder: "your.email@example.com",
       required: true,
-      className: "flex-1 bg-white dark:bg-slate-900 border border-[#C9B59C] dark:border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
+      className: "flex-1 bg-white dark:bg-slate-900 border border-[#C9B59C] dark:border-slate-800 rounded-xl px-4 py-2.5 text-base md:text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 min-h-[44px]"
     }
   ), /* @__PURE__ */ React9.createElement(
     "button",
     {
       type: "submit",
-      className: "px-4 py-2 rounded-xl bg-amber-500 text-slate-950 font-black text-xs hover:bg-amber-400 transition-colors shadow-md shrink-0"
+      className: "px-5 py-2.5 rounded-xl bg-amber-500 text-slate-950 font-black text-xs hover:bg-amber-400 transition-colors shadow-md shrink-0 min-h-[44px] flex items-center justify-center active:scale-95 cursor-pointer"
     },
     t("subscribe")
-  ))), /* @__PURE__ */ React9.createElement("div", { className: "lg:col-span-3 space-y-3" }, /* @__PURE__ */ React9.createElement("h4", { className: "text-xs font-extrabold uppercase tracking-wider text-amber-900 dark:text-amber-400" }, t("nav.mutualFunds"), " & ", t("nav.stocks")), /* @__PURE__ */ React9.createElement("ul", { className: "space-y-2 text-xs font-semibold text-slate-700 dark:text-slate-300" }, /* @__PURE__ */ React9.createElement("li", null, /* @__PURE__ */ React9.createElement("button", { onClick: () => onNavigate && onNavigate("#/category/mutual-funds"), className: "hover:text-slate-950 dark:hover:text-white transition-colors" }, t("nav.mutualFunds"))), /* @__PURE__ */ React9.createElement("li", null, /* @__PURE__ */ React9.createElement("button", { onClick: () => onNavigate && onNavigate("#/category/stocks"), className: "hover:text-slate-950 dark:hover:text-white transition-colors" }, t("nav.stocks"))), /* @__PURE__ */ React9.createElement("li", null, /* @__PURE__ */ React9.createElement("button", { onClick: () => onNavigate && onNavigate("#/category/personal-finance"), className: "hover:text-slate-950 dark:hover:text-white transition-colors" }, t("nav.personalFinance"))), /* @__PURE__ */ React9.createElement("li", null, /* @__PURE__ */ React9.createElement("button", { onClick: () => onNavigate && onNavigate("#/category/education"), className: "hover:text-slate-950 dark:hover:text-white transition-colors" }, t("nav.education"))))), /* @__PURE__ */ React9.createElement("div", { className: "lg:col-span-3 space-y-3" }, /* @__PURE__ */ React9.createElement("h4", { className: "text-xs font-extrabold uppercase tracking-wider text-amber-900 dark:text-amber-400" }, "Financial Utilities"), /* @__PURE__ */ React9.createElement("ul", { className: "space-y-2 text-xs font-semibold text-slate-700 dark:text-slate-300" }, /* @__PURE__ */ React9.createElement("li", null, /* @__PURE__ */ React9.createElement("button", { onClick: () => onNavigate && onNavigate("#/calculator"), className: "hover:text-slate-950 dark:hover:text-white transition-colors" }, t("sipCalculatorTitle"))), /* @__PURE__ */ React9.createElement("li", null, /* @__PURE__ */ React9.createElement("button", { onClick: () => onNavigate && onNavigate("#/videos"), className: "hover:text-slate-950 dark:hover:text-white transition-colors" }, "YouTube Video Feed")), /* @__PURE__ */ React9.createElement("li", null, /* @__PURE__ */ React9.createElement("button", { onClick: () => onNavigate && onNavigate("#/news"), className: "hover:text-slate-950 dark:hover:text-white transition-colors" }, "Financial News Hub"))))), /* @__PURE__ */ React9.createElement("div", { className: "space-y-2 text-xs text-slate-700 dark:text-slate-300 leading-relaxed max-w-5xl" }, /* @__PURE__ */ React9.createElement("h5", { className: "font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider text-xs" }, t("footerDisclaimerTitle")), /* @__PURE__ */ React9.createElement("p", null, t("footerDisclaimerText"))), /* @__PURE__ */ React9.createElement("div", { className: "pt-4 text-center text-xs text-slate-700 dark:text-slate-300 font-semibold" }, t("copyright"))));
+  ))), /* @__PURE__ */ React9.createElement("div", { className: "lg:col-span-3 space-y-3" }, /* @__PURE__ */ React9.createElement("h4", { className: "text-xs font-extrabold uppercase tracking-wider text-amber-900 dark:text-amber-400" }, t("nav.mutualFunds"), " & ", t("nav.stocks")), /* @__PURE__ */ React9.createElement("ul", { className: "space-y-1 md:space-y-2 text-sm md:text-xs font-semibold text-slate-700 dark:text-slate-300" }, /* @__PURE__ */ React9.createElement("li", null, /* @__PURE__ */ React9.createElement("button", { onClick: () => onNavigate && onNavigate("#/category/mutual-funds"), className: "py-1.5 md:py-0 min-h-[40px] md:min-h-0 flex items-center hover:text-slate-950 dark:hover:text-white transition-colors" }, t("nav.mutualFunds"))), /* @__PURE__ */ React9.createElement("li", null, /* @__PURE__ */ React9.createElement("button", { onClick: () => onNavigate && onNavigate("#/category/stocks"), className: "py-1.5 md:py-0 min-h-[40px] md:min-h-0 flex items-center hover:text-slate-950 dark:hover:text-white transition-colors" }, t("nav.stocks"))), /* @__PURE__ */ React9.createElement("li", null, /* @__PURE__ */ React9.createElement("button", { onClick: () => onNavigate && onNavigate("#/category/personal-finance"), className: "py-1.5 md:py-0 min-h-[40px] md:min-h-0 flex items-center hover:text-slate-950 dark:hover:text-white transition-colors" }, t("nav.personalFinance"))), /* @__PURE__ */ React9.createElement("li", null, /* @__PURE__ */ React9.createElement("button", { onClick: () => onNavigate && onNavigate("#/category/education"), className: "py-1.5 md:py-0 min-h-[40px] md:min-h-0 flex items-center hover:text-slate-950 dark:hover:text-white transition-colors" }, t("nav.education"))))), /* @__PURE__ */ React9.createElement("div", { className: "lg:col-span-3 space-y-3" }, /* @__PURE__ */ React9.createElement("h4", { className: "text-xs font-extrabold uppercase tracking-wider text-amber-900 dark:text-amber-400" }, "Financial Utilities"), /* @__PURE__ */ React9.createElement("ul", { className: "space-y-1 md:space-y-2 text-sm md:text-xs font-semibold text-slate-700 dark:text-slate-300" }, /* @__PURE__ */ React9.createElement("li", null, /* @__PURE__ */ React9.createElement("button", { onClick: () => onNavigate && onNavigate("#/calculator"), className: "py-1.5 md:py-0 min-h-[40px] md:min-h-0 flex items-center hover:text-slate-950 dark:hover:text-white transition-colors" }, t("sipCalculatorTitle"))), /* @__PURE__ */ React9.createElement("li", null, /* @__PURE__ */ React9.createElement("button", { onClick: () => onNavigate && onNavigate("#/videos"), className: "py-1.5 md:py-0 min-h-[40px] md:min-h-0 flex items-center hover:text-slate-950 dark:hover:text-white transition-colors" }, "YouTube Video Feed")), /* @__PURE__ */ React9.createElement("li", null, /* @__PURE__ */ React9.createElement("button", { onClick: () => onNavigate && onNavigate("#/news"), className: "py-1.5 md:py-0 min-h-[40px] md:min-h-0 flex items-center hover:text-slate-950 dark:hover:text-white transition-colors" }, "Financial News Hub"))))), /* @__PURE__ */ React9.createElement("div", { className: "space-y-2 text-xs md:text-xs text-slate-700 dark:text-slate-300 leading-relaxed max-w-5xl" }, /* @__PURE__ */ React9.createElement("h5", { className: "font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider text-xs" }, t("footerDisclaimerTitle")), /* @__PURE__ */ React9.createElement("p", { className: "text-xs md:text-xs leading-relaxed" }, t("footerDisclaimerText"))), /* @__PURE__ */ React9.createElement("div", { className: "pt-4 text-center text-xs md:text-xs text-slate-700 dark:text-slate-300 font-semibold" }, t("copyright"))));
 }
 var Footer_default = Footer;
 
 // js/components/home/TrendingTicker.jsx
 init_LanguageContext();
 init_translations();
-import React10 from "react";
+import React10, { useState as useState8 } from "react";
 function TrendingTicker({ onNavigate }) {
   const { t, language } = useLanguage();
   const isTamil = language === "ta";
+  const [isDismissed, setIsDismissed] = useState8(false);
   const tickerHeadlines = isTamil ? [
     { text: "@budgetpadmanaban_ \u0BAA\u0BC1\u0BA4\u0BBF\u0BAF \u0BB5\u0BC0\u0B9F\u0BBF\u0BAF\u0BCB: \u0BAE\u0BBF\u0BAF\u0BC2\u0B9A\u0BCD\u0B9A\u0BC1\u0BB5\u0BB2\u0BCD \u0B83\u0BAA\u0BA3\u0BCD\u0B9F\u0BCD \u0B9A\u0BC6\u0BAF\u0BCD\u0BAF \u0BB5\u0BC7\u0BA3\u0BCD\u0B9F\u0BBF\u0BAF\u0BB5\u0BC8 & \u0B9A\u0BC6\u0BAF\u0BCD\u0BAF\u0B95\u0BCD\u0B95\u0BC2\u0B9F\u0BBE\u0BA4\u0BB5\u0BC8!", link: "#/videos" },
     { text: "NIFTY 50 \u0BAA\u0BC1\u0BA4\u0BBF\u0BAF \u0B89\u0B9A\u0BCD\u0B9A\u0BAE\u0BBE\u0BA9 24,850 \u0BAA\u0BC1\u0BB3\u0BCD\u0BB3\u0BBF\u0B95\u0BB3\u0BC8\u0BA4\u0BCD \u0BA4\u0BCA\u0B9F\u0BCD\u0B9F\u0BA4\u0BC1! \u0B9A\u0BA8\u0BCD\u0BA4\u0BC8 \u0B8F\u0BB1\u0BCD\u0BB1\u0BAE\u0BCD \u0BA4\u0BCA\u0B9F\u0BB0\u0BCD\u0B95\u0BBF\u0BB1\u0BA4\u0BC1!", link: "#/news" },
@@ -1469,7 +1546,34 @@ function TrendingTicker({ onNavigate }) {
     /* @__PURE__ */ React10.createElement("span", { className: "group-hover/hl:underline underline-offset-2 decoration-amber-400 decoration-2 font-bold text-[#FBBF24]" }, item.text)
   )));
   const renderMarketTrack = (keyPrefix) => /* @__PURE__ */ React10.createElement("div", { key: keyPrefix, className: "flex items-center gap-5 shrink-0 pr-5 font-num text-xs sm:text-xs font-bold text-white leading-none" }, marketSnapshotData.map((item, idx) => /* @__PURE__ */ React10.createElement("div", { key: `${keyPrefix}-mkt-${idx}`, className: "inline-flex items-center gap-1.5 whitespace-nowrap" }, /* @__PURE__ */ React10.createElement("span", { className: "text-slate-600 dark:text-slate-400 font-semibold" }, item.symbol, ":"), /* @__PURE__ */ React10.createElement("span", { className: "text-white font-bold" }, item.value), /* @__PURE__ */ React10.createElement("span", { className: item.isUp ? "text-[#16A34A] font-bold" : "text-[#DC2626] font-bold" }, item.isUp ? "\u25B2" : "\u25BC", " ", item.percent), /* @__PURE__ */ React10.createElement("span", { className: "text-slate-600 ml-1" }, "\u2022"))));
-  return /* @__PURE__ */ React10.createElement("div", { className: "w-full max-w-full overflow-hidden min-w-0 bg-[#0F172A] text-white border-y border-slate-800 shadow-sm relative z-30 select-none" }, /* @__PURE__ */ React10.createElement("div", { className: "w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 py-2.5 sm:py-3 flex items-center justify-between min-w-0" }, /* @__PURE__ */ React10.createElement("div", { className: "flex items-center shrink-0 pr-3 sm:pr-4" }, /* @__PURE__ */ React10.createElement("div", { className: "bg-[#DC2626] text-white font-extrabold text-xs sm:text-xs tracking-wider px-2.5 sm:px-3.5 py-1 rounded-md uppercase flex items-center justify-center gap-1.5 font-sans shadow-sm shrink-0" }, /* @__PURE__ */ React10.createElement("span", { className: "w-1.5 h-1.5 rounded-full bg-white animate-ping" }), /* @__PURE__ */ React10.createElement("span", null, isTamil ? "\u0BAE\u0BC1\u0B95\u0BCD\u0B95\u0BBF\u0BAF \u0B9A\u0BC6\u0BAF\u0BCD\u0BA4\u0BBF\u0B95\u0BB3\u0BCD" : "BREAKING NEWS"))), /* @__PURE__ */ React10.createElement("div", { className: "flex-1 min-w-0 max-w-full overflow-hidden flex items-center pl-2" }, /* @__PURE__ */ React10.createElement("div", { className: "overflow-hidden relative w-full min-w-0 max-w-full flex items-center" }, /* @__PURE__ */ React10.createElement("div", { className: "animate-marquee flex items-center whitespace-nowrap" }, renderHeadlinesTrack("navy-hl-1"), renderMarketTrack("navy-mkt-1"), renderHeadlinesTrack("navy-hl-2"), renderMarketTrack("navy-mkt-2"))))));
+  return /* @__PURE__ */ React10.createElement(React10.Fragment, null, /* @__PURE__ */ React10.createElement("div", { className: "hidden md:block w-full max-w-full overflow-hidden min-w-0 bg-[#0F172A] text-white border-y border-slate-800 shadow-sm relative z-30 select-none" }, /* @__PURE__ */ React10.createElement("div", { className: "w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 py-2.5 sm:py-3 flex items-center justify-between min-w-0" }, /* @__PURE__ */ React10.createElement("div", { className: "flex items-center shrink-0 pr-3 sm:pr-4" }, /* @__PURE__ */ React10.createElement("div", { className: "bg-[#DC2626] text-white font-extrabold text-xs sm:text-xs tracking-wider px-2.5 sm:px-3.5 py-1 rounded-md uppercase flex items-center justify-center gap-1.5 font-sans shadow-sm shrink-0" }, /* @__PURE__ */ React10.createElement("span", { className: "w-1.5 h-1.5 rounded-full bg-white animate-ping" }), /* @__PURE__ */ React10.createElement("span", null, isTamil ? "\u0BAE\u0BC1\u0B95\u0BCD\u0B95\u0BBF\u0BAF \u0B9A\u0BC6\u0BAF\u0BCD\u0BA4\u0BBF\u0B95\u0BB3\u0BCD" : "BREAKING NEWS"))), /* @__PURE__ */ React10.createElement("div", { className: "flex-1 min-w-0 max-w-full overflow-hidden flex items-center pl-2" }, /* @__PURE__ */ React10.createElement("div", { className: "overflow-hidden relative w-full min-w-0 max-w-full flex items-center" }, /* @__PURE__ */ React10.createElement("div", { className: "animate-marquee flex items-center whitespace-nowrap" }, renderHeadlinesTrack("navy-hl-1"), renderMarketTrack("navy-mkt-1"), renderHeadlinesTrack("navy-hl-2"), renderMarketTrack("navy-mkt-2")))))), !isDismissed && /* @__PURE__ */ React10.createElement("div", { className: "md:hidden w-full bg-[#0F172A] text-white border-y border-slate-800 py-1.5 px-2 relative z-30 select-none flex items-center gap-2" }, /* @__PURE__ */ React10.createElement("div", { className: "bg-[#DC2626] text-white font-extrabold text-[11px] px-2 py-0.5 rounded uppercase flex items-center gap-1 shrink-0" }, /* @__PURE__ */ React10.createElement("span", { className: "w-1 h-1 rounded-full bg-white animate-ping" }), /* @__PURE__ */ React10.createElement("span", null, isTamil ? "\u0B9A\u0BC6\u0BAF\u0BCD\u0BA4\u0BBF\u0B95\u0BB3\u0BCD" : "LIVE")), /* @__PURE__ */ React10.createElement("div", { className: "flex-1 min-w-0 overflow-x-auto flex items-center gap-4 no-scrollbar snap-x snap-mandatory py-0.5 touch-pan-x" }, tickerHeadlines.map((item, idx) => /* @__PURE__ */ React10.createElement(
+    "div",
+    {
+      key: `mob-hl-${idx}`,
+      onClick: () => handleHeadlineClick(item.link),
+      className: "snap-start shrink-0 flex items-center gap-1.5 text-xs text-[#FBBF24] font-bold active:opacity-75 cursor-pointer max-w-[280px] truncate"
+    },
+    /* @__PURE__ */ React10.createElement("span", null, "\u26A1"),
+    /* @__PURE__ */ React10.createElement("span", { className: "truncate" }, item.text)
+  )), marketSnapshotData.map((mkt, idx) => /* @__PURE__ */ React10.createElement(
+    "div",
+    {
+      key: `mob-mkt-${idx}`,
+      className: "snap-start shrink-0 flex items-center gap-1 text-[11px] font-num font-bold text-white whitespace-nowrap"
+    },
+    /* @__PURE__ */ React10.createElement("span", { className: "text-slate-400" }, mkt.symbol, ":"),
+    /* @__PURE__ */ React10.createElement("span", null, mkt.value),
+    /* @__PURE__ */ React10.createElement("span", { className: mkt.isUp ? "text-[#16A34A]" : "text-[#DC2626]" }, mkt.isUp ? "\u25B2" : "\u25BC", " ", mkt.percent)
+  ))), /* @__PURE__ */ React10.createElement(
+    "button",
+    {
+      onClick: () => setIsDismissed(true),
+      className: "w-11 h-11 min-w-[44px] min-h-[44px] text-slate-400 hover:text-white flex items-center justify-center rounded-lg text-sm shrink-0 active:scale-95 transition-colors",
+      "aria-label": "Dismiss breaking news ticker",
+      title: "Dismiss"
+    },
+    "\u2715"
+  )));
 }
 var TrendingTicker_default = TrendingTicker;
 
@@ -1484,7 +1588,7 @@ import React11, { useMemo } from "react";
 
 // js/services/articles.js
 init_translations();
-import { useState as useState8, useEffect as useEffect7 } from "react";
+import { useState as useState9, useEffect as useEffect7 } from "react";
 var liveArticlesCache = null;
 var liveArticlesPromise = null;
 function cleanImageUrl(url, category = "mutual-fund", fallbackUrl = null) {
@@ -1613,7 +1717,7 @@ async function fetchCardArticles(limit = 12, sort = "newest") {
   return liveArticlesPromise;
 }
 function useLiveArticles() {
-  const [liveArticles, setLiveArticles] = useState8(() => {
+  const [liveArticles, setLiveArticles] = useState9(() => {
     if (typeof window !== "undefined" && window.__INITIAL_DATA__?.articles) {
       return window.__INITIAL_DATA__.articles;
     }
@@ -1630,7 +1734,7 @@ function useLiveArticles() {
     }
     return [];
   });
-  const [isLoading, setIsLoading] = useState8(liveArticles.length === 0);
+  const [isLoading, setIsLoading] = useState9(liveArticles.length === 0);
   useEffect7(() => {
     let isMounted = true;
     const load = async () => {
@@ -1736,7 +1840,7 @@ function HeroSection({ news, onNavigate }) {
       /* @__PURE__ */ React11.createElement("div", { className: "relative z-10 space-y-1 mt-10" }, /* @__PURE__ */ React11.createElement("h3", { className: "text-xs sm:text-sm md:text-[14.5px] font-bold text-white leading-snug font-sans group-hover/item:text-amber-400 transition-colors drop-shadow line-clamp-2" }, item.title), item.summary && /* @__PURE__ */ React11.createElement("p", { className: "text-xs text-slate-300/90 line-clamp-2 font-sans leading-relaxed" }, item.summary), /* @__PURE__ */ React11.createElement("div", { className: "pt-1 flex items-center justify-between text-xs text-amber-400 font-bold" }, /* @__PURE__ */ React11.createElement("span", { className: "flex items-center gap-1 group-hover/item:translate-x-1 transition-transform" }, /* @__PURE__ */ React11.createElement("span", null, t("readArticle") || "Read Full Story"), /* @__PURE__ */ React11.createElement("span", null, "\u2192")), /* @__PURE__ */ React11.createElement("span", { className: "text-xs text-slate-600 dark:text-slate-400 font-num" }, "Tap to read")))
     );
   }));
-  return /* @__PURE__ */ React11.createElement("section", { className: "w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 select-none min-w-0" }, /* @__PURE__ */ React11.createElement("div", { className: "section-band bg-[#E8F5E9] dark:bg-slate-900/40 rounded-2xl sm:rounded-3xl border border-[#D5EBD9] dark:border-slate-800 p-3.5 sm:p-5 lg:p-6 shadow-sm" }, /* @__PURE__ */ React11.createElement("div", { className: "bg-white dark:bg-slate-900 rounded-xl sm:rounded-2xl border border-[#D5EBD9] dark:border-slate-800/80 shadow-[0_8px_30px_rgba(22,163,74,0.07)] p-5 sm:p-6 lg:p-7" }, /* @__PURE__ */ React11.createElement("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch min-w-0 max-w-full" }, /* @__PURE__ */ React11.createElement("div", { className: "lg:col-span-7 xl:col-span-8 min-w-0 max-w-full flex flex-col justify-between overflow-hidden" }, /* @__PURE__ */ React11.createElement("div", { className: "flex items-center justify-between pb-2.5 mb-3 border-b border-slate-100 dark:border-slate-800" }, /* @__PURE__ */ React11.createElement("div", { className: "flex items-center gap-2 min-w-0 truncate" }, /* @__PURE__ */ React11.createElement("span", { className: "w-2 h-2 rounded-full bg-[#DC2626] animate-ping shrink-0" }), /* @__PURE__ */ React11.createElement("h2", { className: "text-xs sm:text-sm font-extrabold tracking-wide uppercase text-slate-900 dark:text-white font-sans truncate" }, t("featuredNews") || "\u0B9A\u0BBF\u0BB1\u0BAA\u0BCD\u0BAA\u0BC1\u0B9A\u0BCD \u0B9A\u0BC6\u0BAF\u0BCD\u0BA4\u0BBF\u0B95\u0BB3\u0BCD & \u0B86\u0BAF\u0BCD\u0BB5\u0BC1\u0B95\u0BB3\u0BCD")), /* @__PURE__ */ React11.createElement("span", { className: "text-xs font-bold text-[#2563EB] dark:text-[#60a5fa] bg-[#EFF6FF] dark:bg-blue-950/60 px-2.5 py-0.5 rounded-full shrink-0 font-num" }, "LIVE TICKER SPOTLIGHT \u26A1")), /* @__PURE__ */ React11.createElement("div", { className: "featured-marquee-wrapper overflow-hidden rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-slate-950/90 w-full min-w-0 max-w-full shadow-inner p-2.5 sm:p-3 group/marquee" }, /* @__PURE__ */ React11.createElement("div", { className: "animate-featured-marquee flex items-stretch whitespace-normal" }, renderFeaturedTrack("f-track-1"), renderFeaturedTrack("f-track-2")))), /* @__PURE__ */ React11.createElement("div", { className: "lg:col-span-5 xl:col-span-4 min-w-0 max-w-full overflow-hidden flex flex-col justify-between" }, /* @__PURE__ */ React11.createElement("div", { className: "flex items-center justify-between pb-2.5 mb-3 border-b border-slate-100 dark:border-slate-800" }, /* @__PURE__ */ React11.createElement("div", { className: "flex items-center gap-2 min-w-0 truncate" }, /* @__PURE__ */ React11.createElement("span", { className: "w-2 h-2 rounded-full bg-[#2563EB] shrink-0" }), /* @__PURE__ */ React11.createElement("h3", { className: "text-xs sm:text-sm font-extrabold uppercase tracking-wide text-slate-900 dark:text-white font-sans truncate" }, isTamil ? "\u0B9A\u0BAE\u0BC0\u0BAA\u0BA4\u0BCD\u0BA4\u0BBF\u0BAF \u0B95\u0B9F\u0BCD\u0B9F\u0BC1\u0BB0\u0BC8\u0B95\u0BB3\u0BCD" : "Latest Articles")), /* @__PURE__ */ React11.createElement("span", { className: "text-xs font-bold text-[#15803d] dark:text-[#4ade80] bg-[#F0FDF4] dark:bg-emerald-950/60 px-2 py-0.5 rounded-full shrink-0 font-num" }, "Latest")), /* @__PURE__ */ React11.createElement("div", { className: "space-y-2 flex-1 flex flex-col justify-between" }, latestStories.map((article, idx) => {
+  return /* @__PURE__ */ React11.createElement("section", { className: "w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 select-none min-w-0" }, /* @__PURE__ */ React11.createElement("div", { className: "section-band bg-[#E8F5E9] dark:bg-slate-900/40 rounded-2xl sm:rounded-3xl border border-[#D5EBD9] dark:border-slate-800 p-3.5 sm:p-5 lg:p-6 shadow-sm" }, /* @__PURE__ */ React11.createElement("div", { className: "bg-white dark:bg-slate-900 rounded-xl sm:rounded-2xl border border-[#D5EBD9] dark:border-slate-800/80 shadow-[0_8px_30px_rgba(22,163,74,0.07)] p-4 sm:p-6 lg:p-7" }, /* @__PURE__ */ React11.createElement("div", { className: "hidden lg:grid grid-cols-12 gap-6 lg:gap-8 items-stretch min-w-0 max-w-full" }, /* @__PURE__ */ React11.createElement("div", { className: "lg:col-span-7 xl:col-span-8 min-w-0 max-w-full flex flex-col justify-between overflow-hidden" }, /* @__PURE__ */ React11.createElement("div", { className: "flex items-center justify-between pb-2.5 mb-3 border-b border-slate-100 dark:border-slate-800" }, /* @__PURE__ */ React11.createElement("div", { className: "flex items-center gap-2 min-w-0 truncate" }, /* @__PURE__ */ React11.createElement("span", { className: "w-2 h-2 rounded-full bg-[#DC2626] animate-ping shrink-0" }), /* @__PURE__ */ React11.createElement("h2", { className: "text-xs sm:text-sm font-extrabold tracking-wide uppercase text-slate-900 dark:text-white font-sans truncate" }, t("featuredNews") || "\u0B9A\u0BBF\u0BB1\u0BAA\u0BCD\u0BAA\u0BC1\u0B9A\u0BCD \u0B9A\u0BC6\u0BAF\u0BCD\u0BA4\u0BBF\u0B95\u0BB3\u0BCD & \u0B86\u0BAF\u0BCD\u0BB5\u0BC1\u0B95\u0BB3\u0BCD")), /* @__PURE__ */ React11.createElement("span", { className: "text-xs font-bold text-[#2563EB] dark:text-[#60a5fa] bg-[#EFF6FF] dark:bg-blue-950/60 px-2.5 py-0.5 rounded-full shrink-0 font-num" }, "LIVE TICKER SPOTLIGHT \u26A1")), /* @__PURE__ */ React11.createElement("div", { className: "featured-marquee-wrapper overflow-hidden rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-slate-950/90 w-full min-w-0 max-w-full shadow-inner p-2.5 sm:p-3 group/marquee" }, /* @__PURE__ */ React11.createElement("div", { className: "animate-featured-marquee flex items-stretch whitespace-normal" }, renderFeaturedTrack("f-track-1"), renderFeaturedTrack("f-track-2")))), /* @__PURE__ */ React11.createElement("div", { className: "lg:col-span-5 xl:col-span-4 min-w-0 max-w-full overflow-hidden flex flex-col justify-between" }, /* @__PURE__ */ React11.createElement("div", { className: "flex items-center justify-between pb-2.5 mb-3 border-b border-slate-100 dark:border-slate-800" }, /* @__PURE__ */ React11.createElement("div", { className: "flex items-center gap-2 min-w-0 truncate" }, /* @__PURE__ */ React11.createElement("span", { className: "w-2 h-2 rounded-full bg-[#2563EB] shrink-0" }), /* @__PURE__ */ React11.createElement("h3", { className: "text-xs sm:text-sm font-extrabold uppercase tracking-wide text-slate-900 dark:text-white font-sans truncate" }, isTamil ? "\u0B9A\u0BAE\u0BC0\u0BAA\u0BA4\u0BCD\u0BA4\u0BBF\u0BAF \u0B95\u0B9F\u0BCD\u0B9F\u0BC1\u0BB0\u0BC8\u0B95\u0BB3\u0BCD" : "Latest Articles")), /* @__PURE__ */ React11.createElement("span", { className: "text-xs font-bold text-[#15803d] dark:text-[#4ade80] bg-[#F0FDF4] dark:bg-emerald-950/60 px-2 py-0.5 rounded-full shrink-0 font-num" }, "Latest")), /* @__PURE__ */ React11.createElement("div", { className: "space-y-2 flex-1 flex flex-col justify-between" }, latestStories.map((article, idx) => {
     const style = getCategoryStyle(article.category);
     return /* @__PURE__ */ React11.createElement(
       "div",
@@ -1767,6 +1871,64 @@ function HeroSection({ news, onNavigate }) {
       ), /* @__PURE__ */ React11.createElement("div", { className: `hidden absolute inset-0 items-center justify-center text-base font-bold ${style.bg} ${style.text}` }, /* @__PURE__ */ React11.createElement("span", null, style.icon))),
       /* @__PURE__ */ React11.createElement("div", { className: "flex-1 min-w-0" }, /* @__PURE__ */ React11.createElement("div", { className: "flex items-center gap-1.5 mb-0.5" }, /* @__PURE__ */ React11.createElement("span", { className: `text-xs font-extrabold uppercase tracking-wider ${style.text}` }, (article.category || "FINANCE").replace("-", " ")), /* @__PURE__ */ React11.createElement("span", { className: "text-xs text-slate-600 dark:text-slate-400 font-num font-medium" }, "\u2022 ", new Date(article.publishedAt).toLocaleDateString(isTamil ? "ta-IN" : "en-IN", { month: "short", day: "numeric" }))), /* @__PURE__ */ React11.createElement("h4", { className: "text-xs sm:text-[12.5px] font-bold text-slate-900 dark:text-slate-100 line-clamp-2 group-hover:text-[#2563EB] dark:group-hover:text-[#60a5fa] transition-colors leading-snug" }, article.title)),
       /* @__PURE__ */ React11.createElement("span", { className: "text-slate-600 dark:text-slate-400 group-hover:text-[#2563EB] dark:group-hover:text-[#60a5fa] group-hover:translate-x-1 transition-all shrink-0 text-xs font-bold pr-1" }, "\u2192")
+    );
+  })))), /* @__PURE__ */ React11.createElement("div", { className: "lg:hidden space-y-6" }, /* @__PURE__ */ React11.createElement("div", { className: "space-y-3" }, /* @__PURE__ */ React11.createElement("div", { className: "flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800" }, /* @__PURE__ */ React11.createElement("div", { className: "flex items-center gap-2 min-w-0 truncate" }, /* @__PURE__ */ React11.createElement("span", { className: "w-2 h-2 rounded-full bg-[#DC2626] animate-ping shrink-0" }), /* @__PURE__ */ React11.createElement("h2", { className: "text-xs font-extrabold tracking-wide uppercase text-slate-900 dark:text-white font-sans truncate" }, t("featuredNews") || "\u0B9A\u0BBF\u0BB1\u0BAA\u0BCD\u0BAA\u0BC1\u0B9A\u0BCD \u0B9A\u0BC6\u0BAF\u0BCD\u0BA4\u0BBF\u0B95\u0BB3\u0BCD")), /* @__PURE__ */ React11.createElement("span", { className: "text-[11px] font-bold text-[#2563EB] dark:text-[#60a5fa] bg-[#EFF6FF] dark:bg-blue-950/60 px-2 py-0.5 rounded-full shrink-0" }, "Swipe \u2194")), /* @__PURE__ */ React11.createElement("div", { className: "flex overflow-x-auto snap-x snap-mandatory gap-3.5 pb-2 no-scrollbar touch-pan-x -mx-1 px-1" }, featuredStories.map((item, idx) => {
+    const formattedDate = new Intl.DateTimeFormat(
+      language === "ta" ? "ta-IN" : "en-IN",
+      { month: "short", day: "numeric" }
+    ).format(new Date(item.publishedAt || Date.now()));
+    return /* @__PURE__ */ React11.createElement(
+      "article",
+      {
+        key: `mob-feat-${item.id || idx}`,
+        onClick: () => onNavigate && onNavigate(`#/articles/${item.slug}`),
+        className: "group relative w-[80vw] max-w-[300px] h-[260px] shrink-0 snap-center rounded-2xl overflow-hidden flex flex-col justify-end p-4 select-none cursor-pointer bg-slate-950 shadow-md border border-slate-800/80 active:scale-[0.98] transition-all"
+      },
+      /* @__PURE__ */ React11.createElement(
+        "img",
+        {
+          src: item.thumbnail,
+          alt: item.title,
+          loading: "lazy",
+          decoding: "async",
+          className: "absolute inset-0 w-full h-full object-cover opacity-75"
+        }
+      ),
+      /* @__PURE__ */ React11.createElement("div", { className: "absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/75 to-transparent pointer-events-none" }),
+      /* @__PURE__ */ React11.createElement("div", { className: "absolute top-3 left-3 right-3 flex items-center justify-between z-10" }, /* @__PURE__ */ React11.createElement("span", { className: "px-2 py-0.5 text-[11px] font-black uppercase tracking-wider rounded-md bg-amber-500 text-slate-950 shadow-sm" }, (item.category || "FINANCE").replace("-", " ")), /* @__PURE__ */ React11.createElement("span", { className: "px-2 py-0.5 rounded-md bg-slate-950/90 text-slate-200 text-[11px] font-num font-bold border border-white/20" }, formattedDate)),
+      /* @__PURE__ */ React11.createElement("div", { className: "relative z-10 space-y-1.5 mt-auto" }, /* @__PURE__ */ React11.createElement("h3", { className: "text-sm font-bold text-white leading-snug font-sans group-hover:text-amber-400 line-clamp-2" }, item.title), /* @__PURE__ */ React11.createElement("div", { className: "pt-1 flex items-center justify-between text-xs text-amber-400 font-bold" }, /* @__PURE__ */ React11.createElement("span", null, t("readArticle") || "Read Story", " \u2192"), /* @__PURE__ */ React11.createElement("span", { className: "text-[11px] text-slate-400 font-num" }, "Tap to open")))
+    );
+  }))), /* @__PURE__ */ React11.createElement("div", { className: "space-y-3 pt-2 border-t border-slate-100 dark:border-slate-800" }, /* @__PURE__ */ React11.createElement("div", { className: "flex items-center justify-between pb-1" }, /* @__PURE__ */ React11.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React11.createElement("span", { className: "w-2 h-2 rounded-full bg-[#2563EB] shrink-0" }), /* @__PURE__ */ React11.createElement("h3", { className: "text-xs font-extrabold uppercase tracking-wide text-slate-900 dark:text-white font-sans" }, isTamil ? "\u0B9A\u0BAE\u0BC0\u0BAA\u0BA4\u0BCD\u0BA4\u0BBF\u0BAF \u0B95\u0B9F\u0BCD\u0B9F\u0BC1\u0BB0\u0BC8\u0B95\u0BB3\u0BCD" : "Latest Articles")), /* @__PURE__ */ React11.createElement(
+    "button",
+    {
+      onClick: () => onNavigate && onNavigate("#/articles"),
+      className: "text-xs font-bold text-[#2563EB] dark:text-[#60a5fa] hover:underline"
+    },
+    isTamil ? "\u0B85\u0BA9\u0BC8\u0BA4\u0BCD\u0BA4\u0BC1\u0BAE\u0BCD" : "View all",
+    " \u2192"
+  )), /* @__PURE__ */ React11.createElement("div", { className: "space-y-2.5" }, latestStories.map((article, idx) => {
+    const style = getCategoryStyle(article.category);
+    return /* @__PURE__ */ React11.createElement(
+      "div",
+      {
+        key: `mob-latest-${article.id || idx}`,
+        role: "button",
+        tabIndex: 0,
+        onClick: () => onNavigate && onNavigate(`#/articles/${article.slug}`),
+        className: "group flex items-center gap-3 p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all cursor-pointer border border-slate-200/70 dark:border-slate-700/60 min-h-[56px] active:scale-[0.99]"
+      },
+      /* @__PURE__ */ React11.createElement("div", { className: "relative w-14 h-14 rounded-xl shrink-0 overflow-hidden bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xs" }, /* @__PURE__ */ React11.createElement(
+        "img",
+        {
+          src: article.thumbnail || article.coverImage,
+          alt: article.title,
+          loading: "lazy",
+          decoding: "async",
+          className: "w-full h-full object-cover"
+        }
+      )),
+      /* @__PURE__ */ React11.createElement("div", { className: "flex-1 min-w-0" }, /* @__PURE__ */ React11.createElement("div", { className: "flex items-center gap-1.5 mb-1" }, /* @__PURE__ */ React11.createElement("span", { className: `text-[11px] font-extrabold uppercase tracking-wider ${style.text}` }, (article.category || "FINANCE").replace("-", " ")), /* @__PURE__ */ React11.createElement("span", { className: "text-[11px] text-slate-500 dark:text-slate-400 font-num" }, "\u2022 ", new Date(article.publishedAt).toLocaleDateString(isTamil ? "ta-IN" : "en-IN", { month: "short", day: "numeric" }))), /* @__PURE__ */ React11.createElement("h4", { className: "text-sm font-bold text-slate-900 dark:text-slate-100 line-clamp-2 leading-snug" }, article.title)),
+      /* @__PURE__ */ React11.createElement("span", { className: "text-slate-400 group-hover:text-[#2563EB] shrink-0 text-sm font-bold pr-1" }, "\u2192")
     );
   })))))));
 }
@@ -1804,17 +1966,19 @@ function TrendingArticlesSection({ onNavigate }) {
     });
     return merged.slice(0, 6);
   }, [liveArticles, language]);
-  return /* @__PURE__ */ React12.createElement("section", { className: "w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 select-none min-w-0" }, /* @__PURE__ */ React12.createElement("div", { className: "section-band bg-[#E8F5E9] dark:bg-slate-900/40 rounded-2xl sm:rounded-3xl border border-[#D5EBD9] dark:border-slate-800 p-4 sm:p-6 lg:p-7 shadow-sm space-y-4" }, /* @__PURE__ */ React12.createElement("div", { className: "flex items-center justify-between pb-2.5 border-b border-[#D5EBD9] dark:border-slate-800" }, /* @__PURE__ */ React12.createElement("div", { className: "flex items-center gap-2 min-w-0 truncate" }, /* @__PURE__ */ React12.createElement("span", { className: "w-2 h-2 rounded-full bg-[#2563EB] shrink-0" }), /* @__PURE__ */ React12.createElement("h2", { className: "text-base sm:text-lg md:text-xl font-extrabold text-[#0F172A] dark:text-white font-sans truncate" }, t("trendingArticlesTitle") || "\u0B9F\u0BBF\u0BB0\u0BC6\u0BA3\u0BCD\u0B9F\u0BBF\u0B99\u0BCD \u0B9A\u0BC6\u0BAF\u0BCD\u0BA4\u0BBF\u0B95\u0BB3\u0BCD & \u0B95\u0B9F\u0BCD\u0B9F\u0BC1\u0BB0\u0BC8\u0B95\u0BB3\u0BCD")), /* @__PURE__ */ React12.createElement("span", { className: "text-xs sm:text-xs font-bold text-[#2563EB] dark:text-[#60a5fa] bg-white dark:bg-blue-950/60 px-2.5 py-0.5 rounded-full font-num shrink-0 border border-[#D5EBD9] dark:border-slate-800 shadow-xs" }, "Top 6 Trending")), /* @__PURE__ */ React12.createElement("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5" }, allArticles.map((article, idx) => {
+  return /* @__PURE__ */ React12.createElement("section", { className: "w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 select-none min-w-0" }, /* @__PURE__ */ React12.createElement("div", { className: "section-band bg-[#E8F5E9] dark:bg-slate-900/40 rounded-2xl sm:rounded-3xl border border-[#D5EBD9] dark:border-slate-800 p-4 sm:p-6 lg:p-7 shadow-sm space-y-4" }, /* @__PURE__ */ React12.createElement("div", { className: "flex items-center justify-between pb-2.5 border-b border-[#D5EBD9] dark:border-slate-800" }, /* @__PURE__ */ React12.createElement("div", { className: "flex items-center gap-2 min-w-0 truncate" }, /* @__PURE__ */ React12.createElement("span", { className: "w-2 h-2 rounded-full bg-[#2563EB] shrink-0" }), /* @__PURE__ */ React12.createElement("h2", { className: "text-base sm:text-lg md:text-xl font-extrabold text-[#0F172A] dark:text-white font-sans truncate" }, t("trendingArticlesTitle") || "\u0B9F\u0BBF\u0BB0\u0BC6\u0BA3\u0BCD\u0B9F\u0BBF\u0B99\u0BCD \u0B9A\u0BC6\u0BAF\u0BCD\u0BA4\u0BBF\u0B95\u0BB3\u0BCD & \u0B95\u0B9F\u0BCD\u0B9F\u0BC1\u0BB0\u0BC8\u0B95\u0BB3\u0BCD")), /* @__PURE__ */ React12.createElement("span", { className: "text-xs sm:text-xs font-bold text-[#2563EB] dark:text-[#60a5fa] bg-white dark:bg-blue-950/60 px-2.5 py-0.5 rounded-full font-num shrink-0 border border-[#D5EBD9] dark:border-slate-800 shadow-xs" }, "Top 6 Trending")), /* @__PURE__ */ React12.createElement("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-5" }, allArticles.map((article, idx) => {
     const rankStr = `0${idx + 1}`;
     return /* @__PURE__ */ React12.createElement(
       "div",
       {
         key: article.id || `trend-${idx}`,
+        role: "button",
+        tabIndex: 0,
         onClick: () => onNavigate && onNavigate(`#/articles/${article.slug}`),
-        className: "group flex items-start gap-4 p-5 rounded-2xl bg-white dark:bg-slate-900 border border-[#D5EBD9] dark:border-slate-800/80 shadow-[0_4px_20px_rgba(22,163,74,0.07)] hover:shadow-[0_16px_32px_rgba(22,163,74,0.10)] hover:border-[#15803d]/40 dark:hover:border-slate-700 transition-all cursor-pointer select-none"
+        className: "group flex items-start gap-3.5 sm:gap-4 p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-[#D5EBD9] dark:border-slate-800/80 shadow-[0_4px_20px_rgba(22,163,74,0.07)] hover:shadow-[0_16px_32px_rgba(22,163,74,0.10)] hover:border-[#15803d]/40 dark:hover:border-slate-700 transition-all cursor-pointer select-none min-h-[56px] active:scale-[0.99]"
       },
-      /* @__PURE__ */ React12.createElement("span", { className: "text-[36px] font-extrabold text-[#03529A] dark:text-[#60a5fa] font-num shrink-0 leading-none pt-0.5 select-none" }, rankStr),
-      /* @__PURE__ */ React12.createElement("div", { className: "flex-1 min-w-0 flex flex-col justify-between h-full" }, /* @__PURE__ */ React12.createElement("div", null, /* @__PURE__ */ React12.createElement("div", { className: "flex items-center gap-2 mb-1.5" }, /* @__PURE__ */ React12.createElement("span", { className: "text-xs font-extrabold uppercase tracking-wider text-[#2563EB] dark:text-[#60a5fa] font-sans" }, article.category.replace("-", " ")), /* @__PURE__ */ React12.createElement("span", { className: "text-xs text-[#64748B] dark:text-slate-400 font-num" }, "\u2022 ", new Date(article.publishedAt).toLocaleDateString(isTamil ? "ta-IN" : "en-IN", { month: "short", day: "numeric" }))), /* @__PURE__ */ React12.createElement("h3", { className: "text-sm font-bold text-[#0F172A] dark:text-white line-clamp-2 group-hover:text-[#2563EB] dark:group-hover:text-[#60a5fa] transition-colors leading-snug font-sans" }, article.title)), /* @__PURE__ */ React12.createElement("div", { className: "mt-2.5 pt-2 border-t border-slate-100 dark:border-slate-800/60 flex items-center justify-between text-xs text-[#64748B] dark:text-slate-400" }, /* @__PURE__ */ React12.createElement("span", { className: "truncate max-w-[150px]" }, "\u270D\uFE0F ", article.authorName || "Budget Padmanaban"), /* @__PURE__ */ React12.createElement("span", { className: "text-[#2563EB] dark:text-[#60a5fa] font-bold group-hover:translate-x-1 transition-transform" }, "\u2192")))
+      /* @__PURE__ */ React12.createElement("span", { className: "text-2xl sm:text-[36px] font-extrabold text-[#03529A] dark:text-[#60a5fa] font-num shrink-0 leading-none pt-0.5 select-none" }, rankStr),
+      /* @__PURE__ */ React12.createElement("div", { className: "flex-1 min-w-0 flex flex-col justify-between h-full" }, /* @__PURE__ */ React12.createElement("div", null, /* @__PURE__ */ React12.createElement("div", { className: "flex items-center gap-2 mb-1.5" }, /* @__PURE__ */ React12.createElement("span", { className: "text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-[#2563EB] dark:text-[#60a5fa] font-sans" }, article.category.replace("-", " ")), /* @__PURE__ */ React12.createElement("span", { className: "text-[11px] sm:text-xs text-[#64748B] dark:text-slate-400 font-num" }, "\u2022 ", new Date(article.publishedAt).toLocaleDateString(isTamil ? "ta-IN" : "en-IN", { month: "short", day: "numeric" }))), /* @__PURE__ */ React12.createElement("h3", { className: "text-sm sm:text-sm font-bold text-[#0F172A] dark:text-white line-clamp-2 group-hover:text-[#2563EB] dark:group-hover:text-[#60a5fa] transition-colors leading-snug font-sans" }, article.title)), /* @__PURE__ */ React12.createElement("div", { className: "mt-2.5 pt-2 border-t border-slate-100 dark:border-slate-800/60 flex items-center justify-between text-xs text-[#64748B] dark:text-slate-400" }, /* @__PURE__ */ React12.createElement("span", { className: "truncate max-w-[150px] font-medium" }, "\u270D\uFE0F ", article.authorName || "Budget Padmanaban"), /* @__PURE__ */ React12.createElement("span", { className: "text-[#2563EB] dark:text-[#60a5fa] font-bold group-hover:translate-x-1 transition-transform text-sm" }, "\u2192")))
     );
   }))));
 }
@@ -1822,11 +1986,11 @@ var TrendingArticlesSection_default = TrendingArticlesSection;
 
 // js/components/home/HomeCinemaShowcase.jsx
 init_LanguageContext();
-import React17, { useState as useState12, useEffect as useEffect10, useMemo as useMemo4 } from "react";
+import React17, { useState as useState13, useEffect as useEffect10, useMemo as useMemo4 } from "react";
 
 // js/components/home/CinemaSpotlightHero.jsx
 init_LanguageContext();
-import React13, { useState as useState9 } from "react";
+import React13, { useState as useState10 } from "react";
 
 // js/components/home/CinemaVideoRail.jsx
 init_LanguageContext();
@@ -1885,7 +2049,7 @@ function CinemaVideoCard({
 var CinemaVideoCard_default = CinemaVideoCard;
 
 // js/pages/CinemaTheaterModal.jsx
-import React16, { useState as useState10, useEffect as useEffect8, useMemo as useMemo3 } from "react";
+import React16, { useState as useState11, useEffect as useEffect8, useMemo as useMemo3 } from "react";
 
 // js/services/api.js
 init_translations();
@@ -1931,10 +2095,10 @@ function CinemaTheaterModal({
 }) {
   const { session } = useAuth();
   const isTamil = language === "ta";
-  const [copied, setCopied] = useState10(false);
-  const [activeTab, setActiveTab] = useState10("overview");
-  const [sidebarFilter, setSidebarFilter] = useState10("all");
-  const [sidebarSearch, setSidebarSearch] = useState10("");
+  const [copied, setCopied] = useState11(false);
+  const [activeTab, setActiveTab] = useState11("overview");
+  const [sidebarFilter, setSidebarFilter] = useState11("all");
+  const [sidebarSearch, setSidebarSearch] = useState11("");
   useEffect8(() => {
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -2120,7 +2284,7 @@ var CinemaTheaterModal_default = CinemaTheaterModal;
 
 // js/services/videos.js
 init_translations();
-import { useState as useState11, useEffect as useEffect9 } from "react";
+import { useState as useState12, useEffect as useEffect9 } from "react";
 var memoryCache = /* @__PURE__ */ new Map();
 var inflightPromises = /* @__PURE__ */ new Map();
 function getCachedVideos(key, language) {
@@ -2201,7 +2365,7 @@ async function fetchVideos(category = "all", sort = "newest", limit = 12, langua
 }
 function useVideos(category = "all", sort = "newest", limit = 12, language = "ta") {
   const cacheKey = `${category}-${sort}-${limit}-${language}`;
-  const [videos, setVideos] = useState11(() => {
+  const [videos, setVideos] = useState12(() => {
     const cached = getCachedVideos(cacheKey, language);
     if (cached && cached.length > 0) {
       return cached;
@@ -2216,7 +2380,7 @@ function useVideos(category = "all", sort = "newest", limit = 12, language = "ta
     }
     return list.slice(0, limit).map((v) => translateVideo(v, language));
   });
-  const [isLoading, setIsLoading] = useState11(false);
+  const [isLoading, setIsLoading] = useState12(false);
   useEffect9(() => {
     let isMounted = true;
     const revalidate = async () => {
@@ -2237,8 +2401,8 @@ function useVideos(category = "all", sort = "newest", limit = 12, language = "ta
 // js/components/home/HomeCinemaShowcase.jsx
 function HomeCinemaShowcase({ onNavigate, onShowToast, language = "ta" }) {
   const isTamil = language === "ta";
-  const [activeCategory, setActiveCategory] = useState12("featured");
-  const [selectedVideo, setSelectedVideo] = useState12(null);
+  const [activeCategory, setActiveCategory] = useState13("featured");
+  const [selectedVideo, setSelectedVideo] = useState13(null);
   const { videos: allVideos = [], isLoading } = useVideos("all", "newest");
   const categories = [
     { id: "featured", labelTa: "\u0B9A\u0BAE\u0BC0\u0BAA\u0BA4\u0BCD\u0BA4\u0BBF\u0BAF & \u0BAE\u0BC1\u0B95\u0BCD\u0B95\u0BBF\u0BAF \u0BB5\u0BC0\u0B9F\u0BBF\u0BAF\u0BCB\u0B95\u0BCD\u0B95\u0BB3\u0BCD", labelEn: "Latest & Featured" },
@@ -2268,14 +2432,14 @@ function HomeCinemaShowcase({ onNavigate, onShowToast, language = "ta" }) {
     }
     return list.slice(0, 12);
   }, [allVideos, activeCategory]);
-  return /* @__PURE__ */ React17.createElement("section", { className: "w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 select-none min-w-0" }, /* @__PURE__ */ React17.createElement("div", { className: "section-band bg-[#E8F5E9] dark:bg-slate-900/40 rounded-2xl sm:rounded-3xl border border-[#D5EBD9] dark:border-slate-800 p-4 sm:p-6 lg:p-7 shadow-sm space-y-4" }, /* @__PURE__ */ React17.createElement("div", { className: "flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-1 border-b border-[#D5EBD9] dark:border-slate-800" }, /* @__PURE__ */ React17.createElement("div", { className: "flex items-center gap-2 overflow-x-auto no-scrollbar py-1" }, categories.map((cat) => {
+  return /* @__PURE__ */ React17.createElement("section", { className: "w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 select-none min-w-0" }, /* @__PURE__ */ React17.createElement("div", { className: "section-band bg-[#E8F5E9] dark:bg-slate-900/40 rounded-2xl sm:rounded-3xl border border-[#D5EBD9] dark:border-slate-800 p-4 sm:p-6 lg:p-7 shadow-sm space-y-4" }, /* @__PURE__ */ React17.createElement("div", { className: "flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-1 border-b border-[#D5EBD9] dark:border-slate-800" }, /* @__PURE__ */ React17.createElement("div", { className: "flex items-center gap-2 overflow-x-auto no-scrollbar py-1 touch-pan-x" }, categories.map((cat) => {
     const isActive = activeCategory === cat.id;
     return /* @__PURE__ */ React17.createElement(
       "button",
       {
         key: cat.id,
         onClick: () => setActiveCategory(cat.id),
-        className: `px-4 sm:px-5 py-2 rounded-full text-xs sm:text-[12.5px] font-bold whitespace-nowrap transition-all duration-200 shrink-0 ${isActive ? "bg-[#2563EB] text-white shadow-sm shadow-blue-600/20" : "bg-white dark:bg-slate-900 text-[#475569] dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-[#D5EBD9] dark:border-slate-800 hover:border-emerald-300"}`
+        className: `px-4 sm:px-5 py-2.5 min-h-[44px] rounded-full text-xs sm:text-[12.5px] font-bold whitespace-nowrap transition-all duration-200 shrink-0 active:scale-95 ${isActive ? "bg-[#2563EB] text-white shadow-sm shadow-blue-600/20" : "bg-white dark:bg-slate-900 text-[#475569] dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-[#D5EBD9] dark:border-slate-800 hover:border-emerald-300"}`
       },
       isTamil ? cat.labelTa : cat.labelEn
     );
@@ -2286,21 +2450,30 @@ function HomeCinemaShowcase({ onNavigate, onShowToast, language = "ta" }) {
         if (onNavigate) onNavigate("#/videos");
         else if (typeof window !== "undefined") window.location.hash = "#/videos";
       },
-      className: "inline-flex items-center gap-1.5 text-xs sm:text-[13px] font-bold text-[#2563EB] dark:text-[#60a5fa] hover:text-blue-700 transition-colors shrink-0 self-end sm:self-center"
+      className: "inline-flex items-center gap-1.5 text-xs sm:text-[13px] font-bold text-[#2563EB] dark:text-[#60a5fa] hover:text-blue-700 transition-colors shrink-0 self-end sm:self-center min-h-[44px] py-1"
     },
     /* @__PURE__ */ React17.createElement("span", null, isTamil ? "\u0B85\u0BA9\u0BC8\u0BA4\u0BCD\u0BA4\u0BC1 \u0BB5\u0BC0\u0B9F\u0BBF\u0BAF\u0BCB\u0B95\u0BCD\u0B95\u0BB3\u0BCD (800+)" : "View All Videos (800+)"),
     /* @__PURE__ */ React17.createElement("span", { className: "font-bold" }, "\u2192")
-  )), isLoading && showcaseVideos.length === 0 ? /* @__PURE__ */ React17.createElement("div", { className: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 sm:gap-6 animate-pulse" }, Array.from({ length: 5 }).map((_, idx) => /* @__PURE__ */ React17.createElement("div", { key: idx, className: "rounded-2xl bg-slate-200 dark:bg-slate-800/60 aspect-[9/13] p-4 space-y-3" }, /* @__PURE__ */ React17.createElement("div", { className: "aspect-video bg-slate-300 dark:bg-slate-700/60 rounded-xl" }), /* @__PURE__ */ React17.createElement("div", { className: "h-4 bg-slate-300 dark:bg-slate-700/60 rounded w-3/4" }), /* @__PURE__ */ React17.createElement("div", { className: "h-3 bg-slate-300 dark:bg-slate-700/60 rounded w-1/2" })))) : /* @__PURE__ */ React17.createElement("div", { className: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 sm:gap-6" }, showcaseVideos.slice(0, 5).map((video, idx) => /* @__PURE__ */ React17.createElement(
+  )), /* @__PURE__ */ React17.createElement("div", { className: "hidden md:grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 sm:gap-6" }, isLoading && showcaseVideos.length === 0 ? Array.from({ length: 5 }).map((_, idx) => /* @__PURE__ */ React17.createElement("div", { key: idx, className: "rounded-2xl bg-slate-200 dark:bg-slate-800/60 aspect-[9/13] p-4 space-y-3 animate-pulse" }, /* @__PURE__ */ React17.createElement("div", { className: "aspect-video bg-slate-300 dark:bg-slate-700/60 rounded-xl" }), /* @__PURE__ */ React17.createElement("div", { className: "h-4 bg-slate-300 dark:bg-slate-700/60 rounded w-3/4" }), /* @__PURE__ */ React17.createElement("div", { className: "h-3 bg-slate-300 dark:bg-slate-700/60 rounded w-1/2" }))) : showcaseVideos.slice(0, 5).map((video, idx) => /* @__PURE__ */ React17.createElement(
     CinemaVideoCard_default,
     {
-      key: `home-cinema-${video.id || idx}`,
+      key: `home-cinema-desk-${video.id || idx}`,
       video,
       index: idx,
       onSelect: (v) => setSelectedVideo(v),
       language,
       onShowToast
     }
-  )))), selectedVideo && /* @__PURE__ */ React17.createElement(
+  ))), /* @__PURE__ */ React17.createElement("div", { className: "md:hidden flex overflow-x-auto snap-x snap-mandatory gap-3.5 py-1.5 no-scrollbar touch-pan-x -mx-1 px-1" }, isLoading && showcaseVideos.length === 0 ? Array.from({ length: 4 }).map((_, idx) => /* @__PURE__ */ React17.createElement("div", { key: idx, className: "w-[72vw] max-w-[280px] shrink-0 snap-center rounded-2xl bg-slate-200 dark:bg-slate-800/60 aspect-[9/13] p-4 space-y-3 animate-pulse" }, /* @__PURE__ */ React17.createElement("div", { className: "aspect-video bg-slate-300 dark:bg-slate-700/60 rounded-xl" }), /* @__PURE__ */ React17.createElement("div", { className: "h-4 bg-slate-300 dark:bg-slate-700/60 rounded w-3/4" }))) : showcaseVideos.slice(0, 8).map((video, idx) => /* @__PURE__ */ React17.createElement("div", { key: `home-cinema-mob-${video.id || idx}`, className: "w-[72vw] max-w-[280px] shrink-0 snap-center" }, /* @__PURE__ */ React17.createElement(
+    CinemaVideoCard_default,
+    {
+      video,
+      index: idx,
+      onSelect: (v) => setSelectedVideo(v),
+      language,
+      onShowToast
+    }
+  ))))), selectedVideo && /* @__PURE__ */ React17.createElement(
     CinemaTheaterModal_default,
     {
       video: selectedVideo,

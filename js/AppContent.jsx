@@ -153,7 +153,7 @@ export default function AppContent({ currentPath, navigate, isSearchOpen, setIsS
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans pb-[calc(4.25rem+env(safe-area-inset-bottom,0px))] md:pb-0">
       {/* 1. FIXED TOP HEADER & NAVBAR STACK */}
       <div className="sticky-header-container sticky top-0 z-40 w-full shadow-md bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
         <Header onOpenSearch={() => setIsSearchOpen(true)} onNavigate={navigate} />

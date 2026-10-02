@@ -106,16 +106,16 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-start justify-center pt-12 sm:pt-20 px-4 animate-fadeIn"
+      className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-start justify-center pt-2 sm:pt-12 md:pt-20 px-2 sm:px-4 animate-fadeIn"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-3xl bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col max-h-[85vh] modal-card-unified"
+        className="w-full max-w-3xl bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col max-h-[94vh] sm:max-h-[85vh] modal-card-unified mt-[env(safe-area-inset-top,0px)]"
         onClick={e => e.stopPropagation()}
         onKeyDown={handleKeyDown}
       >
         {/* Universal Search Input Bar */}
-        <div className="p-4 sm:p-5 border-b border-slate-200 dark:border-slate-800 flex items-center gap-3 bg-slate-50/50 dark:bg-slate-950/50">
+        <div className="p-3.5 sm:p-5 border-b border-slate-200 dark:border-slate-800 flex items-center gap-2.5 sm:gap-3 bg-slate-50/50 dark:bg-slate-950/50">
           <div className="w-8 h-8 rounded-xl bg-amber-500/15 text-amber-800 flex items-center justify-center shrink-0">
             {isSearching ? (
               <svg className="w-4 h-4 animate-spin text-amber-500" fill="none" viewBox="0 0 24 24">
@@ -133,31 +133,32 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
             type="text"
             value={query}
             onChange={e => setQuery(e.target.value)}
-            placeholder={isTa ? "செய்திகள், கட்டுரைகள், வீடியோக்கள், நிபுணர்களில் தேடுங்கள்..." : "Search articles, videos, news, publishers..."}
-            className="w-full bg-transparent text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none text-sm sm:text-base font-semibold"
+            placeholder={isTa ? "செய்திகள், கட்டுரைகள், வீடியோக்களில் தேடுங்கள்..." : "Search articles, videos, news..."}
+            className="w-full bg-transparent text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none text-[16px] sm:text-base font-semibold"
           />
           {query && (
             <button
               onClick={() => setQuery('')}
-              className="text-xs text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 px-2.5 py-1 rounded-lg bg-slate-200/80 dark:bg-slate-800 font-bold transition-colors"
+              className="min-h-[44px] px-3 text-xs text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 rounded-lg bg-slate-200/80 dark:bg-slate-800 font-bold transition-colors flex items-center justify-center active:scale-95"
             >
               {isTa ? 'அழி' : 'Clear'}
             </button>
           )}
           <button
             onClick={onClose}
-            className="text-xs font-bold px-2.5 py-1 rounded-lg bg-slate-200/80 dark:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors"
+            className="min-h-[44px] min-w-[44px] text-xs font-bold px-3 rounded-lg bg-slate-200/80 dark:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors flex items-center justify-center active:scale-95"
+            aria-label="Close search"
           >
-            ESC
+            ✕
           </button>
         </div>
 
         {/* Category Tabs with live counts */}
         {totalCount > 0 && (
-          <div className="px-4 py-2.5 bg-slate-50 dark:bg-slate-950/70 border-b border-slate-200 dark:border-slate-800 flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar">
+          <div className="px-3 sm:px-4 py-2 bg-slate-50 dark:bg-slate-950/70 border-b border-slate-200 dark:border-slate-800 flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar touch-pan-x">
             <button
               onClick={() => { setFilterType('all'); setSelectedIndex(0); }}
-              className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 whitespace-nowrap ${filterType === 'all'
+              className={`px-3 py-2 min-h-[40px] rounded-xl text-xs font-black transition-all flex items-center gap-1.5 whitespace-nowrap active:scale-95 ${filterType === 'all'
                   ? 'bg-amber-500 text-slate-950 shadow-sm'
                   : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200/80 dark:hover:bg-slate-800'
                 }`}
