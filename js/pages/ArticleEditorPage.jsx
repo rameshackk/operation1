@@ -279,7 +279,8 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
   if (role !== 'admin' && role !== 'publisher') return null;
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fadeIn">
+    <div className="w-full min-h-[calc(100vh-140px)] py-6 sm:py-8 transition-colors duration-300 relative" style={{ backgroundColor: '#23645C' }}>
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 animate-fadeIn">
       {/* Unified Compact Hero Header Banner (Light & Dark mode) */}
       <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-slate-100/90 dark:from-slate-900 dark:via-slate-900/95 dark:to-amber-950/40 border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 lg:p-7 shadow-lg dark:shadow-xl overflow-hidden text-slate-900 dark:text-white">
         <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/10 rounded-full  pointer-events-none" />
@@ -591,6 +592,7 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
           </button>
         </div>
       </div>
+    </div>
     </div>
   );
 }

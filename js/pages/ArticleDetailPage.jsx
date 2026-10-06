@@ -519,7 +519,12 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
   const relatedCategoryArticles = categoryArticles.filter(a => a.slug !== article.slug);
 
   return (
-    <div className={`min-h-screen pb-20 animate-fadeIn relative transition-colors duration-300 ${isReadingMode ? 'bg-[#fbfbf9] dark:bg-[#0a0f18]' : 'bg-slate-50/50 dark:bg-slate-950'}`}>
+    <div 
+      className={`min-h-screen pb-20 animate-fadeIn relative transition-colors duration-300 ${isReadingMode ? 'bg-[#fbfbf9] dark:bg-[#0a0f18]' : ''}`}
+      style={!isReadingMode ? {
+        backgroundColor: '#23645C'
+      } : undefined}
+    >
 
       {/* ================= 1. STICKY "NOW READING" BAR ================= */}
       <div
@@ -857,8 +862,8 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
           </span>
         </div>
 
-        {/* Article Headline */}
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl 2xl:text-[40px] font-black text-slate-900 dark:text-white font-serif leading-tight sm:leading-snug mb-5">
+        {/* Article Headline with Generous Multi-line Breathing Room */}
+        <h1 className="article-headline text-2xl sm:text-3xl lg:text-4xl 2xl:text-[40px] font-black text-slate-900 dark:text-white font-serif leading-[1.5] sm:leading-[1.46] lg:leading-[1.42] mb-6 tracking-normal">
           {title}
         </h1>
 

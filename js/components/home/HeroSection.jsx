@@ -98,7 +98,7 @@ function HeroSection({ news, onNavigate }) {
             </div>
 
             <div className="relative z-10 space-y-1 mt-10">
-              <h3 className="text-xs sm:text-sm md:text-[14.5px] font-bold text-white leading-snug font-sans group-hover/item:text-amber-400 transition-colors drop-shadow line-clamp-2">
+              <h3 className="text-sm sm:text-[15px] md:text-[16px] font-bold text-white leading-snug font-sans group-hover/item:text-amber-400 transition-colors drop-shadow line-clamp-2">
                 {item.title}
               </h3>
               {item.summary && (
@@ -122,19 +122,27 @@ function HeroSection({ news, onNavigate }) {
 
   return (
     <section className="w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 select-none min-w-0">
-      {/* Section Band Container */}
-      <div className="section-band bg-[#E8F5E9] dark:bg-slate-900/40 rounded-2xl sm:rounded-3xl border border-[#D5EBD9] dark:border-slate-800 p-3.5 sm:p-5 lg:p-6 shadow-sm">
-        <div className="bg-white dark:bg-slate-900 rounded-xl sm:rounded-2xl border border-[#D5EBD9] dark:border-slate-800/80 shadow-[0_8px_30px_rgba(22,163,74,0.07)] p-4 sm:p-6 lg:p-7">
+      <div className="w-full">
           
           {/* 1. DESKTOP VIEW (hidden lg:grid) - Preserved exactly as original */}
           <div className="hidden lg:grid grid-cols-12 gap-6 lg:gap-8 items-stretch min-w-0 max-w-full">
             {/* Left Column: Featured News Live Ticker Stream */}
             <div className="lg:col-span-7 xl:col-span-8 min-w-0 max-w-full flex flex-col justify-between overflow-hidden">
-              <div className="flex items-center justify-between pb-2.5 mb-3 border-b border-slate-100 dark:border-slate-800">
-                <div className="flex items-center gap-2 min-w-0 truncate">
-                  <span className="w-2 h-2 rounded-full bg-[#DC2626] animate-ping shrink-0" />
-                  <h2 className="text-xs sm:text-sm font-extrabold tracking-wide uppercase text-slate-900 dark:text-white font-sans truncate">
-                    {t('featuredNews') || 'சிறப்புச் செய்திகள் & ஆய்வுகள்'}
+              <div className="flex items-center justify-between pb-2.5 mb-3 border-b border-slate-200 dark:border-slate-800">
+                <div className="flex items-center gap-2.5 min-w-0 truncate">
+                  <span className="w-3 h-3 rounded-full bg-[#DC2626] animate-ping shrink-0" />
+                  <h2 className="text-lg sm:text-xl md:text-2xl 2xl:text-[24px] font-black tracking-wide uppercase font-sans truncate">
+                    {isTamil ? (
+                      <>
+                        <span className="text-slate-950 dark:text-white">சிறப்புச் </span>
+                        <span className="text-[#4A9E2C]">செய்திகள்</span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="text-slate-950 dark:text-white">FEATURED </span>
+                        <span className="text-[#4A9E2C]">NEWS</span>
+                      </>
+                    )}
                   </h2>
                 </div>
                 <span className="text-xs font-bold text-[#2563EB] dark:text-[#60a5fa] bg-[#EFF6FF] dark:bg-blue-950/60 px-2.5 py-0.5 rounded-full shrink-0 font-num">
@@ -153,14 +161,24 @@ function HeroSection({ news, onNavigate }) {
 
             {/* Right Column: Latest Articles List with Dynamic Image Thumbnails */}
             <div className="lg:col-span-5 xl:col-span-4 min-w-0 max-w-full overflow-hidden flex flex-col justify-between">
-              <div className="flex items-center justify-between pb-2.5 mb-3 border-b border-slate-100 dark:border-slate-800">
-                <div className="flex items-center gap-2 min-w-0 truncate">
-                  <span className="w-2 h-2 rounded-full bg-[#2563EB] shrink-0" />
-                  <h3 className="text-xs sm:text-sm font-extrabold uppercase tracking-wide text-slate-900 dark:text-white font-sans truncate">
-                    {isTamil ? 'சமீபத்திய கட்டுரைகள்' : 'Latest Articles'}
+              <div className="flex items-center justify-between pb-2.5 mb-3 border-b border-slate-200 dark:border-slate-800">
+                <div className="flex items-center gap-2.5 min-w-0 truncate">
+                  <span className="w-3 h-3 rounded-full bg-[#2563EB] shrink-0" />
+                  <h3 className="text-lg sm:text-xl md:text-2xl 2xl:text-[24px] font-black uppercase tracking-wide font-sans truncate">
+                    {isTamil ? (
+                      <>
+                        <span className="text-slate-950 dark:text-white">சமீபத்திய </span>
+                        <span className="text-[#4A9E2C]">கட்டுரைகள்</span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="text-slate-950 dark:text-white">LATEST </span>
+                        <span className="text-[#4A9E2C]">ARTICLES</span>
+                      </>
+                    )}
                   </h3>
                 </div>
-                <span className="text-xs font-bold text-[#15803d] dark:text-[#4ade80] bg-[#F0FDF4] dark:bg-emerald-950/60 px-2 py-0.5 rounded-full shrink-0 font-num">
+                <span className="text-xs font-bold text-[#15803d] dark:text-[#4ade80] bg-[#DCFCE7] dark:bg-emerald-950/60 px-2 py-0.5 rounded-full shrink-0 font-num">
                   Latest
                 </span>
               </div>
@@ -174,7 +192,7 @@ function HeroSection({ news, onNavigate }) {
                       role="button"
                       tabIndex={0}
                       onClick={() => onNavigate && onNavigate(`#/articles/${article.slug}`)}
-                      className="group flex items-center gap-3 p-2 sm:p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-all cursor-pointer border border-transparent hover:border-slate-200 dark:hover:border-slate-700/60"
+                      className="group flex items-center gap-3 p-2.5 rounded-xl bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all cursor-pointer"
                     >
                       {/* Real Article Image Thumbnail with fallback badge */}
                       <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-xl shrink-0 overflow-hidden bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xs group-hover:shadow-md transition-all">
@@ -207,7 +225,7 @@ function HeroSection({ news, onNavigate }) {
                             • {new Date(article.publishedAt).toLocaleDateString(isTamil ? 'ta-IN' : 'en-IN', { month: 'short', day: 'numeric' })}
                           </span>
                         </div>
-                        <h4 className="text-xs sm:text-[12.5px] font-bold text-slate-900 dark:text-slate-100 line-clamp-2 group-hover:text-[#2563EB] dark:group-hover:text-[#60a5fa] transition-colors leading-snug">
+                        <h4 className="text-sm sm:text-[14px] md:text-[15px] font-bold text-slate-900 dark:text-slate-100 line-clamp-2 group-hover:text-[#2563EB] dark:group-hover:text-[#60a5fa] transition-colors leading-snug">
                           {article.title}
                         </h4>
                       </div>
@@ -226,11 +244,21 @@ function HeroSection({ news, onNavigate }) {
           <div className="lg:hidden space-y-6">
             {/* Top: Swipeable Featured News Cards */}
             <div className="space-y-3">
-              <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
+              <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
                 <div className="flex items-center gap-2 min-w-0 truncate">
-                  <span className="w-2 h-2 rounded-full bg-[#DC2626] animate-ping shrink-0" />
-                  <h2 className="text-xs font-extrabold tracking-wide uppercase text-slate-900 dark:text-white font-sans truncate">
-                    {t('featuredNews') || 'சிறப்புச் செய்திகள்'}
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#DC2626] animate-ping shrink-0" />
+                  <h2 className="text-base sm:text-lg font-black tracking-wide uppercase font-sans truncate">
+                    {isTamil ? (
+                      <>
+                        <span className="text-slate-950 dark:text-white">சிறப்புச் </span>
+                        <span className="text-[#4A9E2C]">செய்திகள்</span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="text-slate-950 dark:text-white">FEATURED </span>
+                        <span className="text-[#4A9E2C]">NEWS</span>
+                      </>
+                    )}
                   </h2>
                 </div>
                 <span className="text-[11px] font-bold text-[#2563EB] dark:text-[#60a5fa] bg-[#EFF6FF] dark:bg-blue-950/60 px-2 py-0.5 rounded-full shrink-0">
@@ -271,7 +299,7 @@ function HeroSection({ news, onNavigate }) {
                       </div>
 
                       <div className="relative z-10 space-y-1.5 mt-auto">
-                        <h3 className="text-sm font-bold text-white leading-snug font-sans group-hover:text-amber-400 line-clamp-2">
+                        <h3 className="text-[15px] sm:text-base font-bold text-white leading-snug font-sans group-hover:text-amber-400 line-clamp-2">
                           {item.title}
                         </h3>
                         <div className="pt-1 flex items-center justify-between text-xs text-amber-400 font-bold">
@@ -286,12 +314,22 @@ function HeroSection({ news, onNavigate }) {
             </div>
 
             {/* Bottom: Latest Articles Single Column Stack */}
-            <div className="space-y-3 pt-2 border-t border-slate-100 dark:border-slate-800">
+            <div className="space-y-3 pt-2 border-t border-slate-200 dark:border-slate-800">
               <div className="flex items-center justify-between pb-1">
                 <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[#2563EB] shrink-0" />
-                  <h3 className="text-xs font-extrabold uppercase tracking-wide text-slate-900 dark:text-white font-sans">
-                    {isTamil ? 'சமீபத்திய கட்டுரைகள்' : 'Latest Articles'}
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#2563EB] shrink-0" />
+                  <h3 className="text-base sm:text-lg font-black uppercase tracking-wide font-sans">
+                    {isTamil ? (
+                      <>
+                        <span className="text-slate-950 dark:text-white">சமீபத்திய </span>
+                        <span className="text-[#4A9E2C]">கட்டுரைகள்</span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="text-slate-950 dark:text-white">LATEST </span>
+                        <span className="text-[#4A9E2C]">ARTICLES</span>
+                      </>
+                    )}
                   </h3>
                 </div>
                 <button
@@ -311,7 +349,7 @@ function HeroSection({ news, onNavigate }) {
                       role="button"
                       tabIndex={0}
                       onClick={() => onNavigate && onNavigate(`#/articles/${article.slug}`)}
-                      className="group flex items-center gap-3 p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all cursor-pointer border border-slate-200/70 dark:border-slate-700/60 min-h-[56px] active:scale-[0.99]"
+                      className="group flex items-center gap-3 p-3 rounded-2xl bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all cursor-pointer min-h-[56px] active:scale-[0.99]"
                     >
                       <div className="relative w-14 h-14 rounded-xl shrink-0 overflow-hidden bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xs">
                         <img
@@ -332,7 +370,7 @@ function HeroSection({ news, onNavigate }) {
                             • {new Date(article.publishedAt).toLocaleDateString(isTamil ? 'ta-IN' : 'en-IN', { month: 'short', day: 'numeric' })}
                           </span>
                         </div>
-                        <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100 line-clamp-2 leading-snug">
+                        <h4 className="text-[14.5px] sm:text-[15.5px] font-bold text-slate-900 dark:text-slate-100 line-clamp-2 leading-snug">
                           {article.title}
                         </h4>
                       </div>
@@ -348,10 +386,9 @@ function HeroSection({ news, onNavigate }) {
           </div>
 
         </div>
-      </div>
-    </section>
-  );
-}
+      </section>
+    );
+  }
 
 export default HeroSection;
 export { HeroSection };

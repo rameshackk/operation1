@@ -44,18 +44,18 @@ html {
 }
 
 :root {
-  /* Design Tokens - Modern Palette (Light Theme: Soft Green System) */
-  --bg-page: #F4F9F4;
-  --bg-main: #F4F9F4;
-  --bg-section: #E8F5E9;
+  /* Design Tokens - Modern Responsive Multi-Section System */
+  --bg-page: #ffffff;
+  --bg-main: #ffffff;
+  --bg-section: #ffffff;
   --bg-card: #ffffff;
   --bg-card-hover: #ffffff;
-  --border-color: #D5EBD9;
-  --border-subtle: #D5EBD9;
-  --border-light: #D5EBD9;
+  --border-color: #e2e8df;
+  --border-subtle: #e2e8df;
+  --border-light: #e8ede5;
   --header-bg: #ffffff;
-  --nav-bg: #F4F9F4;
-  --nav-border: #D5EBD9;
+  --nav-bg: #ffffff;
+  --nav-border: #e2e8df;
 
   --navy-900: #0F172A;
   --navy-800: #1E293B;
@@ -66,9 +66,9 @@ html {
   --red-600: #DC2626;
   --amber-400: #FBBF24;
   --cream-50: #FBF7EF;
-  --gray-50: #F4F9F4;
-  --gray-100: #E8F5E9;
-  --gray-200: #D5EBD9;
+  --gray-50: #f8faf4;
+  --gray-100: #f8faf4;
+  --gray-200: #e2e8df;
   --gray-500: #475569;
 
   /* Spacing Scale Tokens - Fluid Multi-Device Architecture */
@@ -95,9 +95,9 @@ html {
   --font-serif: 'Book Antiqua', Palatino, 'Palatino Linotype', 'URW Bookman L', 'Noto Serif Tamil', Georgia, serif;
   --font-heading: 'Book Antiqua', Palatino, 'Palatino Linotype', 'URW Bookman L', 'Noto Serif Tamil', Georgia, serif;
   --font-num: 'Book Antiqua', Palatino, 'Palatino Linotype', 'URW Bookman L', 'Noto Serif Tamil', Georgia, serif;
-  --line-height-body: 1.65;
-  --line-height-heading: 1.28;
-  --line-height-tight: 1.18;
+  --line-height-body: 1.68;
+  --line-height-heading: 1.48;
+  --line-height-tight: 1.35;
 
   /* Design Tokens for Cards & Elevation - Faint Soft Green-Tinted Shadows */
   --radius-card: 1.125rem; /* 18px */
@@ -448,7 +448,22 @@ button:not([disabled]):nth-of-type(even):hover,
 
 .font-serif {
   font-family: var(--font-serif);
-  line-height: var(--line-height-heading);
+  line-height: var(--line-height-heading, 1.48);
+}
+
+.article-headline,
+h1.font-serif,
+.article-title {
+  line-height: 1.48 !important;
+  letter-spacing: 0.01em;
+}
+
+@media (min-width: 640px) {
+  .article-headline,
+  h1.font-serif,
+  .article-title {
+    line-height: 1.44 !important;
+  }
 }
 
 /* Shared Max-Width Container - Focused Reading Rhythm */
@@ -1459,45 +1474,43 @@ html:not([data-theme="dark"]) table tbody tr:hover,
    LIGHT THEME DESIGN SYSTEM PALETTE OVERRIDES
    ========================================================================== */
 
-/* Section Band Background (#E8F5E9 in light theme) */
+/* Section Band: Clean borderless container */
 .section-band {
-  background-color: var(--bg-section, #E8F5E9) !important;
-  border-color: var(--border-color, #D5EBD9) !important;
+  background-color: transparent !important;
+  border: none !important;
 }
 
 [data-theme="dark"] .section-band {
-  background-color: var(--bg-section, #0B132B) !important;
-  border-color: var(--border-color, #1e293b) !important;
+  background-color: transparent !important;
+  border: none !important;
 }
 
-/* Light Theme Card Borders: #D5EBD9 (Soft Green-tinted border family) */
+/* Light Theme Card Borders */
 html[data-theme="light"] .border-slate-200,
 html[data-theme="light"] .border-slate-100,
-html[data-theme="light"] .border-gray-200,
-html[data-theme="light"] [class*="border-slate-200"],
-html[data-theme="light"] [class*="border-slate-100"] {
-  border-color: #D5EBD9 !important;
+html[data-theme="light"] .border-gray-200 {
+  border-color: #f1f5f9;
 }
 
-/* Light Theme Header (Pure White #ffffff) & Nav Bar Background (#F4F9F4) */
+/* Light Theme Header (Pure White #ffffff) & Nav Bar Background (#f8faf4) */
 html[data-theme="light"] header {
   background-color: #ffffff !important;
-  border-bottom-color: #D5EBD9 !important;
+  border-bottom-color: #e2e8df !important;
 }
 
 html[data-theme="light"] nav {
-  background-color: #F4F9F4 !important;
-  border-bottom-color: #D5EBD9 !important;
+  background-color: #ffffff !important;
+  border-bottom-color: #e2e8df !important;
 }
 
-/* Light Theme Faint Soft Green-Tinted Elevation Shadows: rgba(22, 163, 74, 0.07) */
+/* Light Theme Clean Elevation Shadows */
 html[data-theme="light"] .shadow-sm {
-  box-shadow: 0 2px 8px 0 rgba(22, 163, 74, 0.05), 0 1px 2px -1px rgba(22, 163, 74, 0.03) !important;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.02) !important;
 }
 
 html[data-theme="light"] .shadow,
 html[data-theme="light"] .shadow-md {
-  box-shadow: 0 4px 16px -2px rgba(22, 163, 74, 0.07), 0 2px 4px -2px rgba(22, 163, 74, 0.04) !important;
+  box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.03) !important;
 }
 
 html[data-theme="light"] .shadow-lg,
@@ -1506,10 +1519,10 @@ html[data-theme="light"] .shadow-2xl,
 html[data-theme="light"] [class*="shadow-[0_4px_20px"],
 html[data-theme="light"] [class*="shadow-[0_8px_30px"],
 html[data-theme="light"] [class*="shadow-[0_16px_32px"] {
-  box-shadow: 0 10px 28px -4px rgba(22, 163, 74, 0.07), 0 4px 8px -2px rgba(22, 163, 74, 0.03) !important;
+  box-shadow: 0 10px 28px -4px rgba(0, 0, 0, 0.06), 0 4px 8px -2px rgba(0, 0, 0, 0.02) !important;
 }
 
-/* WCAG AA High Contrast Text Polish on #E8F5E9 & #F4F9F4 */
+/* WCAG AA High Contrast Text Polish */
 html[data-theme="light"] .text-slate-500,
 html[data-theme="light"] .text-slate-400 {
   color: #475569 !important;

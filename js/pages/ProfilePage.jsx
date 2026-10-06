@@ -125,93 +125,94 @@ function ProfilePage({ onNavigate, onShowToast }) {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 animate-fadeIn">
-      {/* Header Banner */}
-      <div className="relative rounded-3xl bg-gradient-to-r from-[#4A9E2C] via-[#3b8022] to-[#2d6319] border border-white/20 p-6 sm:p-8 shadow-2xl overflow-hidden text-white">
-        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 relative z-10">
-          <div
-            onClick={() => isPublisher ? setIsEditingPublisherModalOpen(true) : null}
-            className={`relative group/avatar shrink-0 ${isPublisher ? 'cursor-pointer' : ''}`}
-            title={isPublisher ? (isTamil ? 'சுயவிவரப் புகைப்படத்தை மாற்ற கிளிக் செய்யவும்' : 'Click to change profile photo & credentials') : ''}
-          >
-            {avatarUrl ? (
-              <img
-                src={avatarUrl}
-                alt={displayName}
-                className="w-20 h-20 rounded-full object-cover border-2 border-white/80 shadow-xl shrink-0 group-hover/avatar:opacity-85 transition-opacity"
-                onError={(e) => { e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName || 'User')}&background=4a9e2c&color=ffffff&bold=true`; }}
-              />
-            ) : (
-              <div className="w-20 h-20 rounded-full bg-white/20 text-white font-black text-2xl flex items-center justify-center border-2 border-white/80 shadow-xl shrink-0 backdrop-blur-md">
-                {initials}
-              </div>
-            )}
-            {isPublisher && (
-              <div className="absolute inset-0 rounded-full bg-slate-950/70 opacity-0 group-hover/avatar:opacity-100 flex flex-col items-center justify-center text-emerald-300 text-xs font-black transition-opacity">
-                <span className="text-sm">📷</span>
-                <span>{isTamil ? 'புகைப்படம்' : 'Change'}</span>
-              </div>
-            )}
-          </div>
-          <div className="space-y-1.5 text-center sm:text-left flex-1">
-            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
-              <h1 className="text-2xl sm:text-3xl font-extrabold font-serif text-white">{displayName || 'Investor'}</h1>
-              <span className={`px-2.5 py-0.5 text-xs font-black uppercase tracking-wider rounded-full border ${role === 'admin'
-                  ? 'bg-red-500/30 text-white border-red-400/50'
-                  : role === 'publisher'
-                    ? 'bg-white/20 text-white border-white/40'
-                    : 'bg-white/15 text-white border-white/30'
-                }`}>
-                {role === 'admin' ? 'Administrator' : (role === 'publisher' ? 'AMFI Publisher / Advisor' : 'Investor')}
-              </span>
-            </div>
-            <p className="text-xs text-white/80 font-mono">{email}</p>
-            <p className="text-xs text-emerald-200 font-medium">
-              {profile?.title || (isTamil ? 'முதலீட்டு திசை நிதி தளத்தின் உறுப்பினர்' : 'Muthaleetu Thisai Certified Member')}
-            </p>
-          </div>
-
-          <div className="flex items-center gap-2 shrink-0">
-            {isPublisher && (
-              <button
-                onClick={() => setIsEditingPublisherModalOpen(true)}
-                className="btn-magnetic px-4 py-2 rounded-xl bg-white text-[#4A9E2C] hover:bg-slate-100 font-black text-xs shadow-md transition-all flex items-center gap-1.5"
-              >
-                <span>✏️</span>
-                <span>{isTamil ? 'சான்றுகளை திருத்து' : 'Edit Credentials'}</span>
-              </button>
-            )}
-            <button
-              onClick={signOut}
-              className="btn-magnetic px-4 py-2 rounded-xl bg-red-600/30 hover:bg-red-600 text-white border border-red-400/40 text-xs font-bold transition-all shrink-0"
+    <div className="w-full min-h-[calc(100vh-140px)] bg-[#23645C] py-8 sm:py-10 transition-colors">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 animate-fadeIn">
+        {/* Header Banner - Solid White Content Card */}
+        <div className="relative rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-xl overflow-hidden text-slate-900 dark:text-white">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 relative z-10">
+            <div
+              onClick={() => isPublisher ? setIsEditingPublisherModalOpen(true) : null}
+              className={`relative group/avatar shrink-0 ${isPublisher ? 'cursor-pointer' : ''}`}
+              title={isPublisher ? (isTamil ? 'சுயவிவரப் புகைப்படத்தை மாற்ற கிளிக் செய்யவும்' : 'Click to change profile photo & credentials') : ''}
             >
-              {isTamil ? 'வெளியேறு (Logout)' : 'Logout'}
-            </button>
+              {avatarUrl ? (
+                <img
+                  src={avatarUrl}
+                  alt={displayName}
+                  className="w-20 h-20 rounded-full object-cover border-2 border-[#23645C] shadow-md shrink-0 group-hover/avatar:opacity-85 transition-opacity"
+                  onError={(e) => { e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName || 'User')}&background=23645C&color=ffffff&bold=true`; }}
+                />
+              ) : (
+                <div className="w-20 h-20 rounded-full bg-[#23645C] text-white font-black text-2xl flex items-center justify-center border-2 border-emerald-300 shadow-md shrink-0">
+                  {initials}
+                </div>
+              )}
+              {isPublisher && (
+                <div className="absolute inset-0 rounded-full bg-slate-950/70 opacity-0 group-hover/avatar:opacity-100 flex flex-col items-center justify-center text-white text-xs font-black transition-opacity">
+                  <span className="text-sm">📷</span>
+                  <span>{isTamil ? 'புகைப்படம்' : 'Change'}</span>
+                </div>
+              )}
+            </div>
+            <div className="space-y-1.5 text-center sm:text-left flex-1">
+              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
+                <h1 className="text-2xl sm:text-3xl font-extrabold font-serif text-slate-900 dark:text-white">{displayName || 'Investor'}</h1>
+                <span className={`px-2.5 py-0.5 text-xs font-black uppercase tracking-wider rounded-full border ${role === 'admin'
+                    ? 'bg-red-500/20 text-red-700 dark:text-red-300 border-red-400/40'
+                    : role === 'publisher'
+                      ? 'bg-emerald-50 dark:bg-emerald-950/50 text-[#23645C] dark:text-emerald-300 border-emerald-200 dark:border-emerald-800 font-black'
+                      : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700'
+                  }`}>
+                  {role === 'admin' ? 'Administrator' : (role === 'publisher' ? 'AMFI Publisher / Advisor' : 'Investor')}
+                </span>
+              </div>
+              <p className="text-xs text-slate-600 dark:text-slate-400 font-mono">{email}</p>
+              <p className="text-xs text-[#23645C] dark:text-emerald-400 font-semibold">
+                {profile?.title || (isTamil ? 'முதலீட்டு திசை நிதி தளத்தின் உறுப்பினர்' : 'Muthaleetu Thisai Certified Member')}
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2 shrink-0">
+              {isPublisher && (
+                <button
+                  onClick={() => setIsEditingPublisherModalOpen(true)}
+                  className="btn-magnetic px-4 py-2 rounded-xl bg-[#23645C] hover:bg-[#1a4b45] text-white font-black text-xs shadow-sm transition-all flex items-center gap-1.5"
+                >
+                  <span>✏️</span>
+                  <span>{isTamil ? 'சான்றுகளை திருத்து' : 'Edit Credentials'}</span>
+                </button>
+              )}
+              <button
+                onClick={signOut}
+                className="btn-magnetic px-4 py-2 rounded-xl bg-red-50 dark:bg-red-950/30 hover:bg-red-600 hover:text-white text-red-600 dark:text-red-400 border border-red-200 dark:border-red-800 text-xs font-bold transition-all shrink-0"
+              >
+                {isTamil ? 'வெளியேறு (Logout)' : 'Logout'}
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Tabs */}
-      <div className="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
-        <button
-          onClick={() => setActiveTab('overview')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === 'overview'
-              ? 'bg-amber-500 text-slate-950 shadow-md'
-              : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
-            }`}
-        >
-          {isTamil ? 'சுயவிவர விவரங்கள்' : 'Profile Settings'}
-        </button>
-        <button
-          onClick={() => setActiveTab('bookmarks')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === 'bookmarks'
-              ? 'bg-amber-500 text-slate-950 shadow-md'
-              : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
-            }`}
-        >
-          {isTamil ? `சேமிக்கப்பட்டவை (${bookmarks.length})` : `Saved Bookmarks (${bookmarks.length})`}
-        </button>
-      </div>
+        {/* Tabs on #23645C Canvas */}
+        <div className="flex items-center gap-2 border-b border-white/20 pb-3">
+          <button
+            onClick={() => setActiveTab('overview')}
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === 'overview'
+                ? 'bg-amber-500 text-slate-950 shadow-md font-extrabold'
+                : 'text-white/90 bg-white/10 hover:bg-white/20 hover:text-white backdrop-blur-xs'
+              }`}
+          >
+            {isTamil ? 'சுயவிவர விவரங்கள்' : 'Profile Settings'}
+          </button>
+          <button
+            onClick={() => setActiveTab('bookmarks')}
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === 'bookmarks'
+                ? 'bg-amber-500 text-slate-950 shadow-md font-extrabold'
+                : 'text-white/90 bg-white/10 hover:bg-white/20 hover:text-white backdrop-blur-xs'
+              }`}
+          >
+            {isTamil ? `சேமிக்கப்பட்டவை (${bookmarks.length})` : `Saved Bookmarks (${bookmarks.length})`}
+          </button>
+        </div>
 
       {/* Tab Content: Settings */}
       {activeTab === 'overview' && (
@@ -481,59 +482,59 @@ function ProfilePage({ onNavigate, onShowToast }) {
           {/* Right Column: Publisher Credentials Card or Quick Actions */}
           <div className="space-y-6">
             {isPublisher && (
-              <div className="bg-gradient-to-br from-[#4A9E2C] via-[#3b8022] to-[#2d6319] rounded-3xl p-6 border border-white/20 shadow-xl text-white space-y-4">
+              <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4 text-slate-900 dark:text-white">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="text-base">💼</span>
-                    <h3 className="text-sm font-black uppercase tracking-wider text-emerald-300 font-serif">
+                    <h3 className="text-sm font-black uppercase tracking-wider text-slate-900 dark:text-white font-serif">
                       {isTamil ? 'வெளியீட்டாளர் & AMFI சான்றுகள்' : 'Publisher & AMFI Credentials'}
                     </h3>
                   </div>
                   <button
                     onClick={() => setIsEditingPublisherModalOpen(true)}
-                    className="text-xs font-bold text-white hover:underline flex items-center gap-1 bg-white/20 px-2.5 py-1 rounded-lg transition-colors"
+                    className="text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 bg-slate-50 dark:bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-700 transition-colors flex items-center gap-1"
                   >
                     <span>✏️</span>
                     <span>{isTamil ? 'திருத்து' : 'Edit'}</span>
                   </button>
                 </div>
 
-                <div className="space-y-2.5 text-xs text-white/90">
-                  <div className="flex justify-between py-1 border-b border-white/15">
-                    <span className="text-white/70">{isTamil ? 'பதவி / பதவிப்பெயர்:' : 'Designation:'}</span>
-                    <span className="font-bold text-white text-right">{profile?.title || 'AMFI Registered MFD'}</span>
+                <div className="space-y-2.5 text-xs">
+                  <div className="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800">
+                    <span className="text-slate-500 dark:text-slate-400">{isTamil ? 'பதவி / பதவிப்பெயர்:' : 'Designation:'}</span>
+                    <span className="font-bold text-slate-900 dark:text-white text-right">{profile?.title || 'AMFI Registered MFD'}</span>
                   </div>
-                  <div className="flex justify-between py-1 border-b border-white/15">
-                    <span className="text-white/70">{isTamil ? 'AMFI ARN எண்:' : 'ARN License:'}</span>
-                    <span className="font-mono font-bold text-emerald-200">{profile?.arn_number || 'Not Set'}</span>
+                  <div className="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800">
+                    <span className="text-slate-500 dark:text-slate-400">{isTamil ? 'AMFI ARN எண்:' : 'ARN License:'}</span>
+                    <span className="font-mono font-bold text-[#24874b] dark:text-[#32B363]">{profile?.arn_number || 'Not Set'}</span>
                   </div>
-                  <div className="flex justify-between items-center py-1 border-b border-white/15">
-                    <span className="text-white/70">{isTamil ? 'அதிகாரப்பூர்வ வலைத்தளம்:' : 'Official Website:'}</span>
+                  <div className="flex justify-between items-center py-1 border-b border-slate-100 dark:border-slate-800">
+                    <span className="text-slate-500 dark:text-slate-400">{isTamil ? 'அதிகாரப்பூர்வ வலைத்தளம்:' : 'Official Website:'}</span>
                     <div className="text-right">
                       {profile?.website_url ? (
                         <a
                           href={profile.website_url.startsWith('http') ? profile.website_url : `https://${profile.website_url}`}
                           target="_blank"
                           rel="noreferrer"
-                          className="font-bold text-emerald-200 hover:underline text-xs truncate max-w-[180px] block"
+                          className="font-bold text-[#24874b] dark:text-[#32B363] hover:underline text-xs truncate max-w-[180px] block"
                         >
                           {profile.website_url.replace(/^https?:\/\//, '')} ↗
                         </a>
                       ) : (
-                        <span className="text-white/50 text-xs italic">Not Set</span>
+                        <span className="text-slate-400 dark:text-slate-500 text-xs italic">Not Set</span>
                       )}
                     </div>
                   </div>
-                  <div className="flex justify-between py-1 border-b border-white/15">
-                    <span className="text-white/70">{isTamil ? 'வாட்ஸ்அப் ஆலோசனை:' : 'WhatsApp:'}</span>
-                    <span className="font-mono text-white">{profile?.whatsapp_number || profile?.phone || 'Not Set'}</span>
+                  <div className="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800">
+                    <span className="text-slate-500 dark:text-slate-400">{isTamil ? 'வாட்ஸ்அப் ஆலோசனை:' : 'WhatsApp:'}</span>
+                    <span className="font-mono text-slate-800 dark:text-slate-200 font-medium">{profile?.whatsapp_number || profile?.phone || 'Not Set'}</span>
                   </div>
-                  <div className="py-1 border-b border-white/15">
-                    <span className="text-white/70 block mb-1">{isTamil ? 'சிறப்புத் துறைகள்:' : 'Specialties:'}</span>
-                    <div className="flex flex-wrap gap-1">
+                  <div className="py-1 border-b border-slate-100 dark:border-slate-800">
+                    <span className="text-slate-500 dark:text-slate-400 block mb-1">{isTamil ? 'சிறப்புத் துறைகள்:' : 'Specialties:'}</span>
+                    <div className="flex flex-wrap gap-1.5">
                       {profile?.specialties && Array.isArray(profile.specialties) ? (
                         profile.specialties.map((s, idx) => (
-                          <span key={idx} className="px-2 py-0.5 rounded bg-slate-800 text-xs text-amber-300 border border-slate-700">
+                          <span key={idx} className="px-2.5 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 font-semibold text-xs">
                             {s}
                           </span>
                         ))
@@ -547,7 +548,7 @@ function ProfilePage({ onNavigate, onShowToast }) {
                 <div className="pt-2 flex items-center gap-2">
                   <button
                     onClick={() => onNavigate && onNavigate(`#/professionals/${profile?.id || user?.id}`)}
-                    className="w-full py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 font-bold text-xs border border-amber-500/20 transition-all text-center"
+                    className="w-full py-2.5 rounded-xl bg-[#32B363] hover:bg-[#289a54] text-white font-bold text-xs shadow-md shadow-[#32B363]/25 transition-all text-center"
                   >
                     {isTamil ? 'உங்கள் பொது சுயவிவரத்தைக் காண்க →' : 'View Your Public Profile →'}
                   </button>
@@ -665,6 +666,7 @@ function ProfilePage({ onNavigate, onShowToast }) {
           )}
         </div>
       )}
+      </div>
     </div>
   );
 }

@@ -33,34 +33,42 @@ function Home({ onNavigate, onShowToast }) {
   const { language } = useLanguage();
 
   return (
-    <div className="space-y-12 sm:space-y-14 pb-16 sm:pb-20 pt-4 sm:pt-6 animate-fadeIn">
-      {/* 1. FEATURED NEWS TICKER ON LEFT + LATEST ARTICLES ON RIGHT */}
-      <HeroSection onNavigate={onNavigate} />
+    <div className="w-full animate-fadeIn flex flex-col">
+      {/* 1. SECTION 1: HERO & FEATURED NEWS (Pure White #FFFFFF) */}
+      <section className="w-full bg-[#FFFFFF] dark:bg-slate-900/60 py-8 sm:py-12 border-b border-slate-100 dark:border-slate-800">
+        <HeroSection onNavigate={onNavigate} />
+      </section>
 
-      {/* 2. COMPACT CINEMA VIDEO CARDS SHOWCASE */}
-      <HomeCinemaShowcase
-        onNavigate={onNavigate}
-        onShowToast={onShowToast}
-        language={language}
-      />
+      {/* 2. SECTION 2: CINEMA VIDEO SHOWCASE (Accent #23645C) */}
+      <section className="w-full bg-[#23645C] dark:bg-slate-950 py-10 sm:py-14 border-b border-[#1b4f49] dark:border-slate-800">
+        <HomeCinemaShowcase
+          onNavigate={onNavigate}
+          onShowToast={onShowToast}
+          language={language}
+        />
+      </section>
 
-      {/* 3. TRENDING ARTICLES SECTION (DYNAMIC DB SYNC) */}
-      <TrendingArticlesSection onNavigate={onNavigate} />
+      {/* 3. SECTION 3: TRENDING ARTICLES (Pure White #FFFFFF) */}
+      <section className="w-full bg-[#FFFFFF] dark:bg-slate-900/60 py-10 sm:py-14 border-b border-slate-100 dark:border-slate-800">
+        <TrendingArticlesSection onNavigate={onNavigate} />
+      </section>
 
-      {/* 4. FINANCIAL CALCULATOR & IN-DEPTH ANALYSIS (IntersectionObserver Lazy Mount) */}
-      <LazyMount fallback={
-        <div className="w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 py-8 text-center text-sm font-medium text-slate-600 dark:text-slate-400 min-h-[120px]">
-          நிதி கணக்கீட்டுக் கருவி ஏற்றப்படுகிறது...
-        </div>
-      }>
-        <Suspense fallback={
-          <div className="w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 py-8 text-center text-sm font-medium text-slate-600 dark:text-slate-400 min-h-[120px]">
+      {/* 4. SECTION 4: SIP WEALTH CALCULATOR (Accent #23645C) */}
+      <section className="w-full bg-[#23645C] dark:bg-slate-950 py-10 sm:py-14 pb-16 sm:pb-20">
+        <LazyMount fallback={
+          <div className="w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 py-8 text-center text-sm font-medium text-emerald-200 min-h-[120px]">
             நிதி கணக்கீட்டுக் கருவி ஏற்றப்படுகிறது...
           </div>
         }>
-          <SipCalculator />
-        </Suspense>
-      </LazyMount>
+          <Suspense fallback={
+            <div className="w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 py-8 text-center text-sm font-medium text-emerald-200 min-h-[120px]">
+              நிதி கணக்கீட்டுக் கருவி ஏற்றப்படுகிறது...
+            </div>
+          }>
+            <SipCalculator />
+          </Suspense>
+        </LazyMount>
+      </section>
     </div>
   );
 }

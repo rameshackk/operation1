@@ -175,11 +175,9 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
 
   return (
     <div
-      className="w-full min-h-[calc(100vh-140px)] py-6 sm:py-8 transition-colors duration-300 bg-cover bg-center bg-no-repeat relative"
+      className="w-full min-h-[calc(100vh-140px)] py-6 sm:py-8 transition-colors duration-300 relative"
       style={{
-        backgroundImage: "url('https://png.pngtree.com/thumb_back/fh260/background/20231227/pngtree-hand-drawn-aquarelle-texture-light-green-gradient-watercolor-vector-background-with-image_13880407.png')",
-        backgroundAttachment: 'fixed',
-        backgroundColor: '#eaf4ee'
+        backgroundColor: '#23645C'
       }}
     >
       <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-6 animate-fadeIn">

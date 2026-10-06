@@ -576,11 +576,9 @@ function ArticlesPage({ onNavigate, onShowToast }) {
 
   return (
     <div
-      className="w-full min-h-[calc(100vh-120px)] pb-16 pt-3 flex flex-col animate-fadeIn bg-cover bg-center bg-no-repeat relative"
+      className="w-full min-h-[calc(100vh-120px)] pb-16 pt-3 flex flex-col animate-fadeIn relative"
       style={{
-        backgroundImage: "url('https://png.pngtree.com/thumb_back/fh260/background/20231227/pngtree-hand-drawn-aquarelle-texture-light-green-gradient-watercolor-vector-background-with-image_13880407.png')",
-        backgroundAttachment: 'fixed',
-        backgroundColor: '#eaf4ee'
+        backgroundColor: '#23645C'
       }}
     >
       {/* Top Search & Filter Bar (Fixed / Pinned) */}
@@ -671,38 +669,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
           {/* ================= MAIN COLUMN — RESULTS LIST ================= */}
           <main className="col-span-12 md:col-span-8 lg:col-span-9 xl:col-span-9 space-y-4 pr-1 scroll-smooth" ref={resultsTopRef}>
 
-            {/* Main Column Top Control Bar: Results Count & Sort Dropdown */}
-            <div className="p-3.5 sm:p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm flex flex-wrap items-center justify-between gap-3">
-              <div className="flex items-center gap-2">
-                <span className="text-xs sm:text-sm font-extrabold text-slate-800 dark:text-slate-200">
-                  {isTamil
-                    ? `மொத்தம் ${totalArticles} கட்டுரைகள் கண்டறியப்பட்டன`
-                    : `Showing ${totalArticles} article${totalArticles === 1 ? '' : 's'}`}
-                </span>
-                {hasActiveFilters && (
-                  <span className="hidden sm:inline-block text-xs font-bold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-full">
-                    {isTamil ? 'வடிகட்டப்பட்டது' : 'Filtered'}
-                  </span>
-                )}
-              </div>
 
-              <div className="flex items-center gap-2 ml-auto">
-                <label htmlFor="articlesSortDropdown" className="text-xs font-bold text-slate-500 dark:text-slate-400 whitespace-nowrap">
-                  {isTamil ? 'வரிசைப்படுத்து:' : 'Sort by:'}
-                </label>
-                <select
-                  id="articlesSortDropdown"
-                  value={sortBy}
-                  onChange={e => { setSortBy(e.target.value); setCurrentPage(1); }}
-                  className="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 text-xs font-bold focus:outline-none focus:border-[#4A9E2C] cursor-pointer"
-                >
-                  <option value="newest">{isTamil ? 'சமீபத்தியவை (Newest first)' : 'Newest first'}</option>
-                  <option value="views">{isTamil ? 'அதிகம் வாசிக்கப்பட்டவை (Most read)' : 'Most read'}</option>
-                  <option value="read_time">{isTamil ? 'வாசிக்கும் நேரம் (Read time)' : 'Read time'}</option>
-                  <option value="oldest">{isTamil ? 'பழையவை (Oldest first)' : 'Oldest first'}</option>
-                </select>
-              </div>
-            </div>
 
             {/* Active Filter Pills Bar (Quick Dismiss) */}
             {hasActiveFilters && (
@@ -864,7 +831,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                           </div>
 
                           {/* Row 2: Article Headline */}
-                          <h2 className="text-sm sm:text-base lg:text-lg font-bold text-slate-900 dark:text-slate-100 group-hover:text-brandBlue-600 dark:group-hover:text-brandBlue-400 transition-colors font-serif leading-snug line-clamp-2">
+                          <h2 className="text-sm sm:text-base lg:text-lg font-bold text-slate-900 dark:text-slate-100 group-hover:text-brandBlue-600 dark:group-hover:text-brandBlue-400 transition-colors font-serif leading-[1.45] sm:leading-[1.42] line-clamp-2">
                             <a
                               href={`#/articles/${article.slug}`}
                               onClick={(e) => { e.preventDefault(); onNavigate(`#/articles/${article.slug}`); }}

@@ -198,7 +198,8 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
   const cleanWhatsApp = (prof.whatsapp || '').replace(/[^0-9]/g, '');
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fadeIn">
+    <div className="w-full min-h-[calc(100vh-140px)] py-8 transition-colors duration-300 relative" style={{ backgroundColor: '#23645C' }}>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 animate-fadeIn">
       {/* Back Button */}
       <button
         onClick={() => onNavigate && onNavigate('#/professionals')}
@@ -478,6 +479,7 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
           onShowToast={onShowToast}
         />
       )}
+      </div>
     </div>
   );
 }

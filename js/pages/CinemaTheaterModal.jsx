@@ -1,8 +1,16 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { createPortal } from 'react-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { translateVideo } from '../services/api.js';
 import { videosData } from '../data/translations.js';
 
+function extractYoutubeId(val) {
+  if (!val || typeof val !== 'string') return '';
+  const trimmed = val.trim();
+  if (/^[a-zA-Z0-9_-]{11}$/.test(trimmed)) return trimmed;
+  const match = trimmed.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/i);
+  return match ? match[1] : (trimmed.length === 11 ? trimmed : '');
+}
 
 function CinemaTheaterModal({
   video,
@@ -37,9 +45,9 @@ function CinemaTheaterModal({
 
   if (!video) return null;
 
-  const youtubeId = video.youtubeId || video.youtube_id || (video.id && video.id.length === 11 ? video.id : '');
+  const youtubeId = extractYoutubeId(video.youtubeId || video.youtube_id || video.id || video.youtubeUrl || video.youtube_url) || 'GizYMQfl9CY';
   const embedUrl = youtubeId ? `https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=1&rel=0&modestbranding=1` : '';
-  const youtubeWatchUrl = video.youtubeUrl || (youtubeId ? `https://www.youtube.com/watch?v=${youtubeId}` : '');
+  const youtubeWatchUrl = video.youtubeUrl || video.youtube_url || (youtubeId ? `https://www.youtube.com/watch?v=${youtubeId}` : '');
 
   const title = isTamil
     ? (video.titleTamil || video.title)
@@ -416,7 +424,7 @@ function CinemaTheaterModal({
     </div>
   );
 
-  return ReactDOM.createPortal(modalNode, document.body);
+  return typeof document !== 'undefined' ? createPortal(modalNode, document.body) : modalNode;
 }
 
 /**

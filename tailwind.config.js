@@ -29,9 +29,9 @@ export default {
         mono: ['"Book Antiqua"', 'Palatino', '"Palatino Linotype"', '"URW Bookman L"', '"Noto Serif Tamil"', 'Georgia', 'serif']
       },
       colors: {
-        page: '#F4F9F4',
-        section: '#E8F5E9',
-        borderTint: '#D5EBD9',
+        page: '#ffffff',
+        section: '#ffffff',
+        borderTint: '#e2e8df',
         navy: {
           800: '#1E293B',
           900: '#0F172A',
@@ -54,9 +54,9 @@ export default {
           50: '#FBF7EF',
         },
         gray: {
-          50: '#F4F9F4',
-          100: '#E8F5E9',
-          200: '#D5EBD9',
+          50: '#f8faf4',
+          100: '#f8faf4',
+          200: '#e2e8df',
           500: '#475569',
         },
         obsidian: '#020617',
