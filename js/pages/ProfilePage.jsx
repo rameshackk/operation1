@@ -131,9 +131,9 @@ function ProfilePage({ onNavigate, onShowToast }) {
         <div className="relative rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-xl overflow-hidden text-slate-900 dark:text-white">
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 relative z-10">
             <div
-              onClick={() => isPublisher ? setIsEditingPublisherModalOpen(true) : null}
-              className={`relative group/avatar shrink-0 ${isPublisher ? 'cursor-pointer' : ''}`}
-              title={isPublisher ? (isTamil ? 'சுயவிவரப் புகைப்படத்தை மாற்ற கிளிக் செய்யவும்' : 'Click to change profile photo & credentials') : ''}
+              onClick={() => setIsEditingPublisherModalOpen(true)}
+              className="relative group/avatar shrink-0 cursor-pointer"
+              title={isTamil ? 'சுயவிவரப் புகைப்படத்தை மாற்ற கிளிக் செய்யவும்' : 'Click to change profile photo & credentials'}
             >
               {avatarUrl ? (
                 <img
@@ -147,12 +147,10 @@ function ProfilePage({ onNavigate, onShowToast }) {
                   {initials}
                 </div>
               )}
-              {isPublisher && (
-                <div className="absolute inset-0 rounded-full bg-slate-950/70 opacity-0 group-hover/avatar:opacity-100 flex flex-col items-center justify-center text-white text-xs font-black transition-opacity">
-                  <span className="text-sm">📷</span>
-                  <span>{isTamil ? 'புகைப்படம்' : 'Change'}</span>
-                </div>
-              )}
+              <div className="absolute inset-0 rounded-full bg-slate-950/70 opacity-0 group-hover/avatar:opacity-100 flex flex-col items-center justify-center text-white text-xs font-black transition-opacity">
+                <span className="text-sm">📷</span>
+                <span>{isTamil ? 'புகைப்படம்' : 'Change'}</span>
+              </div>
             </div>
             <div className="space-y-1.5 text-center sm:text-left flex-1">
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
@@ -173,15 +171,13 @@ function ProfilePage({ onNavigate, onShowToast }) {
             </div>
 
             <div className="flex items-center gap-2 shrink-0">
-              {isPublisher && (
-                <button
-                  onClick={() => setIsEditingPublisherModalOpen(true)}
-                  className="btn-magnetic px-4 py-2 rounded-xl bg-[#23645C] hover:bg-[#1a4b45] text-white font-black text-xs shadow-sm transition-all flex items-center gap-1.5"
-                >
-                  <span>✏️</span>
-                  <span>{isTamil ? 'சான்றுகளை திருத்து' : 'Edit Credentials'}</span>
-                </button>
-              )}
+              <button
+                onClick={() => setIsEditingPublisherModalOpen(true)}
+                className="btn-magnetic px-4 py-2 rounded-xl bg-[#23645C] hover:bg-[#1a4b45] text-white font-black text-xs shadow-sm transition-all flex items-center gap-1.5"
+              >
+                <span>✏️</span>
+                <span>{isTamil ? 'சான்றுகளை திருத்து' : 'Edit Credentials'}</span>
+              </button>
               <button
                 onClick={signOut}
                 className="btn-magnetic px-4 py-2 rounded-xl bg-red-50 dark:bg-red-950/30 hover:bg-red-600 hover:text-white text-red-600 dark:text-red-400 border border-red-200 dark:border-red-800 text-xs font-bold transition-all shrink-0"

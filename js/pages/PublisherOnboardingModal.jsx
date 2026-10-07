@@ -163,6 +163,9 @@ function PublisherOnboardingModal({ profile, onComplete, onClose }) {
 
       const updated = json.data || { ...profile, ...payload, is_onboarded: true };
       if (setProfile) setProfile(updated);
+      try {
+        localStorage.removeItem('muthaleetu_publishers_cache');
+      } catch (_) {}
       if (typeof window !== 'undefined') {
         window.dispatchEvent(new CustomEvent('publisher-profile-updated', { detail: updated }));
       }

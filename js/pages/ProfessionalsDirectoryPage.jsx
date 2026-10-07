@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { useLanguage } from '../context/LanguageContext.jsx';
+import { useAuth } from '../context/AuthContext.jsx';
 import { professionalsData } from '../data/translations.js';
 import { updateHeadTags, SITE_URL } from '../utils/formatters.js';
 
 function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
   const { language } = useLanguage();
+  const { user, profile } = useAuth();
   const isTamil = language === 'ta';
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -113,6 +115,19 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
         ? 'AMFI பதிவுசெய்த விநியோகஸ்தர் | நிறுவனர்'
         : (arn ? `AMFI பதிவுசெய்த விநியோகஸ்தர் | ${arn}` : 'AMFI பதிவுசெய்த விநியோகஸ்தர்');
 
+      // Check if this card belongs to the currently logged in user
+      const isCurrentUser = Boolean(
+        (user?.id && (p.id === user.id || String(p.id) === String(user.id))) ||
+        (user?.email && p.email && user.email.toLowerCase() === p.email.toLowerCase()) ||
+        (profile?.display_name && cleanName.toLowerCase() === profile.display_name.trim().toLowerCase())
+      );
+
+      const activeUserAvatar = isCurrentUser
+        ? (profile?.avatar_url || user?.user_metadata?.avatar_url || user?.user_metadata?.picture || null)
+        : null;
+
+      const cardAvatar = p.avatar_url || activeUserAvatar || (isFounder ? '/assets/padmanaban.jpg' : `https://ui-avatars.com/api/?name=${encodeURIComponent(cleanName)}&background=23645C&color=ffffff&bold=true`);
+
       list.push({
         id: isFounder ? 'budget-padmanaban' : p.id,
         isLive: true,
@@ -122,7 +137,7 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
         titleTamil: p.title || (isFounder ? 'நிறுவனர் & தலைமை சந்தை ஆய்வாளர்' : 'பதிவுசெய்யப்பட்ட மியூச்சுவல் ஃபண்ட் விநியோகஸ்தர்'),
         organization: isFounder ? 'Fortune Investment Services (FISPL)' : 'Fortune Investment Services (FISPL Partner)',
         arnNumber: arn,
-        avatar: p.avatar_url || (isFounder ? '/assets/padmanaban.jpg' : `https://ui-avatars.com/api/?name=${encodeURIComponent(cleanName)}&background=4a9e2c&color=ffffff&bold=true`),
+        avatar: cardAvatar,
         badgeEnglish: badgeEn,
         badgeTamil: badgeTa,
         bioEnglish: p.bio || (isFounder
@@ -170,7 +185,7 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
     });
 
     return list;
-  }, [livePublishers]);
+  }, [livePublishers, user, profile]);
 
   const filteredProfessionals = useMemo(() => {
     let list = [...allPublishers];
@@ -302,7 +317,9 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
                           alt={name}
                           className="w-16 h-16 rounded-2xl object-cover border-2 border-amber-500/40 group-hover:border-amber-500 shadow-md transition-colors"
                           onError={(e) => {
-                            e.target.src = '/assets/padmanaban.jpg';
+                            e.target.src = prof.id === 'budget-padmanaban'
+                              ? '/assets/padmanaban.jpg'
+                              : `https://ui-avatars.com/api/?name=${encodeURIComponent(prof.nameEnglish || 'Advisor')}&background=23645C&color=ffffff&bold=true`;
                           }}
                         />
                         <span className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-white dark:border-slate-900" title="Active Publisher" />

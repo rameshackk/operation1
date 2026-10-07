@@ -120,8 +120,8 @@ export default async function handler(req, res) {
 
         if (existingRes.rows.length > 0) {
           profile = existingRes.rows[0];
-          // If profile exists and avatar needs updating
-          if (avatarUrl && !profile.avatar_url) {
+          // If avatarUrl is provided and (not set or different from current)
+          if (avatarUrl && (!profile.avatar_url || (avatarUrl.startsWith('http') && profile.avatar_url !== avatarUrl))) {
             await pgPool.query(
               `UPDATE profiles SET avatar_url = $1, updated_at = CURRENT_TIMESTAMP WHERE id = $2`,
               [avatarUrl, profile.id]
@@ -136,7 +136,7 @@ export default async function handler(req, res) {
              ON CONFLICT (id) DO UPDATE SET
                email = COALESCE(EXCLUDED.email, profiles.email),
                display_name = COALESCE(profiles.display_name, EXCLUDED.display_name),
-               avatar_url = COALESCE(profiles.avatar_url, EXCLUDED.avatar_url),
+               avatar_url = COALESCE(EXCLUDED.avatar_url, profiles.avatar_url),
                updated_at = CURRENT_TIMESTAMP
              RETURNING *`,
             [rawUserId, email, displayName, avatarUrl || null]
@@ -155,6 +155,10 @@ export default async function handler(req, res) {
 
         if (sbProfile) {
           profile = sbProfile;
+          if (avatarUrl && (!profile.avatar_url || profile.avatar_url !== avatarUrl)) {
+            await supabaseAdmin.from('profiles').update({ avatar_url: avatarUrl }).eq('id', profile.id).catch(() => {});
+            profile.avatar_url = avatarUrl;
+          }
         } else {
           const { data: newProfile } = await supabaseAdmin
             .from('profiles')

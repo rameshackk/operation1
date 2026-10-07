@@ -121,13 +121,16 @@ export default async function handler(req, res) {
             id, email, display_name, avatar_url, title, arn_number,
             specialties, bio, bio_ta, linkedin_url, twitter_url, website_url,
             youtube_url, youtube_channel_id, youtube_channel_title, youtube_channel_thumbnail, youtube_channel_verified,
-            whatsapp_number, phone, is_onboarded, updated_at
+            whatsapp_number, phone, role, is_onboarded, updated_at
           ) VALUES (
-            $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, true, CURRENT_TIMESTAMP
+            $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, 'publisher', true, CURRENT_TIMESTAMP
           )
           ON CONFLICT (id) DO UPDATE SET
             display_name = EXCLUDED.display_name,
-            avatar_url = COALESCE(EXCLUDED.avatar_url, profiles.avatar_url),
+            avatar_url = CASE 
+              WHEN EXCLUDED.avatar_url IS NOT NULL AND EXCLUDED.avatar_url != '' THEN EXCLUDED.avatar_url 
+              ELSE profiles.avatar_url 
+            END,
             title = COALESCE(EXCLUDED.title, profiles.title),
             arn_number = COALESCE(EXCLUDED.arn_number, profiles.arn_number),
             specialties = COALESCE(EXCLUDED.specialties, profiles.specialties),
@@ -143,6 +146,7 @@ export default async function handler(req, res) {
             youtube_channel_verified = COALESCE(EXCLUDED.youtube_channel_verified, profiles.youtube_channel_verified),
             whatsapp_number = COALESCE(EXCLUDED.whatsapp_number, profiles.whatsapp_number),
             phone = COALESCE(EXCLUDED.phone, profiles.phone),
+            role = CASE WHEN profiles.role = 'admin' THEN 'admin' ELSE 'publisher' END,
             is_onboarded = true,
             updated_at = CURRENT_TIMESTAMP
           RETURNING *;
@@ -175,7 +179,7 @@ export default async function handler(req, res) {
       } else if (supabaseAdmin) {
         const { data, error } = await supabaseAdmin
           .from('profiles')
-          .upsert({ ...updates, id: userId, is_onboarded: true })
+          .upsert({ ...updates, id: userId, is_onboarded: true, role: 'publisher' })
           .select()
           .single();
 
@@ -375,11 +379,12 @@ export default async function handler(req, res) {
 
     // 2. List all publishers
     try {
+      const isFresh = Boolean(req.query?.t || req.query?.fresh || req.headers?.['cache-control']?.includes('no-cache'));
       const pgPool = getPgPool();
       if (pgPool) {
         let query = `
           SELECT 
-            p.id, p.display_name, p.avatar_url, p.role, p.title, p.arn_number,
+            p.id, p.email, p.display_name, p.avatar_url, p.role, p.title, p.arn_number,
             p.specialties, p.bio, p.bio_ta, p.linkedin_url, p.twitter_url, p.website_url,
             p.youtube_url, p.whatsapp_number, p.phone, p.is_onboarded, p.created_at,
             COALESCE(art.article_count, 0) as article_count
@@ -401,7 +406,7 @@ export default async function handler(req, res) {
         params.push(parseInt(limit, 10) || 50);
 
         const result = await pgPool.query(query, params);
-        res.setHeader('Cache-Control', 'public, s-maxage=600, stale-while-revalidate=86400');
+        res.setHeader('Cache-Control', isFresh ? 'no-cache, no-store, must-revalidate' : 'public, s-maxage=10, stale-while-revalidate=60');
         return res.status(200).json({
           status: 'success',
           data: result.rows
@@ -419,7 +424,7 @@ export default async function handler(req, res) {
           .limit(parseInt(limit, 10) || 50);
 
         if (error) throw error;
-        res.setHeader('Cache-Control', 'public, s-maxage=600, stale-while-revalidate=86400');
+        res.setHeader('Cache-Control', isFresh ? 'no-cache, no-store, must-revalidate' : 'public, s-maxage=10, stale-while-revalidate=60');
         return res.status(200).json({ status: 'success', data: data || [] });
       }
 
