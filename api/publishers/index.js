@@ -388,8 +388,7 @@ export default async function handler(req, res) {
             SELECT author_id, COUNT(*) as article_count FROM articles WHERE status = 'published' GROUP BY author_id
           ) art ON p.id::text = art.author_id::text
           WHERE p.role IN ('publisher', 'admin')
-            AND (p.is_test IS NULL OR p.is_test = false)
-            AND p.display_name NOT ILIKE '%demo%'
+            AND (p.display_name IS NOT NULL AND p.display_name != '' AND p.display_name NOT ILIKE '%demo%')
         `;
 
         const params = [];
@@ -415,7 +414,6 @@ export default async function handler(req, res) {
           .from('profiles')
           .select('*')
           .in('role', ['publisher', 'admin'])
-          .or('is_test.is.null,is_test.eq.false')
           .not('display_name', 'ilike', '%demo%')
           .order('created_at', { ascending: false })
           .limit(parseInt(limit, 10) || 50);
