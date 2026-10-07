@@ -39,8 +39,8 @@ function Home({ onNavigate, onShowToast }) {
         <HeroSection onNavigate={onNavigate} />
       </section>
 
-      {/* 2. SECTION 2: CINEMA VIDEO SHOWCASE (Accent #23645C) */}
-      <section className="w-full bg-[#23645C] dark:bg-slate-950 py-10 sm:py-14 border-b border-[#1b4f49] dark:border-slate-800">
+      {/* 2. SECTION 2: CINEMA VIDEO SHOWCASE (Frosted Glass White Aesthetic) */}
+      <section className="w-full bg-gradient-to-b from-slate-50/80 via-white to-slate-50/90 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 py-10 sm:py-14 border-b border-slate-200/80 dark:border-slate-800">
         <HomeCinemaShowcase
           onNavigate={onNavigate}
           onShowToast={onShowToast}
@@ -53,8 +53,8 @@ function Home({ onNavigate, onShowToast }) {
         <TrendingArticlesSection onNavigate={onNavigate} />
       </section>
 
-      {/* 4. SECTION 4: SIP WEALTH CALCULATOR (Accent #23645C) */}
-      <section className="w-full bg-[#23645C] dark:bg-slate-950 py-10 sm:py-14 pb-16 sm:pb-20">
+      {/* 4. SECTION 4: SIP WEALTH CALCULATOR (Frosted Glass White Aesthetic) */}
+      <section className="w-full bg-gradient-to-b from-slate-50/80 via-white to-slate-50/90 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 py-10 sm:py-14 pb-16 sm:pb-20">
         <LazyMount fallback={
           <div className="w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 py-8 text-center text-sm font-medium text-emerald-200 min-h-[120px]">
             நிதி கணக்கீட்டுக் கருவி ஏற்றப்படுகிறது...

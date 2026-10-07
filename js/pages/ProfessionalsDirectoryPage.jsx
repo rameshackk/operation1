@@ -213,10 +213,7 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
 
   return (
     <div
-      className="w-full min-h-[calc(100vh-140px)] py-6 sm:py-8 transition-colors duration-300 relative"
-      style={{
-        backgroundColor: '#23645C'
-      }}
+      className="w-full min-h-[calc(100vh-140px)] py-6 sm:py-8 transition-colors duration-300 relative bg-gradient-to-b from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950"
     >
       <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-6 animate-fadeIn">
         {/* Controls & Search Bar */}
@@ -230,8 +227,8 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
                   key={cat.id}
                   onClick={() => setSelectedCategory(cat.id)}
                   className={`px-4 py-2 rounded-xl text-xs font-black whitespace-nowrap transition-all ${isActive
-                      ? 'bg-[#107040] text-white shadow-md border-2 border-white scale-105'
-                      : 'bg-white/80 hover:bg-white text-slate-800 dark:text-slate-200 dark:bg-slate-900/80 border border-slate-300/80 dark:border-slate-700 shadow-sm backdrop-blur-sm'
+                      ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-950 shadow-md scale-105'
+                      : 'bg-white/80 hover:bg-white text-slate-800 dark:text-slate-200 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800 shadow-sm backdrop-blur-md'
                     }`}
                 >
                   {isTamil ? cat.labelTa : cat.labelEn}
@@ -306,7 +303,7 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
                 <div
                   key={prof.id}
                   onClick={() => onNavigate && onNavigate(`#/professionals/${prof.id}`)}
-                  className="group bg-white dark:bg-slate-900 rounded-3xl p-6 border border-white/40 dark:border-slate-800 shadow-xl hover:border-amber-500/50 hover:shadow-2xl hover:-translate-y-1 transition-all cursor-pointer flex flex-col justify-between space-y-5 relative overflow-hidden"
+                  className="group bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-3xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-xl hover:border-amber-500/50 hover:shadow-2xl hover:-translate-y-1 transition-all cursor-pointer flex flex-col justify-between space-y-5 relative overflow-hidden"
                 >
                   <div className="space-y-4">
                     {/* Avatar & Badges Header */}

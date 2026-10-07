@@ -2572,14 +2572,14 @@ function HomeCinemaShowcase({ onNavigate, onShowToast, language = "ta" }) {
     }
     return list.slice(0, 12);
   }, [allVideos, activeCategory]);
-  return /* @__PURE__ */ React17.createElement("div", { className: "w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 select-none min-w-0" }, /* @__PURE__ */ React17.createElement("div", { className: "space-y-4" }, /* @__PURE__ */ React17.createElement("div", { className: "flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-white/15 dark:border-slate-800" }, /* @__PURE__ */ React17.createElement("div", { className: "flex items-center gap-2 overflow-x-auto no-scrollbar py-1 touch-pan-x" }, categories.map((cat) => {
+  return /* @__PURE__ */ React17.createElement("div", { className: "w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 select-none min-w-0" }, /* @__PURE__ */ React17.createElement("div", { className: "space-y-4" }, /* @__PURE__ */ React17.createElement("div", { className: "flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-200/80 dark:border-slate-800" }, /* @__PURE__ */ React17.createElement("div", { className: "flex items-center gap-2 overflow-x-auto no-scrollbar py-1 touch-pan-x" }, categories.map((cat) => {
     const isActive = activeCategory === cat.id;
     return /* @__PURE__ */ React17.createElement(
       "button",
       {
         key: cat.id,
         onClick: () => setActiveCategory(cat.id),
-        className: `px-4 sm:px-5 py-2.5 min-h-[44px] rounded-full text-xs sm:text-[12.5px] whitespace-nowrap transition-all duration-200 shrink-0 active:scale-95 shadow-sm ${isActive ? "bg-white text-[#23645C] font-black ring-2 ring-[#4A9E2C] shadow-md" : "bg-white text-slate-800 hover:bg-slate-100 hover:text-slate-950 font-bold border border-slate-200/80"}`
+        className: `px-4 sm:px-5 py-2.5 min-h-[44px] rounded-full text-xs sm:text-[12.5px] whitespace-nowrap transition-all duration-200 shrink-0 active:scale-95 shadow-sm ${isActive ? "bg-emerald-700 text-white font-black ring-2 ring-emerald-500 shadow-md shadow-emerald-700/20" : "bg-white/80 dark:bg-slate-900/80 backdrop-blur-md text-slate-800 dark:text-slate-200 hover:bg-white hover:text-slate-950 font-bold border border-slate-200/80 dark:border-slate-800"}`
       },
       isTamil ? cat.labelTa : cat.labelEn
     );
@@ -2590,7 +2590,7 @@ function HomeCinemaShowcase({ onNavigate, onShowToast, language = "ta" }) {
         if (onNavigate) onNavigate("#/videos");
         else if (typeof window !== "undefined") window.location.hash = "#/videos";
       },
-      className: "inline-flex items-center gap-1.5 text-xs sm:text-[13px] font-extrabold text-amber-300 hover:text-amber-200 transition-colors shrink-0 self-end sm:self-center min-h-[44px] py-1"
+      className: "inline-flex items-center gap-1.5 text-xs sm:text-[13px] font-extrabold text-emerald-700 dark:text-amber-400 hover:text-emerald-900 dark:hover:text-amber-300 transition-colors shrink-0 self-end sm:self-center min-h-[44px] py-1"
     },
     /* @__PURE__ */ React17.createElement("span", null, isTamil ? "\u0B85\u0BA9\u0BC8\u0BA4\u0BCD\u0BA4\u0BC1 \u0BB5\u0BC0\u0B9F\u0BBF\u0BAF\u0BCB\u0B95\u0BCD\u0B95\u0BB3\u0BCD (800+)" : "View All Videos (800+)"),
     /* @__PURE__ */ React17.createElement("span", { className: "font-bold" }, "\u2192")
@@ -2651,14 +2651,14 @@ function LazyMount({ children, fallback }) {
 }
 function Home({ onNavigate, onShowToast }) {
   const { language } = useLanguage();
-  return /* @__PURE__ */ React19.createElement("div", { className: "w-full animate-fadeIn flex flex-col" }, /* @__PURE__ */ React19.createElement("section", { className: "w-full bg-[#FFFFFF] dark:bg-slate-900/60 py-8 sm:py-12 border-b border-slate-100 dark:border-slate-800" }, /* @__PURE__ */ React19.createElement(HeroSection_default, { onNavigate })), /* @__PURE__ */ React19.createElement("section", { className: "w-full bg-[#23645C] dark:bg-slate-950 py-10 sm:py-14 border-b border-[#1b4f49] dark:border-slate-800" }, /* @__PURE__ */ React19.createElement(
+  return /* @__PURE__ */ React19.createElement("div", { className: "w-full animate-fadeIn flex flex-col" }, /* @__PURE__ */ React19.createElement("section", { className: "w-full bg-[#FFFFFF] dark:bg-slate-900/60 py-8 sm:py-12 border-b border-slate-100 dark:border-slate-800" }, /* @__PURE__ */ React19.createElement(HeroSection_default, { onNavigate })), /* @__PURE__ */ React19.createElement("section", { className: "w-full bg-gradient-to-b from-slate-50/80 via-white to-slate-50/90 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 py-10 sm:py-14 border-b border-slate-200/80 dark:border-slate-800" }, /* @__PURE__ */ React19.createElement(
     HomeCinemaShowcase_default,
     {
       onNavigate,
       onShowToast,
       language
     }
-  )), /* @__PURE__ */ React19.createElement("section", { className: "w-full bg-[#FFFFFF] dark:bg-slate-900/60 py-10 sm:py-14 border-b border-slate-100 dark:border-slate-800" }, /* @__PURE__ */ React19.createElement(TrendingArticlesSection_default, { onNavigate })), /* @__PURE__ */ React19.createElement("section", { className: "w-full bg-[#23645C] dark:bg-slate-950 py-10 sm:py-14 pb-16 sm:pb-20" }, /* @__PURE__ */ React19.createElement(LazyMount, { fallback: /* @__PURE__ */ React19.createElement("div", { className: "w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 py-8 text-center text-sm font-medium text-emerald-200 min-h-[120px]" }, "\u0BA8\u0BBF\u0BA4\u0BBF \u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BB0\u0BC1\u0BB5\u0BBF \u0B8F\u0BB1\u0BCD\u0BB1\u0BAA\u0BCD\u0BAA\u0B9F\u0BC1\u0B95\u0BBF\u0BB1\u0BA4\u0BC1...") }, /* @__PURE__ */ React19.createElement(Suspense, { fallback: /* @__PURE__ */ React19.createElement("div", { className: "w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 py-8 text-center text-sm font-medium text-emerald-200 min-h-[120px]" }, "\u0BA8\u0BBF\u0BA4\u0BBF \u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BB0\u0BC1\u0BB5\u0BBF \u0B8F\u0BB1\u0BCD\u0BB1\u0BAA\u0BCD\u0BAA\u0B9F\u0BC1\u0B95\u0BBF\u0BB1\u0BA4\u0BC1...") }, /* @__PURE__ */ React19.createElement(SipCalculator2, null)))));
+  )), /* @__PURE__ */ React19.createElement("section", { className: "w-full bg-[#FFFFFF] dark:bg-slate-900/60 py-10 sm:py-14 border-b border-slate-100 dark:border-slate-800" }, /* @__PURE__ */ React19.createElement(TrendingArticlesSection_default, { onNavigate })), /* @__PURE__ */ React19.createElement("section", { className: "w-full bg-gradient-to-b from-slate-50/80 via-white to-slate-50/90 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 py-10 sm:py-14 pb-16 sm:pb-20" }, /* @__PURE__ */ React19.createElement(LazyMount, { fallback: /* @__PURE__ */ React19.createElement("div", { className: "w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 py-8 text-center text-sm font-medium text-emerald-200 min-h-[120px]" }, "\u0BA8\u0BBF\u0BA4\u0BBF \u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BB0\u0BC1\u0BB5\u0BBF \u0B8F\u0BB1\u0BCD\u0BB1\u0BAA\u0BCD\u0BAA\u0B9F\u0BC1\u0B95\u0BBF\u0BB1\u0BA4\u0BC1...") }, /* @__PURE__ */ React19.createElement(Suspense, { fallback: /* @__PURE__ */ React19.createElement("div", { className: "w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 py-8 text-center text-sm font-medium text-emerald-200 min-h-[120px]" }, "\u0BA8\u0BBF\u0BA4\u0BBF \u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BB0\u0BC1\u0BB5\u0BBF \u0B8F\u0BB1\u0BCD\u0BB1\u0BAA\u0BCD\u0BAA\u0B9F\u0BC1\u0B95\u0BBF\u0BB1\u0BA4\u0BC1...") }, /* @__PURE__ */ React19.createElement(SipCalculator2, null)))));
 }
 var Home_default = Home;
 

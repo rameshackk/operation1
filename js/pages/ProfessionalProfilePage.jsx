@@ -219,19 +219,19 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
   const cleanWhatsApp = (prof.whatsapp || '').replace(/[^0-9]/g, '');
 
   return (
-    <div className="w-full min-h-[calc(100vh-140px)] py-8 transition-colors duration-300 relative" style={{ backgroundColor: '#23645C' }}>
+    <div className="w-full min-h-[calc(100vh-140px)] py-8 transition-colors duration-300 relative bg-gradient-to-b from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 animate-fadeIn">
       {/* Back Button */}
       <button
         onClick={() => onNavigate && onNavigate('#/professionals')}
-        className="btn-magnetic px-4 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-bold transition-all inline-flex items-center gap-1.5 border border-slate-200 dark:border-slate-800 shadow-sm"
+        className="btn-magnetic px-4 py-2 rounded-xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-md hover:bg-white text-slate-700 dark:text-slate-200 text-xs font-bold transition-all inline-flex items-center gap-1.5 border border-slate-200 dark:border-slate-800 shadow-sm"
       >
         <span>←</span>
         <span>{isTamil ? 'அனைத்து நிபுணர்கள் பட்டியல்' : 'Back to Advisors Directory'}</span>
       </button>
 
       {/* 1. IDENTITY HERO BANNER */}
-      <div className="relative rounded-3xl bg-white dark:bg-slate-950 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-xl dark:shadow-2xl overflow-hidden backdrop-blur-md">
+      <div className="relative rounded-3xl bg-white/80 dark:bg-slate-900/80 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-xl dark:shadow-2xl overflow-hidden backdrop-blur-xl">
         <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full pointer-events-none" />
 
         <div className="relative z-10 flex flex-col md:flex-row items-start gap-6 sm:gap-8">

@@ -541,10 +541,7 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
 
   return (
     <div 
-      className={`min-h-screen pb-20 animate-fadeIn relative transition-colors duration-300 ${isReadingMode ? 'bg-[#fbfbf9] dark:bg-[#0a0f18]' : ''}`}
-      style={!isReadingMode ? {
-        backgroundColor: '#23645C'
-      } : undefined}
+      className={`min-h-screen pb-20 animate-fadeIn relative transition-colors duration-300 bg-gradient-to-b from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 ${isReadingMode ? 'bg-[#fbfbf9] dark:bg-[#0a0f18]' : ''}`}
     >
 
       {/* ================= 1. STICKY "NOW READING" BAR ================= */}
@@ -867,6 +864,7 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
 
       {/* ================= MAIN ARTICLE WRAPPER ================= */}
       <div className="w-full max-w-[96vw] 2xl:max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+        <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl rounded-3xl p-6 sm:p-8 lg:p-10 border border-slate-200/80 dark:border-slate-800 shadow-xl space-y-6">
 
         {/* Breadcrumb & Navigation Top */}
         <div className="flex items-center justify-between gap-4 py-2 mb-4 text-xs font-bold text-slate-500 dark:text-slate-400">
@@ -1208,6 +1206,7 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
             </div>
           </div>
         )}
+        </div>
       </div>
 
       {/* ================= 9. FLOATING LIVE AUDIO PLAYER CONTROLLER & STICKY BOTTOM BAR ================= */}

@@ -125,10 +125,10 @@ function ProfilePage({ onNavigate, onShowToast }) {
   };
 
   return (
-    <div className="w-full min-h-[calc(100vh-140px)] bg-[#23645C] py-8 sm:py-10 transition-colors">
+    <div className="w-full min-h-[calc(100vh-140px)] bg-gradient-to-b from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 py-8 sm:py-10 transition-colors">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 animate-fadeIn">
         {/* Header Banner - Solid White Content Card */}
-        <div className="relative rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-xl overflow-hidden text-slate-900 dark:text-white">
+        <div className="relative rounded-3xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-xl overflow-hidden text-slate-900 dark:text-white">
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 relative z-10">
             <div
               onClick={() => setIsEditingPublisherModalOpen(true)}
@@ -139,11 +139,11 @@ function ProfilePage({ onNavigate, onShowToast }) {
                 <img
                   src={avatarUrl}
                   alt={displayName}
-                  className="w-20 h-20 rounded-full object-cover border-2 border-[#23645C] shadow-md shrink-0 group-hover/avatar:opacity-85 transition-opacity"
-                  onError={(e) => { e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName || 'User')}&background=23645C&color=ffffff&bold=true`; }}
+                  className="w-20 h-20 rounded-full object-cover border-2 border-slate-300 dark:border-slate-700 shadow-md shrink-0 group-hover/avatar:opacity-85 transition-opacity"
+                  onError={(e) => { e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName || 'User')}&background=0f172a&color=ffffff&bold=true`; }}
                 />
               ) : (
-                <div className="w-20 h-20 rounded-full bg-[#23645C] text-white font-black text-2xl flex items-center justify-center border-2 border-emerald-300 shadow-md shrink-0">
+                <div className="w-20 h-20 rounded-full bg-slate-900 text-white font-black text-2xl flex items-center justify-center border-2 border-slate-700 shadow-md shrink-0">
                   {initials}
                 </div>
               )}
@@ -158,14 +158,14 @@ function ProfilePage({ onNavigate, onShowToast }) {
                 <span className={`px-2.5 py-0.5 text-xs font-black uppercase tracking-wider rounded-full border ${role === 'admin'
                     ? 'bg-red-500/20 text-red-700 dark:text-red-300 border-red-400/40'
                     : role === 'publisher'
-                      ? 'bg-emerald-50 dark:bg-emerald-950/50 text-[#23645C] dark:text-emerald-300 border-emerald-200 dark:border-emerald-800 font-black'
+                      ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800 font-black'
                       : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700'
                   }`}>
                   {role === 'admin' ? 'Administrator' : (role === 'publisher' ? 'AMFI Publisher / Advisor' : 'Investor')}
                 </span>
               </div>
               <p className="text-xs text-slate-600 dark:text-slate-400 font-mono">{email}</p>
-              <p className="text-xs text-[#23645C] dark:text-emerald-400 font-semibold">
+              <p className="text-xs text-emerald-700 dark:text-emerald-400 font-semibold">
                 {profile?.title || (isTamil ? 'முதலீட்டு திசை நிதி தளத்தின் உறுப்பினர்' : 'Muthaleetu Thisai Certified Member')}
               </p>
             </div>
@@ -173,7 +173,7 @@ function ProfilePage({ onNavigate, onShowToast }) {
             <div className="flex items-center gap-2 shrink-0">
               <button
                 onClick={() => setIsEditingPublisherModalOpen(true)}
-                className="btn-magnetic px-4 py-2 rounded-xl bg-[#23645C] hover:bg-[#1a4b45] text-white font-black text-xs shadow-sm transition-all flex items-center gap-1.5"
+                className="btn-magnetic px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-amber-500 dark:hover:bg-amber-400 text-white dark:text-slate-950 font-black text-xs shadow-sm transition-all flex items-center gap-1.5"
               >
                 <span>✏️</span>
                 <span>{isTamil ? 'சான்றுகளை திருத்து' : 'Edit Credentials'}</span>
@@ -188,13 +188,13 @@ function ProfilePage({ onNavigate, onShowToast }) {
           </div>
         </div>
 
-        {/* Tabs on #23645C Canvas */}
-        <div className="flex items-center gap-2 border-b border-white/20 pb-3">
+        {/* Tabs on Frosted Canvas */}
+        <div className="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
           <button
             onClick={() => setActiveTab('overview')}
             className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === 'overview'
                 ? 'bg-amber-500 text-slate-950 shadow-md font-extrabold'
-                : 'text-white/90 bg-white/10 hover:bg-white/20 hover:text-white backdrop-blur-xs'
+                : 'text-slate-700 dark:text-slate-300 bg-white/80 dark:bg-slate-800/80 hover:bg-white border border-slate-200 dark:border-slate-700 backdrop-blur-md'
               }`}
           >
             {isTamil ? 'சுயவிவர விவரங்கள்' : 'Profile Settings'}
@@ -203,7 +203,7 @@ function ProfilePage({ onNavigate, onShowToast }) {
             onClick={() => setActiveTab('bookmarks')}
             className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === 'bookmarks'
                 ? 'bg-amber-500 text-slate-950 shadow-md font-extrabold'
-                : 'text-white/90 bg-white/10 hover:bg-white/20 hover:text-white backdrop-blur-xs'
+                : 'text-slate-700 dark:text-slate-300 bg-white/80 dark:bg-slate-800/80 hover:bg-white border border-slate-200 dark:border-slate-700 backdrop-blur-md'
               }`}
           >
             {isTamil ? `சேமிக்கப்பட்டவை (${bookmarks.length})` : `Saved Bookmarks (${bookmarks.length})`}

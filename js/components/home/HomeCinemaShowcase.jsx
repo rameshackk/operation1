@@ -48,7 +48,7 @@ function HomeCinemaShowcase({ onNavigate, onShowToast, language = 'ta' }) {
     <div className="w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 select-none min-w-0">
       <div className="space-y-4">
         {/* Category Tabs & View All Link */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-white/15 dark:border-slate-800">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-200/80 dark:border-slate-800">
           <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 touch-pan-x">
             {categories.map((cat) => {
               const isActive = activeCategory === cat.id;
@@ -57,8 +57,8 @@ function HomeCinemaShowcase({ onNavigate, onShowToast, language = 'ta' }) {
                   key={cat.id}
                   onClick={() => setActiveCategory(cat.id)}
                   className={`px-4 sm:px-5 py-2.5 min-h-[44px] rounded-full text-xs sm:text-[12.5px] whitespace-nowrap transition-all duration-200 shrink-0 active:scale-95 shadow-sm ${isActive
-                      ? 'bg-white text-[#23645C] font-black ring-2 ring-[#4A9E2C] shadow-md'
-                      : 'bg-white text-slate-800 hover:bg-slate-100 hover:text-slate-950 font-bold border border-slate-200/80'
+                      ? 'bg-emerald-700 text-white font-black ring-2 ring-emerald-500 shadow-md shadow-emerald-700/20'
+                      : 'bg-white/80 dark:bg-slate-900/80 backdrop-blur-md text-slate-800 dark:text-slate-200 hover:bg-white hover:text-slate-950 font-bold border border-slate-200/80 dark:border-slate-800'
                     }`}
                 >
                   {isTamil ? cat.labelTa : cat.labelEn}
@@ -72,7 +72,7 @@ function HomeCinemaShowcase({ onNavigate, onShowToast, language = 'ta' }) {
               if (onNavigate) onNavigate('#/videos');
               else if (typeof window !== 'undefined') window.location.hash = '#/videos';
             }}
-            className="inline-flex items-center gap-1.5 text-xs sm:text-[13px] font-extrabold text-amber-300 hover:text-amber-200 transition-colors shrink-0 self-end sm:self-center min-h-[44px] py-1"
+            className="inline-flex items-center gap-1.5 text-xs sm:text-[13px] font-extrabold text-emerald-700 dark:text-amber-400 hover:text-emerald-900 dark:hover:text-amber-300 transition-colors shrink-0 self-end sm:self-center min-h-[44px] py-1"
           >
             <span>{isTamil ? 'அனைத்து வீடியோக்கள் (800+)' : 'View All Videos (800+)'}</span>
             <span className="font-bold">→</span>

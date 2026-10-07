@@ -587,10 +587,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
 
   return (
     <div
-      className="w-full min-h-[calc(100vh-120px)] pb-16 pt-3 flex flex-col animate-fadeIn relative"
-      style={{
-        backgroundColor: '#23645C'
-      }}
+      className="w-full min-h-[calc(100vh-120px)] pb-16 pt-3 flex flex-col animate-fadeIn relative bg-gradient-to-b from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950"
     >
       {/* Top Search & Filter Bar (Fixed / Pinned) */}
       <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 mb-4 shrink-0">
