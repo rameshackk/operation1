@@ -2,6 +2,30 @@
   "version": 2,
   "regions": ["bom1"],
   "outputDirectory": ".",
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "muthaleetuthisai-rho.vercel.app"
+        }
+      ],
+      "destination": "https://www.muthaleetuthisai.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "muthaleetuthisai.com"
+        }
+      ],
+      "destination": "https://www.muthaleetuthisai.com/:path*",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/manifest.json",
@@ -39,7 +63,7 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, s-maxage=60, stale-while-revalidate=86400"
+          "value": "public, s-maxage=600, stale-while-revalidate=86400"
         }
       ]
     },
@@ -48,7 +72,7 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, s-maxage=300, stale-while-revalidate=86400"
+          "value": "public, s-maxage=600, stale-while-revalidate=86400"
         }
       ]
     },
@@ -57,7 +81,7 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, s-maxage=300, stale-while-revalidate=86400"
+          "value": "public, s-maxage=600, stale-while-revalidate=86400"
         }
       ]
     },
@@ -66,7 +90,7 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, s-maxage=300, stale-while-revalidate=86400"
+          "value": "public, s-maxage=600, stale-while-revalidate=86400"
         }
       ]
     },

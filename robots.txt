@@ -6,4 +6,4 @@ Disallow: /admin/
 Allow: /api/sitemap.xml
 
 # XML Sitemap
-Sitemap: https://muthaleetuthisai-rho.vercel.app/sitemap.xml
+Sitemap: https://www.muthaleetuthisai.com/sitemap.xml

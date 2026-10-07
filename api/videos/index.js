@@ -14,7 +14,7 @@ export default async function handler(req, res) {
   }
 
   const clientIp = getClientIp(req);
-  const { id, preview, type, category = 'all', sort = 'newest' } = req.query || {};
+  const { id, preview, type, category = 'all', sort = 'newest', fields } = req.query || {};
 
   // ================= 1. PUBLIC TRENDING PREVIEW =================
   if (preview === '1' || preview === 'true' || type === 'trending-preview') {
@@ -32,7 +32,7 @@ export default async function handler(req, res) {
         try {
           const query = `
             SELECT 
-              id, youtube_id, title_ta, title_en, description_ta, description_en,
+              id, youtube_id, title_ta, title_en,
               thumbnail_url, duration, duration_seconds,
               published_at, view_count, category, trending, tags
             FROM videos
@@ -50,7 +50,7 @@ export default async function handler(req, res) {
       if (previewVideos.length === 0 && supabaseAdmin) {
         const { data, error } = await supabaseAdmin
           .from('videos')
-          .select('id, youtube_id, title_ta, title_en, description_ta, description_en, thumbnail_url, duration, duration_seconds, published_at, view_count, category, trending, tags')
+          .select('id, youtube_id, title_ta, title_en, thumbnail_url, duration, duration_seconds, published_at, view_count, category, trending, tags')
           .eq('status', 'published')
           .order('trending', { ascending: false })
           .order('published_at', { ascending: false })
@@ -60,7 +60,7 @@ export default async function handler(req, res) {
         previewVideos = (data || []).map(formatVideoRow);
       }
 
-      res.setHeader('Cache-Control', 'public, s-maxage=120, stale-while-revalidate=600');
+      res.setHeader('Cache-Control', 'public, s-maxage=600, stale-while-revalidate=86400');
       res.setHeader('Content-Type', 'application/json');
 
       return res.status(200).json({
@@ -87,7 +87,7 @@ export default async function handler(req, res) {
         return res.status(404).json({ error: 'Video not found' });
       }
 
-      res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=300');
+      res.setHeader('Cache-Control', 'public, s-maxage=600, stale-while-revalidate=86400');
       res.setHeader('Content-Type', 'application/json');
 
       return res.status(200).json({
@@ -105,7 +105,7 @@ export default async function handler(req, res) {
     const { publisherId, sourcePublisherId, search } = req.query || {};
     const rawPublisherId = publisherId || sourcePublisherId || null;
     const targetPublisherId = rawPublisherId ? sanitizeText(rawPublisherId.toString(), 64) : null;
-    const { page, limit } = parseSafePagination(req.query, 100, 100);
+    const { page, limit } = parseSafePagination(req.query, 48, 100);
 
     // Publishers can see their own pending videos when authenticated; public users only see published videos
     let statusFilter = 'published';
@@ -126,9 +126,28 @@ export default async function handler(req, res) {
     });
 
     const isFullView = req.query?.view === 'full';
+    const isListOnly = fields === 'list' || !isFullView;
+
     let videoData = (result.videos || []).map(v => {
-      if (isFullView) return v;
       const ytId = v.youtubeId || v.id;
+      if (isListOnly) {
+        return {
+          id: ytId,
+          youtubeId: ytId,
+          slug: v.slug || ytId,
+          titleTamil: v.titleTamil || v.title || '',
+          titleEnglish: v.titleEnglish || v.title || '',
+          title: v.title || v.titleTamil || v.titleEnglish || '',
+          thumbnail: v.thumbnail || (ytId ? `https://img.youtube.com/vi/${ytId}/hqdefault.jpg` : ''),
+          category: v.category,
+          duration: v.duration,
+          isShort: v.isShort || (v.durationSeconds > 0 && v.durationSeconds <= 65),
+          publishedAt: v.publishedAt,
+          views: v.views,
+          trending: v.trending || false
+        };
+      }
+
       return {
         id: ytId,
         youtubeId: ytId,
@@ -153,7 +172,7 @@ export default async function handler(req, res) {
       };
     });
 
-    res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=86400');
+    res.setHeader('Cache-Control', 'public, s-maxage=600, stale-while-revalidate=86400');
     res.setHeader('Content-Type', 'application/json');
 
     return res.status(200).json({
@@ -171,4 +190,5 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Failed to fetch videos from database', message: error.message });
   }
 }
+
 

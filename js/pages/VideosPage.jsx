@@ -6,7 +6,7 @@ import CinemaVideoCard from '../components/home/CinemaVideoCard.jsx';
 import CinemaTheaterModal from './CinemaTheaterModal.jsx';
 import { useVideos } from '../services/videos.js';
 import { videosData } from '../data/translations.js';
-
+import { updateHeadTags } from '../utils/formatters.js';
 
 function VideosPage({ onNavigate, onShowToast, initialVideoId }) {
   const { language } = useLanguage();
@@ -21,13 +21,29 @@ function VideosPage({ onNavigate, onShowToast, initialVideoId }) {
   const sentinelRef = useRef(null);
 
   // Live video hook — pulls directly from Supabase /api/videos with built-in fallback
-  const { videos: allLiveVideos = [], isLoading: isVideosLoading } = useVideos('all', sortBy, 48, language);
+  const { videos: allLiveVideos = [], isLoading: isVideosLoading, total: totalVideosCount } = useVideos('all', sortBy, 48, language);
+
+  useEffect(() => {
+    updateHeadTags({
+      title: isTamil ? 'வீடியோக்கள் & Masterclasses | முதலீட்டு திசை' : 'Videos & Masterclasses | Muthaleetu Thisai',
+      description: isTamil
+        ? 'மியூச்சுவல் ஃபண்ட், SIP, பங்குச் சந்தை மற்றும் முதலீட்டு வழிகாட்டல் வீடியோக்கள்.'
+        : 'Watch top mutual funds, SIP, stock market and personal finance masterclasses in Tamil.',
+      pathname: '/videos'
+    });
+  }, [isTamil]);
 
   useEffect(() => {
     if (initialVideoId && allLiveVideos && allLiveVideos.length > 0) {
       const found = allLiveVideos.find(v => v.id === initialVideoId || v.youtubeId === initialVideoId || v.youtube_id === initialVideoId || v.slug === initialVideoId);
       if (found) {
         setSelectedVideo(found);
+        updateHeadTags({
+          title: `${found.titleTamil || found.title} | முதலீட்டு திசை`,
+          description: found.descriptionTamil || found.titleEnglish || found.title,
+          image: found.thumbnail,
+          pathname: `/videos/${found.id || found.slug}`
+        });
       }
     }
   }, [initialVideoId, allLiveVideos]);
@@ -146,7 +162,7 @@ function VideosPage({ onNavigate, onShowToast, initialVideoId }) {
       </div>
 
       {/* 2. CATEGORY & SEARCH CONTROLS BAR */}
-      <div className="bg-white/95 dark:bg-slate-950/95  border-y border-slate-200 dark:border-slate-800/80 shadow-sm py-3">
+      <div className="bg-white/95 dark:bg-slate-950/95 border-y border-slate-200 dark:border-slate-800/80 shadow-sm py-3">
         <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-2.5">
           <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1">
             {categoriesList.map(cat => {
@@ -158,7 +174,7 @@ function VideosPage({ onNavigate, onShowToast, initialVideoId }) {
                     setActiveCategory(cat.id);
                     setVisibleGridCount(48);
                   }}
-                  className={`btn-magnetic px-3.5 py-1.5 rounded-full text-xs font-black whitespace-nowrap transition-all duration-200 shrink-0 ${isActive
+                  className={`btn-magnetic px-3.5 py-1.5 rounded-full text-xs font-black whitespace-nowrap transition-all duration-200 shrink-0 cursor-pointer ${isActive
                       ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20 scale-105'
                       : 'bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800'
                     }`}
@@ -187,7 +203,7 @@ function VideosPage({ onNavigate, onShowToast, initialVideoId }) {
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-slate-200"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-slate-200 cursor-pointer"
                 >
                   ✕
                 </button>
@@ -211,7 +227,7 @@ function VideosPage({ onNavigate, onShowToast, initialVideoId }) {
               <div className="inline-flex p-0.5 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
                 <button
                   onClick={() => setViewMode('rails')}
-                  className={`btn-magnetic px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${viewMode === 'rails' && !isFiltering
+                  className={`btn-magnetic px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${viewMode === 'rails' && !isFiltering
                       ? 'bg-amber-500 text-slate-950 font-black shadow'
                       : 'text-slate-500 dark:text-slate-400 hover:text-white'
                     }`}
@@ -220,7 +236,7 @@ function VideosPage({ onNavigate, onShowToast, initialVideoId }) {
                 </button>
                 <button
                   onClick={() => setViewMode('grid')}
-                  className={`btn-magnetic px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${viewMode === 'grid' || isFiltering
+                  className={`btn-magnetic px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${viewMode === 'grid' || isFiltering
                       ? 'bg-amber-500 text-slate-950 font-black shadow'
                       : 'text-slate-500 dark:text-slate-400 hover:text-white'
                     }`}
@@ -233,7 +249,7 @@ function VideosPage({ onNavigate, onShowToast, initialVideoId }) {
         </div>
       </div>
 
-      {/* 3. MAIN CONTENT: CINEMATIC RAILS OR FULL 882 GRID */}
+      {/* 3. MAIN CONTENT: CINEMATIC RAILS OR FULL GRID */}
       <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         {isFiltering || viewMode === 'grid' ? (
           <div className="space-y-6">
@@ -264,7 +280,7 @@ function VideosPage({ onNavigate, onShowToast, initialVideoId }) {
                 <div className="flex flex-wrap items-center justify-center gap-3">
                   <button
                     onClick={handleLoadMore}
-                    className="btn-magnetic px-6 py-2.5 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider shadow-lg shadow-amber-500/20 flex items-center gap-2 transition-transform hover:scale-105"
+                    className="btn-magnetic px-6 py-2.5 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider shadow-lg shadow-amber-500/20 flex items-center gap-2 transition-transform hover:scale-105 cursor-pointer"
                   >
                     <span>▶</span>
                     <span>
@@ -276,7 +292,7 @@ function VideosPage({ onNavigate, onShowToast, initialVideoId }) {
 
                   <button
                     onClick={handleLoadAll}
-                    className="btn-magnetic px-5 py-2.5 rounded-2xl bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-xs border border-slate-200 dark:border-slate-800 transition-colors shadow-sm"
+                    className="btn-magnetic px-5 py-2.5 rounded-2xl bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-xs border border-slate-200 dark:border-slate-800 transition-colors shadow-sm cursor-pointer"
                   >
                     <span>{isTamil ? `அனைத்து ${filteredVideos.length} வீடியோக்களையும் ஏற்று` : `Show All ${filteredVideos.length} Videos`}</span>
                   </button>
@@ -310,7 +326,7 @@ function VideosPage({ onNavigate, onShowToast, initialVideoId }) {
             <CinemaVideoRail
               titleTamil="குறுகிய வீடியோக்கள் & Quick Takes"
               titleEnglish="Quick Takes & YouTube Shorts"
-              subtitleTamil="1 நிமிடத்தில் புரியும் முக்கியமான முதலீட்டு ஆலோசனைகள் மற்றும் ரகசியங்கள்"
+              subtitleTamil="1 நிமிடத்தில் புரியும் முக்கியமான முதலீட்டு தகவல்கள் மற்றும் விளக்கங்கள்"
               subtitleEnglish="Bite-sized high-impact financial lessons in under 60 seconds"
               badgeText="SHORTS"
               videos={railsData.shorts}
@@ -369,6 +385,7 @@ function VideosPage({ onNavigate, onShowToast, initialVideoId }) {
           </div>
         )}
       </div>
+
 
       {selectedVideo && (
         <CinemaTheaterModal

@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import { useLanguage } from '../context/LanguageContext.jsx';
 import { useAuth, useBookmarks } from '../context/AuthContext.jsx';
 import { cleanImageUrl } from '../services/articles.js';
+import { updateHeadTags } from '../utils/formatters.js';
+import { getCachedPublishers } from '../services/api.js';
 
 function ArticlesPage({ onNavigate, onShowToast }) {
   const { language } = useLanguage();
@@ -22,7 +24,17 @@ function ArticlesPage({ onNavigate, onShowToast }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('newest'); // 'newest' | 'views' | 'oldest' | 'read_time'
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 24;
+
+  useEffect(() => {
+    updateHeadTags({
+      title: isTamil ? 'நிதி மற்றும் மியூச்சுவல் ஃபண்ட் கட்டுரைகள் | முதலீட்டு திசை' : 'Articles & Guides | Muthaleetu Thisai',
+      description: isTamil
+        ? 'மியூச்சுவல் ஃபண்ட், SIP, பங்குச் சந்தை, வரி சேமிப்பு மற்றும் ஓய்வூதியத் திட்டமிடல் பற்றிய எளிய தமிழ் கட்டுரைகள்.'
+        : 'Read expert mutual funds, SIP, stock market, tax saving, and personal finance articles in Tamil and English.',
+      pathname: '/articles'
+    });
+  }, [isTamil]);
 
   // Collapsible Sections State (Left Sidebar)
   const [collapsedSections, setCollapsedSections] = useState({
@@ -62,7 +74,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
     return 'personal-finance';
   }, []);
 
-  // Fetch articles and publisher directory
+  // Fetch articles and publisher directory (deduplicated publisher fetch)
   useEffect(() => {
     let isMounted = true;
     const loadData = async () => {
@@ -72,21 +84,20 @@ function ArticlesPage({ onNavigate, onShowToast }) {
         const token = session?.access_token || '';
         const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
 
-        const [articlesRes, pubRes] = await Promise.allSettled([
-          fetch('/api/articles?limit=250&sort=newest', { headers }).then(r => r.ok ? r.json() : null),
-          fetch('/api/publishers?limit=50', { headers }).then(r => r.ok ? r.json() : null)
+        const [articlesRes, publishersData] = await Promise.allSettled([
+          fetch('/api/articles?limit=240&sort=newest', { headers }).then(r => r.ok ? r.json() : null),
+          getCachedPublishers(50)
         ]);
 
         if (isMounted) {
           if (articlesRes.status === 'fulfilled' && articlesRes.value?.status === 'success') {
             setRawArticles(articlesRes.value.data || []);
           } else {
-            // Fallback to sample published articles if database is empty/offline
             setRawArticles([]);
           }
 
-          if (pubRes.status === 'fulfilled' && pubRes.value?.status === 'success') {
-            setPublishersList(pubRes.value.data || []);
+          if (publishersData.status === 'fulfilled' && Array.isArray(publishersData.value)) {
+            setPublishersList(publishersData.value);
           }
         }
       } catch (err) {

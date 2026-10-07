@@ -1,7 +1,7 @@
 // Polyfills for Node.js SSR
 if (typeof globalThis.window === 'undefined') {
   globalThis.window = {
-    location: { hash: '', pathname: '/', search: '', href: 'https://muthaleetuthisai-rho.vercel.app/' },
+    location: { hash: '', pathname: '/', search: '', href: 'https://www.muthaleetuthisai.com/' },
     addEventListener: () => {},
     removeEventListener: () => {},
     matchMedia: () => ({ matches: false, addEventListener: () => {}, removeEventListener: () => {} }),

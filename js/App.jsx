@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ThemeProvider } from './context/ThemeContext.jsx';
 import { LanguageProvider } from './context/LanguageContext.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
+import { updateHeadTags, SITE_URL } from './utils/formatters.js';
 import AppContent from './AppContent.jsx';
 
 function getCurrentAppPath() {
@@ -31,27 +32,68 @@ function updateDocumentSEO(path) {
   const clean = (path || '/').toLowerCase().replace(/\/+$/, '') || '/';
   
   if (clean === '/' || clean === '/home') {
-    document.title = 'முதலீட்டு திசை | Tamil Mutual Fund & Investment Guide - Budget Padmanaban';
+    updateHeadTags({
+      title: 'முதலீட்டு திசை | Tamil Mutual Fund & Investment Guide - Budget Padmanaban',
+      description: 'பட்ஜெட் பத்மநாபன் ஃபைனான்ஷியல் - மியூச்சுவல் ஃபண்ட், பங்குச் சந்தை, தனிநபர் நிதி மற்றும் முதலீட்டு வழிகாட்டி. Tamil & English mutual fund investing platform.',
+      canonical: `${SITE_URL}/`,
+      ogImage: `${SITE_URL}/assets/logo.png`
+    });
   } else if (clean === '/videos') {
-    document.title = 'வீடியோக்கள் | Investment Videos - முதலீட்டு திசை';
+    updateHeadTags({
+      title: 'வீடியோக்கள் | Investment Videos - முதலீட்டு திசை',
+      description: 'பட்ஜெட் பத்மநாபன் வழங்கும் மியூச்சுவல் ஃபண்ட், SIP மற்றும் பங்குச் சந்தை வீடியோக்கள்.',
+      canonical: `${SITE_URL}/videos`
+    });
   } else if (clean === '/articles') {
-    document.title = 'செய்திக் கட்டுரைகள் | Mutual Fund Articles - முதலீட்டு திசை';
+    updateHeadTags({
+      title: 'செய்திக் கட்டுரைகள் | Mutual Fund Articles - முதலீட்டு திசை',
+      description: 'மியூச்சுவல் ஃபண்ட் முதலீட்டு உத்திகள், வரி சேமிப்பு மற்றும் நிதி வழிகாட்டல் கட்டுரைகள்.',
+      canonical: `${SITE_URL}/articles`
+    });
   } else if (clean === '/news') {
-    document.title = 'சந்தை செய்திகள் | Live Market News - முதலீட்டு திசை';
+    updateHeadTags({
+      title: 'சந்தை செய்திகள் | Live Market News - முதலீட்டு திசை',
+      description: 'நேரலை பங்குச் சந்தை, ரிசர்வ் வங்கி மற்றும் மியூச்சுவல் ஃபண்ட் செய்திகள்.',
+      canonical: `${SITE_URL}/news`
+    });
   } else if (clean === '/calculator') {
-    document.title = 'SIP & Return Calculator (தமிழ்) | முதலீட்டு திசை';
+    updateHeadTags({
+      title: 'SIP & Return Calculator (தமிழ்) | முதலீட்டு திசை',
+      description: 'Calculate your SIP, Lumpsum, and Goal Planning mutual fund returns with our instant Tamil financial calculator.',
+      canonical: `${SITE_URL}/calculator`
+    });
   } else if (clean === '/quiz') {
-    document.title = 'Investment & Risk Profile Quiz | முதலீட்டு திசை';
+    updateHeadTags({
+      title: 'Investment & Risk Profile Quiz | முதலீட்டு திசை',
+      description: 'Find your ideal asset allocation and investment personality with our quick 2-minute financial quiz in Tamil.',
+      canonical: `${SITE_URL}/quiz`
+    });
   } else if (clean === '/professionals') {
-    document.title = 'AMFI Registered Advisors Directory | முதலீட்டு திசை';
+    updateHeadTags({
+      title: 'AMFI Registered Mutual Fund Distributors Directory | முதலீட்டு திசை',
+      description: 'Verified AMFI Registered Mutual Fund Distributors directory in Tamil Nadu and India.',
+      canonical: `${SITE_URL}/professionals`
+    });
   } else if (clean === '/profile') {
-    document.title = 'My Profile | முதலீட்டு திசை';
+    updateHeadTags({
+      title: 'My Profile | முதலீட்டு திசை',
+      canonical: `${SITE_URL}/profile`
+    });
   } else if (clean === '/history') {
-    document.title = 'Watch History | முதலீட்டு திசை';
+    updateHeadTags({
+      title: 'Watch History | முதலீட்டு திசை',
+      canonical: `${SITE_URL}/history`
+    });
   } else if (clean === '/login') {
-    document.title = 'Sign In | முதலீட்டு திசை';
+    updateHeadTags({
+      title: 'Sign In | முதலீட்டு திசை',
+      canonical: `${SITE_URL}/login`
+    });
   } else if (clean === '/signup') {
-    document.title = 'Register | முதலீட்டு திசை';
+    updateHeadTags({
+      title: 'Register | முதலீட்டு திசை',
+      canonical: `${SITE_URL}/signup`
+    });
   }
 }
 

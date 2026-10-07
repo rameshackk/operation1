@@ -66,3 +66,68 @@ export function useDebounce(value, delay = 300) {
 
   return debouncedValue;
 }
+
+export const SITE_URL = 'https://www.muthaleetuthisai.com';
+
+export function updateHeadTags({
+  title,
+  description,
+  canonical,
+  ogTitle,
+  ogDescription,
+  ogImage,
+  ogUrl,
+  ogType = 'website'
+} = {}) {
+  if (typeof document === 'undefined') return;
+
+  if (title) {
+    document.title = title;
+    setMetaTag('name', 'title', title);
+    setMetaTag('property', 'og:title', ogTitle || title);
+    setMetaTag('name', 'twitter:title', ogTitle || title);
+  }
+
+  if (description) {
+    setMetaTag('name', 'description', description);
+    setMetaTag('property', 'og:description', ogDescription || description);
+    setMetaTag('name', 'twitter:description', ogDescription || description);
+  }
+
+  const effectiveCanonical = canonical || (typeof window !== 'undefined' ? `${SITE_URL}${window.location.pathname}` : SITE_URL);
+  setLinkTag('canonical', effectiveCanonical);
+  setMetaTag('property', 'og:url', ogUrl || effectiveCanonical);
+  setMetaTag('name', 'twitter:url', ogUrl || effectiveCanonical);
+
+  if (ogImage) {
+    setMetaTag('property', 'og:image', ogImage);
+    setMetaTag('name', 'twitter:image', ogImage);
+  }
+
+  if (ogType) {
+    setMetaTag('property', 'og:type', ogType);
+  }
+}
+
+function setMetaTag(attrName, attrVal, content) {
+  if (!content) return;
+  let tag = document.querySelector(`meta[${attrName}="${attrVal}"]`);
+  if (!tag) {
+    tag = document.createElement('meta');
+    tag.setAttribute(attrName, attrVal);
+    document.head.appendChild(tag);
+  }
+  tag.setAttribute('content', content);
+}
+
+function setLinkTag(rel, href) {
+  if (!href) return;
+  let link = document.querySelector(`link[rel="${rel}"]`);
+  if (!link) {
+    link = document.createElement('link');
+    link.setAttribute('rel', rel);
+    document.head.appendChild(link);
+  }
+  link.setAttribute('href', href);
+}
+

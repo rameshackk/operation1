@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
+import { updateHeadTags } from '../utils/formatters.js';
 
 function AuthPage({ initialMode = 'login', onNavigate }) {
   const { t, language } = useLanguage();
@@ -15,6 +16,14 @@ function AuthPage({ initialMode = 'login', onNavigate }) {
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    updateHeadTags({
+      title: isTamil ? 'உள்நுழைக | முதலீட்டு திசை' : 'Sign In | Muthaleetu Thisai',
+      description: isTamil ? 'முதலீட்டு திசை தளத்தில் உள்நுழையவும்.' : 'Sign in to Muthaleetu Thisai investment platform.',
+      pathname: '/login'
+    });
+  }, [isTamil]);
 
   // If already logged in, navigate away immediately
   useEffect(() => {
@@ -163,7 +172,7 @@ function AuthPage({ initialMode = 'login', onNavigate }) {
 
             <div className="space-y-3 pt-4">
               <span className="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-extrabold uppercase tracking-wider">
-                CFP Verified Advisory
+                {isTamil ? 'AMFI பதிவுசெய்த விநியோகஸ்தர்' : 'AMFI Registered Mutual Fund Distributors'}
               </span>
               <h2 className="text-xl sm:text-2xl font-black font-serif text-white leading-tight">
                 {isTamil
@@ -178,6 +187,7 @@ function AuthPage({ initialMode = 'login', onNavigate }) {
             <span className="text-amber-400">@budgetpadmanaban_</span>
           </div>
         </div>
+
 
         <div className="md:col-span-7 p-6 sm:p-10 flex flex-col justify-center space-y-5 bg-slate-50/50 dark:bg-slate-900">
           <div>

@@ -55,9 +55,36 @@ function RichTextEditor({ value, onChange, placeholder, language = 'ta', minHeig
     const file = e.target.files?.[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = (event) => {
+    reader.onload = async (event) => {
       const dataUrl = event.target?.result;
-      if (dataUrl) exec('insertImage', dataUrl);
+      if (!dataUrl) return;
+
+      let insertedUrl = dataUrl;
+      try {
+        const token = localStorage.getItem('supabase.auth.token') || '';
+        const res = await fetch('/api/admin/articles?action=upload', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            fileData: dataUrl,
+            fileName: file.name,
+            fileType: file.type || 'image/jpeg',
+            folder: 'articles/inline'
+          })
+        });
+        if (res.ok) {
+          const json = await res.json();
+          if (json?.data?.url) {
+            insertedUrl = json.data.url;
+          }
+        }
+      } catch (uploadErr) {
+        console.warn('RichTextEditor inline image upload note:', uploadErr);
+      }
+
+      exec('insertImage', insertedUrl);
     };
     reader.readAsDataURL(file);
     e.target.value = '';

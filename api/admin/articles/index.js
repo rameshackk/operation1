@@ -1,6 +1,7 @@
 import { verifyAdminOrPublisherRequest } from '../../../lib/auth-server.js';
 import { listArticles, createArticle, getArticleById, updateArticle, deleteArticle } from '../../../lib/db.js';
 import { translateText } from '../../../lib/translate.js';
+import { supabaseAdmin } from '../../../lib/supabase.js';
 import { 
   sanitizeHtml, 
   sanitizeText, 
@@ -19,6 +20,101 @@ export default async function handler(req, res) {
   const auth = await verifyAdminOrPublisherRequest(req);
   if (!auth.authorized) {
     return res.status(auth.status).json({ error: auth.error });
+  }
+
+  // Handle media upload action
+  if (req.query?.action === 'upload' || req.body?.action === 'upload') {
+    const rate = checkRateLimit(clientIp, 'admin_upload', 60, 60000);
+    if (!rate.allowed) {
+      return res.status(429).json({ error: 'Upload rate limit exceeded. Please wait a minute.' });
+    }
+
+    try {
+      const { fileData, fileName = 'image.jpg', fileType = 'image/jpeg', folder = 'articles/covers' } = req.body || {};
+      if (!fileData || typeof fileData !== 'string') {
+        return res.status(400).json({ error: 'Image fileData is required (data URL or base64 string)' });
+      }
+
+      // If it's already an http/https URL, return it
+      if (fileData.startsWith('http://') || fileData.startsWith('https://')) {
+        return res.status(200).json({ status: 'success', data: { url: fileData } });
+      }
+
+      let buffer;
+      let mimeType = fileType;
+
+      if (fileData.startsWith('data:')) {
+        const matches = fileData.match(/^data:([A-Za-z0-9\-+\/]+);base64,(.+)$/s);
+        if (matches) {
+          mimeType = matches[1];
+          buffer = Buffer.from(matches[2], 'base64');
+        } else {
+          return res.status(400).json({ error: 'Invalid data URL format' });
+        }
+      } else {
+        buffer = Buffer.from(fileData, 'base64');
+      }
+
+      if (buffer.length > 10 * 1024 * 1024) {
+        return res.status(400).json({ error: 'Image size exceeds 10MB limit' });
+      }
+
+      const ext = mimeType.includes('png') ? 'png' : mimeType.includes('webp') ? 'webp' : mimeType.includes('gif') ? 'gif' : mimeType.includes('svg') ? 'svg' : 'jpg';
+      const cleanFileName = `${Date.now()}_${Math.random().toString(36).substring(2, 8)}.${ext}`;
+      const filePath = `${folder}/${cleanFileName}`.replace(/\/+/g, '/');
+
+      if (supabaseAdmin) {
+        try {
+          // Ensure bucket exists
+          const { data: bucketData, error: bucketErr } = await supabaseAdmin.storage.getBucket('media');
+          if (bucketErr || !bucketData) {
+            await supabaseAdmin.storage.createBucket('media', { public: true }).catch(() => {});
+          }
+
+          const { data: uploadData, error: uploadErr } = await supabaseAdmin.storage
+            .from('media')
+            .upload(filePath, buffer, {
+              contentType: mimeType,
+              upsert: true
+            });
+
+          if (!uploadErr) {
+            const { data: publicUrlData } = supabaseAdmin.storage
+              .from('media')
+              .getPublicUrl(filePath);
+
+            if (publicUrlData && publicUrlData.publicUrl) {
+              return res.status(200).json({
+                status: 'success',
+                data: {
+                  url: publicUrlData.publicUrl,
+                  filePath,
+                  contentType: mimeType,
+                  size: buffer.length
+                }
+              });
+            }
+          } else {
+            console.warn('[Storage] Supabase admin upload warning:', uploadErr.message);
+          }
+        } catch (storageErr) {
+          console.warn('[Storage] Supabase storage exception:', storageErr.message);
+        }
+      }
+
+      // Fallback: If Supabase storage is not configured or fails, safely return the formatted data URL
+      const fallbackDataUrl = fileData.startsWith('data:') ? fileData : `data:${mimeType};base64,${buffer.toString('base64')}`;
+      return res.status(200).json({
+        status: 'success',
+        data: {
+          url: fallbackDataUrl,
+          fallback: true
+        }
+      });
+    } catch (error) {
+      console.error('Upload error in admin articles API:', error);
+      return res.status(500).json({ error: 'Upload failed', message: error.message });
+    }
   }
 
   // Handle translation action

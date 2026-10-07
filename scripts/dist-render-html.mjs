@@ -358,9 +358,11 @@ import React18, { useState as useState14, useMemo as useMemo5 } from "react";
 function SipCalculator() {
   const { t, language } = useLanguage();
   const [calcMode, setCalcMode] = useState14("sip");
-  const [amount, setAmount] = useState14(150);
+  const [inputAmount, setInputAmount] = useState14("150");
+  const [lastValidAmount, setLastValidAmount] = useState14(150);
   const [timeframe, setTimeframe] = useState14("1Y");
   const [analysisTab, setAnalysisTab] = useState14("pie");
+  const [selectedFundName, setSelectedFundName] = useState14("SBI Arbitrage Opportunities Fund");
   const isTamil = language === "ta";
   const RETURN_RATES = {
     sip: {
@@ -378,21 +380,31 @@ function SipCalculator() {
   };
   const currentRates = RETURN_RATES[calcMode][timeframe];
   const years = currentRates.years;
-  const calculateMaturity = (rate) => {
+  const parsedNum = Number(inputAmount);
+  const isInvalid = inputAmount === "" || isNaN(parsedNum) || parsedNum < 150 || parsedNum > 1e6;
+  const activeAmount = isInvalid ? lastValidAmount : parsedNum;
+  const handleAmountChange = (valStr) => {
+    setInputAmount(valStr);
+    const num = Number(valStr);
+    if (!isNaN(num) && num >= 150 && num <= 1e6) {
+      setLastValidAmount(num);
+    }
+  };
+  const calculateMaturity = (rate, amt) => {
     const r = rate / 100;
     if (calcMode === "sip") {
       const i = r / 12;
       const n = years * 12;
-      if (i <= 0) return amount * n;
-      return Math.round(amount * ((Math.pow(1 + i, n) - 1) / i) * (1 + i));
+      if (i <= 0) return amt * n;
+      return Math.round(amt * ((Math.pow(1 + i, n) - 1) / i) * (1 + i));
     } else {
-      return Math.round(amount * Math.pow(1 + r, years));
+      return Math.round(amt * Math.pow(1 + r, years));
     }
   };
-  const fundAmount = calculateMaturity(currentRates.fund);
-  const benchAmount = calculateMaturity(currentRates.bench);
-  const addBenchAmount = calculateMaturity(currentRates.addBench);
-  const totalInvested = calcMode === "sip" ? Math.round(amount * years * 12) : amount;
+  const fundAmount = calculateMaturity(currentRates.fund, activeAmount);
+  const benchAmount = calculateMaturity(currentRates.bench, activeAmount);
+  const addBenchAmount = calculateMaturity(currentRates.addBench, activeAmount);
+  const totalInvested = calcMode === "sip" ? Math.round(activeAmount * years * 12) : activeAmount;
   const estimatedGain = Math.max(0, fundAmount - totalInvested);
   const formatCurrency = (val) => {
     return new Intl.NumberFormat("en-IN", {
@@ -408,7 +420,7 @@ function SipCalculator() {
     return "\u20B9 " + val.toLocaleString("en-IN");
   };
   const presetAmounts = [150, 500, 1e3, 5e3, 1e4, 25e3, 5e4, 1e5];
-  const investedPct = fundAmount > 0 ? Math.min(100, Math.max(1, Math.round(totalInvested / fundAmount * 100))) : 50;
+  const investedPct = fundAmount > 0 ? Math.min(100, Math.max(1, Math.round(totalInvested / fundAmount * 100))) : 100;
   const gainPct = Math.max(0, 100 - investedPct);
   const multiplier = totalInvested > 0 ? (fundAmount / totalInvested).toFixed(2) : "1.00";
   const yearlySchedule = useMemo5(() => {
@@ -424,13 +436,13 @@ function SipCalculator() {
       let curFund = 0;
       let curBench = 0;
       if (calcMode === "sip") {
-        curInvested = amount * n;
-        curFund = iFund > 0 ? Math.round(amount * ((Math.pow(1 + iFund, n) - 1) / iFund) * (1 + iFund)) : curInvested;
-        curBench = iBench > 0 ? Math.round(amount * ((Math.pow(1 + iBench, n) - 1) / iBench) * (1 + iBench)) : curInvested;
+        curInvested = activeAmount * n;
+        curFund = iFund > 0 ? Math.round(activeAmount * ((Math.pow(1 + iFund, n) - 1) / iFund) * (1 + iFund)) : curInvested;
+        curBench = iBench > 0 ? Math.round(activeAmount * ((Math.pow(1 + iBench, n) - 1) / iBench) * (1 + iBench)) : curInvested;
       } else {
-        curInvested = amount;
-        curFund = Math.round(amount * Math.pow(1 + rFund, y));
-        curBench = Math.round(amount * Math.pow(1 + rBench, y));
+        curInvested = activeAmount;
+        curFund = Math.round(activeAmount * Math.pow(1 + rFund, y));
+        curBench = Math.round(activeAmount * Math.pow(1 + rBench, y));
       }
       list.push({
         year: y,
@@ -442,13 +454,13 @@ function SipCalculator() {
       });
     }
     return list;
-  }, [calcMode, amount, years, currentRates]);
+  }, [calcMode, activeAmount, years, currentRates]);
   return /* @__PURE__ */ React18.createElement("section", { id: "calculator", className: "w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 select-none min-w-0" }, /* @__PURE__ */ React18.createElement("div", { className: "bg-gradient-to-br from-[#0F172A] via-[#111C35] to-[#1E293B] rounded-2xl sm:rounded-3xl border border-slate-800 shadow-xl p-4 sm:p-6 lg:p-7 text-white transition-all" }, /* @__PURE__ */ React18.createElement("div", { className: "flex flex-col sm:flex-row items-center justify-between gap-3 pb-4 mb-5 border-b border-slate-800/90" }, /* @__PURE__ */ React18.createElement("div", { className: "flex items-center gap-2.5" }, /* @__PURE__ */ React18.createElement("div", { className: "w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center font-bold text-sm shrink-0" }, "\u26A1"), /* @__PURE__ */ React18.createElement("div", null, /* @__PURE__ */ React18.createElement("h2", { className: "text-base sm:text-lg lg:text-xl font-extrabold text-white tracking-tight font-sans" }, isTamil ? "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BA3\u0BBF\u0BAA\u0BCD\u0BAA\u0BBE\u0BA9\u0BCD & \u0BAA\u0B95\u0BC1\u0BAA\u0BCD\u0BAA\u0BBE\u0BAF\u0BCD\u0BB5\u0BC1" : "Calculators & In-Depth Analysis"), /* @__PURE__ */ React18.createElement("p", { className: "text-xs sm:text-xs text-slate-300 font-medium font-sans" }, isTamil ? "\u0BAE\u0BBE\u0BA4\u0BBE\u0BA8\u0BCD\u0BA4\u0BBF\u0BB0 SIP / \u0BAE\u0BCA\u0BA4\u0BCD\u0BA4 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 \u0BA4\u0BBF\u0B9F\u0BCD\u0B9F\u0BAE\u0BBF\u0B9F\u0BB2\u0BCD & \u0BB5\u0BBF\u0BB0\u0BBF\u0BB5\u0BBE\u0BA9 \u0BA8\u0BBF\u0BA4\u0BBF \u0BB5\u0BB3\u0BB0\u0BCD\u0B9A\u0BCD\u0B9A\u0BBF \u0B85\u0BB1\u0BBF\u0B95\u0BCD\u0B95\u0BC8" : "Interactive SIP & Lumpsum wealth planner with visual asset chart & statement report"))), /* @__PURE__ */ React18.createElement("div", { className: "inline-flex p-1 bg-slate-900/90 rounded-full border border-slate-700/80 gap-1.5 shrink-0" }, /* @__PURE__ */ React18.createElement(
     "button",
     {
       type: "button",
       onClick: () => setCalcMode("sip"),
-      className: "px-4 sm:px-5 py-1.5 rounded-full text-xs font-bold transition-all duration-200 " + (calcMode === "sip" ? "bg-[#16A34A] text-white shadow-md shadow-green-600/30" : "text-slate-300 hover:text-white")
+      className: "px-4 sm:px-5 py-1.5 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer " + (calcMode === "sip" ? "bg-[#16A34A] text-white shadow-md shadow-green-600/30" : "text-slate-300 hover:text-white")
     },
     "SIP"
   ), /* @__PURE__ */ React18.createElement(
@@ -456,34 +468,31 @@ function SipCalculator() {
     {
       type: "button",
       onClick: () => setCalcMode("lumpsum"),
-      className: "px-4 sm:px-5 py-1.5 rounded-full text-xs font-bold transition-all duration-200 " + (calcMode === "lumpsum" ? "bg-[#16A34A] text-white shadow-md shadow-green-600/30" : "text-slate-300 hover:text-white")
+      className: "px-4 sm:px-5 py-1.5 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer " + (calcMode === "lumpsum" ? "bg-[#16A34A] text-white shadow-md shadow-green-600/30" : "text-slate-300 hover:text-white")
     },
     "Lumpsum"
-  ))), /* @__PURE__ */ React18.createElement("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-stretch" }, /* @__PURE__ */ React18.createElement("div", { className: "lg:col-span-6 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-2xl p-5 sm:p-6 shadow-xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between space-y-4" }, /* @__PURE__ */ React18.createElement("div", null, /* @__PURE__ */ React18.createElement("div", { className: "flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 mb-4" }, /* @__PURE__ */ React18.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React18.createElement("span", { className: "text-base" }, "\u{1F9EE}"), /* @__PURE__ */ React18.createElement("h3", { className: "text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 dark:text-slate-200 font-sans" }, isTamil ? "1. \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BC0\u0B9F\u0BC1 (Calculation Part)" : "1. Calculation Part")), /* @__PURE__ */ React18.createElement("span", { className: "text-xs font-bold px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-[#16A34A] dark:text-[#4ade80] font-sans" }, calcMode === "sip" ? "Monthly SIP" : "One-Time Lumpsum")), /* @__PURE__ */ React18.createElement("div", { className: "flex items-center justify-between gap-3 mb-2" }, /* @__PURE__ */ React18.createElement("label", { className: "text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 font-sans" }, calcMode === "sip" ? isTamil ? "\u0BAE\u0BBE\u0BA4\u0BBE\u0BA8\u0BCD\u0BA4\u0BBF\u0BB0 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1" : "Monthly Investment" : isTamil ? "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 \u0BA4\u0BCA\u0B95\u0BC8" : "Investment Amount"), /* @__PURE__ */ React18.createElement("div", { className: "flex items-center bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-1 focus-within:ring-2 focus-within:ring-[#16A34A] transition-all" }, /* @__PURE__ */ React18.createElement("span", { className: "text-slate-500 font-bold text-sm mr-1" }, "\u20B9"), /* @__PURE__ */ React18.createElement(
+  ))), /* @__PURE__ */ React18.createElement("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-stretch" }, /* @__PURE__ */ React18.createElement("div", { className: "lg:col-span-6 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-2xl p-5 sm:p-6 shadow-xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between space-y-4" }, /* @__PURE__ */ React18.createElement("div", null, /* @__PURE__ */ React18.createElement("div", { className: "flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 mb-4" }, /* @__PURE__ */ React18.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React18.createElement("span", { className: "text-base" }, "\u{1F9EE}"), /* @__PURE__ */ React18.createElement("h3", { className: "text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 dark:text-slate-200 font-sans" }, isTamil ? "1. \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BC0\u0B9F\u0BC1" : "1. Calculation Part")), /* @__PURE__ */ React18.createElement("span", { className: "text-xs font-bold px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-[#16A34A] dark:text-[#4ade80] font-sans" }, calcMode === "sip" ? "Monthly SIP" : "One-Time Lumpsum")), /* @__PURE__ */ React18.createElement("div", { className: "flex items-center justify-between gap-3 mb-2" }, /* @__PURE__ */ React18.createElement("label", { className: "text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 font-sans" }, calcMode === "sip" ? isTamil ? "\u0BAE\u0BBE\u0BA4\u0BBE\u0BA8\u0BCD\u0BA4\u0BBF\u0BB0 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1" : "Monthly Investment" : isTamil ? "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 \u0BA4\u0BCA\u0B95\u0BC8" : "Investment Amount"), /* @__PURE__ */ React18.createElement("div", { className: `flex items-center bg-slate-50 dark:bg-slate-800 border rounded-xl px-3 py-1 transition-all ${isInvalid ? "border-red-500 ring-1 ring-red-500" : "border-slate-300 dark:border-slate-700 focus-within:ring-2 focus-within:ring-[#16A34A]"}` }, /* @__PURE__ */ React18.createElement("span", { className: "text-slate-500 font-bold text-sm mr-1" }, "\u20B9"), /* @__PURE__ */ React18.createElement(
     "input",
     {
       type: "number",
       min: "150",
       max: "1000000",
       step: "50",
-      value: amount,
+      value: inputAmount,
       "aria-label": "Monthly Investment Amount in Rupees",
-      onChange: (e) => {
-        const val = Number(e.target.value);
-        setAmount(isNaN(val) ? 150 : Math.max(0, Math.min(1e6, val)));
-      },
+      onChange: (e) => handleAmountChange(e.target.value),
       className: "w-20 sm:w-24 bg-transparent text-right font-black text-slate-900 dark:text-white text-sm sm:text-base outline-none font-num"
     }
-  ))), /* @__PURE__ */ React18.createElement("div", { className: "mb-3" }, /* @__PURE__ */ React18.createElement(
+  ))), isInvalid && /* @__PURE__ */ React18.createElement("p", { className: "text-xs text-red-500 font-medium mb-2 animate-fadeIn" }, "\u26A0\uFE0F ", isTamil ? "\u0BA4\u0BCA\u0B95\u0BC8 \u20B9150 \u0BAE\u0BC1\u0BA4\u0BB2\u0BCD \u20B910,00,000 \u0BB5\u0BB0\u0BC8 \u0B87\u0BB0\u0BC1\u0B95\u0BCD\u0B95 \u0BB5\u0BC7\u0BA3\u0BCD\u0B9F\u0BC1\u0BAE\u0BCD (\u0B95\u0B9F\u0BC8\u0B9A\u0BBF \u0B9A\u0BB0\u0BBF\u0BAF\u0BBE\u0BA9 \u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1 \u0B95\u0BBE\u0B9F\u0BCD\u0B9F\u0BAA\u0BCD\u0BAA\u0B9F\u0BC1\u0B95\u0BBF\u0BB1\u0BA4\u0BC1)." : "Amount must be between \u20B9150 and \u20B910,00,000 (showing last valid calculation)."), /* @__PURE__ */ React18.createElement("div", { className: "mb-3" }, /* @__PURE__ */ React18.createElement(
     "input",
     {
       type: "range",
       min: "150",
       max: "1000000",
       step: "50",
-      value: amount,
+      value: activeAmount,
       "aria-label": "Monthly Investment Amount Slider",
-      onChange: (e) => setAmount(Number(e.target.value)),
+      onChange: (e) => handleAmountChange(e.target.value),
       className: "w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-[#15803d]"
     }
   ), /* @__PURE__ */ React18.createElement("div", { className: "flex justify-between items-center text-xs font-bold text-slate-600 dark:text-slate-400 mt-1 font-num" }, /* @__PURE__ */ React18.createElement("span", null, "\u20B9 150"), /* @__PURE__ */ React18.createElement("span", null, "\u20B9 10 Lakhs"))), /* @__PURE__ */ React18.createElement("div", { className: "flex flex-wrap gap-1.5 mb-4" }, presetAmounts.map((pVal) => /* @__PURE__ */ React18.createElement(
@@ -491,8 +500,8 @@ function SipCalculator() {
     {
       key: pVal,
       type: "button",
-      onClick: () => setAmount(pVal),
-      className: "px-2.5 py-1 rounded-lg text-xs font-bold font-num transition-all " + (amount === pVal ? "bg-[#0F172A] dark:bg-white text-white dark:text-slate-900 shadow-xs" : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700")
+      onClick: () => handleAmountChange(String(pVal)),
+      className: "px-2.5 py-1 rounded-lg text-xs font-bold font-num transition-all cursor-pointer " + (activeAmount === pVal ? "bg-[#0F172A] dark:bg-white text-white dark:text-slate-900 shadow-xs" : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700")
     },
     formatLakhs(pVal)
   ))), /* @__PURE__ */ React18.createElement("div", { className: "mb-4" }, /* @__PURE__ */ React18.createElement("label", { className: "text-xs font-extrabold uppercase text-slate-600 dark:text-slate-400 tracking-wider block mb-1.5 font-sans" }, isTamil ? "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BBE\u0BB2\u0BAE\u0BCD (Time Horizon)" : "Time Horizon (Years)"), /* @__PURE__ */ React18.createElement("div", { className: "flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700 gap-1 overflow-x-auto" }, [
@@ -506,15 +515,15 @@ function SipCalculator() {
       key: tItem.id,
       type: "button",
       onClick: () => setTimeframe(tItem.id),
-      className: "flex-1 py-1 px-2 rounded-lg text-xs font-bold font-sans whitespace-nowrap transition-all duration-200 text-center " + (timeframe === tItem.id ? "bg-[#16A34A] text-white shadow-xs" : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white")
+      className: "flex-1 py-1 px-2 rounded-lg text-xs font-bold font-sans whitespace-nowrap transition-all duration-200 text-center cursor-pointer " + (timeframe === tItem.id ? "bg-[#16A34A] text-white shadow-xs" : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white")
     },
     tItem.label
-  )))), /* @__PURE__ */ React18.createElement("div", { className: "bg-slate-50 dark:bg-slate-800/50 rounded-xl p-3 border border-slate-200/80 dark:border-slate-700/80 divide-y divide-slate-200/60 dark:divide-slate-700/60" }, /* @__PURE__ */ React18.createElement("div", { className: "pb-2 flex justify-between items-center" }, /* @__PURE__ */ React18.createElement("div", { className: "font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white flex items-center gap-1.5 font-sans" }, /* @__PURE__ */ React18.createElement("span", { className: "w-2 h-2 rounded-full bg-[#16A34A] inline-block" }), /* @__PURE__ */ React18.createElement("span", null, isTamil ? "\u0B87\u0BA8\u0BCD\u0BA4 \u0BA8\u0BBF\u0BA4\u0BBF (This Fund)" : "This Fund (SBI Arbitrage)")), /* @__PURE__ */ React18.createElement("div", { className: "text-right" }, /* @__PURE__ */ React18.createElement("span", { className: "text-sm sm:text-base font-black text-slate-900 dark:text-white font-num" }, formatCurrency(fundAmount)), /* @__PURE__ */ React18.createElement("span", { className: "ml-1.5 text-xs font-bold text-[#16A34A] dark:text-[#4ade80] font-num" }, "+", currentRates.fund, "%"))), /* @__PURE__ */ React18.createElement("div", { className: "py-2 flex justify-between items-center" }, /* @__PURE__ */ React18.createElement("span", { className: "text-xs font-semibold text-slate-600 dark:text-slate-300 font-sans" }, "Nifty 50 Arbitrage Index"), /* @__PURE__ */ React18.createElement("div", { className: "text-right" }, /* @__PURE__ */ React18.createElement("span", { className: "text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 font-num" }, formatCurrency(benchAmount)), /* @__PURE__ */ React18.createElement("span", { className: "ml-1.5 text-xs font-bold text-slate-500 font-num" }, "+", currentRates.bench, "%"))), /* @__PURE__ */ React18.createElement("div", { className: "pt-2 flex justify-between items-center" }, /* @__PURE__ */ React18.createElement("span", { className: "text-xs font-semibold text-slate-600 dark:text-slate-300 font-sans" }, "CRISIL 1 Year T-Bill Index"), /* @__PURE__ */ React18.createElement("div", { className: "text-right" }, /* @__PURE__ */ React18.createElement("span", { className: "text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 font-num" }, formatCurrency(addBenchAmount)), /* @__PURE__ */ React18.createElement("span", { className: "ml-1.5 text-xs font-bold text-slate-500 font-num" }, "+", currentRates.addBench, "%"))))), /* @__PURE__ */ React18.createElement("div", { className: "bg-slate-100 dark:bg-slate-800 rounded-xl p-3 flex justify-between items-center text-xs font-sans" }, /* @__PURE__ */ React18.createElement("div", null, /* @__PURE__ */ React18.createElement("span", { className: "text-slate-500 dark:text-slate-400 block text-xs font-medium" }, isTamil ? "\u0BAE\u0BCA\u0BA4\u0BCD\u0BA4 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1" : "Total Capital Outlay"), /* @__PURE__ */ React18.createElement("span", { className: "font-black text-slate-900 dark:text-white font-num text-sm" }, formatCurrency(totalInvested))), /* @__PURE__ */ React18.createElement("div", { className: "text-right" }, /* @__PURE__ */ React18.createElement("span", { className: "text-slate-500 dark:text-slate-400 block text-xs font-medium" }, isTamil ? "\u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BBF\u0B9F\u0BAA\u0BCD\u0BAA\u0B9F\u0BCD\u0B9F \u0BB2\u0BBE\u0BAA\u0BAE\u0BCD" : "Estimated Growth"), /* @__PURE__ */ React18.createElement("span", { className: "font-black text-[#16A34A] dark:text-[#4ade80] font-num text-sm" }, "+", formatCurrency(estimatedGain))))), /* @__PURE__ */ React18.createElement("div", { className: "lg:col-span-6 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-2xl p-5 sm:p-6 shadow-xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between space-y-4" }, /* @__PURE__ */ React18.createElement("div", null, /* @__PURE__ */ React18.createElement("div", { className: "flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 mb-3" }, /* @__PURE__ */ React18.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React18.createElement("span", { className: "text-base" }, "\u{1F4CA}"), /* @__PURE__ */ React18.createElement("h3", { className: "text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 dark:text-slate-200 font-sans" }, isTamil ? "2. \u0B9A\u0BBE\u0BB0\u0BCD\u0B9F\u0BCD & \u0BA8\u0BBF\u0BA4\u0BBF \u0B85\u0BB1\u0BBF\u0B95\u0BCD\u0B95\u0BC8" : "2. Chart & Statement Part")), /* @__PURE__ */ React18.createElement("div", { className: "flex bg-slate-100 dark:bg-slate-800 p-0.5 rounded-xl border border-slate-200 dark:border-slate-700" }, /* @__PURE__ */ React18.createElement(
+  )))), /* @__PURE__ */ React18.createElement("div", { className: "bg-slate-50 dark:bg-slate-800/50 rounded-xl p-3 border border-slate-200/80 dark:border-slate-700/80 divide-y divide-slate-200/60 dark:divide-slate-700/60" }, /* @__PURE__ */ React18.createElement("div", { className: "pb-2 flex justify-between items-center" }, /* @__PURE__ */ React18.createElement("div", { className: "font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white flex items-center gap-1.5 font-sans truncate pr-2" }, /* @__PURE__ */ React18.createElement("span", { className: "w-2 h-2 rounded-full bg-[#16A34A] inline-block shrink-0" }), /* @__PURE__ */ React18.createElement("span", { className: "truncate" }, isTamil ? `${selectedFundName} (SBI \u0B86\u0BB0\u0BCD\u0BAA\u0BBF\u0B9F\u0BCD\u0BB0\u0BC7\u0B9C\u0BCD)` : selectedFundName)), /* @__PURE__ */ React18.createElement("div", { className: "text-right shrink-0" }, /* @__PURE__ */ React18.createElement("span", { className: "text-sm sm:text-base font-black text-slate-900 dark:text-white font-num" }, formatCurrency(fundAmount)), /* @__PURE__ */ React18.createElement("span", { className: "ml-1.5 text-xs font-bold text-[#16A34A] dark:text-[#4ade80] font-num" }, "+", currentRates.fund, "%"))), /* @__PURE__ */ React18.createElement("div", { className: "py-2 flex justify-between items-center" }, /* @__PURE__ */ React18.createElement("span", { className: "text-xs font-semibold text-slate-600 dark:text-slate-300 font-sans" }, "Nifty 50 Arbitrage Index"), /* @__PURE__ */ React18.createElement("div", { className: "text-right" }, /* @__PURE__ */ React18.createElement("span", { className: "text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 font-num" }, formatCurrency(benchAmount)), /* @__PURE__ */ React18.createElement("span", { className: "ml-1.5 text-xs font-bold text-slate-500 font-num" }, "+", currentRates.bench, "%"))), /* @__PURE__ */ React18.createElement("div", { className: "pt-2 flex justify-between items-center" }, /* @__PURE__ */ React18.createElement("span", { className: "text-xs font-semibold text-slate-600 dark:text-slate-300 font-sans" }, "CRISIL 1 Year T-Bill Index"), /* @__PURE__ */ React18.createElement("div", { className: "text-right" }, /* @__PURE__ */ React18.createElement("span", { className: "text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 font-num" }, formatCurrency(addBenchAmount)), /* @__PURE__ */ React18.createElement("span", { className: "ml-1.5 text-xs font-bold text-slate-500 font-num" }, "+", currentRates.addBench, "%"))))), /* @__PURE__ */ React18.createElement("div", { className: "bg-slate-100 dark:bg-slate-800 rounded-xl p-3 flex justify-between items-center text-xs font-sans" }, /* @__PURE__ */ React18.createElement("div", null, /* @__PURE__ */ React18.createElement("span", { className: "text-slate-500 dark:text-slate-400 block text-xs font-medium" }, isTamil ? "\u0BAE\u0BCA\u0BA4\u0BCD\u0BA4 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1" : "Total Capital Outlay"), /* @__PURE__ */ React18.createElement("span", { className: "font-black text-slate-900 dark:text-white font-num text-sm" }, formatCurrency(totalInvested))), /* @__PURE__ */ React18.createElement("div", { className: "text-right" }, /* @__PURE__ */ React18.createElement("span", { className: "text-slate-500 dark:text-slate-400 block text-xs font-medium" }, isTamil ? "\u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BBF\u0B9F\u0BAA\u0BCD\u0BAA\u0B9F\u0BCD\u0B9F \u0BB2\u0BBE\u0BAA\u0BAE\u0BCD" : "Estimated Growth"), /* @__PURE__ */ React18.createElement("span", { className: "font-black text-[#16A34A] dark:text-[#4ade80] font-num text-sm" }, "+", formatCurrency(estimatedGain))))), /* @__PURE__ */ React18.createElement("div", { className: "lg:col-span-6 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-2xl p-5 sm:p-6 shadow-xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between space-y-4" }, /* @__PURE__ */ React18.createElement("div", null, /* @__PURE__ */ React18.createElement("div", { className: "flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 mb-3" }, /* @__PURE__ */ React18.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React18.createElement("span", { className: "text-base" }, "\u{1F4CA}"), /* @__PURE__ */ React18.createElement("h3", { className: "text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 dark:text-slate-200 font-sans" }, isTamil ? "2. \u0B9A\u0BBE\u0BB0\u0BCD\u0B9F\u0BCD & \u0BA8\u0BBF\u0BA4\u0BBF \u0B85\u0BB1\u0BBF\u0B95\u0BCD\u0B95\u0BC8" : "2. Chart & Statement Part")), /* @__PURE__ */ React18.createElement("div", { className: "flex bg-slate-100 dark:bg-slate-800 p-0.5 rounded-xl border border-slate-200 dark:border-slate-700" }, /* @__PURE__ */ React18.createElement(
     "button",
     {
       type: "button",
       onClick: () => setAnalysisTab("pie"),
-      className: "px-3 py-1 rounded-lg text-xs font-bold font-sans transition-all " + (analysisTab === "pie" ? "bg-white dark:bg-slate-900 text-[#16A34A] dark:text-[#4ade80] shadow-xs" : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white")
+      className: "px-3 py-1 rounded-lg text-xs font-bold font-sans transition-all cursor-pointer " + (analysisTab === "pie" ? "bg-white dark:bg-slate-900 text-[#16A34A] dark:text-[#4ade80] shadow-xs" : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white")
     },
     "\u{1F369} ",
     isTamil ? "\u0BAA\u0BC8-\u0B9A\u0BBE\u0BB0\u0BCD\u0B9F\u0BCD" : "Pie Chart"
@@ -523,7 +532,7 @@ function SipCalculator() {
     {
       type: "button",
       onClick: () => setAnalysisTab("statement"),
-      className: "px-3 py-1 rounded-lg text-xs font-bold font-sans transition-all " + (analysisTab === "statement" ? "bg-white dark:bg-slate-900 text-[#16A34A] dark:text-[#4ade80] shadow-xs" : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white")
+      className: "px-3 py-1 rounded-lg text-xs font-bold font-sans transition-all cursor-pointer " + (analysisTab === "statement" ? "bg-white dark:bg-slate-900 text-[#16A34A] dark:text-[#4ade80] shadow-xs" : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white")
     },
     "\u{1F4CB} ",
     isTamil ? "\u0B85\u0BB1\u0BBF\u0B95\u0BCD\u0B95\u0BC8" : "Statement"
@@ -559,7 +568,7 @@ function SipCalculator() {
     }
   )), /* @__PURE__ */ React18.createElement("div", { className: "absolute flex flex-col items-center justify-center text-center p-1" }, /* @__PURE__ */ React18.createElement("span", { className: "text-xs font-extrabold text-slate-600 dark:text-slate-400 uppercase tracking-tight" }, isTamil ? "\u0BAE\u0BC1\u0BA4\u0BBF\u0BB0\u0BCD\u0BB5\u0BC1" : "Corpus"), /* @__PURE__ */ React18.createElement("span", { className: "text-xs sm:text-sm font-black text-slate-900 dark:text-white font-num leading-tight" }, formatCurrency(fundAmount)), /* @__PURE__ */ React18.createElement("span", { className: "text-xs font-bold text-[#16A34A] dark:text-[#4ade80] bg-emerald-100 dark:bg-emerald-950/60 px-1.5 py-0.2 rounded-full mt-0.5 font-num" }, multiplier, "x"))), /* @__PURE__ */ React18.createElement("div", { className: "space-y-1.5 text-xs font-bold font-sans" }, /* @__PURE__ */ React18.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React18.createElement("span", { className: "w-2.5 h-2.5 rounded-full bg-[#0F172A] dark:bg-slate-400" }), /* @__PURE__ */ React18.createElement("span", { className: "text-slate-700 dark:text-slate-300" }, isTamil ? "\u0B85\u0B9A\u0BB2\u0BCD \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1" : "Invested", ": ", investedPct, "%")), /* @__PURE__ */ React18.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React18.createElement("span", { className: "w-2.5 h-2.5 rounded-full bg-[#16A34A]" }), /* @__PURE__ */ React18.createElement("span", { className: "text-[#16A34A] dark:text-[#4ade80]" }, isTamil ? "\u0BB5\u0BB3\u0BB0\u0BCD\u0B9A\u0BCD\u0B9A\u0BBF \u0BB2\u0BBE\u0BAA\u0BAE\u0BCD" : "Gains", ": ", gainPct, "%")))), /* @__PURE__ */ React18.createElement("div", { className: "space-y-2" }, /* @__PURE__ */ React18.createElement("div", { className: "p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700/80 flex justify-between items-center text-xs" }, /* @__PURE__ */ React18.createElement("div", null, /* @__PURE__ */ React18.createElement("span", { className: "text-xs font-extrabold uppercase text-slate-600 dark:text-slate-400 tracking-wide block font-sans" }, isTamil ? "1. \u0B85\u0B9A\u0BB2\u0BCD \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 \u0BA4\u0BCA\u0B95\u0BC8" : "1. Principal Capital"), /* @__PURE__ */ React18.createElement("span", { className: "text-xs text-slate-500 font-medium" }, calcMode === "sip" ? `${years * 12} ${isTamil ? "\u0BA4\u0BB5\u0BA3\u0BC8\u0B95\u0BB3\u0BCD" : "installments"}` : isTamil ? "\u0B92\u0BB0\u0BC7 \u0BAE\u0BC1\u0BB1\u0BC8 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1" : "Lumpsum")), /* @__PURE__ */ React18.createElement("div", { className: "text-right" }, /* @__PURE__ */ React18.createElement("span", { className: "text-sm font-bold text-slate-900 dark:text-white font-num" }, formatCurrency(totalInvested)), /* @__PURE__ */ React18.createElement("span", { className: "block text-xs text-slate-600 dark:text-slate-400 font-num" }, "(", investedPct, "%)"))), /* @__PURE__ */ React18.createElement("div", { className: "p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700/80 flex justify-between items-center text-xs" }, /* @__PURE__ */ React18.createElement("div", null, /* @__PURE__ */ React18.createElement("span", { className: "text-xs font-extrabold uppercase text-slate-600 dark:text-slate-400 tracking-wide block font-sans" }, isTamil ? "2. \u0BB5\u0BB3\u0BB0\u0BCD\u0B9A\u0BCD\u0B9A\u0BBF \u0BB2\u0BBE\u0BAA\u0BAE\u0BCD" : "2. Compound Growth"), /* @__PURE__ */ React18.createElement("span", { className: "text-xs text-slate-500 font-medium" }, "@", currentRates.fund, "% CAGR")), /* @__PURE__ */ React18.createElement("div", { className: "text-right" }, /* @__PURE__ */ React18.createElement("span", { className: "text-sm font-bold text-[#16A34A] dark:text-[#4ade80] font-num" }, "+", formatCurrency(estimatedGain)), /* @__PURE__ */ React18.createElement("span", { className: "block text-xs text-[#16A34A] dark:text-[#4ade80] font-num" }, "(", gainPct, "%)"))), /* @__PURE__ */ React18.createElement("div", { className: "p-2.5 rounded-xl bg-gradient-to-r from-[#0F172A] to-[#1E293B] text-white border border-slate-800 flex justify-between items-center shadow-md" }, /* @__PURE__ */ React18.createElement("div", null, /* @__PURE__ */ React18.createElement("span", { className: "text-xs font-extrabold uppercase text-emerald-400 tracking-wide block font-sans" }, isTamil ? "3. \u0B8E\u0BA4\u0BBF\u0BB0\u0BCD\u0BAA\u0BBE\u0BB0\u0BCD\u0B95\u0BCD\u0B95\u0BC1\u0BAE\u0BCD \u0BAE\u0BC1\u0BA4\u0BBF\u0BB0\u0BCD\u0BB5\u0BC1 \u0BA8\u0BBF\u0BA4\u0BBF" : "3. Projected Total Corpus"), /* @__PURE__ */ React18.createElement("span", { className: "text-xs text-slate-300 font-medium" }, timeframe, " ", isTamil ? "\u0B95\u0BBE\u0BB2 \u0BAE\u0BC1\u0B9F\u0BBF\u0BB5\u0BBF\u0BB2\u0BCD" : "horizon value")), /* @__PURE__ */ React18.createElement("div", { className: "text-right" }, /* @__PURE__ */ React18.createElement("span", { className: "text-sm sm:text-base font-extrabold text-white font-num" }, formatCurrency(fundAmount)), /* @__PURE__ */ React18.createElement("span", { className: "block text-xs font-bold text-emerald-300 font-num" }, "+", (estimatedGain / (totalInvested || 1) * 100).toFixed(1), "% ", isTamil ? "\u0BB5\u0BB3\u0BB0\u0BCD\u0B9A\u0BCD\u0B9A\u0BBF" : "net return"))))) : (
     /* VIEW 2: COMPACT YEARLY FINANCIAL STATEMENT TABLE */
-    /* @__PURE__ */ React18.createElement("div", { className: "overflow-x-auto max-h-[260px] overflow-y-auto rounded-xl border border-slate-200 dark:border-slate-800 shadow-inner animate-fadeIn" }, /* @__PURE__ */ React18.createElement("table", { className: "w-full text-left text-xs" }, /* @__PURE__ */ React18.createElement("thead", { className: "sticky top-0 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-extrabold border-b border-slate-200 dark:border-slate-700 font-sans" }, /* @__PURE__ */ React18.createElement("tr", null, /* @__PURE__ */ React18.createElement("th", { className: "p-2" }, isTamil ? "\u0B86\u0BA3\u0BCD\u0B9F\u0BC1" : "Period"), /* @__PURE__ */ React18.createElement("th", { className: "p-2" }, isTamil ? "\u0B85\u0B9A\u0BB2\u0BCD" : "Capital"), /* @__PURE__ */ React18.createElement("th", { className: "p-2" }, isTamil ? "\u0BB2\u0BBE\u0BAA\u0BAE\u0BCD" : "Growth"), /* @__PURE__ */ React18.createElement("th", { className: "p-2" }, isTamil ? "\u0B87\u0BA8\u0BCD\u0BA4 \u0BA8\u0BBF\u0BA4\u0BBF" : "This Fund"), /* @__PURE__ */ React18.createElement("th", { className: "p-2" }, isTamil ? "\u0BAE\u0B9F\u0B99\u0BCD\u0B95\u0BC1" : "Multiple"))), /* @__PURE__ */ React18.createElement("tbody", { className: "divide-y divide-slate-100 dark:divide-slate-800 font-num" }, yearlySchedule.map((d) => /* @__PURE__ */ React18.createElement("tr", { key: d.year, className: "hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors" }, /* @__PURE__ */ React18.createElement("td", { className: "p-2 font-bold text-slate-900 dark:text-white font-sans" }, "Y", d.year), /* @__PURE__ */ React18.createElement("td", { className: "p-2 text-slate-600 dark:text-slate-400" }, formatCurrency(d.invested)), /* @__PURE__ */ React18.createElement("td", { className: "p-2 text-[#16A34A] dark:text-[#4ade80] font-semibold" }, "+", formatCurrency(d.gain)), /* @__PURE__ */ React18.createElement("td", { className: "p-2 font-bold text-slate-900 dark:text-white" }, formatCurrency(d.fundValue)), /* @__PURE__ */ React18.createElement("td", { className: "p-2" }, /* @__PURE__ */ React18.createElement("span", { className: "px-1.5 py-0.2 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400" }, d.multiplier, "x")))))))
+    /* @__PURE__ */ React18.createElement("div", { className: "overflow-x-auto max-h-[260px] overflow-y-auto rounded-xl border border-slate-200 dark:border-slate-800 shadow-inner animate-fadeIn" }, /* @__PURE__ */ React18.createElement("table", { className: "w-full text-left text-xs" }, /* @__PURE__ */ React18.createElement("thead", { className: "sticky top-0 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-extrabold border-b border-slate-200 dark:border-slate-700 font-sans" }, /* @__PURE__ */ React18.createElement("tr", null, /* @__PURE__ */ React18.createElement("th", { className: "p-2" }, isTamil ? "\u0B86\u0BA3\u0BCD\u0B9F\u0BC1" : "Period"), /* @__PURE__ */ React18.createElement("th", { className: "p-2" }, isTamil ? "\u0B85\u0B9A\u0BB2\u0BCD" : "Capital"), /* @__PURE__ */ React18.createElement("th", { className: "p-2" }, isTamil ? "\u0BB2\u0BBE\u0BAA\u0BAE\u0BCD" : "Growth"), /* @__PURE__ */ React18.createElement("th", { className: "p-2 truncate" }, selectedFundName), /* @__PURE__ */ React18.createElement("th", { className: "p-2" }, isTamil ? "\u0BAE\u0B9F\u0B99\u0BCD\u0B95\u0BC1" : "Multiple"))), /* @__PURE__ */ React18.createElement("tbody", { className: "divide-y divide-slate-100 dark:divide-slate-800 font-num" }, yearlySchedule.map((d) => /* @__PURE__ */ React18.createElement("tr", { key: d.year, className: "hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors" }, /* @__PURE__ */ React18.createElement("td", { className: "p-2 font-bold text-slate-900 dark:text-white font-sans" }, "Y", d.year), /* @__PURE__ */ React18.createElement("td", { className: "p-2 text-slate-600 dark:text-slate-400" }, formatCurrency(d.invested)), /* @__PURE__ */ React18.createElement("td", { className: "p-2 text-[#16A34A] dark:text-[#4ade80] font-semibold" }, "+", formatCurrency(d.gain)), /* @__PURE__ */ React18.createElement("td", { className: "p-2 font-bold text-slate-900 dark:text-white" }, formatCurrency(d.fundValue)), /* @__PURE__ */ React18.createElement("td", { className: "p-2" }, /* @__PURE__ */ React18.createElement("span", { className: "px-1.5 py-0.2 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400" }, d.multiplier, "x")))))))
   )), /* @__PURE__ */ React18.createElement("p", { className: "text-xs text-slate-600 dark:text-slate-400 font-sans leading-tight pt-1" }, "**Past performance may or may not be sustained in future. For performance in SEBI format refer scheme returns.")))));
 }
 var SipCalculator_default;
@@ -1296,7 +1305,7 @@ var Header_default = Header;
 
 // js/components/common/Navbar.jsx
 init_LanguageContext();
-import React8, { useState as useState6, useEffect as useEffect6 } from "react";
+import React8, { useState as useState6 } from "react";
 function Navbar({ currentPath, onNavigate }) {
   const { t, language } = useLanguage();
   const { user, role, signOut } = useAuth();
@@ -1331,7 +1340,7 @@ function Navbar({ currentPath, onNavigate }) {
         {
           key: item.id,
           onClick: () => item.action && item.action(),
-          className: "relative px-4 py-2 text-[13.5px] xl:text-[14px] font-bold transition-all rounded-[10px] whitespace-nowrap text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-white hover:bg-red-50 dark:hover:bg-red-950/30 border border-red-500/20"
+          className: "relative px-4 py-2 text-[13.5px] xl:text-[14px] font-bold transition-all rounded-[10px] whitespace-nowrap text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-white hover:bg-red-50 dark:hover:bg-red-950/30 border border-red-500/20 cursor-pointer"
         },
         item.label
       );
@@ -1341,11 +1350,15 @@ function Navbar({ currentPath, onNavigate }) {
     const activeClass = "bg-[#2563EB] text-white font-extrabold shadow-md shadow-blue-600/30 ring-2 ring-blue-500/20";
     const inactiveClass = "text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-slate-900 font-semibold";
     return /* @__PURE__ */ React8.createElement(
-      "button",
+      "a",
       {
         key: item.id,
-        onClick: () => onNavigate(item.path || item.hash),
-        className: `relative px-3.5 py-2 text-[13px] xl:text-[14px] transition-all rounded-[10px] whitespace-nowrap ${isActive ? activeClass : inactiveClass}`
+        href: item.path || item.hash || "/",
+        onClick: (e) => {
+          e.preventDefault();
+          onNavigate(item.path || item.hash);
+        },
+        className: `relative px-3.5 py-2 text-[13px] xl:text-[14px] transition-all rounded-[10px] whitespace-nowrap inline-flex items-center justify-center cursor-pointer ${isActive ? activeClass : inactiveClass}`
       },
       item.label
     );
@@ -1354,10 +1367,10 @@ function Navbar({ currentPath, onNavigate }) {
     {
       onClick: () => setMobileOpen(true),
       "aria-label": "Open Navigation Menu",
-      className: "px-3.5 py-2 min-h-[44px] rounded-xl text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2 text-xs font-black shadow-sm active:scale-95"
+      className: "px-3.5 py-2 min-h-[44px] rounded-xl text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2 text-xs font-black shadow-sm active:scale-95 cursor-pointer"
     },
     /* @__PURE__ */ React8.createElement("svg", { className: "w-4 h-4", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24" }, /* @__PURE__ */ React8.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2.5", d: "M4 6h16M4 12h16M4 18h16" })),
-    /* @__PURE__ */ React8.createElement("span", null, language === "ta" ? "\u0BAA\u0B9F\u0BCD\u0B9F\u0BBF\u0BAF\u0BB2\u0BCD" : "Menu")
+    /* @__PURE__ */ React8.createElement("span", null, language === "ta" ? "\u0BAA\u0B9F\u0BCD\u0B9F\u0BBF" : "Menu")
   )))), mobileOpen && /* @__PURE__ */ React8.createElement("div", { className: "md:hidden fixed inset-0 z-[99999] flex", role: "dialog", "aria-modal": "true" }, /* @__PURE__ */ React8.createElement(
     "div",
     {
@@ -1368,26 +1381,38 @@ function Navbar({ currentPath, onNavigate }) {
     "button",
     {
       onClick: () => setMobileOpen(false),
-      className: "w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-slate-100 dark:bg-slate-900 text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white flex items-center justify-center font-bold text-base border border-slate-200 dark:border-slate-800 active:scale-95",
+      className: "w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-slate-100 dark:bg-slate-900 text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white flex items-center justify-center font-bold text-base border border-slate-200 dark:border-slate-800 active:scale-95 cursor-pointer",
       "aria-label": "Close menu"
     },
     "\u2715"
   )), /* @__PURE__ */ React8.createElement("div", { className: "p-4 space-y-2 flex-1 overflow-y-auto" }, navItems.map((item) => {
     const cleanItem = (item.path || item.hash || "/").replace(/^#/, "").toLowerCase().replace(/\/+$/, "") || "/";
     const isActive = cleanCurrent === cleanItem || cleanItem === "/" && (cleanCurrent === "" || cleanCurrent === "/home");
+    if (item.isAction) {
+      return /* @__PURE__ */ React8.createElement(
+        "button",
+        {
+          key: item.id,
+          onClick: () => {
+            if (item.action) item.action();
+            setMobileOpen(false);
+          },
+          className: "w-full text-left px-4 py-3.5 min-h-[48px] rounded-2xl text-sm font-black transition-all flex items-center justify-between text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40 cursor-pointer"
+        },
+        /* @__PURE__ */ React8.createElement("span", { className: "flex items-center gap-3" }, /* @__PURE__ */ React8.createElement("span", { className: "text-base" }, item.icon || "\u2022"), /* @__PURE__ */ React8.createElement("span", { className: "text-[14px]" }, item.label))
+      );
+    }
     return /* @__PURE__ */ React8.createElement(
-      "button",
+      "a",
       {
         key: item.id,
-        onClick: () => {
-          if (item.isAction) {
-            if (item.action) item.action();
-          } else {
-            onNavigate(item.path || item.hash);
-          }
+        href: item.path || item.hash || "/",
+        onClick: (e) => {
+          e.preventDefault();
+          onNavigate(item.path || item.hash);
           setMobileOpen(false);
         },
-        className: `w-full text-left px-4 py-3.5 min-h-[48px] rounded-2xl text-sm font-black transition-all flex items-center justify-between ${item.isAction ? "text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40" : isActive ? "bg-[#2563EB] text-white shadow-md border border-blue-500" : "text-slate-700 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-900 border border-transparent"}`
+        className: `w-full text-left px-4 py-3.5 min-h-[48px] rounded-2xl text-sm font-black transition-all flex items-center justify-between cursor-pointer ${isActive ? "bg-[#2563EB] text-white shadow-md border border-blue-500" : "text-slate-700 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-900 border border-transparent"}`
       },
       /* @__PURE__ */ React8.createElement("span", { className: "flex items-center gap-3" }, /* @__PURE__ */ React8.createElement("span", { className: "text-base" }, item.icon || "\u2022"), /* @__PURE__ */ React8.createElement("span", { className: "text-[14px]" }, item.label)),
       isActive && /* @__PURE__ */ React8.createElement("span", { className: "w-2.5 h-2.5 rounded-full bg-white animate-pulse" })
@@ -1399,65 +1424,83 @@ function Navbar({ currentPath, onNavigate }) {
         signOut && signOut();
         setMobileOpen(false);
       },
-      className: "w-full min-h-[44px] py-2.5 px-4 rounded-xl bg-red-50 dark:bg-red-950/40 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900 text-xs font-extrabold hover:bg-red-100 transition-colors active:scale-95"
+      className: "w-full min-h-[44px] py-2.5 px-4 rounded-xl bg-red-50 dark:bg-red-950/40 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900 text-xs font-extrabold hover:bg-red-100 transition-colors active:scale-95 cursor-pointer"
     },
     language === "ta" ? "\u0BB5\u0BC6\u0BB3\u0BBF\u0BAF\u0BC7\u0BB1\u0BC1\u0B95" : "Sign Out"
   ) : /* @__PURE__ */ React8.createElement(
-    "button",
+    "a",
     {
-      onClick: () => {
+      href: "/login",
+      onClick: (e) => {
+        e.preventDefault();
         onNavigate("/login");
         setMobileOpen(false);
       },
-      className: "w-full min-h-[44px] py-2.5 px-4 rounded-xl bg-[#2563EB] text-white text-xs font-extrabold hover:bg-blue-700 transition-colors shadow-sm active:scale-95 flex items-center justify-center gap-1.5"
+      className: "w-full min-h-[44px] py-2.5 px-4 rounded-xl bg-[#2563EB] text-white text-xs font-extrabold hover:bg-blue-700 transition-colors shadow-sm active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer"
     },
     /* @__PURE__ */ React8.createElement("span", null, "\u{1F510}"),
     /* @__PURE__ */ React8.createElement("span", null, language === "ta" ? "\u0B89\u0BB3\u0BCD\u0BA8\u0BC1\u0BB4\u0BC8\u0B95" : "Sign In")
-  ))))), /* @__PURE__ */ React8.createElement("div", { className: "md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl border-t border-[#D5EBD9] dark:border-slate-800 shadow-[0_-4px_25px_rgba(0,0,0,0.08)] select-none" }, /* @__PURE__ */ React8.createElement("div", { className: "flex items-center justify-around px-2 pt-1.5 pb-[max(0.6rem,env(safe-area-inset-bottom,0.6rem))]" }, /* @__PURE__ */ React8.createElement(
-    "button",
+  ))))), /* @__PURE__ */ React8.createElement("div", { className: "md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl border-t border-[#D5EBD9] dark:border-slate-800 shadow-[0_-4px_25px_rgba(0,0,0,0.08)] select-none max-w-full overflow-hidden" }, /* @__PURE__ */ React8.createElement("div", { className: "grid grid-cols-5 w-full max-w-full px-1 pt-1.5 pb-[max(0.5rem,env(safe-area-inset-bottom,0.5rem))]" }, /* @__PURE__ */ React8.createElement(
+    "a",
     {
-      onClick: () => onNavigate("/"),
-      className: `flex flex-col items-center justify-center flex-1 py-1 min-h-[48px] rounded-xl transition-all active:scale-95 ${cleanCurrent === "/" || cleanCurrent === "" || cleanCurrent === "/home" ? "text-[#2563EB] dark:text-[#60a5fa] font-black" : "text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white"}`,
+      href: "/",
+      onClick: (e) => {
+        e.preventDefault();
+        onNavigate("/");
+      },
+      className: `flex flex-col items-center justify-center min-w-0 py-1 min-h-[44px] rounded-lg transition-all active:scale-95 cursor-pointer ${cleanCurrent === "/" || cleanCurrent === "" || cleanCurrent === "/home" ? "text-[#2563EB] dark:text-[#60a5fa] font-black" : "text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white"}`,
       "aria-label": "Home"
     },
-    /* @__PURE__ */ React8.createElement("span", { className: "text-lg leading-none mb-1" }, "\u{1F3E0}"),
-    /* @__PURE__ */ React8.createElement("span", { className: "text-[12px] leading-none tracking-tight" }, language === "ta" ? "\u0BAE\u0BC1\u0B95\u0BAA\u0BCD\u0BAA\u0BC1" : "Home")
+    /* @__PURE__ */ React8.createElement("span", { className: "text-base sm:text-lg leading-none mb-1" }, "\u{1F3E0}"),
+    /* @__PURE__ */ React8.createElement("span", { className: "text-[11px] leading-none tracking-tight truncate max-w-full px-0.5" }, language === "ta" ? "\u0BAE\u0BC1\u0B95\u0BAA\u0BCD\u0BAA\u0BC1" : "Home")
   ), /* @__PURE__ */ React8.createElement(
-    "button",
+    "a",
     {
-      onClick: () => onNavigate("/articles"),
-      className: `flex flex-col items-center justify-center flex-1 py-1 min-h-[48px] rounded-xl transition-all active:scale-95 ${cleanCurrent === "/articles" || cleanCurrent.startsWith("/articles/") ? "text-[#2563EB] dark:text-[#60a5fa] font-black" : "text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white"}`,
+      href: "/articles",
+      onClick: (e) => {
+        e.preventDefault();
+        onNavigate("/articles");
+      },
+      className: `flex flex-col items-center justify-center min-w-0 py-1 min-h-[44px] rounded-lg transition-all active:scale-95 cursor-pointer ${cleanCurrent === "/articles" || cleanCurrent.startsWith("/articles/") ? "text-[#2563EB] dark:text-[#60a5fa] font-black" : "text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white"}`,
       "aria-label": "Articles"
     },
-    /* @__PURE__ */ React8.createElement("span", { className: "text-lg leading-none mb-1" }, "\u{1F4F0}"),
-    /* @__PURE__ */ React8.createElement("span", { className: "text-[12px] leading-none tracking-tight" }, language === "ta" ? "\u0B95\u0B9F\u0BCD\u0B9F\u0BC1\u0BB0\u0BC8\u0B95\u0BB3\u0BCD" : "Articles")
+    /* @__PURE__ */ React8.createElement("span", { className: "text-base sm:text-lg leading-none mb-1" }, "\u{1F4F0}"),
+    /* @__PURE__ */ React8.createElement("span", { className: "text-[11px] leading-none tracking-tight truncate max-w-full px-0.5" }, language === "ta" ? "\u0B95\u0B9F\u0BCD\u0B9F\u0BC1\u0BB0\u0BC8" : "Articles")
   ), /* @__PURE__ */ React8.createElement(
-    "button",
+    "a",
     {
-      onClick: () => onNavigate("/videos"),
-      className: `flex flex-col items-center justify-center flex-1 py-1 min-h-[48px] rounded-xl transition-all active:scale-95 ${cleanCurrent === "/videos" || cleanCurrent.startsWith("/videos/") ? "text-[#2563EB] dark:text-[#60a5fa] font-black" : "text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white"}`,
+      href: "/videos",
+      onClick: (e) => {
+        e.preventDefault();
+        onNavigate("/videos");
+      },
+      className: `flex flex-col items-center justify-center min-w-0 py-1 min-h-[44px] rounded-lg transition-all active:scale-95 cursor-pointer ${cleanCurrent === "/videos" || cleanCurrent.startsWith("/videos/") ? "text-[#2563EB] dark:text-[#60a5fa] font-black" : "text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white"}`,
       "aria-label": "Videos"
     },
-    /* @__PURE__ */ React8.createElement("span", { className: "text-lg leading-none mb-1" }, "\u{1F3A5}"),
-    /* @__PURE__ */ React8.createElement("span", { className: "text-[12px] leading-none tracking-tight" }, language === "ta" ? "\u0BB5\u0BC0\u0B9F\u0BBF\u0BAF\u0BCB" : "Videos")
+    /* @__PURE__ */ React8.createElement("span", { className: "text-base sm:text-lg leading-none mb-1" }, "\u{1F3A5}"),
+    /* @__PURE__ */ React8.createElement("span", { className: "text-[11px] leading-none tracking-tight truncate max-w-full px-0.5" }, language === "ta" ? "\u0BB5\u0BC0\u0B9F\u0BBF\u0BAF\u0BCB" : "Videos")
   ), /* @__PURE__ */ React8.createElement(
-    "button",
+    "a",
     {
-      onClick: () => onNavigate("/calculator"),
-      className: `flex flex-col items-center justify-center flex-1 py-1 min-h-[48px] rounded-xl transition-all active:scale-95 ${cleanCurrent === "/calculator" ? "text-[#2563EB] dark:text-[#60a5fa] font-black" : "text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white"}`,
+      href: "/calculator",
+      onClick: (e) => {
+        e.preventDefault();
+        onNavigate("/calculator");
+      },
+      className: `flex flex-col items-center justify-center min-w-0 py-1 min-h-[44px] rounded-lg transition-all active:scale-95 cursor-pointer ${cleanCurrent === "/calculator" ? "text-[#2563EB] dark:text-[#60a5fa] font-black" : "text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white"}`,
       "aria-label": "SIP Calculator"
     },
-    /* @__PURE__ */ React8.createElement("span", { className: "text-lg leading-none mb-1" }, "\u{1F9EE}"),
-    /* @__PURE__ */ React8.createElement("span", { className: "text-[12px] leading-none tracking-tight" }, language === "ta" ? "SIP \u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BC0\u0B9F\u0BC1" : "Calculator")
+    /* @__PURE__ */ React8.createElement("span", { className: "text-base sm:text-lg leading-none mb-1" }, "\u{1F9EE}"),
+    /* @__PURE__ */ React8.createElement("span", { className: "text-[11px] leading-none tracking-tight truncate max-w-full px-0.5" }, language === "ta" ? "SIP \u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BC0\u0B9F\u0BC1" : "Calculator")
   ), /* @__PURE__ */ React8.createElement(
     "button",
     {
       onClick: () => setMobileOpen(true),
-      className: `flex flex-col items-center justify-center flex-1 py-1 min-h-[48px] rounded-xl transition-all active:scale-95 ${mobileOpen ? "text-[#2563EB] dark:text-[#60a5fa] font-black" : "text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white"}`,
+      className: `flex flex-col items-center justify-center min-w-0 py-1 min-h-[44px] rounded-lg transition-all active:scale-95 cursor-pointer ${mobileOpen ? "text-[#2563EB] dark:text-[#60a5fa] font-black" : "text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white"}`,
       "aria-label": "Open full menu"
     },
-    /* @__PURE__ */ React8.createElement("span", { className: "text-lg leading-none mb-1" }, "\u2630"),
-    /* @__PURE__ */ React8.createElement("span", { className: "text-[12px] leading-none tracking-tight" }, language === "ta" ? "\u0BAA\u0B9F\u0BCD\u0B9F\u0BBF\u0BAF\u0BB2\u0BCD" : "Menu")
+    /* @__PURE__ */ React8.createElement("span", { className: "text-base sm:text-lg leading-none mb-1" }, "\u2630"),
+    /* @__PURE__ */ React8.createElement("span", { className: "text-[11px] leading-none tracking-tight truncate max-w-full px-0.5" }, language === "ta" ? "\u0BAA\u0B9F\u0BCD\u0B9F\u0BBF" : "Menu")
   ))));
 }
 var Navbar_default = Navbar;
@@ -1485,7 +1528,7 @@ function Footer({ onNavigate, onShowToast }) {
       decoding: "async",
       className: "w-12 h-12 sm:w-14 sm:h-14 object-contain drop-shadow-md shrink-0"
     }
-  )), /* @__PURE__ */ React9.createElement("span", { className: "text-2xl sm:text-3xl font-black font-serif" }, language === "ta" ? /* @__PURE__ */ React9.createElement(React9.Fragment, null, /* @__PURE__ */ React9.createElement("span", { className: "text-[#03529A] dark:text-[#38bdf8]" }, "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 "), /* @__PURE__ */ React9.createElement("span", { className: "text-[#2e7d32] dark:text-[#4ade80]" }, "\u0BA4\u0BBF\u0B9A\u0BC8")) : /* @__PURE__ */ React9.createElement(React9.Fragment, null, /* @__PURE__ */ React9.createElement("span", { className: "text-[#03529A] dark:text-[#38bdf8]" }, "Muthaleetu "), /* @__PURE__ */ React9.createElement("span", { className: "text-[#2e7d32] dark:text-[#4ade80]" }, "Thisai")))), /* @__PURE__ */ React9.createElement("p", { className: "text-sm md:text-xs text-slate-700 dark:text-slate-300 max-w-md leading-relaxed" }, t("newsLetterDesc")), /* @__PURE__ */ React9.createElement("form", { onSubmit: handleSubscribe, className: "flex gap-2 max-w-md" }, /* @__PURE__ */ React9.createElement(
+  )), /* @__PURE__ */ React9.createElement("span", { className: "text-2xl sm:text-3xl font-black font-serif" }, language === "ta" ? /* @__PURE__ */ React9.createElement(React9.Fragment, null, /* @__PURE__ */ React9.createElement("span", { className: "text-[#03529A] dark:text-[#38bdf8]" }, "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 "), /* @__PURE__ */ React9.createElement("span", { className: "text-[#2e7d32] dark:text-[#4ade80]" }, "\u0BA4\u0BBF\u0B9A\u0BC8")) : /* @__PURE__ */ React9.createElement(React9.Fragment, null, /* @__PURE__ */ React9.createElement("span", { className: "text-[#03529A] dark:text-[#38bdf8]" }, "Muthaleetu "), /* @__PURE__ */ React9.createElement("span", { className: "text-[#2e7d32] dark:text-[#4ade80]" }, "Thisai")))), /* @__PURE__ */ React9.createElement("p", { className: "text-sm md:text-xs text-slate-700 dark:text-slate-300 max-w-md leading-relaxed" }, t("newsLetterDesc")), /* @__PURE__ */ React9.createElement("form", { onSubmit: handleSubscribe, className: "flex flex-col sm:flex-row gap-2 max-w-md" }, /* @__PURE__ */ React9.createElement(
     "input",
     {
       type: "email",
@@ -1499,10 +1542,98 @@ function Footer({ onNavigate, onShowToast }) {
     "button",
     {
       type: "submit",
-      className: "px-5 py-2.5 rounded-xl bg-amber-500 text-slate-950 font-black text-xs hover:bg-amber-400 transition-colors shadow-md shrink-0 min-h-[44px] flex items-center justify-center active:scale-95 cursor-pointer"
+      className: "w-full sm:w-auto px-5 py-2.5 rounded-xl bg-amber-500 text-slate-950 font-black text-xs hover:bg-amber-400 transition-colors shadow-md shrink-0 min-h-[44px] flex items-center justify-center active:scale-95 cursor-pointer"
     },
     t("subscribe")
-  ))), /* @__PURE__ */ React9.createElement("div", { className: "lg:col-span-3 space-y-3" }, /* @__PURE__ */ React9.createElement("h4", { className: "text-xs font-extrabold uppercase tracking-wider text-amber-900 dark:text-amber-400" }, t("nav.mutualFunds"), " & ", t("nav.stocks")), /* @__PURE__ */ React9.createElement("ul", { className: "space-y-1 md:space-y-2 text-sm md:text-xs font-semibold text-slate-700 dark:text-slate-300" }, /* @__PURE__ */ React9.createElement("li", null, /* @__PURE__ */ React9.createElement("button", { onClick: () => onNavigate && onNavigate("#/category/mutual-funds"), className: "py-1.5 md:py-0 min-h-[40px] md:min-h-0 flex items-center hover:text-slate-950 dark:hover:text-white transition-colors" }, t("nav.mutualFunds"))), /* @__PURE__ */ React9.createElement("li", null, /* @__PURE__ */ React9.createElement("button", { onClick: () => onNavigate && onNavigate("#/category/stocks"), className: "py-1.5 md:py-0 min-h-[40px] md:min-h-0 flex items-center hover:text-slate-950 dark:hover:text-white transition-colors" }, t("nav.stocks"))), /* @__PURE__ */ React9.createElement("li", null, /* @__PURE__ */ React9.createElement("button", { onClick: () => onNavigate && onNavigate("#/category/personal-finance"), className: "py-1.5 md:py-0 min-h-[40px] md:min-h-0 flex items-center hover:text-slate-950 dark:hover:text-white transition-colors" }, t("nav.personalFinance"))), /* @__PURE__ */ React9.createElement("li", null, /* @__PURE__ */ React9.createElement("button", { onClick: () => onNavigate && onNavigate("#/category/education"), className: "py-1.5 md:py-0 min-h-[40px] md:min-h-0 flex items-center hover:text-slate-950 dark:hover:text-white transition-colors" }, t("nav.education"))))), /* @__PURE__ */ React9.createElement("div", { className: "lg:col-span-3 space-y-3" }, /* @__PURE__ */ React9.createElement("h4", { className: "text-xs font-extrabold uppercase tracking-wider text-amber-900 dark:text-amber-400" }, "Financial Utilities"), /* @__PURE__ */ React9.createElement("ul", { className: "space-y-1 md:space-y-2 text-sm md:text-xs font-semibold text-slate-700 dark:text-slate-300" }, /* @__PURE__ */ React9.createElement("li", null, /* @__PURE__ */ React9.createElement("button", { onClick: () => onNavigate && onNavigate("#/calculator"), className: "py-1.5 md:py-0 min-h-[40px] md:min-h-0 flex items-center hover:text-slate-950 dark:hover:text-white transition-colors" }, t("sipCalculatorTitle"))), /* @__PURE__ */ React9.createElement("li", null, /* @__PURE__ */ React9.createElement("button", { onClick: () => onNavigate && onNavigate("#/videos"), className: "py-1.5 md:py-0 min-h-[40px] md:min-h-0 flex items-center hover:text-slate-950 dark:hover:text-white transition-colors" }, "YouTube Video Feed")), /* @__PURE__ */ React9.createElement("li", null, /* @__PURE__ */ React9.createElement("button", { onClick: () => onNavigate && onNavigate("#/news"), className: "py-1.5 md:py-0 min-h-[40px] md:min-h-0 flex items-center hover:text-slate-950 dark:hover:text-white transition-colors" }, "Financial News Hub"))))), /* @__PURE__ */ React9.createElement("div", { className: "space-y-2 text-xs md:text-xs text-slate-700 dark:text-slate-300 leading-relaxed max-w-5xl" }, /* @__PURE__ */ React9.createElement("h5", { className: "font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider text-xs" }, t("footerDisclaimerTitle")), /* @__PURE__ */ React9.createElement("p", { className: "text-xs md:text-xs leading-relaxed" }, t("footerDisclaimerText"))), /* @__PURE__ */ React9.createElement("div", { className: "pt-4 text-center text-xs md:text-xs text-slate-700 dark:text-slate-300 font-semibold" }, t("copyright"))));
+  ))), /* @__PURE__ */ React9.createElement("div", { className: "lg:col-span-3 space-y-3" }, /* @__PURE__ */ React9.createElement("h4", { className: "text-xs font-extrabold uppercase tracking-wider text-amber-900 dark:text-amber-400" }, t("nav.mutualFunds"), " & ", t("nav.stocks")), /* @__PURE__ */ React9.createElement("ul", { className: "space-y-1 md:space-y-2 text-sm md:text-xs font-semibold text-slate-700 dark:text-slate-300" }, /* @__PURE__ */ React9.createElement("li", null, /* @__PURE__ */ React9.createElement(
+    "a",
+    {
+      href: "/category/mutual-funds",
+      onClick: (e) => {
+        e.preventDefault();
+        onNavigate && onNavigate("#/category/mutual-funds");
+      },
+      className: "py-1.5 md:py-0 min-h-[40px] md:min-h-0 flex items-center hover:text-slate-950 dark:hover:text-white transition-colors cursor-pointer"
+    },
+    t("nav.mutualFunds")
+  )), /* @__PURE__ */ React9.createElement("li", null, /* @__PURE__ */ React9.createElement(
+    "a",
+    {
+      href: "/category/stocks",
+      onClick: (e) => {
+        e.preventDefault();
+        onNavigate && onNavigate("#/category/stocks");
+      },
+      className: "py-1.5 md:py-0 min-h-[40px] md:min-h-0 flex items-center hover:text-slate-950 dark:hover:text-white transition-colors cursor-pointer"
+    },
+    t("nav.stocks")
+  )), /* @__PURE__ */ React9.createElement("li", null, /* @__PURE__ */ React9.createElement(
+    "a",
+    {
+      href: "/category/personal-finance",
+      onClick: (e) => {
+        e.preventDefault();
+        onNavigate && onNavigate("#/category/personal-finance");
+      },
+      className: "py-1.5 md:py-0 min-h-[40px] md:min-h-0 flex items-center hover:text-slate-950 dark:hover:text-white transition-colors cursor-pointer"
+    },
+    t("nav.personalFinance")
+  )), /* @__PURE__ */ React9.createElement("li", null, /* @__PURE__ */ React9.createElement(
+    "a",
+    {
+      href: "/category/education",
+      onClick: (e) => {
+        e.preventDefault();
+        onNavigate && onNavigate("#/category/education");
+      },
+      className: "py-1.5 md:py-0 min-h-[40px] md:min-h-0 flex items-center hover:text-slate-950 dark:hover:text-white transition-colors cursor-pointer"
+    },
+    t("nav.education")
+  )))), /* @__PURE__ */ React9.createElement("div", { className: "lg:col-span-3 space-y-3" }, /* @__PURE__ */ React9.createElement("h4", { className: "text-xs font-extrabold uppercase tracking-wider text-amber-900 dark:text-amber-400" }, language === "ta" ? "\u0BA8\u0BBF\u0BA4\u0BBF \u0B95\u0BB0\u0BC1\u0BB5\u0BBF\u0B95\u0BB3\u0BCD" : "Financial Utilities"), /* @__PURE__ */ React9.createElement("ul", { className: "space-y-1 md:space-y-2 text-sm md:text-xs font-semibold text-slate-700 dark:text-slate-300" }, /* @__PURE__ */ React9.createElement("li", null, /* @__PURE__ */ React9.createElement(
+    "a",
+    {
+      href: "/calculator",
+      onClick: (e) => {
+        e.preventDefault();
+        onNavigate && onNavigate("#/calculator");
+      },
+      className: "py-1.5 md:py-0 min-h-[40px] md:min-h-0 flex items-center hover:text-slate-950 dark:hover:text-white transition-colors cursor-pointer"
+    },
+    t("sipCalculatorTitle")
+  )), /* @__PURE__ */ React9.createElement("li", null, /* @__PURE__ */ React9.createElement(
+    "a",
+    {
+      href: "/videos",
+      onClick: (e) => {
+        e.preventDefault();
+        onNavigate && onNavigate("#/videos");
+      },
+      className: "py-1.5 md:py-0 min-h-[40px] md:min-h-0 flex items-center hover:text-slate-950 dark:hover:text-white transition-colors cursor-pointer"
+    },
+    language === "ta" ? "\u0BB5\u0BC0\u0B9F\u0BBF\u0BAF\u0BCB \u0BA4\u0BCA\u0B95\u0BC1\u0BAA\u0BCD\u0BAA\u0BC1" : "YouTube Video Feed"
+  )), /* @__PURE__ */ React9.createElement("li", null, /* @__PURE__ */ React9.createElement(
+    "a",
+    {
+      href: "/news",
+      onClick: (e) => {
+        e.preventDefault();
+        onNavigate && onNavigate("#/news");
+      },
+      className: "py-1.5 md:py-0 min-h-[40px] md:min-h-0 flex items-center hover:text-slate-950 dark:hover:text-white transition-colors cursor-pointer"
+    },
+    language === "ta" ? "\u0BA8\u0BBF\u0BA4\u0BBF\u0B9A\u0BCD \u0B9A\u0BC6\u0BAF\u0BCD\u0BA4\u0BBF\u0B95\u0BB3\u0BCD" : "Financial News Hub"
+  )), /* @__PURE__ */ React9.createElement("li", null, /* @__PURE__ */ React9.createElement(
+    "a",
+    {
+      href: "/professionals",
+      onClick: (e) => {
+        e.preventDefault();
+        onNavigate && onNavigate("#/professionals");
+      },
+      className: "py-1.5 md:py-0 min-h-[40px] md:min-h-0 flex items-center hover:text-slate-950 dark:hover:text-white transition-colors cursor-pointer"
+    },
+    language === "ta" ? "AMFI \u0BAA\u0BA4\u0BBF\u0BB5\u0BC1\u0B9A\u0BC6\u0BAF\u0BCD\u0BA4 \u0BB5\u0BBF\u0BA8\u0BBF\u0BAF\u0BCB\u0B95\u0BB8\u0BCD\u0BA4\u0BB0\u0BCD\u0B95\u0BB3\u0BCD" : "AMFI Registered MFDs"
+  ))))), /* @__PURE__ */ React9.createElement("div", { className: "space-y-2 text-xs md:text-xs text-slate-700 dark:text-slate-300 leading-relaxed max-w-5xl" }, /* @__PURE__ */ React9.createElement("h5", { className: "font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider text-xs" }, t("footerDisclaimerTitle")), /* @__PURE__ */ React9.createElement("p", { className: "text-xs md:text-xs leading-relaxed" }, t("footerDisclaimerText"))), /* @__PURE__ */ React9.createElement("div", { className: "pt-4 text-center text-xs md:text-xs text-slate-700 dark:text-slate-300 font-semibold" }, t("copyright"))));
 }
 var Footer_default = Footer;
 
@@ -1588,26 +1719,27 @@ import React11, { useMemo } from "react";
 
 // js/services/articles.js
 init_translations();
-import { useState as useState9, useEffect as useEffect7 } from "react";
+import { useState as useState9, useEffect as useEffect6 } from "react";
 var liveArticlesCache = null;
 var liveArticlesPromise = null;
 function cleanImageUrl(url, category = "mutual-fund", fallbackUrl = null) {
-  if (url && typeof url === "string" && url !== "/favicon.svg") {
-    if (url.startsWith("data:image")) {
-      return url;
+  if (url && typeof url === "string" && url.trim() && url !== "/favicon.svg") {
+    const trimmed = url.trim();
+    if (trimmed.startsWith("data:image")) {
+      return trimmed;
     }
-    if (url.includes("images.unsplash.com")) {
-      let clean = url.replace(/&w=\d+/g, "&w=600").replace(/&q=\d+/g, "&q=75");
+    if (trimmed.includes("images.unsplash.com")) {
+      let clean = trimmed.replace(/&w=\d+/g, "&w=600").replace(/&q=\d+/g, "&q=75");
       if (!clean.includes("fm=webp")) clean += "&fm=webp";
       return clean;
     }
-    if (url.includes("img.youtube.com/vi/") || url.includes("i.ytimg.com/vi/")) {
-      const match = url.match(/\/vi\/([^/?#]+)\//);
+    if (trimmed.includes("img.youtube.com/vi/") || trimmed.includes("i.ytimg.com/vi/")) {
+      const match = trimmed.match(/\/vi\/([^/?#]+)\//);
       if (match && match[1]) {
         return `https://i.ytimg.com/vi_webp/${match[1]}/mqdefault.webp`;
       }
     }
-    return url;
+    return trimmed;
   }
   if (fallbackUrl && typeof fallbackUrl === "string" && fallbackUrl !== "/favicon.svg") {
     return fallbackUrl;
@@ -1636,7 +1768,7 @@ function normalizeArticleItem(item, language = "ta") {
   const summaryTamil = item.summaryTamil || item.excerptTamil || item.excerpt_ta || item.summary || "";
   const summaryEnglish = item.summaryEnglish || item.excerptEnglish || item.excerpt_en || summaryTamil;
   const summary = isTamil ? summaryTamil || summaryEnglish : summaryEnglish || summaryTamil;
-  const rawThumb = item.coverImage || item.cover_image_url || item.thumbnail || item.thumbnail_url || item.imageUrl || "";
+  const rawThumb = item.cover_image_url || item.coverImage || item.thumbnail_url || item.thumbnail || item.imageUrl || "";
   const category = (item.category || "mutual-fund").replace("_", "-");
   const thumbnail = cleanImageUrl(rawThumb, category);
   const publishedAt = item.publishedAt || item.published_at || item.created_at || (/* @__PURE__ */ new Date()).toISOString();
@@ -1735,7 +1867,7 @@ function useLiveArticles() {
     return [];
   });
   const [isLoading, setIsLoading] = useState9(liveArticles.length === 0);
-  useEffect7(() => {
+  useEffect6(() => {
     let isMounted = true;
     const load = async () => {
       const list = await fetchCardArticles(12, "newest");
@@ -1986,7 +2118,7 @@ var TrendingArticlesSection_default = TrendingArticlesSection;
 
 // js/components/home/HomeCinemaShowcase.jsx
 init_LanguageContext();
-import React17, { useState as useState13, useEffect as useEffect10, useMemo as useMemo4 } from "react";
+import React17, { useState as useState13, useEffect as useEffect9, useMemo as useMemo4 } from "react";
 
 // js/components/home/CinemaSpotlightHero.jsx
 init_LanguageContext();
@@ -2049,7 +2181,7 @@ function CinemaVideoCard({
 var CinemaVideoCard_default = CinemaVideoCard;
 
 // js/pages/CinemaTheaterModal.jsx
-import React16, { useState as useState11, useEffect as useEffect8, useMemo as useMemo3 } from "react";
+import React16, { useState as useState11, useEffect as useEffect7, useMemo as useMemo3 } from "react";
 import { createPortal } from "react-dom";
 
 // js/services/api.js
@@ -2107,7 +2239,7 @@ function CinemaTheaterModal({
   const [activeTab, setActiveTab] = useState11("overview");
   const [sidebarFilter, setSidebarFilter] = useState11("all");
   const [sidebarSearch, setSidebarSearch] = useState11("");
-  useEffect8(() => {
+  useEffect7(() => {
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     const handleKey = (e) => {
@@ -2292,7 +2424,7 @@ var CinemaTheaterModal_default = CinemaTheaterModal;
 
 // js/services/videos.js
 init_translations();
-import { useState as useState12, useEffect as useEffect9 } from "react";
+import { useState as useState12, useEffect as useEffect8 } from "react";
 var memoryCache = /* @__PURE__ */ new Map();
 var inflightPromises = /* @__PURE__ */ new Map();
 function getCachedVideos(key, language) {
@@ -2324,7 +2456,7 @@ function setCachedVideos(key, list) {
     }
   }
 }
-async function fetchVideos(category = "all", sort = "newest", limit = 12, language = "ta") {
+async function fetchVideos(category = "all", sort = "newest", limit = 48, language = "ta") {
   const cacheKey = `${category}-${sort}-${limit}-${language}`;
   if (inflightPromises.has(cacheKey)) {
     return inflightPromises.get(cacheKey);
@@ -2343,7 +2475,7 @@ async function fetchVideos(category = "all", sort = "newest", limit = 12, langua
         } catch (_) {
         }
       }
-      const url = `/api/videos?limit=${limit}&category=${encodeURIComponent(category)}&sort=${encodeURIComponent(sort)}`;
+      const url = `/api/videos?fields=list&limit=${limit}&category=${encodeURIComponent(category)}&sort=${encodeURIComponent(sort)}`;
       const res = await fetch(url);
       if (res.ok) {
         const json = await res.json();
@@ -2371,7 +2503,7 @@ async function fetchVideos(category = "all", sort = "newest", limit = 12, langua
   inflightPromises.set(cacheKey, promise);
   return promise;
 }
-function useVideos(category = "all", sort = "newest", limit = 12, language = "ta") {
+function useVideos(category = "all", sort = "newest", limit = 48, language = "ta") {
   const cacheKey = `${category}-${sort}-${limit}-${language}`;
   const [videos, setVideos] = useState12(() => {
     const cached = getCachedVideos(cacheKey, language);
@@ -2389,7 +2521,7 @@ function useVideos(category = "all", sort = "newest", limit = 12, language = "ta
     return list.slice(0, limit).map((v) => translateVideo(v, language));
   });
   const [isLoading, setIsLoading] = useState12(false);
-  useEffect9(() => {
+  useEffect8(() => {
     let isMounted = true;
     const revalidate = async () => {
       const data = await fetchVideos(category, sort, limit, language);
@@ -2403,7 +2535,7 @@ function useVideos(category = "all", sort = "newest", limit = 12, language = "ta
       isMounted = false;
     };
   }, [category, sort, limit, language]);
-  return { videos, isLoading };
+  return { videos, isLoading, total: videos.length };
 }
 
 // js/components/home/HomeCinemaShowcase.jsx
@@ -2534,7 +2666,7 @@ var Home_default = Home;
 init_translations();
 if (typeof globalThis.window === "undefined") {
   globalThis.window = {
-    location: { hash: "", pathname: "/", search: "", href: "https://muthaleetuthisai-rho.vercel.app/" },
+    location: { hash: "", pathname: "/", search: "", href: "https://www.muthaleetuthisai.com/" },
     addEventListener: () => {
     },
     removeEventListener: () => {

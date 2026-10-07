@@ -4,9 +4,11 @@ import { useLanguage } from '../context/LanguageContext.jsx';
 function SipCalculator() {
   const { t, language } = useLanguage();
   const [calcMode, setCalcMode] = useState('sip'); // 'sip' | 'lumpsum'
-  const [amount, setAmount] = useState(150);
+  const [inputAmount, setInputAmount] = useState('150');
+  const [lastValidAmount, setLastValidAmount] = useState(150);
   const [timeframe, setTimeframe] = useState('1Y'); // '1Y' | '3Y' | '5Y' | 'SI'
   const [analysisTab, setAnalysisTab] = useState('pie'); // 'pie' | 'statement'
+  const [selectedFundName, setSelectedFundName] = useState('SBI Arbitrage Opportunities Fund');
 
   const isTamil = language === 'ta';
 
@@ -29,24 +31,37 @@ function SipCalculator() {
   const currentRates = RETURN_RATES[calcMode][timeframe];
   const years = currentRates.years;
 
+  // Validate and parse amount
+  const parsedNum = Number(inputAmount);
+  const isInvalid = inputAmount === '' || isNaN(parsedNum) || parsedNum < 150 || parsedNum > 1000000;
+  const activeAmount = isInvalid ? lastValidAmount : parsedNum;
+
+  const handleAmountChange = (valStr) => {
+    setInputAmount(valStr);
+    const num = Number(valStr);
+    if (!isNaN(num) && num >= 150 && num <= 1000000) {
+      setLastValidAmount(num);
+    }
+  };
+
   // Calculation formulas
-  const calculateMaturity = (rate) => {
+  const calculateMaturity = (rate, amt) => {
     const r = rate / 100;
     if (calcMode === 'sip') {
       const i = r / 12;
       const n = years * 12;
-      if (i <= 0) return amount * n;
-      return Math.round(amount * ((Math.pow(1 + i, n) - 1) / i) * (1 + i));
+      if (i <= 0) return amt * n;
+      return Math.round(amt * ((Math.pow(1 + i, n) - 1) / i) * (1 + i));
     } else {
-      return Math.round(amount * Math.pow(1 + r, years));
+      return Math.round(amt * Math.pow(1 + r, years));
     }
   };
 
-  const fundAmount = calculateMaturity(currentRates.fund);
-  const benchAmount = calculateMaturity(currentRates.bench);
-  const addBenchAmount = calculateMaturity(currentRates.addBench);
+  const fundAmount = calculateMaturity(currentRates.fund, activeAmount);
+  const benchAmount = calculateMaturity(currentRates.bench, activeAmount);
+  const addBenchAmount = calculateMaturity(currentRates.addBench, activeAmount);
 
-  const totalInvested = calcMode === 'sip' ? Math.round(amount * years * 12) : amount;
+  const totalInvested = calcMode === 'sip' ? Math.round(activeAmount * years * 12) : activeAmount;
   const estimatedGain = Math.max(0, fundAmount - totalInvested);
 
   const formatCurrency = (val) => {
@@ -66,8 +81,8 @@ function SipCalculator() {
 
   const presetAmounts = [150, 500, 1000, 5000, 10000, 25000, 50000, 100000];
 
-  // Pie Chart calculations
-  const investedPct = fundAmount > 0 ? Math.min(100, Math.max(1, Math.round((totalInvested / fundAmount) * 100))) : 50;
+  // Pie Chart calculations - Never show 50/50 for zero
+  const investedPct = fundAmount > 0 ? Math.min(100, Math.max(1, Math.round((totalInvested / fundAmount) * 100))) : 100;
   const gainPct = Math.max(0, 100 - investedPct);
   const multiplier = totalInvested > 0 ? (fundAmount / totalInvested).toFixed(2) : '1.00';
 
@@ -87,13 +102,13 @@ function SipCalculator() {
       let curBench = 0;
 
       if (calcMode === 'sip') {
-        curInvested = amount * n;
-        curFund = iFund > 0 ? Math.round(amount * ((Math.pow(1 + iFund, n) - 1) / iFund) * (1 + iFund)) : curInvested;
-        curBench = iBench > 0 ? Math.round(amount * ((Math.pow(1 + iBench, n) - 1) / iBench) * (1 + iBench)) : curInvested;
+        curInvested = activeAmount * n;
+        curFund = iFund > 0 ? Math.round(activeAmount * ((Math.pow(1 + iFund, n) - 1) / iFund) * (1 + iFund)) : curInvested;
+        curBench = iBench > 0 ? Math.round(activeAmount * ((Math.pow(1 + iBench, n) - 1) / iBench) * (1 + iBench)) : curInvested;
       } else {
-        curInvested = amount;
-        curFund = Math.round(amount * Math.pow(1 + rFund, y));
-        curBench = Math.round(amount * Math.pow(1 + rBench, y));
+        curInvested = activeAmount;
+        curFund = Math.round(activeAmount * Math.pow(1 + rFund, y));
+        curBench = Math.round(activeAmount * Math.pow(1 + rBench, y));
       }
 
       list.push({
@@ -106,7 +121,7 @@ function SipCalculator() {
       });
     }
     return list;
-  }, [calcMode, amount, years, currentRates]);
+  }, [calcMode, activeAmount, years, currentRates]);
 
   return (
     <section id="calculator" className="w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 select-none min-w-0">
@@ -134,7 +149,7 @@ function SipCalculator() {
             <button
               type="button"
               onClick={() => setCalcMode('sip')}
-              className={'px-4 sm:px-5 py-1.5 rounded-full text-xs font-bold transition-all duration-200 ' + (
+              className={'px-4 sm:px-5 py-1.5 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer ' + (
                 calcMode === 'sip'
                   ? 'bg-[#16A34A] text-white shadow-md shadow-green-600/30'
                   : 'text-slate-300 hover:text-white'
@@ -145,7 +160,7 @@ function SipCalculator() {
             <button
               type="button"
               onClick={() => setCalcMode('lumpsum')}
-              className={'px-4 sm:px-5 py-1.5 rounded-full text-xs font-bold transition-all duration-200 ' + (
+              className={'px-4 sm:px-5 py-1.5 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer ' + (
                 calcMode === 'lumpsum'
                   ? 'bg-[#16A34A] text-white shadow-md shadow-green-600/30'
                   : 'text-slate-300 hover:text-white'
@@ -168,7 +183,7 @@ function SipCalculator() {
                 <div className="flex items-center gap-2">
                   <span className="text-base">🧮</span>
                   <h3 className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 dark:text-slate-200 font-sans">
-                    {isTamil ? '1. முதலீட்டுக் கணக்கீடு (Calculation Part)' : '1. Calculation Part'}
+                    {isTamil ? '1. முதலீட்டுக் கணக்கீடு' : '1. Calculation Part'}
                   </h3>
                 </div>
                 <span className="text-xs font-bold px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-[#16A34A] dark:text-[#4ade80] font-sans">
@@ -181,23 +196,27 @@ function SipCalculator() {
                 <label className="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 font-sans">
                   {calcMode === 'sip' ? (isTamil ? 'மாதாந்திர முதலீடு' : 'Monthly Investment') : (isTamil ? 'முதலீட்டு தொகை' : 'Investment Amount')}
                 </label>
-                <div className="flex items-center bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-1 focus-within:ring-2 focus-within:ring-[#16A34A] transition-all">
+                <div className={`flex items-center bg-slate-50 dark:bg-slate-800 border rounded-xl px-3 py-1 transition-all ${isInvalid ? 'border-red-500 ring-1 ring-red-500' : 'border-slate-300 dark:border-slate-700 focus-within:ring-2 focus-within:ring-[#16A34A]'}`}>
                   <span className="text-slate-500 font-bold text-sm mr-1">₹</span>
                   <input
                     type="number"
                     min="150"
                     max="1000000"
                     step="50"
-                    value={amount}
+                    value={inputAmount}
                     aria-label="Monthly Investment Amount in Rupees"
-                    onChange={(e) => {
-                      const val = Number(e.target.value);
-                      setAmount(isNaN(val) ? 150 : Math.max(0, Math.min(1000000, val)));
-                    }}
+                    onChange={(e) => handleAmountChange(e.target.value)}
                     className="w-20 sm:w-24 bg-transparent text-right font-black text-slate-900 dark:text-white text-sm sm:text-base outline-none font-num"
                   />
                 </div>
               </div>
+
+              {/* Inline Validation Error */}
+              {isInvalid && (
+                <p className="text-xs text-red-500 font-medium mb-2 animate-fadeIn">
+                  ⚠️ {isTamil ? 'தொகை ₹150 முதல் ₹10,00,000 வரை இருக்க வேண்டும் (கடைசி சரியான மதிப்பு காட்டப்படுகிறது).' : 'Amount must be between ₹150 and ₹10,00,000 (showing last valid calculation).'}
+                </p>
+              )}
 
               {/* Range Slider Track */}
               <div className="mb-3">
@@ -206,9 +225,9 @@ function SipCalculator() {
                   min="150"
                   max="1000000"
                   step="50"
-                  value={amount}
+                  value={activeAmount}
                   aria-label="Monthly Investment Amount Slider"
-                  onChange={(e) => setAmount(Number(e.target.value))}
+                  onChange={(e) => handleAmountChange(e.target.value)}
                   className="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-[#15803d]"
                 />
                 <div className="flex justify-between items-center text-xs font-bold text-slate-600 dark:text-slate-400 mt-1 font-num">
@@ -223,9 +242,9 @@ function SipCalculator() {
                   <button
                     key={pVal}
                     type="button"
-                    onClick={() => setAmount(pVal)}
-                    className={'px-2.5 py-1 rounded-lg text-xs font-bold font-num transition-all ' + (
-                      amount === pVal
+                    onClick={() => handleAmountChange(String(pVal))}
+                    className={'px-2.5 py-1 rounded-lg text-xs font-bold font-num transition-all cursor-pointer ' + (
+                      activeAmount === pVal
                         ? 'bg-[#0F172A] dark:bg-white text-white dark:text-slate-900 shadow-xs'
                         : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
                     )}
@@ -251,7 +270,7 @@ function SipCalculator() {
                       key={tItem.id}
                       type="button"
                       onClick={() => setTimeframe(tItem.id)}
-                      className={'flex-1 py-1 px-2 rounded-lg text-xs font-bold font-sans whitespace-nowrap transition-all duration-200 text-center ' + (
+                      className={'flex-1 py-1 px-2 rounded-lg text-xs font-bold font-sans whitespace-nowrap transition-all duration-200 text-center cursor-pointer ' + (
                         timeframe === tItem.id
                           ? 'bg-[#16A34A] text-white shadow-xs'
                           : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -265,13 +284,13 @@ function SipCalculator() {
 
               {/* Fund Returns vs Benchmark Comparison List */}
               <div className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-3 border border-slate-200/80 dark:border-slate-700/80 divide-y divide-slate-200/60 dark:divide-slate-700/60">
-                {/* Row 1: This Fund */}
+                {/* Row 1: Selected Fund Name */}
                 <div className="pb-2 flex justify-between items-center">
-                  <div className="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white flex items-center gap-1.5 font-sans">
-                    <span className="w-2 h-2 rounded-full bg-[#16A34A] inline-block"></span>
-                    <span>{isTamil ? 'இந்த நிதி (This Fund)' : 'This Fund (SBI Arbitrage)'}</span>
+                  <div className="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white flex items-center gap-1.5 font-sans truncate pr-2">
+                    <span className="w-2 h-2 rounded-full bg-[#16A34A] inline-block shrink-0"></span>
+                    <span className="truncate">{isTamil ? `${selectedFundName} (SBI ஆர்பிட்ரேஜ்)` : selectedFundName}</span>
                   </div>
-                  <div className="text-right">
+                  <div className="text-right shrink-0">
                     <span className="text-sm sm:text-base font-black text-slate-900 dark:text-white font-num">
                       {formatCurrency(fundAmount)}
                     </span>
@@ -346,7 +365,7 @@ function SipCalculator() {
                   <button
                     type="button"
                     onClick={() => setAnalysisTab('pie')}
-                    className={'px-3 py-1 rounded-lg text-xs font-bold font-sans transition-all ' + (
+                    className={'px-3 py-1 rounded-lg text-xs font-bold font-sans transition-all cursor-pointer ' + (
                       analysisTab === 'pie'
                         ? 'bg-white dark:bg-slate-900 text-[#16A34A] dark:text-[#4ade80] shadow-xs'
                         : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -357,7 +376,7 @@ function SipCalculator() {
                   <button
                     type="button"
                     onClick={() => setAnalysisTab('statement')}
-                    className={'px-3 py-1 rounded-lg text-xs font-bold font-sans transition-all ' + (
+                    className={'px-3 py-1 rounded-lg text-xs font-bold font-sans transition-all cursor-pointer ' + (
                       analysisTab === 'statement'
                         ? 'bg-white dark:bg-slate-900 text-[#16A34A] dark:text-[#4ade80] shadow-xs'
                         : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -484,7 +503,7 @@ function SipCalculator() {
                         <th className="p-2">{isTamil ? 'ஆண்டு' : 'Period'}</th>
                         <th className="p-2">{isTamil ? 'அசல்' : 'Capital'}</th>
                         <th className="p-2">{isTamil ? 'லாபம்' : 'Growth'}</th>
-                        <th className="p-2">{isTamil ? 'இந்த நிதி' : 'This Fund'}</th>
+                        <th className="p-2 truncate">{selectedFundName}</th>
                         <th className="p-2">{isTamil ? 'மடங்கு' : 'Multiple'}</th>
                       </tr>
                     </thead>
@@ -522,6 +541,6 @@ function SipCalculator() {
   );
 }
 
-
 export default SipCalculator;
 export { SipCalculator };
+

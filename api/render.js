@@ -197,6 +197,8 @@ export default async function handler(req, res) {
     let schemas = [];
     let preRenderedHtml = '';
 
+    let isNotFound = false;
+
     // 1. Homepage (/)
     if (cleanPath === '/' || cleanPath === '') {
       pageTitle = `${SITE_NAME_TA} | Tamil Mutual Fund & Investment Guide - Budget Padmanaban`;
@@ -315,6 +317,8 @@ export default async function handler(req, res) {
             </article>
           </div>
         `;
+      } else {
+        isNotFound = true;
       }
 
     // 3. Article Detail (/articles/:slug, /news/:slug)
@@ -390,6 +394,8 @@ export default async function handler(req, res) {
             </article>
           </div>
         `;
+      } else {
+        isNotFound = true;
       }
 
     // 4. Category Pages (/category/:id)
@@ -398,7 +404,7 @@ export default async function handler(req, res) {
       const catInfo = CATEGORY_MAP[catSlug] || { ta: catSlug, en: catSlug };
 
       pageTitle = `${catInfo.ta} (${catInfo.en}) - மியூச்சுவல் ஃபண்ட் வழிகாட்டி | முதலீட்டு திசை`;
-      metaDescription = `${catInfo.ta} (${catInfo.en}) தொடர்பான தமிழ் வீடியோக்கள் மற்றும் ஆலோசனைக் கட்டுரைகள். Learn ${catInfo.en} in Tamil on Muthaleetu Thisai.`;
+      metaDescription = `${catInfo.ta} (${catInfo.en}) தொடர்பான தமிழ் வீடியோக்கள் மற்றும் விழிப்புணர்வுக் கட்டுரைகள். Learn ${catInfo.en} in Tamil on Muthaleetu Thisai.`;
       canonicalUrl = `${BASE_URL}/category/${catSlug}`;
 
       const breadcrumbSchema = generateBreadcrumbSchema([
@@ -411,7 +417,7 @@ export default async function handler(req, res) {
       preRenderedHtml = `
         <div class="ssr-pre-rendered max-w-6xl mx-auto px-4 py-8">
           <h1 class="text-3xl font-extrabold text-slate-900 mb-2">${escapeHtml(catInfo.ta)}</h1>
-          <p class="text-slate-600 mb-8">${escapeHtml(catInfo.en)} - முதலீட்டு ஆலோசனைகள் மற்றும் வழிகாட்டல்கள்.</p>
+          <p class="text-slate-600 mb-8">${escapeHtml(catInfo.en)} - முதலீட்டு வழிகாட்டல்கள்.</p>
         </div>
       `;
 
@@ -430,10 +436,10 @@ export default async function handler(req, res) {
       }
 
       if (profile) {
-        const name = profile.display_name || 'Financial Specialist';
+        const name = profile.display_name || 'Mutual Fund Specialist';
         const arn = profile.arn_number ? ` (ARN: ${profile.arn_number})` : '';
-        pageTitle = `${name}${arn} - AMFI Registered Mutual Fund Specialist | முதலீட்டு திசை`;
-        metaDescription = (profile.bio_ta || profile.bio || `${name} - Verified AMFI Registered Mutual Fund Advisor`).slice(0, 160);
+        pageTitle = `${name}${arn} - AMFI Registered Mutual Fund Distributor | முதலீட்டு திசை`;
+        metaDescription = (profile.bio_ta || profile.bio || `${name} - AMFI Registered Mutual Fund Distributor`).slice(0, 160);
         canonicalUrl = `${BASE_URL}/professionals/${profId}`;
         ogImage = profile.avatar_url || DEFAULT_OG_IMAGE;
 
@@ -445,12 +451,14 @@ export default async function handler(req, res) {
             <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm text-center">
               <img src="${ogImage}" alt="${escapeHtml(name)}" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-2 border-emerald-500" />
               <h1 class="text-2xl font-bold text-slate-900">${escapeHtml(name)}</h1>
-              <p class="text-emerald-700 font-medium text-sm mt-1">${escapeHtml(profile.title || 'AMFI Registered Mutual Fund Specialist')}</p>
+              <p class="text-emerald-700 font-medium text-sm mt-1">${escapeHtml(profile.title || 'AMFI Registered Mutual Fund Distributor')}</p>
               ${profile.arn_number ? `<p class="text-xs text-slate-500 mt-1">ARN: ${escapeHtml(profile.arn_number)}</p>` : ''}
               <p class="text-slate-700 text-sm max-w-lg mx-auto mt-4 leading-relaxed">${escapeHtml(profile.bio_ta || profile.bio || '')}</p>
             </div>
           </div>
         `;
+      } else {
+        isNotFound = true;
       }
 
     // 6. Tools (/calculator, /quiz)
@@ -462,6 +470,43 @@ export default async function handler(req, res) {
       pageTitle = `Investment & Risk Profile Quiz (தமிழ்) | முதலீட்டு திசை`;
       metaDescription = 'Find your ideal asset allocation and investment personality with our quick 2-minute financial quiz in Tamil.';
       canonicalUrl = `${BASE_URL}/quiz`;
+    } else if (cleanPath === '/articles' || cleanPath === '/videos' || cleanPath === '/news' || cleanPath === '/professionals') {
+      // Standard static list pages
+      const pageNames = {
+        '/articles': { ta: 'கட்டுரைகள்', en: 'Articles' },
+        '/videos': { ta: 'வீடியோக்கள்', en: 'Videos' },
+        '/news': { ta: 'செய்திகள்', en: 'News' },
+        '/professionals': { ta: 'விநியோகஸ்தர்கள் பட்டியல்', en: 'Distributors Directory' }
+      };
+      const info = pageNames[cleanPath];
+      pageTitle = `${info.ta} (${info.en}) | முதலீட்டு திசை`;
+      metaDescription = `${info.ta} - முதலீட்டு திசை வழிகாட்டி.`;
+      canonicalUrl = `${BASE_URL}${cleanPath}`;
+    } else {
+      isNotFound = true;
+    }
+
+    if (isNotFound) {
+      pageTitle = `404 - பக்கம் கிடைக்கவில்லை | Page Not Found - முதலீட்டு திசை`;
+      metaDescription = `மன்னிக்கவும், நீங்கள் தேடும் பக்கம் கிடைக்கவில்லை அல்லது நீக்கப்பட்டு இருக்கலாம். Page not found on Muthaleetu Thisai.`;
+      canonicalUrl = `${BASE_URL}/404`;
+
+      preRenderedHtml = `
+        <div class="ssr-pre-rendered max-w-xl mx-auto px-4 py-16 text-center">
+          <div class="w-20 h-20 mx-auto rounded-3xl bg-amber-500/10 text-amber-500 flex items-center justify-center text-4xl mb-6 font-bold">
+            404
+          </div>
+          <h1 class="text-2xl sm:text-3xl font-black text-slate-900 mb-3">
+            பக்கம் கிடைக்கவில்லை (Page Not Found)
+          </h1>
+          <p class="text-slate-600 text-sm mb-8">
+            நீங்கள் தேடும் பக்கம் கிடைக்கவில்லை அல்லது நீக்கப்பட்டு இருக்கலாம்.
+          </p>
+          <a href="/" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm shadow-md transition-all">
+            🏠 முகப்புக்குச் செல்க (Back to Home)
+          </a>
+        </div>
+      `;
     }
 
     // Dynamic Meta Tags Construction
@@ -520,8 +565,8 @@ export default async function handler(req, res) {
     }
 
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=300, stale-while-revalidate=86400');
-    return res.status(200).send(finalHtml);
+    res.setHeader('Cache-Control', isNotFound ? 'no-cache, no-store, must-revalidate' : 'public, max-age=60, s-maxage=300, stale-while-revalidate=86400');
+    return res.status(isNotFound ? 404 : 200).send(finalHtml);
 
   } catch (globalErr) {
     console.error('SSR Render Global Handler Error:', globalErr);

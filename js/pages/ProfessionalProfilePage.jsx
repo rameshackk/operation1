@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import { useLanguage } from '../context/LanguageContext.jsx';
 import { professionalsData, videosData } from '../data/translations.js';
 import { normalizeVideoRow, translateVideo } from '../services/api.js';
-import { normalizeSocialUrl } from '../utils/formatters.js';
+import { normalizeSocialUrl, updateHeadTags, SITE_URL } from '../utils/formatters.js';
 import ProfessionalWidescreenVideoCard from './ProfessionalWidescreenVideoCard.jsx';
 import CinemaTheaterModal from './CinemaTheaterModal.jsx';
 
@@ -66,20 +66,20 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
     if (livePublisher) {
       return {
         id: livePublisher.id,
-        nameEnglish: livePublisher.display_name || 'Certified Advisor',
-        nameTamil: livePublisher.display_name || 'அங்கீகரிக்கப்பட்ட ஆலோசகர்',
+        nameEnglish: livePublisher.display_name || 'AMFI Registered Distributor',
+        nameTamil: livePublisher.display_name || 'AMFI பதிவுசெய்த விநியோகஸ்தர்',
         titleEnglish: livePublisher.title || 'AMFI Registered Mutual Fund Distributor',
-        titleTamil: livePublisher.title || 'பதிவுசெய்யப்பட்ட நிதி ஆலோசகர்',
+        titleTamil: livePublisher.title || 'பதிவுசெய்யப்பட்ட மியூச்சுவல் ஃபண்ட் விநியோகஸ்தர்',
         organization: 'Fortune Investment Services (FISPL Partner)',
         arnNumber: livePublisher.arn_number || '',
-        avatar: livePublisher.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(livePublisher.display_name || 'Advisor')}&background=f59e0b&color=0f172a&bold=true`,
-        badgeEnglish: 'VERIFIED ADVISOR',
-        badgeTamil: 'சரிபார்க்கப்பட்ட ஆலோசகர்',
+        avatar: livePublisher.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(livePublisher.display_name || 'MFD')}&background=f59e0b&color=0f172a&bold=true`,
+        badgeEnglish: 'AMFI REGISTERED MFD',
+        badgeTamil: 'சரிபார்க்கப்பட்ட விநியோகஸ்தர்',
         locationEnglish: 'Tamil Nadu, India',
         locationTamil: 'தமிழ்நாடு, இந்தியா',
         experience: 'AMFI Certified',
         fullBioEnglish: livePublisher.bio || 'Certified AMFI mutual fund distributor dedicated to investor financial freedom and long-term compounding.',
-        fullBioTamil: livePublisher.bio_ta || livePublisher.bio || 'முதலீட்டாளர்களின் நிதி சுதந்திரம் மற்றும் நீண்ட கால செல்வ உருவாக்கத்திற்கு வழிகாட்டும் AMFI அங்கீகாரம் பெற்ற ஆலோசகர்.',
+        fullBioTamil: livePublisher.bio_ta || livePublisher.bio || 'முதலீட்டாளர்களின் நிதி சுதந்திரம் மற்றும் நீண்ட கால செல்வ உருவாக்கத்திற்கு வழிகாட்டும் AMFI அங்கீகாரம் பெற்ற விநியோகஸ்தர்.',
         specializations: Array.isArray(livePublisher.specialties)
           ? livePublisher.specialties.map(s => ({ en: s, ta: s }))
           : [{ en: 'Mutual Funds', ta: 'மியூச்சுவல் ஃபண்ட்' }, { en: 'Equity SIPs', ta: 'ஈக்விட்டி SIP' }],
@@ -94,6 +94,26 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
     }
     return seedProf || null;
   }, [livePublisher, seedProf]);
+
+  useEffect(() => {
+    if (prof) {
+      const pName = isTamil ? (prof.nameTamil || prof.nameEnglish) : (prof.nameEnglish || prof.nameTamil);
+      const pBio = isTamil ? (prof.fullBioTamil || prof.fullBioEnglish) : (prof.fullBioEnglish || prof.fullBioTamil);
+      const pCover = prof.avatar || `${SITE_URL}/assets/logo.png`;
+      const arnText = prof.arnNumber ? ` (ARN: ${prof.arnNumber})` : '';
+
+      updateHeadTags({
+        title: `${pName}${arnText} - AMFI Registered Mutual Fund Distributor | முதலீட்டு திசை`,
+        description: (pBio || '').slice(0, 160),
+        canonical: `${SITE_URL}/professionals/${prof.id || professionalId}`,
+        ogTitle: `${pName}${arnText} | முதலீட்டு திசை`,
+        ogDescription: (pBio || '').slice(0, 200),
+        ogImage: pCover,
+        ogUrl: `${SITE_URL}/professionals/${prof.id || professionalId}`,
+        ogType: 'profile'
+      });
+    }
+  }, [prof, professionalId, isTamil]);
 
   // Skeleton state while profile is loading
   if (isLoading && !prof) {
@@ -118,17 +138,18 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
       <div className="max-w-4xl mx-auto px-4 py-16 text-center space-y-4">
         <div className="text-4xl">⚠️</div>
         <h2 className="text-xl font-bold text-slate-900 dark:text-white font-serif">
-          {isTamil ? 'ஆலோசகர் சுயவிவரம் கிடைக்கவில்லை' : 'Advisor Profile Not Found'}
+          {isTamil ? 'விநியோகஸ்தர் சுயவிவரம் கிடைக்கவில்லை' : 'Distributor Profile Not Found'}
         </h2>
         <p className="text-sm text-slate-500">
-          {isTamil ? 'கோரப்பட்ட ஆலோசகர் விவரங்கள் கிடைக்கவில்லை அல்லது நீக்கப்பட்டு இருக்கலாம்.' : 'The requested advisor profile may have been removed or does not exist.'}
+          {isTamil ? 'கோரப்பட்ட விநியோகஸ்தர் விவரங்கள் கிடைக்கவில்லை அல்லது நீக்கப்பட்டு இருக்கலாம்.' : 'The requested distributor profile may have been removed or does not exist.'}
         </p>
-        <button
-          onClick={() => onNavigate && onNavigate('#/professionals')}
-          className="px-5 py-2.5 rounded-xl bg-amber-500 text-slate-950 font-bold text-xs"
+        <a
+          href="/professionals"
+          onClick={(e) => { e.preventDefault(); onNavigate && onNavigate('/professionals'); }}
+          className="inline-block px-5 py-2.5 rounded-xl bg-amber-500 text-slate-950 font-bold text-xs"
         >
-          {isTamil ? 'அனைத்து நிபுணர்கள் பட்டியல்' : 'Back to Advisors Directory'}
-        </button>
+          {isTamil ? 'அனைத்து விநியோகஸ்தர்கள் பட்டியல்' : 'Back to Distributors Directory'}
+        </a>
       </div>
     );
   }
@@ -456,12 +477,12 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
             <div className="text-center py-16 px-6 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-3 max-w-xl mx-auto">
               <div className="text-3xl">✍️</div>
               <h3 className="text-base font-bold text-slate-900 dark:text-white font-serif">
-                {isTamil ? `${name} - ஆய்வுக் கட்டுரைகள்` : `${name} - Articles & Research`}
+                {isTamil ? `${name} - கட்டுரைகள்` : `${name} - Articles & Research`}
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto leading-relaxed">
                 {isTamil
-                  ? 'இந்த ஆலோசகர் வெளியிடும் புதிய கட்டுரைகள் மற்றும் முதலீட்டு வழிகாட்டல்கள் விரைவில் இந்த பக்கத்தில் பிரசுரிக்கப்படும்.'
-                  : 'Financial advisory and research articles published by this advisor will appear here.'}
+                  ? 'இந்த விநியோகஸ்தர் வெளியிடும் புதிய கட்டுரைகள் மற்றும் முதலீட்டு வழிகாட்டல்கள் விரைவில் இந்த பக்கத்தில் பிரசுரிக்கப்படும்.'
+                  : 'Articles and educational guides published by this mutual fund distributor will appear here.'}
               </p>
             </div>
           )}

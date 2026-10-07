@@ -5,28 +5,29 @@ let liveArticlesCache = null;
 let liveArticlesPromise = null;
 
 export function cleanImageUrl(url, category = 'mutual-fund', fallbackUrl = null) {
-  if (url && typeof url === 'string' && url !== '/favicon.svg') {
+  if (url && typeof url === 'string' && url.trim() && url !== '/favicon.svg') {
+    const trimmed = url.trim();
     // Preserve publisher uploaded data URLs
-    if (url.startsWith('data:image')) {
-      return url;
+    if (trimmed.startsWith('data:image')) {
+      return trimmed;
     }
 
     // Optimize Unsplash images
-    if (url.includes('images.unsplash.com')) {
-      let clean = url.replace(/&w=\d+/g, '&w=600').replace(/&q=\d+/g, '&q=75');
+    if (trimmed.includes('images.unsplash.com')) {
+      let clean = trimmed.replace(/&w=\d+/g, '&w=600').replace(/&q=\d+/g, '&q=75');
       if (!clean.includes('fm=webp')) clean += '&fm=webp';
       return clean;
     }
 
     // Optimize YouTube thumbnails to webp
-    if (url.includes('img.youtube.com/vi/') || url.includes('i.ytimg.com/vi/')) {
-      const match = url.match(/\/vi\/([^/?#]+)\//);
+    if (trimmed.includes('img.youtube.com/vi/') || trimmed.includes('i.ytimg.com/vi/')) {
+      const match = trimmed.match(/\/vi\/([^/?#]+)\//);
       if (match && match[1]) {
         return `https://i.ytimg.com/vi_webp/${match[1]}/mqdefault.webp`;
       }
     }
 
-    return url;
+    return trimmed;
   }
 
   if (fallbackUrl && typeof fallbackUrl === 'string' && fallbackUrl !== '/favicon.svg') {
@@ -59,7 +60,7 @@ export function normalizeArticleItem(item, language = 'ta') {
   const summaryEnglish = item.summaryEnglish || item.excerptEnglish || item.excerpt_en || summaryTamil;
   const summary = isTamil ? (summaryTamil || summaryEnglish) : (summaryEnglish || summaryTamil);
 
-  const rawThumb = item.coverImage || item.cover_image_url || item.thumbnail || item.thumbnail_url || item.imageUrl || '';
+  const rawThumb = item.cover_image_url || item.coverImage || item.thumbnail_url || item.thumbnail || item.imageUrl || '';
   const category = (item.category || 'mutual-fund').replace('_', '-');
   const thumbnail = cleanImageUrl(rawThumb, category);
   const publishedAt = item.publishedAt || item.published_at || item.created_at || new Date().toISOString();

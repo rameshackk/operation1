@@ -34,7 +34,7 @@ function setCachedVideos(key, list) {
   }
 }
 
-export async function fetchVideos(category = 'all', sort = 'newest', limit = 12, language = 'ta') {
+export async function fetchVideos(category = 'all', sort = 'newest', limit = 48, language = 'ta') {
   const cacheKey = `${category}-${sort}-${limit}-${language}`;
 
   if (inflightPromises.has(cacheKey)) {
@@ -56,7 +56,7 @@ export async function fetchVideos(category = 'all', sort = 'newest', limit = 12,
         } catch (_) {}
       }
 
-      const url = `/api/videos?limit=${limit}&category=${encodeURIComponent(category)}&sort=${encodeURIComponent(sort)}`;
+      const url = `/api/videos?fields=list&limit=${limit}&category=${encodeURIComponent(category)}&sort=${encodeURIComponent(sort)}`;
       const res = await fetch(url);
       if (res.ok) {
         const json = await res.json();
@@ -89,7 +89,7 @@ export async function fetchVideos(category = 'all', sort = 'newest', limit = 12,
   return promise;
 }
 
-export function useVideos(category = 'all', sort = 'newest', limit = 12, language = 'ta') {
+export function useVideos(category = 'all', sort = 'newest', limit = 48, language = 'ta') {
   const cacheKey = `${category}-${sort}-${limit}-${language}`;
 
   // Instant 0ms Initial State: SWR Cache -> Initial Prerender -> Static Catalog
@@ -127,6 +127,7 @@ export function useVideos(category = 'all', sort = 'newest', limit = 12, languag
     };
   }, [category, sort, limit, language]);
 
-  return { videos, isLoading };
+  return { videos, isLoading, total: videos.length };
 }
+
 

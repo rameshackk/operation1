@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useLanguage } from '../../context/LanguageContext.jsx';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { LanguageSwitcher } from './LanguageSwitcher.jsx';
@@ -41,7 +41,7 @@ function Navbar({ currentPath, onNavigate }) {
     <>
       <nav className="bg-[#F4F9F4] dark:bg-slate-950 text-slate-800 dark:text-slate-100 border-b border-[#D5EBD9] dark:border-slate-800 shadow-sm relative z-20">
         <div className="w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
-          {/* Desktop / Laptop Horizontal Bar - Preserved 100% */}
+          {/* Desktop / Laptop Horizontal Bar */}
           <div className="hidden md:flex items-center justify-between gap-2 py-2">
             <div className="flex items-center justify-between flex-1 gap-1.5 xl:gap-2">
               {navItems.map((item) => {
@@ -50,7 +50,7 @@ function Navbar({ currentPath, onNavigate }) {
                     <button
                       key={item.id}
                       onClick={() => item.action && item.action()}
-                      className="relative px-4 py-2 text-[13.5px] xl:text-[14px] font-bold transition-all rounded-[10px] whitespace-nowrap text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-white hover:bg-red-50 dark:hover:bg-red-950/30 border border-red-500/20"
+                      className="relative px-4 py-2 text-[13.5px] xl:text-[14px] font-bold transition-all rounded-[10px] whitespace-nowrap text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-white hover:bg-red-50 dark:hover:bg-red-950/30 border border-red-500/20 cursor-pointer"
                     >
                       {item.label}
                     </button>
@@ -59,27 +59,28 @@ function Navbar({ currentPath, onNavigate }) {
                 const cleanItem = (item.path || item.hash || '/').replace(/^#/, '').toLowerCase().replace(/\/+$/, '') || '/';
                 const isActive = cleanCurrent === cleanItem || (cleanItem === '/' && (cleanCurrent === '' || cleanCurrent === '/home'));
                 
-                // Active: filled solid blue (#2563EB bg, white text, bold)
-                // Inactive: subtle hover
                 const activeClass = 'bg-[#2563EB] text-white font-extrabold shadow-md shadow-blue-600/30 ring-2 ring-blue-500/20';
                 const inactiveClass = 'text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-slate-900 font-semibold';
 
                 return (
-                  <button
+                  <a
                     key={item.id}
-                    onClick={() => onNavigate(item.path || item.hash)}
-                    className={`relative px-3.5 py-2 text-[13px] xl:text-[14px] transition-all rounded-[10px] whitespace-nowrap ${isActive ? activeClass : inactiveClass}`}
+                    href={item.path || item.hash || '/'}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      onNavigate(item.path || item.hash);
+                    }}
+                    className={`relative px-3.5 py-2 text-[13px] xl:text-[14px] transition-all rounded-[10px] whitespace-nowrap inline-flex items-center justify-center cursor-pointer ${isActive ? activeClass : inactiveClass}`}
                   >
                     {item.label}
-                  </button>
+                  </a>
                 );
               })}
             </div>
           </div>
 
-          {/* Mobile & Tablet Compact Nav Trigger Header (Hidden on md: screens) */}
+          {/* Mobile & Tablet Compact Nav Trigger Header */}
           <div className="md:hidden flex items-center justify-between h-11 sm:h-12 min-w-0">
-            {/* Active section breadcrumb pill */}
             <div className="flex items-center gap-2 min-w-0 truncate">
               <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse shrink-0" />
               <span className="text-xs font-black text-[#2563EB] dark:text-[#60a5fa] uppercase tracking-wider truncate">
@@ -91,10 +92,10 @@ function Navbar({ currentPath, onNavigate }) {
               <button
                 onClick={() => setMobileOpen(true)}
                 aria-label="Open Navigation Menu"
-                className="px-3.5 py-2 min-h-[44px] rounded-xl text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2 text-xs font-black shadow-sm active:scale-95"
+                className="px-3.5 py-2 min-h-[44px] rounded-xl text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-2 text-xs font-black shadow-sm active:scale-95 cursor-pointer"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M4 6h16M4 12h16M4 18h16" /></svg>
-                <span>{language === 'ta' ? 'பட்டியல்' : 'Menu'}</span>
+                <span>{language === 'ta' ? 'பட்டி' : 'Menu'}</span>
               </button>
             </div>
           </div>
@@ -123,7 +124,7 @@ function Navbar({ currentPath, onNavigate }) {
 
                 <button
                   onClick={() => setMobileOpen(false)}
-                  className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-slate-100 dark:bg-slate-900 text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white flex items-center justify-center font-bold text-base border border-slate-200 dark:border-slate-800 active:scale-95"
+                  className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-slate-100 dark:bg-slate-900 text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white flex items-center justify-center font-bold text-base border border-slate-200 dark:border-slate-800 active:scale-95 cursor-pointer"
                   aria-label="Close menu"
                 >
                   ✕
@@ -135,35 +136,51 @@ function Navbar({ currentPath, onNavigate }) {
                 {navItems.map((item) => {
                   const cleanItem = (item.path || item.hash || '/').replace(/^#/, '').toLowerCase().replace(/\/+$/, '') || '/';
                   const isActive = cleanCurrent === cleanItem || (cleanItem === '/' && (cleanCurrent === '' || cleanCurrent === '/home'));
-                  return (
-                    <button
-                      key={item.id}
-                      onClick={() => {
-                        if (item.isAction) {
+                  
+                  if (item.isAction) {
+                    return (
+                      <button
+                        key={item.id}
+                        onClick={() => {
                           if (item.action) item.action();
-                        } else {
-                          onNavigate(item.path || item.hash);
-                        }
+                          setMobileOpen(false);
+                        }}
+                        className="w-full text-left px-4 py-3.5 min-h-[48px] rounded-2xl text-sm font-black transition-all flex items-center justify-between text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40 cursor-pointer"
+                      >
+                        <span className="flex items-center gap-3">
+                          <span className="text-base">{item.icon || '•'}</span>
+                          <span className="text-[14px]">{item.label}</span>
+                        </span>
+                      </button>
+                    );
+                  }
+
+                  return (
+                    <a
+                      key={item.id}
+                      href={item.path || item.hash || '/'}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        onNavigate(item.path || item.hash);
                         setMobileOpen(false);
                       }}
-                      className={`w-full text-left px-4 py-3.5 min-h-[48px] rounded-2xl text-sm font-black transition-all flex items-center justify-between ${item.isAction
-                          ? 'text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40'
-                          : isActive
-                            ? 'bg-[#2563EB] text-white shadow-md border border-blue-500'
-                            : 'text-slate-700 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-900 border border-transparent'
-                        }`}
+                      className={`w-full text-left px-4 py-3.5 min-h-[48px] rounded-2xl text-sm font-black transition-all flex items-center justify-between cursor-pointer ${
+                        isActive
+                          ? 'bg-[#2563EB] text-white shadow-md border border-blue-500'
+                          : 'text-slate-700 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-900 border border-transparent'
+                      }`}
                     >
                       <span className="flex items-center gap-3">
                         <span className="text-base">{item.icon || '•'}</span>
                         <span className="text-[14px]">{item.label}</span>
                       </span>
                       {isActive && <span className="w-2.5 h-2.5 rounded-full bg-white animate-pulse" />}
-                    </button>
+                    </a>
                   );
                 })}
               </div>
 
-              {/* Drawer Footer with Quick Switchers & User Auth - Thumb Reach Area */}
+              {/* Drawer Footer with Quick Switchers & User Auth */}
               <div className="p-4 border-t border-slate-200 dark:border-slate-800 space-y-3.5 bg-slate-50 dark:bg-slate-900/60 pb-[max(1.5rem,env(safe-area-inset-bottom,1.5rem))]">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
@@ -181,21 +198,23 @@ function Navbar({ currentPath, onNavigate }) {
                       signOut && signOut();
                       setMobileOpen(false);
                     }}
-                    className="w-full min-h-[44px] py-2.5 px-4 rounded-xl bg-red-50 dark:bg-red-950/40 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900 text-xs font-extrabold hover:bg-red-100 transition-colors active:scale-95"
+                    className="w-full min-h-[44px] py-2.5 px-4 rounded-xl bg-red-50 dark:bg-red-950/40 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900 text-xs font-extrabold hover:bg-red-100 transition-colors active:scale-95 cursor-pointer"
                   >
                     {language === 'ta' ? 'வெளியேறுக' : 'Sign Out'}
                   </button>
                 ) : (
-                  <button
-                    onClick={() => {
+                  <a
+                    href="/login"
+                    onClick={(e) => {
+                      e.preventDefault();
                       onNavigate('/login');
                       setMobileOpen(false);
                     }}
-                    className="w-full min-h-[44px] py-2.5 px-4 rounded-xl bg-[#2563EB] text-white text-xs font-extrabold hover:bg-blue-700 transition-colors shadow-sm active:scale-95 flex items-center justify-center gap-1.5"
+                    className="w-full min-h-[44px] py-2.5 px-4 rounded-xl bg-[#2563EB] text-white text-xs font-extrabold hover:bg-blue-700 transition-colors shadow-sm active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer"
                   >
                     <span>🔐</span>
                     <span>{language === 'ta' ? 'உள்நுழைக' : 'Sign In'}</span>
-                  </button>
+                  </a>
                 )}
               </div>
             </div>
@@ -203,86 +222,102 @@ function Navbar({ currentPath, onNavigate }) {
         )}
       </nav>
 
-      {/* 3. MOBILE STICKY BOTTOM TAB BAR (md:hidden) */}
-      <div className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl border-t border-[#D5EBD9] dark:border-slate-800 shadow-[0_-4px_25px_rgba(0,0,0,0.08)] select-none">
-        <div className="flex items-center justify-around px-2 pt-1.5 pb-[max(0.6rem,env(safe-area-inset-bottom,0.6rem))]">
+      {/* 3. MOBILE STICKY BOTTOM TAB BAR (md:hidden) - Fixed 375px & Small screens overflow */}
+      <div className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl border-t border-[#D5EBD9] dark:border-slate-800 shadow-[0_-4px_25px_rgba(0,0,0,0.08)] select-none max-w-full overflow-hidden">
+        <div className="grid grid-cols-5 w-full max-w-full px-1 pt-1.5 pb-[max(0.5rem,env(safe-area-inset-bottom,0.5rem))]">
           {/* Tab 1: Home */}
-          <button
-            onClick={() => onNavigate('/')}
-            className={`flex flex-col items-center justify-center flex-1 py-1 min-h-[48px] rounded-xl transition-all active:scale-95 ${
+          <a
+            href="/"
+            onClick={(e) => {
+              e.preventDefault();
+              onNavigate('/');
+            }}
+            className={`flex flex-col items-center justify-center min-w-0 py-1 min-h-[44px] rounded-lg transition-all active:scale-95 cursor-pointer ${
               cleanCurrent === '/' || cleanCurrent === '' || cleanCurrent === '/home'
                 ? 'text-[#2563EB] dark:text-[#60a5fa] font-black'
                 : 'text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white'
             }`}
             aria-label="Home"
           >
-            <span className="text-lg leading-none mb-1">🏠</span>
-            <span className="text-[12px] leading-none tracking-tight">
+            <span className="text-base sm:text-lg leading-none mb-1">🏠</span>
+            <span className="text-[11px] leading-none tracking-tight truncate max-w-full px-0.5">
               {language === 'ta' ? 'முகப்பு' : 'Home'}
             </span>
-          </button>
+          </a>
 
           {/* Tab 2: Articles */}
-          <button
-            onClick={() => onNavigate('/articles')}
-            className={`flex flex-col items-center justify-center flex-1 py-1 min-h-[48px] rounded-xl transition-all active:scale-95 ${
+          <a
+            href="/articles"
+            onClick={(e) => {
+              e.preventDefault();
+              onNavigate('/articles');
+            }}
+            className={`flex flex-col items-center justify-center min-w-0 py-1 min-h-[44px] rounded-lg transition-all active:scale-95 cursor-pointer ${
               cleanCurrent === '/articles' || cleanCurrent.startsWith('/articles/')
                 ? 'text-[#2563EB] dark:text-[#60a5fa] font-black'
                 : 'text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white'
             }`}
             aria-label="Articles"
           >
-            <span className="text-lg leading-none mb-1">📰</span>
-            <span className="text-[12px] leading-none tracking-tight">
-              {language === 'ta' ? 'கட்டுரைகள்' : 'Articles'}
+            <span className="text-base sm:text-lg leading-none mb-1">📰</span>
+            <span className="text-[11px] leading-none tracking-tight truncate max-w-full px-0.5">
+              {language === 'ta' ? 'கட்டுரை' : 'Articles'}
             </span>
-          </button>
+          </a>
 
           {/* Tab 3: Videos */}
-          <button
-            onClick={() => onNavigate('/videos')}
-            className={`flex flex-col items-center justify-center flex-1 py-1 min-h-[48px] rounded-xl transition-all active:scale-95 ${
+          <a
+            href="/videos"
+            onClick={(e) => {
+              e.preventDefault();
+              onNavigate('/videos');
+            }}
+            className={`flex flex-col items-center justify-center min-w-0 py-1 min-h-[44px] rounded-lg transition-all active:scale-95 cursor-pointer ${
               cleanCurrent === '/videos' || cleanCurrent.startsWith('/videos/')
                 ? 'text-[#2563EB] dark:text-[#60a5fa] font-black'
                 : 'text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white'
             }`}
             aria-label="Videos"
           >
-            <span className="text-lg leading-none mb-1">🎥</span>
-            <span className="text-[12px] leading-none tracking-tight">
+            <span className="text-base sm:text-lg leading-none mb-1">🎥</span>
+            <span className="text-[11px] leading-none tracking-tight truncate max-w-full px-0.5">
               {language === 'ta' ? 'வீடியோ' : 'Videos'}
             </span>
-          </button>
+          </a>
 
           {/* Tab 4: Calculator */}
-          <button
-            onClick={() => onNavigate('/calculator')}
-            className={`flex flex-col items-center justify-center flex-1 py-1 min-h-[48px] rounded-xl transition-all active:scale-95 ${
+          <a
+            href="/calculator"
+            onClick={(e) => {
+              e.preventDefault();
+              onNavigate('/calculator');
+            }}
+            className={`flex flex-col items-center justify-center min-w-0 py-1 min-h-[44px] rounded-lg transition-all active:scale-95 cursor-pointer ${
               cleanCurrent === '/calculator'
                 ? 'text-[#2563EB] dark:text-[#60a5fa] font-black'
                 : 'text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white'
             }`}
             aria-label="SIP Calculator"
           >
-            <span className="text-lg leading-none mb-1">🧮</span>
-            <span className="text-[12px] leading-none tracking-tight">
+            <span className="text-base sm:text-lg leading-none mb-1">🧮</span>
+            <span className="text-[11px] leading-none tracking-tight truncate max-w-full px-0.5">
               {language === 'ta' ? 'SIP கணக்கீடு' : 'Calculator'}
             </span>
-          </button>
+          </a>
 
           {/* Tab 5: Menu Drawer Trigger */}
           <button
             onClick={() => setMobileOpen(true)}
-            className={`flex flex-col items-center justify-center flex-1 py-1 min-h-[48px] rounded-xl transition-all active:scale-95 ${
+            className={`flex flex-col items-center justify-center min-w-0 py-1 min-h-[44px] rounded-lg transition-all active:scale-95 cursor-pointer ${
               mobileOpen
                 ? 'text-[#2563EB] dark:text-[#60a5fa] font-black'
                 : 'text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white'
             }`}
             aria-label="Open full menu"
           >
-            <span className="text-lg leading-none mb-1">☰</span>
-            <span className="text-[12px] leading-none tracking-tight">
-              {language === 'ta' ? 'பட்டியல்' : 'Menu'}
+            <span className="text-base sm:text-lg leading-none mb-1">☰</span>
+            <span className="text-[11px] leading-none tracking-tight truncate max-w-full px-0.5">
+              {language === 'ta' ? 'பட்டி' : 'Menu'}
             </span>
           </button>
         </div>
@@ -293,3 +328,4 @@ function Navbar({ currentPath, onNavigate }) {
 
 export default Navbar;
 export { Navbar };
+

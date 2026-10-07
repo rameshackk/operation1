@@ -388,6 +388,8 @@ export default async function handler(req, res) {
             SELECT author_id, COUNT(*) as article_count FROM articles WHERE status = 'published' GROUP BY author_id
           ) art ON p.id::text = art.author_id::text
           WHERE p.role IN ('publisher', 'admin')
+            AND (p.is_test IS NULL OR p.is_test = false)
+            AND p.display_name NOT ILIKE '%demo%'
         `;
 
         const params = [];
@@ -400,7 +402,7 @@ export default async function handler(req, res) {
         params.push(parseInt(limit, 10) || 50);
 
         const result = await pgPool.query(query, params);
-        res.setHeader('Cache-Control', 'public, s-maxage=30, stale-while-revalidate=120');
+        res.setHeader('Cache-Control', 'public, s-maxage=600, stale-while-revalidate=86400');
         return res.status(200).json({
           status: 'success',
           data: result.rows
@@ -413,10 +415,13 @@ export default async function handler(req, res) {
           .from('profiles')
           .select('*')
           .in('role', ['publisher', 'admin'])
+          .or('is_test.is.null,is_test.eq.false')
+          .not('display_name', 'ilike', '%demo%')
           .order('created_at', { ascending: false })
           .limit(parseInt(limit, 10) || 50);
 
         if (error) throw error;
+        res.setHeader('Cache-Control', 'public, s-maxage=600, stale-while-revalidate=86400');
         return res.status(200).json({ status: 'success', data: data || [] });
       }
 

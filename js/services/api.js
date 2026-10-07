@@ -381,8 +381,8 @@ async function searchAllContent(query, language = "ta") {
       avatar,
       thumbnail: avatar,
       arnNumber: p.arn_number || p.arnNumber || '',
-      designation: p.title || (language === 'ta' ? (isFounder ? 'நிறுவனர் & தலைமை நிதி ஆய்வாளர்' : 'பதிவுசெய்யப்பட்ட நிதி ஆலோசகர்') : (isFounder ? 'Founder & Chief Market Commentator' : 'AMFI Registered Mutual Fund Distributor')),
-      summary: p.bio || (language === 'ta' ? (p.bio_ta || 'முதலீட்டாளர்களுக்கு வழிகாட்டும் AMFI பதிவுபெற்ற ஆலோசகர்') : 'Certified AMFI mutual fund distributor dedicated to investor wealth creation.'),
+      designation: p.title || (language === 'ta' ? (isFounder ? 'நிறுவனர் & தலைமை நிதி ஆய்வாளர்' : 'பதிவுசெய்யப்பட்ட மியூச்சுவல் ஃபண்ட் விநியோகஸ்தர்') : (isFounder ? 'Founder & Chief Market Commentator' : 'AMFI Registered Mutual Fund Distributor')),
+      summary: p.bio || (language === 'ta' ? (p.bio_ta || 'முதலீட்டாளர்களுக்கு வழிகாட்டும் AMFI பதிவுசெய்த விநியோகஸ்தர்') : 'Certified AMFI mutual fund distributor dedicated to investor wealth creation.'),
       category: 'publisher',
       contentType: 'publisher',
       articleCount: p.article_count || p.stats?.articles || 0,
@@ -408,6 +408,18 @@ async function searchVideos(query, language = "ta") {
   return resultObj.videos || [];
 }
 
+let publishersPromise = null;
+async function getCachedPublishers(limit = 50) {
+  if (publishersPromise) return publishersPromise;
+  publishersPromise = fetch(`/api/publishers?limit=${limit}`)
+    .then(r => r.ok ? r.json() : null)
+    .then(json => json?.status === 'success' && Array.isArray(json.data) ? json.data : [])
+    .catch(err => {
+      console.warn('Publishers fetch fallback note:', err);
+      return [];
+    });
+  return publishersPromise;
+}
 
 export {
   translateVideo,
@@ -418,5 +430,7 @@ export {
   getVideoById,
   getRelatedVideos,
   searchAllContent,
-  searchVideos
+  searchVideos,
+  getCachedPublishers
 };
+

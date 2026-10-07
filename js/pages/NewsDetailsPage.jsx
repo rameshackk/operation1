@@ -2,12 +2,33 @@ import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext.jsx';
 import { newsData } from '../data/translations.js';
 import { translateNewsArticle } from '../services/api.js';
+import { updateHeadTags, SITE_URL } from '../utils/formatters.js';
 
 function NewsDetailsPage({ slug, onNavigate }) {
   const { language } = useLanguage();
   const isTamil = language === 'ta';
   const rawArticle = (newsData || []).find(a => a.slug === slug) || newsData[0];
   const article = translateNewsArticle(rawArticle, language);
+
+  useEffect(() => {
+    if (article) {
+      const artTitle = article.title || 'நிதிச் செய்தி';
+      const artDesc = article.summary || artTitle;
+      const artCover = article.thumbnail || `${SITE_URL}/assets/logo.png`;
+      const artSlug = article.slug || slug;
+
+      updateHeadTags({
+        title: `${artTitle} | முதலீட்டு திசை`,
+        description: artDesc.slice(0, 160),
+        canonical: `${SITE_URL}/news/${artSlug}`,
+        ogTitle: `${artTitle} | முதலீட்டு திசை`,
+        ogDescription: artDesc.slice(0, 200),
+        ogImage: artCover,
+        ogUrl: `${SITE_URL}/news/${artSlug}`,
+        ogType: 'article'
+      });
+    }
+  }, [article, slug]);
 
   if (!article) return null;
 

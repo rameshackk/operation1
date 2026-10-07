@@ -1,12 +1,29 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { useLanguage } from '../context/LanguageContext.jsx';
 import { professionalsData } from '../data/translations.js';
+import { updateHeadTags, SITE_URL } from '../utils/formatters.js';
 
 function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
   const { language } = useLanguage();
   const isTamil = language === 'ta';
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+
+  useEffect(() => {
+    updateHeadTags({
+      title: isTamil ? 'AMFI பதிவுசெய்த விநியோகஸ்தர்கள் | முதலீட்டு திசை' : 'AMFI Registered Mutual Fund Distributors Directory | Muthaleetu Thisai',
+      description: isTamil
+        ? 'தமிழ்நாடு மற்றும் இந்தியாவின் AMFI பதிவுசெய்த மியூச்சுவல் ஃபண்ட் விநியோகஸ்தர்களின் அதிகாரப்பூர்வ பட்டியல்.'
+        : 'Official directory of AMFI Registered Mutual Fund Distributors across Tamil Nadu and India.',
+      canonical: `${SITE_URL}/professionals`,
+      ogTitle: isTamil ? 'AMFI பதிவுசெய்த விநியோகஸ்தர்கள் | முதலீட்டு திசை' : 'AMFI Registered Mutual Fund Distributors Directory',
+      ogDescription: isTamil
+        ? 'தமிழ்நாடு மற்றும் இந்தியாவின் AMFI பதிவுசெய்த மியூச்சுவல் ஃபண்ட் விநியோகஸ்தர்களின் அதிகாரப்பூர்வ பட்டியல்.'
+        : 'Official directory of AMFI Registered Mutual Fund Distributors across Tamil Nadu and India.',
+      ogImage: `${SITE_URL}/assets/logo.png`,
+      ogUrl: `${SITE_URL}/professionals`
+    });
+  }, [isTamil]);
 
   // 1. Instant Cache-First Initialization (Zero render delay)
   const [livePublishers, setLivePublishers] = useState(() => {
@@ -54,11 +71,11 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
   }, []);
 
   const categories = [
-    { id: 'all', labelTa: 'அனைத்து நிபுணர்கள்', labelEn: 'All Specialists' },
-    { id: 'mutual-funds', labelTa: 'மியூச்சுவல் ஃபண்ட் & சந்தை', labelEn: 'Mutual Funds & Market' },
-    { id: 'fintech', labelTa: 'தொழில்நுட்பம் & ஆட்டோமேஷன்', labelEn: 'Tech & Strategy' },
+    { id: 'all', labelTa: 'அனைத்து நிபுணர்கள்', labelEn: 'All Distributors' },
+    { id: 'mutual-funds', labelTa: 'மியூச்சுவல் ஃபண்ட் & சந்தை', labelEn: 'Mutual Funds & SIP' },
+    { id: 'fintech', labelTa: 'தொழில்நுட்பம் & உத்திகள்', labelEn: 'Tech & Strategy' },
     { id: 'research', labelTa: 'ஈக்விட்டி & ஃபண்ட் ஆராய்ச்சி', labelEn: 'Fund Research' },
-    { id: 'client-advisory', labelTa: 'தனிநபர் நிதி & வாடிக்கையாளர்', labelEn: 'Personal CFO Desk' }
+    { id: 'client-services', labelTa: 'தனிநபர் நிதி & சேவைகள்', labelEn: 'Personal Wealth Desk' }
   ];
 
   // Merge live database publishers with platform seed professionals
@@ -69,11 +86,17 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
 
     // 1. Live DB Publishers (All registered publishers stored in database)
     (livePublishers || []).forEach(p => {
-      const displayName = p.display_name || p.email?.split('@')[0] || 'Advisor';
+      const displayName = p.display_name || p.email?.split('@')[0] || 'Distributor';
       const cleanName = displayName.trim();
+      
+      // Filter out internal admin or test / demo profiles
       if (cleanName.toLowerCase() === 'admin' && !p.avatar_url && !p.article_count) {
-        return; // Skip internal system admin entry
+        return;
       }
+      if (p.is_test || p.is_test === true || cleanName.toLowerCase().includes('demo') || cleanName.toLowerCase() === 'test') {
+        return;
+      }
+
       seenIds.add(p.id);
       seenNames.add(cleanName.toLowerCase());
 
@@ -87,8 +110,8 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
         ? 'AMFI-REGISTERED MFD | FOUNDER'
         : (arn ? `AMFI-REGISTERED MFD | ${arn}` : 'AMFI-REGISTERED MFD');
       const badgeTa = isFounder
-        ? 'AMFI பதிவுசெய்த ஆலோசகர் | நிறுவனர்'
-        : (arn ? `AMFI பதிவுசெய்த ஆலோசகர் | ${arn}` : 'AMFI பதிவுசெய்த ஆலோசகர்');
+        ? 'AMFI பதிவுசெய்த விநியோகஸ்தர் | நிறுவனர்'
+        : (arn ? `AMFI பதிவுசெய்த விநியோகஸ்தர் | ${arn}` : 'AMFI பதிவுசெய்த விநியோகஸ்தர்');
 
       list.push({
         id: isFounder ? 'budget-padmanaban' : p.id,
@@ -96,7 +119,7 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
         nameEnglish: isFounder ? 'B. Padmanaban (Budget Padmanaban)' : cleanName,
         nameTamil: isFounder ? 'பி. பத்மநாபன் (பட்ஜெட் பத்மநாபன்)' : cleanName,
         titleEnglish: p.title || (isFounder ? 'Founder & Chief Market Commentator' : 'AMFI Registered Mutual Fund Distributor'),
-        titleTamil: p.title || (isFounder ? 'நிறுவனர் & தலைமை சந்தை ஆய்வாளர்' : 'பதிவுசெய்யப்பட்ட நிதி ஆலோசகர்'),
+        titleTamil: p.title || (isFounder ? 'நிறுவனர் & தலைமை சந்தை ஆய்வாளர்' : 'பதிவுசெய்யப்பட்ட மியூச்சுவல் ஃபண்ட் விநியோகஸ்தர்'),
         organization: isFounder ? 'Fortune Investment Services (FISPL)' : 'Fortune Investment Services (FISPL Partner)',
         arnNumber: arn,
         avatar: p.avatar_url || (isFounder ? '/assets/padmanaban.jpg' : `https://ui-avatars.com/api/?name=${encodeURIComponent(cleanName)}&background=4a9e2c&color=ffffff&bold=true`),
@@ -107,7 +130,7 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
           : 'Certified AMFI mutual fund distributor dedicated to investor financial freedom, portfolio diversification, and long-term compounding.'),
         bioTamil: p.bio_ta || p.bio || (isFounder
           ? 'FISPL நிறுவனர், 15+ ஆண்டுகால நிதி அனுபவத்துடன் மியூச்சுவல் ஃபண்ட் மற்றும் நீண்டகால செல்வ உருவாக்கம் குறித்த வழிகாட்டல்.'
-          : 'முதலீட்டாளர்களின் நிதி சுதந்திரம் மற்றும் நீண்ட கால செல்வ உருவாக்கத்திற்கு வழிகாட்டும் AMFI அங்கீகாரம் பெற்ற ஆலோசகர்.'),
+          : 'முதலீட்டாளர்களின் நிதி சுதந்திரம் மற்றும் நீண்ட கால செல்வ உருவாக்கத்திற்கு வழிகாட்டும் AMFI பதிவுபெற்ற விநியோகஸ்தர்.'),
         category: 'mutual-funds',
         stats: {
           masterclasses: isFounder ? '800+' : 0,

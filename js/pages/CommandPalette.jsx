@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useLanguage } from '../context/LanguageContext.jsx';
 import { searchAllContent } from '../services/api.js';
 import { useDebounce } from '../utils/formatters.js';
@@ -12,13 +12,20 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
   const [isSearching, setIsSearching] = useState(false);
   const debouncedQuery = useDebounce(query, 350);
   const inputRef = useRef(null);
+  const modalRef = useRef(null);
+  const triggerRef = useRef(null);
 
   useEffect(() => {
     if (isOpen) {
+      triggerRef.current = document.activeElement;
       setTimeout(() => inputRef.current?.focus(), 50);
       setQuery('');
       setResultsObj({ all: [], articles: [], videos: [], news: [], publishers: [] });
       setFilterType('all');
+    } else if (triggerRef.current && typeof triggerRef.current.focus === 'function') {
+      try {
+        triggerRef.current.focus();
+      } catch (e) {}
     }
   }, [isOpen]);
 
@@ -43,14 +50,48 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
     return () => { isStale = true; };
   }, [debouncedQuery, language]);
 
+  // Window-level keydown handler for Escape, Ctrl/Cmd+K, and Focus Trap
   useEffect(() => {
     const handleGlobalKeyDown = (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
         if (isOpen) onClose();
         else onNavigate(window.location.hash || '#/');
+        return;
+      }
+
+      if (!isOpen) return;
+
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        onClose();
+        return;
+      }
+
+      // Focus trap inside modal
+      if (e.key === 'Tab' && modalRef.current) {
+        const focusables = modalRef.current.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusables.length > 0) {
+          const firstElement = focusables[0];
+          const lastElement = focusables[focusables.length - 1];
+
+          if (e.shiftKey) {
+            if (document.activeElement === firstElement) {
+              e.preventDefault();
+              lastElement.focus();
+            }
+          } else {
+            if (document.activeElement === lastElement) {
+              e.preventDefault();
+              firstElement.focus();
+            }
+          }
+        }
       }
     };
+
     window.addEventListener('keydown', handleGlobalKeyDown);
     return () => window.removeEventListener('keydown', handleGlobalKeyDown);
   }, [isOpen, onClose, onNavigate]);
@@ -80,8 +121,7 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Escape') onClose();
-    else if (e.key === 'ArrowDown') {
+    if (e.key === 'ArrowDown') {
       e.preventDefault();
       setSelectedIndex(prev => (prev < activeResults.length - 1 ? prev + 1 : 0));
     } else if (e.key === 'ArrowUp') {
@@ -95,7 +135,7 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
 
   if (!isOpen) return null;
 
-  const popularTags = ["@budgetpadmanaban_", "SIP", "NIFTY 50", "Mutual Fund", "Tax Saving", "NPS", "SGB", "IPO"];
+  const popularTags = ["SIP", "NIFTY 50", "Mutual Fund", "Tax Saving", "NPS", "SGB", "IPO"];
   const totalCount = resultsObj.all.length;
   const articlesCount = resultsObj.articles.length;
   const videosCount = resultsObj.videos.length;
@@ -106,10 +146,14 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
 
   return (
     <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={isTa ? "தேடல் சாளரம்" : "Search dialog"}
       className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-start justify-center pt-2 sm:pt-12 md:pt-20 px-2 sm:px-4 animate-fadeIn"
       onClick={onClose}
     >
       <div
+        ref={modalRef}
         className="w-full max-w-3xl bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col max-h-[94vh] sm:max-h-[85vh] modal-card-unified mt-[env(safe-area-inset-top,0px)]"
         onClick={e => e.stopPropagation()}
         onKeyDown={handleKeyDown}
@@ -139,14 +183,14 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
           {query && (
             <button
               onClick={() => setQuery('')}
-              className="min-h-[44px] px-3 text-xs text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 rounded-lg bg-slate-200/80 dark:bg-slate-800 font-bold transition-colors flex items-center justify-center active:scale-95"
+              className="min-h-[44px] px-3 text-xs text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 rounded-lg bg-slate-200/80 dark:bg-slate-800 font-bold transition-colors flex items-center justify-center active:scale-95 cursor-pointer"
             >
               {isTa ? 'அழி' : 'Clear'}
             </button>
           )}
           <button
             onClick={onClose}
-            className="min-h-[44px] min-w-[44px] text-xs font-bold px-3 rounded-lg bg-slate-200/80 dark:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors flex items-center justify-center active:scale-95"
+            className="min-h-[44px] min-w-[44px] text-xs font-bold px-3 rounded-lg bg-slate-200/80 dark:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors flex items-center justify-center active:scale-95 cursor-pointer"
             aria-label="Close search"
           >
             ✕
@@ -158,7 +202,7 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
           <div className="px-3 sm:px-4 py-2 bg-slate-50 dark:bg-slate-950/70 border-b border-slate-200 dark:border-slate-800 flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar touch-pan-x">
             <button
               onClick={() => { setFilterType('all'); setSelectedIndex(0); }}
-              className={`px-3 py-2 min-h-[40px] rounded-xl text-xs font-black transition-all flex items-center gap-1.5 whitespace-nowrap active:scale-95 ${filterType === 'all'
+              className={`px-3 py-2 min-h-[40px] rounded-xl text-xs font-black transition-all flex items-center gap-1.5 whitespace-nowrap active:scale-95 cursor-pointer ${filterType === 'all'
                   ? 'bg-amber-500 text-slate-950 shadow-sm'
                   : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200/80 dark:hover:bg-slate-800'
                 }`}
@@ -170,7 +214,7 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
             {articlesCount > 0 && (
               <button
                 onClick={() => { setFilterType('article'); setSelectedIndex(0); }}
-                className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 whitespace-nowrap ${filterType === 'article'
+                className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${filterType === 'article'
                     ? 'bg-blue-600 text-white shadow-sm'
                     : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200/80 dark:hover:bg-slate-800'
                   }`}
@@ -183,7 +227,7 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
             {videosCount > 0 && (
               <button
                 onClick={() => { setFilterType('video'); setSelectedIndex(0); }}
-                className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 whitespace-nowrap ${filterType === 'video'
+                className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${filterType === 'video'
                     ? 'bg-red-600 text-white shadow-sm'
                     : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200/80 dark:hover:bg-slate-800'
                   }`}
@@ -196,7 +240,7 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
             {newsCount > 0 && (
               <button
                 onClick={() => { setFilterType('news'); setSelectedIndex(0); }}
-                className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 whitespace-nowrap ${filterType === 'news'
+                className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${filterType === 'news'
                     ? 'bg-emerald-600 text-white shadow-sm'
                     : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200/80 dark:hover:bg-slate-800'
                   }`}
@@ -209,12 +253,12 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
             {publishersCount > 0 && (
               <button
                 onClick={() => { setFilterType('publisher'); setSelectedIndex(0); }}
-                className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 whitespace-nowrap ${filterType === 'publisher'
+                className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${filterType === 'publisher'
                     ? 'bg-amber-500 text-slate-950 font-black shadow-sm'
                     : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200/80 dark:hover:bg-slate-800'
                   }`}
               >
-                <span>{isTa ? 'நிபுணர்கள்' : 'Publishers'}</span>
+                <span>{isTa ? 'விநியோகஸ்தர்கள்' : 'Distributors'}</span>
                 <span className="px-1.5 py-0.2 rounded-full bg-black/20 text-xs">{publishersCount}</span>
               </button>
             )}
@@ -228,7 +272,7 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
             <div className="py-10 text-center space-y-3">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 text-amber-800 border border-amber-500/20 text-xs font-bold animate-pulse">
                 <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping" />
-                <span>{isTa ? 'தகவல்கள் தேடப்படுகின்றன...' : 'Searching all articles, videos, news & publishers...'}</span>
+                <span>{isTa ? 'தகவல்கள் தேடப்படுகின்றன...' : 'Searching all articles, videos, news & distributors...'}</span>
               </div>
             </div>
           )}
@@ -238,7 +282,7 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
             <div className="py-12 text-center text-slate-500 dark:text-slate-400 text-sm font-medium space-y-2">
               <div className="text-3xl">🔍</div>
               <p>{isTa ? `"${query}" தொடர்பாக முடிவுகள் எதுவும் கிடைக்கவில்லை` : `No matching contents found for "${query}"`}</p>
-              <p className="text-xs text-slate-600 dark:text-slate-400">{isTa ? 'வேறு முக்கிய வார்த்தைகளைப் பயன்படுத்தி தேடவும்.' : 'Try searching for mutual funds, SIP, NIFTY 50, or advisor name.'}</p>
+              <p className="text-xs text-slate-600 dark:text-slate-400">{isTa ? 'வேறு முக்கிய வார்த்தைகளைப் பயன்படுத்தி தேடவும்.' : 'Try searching for mutual funds, SIP, NIFTY 50, or distributor name.'}</p>
             </div>
           )}
 
@@ -253,7 +297,7 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
                   <button
                     key={idx}
                     onClick={() => setQuery(tag)}
-                    className="px-3.5 py-1.5 text-xs font-bold rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-400 border border-slate-200 dark:border-slate-700 transition-colors"
+                    className="px-3.5 py-1.5 text-xs font-bold rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-400 border border-slate-200 dark:border-slate-700 transition-colors cursor-pointer"
                   >
                     #{tag}
                   </button>
@@ -310,7 +354,7 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
                                   : 'bg-red-500/20 text-red-700 dark:text-red-300'
                             }`}
                         >
-                          {isPub ? (isTa ? 'நிபுணர்' : 'PUBLISHER') : isArticle ? (isTa ? 'கட்டுரை' : 'ARTICLE') : isNews ? (isTa ? 'செய்தி' : 'NEWS') : (isTa ? 'வீடியோ' : 'VIDEO')}
+                          {isPub ? (isTa ? 'விநியோகஸ்தர்' : 'MFD') : isArticle ? (isTa ? 'கட்டுரை' : 'ARTICLE') : isNews ? (isTa ? 'செய்தி' : 'NEWS') : (isTa ? 'வீடியோ' : 'VIDEO')}
                         </span>
 
                         {item.arnNumber && (
@@ -352,7 +396,6 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
   );
 }
 
-
-
 export default CommandPalette;
 export { CommandPalette };
+

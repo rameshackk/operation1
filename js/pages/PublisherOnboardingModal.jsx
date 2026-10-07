@@ -54,35 +54,77 @@ function PublisherOnboardingModal({ profile, onComplete, onClose }) {
     setIsUploadingPhoto(true);
     setError('');
 
-    try {
-      if (supabase && supabase.storage) {
-        const fileExt = file.name.split('.').pop() || 'jpg';
-        const userId = session?.user?.id || profile?.id || 'advisor';
-        const filePath = `avatars/${userId}_${Date.now()}.${fileExt}`;
-
-        const { error: uploadError } = await supabase.storage
-          .from('media')
-          .upload(filePath, file, { cacheControl: '31536000', upsert: true });
-
-        if (uploadError) throw uploadError;
-
-        const { data: publicUrlData } = supabase.storage
-          .from('media')
-          .getPublicUrl(filePath);
-
-        if (publicUrlData && publicUrlData.publicUrl) {
-          setAvatarUrl(publicUrlData.publicUrl);
-          setIsUploadingPhoto(false);
-          return;
-        }
-      } else {
-        throw new Error('Storage client unavailable.');
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+      const dataUrl = event.target?.result;
+      if (!dataUrl) {
+        setIsUploadingPhoto(false);
+        return;
       }
-    } catch (err) {
-      console.error('Avatar upload failed:', err);
-      setError(`Photo upload error: ${err.message}`);
+
+      try {
+        const token = session?.access_token || '';
+        // 1. Try server-side upload endpoint
+        const res = await fetch('/api/admin/articles?action=upload', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            fileData: dataUrl,
+            fileName: file.name,
+            fileType: file.type || 'image/jpeg',
+            folder: 'avatars'
+          })
+        });
+
+        if (res.ok) {
+          const json = await res.json();
+          if (json?.data?.url) {
+            setAvatarUrl(json.data.url);
+            setIsUploadingPhoto(false);
+            return;
+          }
+        }
+
+        // 2. Direct client supabase fallback
+        if (supabase && supabase.storage) {
+          const fileExt = file.name.split('.').pop() || 'jpg';
+          const userId = session?.user?.id || profile?.id || 'advisor';
+          const filePath = `avatars/${userId}_${Date.now()}.${fileExt}`;
+
+          const { error: uploadError } = await supabase.storage
+            .from('media')
+            .upload(filePath, file, { cacheControl: '31536000', upsert: true });
+
+          if (!uploadError) {
+            const { data: publicUrlData } = supabase.storage
+              .from('media')
+              .getPublicUrl(filePath);
+
+            if (publicUrlData && publicUrlData.publicUrl) {
+              setAvatarUrl(publicUrlData.publicUrl);
+              setIsUploadingPhoto(false);
+              return;
+            }
+          }
+        }
+
+        // 3. Fallback: Base64 data URL
+        setAvatarUrl(dataUrl);
+      } catch (err) {
+        console.warn('Avatar upload fallback to dataUrl:', err);
+        setAvatarUrl(dataUrl);
+      } finally {
+        setIsUploadingPhoto(false);
+      }
+    };
+    reader.onerror = () => {
+      setError(isTamil ? 'படத்தை வாசிப்பதில் பிழை ஏற்பட்டது.' : 'Failed to read photo file.');
       setIsUploadingPhoto(false);
-    }
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleSubmit = async () => {

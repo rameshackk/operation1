@@ -113,36 +113,80 @@ function ArticleEditorPage({ articleId, onNavigate, onShowToast }) {
     setIsUploadingImage(true);
     setError('');
 
-    try {
-      if (supabase && supabase.storage) {
-        const fileExt = file.name.split('.').pop() || 'jpg';
-        const fileName = `cover_${Date.now()}_${Math.random().toString(36).substring(2, 8)}.${fileExt}`;
-        const filePath = `articles/covers/${fileName}`;
-
-        const { data, error: uploadError } = await supabase.storage
-          .from('media')
-          .upload(filePath, file, { cacheControl: '31536000', upsert: true });
-
-        if (uploadError) throw uploadError;
-
-        const { data: publicUrlData } = supabase.storage
-          .from('media')
-          .getPublicUrl(filePath);
-
-        if (publicUrlData && publicUrlData.publicUrl) {
-          setCoverImageUrl(publicUrlData.publicUrl);
-          if (onShowToast) onShowToast(isTamil ? 'படம் பதிவேற்றப்பட்டது!' : 'Cover image uploaded!');
-          setIsUploadingImage(false);
-          return;
-        }
-      } else {
-        throw new Error('Supabase storage is not initialized. Please ensure network connectivity.');
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+      const dataUrl = event.target?.result;
+      if (!dataUrl) {
+        setIsUploadingImage(false);
+        return;
       }
-    } catch (err) {
-      console.error('Image upload failed:', err);
-      setError(`Image upload error: ${err.message}`);
+
+      try {
+        const token = session?.access_token || '';
+        // 1. Try server-side upload endpoint (uses supabaseAdmin service role for guaranteed storage)
+        const res = await fetch('/api/admin/articles?action=upload', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            fileData: dataUrl,
+            fileName: file.name,
+            fileType: file.type || 'image/jpeg',
+            folder: 'articles/covers'
+          })
+        });
+
+        if (res.ok) {
+          const json = await res.json();
+          if (json?.data?.url) {
+            setCoverImageUrl(json.data.url);
+            if (onShowToast) onShowToast(isTamil ? 'படம் பதிவேற்றப்பட்டது!' : 'Cover image uploaded!');
+            setIsUploadingImage(false);
+            return;
+          }
+        }
+
+        // 2. Direct client supabase fallback
+        if (supabase && supabase.storage) {
+          const fileExt = file.name.split('.').pop() || 'jpg';
+          const fileName = `cover_${Date.now()}_${Math.random().toString(36).substring(2, 8)}.${fileExt}`;
+          const filePath = `articles/covers/${fileName}`;
+          const { error: uploadError } = await supabase.storage
+            .from('media')
+            .upload(filePath, file, { cacheControl: '31536000', upsert: true });
+
+          if (!uploadError) {
+            const { data: publicUrlData } = supabase.storage
+              .from('media')
+              .getPublicUrl(filePath);
+
+            if (publicUrlData && publicUrlData.publicUrl) {
+              setCoverImageUrl(publicUrlData.publicUrl);
+              if (onShowToast) onShowToast(isTamil ? 'படம் பதிவேற்றப்பட்டது!' : 'Cover image uploaded!');
+              setIsUploadingImage(false);
+              return;
+            }
+          }
+        }
+
+        // 3. Fallback: Use Base64 data URL directly
+        setCoverImageUrl(dataUrl);
+        if (onShowToast) onShowToast(isTamil ? 'படம் இணைக்கப்பட்டது!' : 'Cover image attached!');
+      } catch (err) {
+        console.warn('Upload fallback to dataUrl:', err);
+        setCoverImageUrl(dataUrl);
+        if (onShowToast) onShowToast(isTamil ? 'படம் இணைக்கப்பட்டது!' : 'Cover image attached!');
+      } finally {
+        setIsUploadingImage(false);
+      }
+    };
+    reader.onerror = () => {
+      setError(isTamil ? 'படத்தை வாசிப்பதில் பிழை ஏற்பட்டது.' : 'Failed to read image file.');
       setIsUploadingImage(false);
-    }
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleAutoTranslate = async () => {

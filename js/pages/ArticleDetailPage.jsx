@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { useLanguage } from '../context/LanguageContext.jsx';
 import { useAuth, useBookmarks } from '../context/AuthContext.jsx';
+import { updateHeadTags, SITE_URL } from '../utils/formatters.js';
 import ArticleCommentsSection from './ArticleCommentsSection.jsx';
 
 function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
@@ -90,7 +91,27 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
 
         const data = await res.json();
         if (isMounted) {
-          setArticle(data.data);
+          const art = data.data;
+          setArticle(art);
+
+          if (art) {
+            const artTitle = (isTamil ? (art.titleTamil || art.title_ta) : (art.titleEnglish || art.title_en)) || art.title || 'கட்டுரை';
+            const artDesc = (isTamil ? (art.excerptTamil || art.excerpt_ta || art.summaryTamil) : (art.excerptEnglish || art.excerpt_en || art.summaryEnglish)) || art.summary || artTitle;
+            const artCover = art.coverImage || art.cover_image_url || art.thumbnail || `${SITE_URL}/assets/logo.png`;
+            const artSlug = art.slug || slug;
+
+            updateHeadTags({
+              title: `${artTitle} | முதலீட்டு திசை`,
+              description: artDesc.slice(0, 160),
+              canonical: `${SITE_URL}/articles/${artSlug}`,
+              ogTitle: `${artTitle} | முதலீட்டு திசை`,
+              ogDescription: artDesc.slice(0, 200),
+              ogImage: artCover,
+              ogUrl: `${SITE_URL}/articles/${artSlug}`,
+              ogType: 'article'
+            });
+          }
+
           // Also fetch sibling articles in the same category for prev/next and sidebar
           if (data.data?.category) {
             fetch(`/api/articles?category=${encodeURIComponent(data.data.category)}&limit=15`)

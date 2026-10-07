@@ -217,18 +217,18 @@ async function runBuild() {
   <meta name="description" content="பட்ஜெட் பத்மநாபன் ஃபைனான்ஷியல் - மியூச்சுவல் ஃபண்ட், பங்குச் சந்தை, தனிநபர் நிதி மற்றும் முதலீட்டு வழிகாட்டி. Tamil & English mutual fund investing platform." />
 
   <!-- Canonical & Bilingual Hreflang Tags -->
-  <link rel="canonical" href="https://muthaleetuthisai-rho.vercel.app/" />
-  <link rel="alternate" hreflang="ta" href="https://muthaleetuthisai-rho.vercel.app/" />
-  <link rel="alternate" hreflang="en" href="https://muthaleetuthisai-rho.vercel.app/?lang=en" />
-  <link rel="alternate" hreflang="x-default" href="https://muthaleetuthisai-rho.vercel.app/" />
+  <link rel="canonical" href="https://www.muthaleetuthisai.com/" />
+  <link rel="alternate" hreflang="ta" href="https://www.muthaleetuthisai.com/" />
+  <link rel="alternate" hreflang="en" href="https://www.muthaleetuthisai.com/?lang=en" />
+  <link rel="alternate" hreflang="x-default" href="https://www.muthaleetuthisai.com/" />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Muthaleetu Thisai" />
-  <meta property="og:url" content="https://muthaleetuthisai-rho.vercel.app/" />
+  <meta property="og:url" content="https://www.muthaleetuthisai.com/" />
   <meta property="og:title" content="முதலீட்டு திசை | Tamil Mutual Fund & Investment Guide - Budget Padmanaban" />
   <meta property="og:description" content="பட்ஜெட் பத்மநாபன் ஃபைனான்ஷியல் - மியூச்சுவல் ஃபண்ட், பங்குச் சந்தை, தனிநபர் நிதி மற்றும் முதலீட்டு வழிகாட்டி." />
-  <meta property="og:image" content="https://muthaleetuthisai-rho.vercel.app/assets/logo.png" />
+  <meta property="og:image" content="https://www.muthaleetuthisai.com/assets/logo.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:locale" content="ta_IN" />
@@ -238,10 +238,10 @@ async function runBuild() {
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@budgetpadmanaban" />
   <meta name="twitter:creator" content="@budgetpadmanaban" />
-  <meta name="twitter:url" content="https://muthaleetuthisai-rho.vercel.app/" />
+  <meta name="twitter:url" content="https://www.muthaleetuthisai.com/" />
   <meta name="twitter:title" content="முதலீட்டு திசை | Tamil Mutual Fund & Investment Guide - Budget Padmanaban" />
   <meta name="twitter:description" content="பட்ஜெட் பத்மநாபன் ஃபைனான்ஷியல் - மியூச்சுவல் ஃபண்ட், பங்குச் சந்தை, தனிநபர் நிதி மற்றும் முதலீட்டு வழிகாட்டி." />
-  <meta name="twitter:image" content="https://muthaleetuthisai-rho.vercel.app/assets/logo.png" />
+  <meta name="twitter:image" content="https://www.muthaleetuthisai.com/assets/logo.png" />
 
   <!-- Structured Data JSON-LD -->
   <script type="application/ld+json">
@@ -249,13 +249,13 @@ async function runBuild() {
     {
       "@context": "https://schema.org",
       "@type": "Organization",
-      "@id": "https://muthaleetuthisai-rho.vercel.app/#organization",
+      "@id": "https://www.muthaleetuthisai.com/#organization",
       "name": "Muthaleetu Thisai - Budget Padmanaban",
       "alternateName": "முதலீட்டு திசை",
-      "url": "https://muthaleetuthisai-rho.vercel.app",
+      "url": "https://www.muthaleetuthisai.com",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://muthaleetuthisai-rho.vercel.app/assets/logo.png",
+        "url": "https://www.muthaleetuthisai.com/assets/logo.png",
         "width": 512,
         "height": 512
       },
@@ -269,15 +269,15 @@ async function runBuild() {
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      "@id": "https://muthaleetuthisai-rho.vercel.app/#website",
+      "@id": "https://www.muthaleetuthisai.com/#website",
       "name": "Muthaleetu Thisai",
-      "url": "https://muthaleetuthisai-rho.vercel.app",
+      "url": "https://www.muthaleetuthisai.com",
       "inLanguage": ["ta", "en"],
       "potentialAction": {
         "@type": "SearchAction",
         "target": {
           "@type": "EntryPoint",
-          "urlTemplate": "https://muthaleetuthisai-rho.vercel.app/videos?search={search_term_string}"
+          "urlTemplate": "https://www.muthaleetuthisai.com/videos?search={search_term_string}"
         },
         "query-input": "required name=search_term_string"
       }
@@ -290,7 +290,6 @@ async function runBuild() {
   <link rel="dns-prefetch" href="https://etanokdvfyvkidpeovdi.supabase.co" />
   <link rel="preconnect" href="https://i.ytimg.com" crossorigin />
   <link rel="dns-prefetch" href="https://i.ytimg.com" />
-  <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
 
   <!-- Preload Consolidated Home Feed API (Starts before React JS boots) -->
   <link rel="preload" href="/api/home" as="fetch" crossorigin />
@@ -298,12 +297,9 @@ async function runBuild() {
     window.__HOME__ = fetch('/api/home').then(function(r) { return r.ok ? r.json() : null; }).catch(function() { return null; });
   </script>
 
-  <!-- Preload Self-Hosted Critical Woff2 Fonts -->
+  <!-- Preload Self-Hosted Critical Tamil Subset Woff2 Fonts -->
   <link rel="preload" as="font" type="font/woff2" href="/fonts/noto-serif-tamil-400-0.woff2" crossorigin />
   <link rel="preload" as="font" type="font/woff2" href="/fonts/noto-serif-tamil-400-2.woff2" crossorigin />
-
-  <!-- Preload LCP Hero Article Image with accurate Desktop & Mobile sizes -->
-  <link rel="preload" as="image" href="${lcpImage}" imagesrcset="${lcpBase}?w=320&q=70&auto=format&fit=crop&fm=webp 320w, ${lcpBase}?w=480&q=70&auto=format&fit=crop&fm=webp 480w, ${lcpBase}?w=768&q=70&auto=format&fit=crop&fm=webp 768w" imagesizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px" fetchpriority="high" />
 
   <!-- Preload & Synchronous Compiled CSS (14 KB gzipped) - Zero FOUC, 0.00 CLS -->
   <link rel="preload" as="style" href="/css/app.min.css" />
