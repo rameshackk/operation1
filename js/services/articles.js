@@ -63,7 +63,7 @@ export function normalizeArticleItem(item, language = 'ta') {
   const rawThumb = item.cover_image_url || item.coverImage || item.thumbnail_url || item.thumbnail || item.imageUrl || '';
   const category = (item.category || 'mutual-fund').replace('_', '-');
   const thumbnail = cleanImageUrl(rawThumb, category);
-  const publishedAt = item.publishedAt || item.published_at || item.created_at || new Date().toISOString();
+  const publishedAt = item.publishedAt || item.published_at || item.created_at || '2025-01-01T00:00:00.000Z';
   const authorName = item.authorName || item.author_name || (item.author_profile ? item.author_profile.full_name : null) || 'Budget Padmanaban CFP®';
   const authorRole = item.authorRole || item.author_role || (item.author_profile ? item.author_profile.designation : null) || 'Financial Advisor';
   const authorAvatar = item.authorAvatar || item.author_avatar || (item.author_profile ? item.author_profile.avatar_url : null) || null;
@@ -91,35 +91,33 @@ export function normalizeArticleItem(item, language = 'ta') {
   };
 }
 
-export async function fetchCardArticles(limit = 12, sort = 'newest') {
-  if (liveArticlesCache && liveArticlesCache.length > 0) {
+export async function fetchCardArticles(limit = 24, sort = 'newest', forceRefresh = false) {
+  if (!forceRefresh && liveArticlesCache && liveArticlesCache.length > 0) {
     return liveArticlesCache;
   }
-  if (liveArticlesPromise) {
+  if (!forceRefresh && liveArticlesPromise) {
     return liveArticlesPromise;
   }
 
   liveArticlesPromise = (async () => {
     try {
-      // 1. Consume early preload promise from <head> if available
-      if (typeof window !== 'undefined' && window.__HOME__) {
+      // 1. Consume early preload promise from <head> if available on initial load
+      if (!forceRefresh && typeof window !== 'undefined' && window.__HOME__) {
         try {
           const homeResult = await window.__HOME__;
           const homeList = homeResult?.data?.articles || homeResult?.articles;
           if (Array.isArray(homeList) && homeList.length > 0) {
+            homeList.sort((a, b) => {
+              const tA = new Date(a.publishedAt || a.published_at || a.created_at || 0).getTime();
+              const tB = new Date(b.publishedAt || b.published_at || b.created_at || 0).getTime();
+              return tB - tA;
+            });
             liveArticlesCache = homeList;
             try {
               sessionStorage.setItem('muthaleetu_articles_cache', JSON.stringify(homeList));
             } catch (_) {}
-            return homeList;
           }
         } catch (_) {}
-      }
-
-      // 2. Check embedded server data or static build snapshot
-      if (typeof window !== 'undefined' && window.__INITIAL_DATA__?.articles) {
-        liveArticlesCache = window.__INITIAL_DATA__.articles;
-        return liveArticlesCache;
       }
 
       const res = await fetch(`/api/articles?view=card&limit=${limit}&sort=${sort}`);
@@ -127,6 +125,12 @@ export async function fetchCardArticles(limit = 12, sort = 'newest') {
         const json = await res.json();
         const list = json.data || [];
         if (Array.isArray(list) && list.length > 0) {
+          // Sort strictly descending by publication/upload date (newest first)
+          list.sort((a, b) => {
+            const tA = new Date(a.publishedAt || a.published_at || a.created_at || 0).getTime();
+            const tB = new Date(b.publishedAt || b.published_at || b.created_at || 0).getTime();
+            return tB - tA;
+          });
           liveArticlesCache = list;
           try {
             sessionStorage.setItem('muthaleetu_articles_cache', JSON.stringify(list));
@@ -140,6 +144,21 @@ export async function fetchCardArticles(limit = 12, sort = 'newest') {
     } finally {
       liveArticlesPromise = null;
     }
+
+    if (liveArticlesCache && liveArticlesCache.length > 0) {
+      return liveArticlesCache;
+    }
+
+    if (typeof window !== 'undefined' && window.__INITIAL_DATA__?.articles) {
+      const initial = [...window.__INITIAL_DATA__.articles];
+      initial.sort((a, b) => {
+        const tA = new Date(a.publishedAt || a.published_at || a.created_at || 0).getTime();
+        const tB = new Date(b.publishedAt || b.published_at || b.created_at || 0).getTime();
+        return tB - tA;
+      });
+      return initial;
+    }
+
     return newsData;
   })();
 
@@ -148,38 +167,46 @@ export async function fetchCardArticles(limit = 12, sort = 'newest') {
 
 export function useLiveArticles() {
   const [liveArticles, setLiveArticles] = useState(() => {
-    if (typeof window !== 'undefined' && window.__INITIAL_DATA__?.articles) {
-      return window.__INITIAL_DATA__.articles;
-    }
     if (liveArticlesCache && liveArticlesCache.length > 0) {
       return liveArticlesCache;
     }
     try {
-      const cached = localStorage.getItem('muthaleetu_articles_cache');
+      const cached = localStorage.getItem('muthaleetu_articles_cache') || sessionStorage.getItem('muthaleetu_articles_cache');
       if (cached) {
         const parsed = JSON.parse(cached);
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          parsed.sort((a, b) => {
+            const tA = new Date(a.publishedAt || a.published_at || a.created_at || 0).getTime();
+            const tB = new Date(b.publishedAt || b.published_at || b.created_at || 0).getTime();
+            return tB - tA;
+          });
+          return parsed;
+        }
       }
     } catch (_) {}
+    if (typeof window !== 'undefined' && window.__INITIAL_DATA__?.articles) {
+      return window.__INITIAL_DATA__.articles;
+    }
     return [];
   });
   const [isLoading, setIsLoading] = useState(liveArticles.length === 0);
 
   useEffect(() => {
     let isMounted = true;
-    const load = async () => {
-      const list = await fetchCardArticles(12, 'newest');
+    const load = async (force = false) => {
+      const list = await fetchCardArticles(24, 'newest', force);
       if (isMounted && Array.isArray(list) && list.length > 0) {
         setLiveArticles(list);
         setIsLoading(false);
       }
     };
 
-    load();
+    // Always fetch latest data from API on mount
+    load(true);
 
     const handleUpdate = () => {
       liveArticlesCache = null;
-      load();
+      load(true);
     };
 
     window.addEventListener('articles_updated', handleUpdate);

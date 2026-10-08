@@ -191,7 +191,7 @@ var init_translations = __esm({
         summaryTamil: "\u0B87\u0BA8\u0BCD\u0BA4\u0BBF\u0BAF \u0BAA\u0B99\u0BCD\u0B95\u0BC1 \u0BAE\u0BB1\u0BCD\u0BB1\u0BC1\u0BAE\u0BCD \u0BAA\u0BB0\u0BBF\u0BB5\u0BB0\u0BCD\u0BA4\u0BCD\u0BA4\u0BA9\u0BC8 \u0BB5\u0BBE\u0BB0\u0BBF\u0BAF\u0BAE\u0BCD (SEBI) \u0BAE\u0BBF\u0BAF\u0BC2\u0B9A\u0BCD\u0B9A\u0BC1\u0BB5\u0BB2\u0BCD \u0B83\u0BAA\u0BA3\u0BCD\u0B9F\u0BCD \u0B95\u0B9F\u0BCD\u0B9F\u0BA3 \u0B85\u0BAE\u0BC8\u0BAA\u0BCD\u0BAA\u0BC8 \u0BAE\u0BC7\u0BB2\u0BC1\u0BAE\u0BCD \u0BB5\u0BC6\u0BB3\u0BBF\u0BAA\u0BCD\u0BAA\u0B9F\u0BC8\u0BAF\u0BBE\u0B95\u0BCD\u0B95\u0BC1\u0BAE\u0BCD \u0BAA\u0BC1\u0BA4\u0BBF\u0BAF \u0BB5\u0BB4\u0BBF\u0B95\u0BBE\u0B9F\u0BCD\u0B9F\u0BC1\u0BA4\u0BB2\u0BCD\u0B95\u0BB3\u0BC8 \u0BB5\u0BC6\u0BB3\u0BBF\u0BAF\u0BBF\u0B9F\u0BCD\u0B9F\u0BC1\u0BB3\u0BCD\u0BB3\u0BA4\u0BC1.",
         summaryEnglish: "Securities and Exchange Board of India (SEBI) has issued new guidelines to enhance transparency in Total Expense Ratios (TER) for retail mutual funds.",
         category: "mutual-funds",
-        publishedAt: new Date(Date.now() - 2 * 3600 * 1e3).toISOString(),
+        publishedAt: "2025-01-05T08:00:00.000Z",
         readTimeMinutes: 4,
         author: "Budget Padmanaban Editorial",
         thumbnail: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=400&q=70&fm=webp",
@@ -215,7 +215,7 @@ var init_translations = __esm({
       <p>The Reserve Bank of India (RBI) kept interest rates steady to balance inflation management with sustainable domestic growth.</p>
     `,
         category: "personal-finance",
-        publishedAt: new Date(Date.now() - 4 * 3600 * 1e3).toISOString(),
+        publishedAt: "2025-01-04T08:00:00.000Z",
         readTimeMinutes: 5,
         author: "\u0BAA\u0B9F\u0BCD\u0B9C\u0BC6\u0B9F\u0BCD \u0BAA\u0BA4\u0BCD\u0BAE\u0BA8\u0BBE\u0BAA\u0BA9\u0BCD",
         thumbnail: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=400&q=70&fm=webp",
@@ -239,7 +239,7 @@ var init_translations = __esm({
       <p>Disciplined long-term investing is essential to unlock the power of compounding in equity mutual funds.</p>
     `,
         category: "investment",
-        publishedAt: new Date(Date.now() - 6 * 3600 * 1e3).toISOString(),
+        publishedAt: "2025-01-03T08:00:00.000Z",
         readTimeMinutes: 6,
         author: "\u0BAA\u0B9F\u0BCD\u0B9C\u0BC6\u0B9F\u0BCD \u0BAA\u0BA4\u0BCD\u0BAE\u0BA8\u0BBE\u0BAA\u0BA9\u0BCD",
         thumbnail: "https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?auto=format&fit=crop&w=400&q=70&fm=webp",
@@ -263,7 +263,7 @@ var init_translations = __esm({
       <p>Financial advisors recommend allocating around 10% of portfolio assets into gold or Sovereign Gold Bonds for risk diversification.</p>
     `,
         category: "personal-finance",
-        publishedAt: new Date(Date.now() - 8 * 3600 * 1e3).toISOString(),
+        publishedAt: "2025-01-02T08:00:00.000Z",
         readTimeMinutes: 4,
         author: "Muthaleetu Thisai Research Desk",
         thumbnail: "https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&w=400&q=70&fm=webp",
@@ -287,7 +287,7 @@ var init_translations = __esm({
       <p>Banking and IT sectors led today's market rally with robust volume support.</p>
     `,
         category: "stocks",
-        publishedAt: new Date(Date.now() - 10 * 3600 * 1e3).toISOString(),
+        publishedAt: "2025-01-01T08:00:00.000Z",
         readTimeMinutes: 3,
         author: "Budget Padmanaban Editorial",
         thumbnail: "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=400&q=70&fm=webp",
@@ -1769,7 +1769,7 @@ function normalizeArticleItem(item, language = "ta") {
   const rawThumb = item.cover_image_url || item.coverImage || item.thumbnail_url || item.thumbnail || item.imageUrl || "";
   const category = (item.category || "mutual-fund").replace("_", "-");
   const thumbnail = cleanImageUrl(rawThumb, category);
-  const publishedAt = item.publishedAt || item.published_at || item.created_at || (/* @__PURE__ */ new Date()).toISOString();
+  const publishedAt = item.publishedAt || item.published_at || item.created_at || "2025-01-01T00:00:00.000Z";
   const authorName = item.authorName || item.author_name || (item.author_profile ? item.author_profile.full_name : null) || "Budget Padmanaban CFP\xAE";
   const authorRole = item.authorRole || item.author_role || (item.author_profile ? item.author_profile.designation : null) || "Financial Advisor";
   const authorAvatar = item.authorAvatar || item.author_avatar || (item.author_profile ? item.author_profile.avatar_url : null) || null;
@@ -1795,39 +1795,44 @@ function normalizeArticleItem(item, language = "ta") {
     isLive
   };
 }
-async function fetchCardArticles(limit = 12, sort = "newest") {
-  if (liveArticlesCache && liveArticlesCache.length > 0) {
+async function fetchCardArticles(limit = 24, sort = "newest", forceRefresh = false) {
+  if (!forceRefresh && liveArticlesCache && liveArticlesCache.length > 0) {
     return liveArticlesCache;
   }
-  if (liveArticlesPromise) {
+  if (!forceRefresh && liveArticlesPromise) {
     return liveArticlesPromise;
   }
   liveArticlesPromise = (async () => {
     try {
-      if (typeof window !== "undefined" && window.__HOME__) {
+      if (!forceRefresh && typeof window !== "undefined" && window.__HOME__) {
         try {
           const homeResult = await window.__HOME__;
           const homeList = homeResult?.data?.articles || homeResult?.articles;
           if (Array.isArray(homeList) && homeList.length > 0) {
+            homeList.sort((a, b) => {
+              const tA = new Date(a.publishedAt || a.published_at || a.created_at || 0).getTime();
+              const tB = new Date(b.publishedAt || b.published_at || b.created_at || 0).getTime();
+              return tB - tA;
+            });
             liveArticlesCache = homeList;
             try {
               sessionStorage.setItem("muthaleetu_articles_cache", JSON.stringify(homeList));
             } catch (_) {
             }
-            return homeList;
           }
         } catch (_) {
         }
-      }
-      if (typeof window !== "undefined" && window.__INITIAL_DATA__?.articles) {
-        liveArticlesCache = window.__INITIAL_DATA__.articles;
-        return liveArticlesCache;
       }
       const res = await fetch(`/api/articles?view=card&limit=${limit}&sort=${sort}`);
       if (res.ok) {
         const json = await res.json();
         const list = json.data || [];
         if (Array.isArray(list) && list.length > 0) {
+          list.sort((a, b) => {
+            const tA = new Date(a.publishedAt || a.published_at || a.created_at || 0).getTime();
+            const tB = new Date(b.publishedAt || b.published_at || b.created_at || 0).getTime();
+            return tB - tA;
+          });
           liveArticlesCache = list;
           try {
             sessionStorage.setItem("muthaleetu_articles_cache", JSON.stringify(list));
@@ -1842,42 +1847,61 @@ async function fetchCardArticles(limit = 12, sort = "newest") {
     } finally {
       liveArticlesPromise = null;
     }
+    if (liveArticlesCache && liveArticlesCache.length > 0) {
+      return liveArticlesCache;
+    }
+    if (typeof window !== "undefined" && window.__INITIAL_DATA__?.articles) {
+      const initial = [...window.__INITIAL_DATA__.articles];
+      initial.sort((a, b) => {
+        const tA = new Date(a.publishedAt || a.published_at || a.created_at || 0).getTime();
+        const tB = new Date(b.publishedAt || b.published_at || b.created_at || 0).getTime();
+        return tB - tA;
+      });
+      return initial;
+    }
     return newsData;
   })();
   return liveArticlesPromise;
 }
 function useLiveArticles() {
   const [liveArticles, setLiveArticles] = useState9(() => {
-    if (typeof window !== "undefined" && window.__INITIAL_DATA__?.articles) {
-      return window.__INITIAL_DATA__.articles;
-    }
     if (liveArticlesCache && liveArticlesCache.length > 0) {
       return liveArticlesCache;
     }
     try {
-      const cached = localStorage.getItem("muthaleetu_articles_cache");
+      const cached = localStorage.getItem("muthaleetu_articles_cache") || sessionStorage.getItem("muthaleetu_articles_cache");
       if (cached) {
         const parsed = JSON.parse(cached);
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          parsed.sort((a, b) => {
+            const tA = new Date(a.publishedAt || a.published_at || a.created_at || 0).getTime();
+            const tB = new Date(b.publishedAt || b.published_at || b.created_at || 0).getTime();
+            return tB - tA;
+          });
+          return parsed;
+        }
       }
     } catch (_) {
+    }
+    if (typeof window !== "undefined" && window.__INITIAL_DATA__?.articles) {
+      return window.__INITIAL_DATA__.articles;
     }
     return [];
   });
   const [isLoading, setIsLoading] = useState9(liveArticles.length === 0);
   useEffect6(() => {
     let isMounted = true;
-    const load = async () => {
-      const list = await fetchCardArticles(12, "newest");
+    const load = async (force = false) => {
+      const list = await fetchCardArticles(24, "newest", force);
       if (isMounted && Array.isArray(list) && list.length > 0) {
         setLiveArticles(list);
         setIsLoading(false);
       }
     };
-    load();
+    load(true);
     const handleUpdate = () => {
       liveArticlesCache = null;
-      load();
+      load(true);
     };
     window.addEventListener("articles_updated", handleUpdate);
     window.addEventListener("storage", handleUpdate);
@@ -1913,8 +1937,8 @@ function HeroSection({ news, onNavigate }) {
       }
     }
     merged.sort((a, b) => {
-      const dateA = new Date(a.publishedAt || 0).getTime();
-      const dateB = new Date(b.publishedAt || 0).getTime();
+      const dateA = new Date(a.publishedAt || a.published_at || a.created_at || 0).getTime();
+      const dateB = new Date(b.publishedAt || b.published_at || b.created_at || 0).getTime();
       return dateB - dateA;
     });
     return merged;
@@ -2090,8 +2114,8 @@ function TrendingArticlesSection({ onNavigate }) {
       }
     }
     merged.sort((a, b) => {
-      const dateA = new Date(a.publishedAt || 0).getTime();
-      const dateB = new Date(b.publishedAt || 0).getTime();
+      const dateA = new Date(a.publishedAt || a.published_at || a.created_at || 0).getTime();
+      const dateB = new Date(b.publishedAt || b.published_at || b.created_at || 0).getTime();
       return dateB - dateA;
     });
     return merged.slice(0, 6);

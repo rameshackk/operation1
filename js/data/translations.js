@@ -190,7 +190,7 @@ const newsData = [
     summaryTamil: "இந்திய பங்கு மற்றும் பரிவர்த்தனை வாரியம் (SEBI) மியூச்சுவல் ஃபண்ட் கட்டண அமைப்பை மேலும் வெளிப்படையாக்கும் புதிய வழிகாட்டுதல்களை வெளியிட்டுள்ளது.",
     summaryEnglish: "Securities and Exchange Board of India (SEBI) has issued new guidelines to enhance transparency in Total Expense Ratios (TER) for retail mutual funds.",
     category: "mutual-funds",
-    publishedAt: new Date(Date.now() - 2 * 3600 * 1000).toISOString(),
+    publishedAt: "2025-01-05T08:00:00.000Z",
     readTimeMinutes: 4,
     author: "Budget Padmanaban Editorial",
     thumbnail: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=400&q=70&fm=webp",
@@ -214,7 +214,7 @@ const newsData = [
       <p>The Reserve Bank of India (RBI) kept interest rates steady to balance inflation management with sustainable domestic growth.</p>
     `,
     category: "personal-finance",
-    publishedAt: new Date(Date.now() - 4 * 3600 * 1000).toISOString(),
+    publishedAt: "2025-01-04T08:00:00.000Z",
     readTimeMinutes: 5,
     author: "பட்ஜெட் பத்மநாபன்",
     thumbnail: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=400&q=70&fm=webp",
@@ -238,7 +238,7 @@ const newsData = [
       <p>Disciplined long-term investing is essential to unlock the power of compounding in equity mutual funds.</p>
     `,
     category: "investment",
-    publishedAt: new Date(Date.now() - 6 * 3600 * 1000).toISOString(),
+    publishedAt: "2025-01-03T08:00:00.000Z",
     readTimeMinutes: 6,
     author: "பட்ஜெட் பத்மநாபன்",
     thumbnail: "https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?auto=format&fit=crop&w=400&q=70&fm=webp",
@@ -262,7 +262,7 @@ const newsData = [
       <p>Financial advisors recommend allocating around 10% of portfolio assets into gold or Sovereign Gold Bonds for risk diversification.</p>
     `,
     category: "personal-finance",
-    publishedAt: new Date(Date.now() - 8 * 3600 * 1000).toISOString(),
+    publishedAt: "2025-01-02T08:00:00.000Z",
     readTimeMinutes: 4,
     author: "Muthaleetu Thisai Research Desk",
     thumbnail: "https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&w=400&q=70&fm=webp",
@@ -286,7 +286,7 @@ const newsData = [
       <p>Banking and IT sectors led today's market rally with robust volume support.</p>
     `,
     category: "stocks",
-    publishedAt: new Date(Date.now() - 10 * 3600 * 1000).toISOString(),
+    publishedAt: "2025-01-01T08:00:00.000Z",
     readTimeMinutes: 3,
     author: "Budget Padmanaban Editorial",
     thumbnail: "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=400&q=70&fm=webp",
