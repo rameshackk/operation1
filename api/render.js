@@ -503,7 +503,7 @@ export default async function handler(req, res) {
             நீங்கள் தேடும் பக்கம் கிடைக்கவில்லை அல்லது நீக்கப்பட்டு இருக்கலாம்.
           </p>
           <a href="/" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm shadow-md transition-all">
-            🏠 முகப்புக்குச் செல்க (Back to Home)
+            <span>முகப்புக்குச் செல்க (Back to Home)</span>
           </a>
         </div>
       `;

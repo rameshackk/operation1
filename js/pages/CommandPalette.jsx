@@ -193,7 +193,9 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
             className="min-h-[44px] min-w-[44px] text-xs font-bold px-3 rounded-lg bg-slate-200/80 dark:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors flex items-center justify-center active:scale-95 cursor-pointer"
             aria-label="Close search"
           >
-            ✕
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
           </button>
         </div>
 
@@ -280,7 +282,11 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
           {/* No Results Fallback */}
           {!isSearching && query.trim() && activeResults.length === 0 && (
             <div className="py-12 text-center text-slate-500 dark:text-slate-400 text-sm font-medium space-y-2">
-              <div className="text-3xl">🔍</div>
+              <div className="w-12 h-12 mx-auto rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 mb-2">
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
               <p>{isTa ? `"${query}" தொடர்பாக முடிவுகள் எதுவும் கிடைக்கவில்லை` : `No matching contents found for "${query}"`}</p>
               <p className="text-xs text-slate-600 dark:text-slate-400">{isTa ? 'வேறு முக்கிய வார்த்தைகளைப் பயன்படுத்தி தேடவும்.' : 'Try searching for mutual funds, SIP, NIFTY 50, or distributor name.'}</p>
             </div>

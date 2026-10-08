@@ -193,7 +193,7 @@ export default function AppContent({ currentPath, navigate, isSearchOpen, setIsS
             profile={profile}
             onComplete={(updated) => {
               if (setProfile) setProfile(updated);
-              setToastMessage('🎉 Welcome! Your publisher profile is complete and visible to all users.');
+              setToastMessage('Welcome! Your publisher profile is complete and visible to all users.');
             }}
           />
         </Suspense>

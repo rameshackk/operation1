@@ -12,22 +12,22 @@ function Navbar({ currentPath, onNavigate }) {
   const cleanCurrent = (currentPath || '/').toLowerCase().replace(/\/+$/, '') || '/';
 
   const baseNavItems = [
-    { id: 'home', path: '/', hash: '/', label: t('nav.home'), icon: '🏠' },
-    { id: 'articles', path: '/articles', hash: '/articles', label: t('nav.articles'), icon: '📰' },
-    { id: 'videos', path: '/videos', hash: '/videos', label: t('nav.videos'), icon: '🎥' },
-    { id: 'news', path: '/news', hash: '/news', label: t('nav.news'), icon: '⚡' },
-    { id: 'professionals', path: '/professionals', hash: '/professionals', label: t('nav.professionals') || (language === 'ta' ? 'நிபுணர்கள்' : 'Professionals'), icon: '💼' },
-    { id: 'calculator', path: '/calculator', hash: '/calculator', label: t('nav.calculator'), icon: '🧮' },
-    { id: 'quiz', path: '/quiz', hash: '/quiz', label: t('nav.quiz') || 'Quiz', icon: '🎯' }
+    { id: 'home', path: '/', hash: '/', label: t('nav.home') },
+    { id: 'articles', path: '/articles', hash: '/articles', label: t('nav.articles') },
+    { id: 'videos', path: '/videos', hash: '/videos', label: t('nav.videos') },
+    { id: 'news', path: '/news', hash: '/news', label: t('nav.news') },
+    { id: 'professionals', path: '/professionals', hash: '/professionals', label: t('nav.professionals') || (language === 'ta' ? 'நிபுணர்கள்' : 'Professionals') },
+    { id: 'calculator', path: '/calculator', hash: '/calculator', label: t('nav.calculator') },
+    { id: 'quiz', path: '/quiz', hash: '/quiz', label: t('nav.quiz') || 'Quiz' }
   ];
 
   const authNavItems = user ? [
-    { id: 'profile', path: '/profile', hash: '/profile', label: `👤 ${language === 'ta' ? 'சுயவிவரம்' : 'Profile'}` },
+    { id: 'profile', path: '/profile', hash: '/profile', label: language === 'ta' ? 'சுயவிவரம்' : 'Profile' },
     ...(role === 'admin' || role === 'publisher' ? [
-      { id: 'admin-articles', path: '/admin/articles', hash: '/admin/articles', label: `✍️ ${language === 'ta' ? 'கட்டுரைகள் ஸ்டுடியோ' : 'Article Studio'}` }
+      { id: 'admin-articles', path: '/admin/articles', hash: '/admin/articles', label: language === 'ta' ? 'கட்டுரைகள் ஸ்டுடியோ' : 'Article Studio' }
     ] : [])
   ] : [
-    { id: 'login', path: '/login', hash: '/login', label: `🔐 ${language === 'ta' ? 'உள்நுழைக' : 'Sign In'}` }
+    { id: 'login', path: '/login', hash: '/login', label: language === 'ta' ? 'உள்நுழைக' : 'Sign In' }
   ];
 
   const navItems = [...baseNavItems, ...authNavItems];
@@ -127,7 +127,7 @@ function Navbar({ currentPath, onNavigate }) {
                   className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-slate-100 dark:bg-slate-900 text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white flex items-center justify-center font-bold text-base border border-slate-200 dark:border-slate-800 active:scale-95 cursor-pointer"
                   aria-label="Close menu"
                 >
-                  ✕
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
               </div>
 
@@ -148,7 +148,7 @@ function Navbar({ currentPath, onNavigate }) {
                         className="w-full text-left px-4 py-3.5 min-h-[48px] rounded-2xl text-sm font-black transition-all flex items-center justify-between text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40 cursor-pointer"
                       >
                         <span className="flex items-center gap-3">
-                          <span className="text-base">{item.icon || '•'}</span>
+                          <span className="w-2 h-2 rounded-full bg-red-500" />
                           <span className="text-[14px]">{item.label}</span>
                         </span>
                       </button>
@@ -171,7 +171,7 @@ function Navbar({ currentPath, onNavigate }) {
                       }`}
                     >
                       <span className="flex items-center gap-3">
-                        <span className="text-base">{item.icon || '•'}</span>
+                        <span className={`w-2 h-2 rounded-full ${isActive ? 'bg-white' : 'bg-slate-400 dark:bg-slate-600'}`} />
                         <span className="text-[14px]">{item.label}</span>
                       </span>
                       {isActive && <span className="w-2.5 h-2.5 rounded-full bg-white animate-pulse" />}
@@ -212,7 +212,7 @@ function Navbar({ currentPath, onNavigate }) {
                     }}
                     className="w-full min-h-[44px] py-2.5 px-4 rounded-xl bg-[#2563EB] text-white text-xs font-extrabold hover:bg-blue-700 transition-colors shadow-sm active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer"
                   >
-                    <span>🔐</span>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
                     <span>{language === 'ta' ? 'உள்நுழைக' : 'Sign In'}</span>
                   </a>
                 )}
@@ -239,7 +239,7 @@ function Navbar({ currentPath, onNavigate }) {
             }`}
             aria-label="Home"
           >
-            <span className="text-base sm:text-lg leading-none mb-1">🏠</span>
+            <svg className="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
             <span className="text-[11px] leading-none tracking-tight truncate max-w-full px-0.5">
               {language === 'ta' ? 'முகப்பு' : 'Home'}
             </span>
@@ -259,7 +259,7 @@ function Navbar({ currentPath, onNavigate }) {
             }`}
             aria-label="Articles"
           >
-            <span className="text-base sm:text-lg leading-none mb-1">📰</span>
+            <svg className="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
             <span className="text-[11px] leading-none tracking-tight truncate max-w-full px-0.5">
               {language === 'ta' ? 'கட்டுரை' : 'Articles'}
             </span>
@@ -279,7 +279,7 @@ function Navbar({ currentPath, onNavigate }) {
             }`}
             aria-label="Videos"
           >
-            <span className="text-base sm:text-lg leading-none mb-1">🎥</span>
+            <svg className="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             <span className="text-[11px] leading-none tracking-tight truncate max-w-full px-0.5">
               {language === 'ta' ? 'வீடியோ' : 'Videos'}
             </span>
@@ -299,7 +299,7 @@ function Navbar({ currentPath, onNavigate }) {
             }`}
             aria-label="SIP Calculator"
           >
-            <span className="text-base sm:text-lg leading-none mb-1">🧮</span>
+            <svg className="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
             <span className="text-[11px] leading-none tracking-tight truncate max-w-full px-0.5">
               {language === 'ta' ? 'SIP கணக்கீடு' : 'Calculator'}
             </span>
@@ -315,7 +315,7 @@ function Navbar({ currentPath, onNavigate }) {
             }`}
             aria-label="Open full menu"
           >
-            <span className="text-base sm:text-lg leading-none mb-1">☰</span>
+            <svg className="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M4 6h16M4 12h16M4 18h16" /></svg>
             <span className="text-[11px] leading-none tracking-tight truncate max-w-full px-0.5">
               {language === 'ta' ? 'பட்டி' : 'Menu'}
             </span>

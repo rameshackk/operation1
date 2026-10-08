@@ -73,8 +73,8 @@ function AggregatedNewsCard({ item, language }) {
 
       {/* Footer Outbound Attribution Link */}
       <div className="px-5 pb-5 pt-4 flex items-center justify-between border-t border-slate-100 dark:border-slate-800/80 mt-4 text-xs font-semibold">
-        <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400 text-xs">
-          <span>⏱</span>
+        <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400 text-xs">
+          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
           <span>{relativeTime || 'Recently'}</span>
         </div>
 

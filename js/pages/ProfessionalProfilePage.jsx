@@ -136,7 +136,11 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
   if (!prof) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-16 text-center space-y-4">
-        <div className="text-4xl">⚠️</div>
+        <div className="w-12 h-12 mx-auto rounded-full bg-amber-500/10 text-amber-500 flex items-center justify-center mb-2">
+          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+        </div>
         <h2 className="text-xl font-bold text-slate-900 dark:text-white font-serif">
           {isTamil ? 'விநியோகஸ்தர் சுயவிவரம் கிடைக்கவில்லை' : 'Distributor Profile Not Found'}
         </h2>
@@ -265,8 +269,12 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
               <p className="text-xs sm:text-sm font-bold text-amber-700 dark:text-amber-400/90 font-mono">
                 {title} • {prof.organization}
               </p>
-              <p className="text-xs text-slate-500 dark:text-slate-400">
-                📍 {location} {prof.arnNumber && `• AMFI Registration ARN: ${prof.arnNumber}`}
+              <p className="text-xs text-slate-500 dark:text-slate-400 flex items-center justify-center md:justify-start gap-1">
+                <svg className="w-3.5 h-3.5 text-amber-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <span>{location} {prof.arnNumber && `• AMFI Registration ARN: ${prof.arnNumber}`}</span>
               </p>
             </div>
 
@@ -295,7 +303,10 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
                   rel="noreferrer"
                   className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-slate-950 font-black text-xs shadow-lg transition-all flex items-center gap-2"
                 >
-                  <span className="text-sm">💬</span>
+                  <svg className="w-4 h-4 text-slate-950" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.979-.276-.1-.477-.15-.678.15-.2.301-.778.98-1.028 1.206-.251.226-.452.251-.753.1-.301-.15-1.272-.469-2.423-1.496-.897-.799-1.503-1.786-1.68-2.086-.176-.301-.019-.464.132-.614.136-.135.301-.351.452-.527.15-.175.2-.301.301-.501.101-.201.05-.376-.025-.526-.075-.15-.678-1.635-.929-2.238-.244-.588-.493-.508-.678-.517-.175-.01-.376-.01-.577-.01-.201 0-.527.075-.803.376s-1.054 1.029-1.054 2.509c0 1.48 1.079 2.909 1.23 3.11.15.201 2.123 3.242 5.143 4.547.719.311 1.28.497 1.718.636.723.23 1.381.197 1.901.12.579-.086 1.78-.727 2.032-1.43.251-.703.251-1.305.175-1.43-.075-.126-.276-.201-.577-.351z" />
+                    <path d="M12.004 0C5.373 0 0 5.373 0 12.004c0 2.115.548 4.103 1.51 5.836L.062 23.938l6.273-1.411a11.947 11.947 0 005.669 1.481h.005c6.63 0 12.003-5.374 12.003-12.004 0-3.208-1.25-6.223-3.518-8.492C18.226 1.244 15.212 0 12.004 0zm0 21.993h-.004a9.94 9.94 0 01-5.074-1.393l-.364-.216-3.771.849.865-3.676-.237-.378a9.92 9.92 0 01-1.523-5.175c0-5.488 4.467-9.956 9.957-9.956 2.658 0 5.158 1.036 7.038 2.916 1.88 1.88 2.915 4.38 2.915 7.038 0 5.489-4.468 9.957-9.802 9.957z" />
+                  </svg>
                   <span>{isTamil ? 'வாட்ஸ்அப் வழியே ஆலோசனை பெறுக' : 'Direct WhatsApp Consultation'}</span>
                 </a>
               )}
@@ -307,7 +318,9 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
                   rel="noreferrer"
                   className="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-amber-600 text-slate-700 dark:text-white border border-slate-200 dark:border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
                 >
-                  <span>🌐</span>
+                  <svg className="w-3.5 h-3.5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                  </svg>
                   <span>{isTamil ? 'வலைத்தளம்' : 'Website'}</span>
                 </a>
               )}
@@ -358,7 +371,9 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
               : 'text-slate-700 dark:text-slate-400 bg-white/70 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700'
             }`}
         >
-          <span>✍️</span>
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+          </svg>
           <span>{isTamil ? 'கட்டுரைகள் & ஆய்வுகள்' : 'Articles & Research'}</span>
           <span className={`px-2 py-0.5 rounded-full text-xs font-black ${activeTab === 'articles' ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-[#4A9E2C] dark:text-emerald-400'
             }`}>
@@ -374,7 +389,9 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
                 : 'text-slate-700 dark:text-slate-400 bg-white/70 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700'
               }`}
           >
-            <span>🎬</span>
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
             <span>{isTamil ? 'முக்கிய வீடியோக்கள் (Masterclasses)' : 'Video Masterclasses'}</span>
             <span className={`px-2 py-0.5 rounded-full text-xs font-black ${activeTab === 'videos' ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-[#4A9E2C] dark:text-emerald-400'
               }`}>
@@ -462,9 +479,18 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
                   <div className="px-5 pb-5 pt-2 flex items-center justify-between border-t border-slate-100 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 font-semibold">
                     <div className="flex items-center gap-2.5 font-mono">
                       <span className="text-blue-600 dark:text-blue-400 font-bold flex items-center gap-1">
-                        👁 {(article.views || article.viewCount || 0).toLocaleString()}
+                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                        <span>{(article.views || article.viewCount || 0).toLocaleString()}</span>
                       </span>
-                      <span>⏱ {article.readTimeMinutes} min read</span>
+                      <span className="flex items-center gap-1">
+                        <svg className="w-3.5 h-3.5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span>{article.readTimeMinutes} min read</span>
+                      </span>
                     </div>
                     <span className="text-amber-800 group-hover:translate-x-1 transition-transform inline-flex items-center gap-1 font-bold">
                       {isTamil ? 'படிக்க' : 'Read Article'} →
@@ -475,7 +501,11 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
             </div>
           ) : (
             <div className="text-center py-16 px-6 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-3 max-w-xl mx-auto">
-              <div className="text-3xl">✍️</div>
+              <div className="w-12 h-12 mx-auto rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center mb-2">
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                </svg>
+              </div>
               <h3 className="text-base font-bold text-slate-900 dark:text-white font-serif">
                 {isTamil ? `${name} - கட்டுரைகள்` : `${name} - Articles & Research`}
               </h3>

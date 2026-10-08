@@ -102,8 +102,10 @@ function NewsPage({ onNavigate }) {
               className="w-full pl-9 pr-8 py-2 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white text-xs font-medium focus:outline-none focus:border-amber-500 shadow-sm"
             />
             {searchQuery && (
-              <button onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-600 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 font-bold">
-                ✕
+              <button onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-600 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 font-bold" aria-label="Clear search">
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
               </button>
             )}
           </div>
@@ -123,7 +125,11 @@ function NewsPage({ onNavigate }) {
           </div>
         ) : filteredLiveNews.length === 0 ? (
           <div className="py-16 text-center space-y-3 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-8 shadow-sm">
-            <div className="text-4xl">📰</div>
+            <div className="w-14 h-14 mx-auto rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center mb-1">
+              <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+              </svg>
+            </div>
             <h3 className="text-base font-bold text-slate-900 dark:text-white">
               {isTamil ? 'செய்திகள் எதுவும் கிடைக்கவில்லை' : 'No News Articles Found'}
             </h3>
@@ -145,7 +151,9 @@ function NewsPage({ onNavigate }) {
 
         {/* Mandatory Editorial & External Attribution Disclaimer */}
         <div className="p-4 sm:p-5 rounded-2xl bg-amber-500/10 dark:bg-slate-900 border border-amber-500/25 dark:border-slate-800 flex items-start gap-3 text-xs text-slate-600 dark:text-slate-300">
-          <span className="text-base shrink-0 mt-0.5">ℹ️</span>
+          <svg className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
           <div className="space-y-1">
             <p className="font-bold text-slate-800 dark:text-slate-200">
               {isTamil ? 'அறிவிப்பு & மூல உரிமை:' : 'Attribution & Content Disclaimer:'}

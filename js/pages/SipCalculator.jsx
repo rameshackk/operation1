@@ -132,7 +132,9 @@ function SipCalculator() {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pb-4 mb-5 border-b border-slate-800/90">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center font-bold text-sm shrink-0">
-              ⚡
+              <svg className="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
             </div>
             <div>
               <h2 className="text-base sm:text-lg lg:text-xl font-extrabold text-white tracking-tight font-sans">
@@ -181,7 +183,9 @@ function SipCalculator() {
               {/* Part 1 Header */}
               <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 mb-4">
                 <div className="flex items-center gap-2">
-                  <span className="text-base">🧮</span>
+                  <svg className="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                  </svg>
                   <h3 className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 dark:text-slate-200 font-sans">
                     {isTamil ? '1. முதலீட்டுக் கணக்கீடு' : '1. Calculation Part'}
                   </h3>
@@ -213,8 +217,11 @@ function SipCalculator() {
 
               {/* Inline Validation Error */}
               {isInvalid && (
-                <p className="text-xs text-red-500 font-medium mb-2 animate-fadeIn">
-                  ⚠️ {isTamil ? 'தொகை ₹150 முதல் ₹10,00,000 வரை இருக்க வேண்டும் (கடைசி சரியான மதிப்பு காட்டப்படுகிறது).' : 'Amount must be between ₹150 and ₹10,00,000 (showing last valid calculation).'}
+                <p className="text-xs text-red-500 font-medium mb-2 animate-fadeIn flex items-center gap-1.5">
+                  <svg className="w-3.5 h-3.5 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                  <span>{isTamil ? 'தொகை ₹150 முதல் ₹10,00,000 வரை இருக்க வேண்டும் (கடைசி சரியான மதிப்பு காட்டப்படுகிறது).' : 'Amount must be between ₹150 and ₹10,00,000 (showing last valid calculation).'}</span>
                 </p>
               )}
 
@@ -354,7 +361,9 @@ function SipCalculator() {
               {/* Part 2 Header & Tabs */}
               <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 mb-3">
                 <div className="flex items-center gap-2">
-                  <span className="text-base">📊</span>
+                  <svg className="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
                   <h3 className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 dark:text-slate-200 font-sans">
                     {isTamil ? '2. சார்ட் & நிதி அறிக்கை' : '2. Chart & Statement Part'}
                   </h3>
@@ -371,7 +380,7 @@ function SipCalculator() {
                         : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                     )}
                   >
-                    🍩 {isTamil ? 'பை-சார்ட்' : 'Pie Chart'}
+                    {isTamil ? 'பை-சார்ட்' : 'Pie Chart'}
                   </button>
                   <button
                     type="button"
@@ -382,7 +391,7 @@ function SipCalculator() {
                         : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                     )}
                   >
-                    📋 {isTamil ? 'அறிக்கை' : 'Statement'}
+                    {isTamil ? 'அறிக்கை' : 'Statement'}
                   </button>
                 </div>
               </div>

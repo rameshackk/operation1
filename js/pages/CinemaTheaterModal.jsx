@@ -126,7 +126,16 @@ function CinemaTheaterModal({
             onClick={handleShare}
             className="px-2.5 sm:px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-slate-200 hover:text-white flex items-center gap-1.5 transition-colors"
           >
-            <span>{copied ? '✓' : (isTamil ? 'பகிர்' : 'Share')}</span>
+            {copied ? (
+              <>
+                <svg className="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                </svg>
+                <span>{isTamil ? 'நகலெடுக்கப்பட்டது' : 'Copied'}</span>
+              </>
+            ) : (
+              <span>{isTamil ? 'பகிர்' : 'Share'}</span>
+            )}
           </button>
 
           <button
@@ -134,7 +143,9 @@ function CinemaTheaterModal({
             aria-label="Exit Fullscreen"
             className="w-8 h-8 rounded-xl bg-slate-800 hover:bg-red-600 text-slate-300 hover:text-white flex items-center justify-center transition-colors text-sm font-bold border border-slate-700"
           >
-            ✕
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
           </button>
         </div>
       </div>
@@ -182,7 +193,7 @@ function CinemaTheaterModal({
                       <span className="text-sm font-bold text-white">
                         {video.channelName || 'Budget Padmanaban'}
                       </span>
-                      <span className="text-emerald-400 text-xs font-bold" title="CFP Certified">✓ CFP®</span>
+                      <span className="text-emerald-400 text-xs font-bold" title="CFP Certified">CFP®</span>
                     </div>
                     <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">
                       Certified Financial Planner • Video Masterclasses
@@ -216,7 +227,7 @@ function CinemaTheaterModal({
                     : 'bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-white border border-slate-800'
                   }`}
               >
-                {isTamil ? '📖 விளக்கம் & விவரங்கள்' : '📖 Overview & Details'}
+                {isTamil ? 'விளக்கம் & விவரங்கள்' : 'Overview & Details'}
               </button>
 
               <button
@@ -226,7 +237,7 @@ function CinemaTheaterModal({
                     : 'bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-white border border-slate-800'
                   }`}
               >
-                {isTamil ? '💡 முக்கிய ஆலோசனைகள்' : '💡 Key Takeaways'}
+                {isTamil ? 'முக்கிய ஆலோசனைகள்' : 'Key Takeaways'}
               </button>
 
               <button
@@ -236,7 +247,7 @@ function CinemaTheaterModal({
                     : 'bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-white border border-slate-800'
                   }`}
               >
-                {isTamil ? '🧮 SIP கால்குலேட்டர்' : '🧮 SIP Calculator'}
+                {isTamil ? 'SIP கால்குலேட்டர்' : 'SIP Calculator'}
               </button>
             </div>
 
@@ -354,6 +365,9 @@ function CinemaTheaterModal({
 
             {/* Search within playlist */}
             <div className="relative">
+              <svg className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
               <input
                 type="text"
                 value={sidebarSearch}
@@ -361,13 +375,14 @@ function CinemaTheaterModal({
                 placeholder={isTamil ? 'வீடியோக்களைத் தேடுங்கள்...' : 'Filter playlist...'}
                 className="w-full pl-8 pr-7 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
               />
-              <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs">🔍</span>
               {sidebarSearch && (
                 <button
                   onClick={() => setSidebarSearch('')}
                   className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white text-xs"
                 >
-                  ✕
+                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
                 </button>
               )}
             </div>

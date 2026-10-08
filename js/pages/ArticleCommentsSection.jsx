@@ -205,7 +205,9 @@ function ArticleCommentsSection({ slug, article, isTamil, onShowToast }) {
       {/* Header */}
       <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-5">
         <div className="flex items-center gap-3">
-          <span className="text-2xl">💬</span>
+          <div className="w-10 h-10 rounded-2xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+          </div>
           <div>
             <h3 className="text-lg sm:text-xl font-black font-serif text-slate-900 dark:text-white">
               {isTamil ? 'கருத்துகள் மற்றும் கலந்துரையாடல்' : 'Comments & Discussion'}
@@ -238,7 +240,7 @@ function ArticleCommentsSection({ slug, article, isTamil, onShowToast }) {
         </div>
         <div className="flex items-center justify-between pt-1">
           <span className="text-xs text-slate-600 dark:text-slate-400 font-medium">
-            {isTamil ? '🛡️ நிபுணத்துவம் வாய்ந்த ஆலோசகர்கள் பதில் அளிப்பார்கள்' : '🛡️ Certified advisors reply directly to questions'}
+            {isTamil ? 'நிபுணத்துவம் வாய்ந்த ஆலோசகர்கள் பதில் அளிப்பார்கள்' : 'Certified advisors reply directly to questions'}
           </span>
           <button
             type="submit"
@@ -258,7 +260,9 @@ function ArticleCommentsSection({ slug, article, isTamil, onShowToast }) {
         </div>
       ) : topComments.length === 0 ? (
         <div className="py-12 px-6 text-center rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-dashed border-slate-200 dark:border-slate-800 space-y-2">
-          <div className="text-3xl">✍️</div>
+          <div className="w-10 h-10 mx-auto rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+          </div>
           <h4 className="text-sm font-bold text-slate-700 dark:text-slate-300">
             {isTamil ? 'முதல் கருத்தை நீங்கள் பதிவிடுங்கள்!' : 'Be the first to start the discussion!'}
           </h4>
@@ -298,7 +302,8 @@ function ArticleCommentsSection({ slug, article, isTamil, onShowToast }) {
                           </span>
                           {isPublisher && (
                             <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-black bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 tracking-wide shadow-sm">
-                              🛡️ Verified
+                              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"/></svg>
+                              <span>Verified</span>
                             </span>
                           )}
                         </div>
@@ -314,7 +319,7 @@ function ArticleCommentsSection({ slug, article, isTamil, onShowToast }) {
                         className="text-xs text-slate-600 dark:text-slate-400 hover:text-red-500 transition-colors p-1"
                         title={isTamil ? 'நீக்குக' : 'Delete'}
                       >
-                        🗑️
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                       </button>
                     )}
                   </div>
@@ -332,7 +337,7 @@ function ArticleCommentsSection({ slug, article, isTamil, onShowToast }) {
                         }`}
                       title={likedMap[comment.id] ? (isTamil ? 'விருப்பத்தை நீக்குக' : 'Unlike') : (isTamil ? 'விருப்பம்' : 'Like')}
                     >
-                      <span className={likedMap[comment.id] ? 'scale-110' : ''}>{likedMap[comment.id] ? '❤️' : '🤍'}</span>
+                      <svg className="w-3.5 h-3.5" fill={likedMap[comment.id] ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
                       <span>{comment.likesCount || 0}</span>
                     </button>
                     <button
@@ -342,7 +347,7 @@ function ArticleCommentsSection({ slug, article, isTamil, onShowToast }) {
                       }}
                       className="text-amber-800 hover:underline flex items-center gap-1 px-2 py-1 rounded-lg hover:bg-amber-500/10"
                     >
-                      <span>↩</span>
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 10h10a5 5 0 015 5v2M3 10l6-6m-6 6l6 6"/></svg>
                       <span>{isTamil ? 'பதிலளி' : 'Reply'}</span>
                     </button>
                   </div>
@@ -409,7 +414,8 @@ function ArticleCommentsSection({ slug, article, isTamil, onShowToast }) {
                                   </span>
                                   {isReplyPublisher && (
                                     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-black bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
-                                      🛡️ Verified
+                                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"/></svg>
+                                      <span>Verified</span>
                                     </span>
                                   )}
                                 </div>
@@ -425,7 +431,7 @@ function ArticleCommentsSection({ slug, article, isTamil, onShowToast }) {
                                 className="text-xs text-slate-600 dark:text-slate-400 hover:text-red-500 transition-colors p-1"
                                 title={isTamil ? 'நீக்குக' : 'Delete'}
                               >
-                                🗑️
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                               </button>
                             )}
                           </div>
@@ -443,7 +449,7 @@ function ArticleCommentsSection({ slug, article, isTamil, onShowToast }) {
                                 }`}
                               title={likedMap[reply.id] ? (isTamil ? 'விருப்பத்தை நீக்குக' : 'Unlike') : (isTamil ? 'விருப்பம்' : 'Like')}
                             >
-                              <span className={likedMap[reply.id] ? 'scale-110' : ''}>{likedMap[reply.id] ? '❤️' : '🤍'}</span>
+                              <svg className="w-3.5 h-3.5" fill={likedMap[reply.id] ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
                               <span>{reply.likesCount || 0}</span>
                             </button>
                           </div>

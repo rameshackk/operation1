@@ -104,8 +104,9 @@ function CategoryPage({ categoryId, onNavigate, onShowToast }) {
             <button
               onClick={() => setSearchQuery('')}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-slate-200"
+              aria-label="Clear search"
             >
-              ✕
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
           )}
         </div>
@@ -162,7 +163,7 @@ function CategoryPage({ categoryId, onNavigate, onShowToast }) {
           </div>
         ) : (
           <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-bold text-slate-600 dark:text-slate-400">
-            <span>✓</span>
+            <svg className="w-3.5 h-3.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"/></svg>
             <span>
               {isTamil
                 ? `அனைத்து ${filtered.length} வீடியோக்களும் ஏற்றப்பட்டுவிட்டன`

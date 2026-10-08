@@ -256,8 +256,11 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
                 <button
                   onClick={() => setSearchQuery('')}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-900 text-xs font-bold bg-slate-100 hover:bg-slate-200 w-5 h-5 rounded-full flex items-center justify-center transition-colors"
+                  aria-label="Clear search"
                 >
-                  ✕
+                  <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
                 </button>
               )}
             </div>
@@ -368,10 +371,16 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
                   <div className="space-y-3 pt-4 border-t border-slate-100 dark:border-slate-800">
                     <div className="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
                       <span className="flex items-center gap-1">
-                        <span className="text-amber-500">🎬</span> {prof.stats?.masterclasses || 0}+ {isTamil ? 'வீடியோக்கள்' : 'Masterclasses'}
+                        <svg className="w-3.5 h-3.5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                        </svg>
+                        <span>{prof.stats?.masterclasses || 0}+ {isTamil ? 'வீடியோக்கள்' : 'Masterclasses'}</span>
                       </span>
                       <span className="flex items-center gap-1">
-                        <span className="text-blue-500">✍️</span> {prof.articleCount || prof.stats?.articles || 0}+ {isTamil ? 'கட்டுரைகள்' : 'Articles'}
+                        <svg className="w-3.5 h-3.5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                        </svg>
+                        <span>{prof.articleCount || prof.stats?.articles || 0}+ {isTamil ? 'கட்டுரைகள்' : 'Articles'}</span>
                       </span>
                       {prof.whatsapp && (
                         <span
@@ -382,7 +391,10 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
                           }}
                           className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 hover:underline cursor-pointer"
                         >
-                          <span>💬</span> WhatsApp
+                          <svg className="w-3.5 h-3.5 text-emerald-500" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12.004 0C5.373 0 0 5.373 0 12.004c0 2.115.548 4.103 1.51 5.836L.062 23.938l6.273-1.411a11.947 11.947 0 005.669 1.481h.005c6.63 0 12.003-5.374 12.003-12.004 0-3.208-1.25-6.223-3.518-8.492C18.226 1.244 15.212 0 12.004 0zm0 21.993h-.004a9.94 9.94 0 01-5.074-1.393l-.364-.216-3.771.849.865-3.676-.237-.378a9.92 9.92 0 01-1.523-5.175c0-5.488 4.467-9.956 9.957-9.956 2.658 0 5.158 1.036 7.038 2.916 1.88 1.88 2.915 4.38 2.915 7.038 0 5.489-4.468 9.957-9.802 9.957z" />
+                          </svg>
+                          <span>WhatsApp</span>
                         </span>
                       )}
                     </div>
@@ -398,7 +410,11 @@ function ProfessionalsDirectoryPage({ onNavigate, onShowToast }) {
           </div>
         ) : (
           <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-3xl border border-white/40 shadow-xl space-y-3">
-            <div className="text-3xl">🔍</div>
+            <div className="w-12 h-12 mx-auto rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 mb-2">
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
             <h3 className="text-base font-black text-slate-900 dark:text-white font-serif">
               {isTamil ? 'நிபுணர்கள் யாரும் பொருந்தவில்லை' : 'No specialists matched your search'}
             </h3>

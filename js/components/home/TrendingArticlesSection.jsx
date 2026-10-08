@@ -102,7 +102,7 @@ function TrendingArticlesSection({ onNavigate }) {
                   {/* Byline in slate-600 */}
                   <div className="mt-2.5 pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-600 dark:text-slate-400">
                     <span className="truncate max-w-[150px] font-medium text-slate-700 dark:text-slate-300">
-                      ✍️ {article.authorName || 'Budget Padmanaban'}
+                      {article.authorName || 'Budget Padmanaban'}
                     </span>
                     <span className="text-[#23645C] dark:text-[#60a5fa] font-bold group-hover:translate-x-1 transition-transform text-sm">
                       →

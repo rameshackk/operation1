@@ -55,8 +55,11 @@ function NewsDetailsPage({ slug, onNavigate }) {
           <span className="px-3 py-1 text-xs font-bold uppercase rounded-full bg-amber-500/20 text-amber-800">
             {article.category || 'FINANCE'}
           </span>
-          <span className="text-xs text-slate-600 dark:text-slate-400 font-mono">
-            ⏱ {article.readTimeMinutes || 4} {isTamil ? 'நிமிட வாசிப்பு' : 'min read'}
+          <span className="text-xs text-slate-600 dark:text-slate-400 font-mono flex items-center gap-1">
+            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>{article.readTimeMinutes || 4} {isTamil ? 'நிமிட வாசிப்பு' : 'min read'}</span>
           </span>
         </div>
 

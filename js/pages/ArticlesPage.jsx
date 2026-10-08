@@ -611,7 +611,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1"
                 aria-label="Clear search"
               >
-                ✕
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/></svg>
               </button>
             )}
           </div>
@@ -696,7 +696,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                         className="hover:text-red-500 transition-colors"
                         aria-label="Remove filter"
                       >
-                        ✕
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/></svg>
                       </button>
                     </span>
                   );
@@ -716,7 +716,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                         className="hover:text-red-500 transition-colors"
                         aria-label="Remove filter"
                       >
-                        ✕
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/></svg>
                       </button>
                     </span>
                   );
@@ -731,7 +731,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                       className="hover:text-red-500 transition-colors"
                       aria-label="Remove filter"
                     >
-                      ✕
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/></svg>
                     </button>
                   </span>
                 )}
@@ -745,7 +745,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                       className="hover:text-red-500 transition-colors"
                       aria-label="Remove filter"
                     >
-                      ✕
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/></svg>
                     </button>
                   </span>
                 )}
@@ -770,7 +770,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
               </div>
             ) : error ? (
               <div className="p-8 text-center bg-red-500/10 rounded-2xl border border-red-500/30 text-red-600 dark:text-red-400 text-xs font-bold max-w-lg mx-auto space-y-2">
-                <p>⚠️ {error}</p>
+                <p>{error}</p>
                 <button
                   type="button"
                   onClick={() => window.location.reload()}
@@ -782,7 +782,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
             ) : paginatedArticles.length === 0 ? (
               <div className="py-20 text-center space-y-4 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-8 shadow-sm">
                 <div className="w-16 h-16 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 flex items-center justify-center mx-auto text-2xl font-bold">
-                  📄
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                 </div>
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white">
                   {isTamil ? 'பொருத்தமான கட்டுரைகள் எதுவும் கிடைக்கவில்லை' : 'No Matching Articles Found'}
@@ -867,7 +867,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
 
                             {arnNumber && (
                               <span className="hidden md:inline-flex items-center gap-1 text-[11px] font-bold font-mono px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-800 dark:text-amber-300 border border-amber-500/25 shrink-0">
-                                <span>🛡️</span>
+                                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                                 <span>{arnNumber}</span>
                               </span>
                             )}
@@ -888,11 +888,11 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                         <div className="pt-3 mt-1 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 border-t border-slate-100 dark:border-slate-800/60 sm:border-0">
                           <div className="flex items-center gap-3 sm:gap-4 font-mono text-xs">
                             <span className="flex items-center gap-1">
-                              <span>⏱</span>
+                              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                               <span>{readTime} {isTamil ? 'நிமிடம்' : 'min'}</span>
                             </span>
                             <span className="flex items-center gap-1 text-slate-500 dark:text-slate-400">
-                              <span>👁</span>
+                              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                               <span>{(article.views || article.viewCount || 0).toLocaleString()}</span>
                             </span>
                           </div>
@@ -1050,7 +1050,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                   className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center justify-center font-bold text-sm"
                   aria-label="Close filters"
                 >
-                  ✕
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
               </div>
 

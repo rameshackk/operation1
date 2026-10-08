@@ -429,7 +429,9 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                 }}
                 className="px-5 py-3 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100 font-black text-xs sm:text-sm shadow-md transition-all flex items-center gap-2 shrink-0"
               >
-                <span>👥</span>
+                <svg className="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
                 <span>{isTamil ? '+ புதிய வெளியீட்டாளர்' : '+ Create Publisher'}</span>
               </button>
             )}
@@ -438,7 +440,9 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
               onClick={() => onNavigate('#/admin/articles/new')}
               className="px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs sm:text-sm shadow-xl hover:scale-105 transition-all flex items-center gap-2 shrink-0"
             >
-              <span>✍️</span>
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+              </svg>
               <span>{isTamil ? 'புதிய கட்டுரை எழுதுக' : '+ Write New Article'}</span>
             </button>
           </div>
@@ -455,7 +459,9 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                 : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
               }`}
           >
-            <span>✍️</span>
+            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+            </svg>
             <span>{isTamil ? 'கட்டுரைகள் ஸ்டுடியோ' : 'Articles Studio'} ({articles.length})</span>
           </button>
 
@@ -466,7 +472,9 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                 : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
               }`}
           >
-            <span>👥</span>
+            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
             <span>{isTamil ? 'வெளியீட்டாளர்கள் & நிபுணர்கள்' : 'Publishers & Advisors'} ({publishers.length})</span>
           </button>
 
@@ -477,7 +485,9 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                 : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
               }`}
           >
-            <span>🎬</span>
+            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
             <span>{isTamil ? 'சேனல் ஒப்புதல் வரிசை' : 'Channel Approvals'} ({channels.length})</span>
           </button>
 
@@ -488,7 +498,9 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                 : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
               }`}
           >
-            <span>📹</span>
+            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
             <span>{isTamil ? 'வீடியோக்கள் மதிப்பாய்வு' : 'Video Moderation'} ({adminVideos.filter(v => v.status === 'pending').length})</span>
           </button>
         </div>
@@ -532,7 +544,13 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                 placeholder={isTamil ? "கட்டுரைகளைத் தேடுக..." : "Search articles..."}
                 className="w-full pl-4 pr-10 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
               />
-              {search && <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-600 dark:text-slate-400">✕</button>}
+              {search && (
+                <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
+                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              )}
             </div>
           </div>
 
@@ -545,7 +563,11 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
               </div>
             ) : articles.length === 0 ? (
               <div className="py-16 text-center space-y-3">
-                <div className="text-3xl">📝</div>
+                <div className="w-12 h-12 mx-auto rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center mb-2">
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                  </svg>
+                </div>
                 <h3 className="text-base font-bold text-slate-900 dark:text-white">
                   {isTamil ? 'கட்டுரைகள் எதுவும் இல்லை' : 'No Articles Found'}
                 </h3>
@@ -609,7 +631,12 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                           </td>
 
                           <td className="px-6 py-4 font-mono text-slate-500 dark:text-slate-400">
-                            ⏱ {article.readTimeMinutes} min
+                            <span className="flex items-center gap-1">
+                              <svg className="w-3.5 h-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+                              <span>{article.readTimeMinutes} min</span>
+                            </span>
                           </td>
 
                           <td className="px-6 py-4">
@@ -622,7 +649,7 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                                     : 'bg-amber-500/15 text-amber-800 border border-amber-500/30 hover:bg-amber-500/25'
                                   }`}
                               >
-                                {article.status === 'published' ? '● Published' : '○ Draft'}
+                                {article.status === 'published' ? 'Published' : 'Draft'}
                               </button>
                             ) : (
                               <span
@@ -631,7 +658,7 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                                     : 'bg-amber-500/15 text-amber-800 border border-amber-500/30'
                                   }`}
                               >
-                                {article.status === 'published' ? '● Published' : '○ Draft'}
+                                {article.status === 'published' ? 'Published' : 'Draft'}
                               </span>
                             )}
                           </td>
@@ -648,16 +675,22 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                                   title="View live article"
                                   className="p-2 rounded-xl text-slate-600 dark:text-slate-400 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                                 >
-                                  👁️
+                                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                  </svg>
                                 </button>
                               )}
                               {canManage && (
                                 <button
                                   onClick={() => onNavigate(`#/admin/articles/edit/${article.id}`)}
                                   title="Edit article"
-                                  className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-amber-600 hover:text-white text-slate-700 dark:text-slate-300 font-bold transition-all"
+                                  className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-amber-600 hover:text-white text-slate-700 dark:text-slate-300 font-bold transition-all flex items-center gap-1"
                                 >
-                                  ✏️ Edit
+                                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                  </svg>
+                                  <span>Edit</span>
                                 </button>
                               )}
                               {canManage && (
@@ -667,7 +700,9 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                                   title="Delete article"
                                   className="p-2 rounded-xl text-red-500 hover:bg-red-500/10 transition-colors disabled:opacity-50"
                                 >
-                                  🗑️
+                                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                  </svg>
                                 </button>
                               )}
                             </div>
@@ -726,7 +761,11 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                 className="w-full pl-4 pr-10 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
               />
               {publisherSearch && (
-                <button onClick={() => setPublisherSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-600 dark:text-slate-400">✕</button>
+                <button onClick={() => setPublisherSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
+                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
               )}
             </div>
 
@@ -752,7 +791,11 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
               </div>
             ) : filteredPublishers.length === 0 ? (
               <div className="py-16 text-center space-y-3">
-                <div className="text-3xl">👥</div>
+                <div className="w-12 h-12 mx-auto rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center mb-2">
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                </div>
                 <h3 className="text-base font-bold text-slate-900 dark:text-white">
                   {isTamil ? 'வெளியீட்டாளர்கள் எதுவும் இல்லை' : 'No Publishers Found'}
                 </h3>
@@ -828,12 +871,16 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                         <td className="px-6 py-4">
                           {pub.is_onboarded ? (
                             <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
-                              <span>✅</span>
+                              <svg className="w-3.5 h-3.5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                              </svg>
                               <span>Completed</span>
                             </span>
                           ) : (
                             <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-bold bg-amber-500/10 text-amber-800 border border-amber-500/20">
-                              <span>⏳</span>
+                              <svg className="w-3.5 h-3.5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
                               <span>Pending 1st Login</span>
                             </span>
                           )}
@@ -851,9 +898,12 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                             <button
                               onClick={() => setEditingPublisher(pub)}
                               title="Edit publisher details"
-                              className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-amber-600 hover:text-white text-slate-700 dark:text-slate-300 font-bold transition-all"
+                              className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-amber-600 hover:text-white text-slate-700 dark:text-slate-300 font-bold transition-all flex items-center gap-1"
                             >
-                              ✏️ Edit
+                              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                              </svg>
+                              <span>Edit</span>
                             </button>
 
                             {/* Delete Publisher */}
@@ -862,9 +912,12 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                                 onClick={() => handleDeletePublisher(pub.id, pub.display_name || pub.email)}
                                 disabled={deletingPublisherId === pub.id}
                                 title="Delete publisher account"
-                                className="px-3 py-1.5 rounded-xl bg-red-500/10 hover:bg-red-600 hover:text-white text-red-600 dark:text-red-400 font-bold transition-all disabled:opacity-50"
+                                className="px-3 py-1.5 rounded-xl bg-red-500/10 hover:bg-red-600 hover:text-white text-red-600 dark:text-red-400 font-bold transition-all disabled:opacity-50 flex items-center gap-1"
                               >
-                                🗑️ Delete
+                                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                                <span>Delete</span>
                               </button>
                             )}
                           </div>
@@ -896,8 +949,11 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
               <button
                 onClick={() => setIsCreateModalOpen(false)}
                 className="p-2 rounded-xl text-slate-600 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                aria-label="Close modal"
               >
-                ✕
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
               </button>
             </div>
 
@@ -906,7 +962,9 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
               {createdCredentials ? (
                 <div className="p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-slate-900 dark:text-white space-y-3">
                   <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-bold">
-                    <span>🎉</span>
+                    <svg className="w-5 h-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                    </svg>
                     <span>Publisher account created successfully!</span>
                   </div>
                   <p className="text-xs text-slate-600 dark:text-slate-300">
@@ -924,7 +982,7 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                     }}
                     className="w-full py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow transition-colors flex items-center justify-center gap-2"
                   >
-                    📋 Copy Credentials
+                    <span>Copy Credentials</span>
                   </button>
                 </div>
               ) : (
@@ -966,7 +1024,7 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                         onClick={generateStrongPassword}
                         className="text-xs text-amber-800 hover:underline font-bold"
                       >
-                        🎲 Auto-Generate
+                        Auto-Generate
                       </button>
                     </div>
                     <input
@@ -1054,7 +1112,7 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                       disabled={isSubmittingPublisher}
                       className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs shadow-md transition-all disabled:opacity-50"
                     >
-                      {isSubmittingPublisher ? 'Creating...' : '🚀 Create Publisher'}
+                      {isSubmittingPublisher ? 'Creating...' : 'Create Publisher'}
                     </button>
                   </div>
                 </form>
@@ -1132,7 +1190,9 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
               onClick={fetchChannels}
               className="px-4 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 transition-colors self-end sm:self-auto flex items-center gap-1.5"
             >
-              <span>🔄</span>
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
               <span>Refresh Queue</span>
             </button>
           </div>
@@ -1146,7 +1206,11 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
               </div>
             ) : channels.length === 0 ? (
               <div className="py-16 text-center space-y-3">
-                <div className="text-3xl">🎬</div>
+                <div className="w-12 h-12 mx-auto rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center mb-2">
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                </div>
                 <h3 className="text-base font-bold text-slate-900 dark:text-white">
                   {isTamil ? 'சேனல் ஒப்புதல் வரிசை காலியாக உள்ளது' : 'No Channels in Approval Queue'}
                 </h3>
@@ -1229,12 +1293,16 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                         <td className="px-6 py-4">
                           {ch.youtube_channel_verified ? (
                             <span className="px-2.5 py-1 rounded-full text-xs font-extrabold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 flex items-center gap-1 w-max">
-                              <span>✓</span>
+                              <svg className="w-3 h-3 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                              </svg>
                               <span>Verified & Ingesting</span>
                             </span>
                           ) : (
                             <span className="px-2.5 py-1 rounded-full text-xs font-extrabold bg-amber-500/10 text-amber-800 border border-amber-500/20 flex items-center gap-1 w-max">
-                              <span>⏳</span>
+                              <svg className="w-3 h-3 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
                               <span>Pending Review</span>
                             </span>
                           )}
@@ -1249,7 +1317,9 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                                   disabled={processingChannelId === ch.id}
                                   className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-sm transition-all disabled:opacity-50 flex items-center gap-1"
                                 >
-                                  <span>✓</span>
+                                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                                  </svg>
                                   <span>Approve</span>
                                 </button>
                                 <button
@@ -1257,7 +1327,9 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                                   disabled={processingChannelId === ch.id}
                                   className="px-3 py-1.5 rounded-xl bg-red-600/10 hover:bg-red-600 text-red-600 hover:text-white font-bold text-xs border border-red-500/20 transition-all disabled:opacity-50 flex items-center gap-1"
                                 >
-                                  <span>✕</span>
+                                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                  </svg>
                                   <span>Reject</span>
                                 </button>
                               </>
@@ -1361,7 +1433,9 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
               onClick={fetchAdminVideos}
               className="px-4 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 transition-colors self-end sm:self-auto flex items-center gap-1.5"
             >
-              <span>🔄</span>
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
               <span>Refresh Videos</span>
             </button>
           </div>
@@ -1375,7 +1449,11 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
               </div>
             ) : adminVideos.length === 0 ? (
               <div className="py-16 text-center space-y-3">
-                <div className="text-3xl">📹</div>
+                <div className="w-12 h-12 mx-auto rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center mb-2">
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                </div>
                 <h3 className="text-base font-bold text-slate-900 dark:text-white">
                   {isTamil ? 'வீடியோக்கள் எதுவும் இல்லை' : 'No Videos Found in this Queue'}
                 </h3>
@@ -1457,18 +1535,28 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                         </td>
 
                         <td className="px-6 py-4">
-                          <div className="font-mono text-slate-700 dark:text-slate-300">
-                            ⏱ {v.duration || '00:00'}
+                          <div className="font-mono text-slate-700 dark:text-slate-300 flex items-center gap-1">
+                            <svg className="w-3.5 h-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span>{v.duration || '00:00'}</span>
                           </div>
-                          <div className="text-xs text-slate-600 dark:text-slate-400">
-                            👁 {(v.views || 0).toLocaleString()} views
+                          <div className="text-xs text-slate-600 dark:text-slate-400 flex items-center gap-1">
+                            <svg className="w-3.5 h-3.5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                            <span>{(v.views || 0).toLocaleString()} views</span>
                           </div>
                         </td>
 
                         <td className="px-6 py-4">
                           {v.translatedAt ? (
-                            <span className="px-2 py-0.5 rounded text-xs font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
-                              ✓ Gemini Translated
+                            <span className="px-2 py-0.5 rounded text-xs font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center gap-1 w-max">
+                              <svg className="w-3 h-3 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                              </svg>
+                              <span>Gemini Translated</span>
                             </span>
                           ) : (
                             <span className="px-2 py-0.5 rounded text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
@@ -1479,16 +1567,25 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
 
                         <td className="px-6 py-4">
                           {v.status === 'published' ? (
-                            <span className="px-2.5 py-1 rounded-full text-xs font-extrabold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
-                              ✓ Published
+                            <span className="px-2.5 py-1 rounded-full text-xs font-extrabold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 flex items-center gap-1 w-max">
+                              <svg className="w-3 h-3 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                              </svg>
+                              <span>Published</span>
                             </span>
                           ) : v.status === 'rejected' ? (
-                            <span className="px-2.5 py-1 rounded-full text-xs font-extrabold bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20">
-                              ✕ Rejected
+                            <span className="px-2.5 py-1 rounded-full text-xs font-extrabold bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20 flex items-center gap-1 w-max">
+                              <svg className="w-3 h-3 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                              </svg>
+                              <span>Rejected</span>
                             </span>
                           ) : (
-                            <span className="px-2.5 py-1 rounded-full text-xs font-extrabold bg-amber-500/10 text-amber-800 border border-amber-500/20">
-                              ⏳ Pending Review
+                            <span className="px-2.5 py-1 rounded-full text-xs font-extrabold bg-amber-500/10 text-amber-800 border border-amber-500/20 flex items-center gap-1 w-max">
+                              <svg className="w-3 h-3 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+                              <span>Pending Review</span>
                             </span>
                           )}
                         </td>
@@ -1501,7 +1598,9 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                                 disabled={processingVideoId === v.youtubeId}
                                 className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-sm transition-all disabled:opacity-50 flex items-center gap-1"
                               >
-                                <span>✓</span>
+                                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                                </svg>
                                 <span>Publish</span>
                               </button>
                             )}
@@ -1511,7 +1610,9 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                                 disabled={processingVideoId === v.youtubeId}
                                 className="px-3 py-1.5 rounded-xl bg-red-600/10 hover:bg-red-600 text-red-600 hover:text-white font-bold text-xs border border-red-500/20 transition-all disabled:opacity-50 flex items-center gap-1"
                               >
-                                <span>✕</span>
+                                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
                                 <span>Reject</span>
                               </button>
                             )}
@@ -1543,8 +1644,11 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
               <button
                 onClick={() => setEditingPublisher(null)}
                 className="p-2 rounded-xl text-slate-600 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                aria-label="Close modal"
               >
-                ✕
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
               </button>
             </div>
 

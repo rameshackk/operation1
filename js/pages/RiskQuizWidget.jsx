@@ -246,7 +246,12 @@ function RiskQuizWidget() {
 
             {/* SEBI Compliance Disclaimer */}
             <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-900 dark:text-amber-200 text-xs font-medium text-left">
-              <span className="font-bold block mb-1">⚠️ {isTamil ? 'முக்கிய அறிவிப்பு (SEBI Disclaimer):' : 'Mandatory SEBI Disclaimer:'}</span>
+              <span className="font-bold block mb-1 flex items-center gap-1.5">
+                <svg className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <span>{isTamil ? 'முக்கிய அறிவிப்பு (SEBI Disclaimer):' : 'Mandatory SEBI Disclaimer:'}</span>
+              </span>
               {isTamil
                 ? 'மியூச்சுவல் ஃபண்ட் முதலீடுகள் சந்தை அபாயங்களுக்கு உட்பட்டவை, அனைத்து திட்டம் தொடர்பான ஆவணங்களையும் கவனமாகப் படிக்கவும்.'
                 : 'Mutual fund investments are subject to market risks, read all scheme related documents carefully.'}
@@ -274,8 +279,11 @@ function RiskQuizWidget() {
             </div>
 
             {savedSuccess && (
-              <p className="text-xs text-emerald-600 dark:text-emerald-400 font-medium">
-                ✓ {isTamil ? 'உங்கள் இடர் விபரம் பாதுகாப்பாக சேமிக்கப்பட்டது.' : 'Your risk profile has been securely saved to your account.'}
+              <p className="text-xs text-emerald-600 dark:text-emerald-400 font-medium flex items-center justify-center gap-1">
+                <svg className="w-3.5 h-3.5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                </svg>
+                <span>{isTamil ? 'உங்கள் இடர் விபரம் பாதுகாப்பாக சேமிக்கப்பட்டது.' : 'Your risk profile has been securely saved to your account.'}</span>
               </p>
             )}
           </div>

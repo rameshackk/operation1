@@ -38,9 +38,7 @@ function TrendingTicker({ onNavigate }) {
           className="group/hl text-[#FBBF24] hover:text-white cursor-pointer transition-all duration-150 flex items-center gap-2 font-bold text-xs sm:text-[13px] tracking-tight whitespace-nowrap select-none"
           title="Click to view details"
         >
-          <span className="inline-flex items-center justify-center w-4 h-4 rounded-sm bg-[#DC2626] text-white font-black text-xs shadow-sm animate-pulse shrink-0">
-            ⚡
-          </span>
+          <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
           <span className="group-hover/hl:underline underline-offset-2 decoration-amber-400 decoration-2 font-bold text-[#FBBF24]">
             {item.text}
           </span>
@@ -108,7 +106,7 @@ function TrendingTicker({ onNavigate }) {
                 onClick={() => handleHeadlineClick(item.link)}
                 className="snap-start shrink-0 flex items-center gap-1.5 text-xs text-[#FBBF24] font-bold active:opacity-75 cursor-pointer max-w-[280px] truncate"
               >
-                <span>⚡</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
                 <span className="truncate">{item.text}</span>
               </div>
             ))}
@@ -133,7 +131,7 @@ function TrendingTicker({ onNavigate }) {
             aria-label="Dismiss breaking news ticker"
             title="Dismiss"
           >
-            ✕
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/></svg>
           </button>
         </div>
       )}

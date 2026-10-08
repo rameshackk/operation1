@@ -44,18 +44,18 @@ function HeroSection({ news, onNavigate }) {
   const getCategoryStyle = (cat = '') => {
     const c = (cat || '').toLowerCase();
     if (c.includes('mutual') || c.includes('sip')) {
-      return { bg: 'bg-[#F0FDF4] dark:bg-emerald-950/50', text: 'text-[#15803d] dark:text-[#4ade80]', border: 'border-emerald-100 dark:border-emerald-900/40', icon: '📈' };
+      return { bg: 'bg-[#F0FDF4] dark:bg-emerald-950/50', text: 'text-[#15803d] dark:text-[#4ade80]', border: 'border-emerald-100 dark:border-emerald-900/40' };
     }
     if (c.includes('stock') || c.includes('market') || c.includes('ipo')) {
-      return { bg: 'bg-[#EFF6FF] dark:bg-blue-950/50', text: 'text-[#2563EB] dark:text-[#60a5fa]', border: 'border-blue-100 dark:border-blue-900/40', icon: '📊' };
+      return { bg: 'bg-[#EFF6FF] dark:bg-blue-950/50', text: 'text-[#2563EB] dark:text-[#60a5fa]', border: 'border-blue-100 dark:border-blue-900/40' };
     }
     if (c.includes('personal') || c.includes('finance') || c.includes('saving')) {
-      return { bg: 'bg-[#FBF7EF] dark:bg-amber-950/40', text: 'text-amber-800', border: 'border-amber-100 dark:border-amber-900/40', icon: '💰' };
+      return { bg: 'bg-[#FBF7EF] dark:bg-amber-950/40', text: 'text-amber-800', border: 'border-amber-100 dark:border-amber-900/40' };
     }
     if (c.includes('tax') || c.includes('retire')) {
-      return { bg: 'bg-purple-50 dark:bg-purple-950/40', text: 'text-purple-600 dark:text-purple-400', border: 'border-purple-100 dark:border-purple-900/40', icon: '🛡️' };
+      return { bg: 'bg-purple-50 dark:bg-purple-950/40', text: 'text-purple-600 dark:text-purple-400', border: 'border-purple-100 dark:border-purple-900/40' };
     }
-    return { bg: 'bg-[#EFF6FF] dark:bg-slate-800/60', text: 'text-[#2563EB] dark:text-[#60a5fa]', border: 'border-blue-100 dark:border-slate-700', icon: '📰' };
+    return { bg: 'bg-[#EFF6FF] dark:bg-slate-800/60', text: 'text-[#2563EB] dark:text-[#60a5fa]', border: 'border-blue-100 dark:border-slate-700' };
   };
 
   const renderFeaturedTrack = (keyPrefix) => (
@@ -146,7 +146,7 @@ function HeroSection({ news, onNavigate }) {
                   </h2>
                 </div>
                 <span className="text-xs font-bold text-[#2563EB] dark:text-[#60a5fa] bg-[#EFF6FF] dark:bg-blue-950/60 px-2.5 py-0.5 rounded-full shrink-0 font-num">
-                  LIVE TICKER SPOTLIGHT ⚡
+                  LIVE TICKER SPOTLIGHT
                 </span>
               </div>
 
@@ -211,8 +211,8 @@ function HeroSection({ news, onNavigate }) {
                             }
                           }}
                         />
-                        <div className={`hidden absolute inset-0 items-center justify-center text-base font-bold ${style.bg} ${style.text}`}>
-                          <span>{style.icon}</span>
+                        <div className={`hidden absolute inset-0 items-center justify-center ${style.bg} ${style.text}`}>
+                          <svg className="w-5 h-5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
                         </div>
                       </div>
 
