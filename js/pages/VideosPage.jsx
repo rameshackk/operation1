@@ -170,16 +170,7 @@ function VideosPage({ onNavigate, onShowToast, initialVideoId }) {
     <div className="min-h-screen pb-24 bg-white dark:bg-slate-950 text-slate-900 dark:text-white animate-fadeIn">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 space-y-8">
         
-        {/* ================= 1. HERO FEATURED LATEST VIDEO ================= */}
-        {!searchQuery && activeCategory === 'all' && heroVideo ? (
-          <YouTubeHero
-            video={heroVideo}
-            onWatch={handleSelectVideo}
-            isTamil={isTamil}
-          />
-        ) : null}
-
-        {/* ================= 3. CONTROLS BAR (SEARCH + CATEGORY CHIPS) ================= */}
+        {/* ================= CONTROLS BAR (SEARCH + CATEGORY CHIPS) ================= */}
         <div className="space-y-4">
           {/* Search Input */}
           <div className="relative max-w-xl">
@@ -273,8 +264,8 @@ function VideosPage({ onNavigate, onShowToast, initialVideoId }) {
           </div>
 
           {isLoading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-x-6 sm:gap-x-7 lg:gap-x-8 gap-y-10 sm:gap-y-12">
-              {[...Array(15)].map((_, i) => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+              {[...Array(12)].map((_, i) => (
                 <div key={i} className="animate-pulse space-y-3">
                   <div className="aspect-video bg-slate-200 dark:bg-slate-800 rounded-xl" />
                   <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded w-3/4" />
@@ -283,7 +274,7 @@ function VideosPage({ onNavigate, onShowToast, initialVideoId }) {
               ))}
             </div>
           ) : videos.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-x-6 sm:gap-x-7 lg:gap-x-8 gap-y-10 sm:gap-y-12">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {videos.map((vid) => (
                 <YouTubeVideoCard
                   key={vid.video_id || vid.youtubeId || vid.id}
