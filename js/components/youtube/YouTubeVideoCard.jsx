@@ -80,14 +80,14 @@ function YouTubeVideoCard({ video, onSelect, isTamil = false }) {
 
       {/* 2. Video Title */}
       <h3
-        className="mt-3 text-[15px] font-semibold text-slate-900 dark:text-white leading-[1.4] line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors"
+        className="mt-2.5 text-[14px] font-semibold text-slate-900 dark:text-white leading-[1.35] line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors"
         title={title}
       >
         {title}
       </h3>
 
       {/* 3. Meta Line: Budget Padmanaban · 16K views · 1 mo ago */}
-      <div className="mt-1 text-[13px] text-slate-500 dark:text-slate-400 font-medium flex items-center flex-wrap gap-x-1.5">
+      <div className="mt-1 text-[12px] text-slate-500 dark:text-slate-400 font-medium flex items-center flex-wrap gap-x-1.5 leading-tight">
         <span>Budget Padmanaban</span>
         <span>·</span>
         <span>{compactViews}</span>

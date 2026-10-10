@@ -2250,12 +2250,12 @@ function YouTubeVideoCard({ video, onSelect, isTamil = false }) {
     /* @__PURE__ */ React13.createElement(
       "h3",
       {
-        className: "mt-3 text-[15px] font-semibold text-slate-900 dark:text-white leading-[1.4] line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors",
+        className: "mt-2.5 text-[14px] font-semibold text-slate-900 dark:text-white leading-[1.35] line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors",
         title
       },
       title
     ),
-    /* @__PURE__ */ React13.createElement("div", { className: "mt-1 text-[13px] text-slate-500 dark:text-slate-400 font-medium flex items-center flex-wrap gap-x-1.5" }, /* @__PURE__ */ React13.createElement("span", null, "Budget Padmanaban"), /* @__PURE__ */ React13.createElement("span", null, "\xB7"), /* @__PURE__ */ React13.createElement("span", null, compactViews), timeAgo ? /* @__PURE__ */ React13.createElement(React13.Fragment, null, /* @__PURE__ */ React13.createElement("span", null, "\xB7"), /* @__PURE__ */ React13.createElement("span", null, timeAgo)) : null)
+    /* @__PURE__ */ React13.createElement("div", { className: "mt-1 text-[12px] text-slate-500 dark:text-slate-400 font-medium flex items-center flex-wrap gap-x-1.5 leading-tight" }, /* @__PURE__ */ React13.createElement("span", null, "Budget Padmanaban"), /* @__PURE__ */ React13.createElement("span", null, "\xB7"), /* @__PURE__ */ React13.createElement("span", null, compactViews), timeAgo ? /* @__PURE__ */ React13.createElement(React13.Fragment, null, /* @__PURE__ */ React13.createElement("span", null, "\xB7"), /* @__PURE__ */ React13.createElement("span", null, timeAgo)) : null)
   );
 }
 var YouTubeVideoCard_default = YouTubeVideoCard;
