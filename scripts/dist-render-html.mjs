@@ -352,228 +352,1019 @@ var init_LanguageContext = __esm({
 var SipCalculator_exports = {};
 __export(SipCalculator_exports, {
   SipCalculator: () => SipCalculator,
-  default: () => SipCalculator_default
+  default: () => SipCalculator
 });
-import React16, { useState as useState11, useMemo as useMemo3 } from "react";
-function SipCalculator() {
-  const { t, language } = useLanguage();
-  const [calcMode, setCalcMode] = useState11("sip");
-  const [inputAmount, setInputAmount] = useState11("150");
-  const [lastValidAmount, setLastValidAmount] = useState11(150);
-  const [timeframe, setTimeframe] = useState11("1Y");
-  const [analysisTab, setAnalysisTab] = useState11("pie");
-  const [selectedFundName, setSelectedFundName] = useState11("SBI Arbitrage Opportunities Fund");
-  const isTamil = language === "ta";
-  const RETURN_RATES = {
-    sip: {
-      "1Y": { years: 1, fund: 6.65, bench: 6.62, addBench: 4.28 },
-      "3Y": { years: 3, fund: 7.85, bench: 7.3, addBench: 5.95 },
-      "5Y": { years: 5, fund: 7.42, bench: 6.98, addBench: 5.82 },
-      "SI": { years: 18.5, fund: 7.42, bench: 6.98, addBench: 5.82 }
-    },
-    lumpsum: {
-      "1Y": { years: 1, fund: 6.64, bench: 7.02, addBench: 4.3 },
-      "3Y": { years: 3, fund: 7.53, bench: 7.44, addBench: 6.27 },
-      "5Y": { years: 5, fund: 6.78, bench: 6.54, addBench: 5.67 },
-      "SI": { years: 18.5, fund: 6.54, bench: 5.83, addBench: 5.8 }
+import React16, { useState as useState11, useEffect as useEffect9, useMemo as useMemo3 } from "react";
+function formatINR(val, isLakhCr = false) {
+  if (val === null || val === void 0 || isNaN(val)) return "\u20B90";
+  const num = Math.round(val);
+  if (isLakhCr) {
+    if (Math.abs(num) >= 1e7) {
+      return `\u20B9${(num / 1e7).toFixed(2)} Cr`;
     }
-  };
-  const currentRates = RETURN_RATES[calcMode][timeframe];
-  const years = currentRates.years;
-  const parsedNum = Number(inputAmount);
-  const isInvalid = inputAmount === "" || isNaN(parsedNum) || parsedNum < 150 || parsedNum > 1e6;
-  const activeAmount = isInvalid ? lastValidAmount : parsedNum;
-  const handleAmountChange = (valStr) => {
-    setInputAmount(valStr);
-    const num = Number(valStr);
-    if (!isNaN(num) && num >= 150 && num <= 1e6) {
-      setLastValidAmount(num);
+    if (Math.abs(num) >= 1e5) {
+      return `\u20B9${(num / 1e5).toFixed(2)} L`;
     }
-  };
-  const calculateMaturity = (rate, amt) => {
-    const r = rate / 100;
-    if (calcMode === "sip") {
-      const i = r / 12;
-      const n = years * 12;
-      if (i <= 0) return amt * n;
-      return Math.round(amt * ((Math.pow(1 + i, n) - 1) / i) * (1 + i));
-    } else {
-      return Math.round(amt * Math.pow(1 + r, years));
-    }
-  };
-  const fundAmount = calculateMaturity(currentRates.fund, activeAmount);
-  const benchAmount = calculateMaturity(currentRates.bench, activeAmount);
-  const addBenchAmount = calculateMaturity(currentRates.addBench, activeAmount);
-  const totalInvested = calcMode === "sip" ? Math.round(activeAmount * years * 12) : activeAmount;
-  const estimatedGain = Math.max(0, fundAmount - totalInvested);
-  const formatCurrency = (val) => {
-    return new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: "INR",
-      maximumFractionDigits: 0
-    }).format(val);
-  };
-  const formatLakhs = (val) => {
-    if (val >= 1e5) {
-      return "\u20B9 " + (val / 1e5).toFixed(0) + " Lakh" + (val >= 2e5 ? "s" : "");
-    }
-    return "\u20B9 " + val.toLocaleString("en-IN");
-  };
-  const presetAmounts = [150, 500, 1e3, 5e3, 1e4, 25e3, 5e4, 1e5];
-  const investedPct = fundAmount > 0 ? Math.min(100, Math.max(1, Math.round(totalInvested / fundAmount * 100))) : 100;
-  const gainPct = Math.max(0, 100 - investedPct);
-  const multiplier = totalInvested > 0 ? (fundAmount / totalInvested).toFixed(2) : "1.00";
-  const yearlySchedule = useMemo3(() => {
-    const list = [];
-    const maxYears = Math.min(Math.max(Math.ceil(years), 1), 30);
-    const rFund = currentRates.fund / 100;
-    const rBench = currentRates.bench / 100;
-    const iFund = rFund / 12;
-    const iBench = rBench / 12;
-    for (let y = 1; y <= maxYears; y++) {
-      const n = y * 12;
-      let curInvested = 0;
-      let curFund = 0;
-      let curBench = 0;
-      if (calcMode === "sip") {
-        curInvested = activeAmount * n;
-        curFund = iFund > 0 ? Math.round(activeAmount * ((Math.pow(1 + iFund, n) - 1) / iFund) * (1 + iFund)) : curInvested;
-        curBench = iBench > 0 ? Math.round(activeAmount * ((Math.pow(1 + iBench, n) - 1) / iBench) * (1 + iBench)) : curInvested;
-      } else {
-        curInvested = activeAmount;
-        curFund = Math.round(activeAmount * Math.pow(1 + rFund, y));
-        curBench = Math.round(activeAmount * Math.pow(1 + rBench, y));
+  }
+  return "\u20B9" + num.toLocaleString("en-IN");
+}
+function parseCleanNumber(valStr, fallback = 0) {
+  if (typeof valStr === "number") return isNaN(valStr) ? fallback : valStr;
+  const clean = String(valStr).replace(/[^0-9.]/g, "");
+  const num = parseFloat(clean);
+  return isNaN(num) ? fallback : num;
+}
+function SipCalculator({ initialTab, isEmbedded = false }) {
+  const { language } = useLanguage();
+  const isTa = language === "ta";
+  const [activeTab, setActiveTab] = useState11(() => {
+    if (initialTab) return initialTab;
+    try {
+      const saved = localStorage.getItem("muthaleetu_calc_tab");
+      if (saved && ["quick", "stepup", "quiz"].includes(saved)) {
+        return saved;
       }
-      list.push({
-        year: y,
-        invested: curInvested,
-        gain: Math.max(0, curFund - curInvested),
-        fundValue: curFund,
-        benchValue: curBench,
-        multiplier: (curFund / (curInvested || 1)).toFixed(2)
-      });
+    } catch (e) {
     }
-    return list;
-  }, [calcMode, activeAmount, years, currentRates]);
-  return /* @__PURE__ */ React16.createElement("section", { id: "calculator", className: "w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 select-none min-w-0" }, /* @__PURE__ */ React16.createElement("div", { className: "bg-gradient-to-br from-[#0F172A] via-[#111C35] to-[#1E293B] rounded-2xl sm:rounded-3xl border border-slate-800 shadow-xl p-4 sm:p-6 lg:p-7 text-white transition-all" }, /* @__PURE__ */ React16.createElement("div", { className: "flex flex-col sm:flex-row items-center justify-between gap-3 pb-4 mb-5 border-b border-slate-800/90" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-2.5" }, /* @__PURE__ */ React16.createElement("div", { className: "w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center font-bold text-sm shrink-0" }, /* @__PURE__ */ React16.createElement("svg", { className: "w-4 h-4 text-emerald-400", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor" }, /* @__PURE__ */ React16.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M13 10V3L4 14h7v7l9-11h-7z" }))), /* @__PURE__ */ React16.createElement("div", null, /* @__PURE__ */ React16.createElement("h2", { className: "text-base sm:text-lg lg:text-xl font-extrabold text-white tracking-tight font-sans" }, isTamil ? "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BA3\u0BBF\u0BAA\u0BCD\u0BAA\u0BBE\u0BA9\u0BCD & \u0BAA\u0B95\u0BC1\u0BAA\u0BCD\u0BAA\u0BBE\u0BAF\u0BCD\u0BB5\u0BC1" : "Calculators & In-Depth Analysis"), /* @__PURE__ */ React16.createElement("p", { className: "text-xs sm:text-xs text-slate-300 font-medium font-sans" }, isTamil ? "\u0BAE\u0BBE\u0BA4\u0BBE\u0BA8\u0BCD\u0BA4\u0BBF\u0BB0 SIP / \u0BAE\u0BCA\u0BA4\u0BCD\u0BA4 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 \u0BA4\u0BBF\u0B9F\u0BCD\u0B9F\u0BAE\u0BBF\u0B9F\u0BB2\u0BCD & \u0BB5\u0BBF\u0BB0\u0BBF\u0BB5\u0BBE\u0BA9 \u0BA8\u0BBF\u0BA4\u0BBF \u0BB5\u0BB3\u0BB0\u0BCD\u0B9A\u0BCD\u0B9A\u0BBF \u0B85\u0BB1\u0BBF\u0B95\u0BCD\u0B95\u0BC8" : "Interactive SIP & Lumpsum wealth planner with visual asset chart & statement report"))), /* @__PURE__ */ React16.createElement("div", { className: "inline-flex p-1 bg-slate-900/90 rounded-full border border-slate-700/80 gap-1.5 shrink-0" }, /* @__PURE__ */ React16.createElement(
+    return "quick";
+  });
+  const handleTabChange = (tabKey) => {
+    setActiveTab(tabKey);
+    try {
+      localStorage.setItem("muthaleetu_calc_tab", tabKey);
+    } catch (e) {
+    }
+  };
+  useEffect9(() => {
+    if (initialTab && ["quick", "stepup", "quiz"].includes(initialTab)) {
+      setActiveTab(initialTab);
+    }
+  }, [initialTab]);
+  return /* @__PURE__ */ React16.createElement("section", { className: "calc-light w-full py-6 sm:py-10" }, /* @__PURE__ */ React16.createElement("div", { className: "w-full max-w-[1200px] mx-auto px-4 sm:px-6 space-y-6 sm:space-y-8" }, !isEmbedded && /* @__PURE__ */ React16.createElement("div", { className: "space-y-4 pb-2 border-b border-[#E6E3F0]" }, /* @__PURE__ */ React16.createElement("div", { className: "flex flex-col sm:flex-row sm:items-center justify-between gap-4" }, /* @__PURE__ */ React16.createElement("div", null, /* @__PURE__ */ React16.createElement("h1", { className: "text-2xl sm:text-[28px] font-bold text-[#17142E] tracking-tight" }, isTa ? "\u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BB0\u0BC1\u0BB5\u0BBF\u0B95\u0BB3\u0BCD" : "Calculators"), /* @__PURE__ */ React16.createElement("p", { className: "mt-1 text-xs sm:text-sm text-[#5B5875]" }, isTa ? "SIP \u0BAE\u0BB1\u0BCD\u0BB1\u0BC1\u0BAE\u0BCD \u0BAE\u0BCA\u0BA4\u0BCD\u0BA4 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD\u0B95\u0BBE\u0BA9 \u0B89\u0B9F\u0BA9\u0B9F\u0BBF \u0B95\u0BA3\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1\u0B95\u0BB3\u0BCD. \u0BAA\u0BBF\u0BB0\u0BC0\u0BAE\u0BBF\u0BAF\u0BAE\u0BCD \u0B89\u0BB1\u0BC1\u0BAA\u0BCD\u0BAA\u0BBF\u0BA9\u0BB0\u0BCD\u0B95\u0BB3\u0BC1\u0B95\u0BCD\u0B95\u0BC1 30+ \u0B95\u0BC2\u0B9F\u0BC1\u0BA4\u0BB2\u0BCD \u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BB0\u0BC1\u0BB5\u0BBF\u0B95\u0BB3\u0BCD \u0B95\u0BBF\u0B9F\u0BC8\u0B95\u0BCD\u0B95\u0BBF\u0BA9\u0BCD\u0BB1\u0BA9." : "Quick estimates for SIPs and lumpsums. Members get 30+ more calculators in Premium Access.")), /* @__PURE__ */ React16.createElement("div", { className: "shrink-0" }, /* @__PURE__ */ React16.createElement(
+    "a",
+    {
+      href: "#premium",
+      className: "inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-[#E6E3F0] text-xs font-bold text-[#17142E] hover:border-[#4F46E5] hover:text-[#4F46E5] transition-all shadow-xs"
+    },
+    /* @__PURE__ */ React16.createElement("span", null, isTa ? "\u0B85\u0BA9\u0BC8\u0BA4\u0BCD\u0BA4\u0BC1 30+ \u0B95\u0BB0\u0BC1\u0BB5\u0BBF\u0B95\u0BB3\u0BCD" : "All 30+ calculators"),
+    /* @__PURE__ */ React16.createElement("span", { className: "bg-[#F5B700] text-[#3B2A00] font-extrabold text-[10px] px-1.5 py-0.5 rounded-[6px] tracking-wide" }, "PRO")
+  ))), /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-6 overflow-x-auto no-scrollbar pt-2" }, /* @__PURE__ */ React16.createElement(
     "button",
     {
       type: "button",
-      onClick: () => setCalcMode("sip"),
-      className: "px-4 sm:px-5 py-1.5 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer " + (calcMode === "sip" ? "bg-[#16A34A] text-white shadow-md shadow-green-600/30" : "text-slate-300 hover:text-white")
+      onClick: () => handleTabChange("quick"),
+      className: `pb-3 text-xs sm:text-sm font-bold whitespace-nowrap border-b-2 transition-all cursor-pointer ${activeTab === "quick" ? "text-[#17142E] border-[#4F46E5]" : "text-[#5B5875] border-transparent hover:text-[#17142E]"}`
+    },
+    isTa ? "\u0BB5\u0BBF\u0BB0\u0BC8\u0BB5\u0BC1 \u0B95\u0BBE\u0BB2\u0BCD\u0B95\u0BC1\u0BB2\u0BC7\u0B9F\u0BCD\u0B9F\u0BB0\u0BCD" : "Quick Calculator"
+  ), /* @__PURE__ */ React16.createElement(
+    "button",
+    {
+      type: "button",
+      onClick: () => handleTabChange("stepup"),
+      className: `pb-3 text-xs sm:text-sm font-bold whitespace-nowrap border-b-2 transition-all cursor-pointer ${activeTab === "stepup" ? "text-[#17142E] border-[#4F46E5]" : "text-[#5B5875] border-transparent hover:text-[#17142E]"}`
+    },
+    isTa ? "SIP \u0BB8\u0BCD\u0B9F\u0BC6\u0BAA\u0BCD-\u0B85\u0BAA\u0BCD \u0B95\u0BBE\u0BB2\u0BCD\u0B95\u0BC1\u0BB2\u0BC7\u0B9F\u0BCD\u0B9F\u0BB0\u0BCD" : "SIP Step-up Calculator"
+  ), /* @__PURE__ */ React16.createElement(
+    "button",
+    {
+      type: "button",
+      onClick: () => handleTabChange("quiz"),
+      className: `pb-3 text-xs sm:text-sm font-bold whitespace-nowrap border-b-2 transition-all cursor-pointer ${activeTab === "quiz" ? "text-[#17142E] border-[#4F46E5]" : "text-[#5B5875] border-transparent hover:text-[#17142E]"}`
+    },
+    isTa ? "\u0BB0\u0BBF\u0BB8\u0BCD\u0B95\u0BCD \u0B9A\u0BC1\u0BAF\u0BB5\u0BBF\u0BB5\u0BB0 \u0BB5\u0BBF\u0BA9\u0BBE\u0B9F\u0BBF\u0BB5\u0BBF\u0BA9\u0BBE" : "Risk Profile Quiz"
+  ))), activeTab === "quick" && /* @__PURE__ */ React16.createElement(QuickCalculatorTab, { isTa, isEmbedded }), activeTab === "stepup" && /* @__PURE__ */ React16.createElement(StepUpCalculatorTab, { isTa }), activeTab === "quiz" && /* @__PURE__ */ React16.createElement(RiskProfileQuizTab, { isTa })));
+}
+function QuickCalculatorTab({ isTa, isEmbedded }) {
+  const [mode, setMode] = useState11("sip");
+  const [freq, setFreq] = useState11("monthly");
+  const [amount, setAmount] = useState11(1e4);
+  const [lumpsumAmount, setLumpsumAmount] = useState11(1e5);
+  const [annualRate, setAnnualRate] = useState11(12);
+  const [years, setYears] = useState11(10);
+  const [months, setMonths] = useState11(0);
+  const [isStepUp, setIsStepUp] = useState11(false);
+  const [stepUpBy, setStepUpBy] = useState11("percent");
+  const [stepUpFreq, setStepUpFreq] = useState11("yearly");
+  const [stepUpPercent, setStepUpPercent] = useState11(10);
+  const [stepUpAmount, setStepUpAmount] = useState11(1e3);
+  const [subTab, setSubTab] = useState11("summary");
+  const handleReset = () => {
+    setMode("sip");
+    setFreq("monthly");
+    setAmount(1e4);
+    setLumpsumAmount(1e5);
+    setAnnualRate(12);
+    setYears(10);
+    setMonths(0);
+    setIsStepUp(false);
+    setStepUpBy("percent");
+    setStepUpFreq("yearly");
+    setStepUpPercent(10);
+    setStepUpAmount(1e3);
+    setSubTab("summary");
+  };
+  const periodsPerYear = useMemo3(() => {
+    switch (freq) {
+      case "daily":
+        return 365;
+      case "weekly":
+        return 52;
+      case "quarterly":
+        return 4;
+      case "half_yearly":
+        return 2;
+      case "yearly":
+        return 1;
+      case "monthly":
+      default:
+        return 12;
+    }
+  }, [freq]);
+  const frequencyLabel = useMemo3(() => {
+    if (mode === "lumpsum") return isTa ? "\u0BAE\u0BCA\u0BA4\u0BCD\u0BA4 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0BA4\u0BCD \u0BA4\u0BCA\u0B95\u0BC8 (\u20B9)" : "Lumpsum amount (\u20B9)";
+    switch (freq) {
+      case "daily":
+        return isTa ? "\u0BA4\u0BBF\u0BA9\u0B9A\u0BB0\u0BBF \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1 (\u20B9)" : "Daily investment (\u20B9)";
+      case "weekly":
+        return isTa ? "\u0BB5\u0BBE\u0BB0\u0BBE\u0BA8\u0BCD\u0BA4\u0BBF\u0BB0 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1 (\u20B9)" : "Weekly investment (\u20B9)";
+      case "quarterly":
+        return isTa ? "\u0B95\u0BBE\u0BB2\u0BBE\u0BA3\u0BCD\u0B9F\u0BC1 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1 (\u20B9)" : "Quarterly investment (\u20B9)";
+      case "half_yearly":
+        return isTa ? "\u0B85\u0BB0\u0BC8\u0BAF\u0BBE\u0BA3\u0BCD\u0B9F\u0BC1 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1 (\u20B9)" : "Half yearly investment (\u20B9)";
+      case "yearly":
+        return isTa ? "\u0B86\u0BA3\u0BCD\u0B9F\u0BC1 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1 (\u20B9)" : "Yearly investment (\u20B9)";
+      case "monthly":
+      default:
+        return isTa ? "\u0BAE\u0BBE\u0BA4\u0BBE\u0BA8\u0BCD\u0BA4\u0BBF\u0BB0 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1 (\u20B9)" : "Monthly investment (\u20B9)";
+    }
+  }, [freq, mode, isTa]);
+  const calcResult = useMemo3(() => {
+    const totalYears = years + months / 12;
+    if (totalYears <= 0 || annualRate <= 0) {
+      return { totalInvested: 0, estReturns: 0, totalValue: 0, donutReturnsPercent: 0, yearlyBreakdown: [] };
+    }
+    if (mode === "lumpsum") {
+      const L = lumpsumAmount;
+      const FV = L * Math.pow(1 + annualRate / 100, totalYears);
+      const totalInvested2 = L;
+      const totalValue = Math.round(FV);
+      const estReturns2 = Math.max(0, totalValue - totalInvested2);
+      const donutReturnsPercent2 = totalValue > 0 ? Math.round(estReturns2 / totalValue * 100) : 0;
+      const yearlyBreakdown2 = [];
+      const wholeYears2 = Math.ceil(totalYears);
+      for (let y = 1; y <= wholeYears2; y++) {
+        const curY = Math.min(y, totalYears);
+        const curFV = Math.round(L * Math.pow(1 + annualRate / 100, curY));
+        const prevFV = y === 1 ? L : Math.round(L * Math.pow(1 + annualRate / 100, y - 1));
+        const returnThisYear = Math.max(0, curFV - prevFV);
+        yearlyBreakdown2.push({
+          year: y,
+          periodicAmount: 0,
+          investedThisYear: y === 1 ? L : 0,
+          returnEarned: returnThisYear,
+          cumulativeInvested: L,
+          balanceEnd: curFV
+        });
+      }
+      return { totalInvested: totalInvested2, estReturns: estReturns2, totalValue, donutReturnsPercent: donutReturnsPercent2, yearlyBreakdown: yearlyBreakdown2 };
+    }
+    const n = periodsPerYear;
+    const r = Math.pow(1 + annualRate / 100, 1 / n) - 1;
+    const totalPeriods = Math.round(n * totalYears);
+    if (!isStepUp) {
+      const P = amount;
+      const FV = r > 0 ? P * ((Math.pow(1 + r, totalPeriods) - 1) / r) * (1 + r) : P * totalPeriods;
+      const totalInvested2 = Math.round(P * totalPeriods);
+      const totalValue = Math.round(FV);
+      const estReturns2 = Math.max(0, totalValue - totalInvested2);
+      const donutReturnsPercent2 = totalValue > 0 ? Math.round(estReturns2 / totalValue * 100) : 0;
+      const yearlyBreakdown2 = [];
+      const wholeYears2 = Math.ceil(totalYears);
+      let cumInvested = 0;
+      for (let y = 1; y <= wholeYears2; y++) {
+        const periodsInYear = y === wholeYears2 && totalPeriods % n !== 0 ? totalPeriods % n : n;
+        const investedThisYear = P * periodsInYear;
+        cumInvested += investedThisYear;
+        const curPeriods = Math.min(y * n, totalPeriods);
+        const curFV = Math.round(r > 0 ? P * ((Math.pow(1 + r, curPeriods) - 1) / r) * (1 + r) : P * curPeriods);
+        const prevPeriods = (y - 1) * n;
+        const prevFV = prevPeriods > 0 ? Math.round(r > 0 ? P * ((Math.pow(1 + r, prevPeriods) - 1) / r) * (1 + r) : P * prevPeriods) : 0;
+        const returnEarned = Math.max(0, curFV - (prevFV + investedThisYear));
+        yearlyBreakdown2.push({
+          year: y,
+          periodicAmount: P,
+          investedThisYear,
+          returnEarned,
+          cumulativeInvested: cumInvested,
+          balanceEnd: curFV
+        });
+      }
+      return { totalInvested: totalInvested2, estReturns: estReturns2, totalValue, donutReturnsPercent: donutReturnsPercent2, yearlyBreakdown: yearlyBreakdown2 };
+    }
+    const periodsPerStep = stepUpFreq === "half_yearly" ? Math.max(1, Math.floor(n / 2)) : n;
+    let totalInvested = 0;
+    let totalFV = 0;
+    const yearlyBreakdown = [];
+    const wholeYears = Math.ceil(totalYears);
+    const paymentSchedule = [];
+    for (let t = 0; t < totalPeriods; t++) {
+      const stepCount = Math.floor(t / periodsPerStep);
+      let P_t = amount;
+      if (stepUpBy === "percent") {
+        P_t = amount * Math.pow(1 + stepUpPercent / 100, stepCount);
+      } else {
+        P_t = amount + stepCount * stepUpAmount;
+      }
+      totalInvested += P_t;
+      totalFV += P_t * Math.pow(1 + r, totalPeriods - t);
+      paymentSchedule.push(P_t);
+    }
+    let runningInvested = 0;
+    for (let y = 1; y <= wholeYears; y++) {
+      const startIdx = (y - 1) * n;
+      const endIdx = Math.min(y * n, totalPeriods);
+      let investedThisYear = 0;
+      for (let i = startIdx; i < endIdx; i++) {
+        investedThisYear += paymentSchedule[i] || 0;
+      }
+      runningInvested += investedThisYear;
+      let curFV = 0;
+      for (let i = 0; i < endIdx; i++) {
+        curFV += paymentSchedule[i] * Math.pow(1 + r, endIdx - i);
+      }
+      let prevFV = 0;
+      for (let i = 0; i < startIdx; i++) {
+        prevFV += paymentSchedule[i] * Math.pow(1 + r, startIdx - i);
+      }
+      const returnEarned = Math.max(0, Math.round(curFV - (prevFV + investedThisYear)));
+      yearlyBreakdown.push({
+        year: y,
+        periodicAmount: Math.round(paymentSchedule[startIdx] || amount),
+        investedThisYear: Math.round(investedThisYear),
+        returnEarned,
+        cumulativeInvested: Math.round(runningInvested),
+        balanceEnd: Math.round(curFV)
+      });
+    }
+    const roundedInvested = Math.round(totalInvested);
+    const roundedTotal = Math.round(totalFV);
+    const estReturns = Math.max(0, roundedTotal - roundedInvested);
+    const donutReturnsPercent = roundedTotal > 0 ? Math.round(estReturns / roundedTotal * 100) : 0;
+    return { totalInvested: roundedInvested, estReturns, totalValue: roundedTotal, donutReturnsPercent, yearlyBreakdown };
+  }, [mode, freq, amount, lumpsumAmount, annualRate, years, months, isStepUp, stepUpBy, stepUpFreq, stepUpPercent, stepUpAmount, periodsPerYear]);
+  const totalMonths = years * 12 + months;
+  const handleSliderMonthsChange = (val) => {
+    const total = Math.max(1, Math.min(480, Number(val)));
+    setYears(Math.floor(total / 12));
+    setMonths(total % 12);
+  };
+  return /* @__PURE__ */ React16.createElement("div", { className: "calc-card p-5 sm:p-7 space-y-6" }, /* @__PURE__ */ React16.createElement("div", { className: "flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E6E3F0]" }, /* @__PURE__ */ React16.createElement("div", null, /* @__PURE__ */ React16.createElement("h2", { className: "text-lg font-bold text-[#17142E]" }, isTa ? "\u0BB5\u0BBF\u0BB0\u0BC8\u0BB5\u0BC1 \u0B95\u0BBE\u0BB2\u0BCD\u0B95\u0BC1\u0BB2\u0BC7\u0B9F\u0BCD\u0B9F\u0BB0\u0BCD" : "Quick Calculator"), /* @__PURE__ */ React16.createElement("p", { className: "text-xs text-[#5B5875] mt-0.5" }, isTa ? "\u0B9A\u0BBE\u0BA4\u0BBE\u0BB0\u0BA3 \u0B85\u0BB2\u0BCD\u0BB2\u0BA4\u0BC1 \u0BB8\u0BCD\u0B9F\u0BC6\u0BAA\u0BCD-\u0B85\u0BAA\u0BCD SIP, \u0B85\u0BB2\u0BCD\u0BB2\u0BA4\u0BC1 \u0B92\u0BB0\u0BC1 \u0BAE\u0BC1\u0BB1\u0BC8 \u0BAE\u0BCA\u0BA4\u0BCD\u0BA4 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BBF\u0BB1\u0BCD\u0B95\u0BBE\u0BA9 \u0BB5\u0BBF\u0BB0\u0BC8\u0BB5\u0BC1 \u0B95\u0BA3\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1." : "A quick estimate for a flat or step-up SIP, or a one-time lumpsum.")), /* @__PURE__ */ React16.createElement("div", { className: "flex items-center p-1 bg-[#F3F1FA] rounded-full self-start sm:self-auto border border-[#E6E3F0]" }, /* @__PURE__ */ React16.createElement(
+    "button",
+    {
+      type: "button",
+      onClick: () => setMode("sip"),
+      className: `px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${mode === "sip" ? "bg-[#4F46E5] text-white shadow-xs" : "text-[#5B5875] hover:bg-[#E9E6F5]"}`
     },
     "SIP"
   ), /* @__PURE__ */ React16.createElement(
     "button",
     {
       type: "button",
-      onClick: () => setCalcMode("lumpsum"),
-      className: "px-4 sm:px-5 py-1.5 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer " + (calcMode === "lumpsum" ? "bg-[#16A34A] text-white shadow-md shadow-green-600/30" : "text-slate-300 hover:text-white")
+      onClick: () => setMode("lumpsum"),
+      className: `px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${mode === "lumpsum" ? "bg-[#4F46E5] text-white shadow-xs" : "text-[#5B5875] hover:bg-[#E9E6F5]"}`
     },
-    "Lumpsum"
-  ))), /* @__PURE__ */ React16.createElement("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-stretch" }, /* @__PURE__ */ React16.createElement("div", { className: "lg:col-span-6 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-2xl p-5 sm:p-6 shadow-xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between space-y-4" }, /* @__PURE__ */ React16.createElement("div", null, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 mb-4" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React16.createElement("svg", { className: "w-4 h-4 text-emerald-600 dark:text-emerald-400", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor" }, /* @__PURE__ */ React16.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" })), /* @__PURE__ */ React16.createElement("h3", { className: "text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 dark:text-slate-200 font-sans" }, isTamil ? "1. \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BC0\u0B9F\u0BC1" : "1. Calculation Part")), /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-bold px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-[#16A34A] dark:text-[#4ade80] font-sans" }, calcMode === "sip" ? "Monthly SIP" : "One-Time Lumpsum")), /* @__PURE__ */ React16.createElement("div", { className: "flex items-center justify-between gap-3 mb-2" }, /* @__PURE__ */ React16.createElement("label", { className: "text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 font-sans" }, calcMode === "sip" ? isTamil ? "\u0BAE\u0BBE\u0BA4\u0BBE\u0BA8\u0BCD\u0BA4\u0BBF\u0BB0 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1" : "Monthly Investment" : isTamil ? "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 \u0BA4\u0BCA\u0B95\u0BC8" : "Investment Amount"), /* @__PURE__ */ React16.createElement("div", { className: `flex items-center bg-slate-50 dark:bg-slate-800 border rounded-xl px-3 py-1 transition-all ${isInvalid ? "border-red-500 ring-1 ring-red-500" : "border-slate-300 dark:border-slate-700 focus-within:ring-2 focus-within:ring-[#16A34A]"}` }, /* @__PURE__ */ React16.createElement("span", { className: "text-slate-500 font-bold text-sm mr-1" }, "\u20B9"), /* @__PURE__ */ React16.createElement(
+    isTa ? "\u0BAE\u0BCA\u0BA4\u0BCD\u0BA4 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1 (Lumpsum)" : "Lumpsum"
+  ))), /* @__PURE__ */ React16.createElement("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-8 items-start" }, /* @__PURE__ */ React16.createElement("div", { className: "lg:col-span-5 space-y-5" }, mode === "sip" && /* @__PURE__ */ React16.createElement("div", { className: "space-y-2" }, /* @__PURE__ */ React16.createElement("label", { className: "text-[13px] font-semibold text-[#5B5875]" }, isTa ? "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 \u0B87\u0B9F\u0BC8\u0BB5\u0BC6\u0BB3\u0BBF" : "Investment frequency"), /* @__PURE__ */ React16.createElement("div", { className: "flex flex-wrap gap-1.5 p-1 bg-[#F3F1FA] rounded-xl border border-[#E6E3F0]" }, [
+    { id: "daily", en: "Daily", ta: "\u0BA4\u0BBF\u0BA9\u0B9A\u0BB0\u0BBF" },
+    { id: "weekly", en: "Weekly", ta: "\u0BB5\u0BBE\u0BB0\u0BBE\u0BA8\u0BCD\u0BA4\u0BBF\u0BB0" },
+    { id: "monthly", en: "Monthly", ta: "\u0BAE\u0BBE\u0BA4\u0BBE\u0BA8\u0BCD\u0BA4\u0BBF\u0BB0" },
+    { id: "quarterly", en: "Quarterly", ta: "\u0B95\u0BBE\u0BB2\u0BBE\u0BA3\u0BCD\u0B9F\u0BC1" },
+    { id: "half_yearly", en: "Half Yearly", ta: "\u0B85\u0BB0\u0BC8\u0BAF\u0BBE\u0BA3\u0BCD\u0B9F\u0BC1" },
+    { id: "yearly", en: "Yearly", ta: "\u0BB5\u0BB0\u0BC1\u0B9F\u0BBE\u0BA8\u0BCD\u0BA4\u0BBF\u0BB0" }
+  ].map((item) => /* @__PURE__ */ React16.createElement(
+    "button",
+    {
+      key: item.id,
+      type: "button",
+      onClick: () => setFreq(item.id),
+      className: `px-2.5 py-1 text-xs font-bold rounded-lg transition-all cursor-pointer ${freq === item.id ? "bg-[#4F46E5] text-white shadow-xs" : "text-[#5B5875] hover:bg-[#E9E6F5]"}`
+    },
+    isTa ? item.ta : item.en
+  )))), /* @__PURE__ */ React16.createElement("div", { className: "space-y-1.5" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center justify-between" }, /* @__PURE__ */ React16.createElement("label", { className: "text-[13px] font-semibold text-[#5B5875]" }, frequencyLabel), /* @__PURE__ */ React16.createElement("div", { className: "relative" }, /* @__PURE__ */ React16.createElement(
     "input",
     {
-      type: "number",
-      min: "150",
-      max: "1000000",
-      step: "50",
-      value: inputAmount,
-      "aria-label": "Monthly Investment Amount in Rupees",
-      onChange: (e) => handleAmountChange(e.target.value),
-      className: "w-20 sm:w-24 bg-transparent text-right font-black text-slate-900 dark:text-white text-sm sm:text-base outline-none font-num"
+      type: "text",
+      value: mode === "sip" ? amount.toLocaleString("en-IN") : lumpsumAmount.toLocaleString("en-IN"),
+      onChange: (e) => {
+        const clean = parseCleanNumber(e.target.value, 0);
+        if (mode === "sip") {
+          setAmount(clean);
+        } else {
+          setLumpsumAmount(clean);
+        }
+      },
+      className: "calc-input w-36 px-3 text-sm"
     }
-  ))), isInvalid && /* @__PURE__ */ React16.createElement("p", { className: "text-xs text-red-500 font-medium mb-2 animate-fadeIn flex items-center gap-1.5" }, /* @__PURE__ */ React16.createElement("svg", { className: "w-3.5 h-3.5 text-red-500 shrink-0", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor" }, /* @__PURE__ */ React16.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" })), /* @__PURE__ */ React16.createElement("span", null, isTamil ? "\u0BA4\u0BCA\u0B95\u0BC8 \u20B9150 \u0BAE\u0BC1\u0BA4\u0BB2\u0BCD \u20B910,00,000 \u0BB5\u0BB0\u0BC8 \u0B87\u0BB0\u0BC1\u0B95\u0BCD\u0B95 \u0BB5\u0BC7\u0BA3\u0BCD\u0B9F\u0BC1\u0BAE\u0BCD (\u0B95\u0B9F\u0BC8\u0B9A\u0BBF \u0B9A\u0BB0\u0BBF\u0BAF\u0BBE\u0BA9 \u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1 \u0B95\u0BBE\u0B9F\u0BCD\u0B9F\u0BAA\u0BCD\u0BAA\u0B9F\u0BC1\u0B95\u0BBF\u0BB1\u0BA4\u0BC1)." : "Amount must be between \u20B9150 and \u20B910,00,000 (showing last valid calculation).")), /* @__PURE__ */ React16.createElement("div", { className: "mb-3" }, /* @__PURE__ */ React16.createElement(
+  ), /* @__PURE__ */ React16.createElement("span", { className: "absolute left-2.5 top-1/2 -translate-y-1/2 text-xs font-bold text-[#8E8BA6]" }, "\u20B9"))), mode === "sip" ? /* @__PURE__ */ React16.createElement(
     "input",
     {
       type: "range",
-      min: "150",
-      max: "1000000",
-      step: "50",
-      value: activeAmount,
-      "aria-label": "Monthly Investment Amount Slider",
-      onChange: (e) => handleAmountChange(e.target.value),
-      className: "w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-[#15803d]"
+      min: "500",
+      max: "2500000",
+      step: "500",
+      value: amount,
+      onChange: (e) => setAmount(Number(e.target.value)),
+      className: "calc-range"
     }
-  ), /* @__PURE__ */ React16.createElement("div", { className: "flex justify-between items-center text-xs font-bold text-slate-600 dark:text-slate-400 mt-1 font-num" }, /* @__PURE__ */ React16.createElement("span", null, "\u20B9 150"), /* @__PURE__ */ React16.createElement("span", null, "\u20B9 10 Lakhs"))), /* @__PURE__ */ React16.createElement("div", { className: "flex flex-wrap gap-1.5 mb-4" }, presetAmounts.map((pVal) => /* @__PURE__ */ React16.createElement(
+  ) : /* @__PURE__ */ React16.createElement(
+    "input",
+    {
+      type: "range",
+      min: "10000",
+      max: "100000000",
+      step: "10000",
+      value: lumpsumAmount,
+      onChange: (e) => setLumpsumAmount(Number(e.target.value)),
+      className: "calc-range"
+    }
+  ), /* @__PURE__ */ React16.createElement("div", { className: "flex justify-between text-[11px] text-[#8E8BA6] font-medium" }, /* @__PURE__ */ React16.createElement("span", null, mode === "sip" ? "\u20B9500" : "\u20B910,000"), /* @__PURE__ */ React16.createElement("span", null, mode === "sip" ? "\u20B925 L" : "\u20B910 Cr"))), /* @__PURE__ */ React16.createElement("div", { className: "space-y-1.5" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center justify-between" }, /* @__PURE__ */ React16.createElement("label", { className: "text-[13px] font-semibold text-[#5B5875]" }, isTa ? "\u0B8E\u0BA4\u0BBF\u0BB0\u0BCD\u0BAA\u0BBE\u0BB0\u0BCD\u0B95\u0BCD\u0B95\u0BAA\u0BCD\u0BAA\u0B9F\u0BC1\u0BAE\u0BCD \u0B86\u0BA3\u0BCD\u0B9F\u0BC1 \u0BB5\u0BB0\u0BC1\u0BAE\u0BBE\u0BA9\u0BAE\u0BCD (%)" : "Expected return rate p.a. (%)"), /* @__PURE__ */ React16.createElement("div", { className: "relative" }, /* @__PURE__ */ React16.createElement(
+    "input",
+    {
+      type: "number",
+      step: "0.5",
+      min: "1",
+      max: "30",
+      value: annualRate,
+      onChange: (e) => setAnnualRate(Number(e.target.value) || 1),
+      className: "calc-input w-24 pr-7 px-3 text-sm"
+    }
+  ), /* @__PURE__ */ React16.createElement("span", { className: "absolute right-2.5 top-1/2 -translate-y-1/2 text-xs font-bold text-[#8E8BA6]" }, "%"))), /* @__PURE__ */ React16.createElement(
+    "input",
+    {
+      type: "range",
+      min: "1",
+      max: "30",
+      step: "0.5",
+      value: annualRate,
+      onChange: (e) => setAnnualRate(Number(e.target.value)),
+      className: "calc-range"
+    }
+  ), /* @__PURE__ */ React16.createElement("div", { className: "flex justify-between text-[11px] text-[#8E8BA6] font-medium" }, /* @__PURE__ */ React16.createElement("span", null, "1%"), /* @__PURE__ */ React16.createElement("span", null, "30%"))), /* @__PURE__ */ React16.createElement("div", { className: "space-y-1.5" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center justify-between" }, /* @__PURE__ */ React16.createElement("label", { className: "text-[13px] font-semibold text-[#5B5875]" }, isTa ? "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BBE\u0BB2\u0BAE\u0BCD" : "Time period"), /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React16.createElement("div", { className: "relative" }, /* @__PURE__ */ React16.createElement(
+    "input",
+    {
+      type: "number",
+      min: "0",
+      max: "40",
+      value: years,
+      onChange: (e) => setYears(Math.max(0, Math.min(40, Number(e.target.value) || 0))),
+      className: "calc-input w-20 pr-7 px-2 text-sm"
+    }
+  ), /* @__PURE__ */ React16.createElement("span", { className: "absolute right-2 top-1/2 -translate-y-1/2 text-xs font-bold text-[#8E8BA6]" }, isTa ? "\u0B86" : "yrs")), /* @__PURE__ */ React16.createElement("div", { className: "relative" }, /* @__PURE__ */ React16.createElement(
+    "input",
+    {
+      type: "number",
+      min: "0",
+      max: "11",
+      value: months,
+      onChange: (e) => setMonths(Math.max(0, Math.min(11, Number(e.target.value) || 0))),
+      className: "calc-input w-18 pr-7 px-2 text-sm"
+    }
+  ), /* @__PURE__ */ React16.createElement("span", { className: "absolute right-2 top-1/2 -translate-y-1/2 text-xs font-bold text-[#8E8BA6]" }, isTa ? "\u0BAE\u0BBE" : "mo")))), /* @__PURE__ */ React16.createElement(
+    "input",
+    {
+      type: "range",
+      min: "1",
+      max: "480",
+      step: "1",
+      value: totalMonths,
+      onChange: (e) => handleSliderMonthsChange(e.target.value),
+      className: "calc-range"
+    }
+  ), /* @__PURE__ */ React16.createElement("div", { className: "flex justify-between text-[11px] text-[#8E8BA6] font-medium" }, /* @__PURE__ */ React16.createElement("span", null, "1 ", isTa ? "\u0BAE\u0BBE\u0BA4\u0BAE\u0BCD" : "mo"), /* @__PURE__ */ React16.createElement("span", null, "40 ", isTa ? "\u0B86\u0BA3\u0BCD\u0B9F\u0BC1\u0B95\u0BB3\u0BCD" : "yrs", " (480 ", isTa ? "\u0BAE\u0BBE\u0BA4\u0B99\u0BCD\u0B95\u0BB3\u0BCD" : "mo", ")"))), mode === "sip" && /* @__PURE__ */ React16.createElement("div", { className: "p-4 bg-[#F3F1FA] rounded-xl border border-[#E6E3F0] space-y-3" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center justify-between" }, /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-bold text-[#17142E]" }, isTa ? "SIP \u0BA4\u0BCA\u0B95\u0BC8\u0BAF\u0BC8 \u0BAA\u0B9F\u0BBF\u0BAA\u0BCD\u0BAA\u0B9F\u0BBF\u0BAF\u0BBE\u0B95 \u0B85\u0BA4\u0BBF\u0B95\u0BB0\u0BBF\u0B95\u0BCD\u0B95\u0BB5\u0BBE (Step-up)?" : "Step-up the SIP?"), /* @__PURE__ */ React16.createElement("div", { className: "flex items-center p-0.5 bg-white rounded-full border border-[#E6E3F0]" }, /* @__PURE__ */ React16.createElement(
     "button",
     {
-      key: pVal,
       type: "button",
-      onClick: () => handleAmountChange(String(pVal)),
-      className: "px-2.5 py-1 rounded-lg text-xs font-bold font-num transition-all cursor-pointer " + (activeAmount === pVal ? "bg-[#0F172A] dark:bg-white text-white dark:text-slate-900 shadow-xs" : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700")
+      onClick: () => setIsStepUp(false),
+      className: `px-3 py-1 rounded-full text-xs font-bold transition-all cursor-pointer ${!isStepUp ? "bg-[#4F46E5] text-white shadow-xs" : "text-[#5B5875] hover:bg-[#F3F1FA]"}`
     },
-    formatLakhs(pVal)
-  ))), /* @__PURE__ */ React16.createElement("div", { className: "mb-4" }, /* @__PURE__ */ React16.createElement("label", { className: "text-xs font-extrabold uppercase text-slate-600 dark:text-slate-400 tracking-wider block mb-1.5 font-sans" }, isTamil ? "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BBE\u0BB2\u0BAE\u0BCD (Time Horizon)" : "Time Horizon (Years)"), /* @__PURE__ */ React16.createElement("div", { className: "flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700 gap-1 overflow-x-auto" }, [
-    { id: "1Y", label: "1 Year" },
-    { id: "3Y", label: "3 Years" },
-    { id: "5Y", label: "5 Years" },
-    { id: "SI", label: "Since Inception" }
-  ].map((tItem) => /* @__PURE__ */ React16.createElement(
-    "button",
-    {
-      key: tItem.id,
-      type: "button",
-      onClick: () => setTimeframe(tItem.id),
-      className: "flex-1 py-1 px-2 rounded-lg text-xs font-bold font-sans whitespace-nowrap transition-all duration-200 text-center cursor-pointer " + (timeframe === tItem.id ? "bg-[#16A34A] text-white shadow-xs" : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white")
-    },
-    tItem.label
-  )))), /* @__PURE__ */ React16.createElement("div", { className: "bg-slate-50 dark:bg-slate-800/50 rounded-xl p-3 border border-slate-200/80 dark:border-slate-700/80 divide-y divide-slate-200/60 dark:divide-slate-700/60" }, /* @__PURE__ */ React16.createElement("div", { className: "pb-2 flex justify-between items-center" }, /* @__PURE__ */ React16.createElement("div", { className: "font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white flex items-center gap-1.5 font-sans truncate pr-2" }, /* @__PURE__ */ React16.createElement("span", { className: "w-2 h-2 rounded-full bg-[#16A34A] inline-block shrink-0" }), /* @__PURE__ */ React16.createElement("span", { className: "truncate" }, isTamil ? `${selectedFundName} (SBI \u0B86\u0BB0\u0BCD\u0BAA\u0BBF\u0B9F\u0BCD\u0BB0\u0BC7\u0B9C\u0BCD)` : selectedFundName)), /* @__PURE__ */ React16.createElement("div", { className: "text-right shrink-0" }, /* @__PURE__ */ React16.createElement("span", { className: "text-sm sm:text-base font-black text-slate-900 dark:text-white font-num" }, formatCurrency(fundAmount)), /* @__PURE__ */ React16.createElement("span", { className: "ml-1.5 text-xs font-bold text-[#16A34A] dark:text-[#4ade80] font-num" }, "+", currentRates.fund, "%"))), /* @__PURE__ */ React16.createElement("div", { className: "py-2 flex justify-between items-center" }, /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-semibold text-slate-600 dark:text-slate-300 font-sans" }, "Nifty 50 Arbitrage Index"), /* @__PURE__ */ React16.createElement("div", { className: "text-right" }, /* @__PURE__ */ React16.createElement("span", { className: "text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 font-num" }, formatCurrency(benchAmount)), /* @__PURE__ */ React16.createElement("span", { className: "ml-1.5 text-xs font-bold text-slate-500 font-num" }, "+", currentRates.bench, "%"))), /* @__PURE__ */ React16.createElement("div", { className: "pt-2 flex justify-between items-center" }, /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-semibold text-slate-600 dark:text-slate-300 font-sans" }, "CRISIL 1 Year T-Bill Index"), /* @__PURE__ */ React16.createElement("div", { className: "text-right" }, /* @__PURE__ */ React16.createElement("span", { className: "text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 font-num" }, formatCurrency(addBenchAmount)), /* @__PURE__ */ React16.createElement("span", { className: "ml-1.5 text-xs font-bold text-slate-500 font-num" }, "+", currentRates.addBench, "%"))))), /* @__PURE__ */ React16.createElement("div", { className: "bg-slate-100 dark:bg-slate-800 rounded-xl p-3 flex justify-between items-center text-xs font-sans" }, /* @__PURE__ */ React16.createElement("div", null, /* @__PURE__ */ React16.createElement("span", { className: "text-slate-500 dark:text-slate-400 block text-xs font-medium" }, isTamil ? "\u0BAE\u0BCA\u0BA4\u0BCD\u0BA4 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1" : "Total Capital Outlay"), /* @__PURE__ */ React16.createElement("span", { className: "font-black text-slate-900 dark:text-white font-num text-sm" }, formatCurrency(totalInvested))), /* @__PURE__ */ React16.createElement("div", { className: "text-right" }, /* @__PURE__ */ React16.createElement("span", { className: "text-slate-500 dark:text-slate-400 block text-xs font-medium" }, isTamil ? "\u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BBF\u0B9F\u0BAA\u0BCD\u0BAA\u0B9F\u0BCD\u0B9F \u0BB2\u0BBE\u0BAA\u0BAE\u0BCD" : "Estimated Growth"), /* @__PURE__ */ React16.createElement("span", { className: "font-black text-[#16A34A] dark:text-[#4ade80] font-num text-sm" }, "+", formatCurrency(estimatedGain))))), /* @__PURE__ */ React16.createElement("div", { className: "lg:col-span-6 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-2xl p-5 sm:p-6 shadow-xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between space-y-4" }, /* @__PURE__ */ React16.createElement("div", null, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 mb-3" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React16.createElement("svg", { className: "w-4 h-4 text-emerald-600 dark:text-emerald-400", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor" }, /* @__PURE__ */ React16.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" })), /* @__PURE__ */ React16.createElement("h3", { className: "text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 dark:text-slate-200 font-sans" }, isTamil ? "2. \u0B9A\u0BBE\u0BB0\u0BCD\u0B9F\u0BCD & \u0BA8\u0BBF\u0BA4\u0BBF \u0B85\u0BB1\u0BBF\u0B95\u0BCD\u0B95\u0BC8" : "2. Chart & Statement Part")), /* @__PURE__ */ React16.createElement("div", { className: "flex bg-slate-100 dark:bg-slate-800 p-0.5 rounded-xl border border-slate-200 dark:border-slate-700" }, /* @__PURE__ */ React16.createElement(
-    "button",
-    {
-      type: "button",
-      onClick: () => setAnalysisTab("pie"),
-      className: "px-3 py-1 rounded-lg text-xs font-bold font-sans transition-all cursor-pointer " + (analysisTab === "pie" ? "bg-white dark:bg-slate-900 text-[#16A34A] dark:text-[#4ade80] shadow-xs" : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white")
-    },
-    isTamil ? "\u0BAA\u0BC8-\u0B9A\u0BBE\u0BB0\u0BCD\u0B9F\u0BCD" : "Pie Chart"
+    isTa ? "\u0B87\u0BB2\u0BCD\u0BB2\u0BC8" : "No"
   ), /* @__PURE__ */ React16.createElement(
     "button",
     {
       type: "button",
-      onClick: () => setAnalysisTab("statement"),
-      className: "px-3 py-1 rounded-lg text-xs font-bold font-sans transition-all cursor-pointer " + (analysisTab === "statement" ? "bg-white dark:bg-slate-900 text-[#16A34A] dark:text-[#4ade80] shadow-xs" : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white")
+      onClick: () => setIsStepUp(true),
+      className: `px-3 py-1 rounded-full text-xs font-bold transition-all cursor-pointer ${isStepUp ? "bg-[#4F46E5] text-white shadow-xs" : "text-[#5B5875] hover:bg-[#F3F1FA]"}`
     },
-    isTamil ? "\u0B85\u0BB1\u0BBF\u0B95\u0BCD\u0B95\u0BC8" : "Statement"
-  ))), analysisTab === "pie" ? /* @__PURE__ */ React16.createElement("div", { className: "space-y-3 animate-fadeIn" }, /* @__PURE__ */ React16.createElement("div", { className: "flex flex-col sm:flex-row items-center justify-around gap-4 bg-slate-50 dark:bg-slate-800/40 p-3 rounded-xl border border-slate-200/80 dark:border-slate-700/80" }, /* @__PURE__ */ React16.createElement("div", { className: "relative w-32 h-32 flex items-center justify-center shrink-0" }, /* @__PURE__ */ React16.createElement("svg", { className: "w-full h-full transform -rotate-90", viewBox: "0 0 36 36" }, /* @__PURE__ */ React16.createElement(
-    "path",
+    isTa ? "\u0B86\u0BAE\u0BCD" : "Yes"
+  ))), isStepUp && /* @__PURE__ */ React16.createElement("div", { className: "space-y-3 pt-2 border-t border-[#E6E3F0]" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center justify-between gap-2" }, /* @__PURE__ */ React16.createElement("span", { className: "text-[11px] font-semibold text-[#5B5875]" }, isTa ? "\u0B85\u0BA4\u0BBF\u0B95\u0BB0\u0BBF\u0B95\u0BCD\u0B95\u0BC1\u0BAE\u0BCD \u0BAE\u0BC1\u0BB1\u0BC8:" : "Step-up by:"), /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-1" }, /* @__PURE__ */ React16.createElement(
+    "button",
     {
-      className: "text-slate-200 dark:text-slate-700",
-      strokeWidth: "3.8",
-      stroke: "currentColor",
+      type: "button",
+      onClick: () => setStepUpBy("percent"),
+      className: `px-2 py-0.5 rounded text-[11px] font-bold cursor-pointer ${stepUpBy === "percent" ? "bg-[#4F46E5] text-white" : "bg-white text-[#5B5875] border border-[#E6E3F0]"}`
+    },
+    isTa ? "\u0B9A\u0BA4\u0BB5\u0BC0\u0BA4\u0BAE\u0BCD (%)" : "Percentage"
+  ), /* @__PURE__ */ React16.createElement(
+    "button",
+    {
+      type: "button",
+      onClick: () => setStepUpBy("amount"),
+      className: `px-2 py-0.5 rounded text-[11px] font-bold cursor-pointer ${stepUpBy === "amount" ? "bg-[#4F46E5] text-white" : "bg-white text-[#5B5875] border border-[#E6E3F0]"}`
+    },
+    isTa ? "\u0BA4\u0BCA\u0B95\u0BC8 (\u20B9)" : "Amount (\u20B9)"
+  ))), /* @__PURE__ */ React16.createElement("div", { className: "flex items-center justify-between gap-2" }, /* @__PURE__ */ React16.createElement("span", { className: "text-[11px] font-semibold text-[#5B5875]" }, isTa ? "\u0B85\u0BA4\u0BBF\u0B95\u0BB0\u0BBF\u0B95\u0BCD\u0B95\u0BC1\u0BAE\u0BCD \u0B95\u0BBE\u0BB2\u0BAE\u0BCD:" : "Step-up every:"), /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-1" }, /* @__PURE__ */ React16.createElement(
+    "button",
+    {
+      type: "button",
+      onClick: () => setStepUpFreq("yearly"),
+      className: `px-2 py-0.5 rounded text-[11px] font-bold cursor-pointer ${stepUpFreq === "yearly" ? "bg-[#4F46E5] text-white" : "bg-white text-[#5B5875] border border-[#E6E3F0]"}`
+    },
+    isTa ? "\u0B86\u0BA3\u0BCD\u0B9F\u0BC1\u0BA4\u0BCB\u0BB1\u0BC1\u0BAE\u0BCD" : "Yearly"
+  ), /* @__PURE__ */ React16.createElement(
+    "button",
+    {
+      type: "button",
+      onClick: () => setStepUpFreq("half_yearly"),
+      className: `px-2 py-0.5 rounded text-[11px] font-bold cursor-pointer ${stepUpFreq === "half_yearly" ? "bg-[#4F46E5] text-white" : "bg-white text-[#5B5875] border border-[#E6E3F0]"}`
+    },
+    isTa ? "\u0B85\u0BB0\u0BC8\u0BAF\u0BBE\u0BA3\u0BCD\u0B9F\u0BC1" : "Half yearly"
+  ))), /* @__PURE__ */ React16.createElement("div", { className: "space-y-1" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center justify-between text-xs font-semibold text-[#5B5875]" }, /* @__PURE__ */ React16.createElement("span", null, isTa ? "\u0B85\u0BA4\u0BBF\u0B95\u0BB0\u0BBF\u0B95\u0BCD\u0B95\u0BC1\u0BAE\u0BCD \u0B85\u0BB3\u0BB5\u0BC1:" : "Yearly increase:"), /* @__PURE__ */ React16.createElement("span", { className: "font-bold text-[#17142E]" }, stepUpBy === "percent" ? `${stepUpPercent}%` : formatINR(stepUpAmount))), stepUpBy === "percent" ? /* @__PURE__ */ React16.createElement(
+    "input",
+    {
+      type: "range",
+      min: "1",
+      max: "30",
+      step: "1",
+      value: stepUpPercent,
+      onChange: (e) => setStepUpPercent(Number(e.target.value)),
+      className: "calc-range"
+    }
+  ) : /* @__PURE__ */ React16.createElement(
+    "input",
+    {
+      type: "range",
+      min: "500",
+      max: "50000",
+      step: "500",
+      value: stepUpAmount,
+      onChange: (e) => setStepUpAmount(Number(e.target.value)),
+      className: "calc-range"
+    }
+  )))), /* @__PURE__ */ React16.createElement("div", { className: "pt-2" }, /* @__PURE__ */ React16.createElement(
+    "button",
+    {
+      type: "button",
+      onClick: handleReset,
+      className: "px-4 py-2 rounded-xl bg-white border border-[#E6E3F0] text-xs font-bold text-[#5B5875] hover:text-[#17142E] hover:border-[#4F46E5] transition-all cursor-pointer shadow-2xs"
+    },
+    isTa ? "\u0BAE\u0BC0\u0B9F\u0BCD\u0B9F\u0BAE\u0BC8\u0B95\u0BCD\u0B95 (Clear)" : "Clear / Reset"
+  ))), /* @__PURE__ */ React16.createElement("div", { className: "lg:col-span-7 space-y-6" }, /* @__PURE__ */ React16.createElement("div", { className: "grid grid-cols-1 sm:grid-cols-3 gap-3" }, /* @__PURE__ */ React16.createElement("div", { className: "p-4 bg-[#F3F1FA] rounded-xl border border-[#E6E3F0] space-y-1" }, /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-semibold text-[#5B5875] uppercase tracking-wider block" }, isTa ? "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1 \u0B9A\u0BC6\u0BAF\u0BCD\u0BA4 \u0BA4\u0BCA\u0B95\u0BC8" : "Invested amount"), /* @__PURE__ */ React16.createElement("span", { className: "text-xl sm:text-2xl font-extrabold text-[#17142E] tabular-nums block" }, formatINR(calcResult.totalInvested))), /* @__PURE__ */ React16.createElement("div", { className: "p-4 bg-[#F3F1FA] rounded-xl border border-[#E6E3F0] space-y-1" }, /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-semibold text-[#5B5875] uppercase tracking-wider block" }, isTa ? "\u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BBF\u0B9F\u0BAA\u0BCD\u0BAA\u0B9F\u0BCD\u0B9F \u0BB5\u0BB0\u0BC1\u0BAE\u0BBE\u0BA9\u0BAE\u0BCD" : "Est. returns"), /* @__PURE__ */ React16.createElement("span", { className: "text-xl sm:text-2xl font-extrabold text-[#0F9D58] tabular-nums block" }, formatINR(calcResult.estReturns))), /* @__PURE__ */ React16.createElement("div", { className: "p-4 bg-[#F3F1FA] rounded-xl border border-[#E6E3F0] space-y-1" }, /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-semibold text-[#5B5875] uppercase tracking-wider block" }, isTa ? "\u0BAE\u0BCA\u0BA4\u0BCD\u0BA4 \u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1" : "Total value"), /* @__PURE__ */ React16.createElement("span", { className: "text-xl sm:text-2xl font-extrabold text-[#4F46E5] tabular-nums block" }, formatINR(calcResult.totalValue)))), /* @__PURE__ */ React16.createElement("div", { className: "p-4 sm:p-5 bg-white rounded-xl border border-[#E6E3F0] flex flex-col sm:flex-row items-center justify-around gap-6 shadow-xs" }, /* @__PURE__ */ React16.createElement("div", { className: "relative w-36 h-36 shrink-0 flex items-center justify-center" }, /* @__PURE__ */ React16.createElement("svg", { className: "w-full h-full -rotate-90", viewBox: "0 0 36 36" }, /* @__PURE__ */ React16.createElement(
+    "circle",
+    {
+      cx: "18",
+      cy: "18",
+      r: "14",
       fill: "none",
-      d: "M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+      stroke: "#C7C4F5",
+      strokeWidth: "4.5"
     }
   ), /* @__PURE__ */ React16.createElement(
-    "path",
+    "circle",
     {
-      className: "text-[#0F172A] dark:text-slate-400 transition-all duration-700",
-      strokeDasharray: investedPct + ", 100",
-      strokeWidth: "3.8",
-      stroke: "currentColor",
+      cx: "18",
+      cy: "18",
+      r: "14",
       fill: "none",
-      d: "M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+      stroke: "#4F46E5",
+      strokeWidth: "4.5",
+      strokeDasharray: `${Math.min(100, Math.max(0, calcResult.donutReturnsPercent * 0.88))} 100`,
+      strokeLinecap: "round",
+      className: "transition-all duration-500"
     }
+  )), /* @__PURE__ */ React16.createElement("div", { className: "absolute inset-0 flex flex-col items-center justify-center text-center select-none" }, /* @__PURE__ */ React16.createElement("span", { className: "text-[11px] font-semibold text-[#5B5875]" }, isTa ? "\u0BB5\u0BB0\u0BC1\u0BAE\u0BBE\u0BA9\u0BAE\u0BCD" : "Returns"), /* @__PURE__ */ React16.createElement("span", { className: "text-lg font-black text-[#17142E] tabular-nums" }, calcResult.donutReturnsPercent, "%"))), /* @__PURE__ */ React16.createElement("div", { className: "space-y-3 w-full sm:w-auto" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-3" }, /* @__PURE__ */ React16.createElement("span", { className: "w-3.5 h-3.5 rounded bg-[#C7C4F5] shrink-0" }), /* @__PURE__ */ React16.createElement("div", { className: "text-xs" }, /* @__PURE__ */ React16.createElement("span", { className: "font-semibold text-[#5B5875]" }, isTa ? "\u0B85\u0B9A\u0BB2\u0BCD \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1:" : "Invested:"), " ", /* @__PURE__ */ React16.createElement("span", { className: "font-bold text-[#17142E]" }, formatINR(calcResult.totalInvested)))), /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-3" }, /* @__PURE__ */ React16.createElement("span", { className: "w-3.5 h-3.5 rounded bg-[#4F46E5] shrink-0" }), /* @__PURE__ */ React16.createElement("div", { className: "text-xs" }, /* @__PURE__ */ React16.createElement("span", { className: "font-semibold text-[#5B5875]" }, isTa ? "\u0B88\u0B9F\u0BCD\u0B9F\u0BBF\u0BAF \u0BB2\u0BBE\u0BAA\u0BAE\u0BCD:" : "Returns:"), " ", /* @__PURE__ */ React16.createElement("span", { className: "font-bold text-[#0F9D58]" }, formatINR(calcResult.estReturns)))))), /* @__PURE__ */ React16.createElement("div", { className: "space-y-4" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-4 border-b border-[#E6E3F0]" }, /* @__PURE__ */ React16.createElement(
+    "button",
+    {
+      type: "button",
+      onClick: () => setSubTab("summary"),
+      className: `pb-2 text-xs font-bold border-b-2 transition-all cursor-pointer ${subTab === "summary" ? "text-[#17142E] border-[#4F46E5]" : "text-[#5B5875] border-transparent hover:text-[#17142E]"}`
+    },
+    isTa ? "\u0B9A\u0BC1\u0BB0\u0BC1\u0B95\u0BCD\u0B95\u0BAE\u0BCD (Summary Chart)" : "Summary"
   ), /* @__PURE__ */ React16.createElement(
-    "path",
+    "button",
     {
-      className: "text-[#16A34A] dark:text-[#4ade80] transition-all duration-700",
-      strokeDasharray: gainPct + ", 100",
-      strokeDashoffset: "-" + investedPct,
-      strokeWidth: "3.8",
-      stroke: "currentColor",
-      fill: "none",
-      d: "M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+      type: "button",
+      onClick: () => setSubTab("breakdown"),
+      className: `pb-2 text-xs font-bold border-b-2 transition-all cursor-pointer ${subTab === "breakdown" ? "text-[#17142E] border-[#4F46E5]" : "text-[#5B5875] border-transparent hover:text-[#17142E]"}`
+    },
+    isTa ? "\u0B86\u0BA3\u0BCD\u0B9F\u0BC1 \u0BB5\u0BBE\u0BB0\u0BBF\u0BAF\u0BBE\u0BA9 \u0BB5\u0BBF\u0BB5\u0BB0\u0BAE\u0BCD" : "Return breakdown, year on year"
+  )), subTab === "summary" && /* @__PURE__ */ React16.createElement(
+    QuickStackedAreaChart,
+    {
+      data: calcResult.yearlyBreakdown,
+      isTa
     }
-  )), /* @__PURE__ */ React16.createElement("div", { className: "absolute flex flex-col items-center justify-center text-center p-1" }, /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-extrabold text-slate-600 dark:text-slate-400 uppercase tracking-tight" }, isTamil ? "\u0BAE\u0BC1\u0BA4\u0BBF\u0BB0\u0BCD\u0BB5\u0BC1" : "Corpus"), /* @__PURE__ */ React16.createElement("span", { className: "text-xs sm:text-sm font-black text-slate-900 dark:text-white font-num leading-tight" }, formatCurrency(fundAmount)), /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-bold text-[#16A34A] dark:text-[#4ade80] bg-emerald-100 dark:bg-emerald-950/60 px-1.5 py-0.2 rounded-full mt-0.5 font-num" }, multiplier, "x"))), /* @__PURE__ */ React16.createElement("div", { className: "space-y-1.5 text-xs font-bold font-sans" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React16.createElement("span", { className: "w-2.5 h-2.5 rounded-full bg-[#0F172A] dark:bg-slate-400" }), /* @__PURE__ */ React16.createElement("span", { className: "text-slate-700 dark:text-slate-300" }, isTamil ? "\u0B85\u0B9A\u0BB2\u0BCD \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1" : "Invested", ": ", investedPct, "%")), /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React16.createElement("span", { className: "w-2.5 h-2.5 rounded-full bg-[#16A34A]" }), /* @__PURE__ */ React16.createElement("span", { className: "text-[#16A34A] dark:text-[#4ade80]" }, isTamil ? "\u0BB5\u0BB3\u0BB0\u0BCD\u0B9A\u0BCD\u0B9A\u0BBF \u0BB2\u0BBE\u0BAA\u0BAE\u0BCD" : "Gains", ": ", gainPct, "%")))), /* @__PURE__ */ React16.createElement("div", { className: "space-y-2" }, /* @__PURE__ */ React16.createElement("div", { className: "p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700/80 flex justify-between items-center text-xs" }, /* @__PURE__ */ React16.createElement("div", null, /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-extrabold uppercase text-slate-600 dark:text-slate-400 tracking-wide block font-sans" }, isTamil ? "1. \u0B85\u0B9A\u0BB2\u0BCD \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 \u0BA4\u0BCA\u0B95\u0BC8" : "1. Principal Capital"), /* @__PURE__ */ React16.createElement("span", { className: "text-xs text-slate-500 font-medium" }, calcMode === "sip" ? `${years * 12} ${isTamil ? "\u0BA4\u0BB5\u0BA3\u0BC8\u0B95\u0BB3\u0BCD" : "installments"}` : isTamil ? "\u0B92\u0BB0\u0BC7 \u0BAE\u0BC1\u0BB1\u0BC8 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1" : "Lumpsum")), /* @__PURE__ */ React16.createElement("div", { className: "text-right" }, /* @__PURE__ */ React16.createElement("span", { className: "text-sm font-bold text-slate-900 dark:text-white font-num" }, formatCurrency(totalInvested)), /* @__PURE__ */ React16.createElement("span", { className: "block text-xs text-slate-600 dark:text-slate-400 font-num" }, "(", investedPct, "%)"))), /* @__PURE__ */ React16.createElement("div", { className: "p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700/80 flex justify-between items-center text-xs" }, /* @__PURE__ */ React16.createElement("div", null, /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-extrabold uppercase text-slate-600 dark:text-slate-400 tracking-wide block font-sans" }, isTamil ? "2. \u0BB5\u0BB3\u0BB0\u0BCD\u0B9A\u0BCD\u0B9A\u0BBF \u0BB2\u0BBE\u0BAA\u0BAE\u0BCD" : "2. Compound Growth"), /* @__PURE__ */ React16.createElement("span", { className: "text-xs text-slate-500 font-medium" }, "@", currentRates.fund, "% CAGR")), /* @__PURE__ */ React16.createElement("div", { className: "text-right" }, /* @__PURE__ */ React16.createElement("span", { className: "text-sm font-bold text-[#16A34A] dark:text-[#4ade80] font-num" }, "+", formatCurrency(estimatedGain)), /* @__PURE__ */ React16.createElement("span", { className: "block text-xs text-[#16A34A] dark:text-[#4ade80] font-num" }, "(", gainPct, "%)"))), /* @__PURE__ */ React16.createElement("div", { className: "p-2.5 rounded-xl bg-gradient-to-r from-[#0F172A] to-[#1E293B] text-white border border-slate-800 flex justify-between items-center shadow-md" }, /* @__PURE__ */ React16.createElement("div", null, /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-extrabold uppercase text-emerald-400 tracking-wide block font-sans" }, isTamil ? "3. \u0B8E\u0BA4\u0BBF\u0BB0\u0BCD\u0BAA\u0BBE\u0BB0\u0BCD\u0B95\u0BCD\u0B95\u0BC1\u0BAE\u0BCD \u0BAE\u0BC1\u0BA4\u0BBF\u0BB0\u0BCD\u0BB5\u0BC1 \u0BA8\u0BBF\u0BA4\u0BBF" : "3. Projected Total Corpus"), /* @__PURE__ */ React16.createElement("span", { className: "text-xs text-slate-300 font-medium" }, timeframe, " ", isTamil ? "\u0B95\u0BBE\u0BB2 \u0BAE\u0BC1\u0B9F\u0BBF\u0BB5\u0BBF\u0BB2\u0BCD" : "horizon value")), /* @__PURE__ */ React16.createElement("div", { className: "text-right" }, /* @__PURE__ */ React16.createElement("span", { className: "text-sm sm:text-base font-extrabold text-white font-num" }, formatCurrency(fundAmount)), /* @__PURE__ */ React16.createElement("span", { className: "block text-xs font-bold text-emerald-300 font-num" }, "+", (estimatedGain / (totalInvested || 1) * 100).toFixed(1), "% ", isTamil ? "\u0BB5\u0BB3\u0BB0\u0BCD\u0B9A\u0BCD\u0B9A\u0BBF" : "net return"))))) : (
-    /* VIEW 2: COMPACT YEARLY FINANCIAL STATEMENT TABLE */
-    /* @__PURE__ */ React16.createElement("div", { className: "overflow-x-auto max-h-[260px] overflow-y-auto rounded-xl border border-slate-200 dark:border-slate-800 shadow-inner animate-fadeIn" }, /* @__PURE__ */ React16.createElement("table", { className: "w-full text-left text-xs" }, /* @__PURE__ */ React16.createElement("thead", { className: "sticky top-0 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-extrabold border-b border-slate-200 dark:border-slate-700 font-sans" }, /* @__PURE__ */ React16.createElement("tr", null, /* @__PURE__ */ React16.createElement("th", { className: "p-2" }, isTamil ? "\u0B86\u0BA3\u0BCD\u0B9F\u0BC1" : "Period"), /* @__PURE__ */ React16.createElement("th", { className: "p-2" }, isTamil ? "\u0B85\u0B9A\u0BB2\u0BCD" : "Capital"), /* @__PURE__ */ React16.createElement("th", { className: "p-2" }, isTamil ? "\u0BB2\u0BBE\u0BAA\u0BAE\u0BCD" : "Growth"), /* @__PURE__ */ React16.createElement("th", { className: "p-2 truncate" }, selectedFundName), /* @__PURE__ */ React16.createElement("th", { className: "p-2" }, isTamil ? "\u0BAE\u0B9F\u0B99\u0BCD\u0B95\u0BC1" : "Multiple"))), /* @__PURE__ */ React16.createElement("tbody", { className: "divide-y divide-slate-100 dark:divide-slate-800 font-num" }, yearlySchedule.map((d) => /* @__PURE__ */ React16.createElement("tr", { key: d.year, className: "hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors" }, /* @__PURE__ */ React16.createElement("td", { className: "p-2 font-bold text-slate-900 dark:text-white font-sans" }, "Y", d.year), /* @__PURE__ */ React16.createElement("td", { className: "p-2 text-slate-600 dark:text-slate-400" }, formatCurrency(d.invested)), /* @__PURE__ */ React16.createElement("td", { className: "p-2 text-[#16A34A] dark:text-[#4ade80] font-semibold" }, "+", formatCurrency(d.gain)), /* @__PURE__ */ React16.createElement("td", { className: "p-2 font-bold text-slate-900 dark:text-white" }, formatCurrency(d.fundValue)), /* @__PURE__ */ React16.createElement("td", { className: "p-2" }, /* @__PURE__ */ React16.createElement("span", { className: "px-1.5 py-0.2 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400" }, d.multiplier, "x")))))))
-  )), /* @__PURE__ */ React16.createElement("p", { className: "text-xs text-slate-600 dark:text-slate-400 font-sans leading-tight pt-1" }, "**Past performance may or may not be sustained in future. For performance in SEBI format refer scheme returns.")))));
+  ), subTab === "breakdown" && /* @__PURE__ */ React16.createElement("div", { className: "overflow-x-auto rounded-xl border border-[#E6E3F0]" }, /* @__PURE__ */ React16.createElement("table", { className: "w-full text-left text-xs" }, /* @__PURE__ */ React16.createElement("thead", { className: "bg-[#F3F1FA] text-[11px] uppercase font-bold text-[#5B5875] border-b border-[#E6E3F0]" }, /* @__PURE__ */ React16.createElement("tr", null, /* @__PURE__ */ React16.createElement("th", { className: "px-3 py-2.5 whitespace-nowrap" }, isTa ? "\u0B86\u0BA3\u0BCD\u0B9F\u0BC1" : "YEAR"), /* @__PURE__ */ React16.createElement("th", { className: "px-3 py-2.5 whitespace-nowrap text-right" }, mode === "lumpsum" ? isTa ? "\u0BB5\u0B95\u0BC8" : "TYPE" : isTa ? "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0BA4\u0BCD \u0BA4\u0BCA\u0B95\u0BC8" : "PERIODIC AMOUNT"), /* @__PURE__ */ React16.createElement("th", { className: "px-3 py-2.5 whitespace-nowrap text-right" }, isTa ? "\u0B87\u0BA8\u0BCD\u0BA4 \u0B86\u0BA3\u0BCD\u0B9F\u0BC1 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1" : "INVESTED THIS YEAR"), /* @__PURE__ */ React16.createElement("th", { className: "px-3 py-2.5 whitespace-nowrap text-right" }, isTa ? "\u0BB5\u0BB0\u0BC1\u0BAE\u0BBE\u0BA9\u0BAE\u0BCD" : "RETURN EARNED"), /* @__PURE__ */ React16.createElement("th", { className: "px-3 py-2.5 whitespace-nowrap text-right" }, isTa ? "\u0BAE\u0BCA\u0BA4\u0BCD\u0BA4 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1" : "CUMULATIVE INVESTED"), /* @__PURE__ */ React16.createElement("th", { className: "px-3 py-2.5 whitespace-nowrap text-right" }, isTa ? "\u0B86\u0BA3\u0BCD\u0B9F\u0BC1 \u0B87\u0BB1\u0BC1\u0BA4\u0BBF \u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1" : "BALANCE AT YEAR END"))), /* @__PURE__ */ React16.createElement("tbody", { className: "divide-y divide-[#E6E3F0]" }, calcResult.yearlyBreakdown.map((row, idx) => /* @__PURE__ */ React16.createElement("tr", { key: row.year, className: idx % 2 === 1 ? "bg-[#FBFAFE]" : "bg-white" }, /* @__PURE__ */ React16.createElement("td", { className: "px-3 py-2.5 font-bold text-[#17142E] whitespace-nowrap" }, isTa ? `${row.year}-\u0BAE\u0BCD \u0B86\u0BA3\u0BCD\u0B9F\u0BC1` : `Year ${row.year}`), /* @__PURE__ */ React16.createElement("td", { className: "px-3 py-2.5 text-right font-medium text-[#5B5875] whitespace-nowrap" }, mode === "lumpsum" ? isTa ? "\u0BAE\u0BCA\u0BA4\u0BCD\u0BA4 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1" : "Lumpsum" : formatINR(row.periodicAmount)), /* @__PURE__ */ React16.createElement("td", { className: "px-3 py-2.5 text-right font-medium text-[#17142E] whitespace-nowrap" }, formatINR(row.investedThisYear)), /* @__PURE__ */ React16.createElement("td", { className: "px-3 py-2.5 text-right font-bold text-[#0F9D58] whitespace-nowrap" }, "+", formatINR(row.returnEarned)), /* @__PURE__ */ React16.createElement("td", { className: "px-3 py-2.5 text-right font-medium text-[#5B5875] whitespace-nowrap" }, formatINR(row.cumulativeInvested)), /* @__PURE__ */ React16.createElement("td", { className: "px-3 py-2.5 text-right font-bold text-[#4F46E5] whitespace-nowrap" }, formatINR(row.balanceEnd)))))))), /* @__PURE__ */ React16.createElement("p", { className: "text-[12px] text-[#8E8BA6] leading-relaxed pt-2" }, isTa ? "\u0BB5\u0BBF\u0BB3\u0B95\u0BCD\u0B95\u0B95\u0BCD \u0B95\u0BBE\u0B9F\u0BCD\u0B9A\u0BBF \u0BAE\u0B9F\u0BCD\u0B9F\u0BC1\u0BAE\u0BC7. \u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BC0\u0B9F\u0BC1 \u0BA8\u0BBF\u0BB2\u0BC8\u0BAF\u0BBE\u0BA9 \u0BB5\u0BB0\u0BC1\u0BAE\u0BBE\u0BA9 \u0BB5\u0BBF\u0B95\u0BBF\u0BA4\u0BA4\u0BCD\u0BA4\u0BBF\u0BB2\u0BCD \u0B9A\u0BC6\u0BAF\u0BCD\u0BAF\u0BAA\u0BCD\u0BAA\u0B9F\u0BCD\u0B9F\u0BC1\u0BB3\u0BCD\u0BB3\u0BA4\u0BC1. \u0BAE\u0BBF\u0BAF\u0BC2\u0B9A\u0BCD\u0B9A\u0BC1\u0BB5\u0BB2\u0BCD \u0B83\u0BAA\u0BA3\u0BCD\u0B9F\u0BCD \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1\u0B95\u0BB3\u0BCD \u0B9A\u0BA8\u0BCD\u0BA4\u0BC8 \u0B85\u0BAA\u0BBE\u0BAF\u0B99\u0BCD\u0B95\u0BB3\u0BC1\u0B95\u0BCD\u0B95\u0BC1 \u0B89\u0B9F\u0BCD\u0BAA\u0B9F\u0BCD\u0B9F\u0BB5\u0BC8, \u0BA4\u0BBF\u0B9F\u0BCD\u0B9F\u0BAE\u0BCD \u0BA4\u0BCA\u0B9F\u0BB0\u0BCD\u0BAA\u0BBE\u0BA9 \u0B85\u0BA9\u0BC8\u0BA4\u0BCD\u0BA4\u0BC1 \u0B86\u0BB5\u0BA3\u0B99\u0BCD\u0B95\u0BB3\u0BC8\u0BAF\u0BC1\u0BAE\u0BCD \u0B95\u0BB5\u0BA9\u0BAE\u0BBE\u0B95\u0BAA\u0BCD \u0BAA\u0B9F\u0BBF\u0B95\u0BCD\u0B95\u0BB5\u0BC1\u0BAE\u0BCD." : "Illustration only, at an assumed constant rate of return. Mutual fund investments are subject to market risks, read all scheme related documents carefully."))));
 }
-var SipCalculator_default;
+function QuickStackedAreaChart({ data, isTa }) {
+  if (!data || data.length === 0) {
+    return /* @__PURE__ */ React16.createElement("div", { className: "h-56 bg-white rounded-xl border border-[#E6E3F0] flex items-center justify-center text-xs text-[#8E8BA6]" }, isTa ? "\u0BB5\u0BBF\u0BB5\u0BB0\u0B99\u0BCD\u0B95\u0BB3\u0BCD \u0B87\u0BB2\u0BCD\u0BB2\u0BC8" : "No chart data");
+  }
+  const [hoverIndex, setHoverIndex] = useState11(null);
+  const maxVal = Math.max(...data.map((d) => d.balanceEnd), 1e3);
+  const width = 600;
+  const height = 220;
+  const padLeft = 45;
+  const padRight = 20;
+  const padTop = 20;
+  const padBottom = 30;
+  const plotW = width - padLeft - padRight;
+  const plotH = height - padTop - padBottom;
+  const points = data.map((d, i) => {
+    const x = padLeft + i / Math.max(1, data.length - 1) * plotW;
+    const yTotal = padTop + plotH - d.balanceEnd / maxVal * plotH;
+    const yInvested = padTop + plotH - d.cumulativeInvested / maxVal * plotH;
+    return { x, yTotal, yInvested, ...d };
+  });
+  const totalAreaPath = `
+    M ${points[0].x} ${padTop + plotH}
+    ${points.map((p) => `L ${p.x} ${p.yTotal}`).join(" ")}
+    L ${points[points.length - 1].x} ${padTop + plotH}
+    Z
+  `;
+  const investedAreaPath = `
+    M ${points[0].x} ${padTop + plotH}
+    ${points.map((p) => `L ${p.x} ${p.yInvested}`).join(" ")}
+    L ${points[points.length - 1].x} ${padTop + plotH}
+    Z
+  `;
+  const hoveredItem = hoverIndex !== null ? points[hoverIndex] : null;
+  return /* @__PURE__ */ React16.createElement("div", { className: "relative bg-white rounded-xl border border-[#E6E3F0] p-3 sm:p-4 shadow-xs" }, /* @__PURE__ */ React16.createElement(
+    "svg",
+    {
+      className: "w-full h-auto overflow-visible select-none",
+      viewBox: `0 0 ${width} ${height}`,
+      onMouseLeave: () => setHoverIndex(null)
+    },
+    [0, 0.25, 0.5, 0.75, 1].map((frac, idx) => {
+      const y = padTop + plotH - frac * plotH;
+      const val = maxVal * frac;
+      return /* @__PURE__ */ React16.createElement("g", { key: idx }, /* @__PURE__ */ React16.createElement(
+        "line",
+        {
+          x1: padLeft,
+          y1: y,
+          x2: width - padRight,
+          y2: y,
+          stroke: "#EEEDF4",
+          strokeWidth: "1"
+        }
+      ), /* @__PURE__ */ React16.createElement(
+        "text",
+        {
+          x: padLeft - 6,
+          y: y + 3,
+          textAnchor: "end",
+          className: "text-[9px] fill-[#8E8BA6] font-medium"
+        },
+        formatINR(val, true)
+      ));
+    }),
+    /* @__PURE__ */ React16.createElement("path", { d: totalAreaPath, fill: "#4F46E5", fillOpacity: "0.85" }),
+    /* @__PURE__ */ React16.createElement("path", { d: investedAreaPath, fill: "#C7C4F5", fillOpacity: "0.9" }),
+    /* @__PURE__ */ React16.createElement(
+      "polyline",
+      {
+        fill: "none",
+        stroke: "#4F46E5",
+        strokeWidth: "2",
+        points: points.map((p) => `${p.x},${p.yTotal}`).join(" ")
+      }
+    ),
+    /* @__PURE__ */ React16.createElement(
+      "polyline",
+      {
+        fill: "none",
+        stroke: "#7A74D4",
+        strokeWidth: "1.5",
+        strokeDasharray: "3 3",
+        points: points.map((p) => `${p.x},${p.yInvested}`).join(" ")
+      }
+    ),
+    points.map((p, idx) => {
+      const isEvenYear = p.year % 2 === 0 || p.year === 1 || p.year === data.length;
+      if (!isEvenYear && data.length > 8) return null;
+      return /* @__PURE__ */ React16.createElement(
+        "text",
+        {
+          key: p.year,
+          x: p.x,
+          y: height - 8,
+          textAnchor: "middle",
+          className: "text-[10px] fill-[#8E8BA6] font-bold"
+        },
+        "Y",
+        p.year
+      );
+    }),
+    points.map((p, idx) => /* @__PURE__ */ React16.createElement(
+      "rect",
+      {
+        key: `hit-${idx}`,
+        x: p.x - plotW / data.length / 2,
+        y: padTop,
+        width: plotW / data.length,
+        height: plotH,
+        fill: "transparent",
+        className: "cursor-pointer",
+        onMouseEnter: () => setHoverIndex(idx),
+        onTouchStart: () => setHoverIndex(idx)
+      }
+    )),
+    hoveredItem && /* @__PURE__ */ React16.createElement("g", null, /* @__PURE__ */ React16.createElement(
+      "line",
+      {
+        x1: hoveredItem.x,
+        y1: padTop,
+        x2: hoveredItem.x,
+        y2: padTop + plotH,
+        stroke: "#17142E",
+        strokeWidth: "1",
+        strokeDasharray: "2 2"
+      }
+    ), /* @__PURE__ */ React16.createElement("circle", { cx: hoveredItem.x, cy: hoveredItem.yTotal, r: "4", fill: "#4F46E5", stroke: "#FFFFFF", strokeWidth: "2" }), /* @__PURE__ */ React16.createElement("circle", { cx: hoveredItem.x, cy: hoveredItem.yInvested, r: "4", fill: "#C7C4F5", stroke: "#FFFFFF", strokeWidth: "2" }))
+  ), hoveredItem && /* @__PURE__ */ React16.createElement(
+    "div",
+    {
+      className: "absolute top-4 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur-md border border-[#E6E3F0] px-3.5 py-2 rounded-xl shadow-md text-xs pointer-events-none z-10 flex items-center gap-4"
+    },
+    /* @__PURE__ */ React16.createElement("span", { className: "font-bold text-[#17142E]" }, isTa ? `${hoveredItem.year}-\u0BAE\u0BCD \u0B86\u0BA3\u0BCD\u0B9F\u0BC1` : `Year ${hoveredItem.year}`),
+    /* @__PURE__ */ React16.createElement("div", null, /* @__PURE__ */ React16.createElement("span", { className: "text-[#5B5875] text-[11px] block" }, isTa ? "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1" : "Invested", ":"), /* @__PURE__ */ React16.createElement("span", { className: "font-bold text-[#17142E]" }, formatINR(hoveredItem.cumulativeInvested))),
+    /* @__PURE__ */ React16.createElement("div", null, /* @__PURE__ */ React16.createElement("span", { className: "text-[#5B5875] text-[11px] block" }, isTa ? "\u0BAE\u0BCA\u0BA4\u0BCD\u0BA4 \u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1" : "Total", ":"), /* @__PURE__ */ React16.createElement("span", { className: "font-extrabold text-[#4F46E5]" }, formatINR(hoveredItem.balanceEnd)))
+  ));
+}
+function StepUpCalculatorTab({ isTa }) {
+  const [monthlySip, setMonthlySip] = useState11(1e4);
+  const [stepUpPercent, setStepUpPercent] = useState11(10);
+  const [assumedReturn, setAssumedReturn] = useState11(12);
+  const [periodYears, setPeriodYears] = useState11(15);
+  const [lumpsum, setLumpsum] = useState11(0);
+  const outcome = useMemo3(() => {
+    const N = periodYears * 12;
+    const r = assumedReturn / 100 / 12;
+    let totalInvested = 0;
+    let totalFV = 0;
+    const yearlyData = [];
+    const monthlySchedule = [];
+    for (let t = 0; t < N; t++) {
+      const yearIdx = Math.floor(t / 12);
+      const P_t = monthlySip * Math.pow(1 + stepUpPercent / 100, yearIdx);
+      totalInvested += P_t;
+      totalFV += P_t * Math.pow(1 + r, N - t);
+      monthlySchedule.push(P_t);
+    }
+    if (lumpsum > 0) {
+      totalInvested += lumpsum;
+      totalFV += lumpsum * Math.pow(1 + assumedReturn / 100, periodYears);
+    }
+    let runningInvested = lumpsum;
+    for (let y = 1; y <= periodYears; y++) {
+      const endMonth = y * 12;
+      let curInvested = lumpsum;
+      let curFV = lumpsum > 0 ? lumpsum * Math.pow(1 + assumedReturn / 100, y) : 0;
+      for (let i = 0; i < endMonth; i++) {
+        curInvested += monthlySchedule[i];
+        curFV += monthlySchedule[i] * Math.pow(1 + r, endMonth - i);
+      }
+      yearlyData.push({
+        year: y,
+        invested: Math.round(curInvested),
+        projectedValue: Math.round(curFV)
+      });
+    }
+    const investedRounded = Math.round(totalInvested);
+    const valueRounded = Math.round(totalFV);
+    const gainsRounded = Math.max(0, valueRounded - investedRounded);
+    return {
+      totalInvested: investedRounded,
+      estimatedGains: gainsRounded,
+      projectedValue: valueRounded,
+      yearlyData
+    };
+  }, [monthlySip, stepUpPercent, assumedReturn, periodYears, lumpsum]);
+  return /* @__PURE__ */ React16.createElement("div", { className: "calc-card p-5 sm:p-7 space-y-7" }, /* @__PURE__ */ React16.createElement("div", { className: "pb-4 border-b border-[#E6E3F0]" }, /* @__PURE__ */ React16.createElement("h2", { className: "text-lg font-bold text-[#17142E]" }, isTa ? "SIP \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 \u0BB5\u0BB0\u0BC1\u0BAE\u0BBE\u0BA9\u0B95\u0BCD \u0B95\u0BBE\u0BB2\u0BCD\u0B95\u0BC1\u0BB2\u0BC7\u0B9F\u0BCD\u0B9F\u0BB0\u0BCD" : "SIP Investment Return Calculator"), /* @__PURE__ */ React16.createElement("p", { className: "text-xs text-[#5B5875] mt-0.5" }, isTa ? "\u0B86\u0BA3\u0BCD\u0B9F\u0BC1 \u0BB8\u0BCD\u0B9F\u0BC6\u0BAA\u0BCD-\u0B85\u0BAA\u0BCD \u0B89\u0B9F\u0BA9\u0BCD \u0BAE\u0BBE\u0BA4\u0BBE\u0BA8\u0BCD\u0BA4\u0BBF\u0BB0 SIP \u0B8E\u0BB5\u0BCD\u0BB5\u0BBE\u0BB1\u0BC1 \u0BB5\u0BB3\u0BB0\u0BCD\u0B95\u0BBF\u0BB1\u0BA4\u0BC1 \u0B8E\u0BA9\u0BCD\u0BAA\u0BA4\u0BC8\u0B95\u0BCD \u0B95\u0BBE\u0BA3 \u0BB8\u0BCD\u0BB2\u0BC8\u0B9F\u0BB0\u0BCD\u0B95\u0BB3\u0BC8 \u0BA8\u0B95\u0BB0\u0BCD\u0BA4\u0BCD\u0BA4\u0BB5\u0BC1\u0BAE\u0BCD. \u0BAA\u0BC1\u0BB3\u0BCD\u0BB3\u0BBF\u0BB5\u0BBF\u0BB5\u0BB0\u0B99\u0BCD\u0B95\u0BB3\u0BCD \u0B85\u0BA9\u0BC1\u0BAE\u0BBE\u0BA9\u0BBF\u0B95\u0BCD\u0B95\u0BAA\u0BCD\u0BAA\u0B9F\u0BCD\u0B9F \u0BB5\u0BBF\u0B95\u0BBF\u0BA4\u0BA4\u0BCD\u0BA4\u0BBF\u0BB2\u0BCD \u0BB5\u0BBF\u0BB3\u0B95\u0BCD\u0B95\u0BAA\u0BCD\u0BAA\u0B9F\u0BAE\u0BBE\u0B95\u0BC1\u0BAE\u0BCD." : "Move the sliders to see how a monthly SIP with an annual step-up can grow. Figures are illustrative at an assumed rate.")), /* @__PURE__ */ React16.createElement("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-8 items-start" }, /* @__PURE__ */ React16.createElement("div", { className: "lg:col-span-6 space-y-5" }, /* @__PURE__ */ React16.createElement("div", { className: "space-y-1.5" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center justify-between text-xs font-semibold text-[#5B5875]" }, /* @__PURE__ */ React16.createElement("span", null, isTa ? "\u0BAE\u0BBE\u0BA4\u0BBE\u0BA8\u0BCD\u0BA4\u0BBF\u0BB0 SIP" : "Monthly SIP"), /* @__PURE__ */ React16.createElement("span", { className: "text-sm font-extrabold text-[#17142E]" }, formatINR(monthlySip))), /* @__PURE__ */ React16.createElement(
+    "input",
+    {
+      type: "range",
+      min: "500",
+      max: "200000",
+      step: "500",
+      value: monthlySip,
+      onChange: (e) => setMonthlySip(Number(e.target.value)),
+      className: "calc-range"
+    }
+  ), /* @__PURE__ */ React16.createElement("div", { className: "flex justify-between text-[11px] text-[#8E8BA6]" }, /* @__PURE__ */ React16.createElement("span", null, "\u20B9500"), /* @__PURE__ */ React16.createElement("span", null, "\u20B92,00,000"))), /* @__PURE__ */ React16.createElement("div", { className: "space-y-1.5" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center justify-between text-xs font-semibold text-[#5B5875]" }, /* @__PURE__ */ React16.createElement("span", null, isTa ? "\u0B86\u0BA3\u0BCD\u0B9F\u0BC1 \u0BB8\u0BCD\u0B9F\u0BC6\u0BAA\u0BCD-\u0B85\u0BAA\u0BCD (%)" : "Annual step-up"), /* @__PURE__ */ React16.createElement("span", { className: "text-sm font-extrabold text-[#17142E]" }, stepUpPercent, "%")), /* @__PURE__ */ React16.createElement(
+    "input",
+    {
+      type: "range",
+      min: "0",
+      max: "25",
+      step: "1",
+      value: stepUpPercent,
+      onChange: (e) => setStepUpPercent(Number(e.target.value)),
+      className: "calc-range"
+    }
+  ), /* @__PURE__ */ React16.createElement("div", { className: "flex justify-between text-[11px] text-[#8E8BA6]" }, /* @__PURE__ */ React16.createElement("span", null, "0%"), /* @__PURE__ */ React16.createElement("span", null, "25%"))), /* @__PURE__ */ React16.createElement("div", { className: "space-y-1.5" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center justify-between text-xs font-semibold text-[#5B5875]" }, /* @__PURE__ */ React16.createElement("span", null, isTa ? "\u0B8E\u0BA4\u0BBF\u0BB0\u0BCD\u0BAA\u0BBE\u0BB0\u0BCD\u0B95\u0BCD\u0B95\u0BAA\u0BCD\u0BAA\u0B9F\u0BC1\u0BAE\u0BCD \u0B86\u0BA3\u0BCD\u0B9F\u0BC1 \u0BB5\u0BB0\u0BC1\u0BAE\u0BBE\u0BA9\u0BAE\u0BCD (%)" : "Assumed return p.a."), /* @__PURE__ */ React16.createElement("span", { className: "text-sm font-extrabold text-[#17142E]" }, assumedReturn, "%")), /* @__PURE__ */ React16.createElement(
+    "input",
+    {
+      type: "range",
+      min: "4",
+      max: "18",
+      step: "0.5",
+      value: assumedReturn,
+      onChange: (e) => setAssumedReturn(Number(e.target.value)),
+      className: "calc-range"
+    }
+  ), /* @__PURE__ */ React16.createElement("div", { className: "flex justify-between text-[11px] text-[#8E8BA6]" }, /* @__PURE__ */ React16.createElement("span", null, "4%"), /* @__PURE__ */ React16.createElement("span", null, "18%"))), /* @__PURE__ */ React16.createElement("div", { className: "space-y-1.5" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center justify-between text-xs font-semibold text-[#5B5875]" }, /* @__PURE__ */ React16.createElement("span", null, isTa ? "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BBE\u0BB2\u0BAE\u0BCD" : "Investment period"), /* @__PURE__ */ React16.createElement("span", { className: "text-sm font-extrabold text-[#17142E]" }, periodYears, " ", isTa ? "\u0B86\u0BA3\u0BCD\u0B9F\u0BC1\u0B95\u0BB3\u0BCD" : "yrs")), /* @__PURE__ */ React16.createElement(
+    "input",
+    {
+      type: "range",
+      min: "1",
+      max: "40",
+      step: "1",
+      value: periodYears,
+      onChange: (e) => setPeriodYears(Number(e.target.value)),
+      className: "calc-range"
+    }
+  ), /* @__PURE__ */ React16.createElement("div", { className: "flex justify-between text-[11px] text-[#8E8BA6]" }, /* @__PURE__ */ React16.createElement("span", null, "1 ", isTa ? "\u0B86\u0BA3\u0BCD\u0B9F\u0BC1" : "yr"), /* @__PURE__ */ React16.createElement("span", null, "40 ", isTa ? "\u0B86\u0BA3\u0BCD\u0B9F\u0BC1\u0B95\u0BB3\u0BCD" : "yrs"))), /* @__PURE__ */ React16.createElement("div", { className: "space-y-1.5" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center justify-between text-xs font-semibold text-[#5B5875]" }, /* @__PURE__ */ React16.createElement("span", null, isTa ? "\u0B92\u0BB0\u0BC1 \u0BAE\u0BC1\u0BB1\u0BC8 \u0BAE\u0BCA\u0BA4\u0BCD\u0BA4 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1 (\u0BB5\u0BBF\u0BB0\u0BC1\u0BAA\u0BCD\u0BAA\u0BAE\u0BBE\u0BA9\u0BA4\u0BC1)" : "One-time lumpsum"), /* @__PURE__ */ React16.createElement("span", { className: "text-sm font-extrabold text-[#17142E]" }, formatINR(lumpsum))), /* @__PURE__ */ React16.createElement(
+    "input",
+    {
+      type: "range",
+      min: "0",
+      max: "5000000",
+      step: "10000",
+      value: lumpsum,
+      onChange: (e) => setLumpsum(Number(e.target.value)),
+      className: "calc-range"
+    }
+  ), /* @__PURE__ */ React16.createElement("div", { className: "flex justify-between text-[11px] text-[#8E8BA6]" }, /* @__PURE__ */ React16.createElement("span", null, "\u20B90"), /* @__PURE__ */ React16.createElement("span", null, "\u20B950,00,000")))), /* @__PURE__ */ React16.createElement("div", { className: "lg:col-span-6 space-y-6" }, /* @__PURE__ */ React16.createElement("div", { className: "space-y-3" }, /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-bold uppercase tracking-wider text-[#5B5875] block" }, isTa ? "\u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BBF\u0B9F\u0BAA\u0BCD\u0BAA\u0B9F\u0BCD\u0B9F \u0BB5\u0BB3\u0BB0\u0BCD\u0B9A\u0BCD\u0B9A\u0BBF \u0BAE\u0BC1\u0B9F\u0BBF\u0BB5\u0BC1" : "Projected outcome"), /* @__PURE__ */ React16.createElement("div", { className: "grid grid-cols-1 sm:grid-cols-3 gap-3" }, /* @__PURE__ */ React16.createElement("div", { className: "p-3.5 bg-[#F3F1FA] rounded-xl border border-[#E6E3F0] space-y-1" }, /* @__PURE__ */ React16.createElement("span", { className: "text-[11px] font-semibold text-[#5B5875] block" }, isTa ? "\u0BAE\u0BCA\u0BA4\u0BCD\u0BA4 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1" : "Total invested"), /* @__PURE__ */ React16.createElement("span", { className: "text-lg sm:text-xl font-extrabold text-[#17142E] tabular-nums block" }, formatINR(outcome.totalInvested, true))), /* @__PURE__ */ React16.createElement("div", { className: "p-3.5 bg-[#F3F1FA] rounded-xl border border-[#E6E3F0] space-y-1" }, /* @__PURE__ */ React16.createElement("span", { className: "text-[11px] font-semibold text-[#5B5875] block" }, isTa ? "\u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BBF\u0B9F\u0BAA\u0BCD\u0BAA\u0B9F\u0BCD\u0B9F \u0BB2\u0BBE\u0BAA\u0BAE\u0BCD" : "Estimated gains"), /* @__PURE__ */ React16.createElement("span", { className: "text-lg sm:text-xl font-extrabold text-[#0F9D58] tabular-nums block" }, formatINR(outcome.estimatedGains, true))), /* @__PURE__ */ React16.createElement("div", { className: "p-3.5 bg-[#F3F1FA] rounded-xl border border-[#E6E3F0] space-y-1" }, /* @__PURE__ */ React16.createElement("span", { className: "text-[11px] font-semibold text-[#5B5875] block" }, isTa ? "\u0B8E\u0BA4\u0BBF\u0BB0\u0BCD\u0BAA\u0BBE\u0BB0\u0BCD\u0B95\u0BCD\u0B95\u0BAA\u0BCD\u0BAA\u0B9F\u0BC1\u0BAE\u0BCD \u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1" : "Projected value"), /* @__PURE__ */ React16.createElement("span", { className: "text-lg sm:text-xl font-extrabold text-[#4F46E5] tabular-nums block" }, formatINR(outcome.projectedValue, true))))), /* @__PURE__ */ React16.createElement(StepUpLineChart, { data: outcome.yearlyData, isTa }), /* @__PURE__ */ React16.createElement("p", { className: "text-[12px] text-[#8E8BA6] leading-relaxed" }, isTa ? "\u0BB5\u0BBF\u0BB3\u0B95\u0BCD\u0B95\u0B95\u0BCD \u0B95\u0BBE\u0B9F\u0BCD\u0B9A\u0BBF \u0BAE\u0B9F\u0BCD\u0B9F\u0BC1\u0BAE\u0BC7. \u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BC0\u0B9F\u0BC1 \u0BA8\u0BBF\u0BB2\u0BC8\u0BAF\u0BBE\u0BA9 \u0BB5\u0BB0\u0BC1\u0BAE\u0BBE\u0BA9 \u0BB5\u0BBF\u0B95\u0BBF\u0BA4\u0BA4\u0BCD\u0BA4\u0BBF\u0BB2\u0BCD \u0B9A\u0BC6\u0BAF\u0BCD\u0BAF\u0BAA\u0BCD\u0BAA\u0B9F\u0BCD\u0B9F\u0BC1\u0BB3\u0BCD\u0BB3\u0BA4\u0BC1. \u0BAE\u0BBF\u0BAF\u0BC2\u0B9A\u0BCD\u0B9A\u0BC1\u0BB5\u0BB2\u0BCD \u0B83\u0BAA\u0BA3\u0BCD\u0B9F\u0BCD \u0BB5\u0BB0\u0BC1\u0BAE\u0BBE\u0BA9\u0BAE\u0BCD \u0B9A\u0BA8\u0BCD\u0BA4\u0BC8 \u0B9A\u0BBE\u0BB0\u0BCD\u0BA8\u0BCD\u0BA4\u0BA4\u0BC1 \u0BAE\u0BB1\u0BCD\u0BB1\u0BC1\u0BAE\u0BCD \u0B86\u0BA3\u0BCD\u0B9F\u0BC1\u0BA4\u0BCB\u0BB1\u0BC1\u0BAE\u0BCD \u0BAE\u0BBE\u0BB1\u0BC1\u0BAA\u0B9F\u0BC1\u0BAE\u0BCD." : "Illustration only, at an assumed constant return. Mutual fund returns are market-linked and will vary year to year."))));
+}
+function StepUpLineChart({ data, isTa }) {
+  if (!data || data.length === 0) return null;
+  const maxVal = Math.max(...data.map((d) => d.projectedValue), 1e3);
+  const width = 500;
+  const height = 200;
+  const padLeft = 45;
+  const padRight = 20;
+  const padTop = 20;
+  const padBottom = 30;
+  const plotW = width - padLeft - padRight;
+  const plotH = height - padTop - padBottom;
+  const points = data.map((d, i) => {
+    const x = padLeft + i / Math.max(1, data.length - 1) * plotW;
+    const yVal = padTop + plotH - d.projectedValue / maxVal * plotH;
+    const yInv = padTop + plotH - d.invested / maxVal * plotH;
+    return { x, yVal, yInv, ...d };
+  });
+  return /* @__PURE__ */ React16.createElement("div", { className: "bg-white rounded-xl border border-[#E6E3F0] p-3 sm:p-4 shadow-xs" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center justify-between pb-2 text-[11px]" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-4" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-1.5" }, /* @__PURE__ */ React16.createElement("span", { className: "w-2.5 h-2.5 rounded-full bg-[#4F46E5]" }), /* @__PURE__ */ React16.createElement("span", { className: "font-bold text-[#17142E]" }, isTa ? "\u0B8E\u0BA4\u0BBF\u0BB0\u0BCD\u0BAA\u0BBE\u0BB0\u0BCD\u0B95\u0BCD\u0B95\u0BAA\u0BCD\u0BAA\u0B9F\u0BC1\u0BAE\u0BCD \u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1" : "Projected value")), /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-1.5" }, /* @__PURE__ */ React16.createElement("span", { className: "w-2.5 h-2.5 rounded-full bg-[#C7C4F5]" }), /* @__PURE__ */ React16.createElement("span", { className: "font-medium text-[#5B5875]" }, isTa ? "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1 \u0B9A\u0BC6\u0BAF\u0BCD\u0BA4 \u0BA4\u0BCA\u0B95\u0BC8" : "Amount invested")))), /* @__PURE__ */ React16.createElement("svg", { className: "w-full h-auto overflow-visible select-none", viewBox: `0 0 ${width} ${height}` }, [0, 0.33, 0.66, 1].map((frac, idx) => {
+    const y = padTop + plotH - frac * plotH;
+    return /* @__PURE__ */ React16.createElement("g", { key: idx }, /* @__PURE__ */ React16.createElement("line", { x1: padLeft, y1: y, x2: width - padRight, y2: y, stroke: "#EEEDF4", strokeWidth: "1" }), /* @__PURE__ */ React16.createElement("text", { x: padLeft - 6, y: y + 3, textAnchor: "end", className: "text-[9px] fill-[#8E8BA6]" }, formatINR(maxVal * frac, true)));
+  }), /* @__PURE__ */ React16.createElement(
+    "polyline",
+    {
+      fill: "none",
+      stroke: "#4F46E5",
+      strokeWidth: "2.5",
+      strokeLinecap: "round",
+      points: points.map((p) => `${p.x},${p.yVal}`).join(" ")
+    }
+  ), /* @__PURE__ */ React16.createElement(
+    "polyline",
+    {
+      fill: "none",
+      stroke: "#C7C4F5",
+      strokeWidth: "2",
+      strokeLinecap: "round",
+      strokeDasharray: "4 3",
+      points: points.map((p) => `${p.x},${p.yInv}`).join(" ")
+    }
+  ), points.map((p, idx) => {
+    const show = p.year === 1 || p.year % 2 === 0 || p.year === data.length;
+    if (!show && data.length > 8) return null;
+    return /* @__PURE__ */ React16.createElement(
+      "text",
+      {
+        key: p.year,
+        x: p.x,
+        y: height - 8,
+        textAnchor: "middle",
+        className: "text-[9px] fill-[#8E8BA6] font-bold"
+      },
+      "Y",
+      p.year
+    );
+  })));
+}
+function RiskProfileQuizTab({ isTa }) {
+  const [currentQuestionIdx, setCurrentQuestionIdx] = useState11(0);
+  const [answers, setAnswers] = useState11([]);
+  const [isCompleted, setIsCompleted] = useState11(false);
+  const handleSelectOption = (score) => {
+    const updated = [...answers];
+    updated[currentQuestionIdx] = score;
+    setAnswers(updated);
+    if (currentQuestionIdx < QUIZ_QUESTIONS.length - 1) {
+      setCurrentQuestionIdx(currentQuestionIdx + 1);
+    } else {
+      setIsCompleted(true);
+    }
+  };
+  const handleBack = () => {
+    if (currentQuestionIdx > 0) {
+      setCurrentQuestionIdx(currentQuestionIdx - 1);
+    }
+  };
+  const handleRetake = () => {
+    setAnswers([]);
+    setCurrentQuestionIdx(0);
+    setIsCompleted(false);
+  };
+  const totalScore = answers.reduce((acc, s) => acc + (s || 0), 0);
+  const profile = useMemo3(() => {
+    if (totalScore <= 9) {
+      return {
+        key: "conservative",
+        nameEn: "Conservative",
+        nameTa: "\u0BAA\u0BBE\u0BA4\u0BC1\u0B95\u0BBE\u0BAA\u0BCD\u0BAA\u0BBE\u0BA9\u0BA4\u0BC1 (Conservative)",
+        descEn: "Your priority is capital preservation with minimal fluctuations. A debt-heavy portfolio protects your capital.",
+        descTa: "\u0B89\u0B99\u0BCD\u0B95\u0BB3\u0BCD \u0BAE\u0BC1\u0BA4\u0BA9\u0BCD\u0BAE\u0BC8 \u0BA8\u0BCB\u0B95\u0BCD\u0B95\u0BAE\u0BCD \u0B95\u0BC1\u0BB1\u0BC8\u0BA8\u0BCD\u0BA4\u0BAA\u0B9F\u0BCD\u0B9A \u0B8F\u0BB1\u0BCD\u0BB1 \u0B87\u0BB1\u0B95\u0BCD\u0B95\u0B99\u0BCD\u0B95\u0BB3\u0BC1\u0B9F\u0BA9\u0BCD \u0BAE\u0BC2\u0BB2\u0BA4\u0BA9\u0BA4\u0BCD\u0BA4\u0BC8\u0BAA\u0BCD \u0BAA\u0BBE\u0BA4\u0BC1\u0B95\u0BBE\u0BAA\u0BCD\u0BAA\u0BA4\u0BBE\u0B95\u0BC1\u0BAE\u0BCD. \u0B95\u0B9F\u0BA9\u0BCD \u0B9A\u0BBE\u0BB0\u0BCD\u0BA8\u0BCD\u0BA4 \u0B83\u0BAA\u0BA3\u0BCD\u0B9F\u0BC1\u0B95\u0BB3\u0BCD \u0B89\u0B99\u0BCD\u0B95\u0BB3\u0BCD \u0BAE\u0BC2\u0BB2\u0BA4\u0BA9\u0BA4\u0BCD\u0BA4\u0BC8\u0BAA\u0BCD \u0BAA\u0BBE\u0BA4\u0BC1\u0B95\u0BBE\u0B95\u0BCD\u0B95\u0BBF\u0BA9\u0BCD\u0BB1\u0BA9.",
+        allocations: [
+          { labelEn: "Debt / Short Duration", labelTa: "\u0B95\u0B9F\u0BA9\u0BCD / \u0B95\u0BC1\u0BB1\u0BC1\u0B95\u0BBF\u0BAF \u0B95\u0BBE\u0BB2 \u0B83\u0BAA\u0BA3\u0BCD\u0B9F\u0BC1\u0B95\u0BB3\u0BCD", percent: 45, color: "#3B82F6" },
+          { labelEn: "Hybrid / Balanced Advantage", labelTa: "\u0BB9\u0BC8\u0BAA\u0BBF\u0BB0\u0BBF\u0B9F\u0BCD / \u0BAA\u0BC7\u0BB2\u0BA9\u0BCD\u0BB8\u0BCD\u0B9F\u0BC1 \u0B85\u0B9F\u0BCD\u0BB5\u0BBE\u0BA9\u0BCD\u0B9F\u0BC7\u0B9C\u0BCD", percent: 25, color: "#10B981" },
+          { labelEn: "Large Cap / Index", labelTa: "\u0BB2\u0BBE\u0BB0\u0BCD\u0B9C\u0BCD \u0B95\u0BC7\u0BAA\u0BCD / \u0B87\u0BA9\u0BCD\u0B9F\u0BC6\u0B95\u0BCD\u0BB8\u0BCD", percent: 15, color: "#4F46E5" },
+          { labelEn: "Gold", labelTa: "\u0BA4\u0B99\u0BCD\u0B95\u0BAE\u0BCD (Gold)", percent: 15, color: "#F5B700" }
+        ]
+      };
+    }
+    if (totalScore <= 14) {
+      return {
+        key: "balanced",
+        nameEn: "Balanced",
+        nameTa: "\u0B9A\u0BAE\u0BA8\u0BBF\u0BB2\u0BC8\u0BAF\u0BBE\u0BA9\u0BA4\u0BC1 (Balanced)",
+        descEn: "You can sit through normal market swings for steady growth. A blend of large cap, flexi cap and hybrid funds suits you.",
+        descTa: "\u0BA8\u0BBF\u0BB2\u0BC8\u0BAF\u0BBE\u0BA9 \u0BB5\u0BB3\u0BB0\u0BCD\u0B9A\u0BCD\u0B9A\u0BBF\u0B95\u0BCD\u0B95\u0BBE\u0B95 \u0B9A\u0BBE\u0BA4\u0BBE\u0BB0\u0BA3 \u0B9A\u0BA8\u0BCD\u0BA4\u0BC8 \u0BAE\u0BBE\u0BB1\u0BCD\u0BB1\u0B99\u0BCD\u0B95\u0BB3\u0BC8 \u0BA8\u0BC0\u0B99\u0BCD\u0B95\u0BB3\u0BCD \u0B9A\u0BAE\u0BBE\u0BB3\u0BBF\u0B95\u0BCD\u0B95 \u0BAE\u0BC1\u0B9F\u0BBF\u0BAF\u0BC1\u0BAE\u0BCD. \u0BB2\u0BBE\u0BB0\u0BCD\u0B9C\u0BCD \u0B95\u0BC7\u0BAA\u0BCD, \u0B83\u0BAA\u0BBF\u0BB3\u0BC6\u0B95\u0BCD\u0B9A\u0BBF \u0B95\u0BC7\u0BAA\u0BCD \u0BAE\u0BB1\u0BCD\u0BB1\u0BC1\u0BAE\u0BCD \u0BB9\u0BC8\u0BAA\u0BBF\u0BB0\u0BBF\u0B9F\u0BCD \u0B83\u0BAA\u0BA3\u0BCD\u0B9F\u0BC1\u0B95\u0BB3\u0BBF\u0BA9\u0BCD \u0B95\u0BB2\u0BB5\u0BC8 \u0B89\u0B99\u0BCD\u0B95\u0BB3\u0BC1\u0B95\u0BCD\u0B95\u0BC1 \u0B8F\u0BB1\u0BCD\u0BB1\u0BA4\u0BC1.",
+        allocations: [
+          { labelEn: "Large Cap / Index", labelTa: "\u0BB2\u0BBE\u0BB0\u0BCD\u0B9C\u0BCD \u0B95\u0BC7\u0BAA\u0BCD / \u0B87\u0BA9\u0BCD\u0B9F\u0BC6\u0B95\u0BCD\u0BB8\u0BCD", percent: 30, color: "#4F46E5" },
+          { labelEn: "Flexi Cap", labelTa: "\u0B83\u0BAA\u0BBF\u0BB3\u0BC6\u0B95\u0BCD\u0B9A\u0BBF \u0B95\u0BC7\u0BAA\u0BCD (Flexi Cap)", percent: 30, color: "#06B6D4" },
+          { labelEn: "Hybrid / Balanced Advantage", labelTa: "\u0BB9\u0BC8\u0BAA\u0BBF\u0BB0\u0BBF\u0B9F\u0BCD / \u0BAA\u0BC7\u0BB2\u0BA9\u0BCD\u0BB8\u0BCD\u0B9F\u0BC1 \u0B85\u0B9F\u0BCD\u0BB5\u0BBE\u0BA9\u0BCD\u0B9F\u0BC7\u0B9C\u0BCD", percent: 20, color: "#10B981" },
+          { labelEn: "Debt / Short Duration", labelTa: "\u0B95\u0B9F\u0BA9\u0BCD / \u0B95\u0BC1\u0BB1\u0BC1\u0B95\u0BBF\u0BAF \u0B95\u0BBE\u0BB2\u0BAE\u0BCD", percent: 10, color: "#3B82F6" },
+          { labelEn: "Gold", labelTa: "\u0BA4\u0B99\u0BCD\u0B95\u0BAE\u0BCD (Gold)", percent: 10, color: "#F5B700" }
+        ]
+      };
+    }
+    return {
+      key: "aggressive",
+      nameEn: "Aggressive",
+      nameTa: "\u0BA4\u0BC0\u0BB5\u0BBF\u0BB0 \u0BB5\u0BB3\u0BB0\u0BCD\u0B9A\u0BCD\u0B9A\u0BBF (Aggressive)",
+      descEn: "You aim for maximum wealth creation and can handle high volatility for superior long-term returns.",
+      descTa: "\u0BA8\u0BC0\u0B99\u0BCD\u0B95\u0BB3\u0BCD \u0B85\u0BA4\u0BBF\u0B95\u0BAA\u0B9F\u0BCD\u0B9A \u0B9A\u0BC6\u0BB2\u0BCD\u0BB5 \u0B89\u0BB0\u0BC1\u0BB5\u0BBE\u0B95\u0BCD\u0B95\u0BA4\u0BCD\u0BA4\u0BC8 \u0BA8\u0BCB\u0B95\u0BCD\u0B95\u0BAE\u0BBE\u0B95\u0B95\u0BCD \u0B95\u0BCA\u0BA3\u0BCD\u0B9F\u0BC1\u0BB3\u0BCD\u0BB3\u0BC0\u0BB0\u0BCD\u0B95\u0BB3\u0BCD \u0BAE\u0BB1\u0BCD\u0BB1\u0BC1\u0BAE\u0BCD \u0BA8\u0BC0\u0BA3\u0BCD\u0B9F \u0B95\u0BBE\u0BB2 \u0BB5\u0BB0\u0BC1\u0BAE\u0BBE\u0BA9\u0BA4\u0BCD\u0BA4\u0BBF\u0BB1\u0BCD\u0B95\u0BBE\u0B95 \u0B8F\u0BB1\u0BCD\u0BB1 \u0B87\u0BB1\u0B95\u0BCD\u0B95\u0B99\u0BCD\u0B95\u0BB3\u0BC8 \u0B95\u0BC8\u0BAF\u0BBE\u0BB3 \u0BAE\u0BC1\u0B9F\u0BBF\u0BAF\u0BC1\u0BAE\u0BCD.",
+      allocations: [
+        { labelEn: "Flexi Cap", labelTa: "\u0B83\u0BAA\u0BBF\u0BB3\u0BC6\u0B95\u0BCD\u0B9A\u0BBF \u0B95\u0BC7\u0BAA\u0BCD (Flexi Cap)", percent: 30, color: "#06B6D4" },
+        { labelEn: "Mid / Small Cap", labelTa: "\u0BAE\u0BBF\u0B9F\u0BCD & \u0BB8\u0BCD\u0BAE\u0BBE\u0BB2\u0BCD \u0B95\u0BC7\u0BAA\u0BCD (Mid/Small Cap)", percent: 30, color: "#8B5CF6" },
+        { labelEn: "Large Cap / Index", labelTa: "\u0BB2\u0BBE\u0BB0\u0BCD\u0B9C\u0BCD \u0B95\u0BC7\u0BAA\u0BCD / \u0B87\u0BA9\u0BCD\u0B9F\u0BC6\u0B95\u0BCD\u0BB8\u0BCD", percent: 25, color: "#4F46E5" },
+        { labelEn: "Hybrid", labelTa: "\u0BB9\u0BC8\u0BAA\u0BBF\u0BB0\u0BBF\u0B9F\u0BCD", percent: 5, color: "#10B981" },
+        { labelEn: "Gold", labelTa: "\u0BA4\u0B99\u0BCD\u0B95\u0BAE\u0BCD (Gold)", percent: 10, color: "#F5B700" }
+      ]
+    };
+  }, [totalScore]);
+  const currentQ = QUIZ_QUESTIONS[currentQuestionIdx];
+  return /* @__PURE__ */ React16.createElement("div", { className: "calc-card p-5 sm:p-8 max-w-2xl mx-auto space-y-6" }, !isCompleted ? (
+    /* QUIZ IN PROGRESS */
+    /* @__PURE__ */ React16.createElement("div", { className: "space-y-6" }, /* @__PURE__ */ React16.createElement("div", { className: "space-y-3" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center justify-between text-xs font-bold text-[#5B5875] uppercase tracking-wider" }, /* @__PURE__ */ React16.createElement("span", null, isTa ? "\u0BB0\u0BBF\u0BB8\u0BCD\u0B95\u0BCD \u0B9A\u0BC1\u0BAF\u0BB5\u0BBF\u0BB5\u0BB0 \u0BB5\u0BBF\u0BA9\u0BBE\u0B9F\u0BBF\u0BB5\u0BBF\u0BA9\u0BBE" : "RISK PROFILE QUIZ"), /* @__PURE__ */ React16.createElement("span", null, isTa ? `\u0B95\u0BC7\u0BB3\u0BCD\u0BB5\u0BBF ${currentQuestionIdx + 1} / 6` : `Question ${currentQuestionIdx + 1} of 6`)), /* @__PURE__ */ React16.createElement("div", { className: "w-full h-2 rounded-full bg-[#F3F1FA] overflow-hidden border border-[#E6E3F0]" }, /* @__PURE__ */ React16.createElement(
+      "div",
+      {
+        className: "h-full bg-[#4F46E5] transition-all duration-300",
+        style: { width: `${(currentQuestionIdx + 1) / 6 * 100}%` }
+      }
+    ))), /* @__PURE__ */ React16.createElement("div", { className: "py-2" }, /* @__PURE__ */ React16.createElement("h3", { className: "text-base sm:text-lg font-bold text-[#17142E] leading-relaxed" }, isTa ? currentQ.qTa : currentQ.qEn)), /* @__PURE__ */ React16.createElement("div", { className: "space-y-3" }, currentQ.options.map((opt, idx) => {
+      const isSelected = answers[currentQuestionIdx] === opt.score;
+      return /* @__PURE__ */ React16.createElement(
+        "button",
+        {
+          key: idx,
+          type: "button",
+          onClick: () => handleSelectOption(opt.score),
+          className: `w-full p-4 rounded-[14px] text-left text-xs sm:text-sm font-semibold transition-all border cursor-pointer flex items-center justify-between ${isSelected ? "bg-[#EEF0FF] border-[#4F46E5] text-[#17142E] shadow-xs" : "bg-white border-[#E6E3F0] text-[#17142E] hover:border-[#4F46E5] hover:bg-[#F8F7FC]"}`
+        },
+        /* @__PURE__ */ React16.createElement("span", null, isTa ? opt.textTa : opt.textEn),
+        /* @__PURE__ */ React16.createElement(
+          "span",
+          {
+            className: `w-5 h-5 rounded-full border flex items-center justify-center text-[10px] shrink-0 ml-3 ${isSelected ? "border-[#4F46E5] bg-[#4F46E5] text-white" : "border-[#E6E3F0] text-transparent"}`
+          },
+          "\u2713"
+        )
+      );
+    })), currentQuestionIdx > 0 && /* @__PURE__ */ React16.createElement("div", { className: "pt-2" }, /* @__PURE__ */ React16.createElement(
+      "button",
+      {
+        type: "button",
+        onClick: handleBack,
+        className: "inline-flex items-center gap-1.5 text-xs font-bold text-[#5B5875] hover:text-[#17142E] transition-colors cursor-pointer"
+      },
+      /* @__PURE__ */ React16.createElement("span", null, "\u2190 ", isTa ? "\u0BAE\u0BC1\u0BA8\u0BCD\u0BA4\u0BC8\u0BAF \u0B95\u0BC7\u0BB3\u0BCD\u0BB5\u0BBF" : "Back")
+    )))
+  ) : (
+    /* QUIZ RESULTS CARD */
+    /* @__PURE__ */ React16.createElement("div", { className: "space-y-6 animate-fadeIn" }, /* @__PURE__ */ React16.createElement("div", { className: "text-center space-y-2 pb-4 border-b border-[#E6E3F0]" }, /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-bold uppercase tracking-wider text-[#4F46E5]" }, isTa ? "\u0B89\u0B99\u0BCD\u0B95\u0BB3\u0BCD \u0BB0\u0BBF\u0BB8\u0BCD\u0B95\u0BCD \u0B9A\u0BC1\u0BAF\u0BB5\u0BBF\u0BB5\u0BB0\u0BAE\u0BCD" : "YOUR RISK PROFILE"), /* @__PURE__ */ React16.createElement("h3", { className: "text-2xl sm:text-3xl font-black text-[#17142E]" }, isTa ? profile.nameTa : profile.nameEn), /* @__PURE__ */ React16.createElement("p", { className: "text-xs sm:text-sm text-[#5B5875] max-w-lg mx-auto leading-relaxed pt-1" }, isTa ? profile.descTa : profile.descEn)), /* @__PURE__ */ React16.createElement("div", { className: "space-y-3" }, /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-bold uppercase tracking-wider text-[#5B5875] block" }, isTa ? "\u0BAA\u0BB0\u0BBF\u0BA8\u0BCD\u0BA4\u0BC1\u0BB0\u0BC8\u0B95\u0BCD\u0B95\u0BAA\u0BCD\u0BAA\u0B9F\u0BC1\u0BAE\u0BCD \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BB2\u0BB5\u0BC8 (Asset Allocation)" : "Recommended Asset Allocation"), /* @__PURE__ */ React16.createElement("div", { className: "space-y-2.5" }, profile.allocations.map((item, idx) => /* @__PURE__ */ React16.createElement("div", { key: idx, className: "space-y-1" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center justify-between text-xs font-semibold text-[#17142E]" }, /* @__PURE__ */ React16.createElement("span", null, isTa ? item.labelTa : item.labelEn), /* @__PURE__ */ React16.createElement("span", { className: "font-bold" }, item.percent, "%")), /* @__PURE__ */ React16.createElement("div", { className: "w-full h-2.5 rounded-full bg-[#F3F1FA] overflow-hidden border border-[#E6E3F0]" }, /* @__PURE__ */ React16.createElement(
+      "div",
+      {
+        className: "h-full rounded-full transition-all duration-500",
+        style: { width: `${item.percent}%`, backgroundColor: item.color }
+      }
+    )))))), /* @__PURE__ */ React16.createElement("div", { className: "pt-2 flex flex-col sm:flex-row items-center gap-3" }, /* @__PURE__ */ React16.createElement(
+      "button",
+      {
+        type: "button",
+        onClick: handleRetake,
+        className: "w-full sm:w-auto px-5 py-2.5 rounded-[10px] bg-[#4F46E5] text-white text-xs font-bold hover:bg-[#4338CA] transition-colors shadow-xs cursor-pointer"
+      },
+      isTa ? "\u0BAE\u0BC0\u0BA3\u0BCD\u0B9F\u0BC1\u0BAE\u0BCD \u0BB5\u0BBF\u0BA9\u0BBE\u0B9F\u0BBF\u0BB5\u0BBF\u0BA9\u0BBE \u0B9A\u0BC6\u0BAF\u0BCD\u0BAF" : "Retake quiz"
+    ), /* @__PURE__ */ React16.createElement(
+      "a",
+      {
+        href: "#/articles",
+        className: "w-full sm:w-auto px-5 py-2.5 rounded-[10px] bg-white border border-[#E6E3F0] text-xs font-bold text-[#17142E] hover:border-[#4F46E5] transition-colors text-center cursor-pointer"
+      },
+      isTa ? "\u0BAA\u0BCA\u0BB0\u0BC1\u0BA4\u0BCD\u0BA4\u0BAE\u0BBE\u0BA9 \u0B95\u0B9F\u0BCD\u0B9F\u0BC1\u0BB0\u0BC8\u0B95\u0BB3\u0BC8\u0BAA\u0BCD \u0BAA\u0B9F\u0BBF\u0B95\u0BCD\u0B95" : "Read relevant guides"
+    )), /* @__PURE__ */ React16.createElement("p", { className: "text-[12px] text-[#8E8BA6] leading-relaxed pt-2 border-t border-[#E6E3F0]" }, isTa ? "\u0B87\u0BA8\u0BCD\u0BA4 \u0BB5\u0BBF\u0BA9\u0BBE\u0B9F\u0BBF\u0BB5\u0BBF\u0BA9\u0BBE \u0B95\u0BB2\u0BCD\u0BB5\u0BBF \u0BA8\u0BCB\u0B95\u0BCD\u0B95\u0BA4\u0BCD\u0BA4\u0BBF\u0BB1\u0BCD\u0B95\u0BBE\u0BA9 \u0B92\u0BB0\u0BC1 \u0B8E\u0BB3\u0BBF\u0BAF \u0B9A\u0BC1\u0BAF \u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BC0\u0B9F\u0BC1 \u0BAE\u0B9F\u0BCD\u0B9F\u0BC1\u0BAE\u0BC7. \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1 \u0B9A\u0BC6\u0BAF\u0BCD\u0BB5\u0BA4\u0BB1\u0BCD\u0B95\u0BC1 \u0BAE\u0BC1\u0BA9\u0BCD \u0B89\u0B99\u0BCD\u0B95\u0BB3\u0BCD \u0BB5\u0BBF\u0BA8\u0BBF\u0BAF\u0BCB\u0B95\u0BB8\u0BCD\u0BA4\u0BB0\u0BC1\u0B9F\u0BA9\u0BCD \u0BAE\u0BC1\u0BB4\u0BC1\u0BAE\u0BC8\u0BAF\u0BBE\u0BA9 \u0B9A\u0BC1\u0BAF\u0BB5\u0BBF\u0BB5\u0BB0\u0BA4\u0BCD\u0BA4\u0BC8 \u0BAA\u0BC2\u0BB0\u0BCD\u0BA4\u0BCD\u0BA4\u0BBF \u0B9A\u0BC6\u0BAF\u0BCD\u0BAF\u0BC1\u0B99\u0BCD\u0B95\u0BB3\u0BCD." : "This quiz is a simple self-assessment for education. A full risk profile is completed with your distributor before investing."))
+  ));
+}
+var QUIZ_QUESTIONS;
 var init_SipCalculator = __esm({
   "js/pages/SipCalculator.jsx"() {
     init_LanguageContext();
-    SipCalculator_default = SipCalculator;
+    QUIZ_QUESTIONS = [
+      {
+        id: 1,
+        qEn: "What is your age?",
+        qTa: "\u0B89\u0B99\u0BCD\u0B95\u0BB3\u0BCD \u0BB5\u0BAF\u0BA4\u0BC1 \u0B8E\u0BA9\u0BCD\u0BA9?",
+        options: [
+          { textEn: "Above 45", textTa: "45 \u0BB5\u0BAF\u0BA4\u0BC1\u0B95\u0BCD\u0B95\u0BC1 \u0BAE\u0BC7\u0BB2\u0BCD", score: 1 },
+          { textEn: "30 to 45", textTa: "30 \u0BAE\u0BC1\u0BA4\u0BB2\u0BCD 45", score: 2 },
+          { textEn: "Under 30", textTa: "30 \u0BB5\u0BAF\u0BA4\u0BC1\u0B95\u0BCD\u0B95\u0BC1 \u0B95\u0BC0\u0BB4\u0BCD", score: 3 }
+        ]
+      },
+      {
+        id: 2,
+        qEn: "When will you need most of this money?",
+        qTa: "\u0B87\u0BA8\u0BCD\u0BA4 \u0BAA\u0BA3\u0BAE\u0BCD \u0B89\u0B99\u0BCD\u0B95\u0BB3\u0BC1\u0B95\u0BCD\u0B95\u0BC1 \u0B8E\u0BAA\u0BCD\u0BAA\u0BCB\u0BA4\u0BC1 \u0B85\u0BA4\u0BBF\u0B95\u0BAE\u0BCD \u0BA4\u0BC7\u0BB5\u0BC8\u0BAA\u0BCD\u0BAA\u0B9F\u0BC1\u0BAE\u0BCD?",
+        options: [
+          { textEn: "Within 3 years", textTa: "3 \u0B86\u0BA3\u0BCD\u0B9F\u0BC1\u0B95\u0BB3\u0BC1\u0B95\u0BCD\u0B95\u0BC1\u0BB3\u0BCD", score: 1 },
+          { textEn: "3 to 7 years", textTa: "3 \u0BAE\u0BC1\u0BA4\u0BB2\u0BCD 7 \u0B86\u0BA3\u0BCD\u0B9F\u0BC1\u0B95\u0BB3\u0BCD", score: 2 },
+          { textEn: "After 7 years", textTa: "7 \u0B86\u0BA3\u0BCD\u0B9F\u0BC1\u0B95\u0BB3\u0BC1\u0B95\u0BCD\u0B95\u0BC1\u0BAA\u0BCD \u0BAA\u0BBF\u0BB1\u0B95\u0BC1", score: 3 }
+        ]
+      },
+      {
+        id: 3,
+        qEn: "If your portfolio fell 20% in a month, you would:",
+        qTa: "\u0B89\u0B99\u0BCD\u0B95\u0BB3\u0BCD \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1 \u0B92\u0BB0\u0BC1 \u0BAE\u0BBE\u0BA4\u0BA4\u0BCD\u0BA4\u0BBF\u0BB2\u0BCD 20% \u0B95\u0BC1\u0BB1\u0BC8\u0BA8\u0BCD\u0BA4\u0BBE\u0BB2\u0BCD \u0B8E\u0BA9\u0BCD\u0BA9 \u0B9A\u0BC6\u0BAF\u0BCD\u0BB5\u0BC0\u0BB0\u0BCD\u0B95\u0BB3\u0BCD?",
+        options: [
+          { textEn: "Sell to stop further loss", textTa: "\u0BAE\u0BC7\u0BB2\u0BC1\u0BAE\u0BCD \u0B87\u0BB4\u0BAA\u0BCD\u0BAA\u0BC8\u0BA4\u0BCD \u0BA4\u0BB5\u0BBF\u0BB0\u0BCD\u0B95\u0BCD\u0B95 \u0BB5\u0BBF\u0BB1\u0BCD\u0BB1\u0BC1\u0BB5\u0BBF\u0B9F\u0BC1\u0BB5\u0BC7\u0BA9\u0BCD", score: 1 },
+          { textEn: "Hold and wait", textTa: "\u0BAA\u0BCA\u0BB1\u0BC1\u0BAE\u0BC8\u0BAF\u0BBE\u0B95 \u0B95\u0BBE\u0BA4\u0BCD\u0BA4\u0BBF\u0BB0\u0BC1\u0BAA\u0BCD\u0BAA\u0BC7\u0BA9\u0BCD", score: 2 },
+          { textEn: "Invest more at lower prices", textTa: "\u0B95\u0BC1\u0BB1\u0BC8\u0BA8\u0BCD\u0BA4 \u0BB5\u0BBF\u0BB2\u0BC8\u0BAF\u0BBF\u0BB2\u0BCD \u0BAE\u0BC7\u0BB2\u0BC1\u0BAE\u0BCD \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1 \u0B9A\u0BC6\u0BAF\u0BCD\u0BB5\u0BC7\u0BA9\u0BCD", score: 3 }
+        ]
+      },
+      {
+        id: 4,
+        qEn: "Your main aim for this money is:",
+        qTa: "\u0B87\u0BA8\u0BCD\u0BA4 \u0BAA\u0BA3\u0BA4\u0BCD\u0BA4\u0BBF\u0BB1\u0BCD\u0B95\u0BBE\u0BA9 \u0B89\u0B99\u0BCD\u0B95\u0BB3\u0BCD \u0BAE\u0BC1\u0B95\u0BCD\u0B95\u0BBF\u0BAF \u0BA8\u0BCB\u0B95\u0BCD\u0B95\u0BAE\u0BCD \u0B8E\u0BA9\u0BCD\u0BA9?",
+        options: [
+          { textEn: "Protect what I have", textTa: "\u0B87\u0BB0\u0BC1\u0BAA\u0BCD\u0BAA\u0BA4\u0BC8 \u0BAA\u0BBE\u0BA4\u0BC1\u0B95\u0BBE\u0BAA\u0BCD\u0BAA\u0BA4\u0BC1", score: 1 },
+          { textEn: "Steady growth", textTa: "\u0BA8\u0BBF\u0BB2\u0BC8\u0BAF\u0BBE\u0BA9 \u0BB5\u0BB3\u0BB0\u0BCD\u0B9A\u0BCD\u0B9A\u0BBF", score: 2 },
+          { textEn: "Maximum long-term growth", textTa: "\u0B85\u0BA4\u0BBF\u0B95\u0BAA\u0B9F\u0BCD\u0B9A \u0BA8\u0BC0\u0BA3\u0BCD\u0B9F\u0B95\u0BBE\u0BB2 \u0BB5\u0BB3\u0BB0\u0BCD\u0B9A\u0BCD\u0B9A\u0BBF", score: 3 }
+        ]
+      },
+      {
+        id: 5,
+        qEn: "Your investing experience:",
+        qTa: "\u0B89\u0B99\u0BCD\u0B95\u0BB3\u0BCD \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 \u0B85\u0BA9\u0BC1\u0BAA\u0BB5\u0BAE\u0BCD:",
+        options: [
+          { textEn: "New to mutual funds", textTa: "\u0BAE\u0BBF\u0BAF\u0BC2\u0B9A\u0BCD\u0B9A\u0BC1\u0BB5\u0BB2\u0BCD \u0B83\u0BAA\u0BA3\u0BCD\u0B9F\u0BBF\u0BB1\u0BCD\u0B95\u0BC1 \u0BAA\u0BC1\u0BA4\u0BBF\u0BAF\u0BB5\u0BB0\u0BCD", score: 1 },
+          { textEn: "A few years of SIPs", textTa: "\u0B9A\u0BBF\u0BB2 \u0B86\u0BA3\u0BCD\u0B9F\u0BC1\u0B95\u0BB3\u0BCD SIP \u0B85\u0BA9\u0BC1\u0BAA\u0BB5\u0BAE\u0BCD", score: 2 },
+          { textEn: "Experienced across equity and debt", textTa: "\u0BAA\u0B99\u0BCD\u0B95\u0BC1 \u0BAE\u0BB1\u0BCD\u0BB1\u0BC1\u0BAE\u0BCD \u0B95\u0B9F\u0BA9\u0BCD \u0B9A\u0BA8\u0BCD\u0BA4\u0BC8\u0B95\u0BB3\u0BBF\u0BB2\u0BCD \u0B85\u0BA9\u0BC1\u0BAA\u0BB5\u0BAE\u0BCD", score: 3 }
+        ]
+      },
+      {
+        id: 6,
+        qEn: "Do you have an emergency fund of 6 months' expenses?",
+        qTa: "\u0B89\u0B99\u0BCD\u0B95\u0BB3\u0BBF\u0B9F\u0BAE\u0BCD 6 \u0BAE\u0BBE\u0BA4 \u0B9A\u0BC6\u0BB2\u0BB5\u0BC1\u0B95\u0BB3\u0BC1\u0B95\u0BCD\u0B95\u0BBE\u0BA9 \u0B85\u0BB5\u0B9A\u0BB0\u0B95\u0BBE\u0BB2 \u0BA8\u0BBF\u0BA4\u0BBF \u0B89\u0BB3\u0BCD\u0BB3\u0BA4\u0BBE?",
+        options: [
+          { textEn: "Not yet", textTa: "\u0B87\u0BA9\u0BCD\u0BA9\u0BC1\u0BAE\u0BCD \u0B87\u0BB2\u0BCD\u0BB2\u0BC8", score: 1 },
+          { textEn: "Partly", textTa: "\u0BAA\u0B95\u0BC1\u0BA4\u0BBF\u0BAF\u0BB3\u0BB5\u0BC1 \u0B89\u0BB3\u0BCD\u0BB3\u0BA4\u0BC1", score: 2 },
+          { textEn: "Yes, fully", textTa: "\u0B86\u0BAE\u0BCD, \u0BAE\u0BC1\u0BB4\u0BC1\u0BAE\u0BC8\u0BAF\u0BBE\u0B95 \u0B89\u0BB3\u0BCD\u0BB3\u0BA4\u0BC1", score: 3 }
+        ]
+      }
+    ];
   }
 });
 
