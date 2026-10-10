@@ -38,6 +38,14 @@ function VideosPage({ onNavigate, onShowToast, initialVideoId }) {
 
   const sentinelRef = useRef(null);
   const debounceTimerRef = useRef(null);
+  const shortsRailRef = useRef(null);
+
+  const scrollShorts = (direction) => {
+    if (shortsRailRef.current) {
+      const scrollAmount = direction === 'left' ? -380 : 380;
+      shortsRailRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
 
   // SEO metadata
   useEffect(() => {
@@ -227,17 +235,46 @@ function VideosPage({ onNavigate, onShowToast, initialVideoId }) {
           </div>
         </div>
 
-        {/* ================= 4. SHORTS RAIL (9:16 Horizontal Rail) ================= */}
+        {/* ================= 4. SHORTS RAIL (9:16 Horizontal Rail with Arrow Navigation) ================= */}
         {shorts.length > 0 && !searchQuery && activeCategory === 'all' ? (
           <div className="space-y-3 pt-2">
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-red-600" />
-              <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white uppercase tracking-wider">
-                {isTamil ? 'குறுகிய வீடியோக்கள் (Shorts)' : 'YouTube Shorts'}
-              </h3>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-red-600" />
+                <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white uppercase tracking-wider">
+                  {isTamil ? 'குறுகிய வீடியோக்கள் (Shorts)' : 'YouTube Shorts'}
+                </h3>
+              </div>
+
+              {/* Left & Right Arrow Navigation Buttons */}
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => scrollShorts('left')}
+                  className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-blue-600 hover:text-white hover:border-blue-600 dark:hover:bg-blue-600 dark:hover:text-white dark:hover:border-blue-600 flex items-center justify-center transition-all cursor-pointer shadow-sm hover:scale-105 active:scale-95"
+                  aria-label="Scroll left"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollShorts('right')}
+                  className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-blue-600 hover:text-white hover:border-blue-600 dark:hover:bg-blue-600 dark:hover:text-white dark:hover:border-blue-600 flex items-center justify-center transition-all cursor-pointer shadow-sm hover:scale-105 active:scale-95"
+                  aria-label="Scroll right"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
             </div>
 
-            <div className="flex gap-4 overflow-x-auto no-scrollbar pb-3 pt-1">
+            <div
+              ref={shortsRailRef}
+              className="flex gap-4 overflow-x-auto no-scrollbar pb-3 pt-1 scroll-smooth"
+            >
               {shorts.map((shortVid) => (
                 <YouTubeShortCard
                   key={shortVid.video_id || shortVid.youtubeId || shortVid.id}
