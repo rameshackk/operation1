@@ -21,12 +21,12 @@ export default {
         '2xl': '1536px'
       },
       fontFamily: {
-        sans: ['"Book Antiqua"', 'Palatino', '"Palatino Linotype"', '"URW Bookman L"', '"Noto Serif Tamil"', 'Georgia', 'serif'],
-        heading: ['"Book Antiqua"', 'Palatino', '"Palatino Linotype"', '"URW Bookman L"', '"Noto Serif Tamil"', 'Georgia', 'serif'],
-        display: ['"Book Antiqua"', 'Palatino', '"Palatino Linotype"', '"URW Bookman L"', '"Noto Serif Tamil"', 'Georgia', 'serif'],
-        serif: ['"Book Antiqua"', 'Palatino', '"Palatino Linotype"', '"URW Bookman L"', '"Noto Serif Tamil"', 'Georgia', 'serif'],
-        num: ['"Book Antiqua"', 'Palatino', '"Palatino Linotype"', '"URW Bookman L"', '"Noto Serif Tamil"', 'Georgia', 'serif'],
-        mono: ['"Book Antiqua"', 'Palatino', '"Palatino Linotype"', '"URW Bookman L"', '"Noto Serif Tamil"', 'Georgia', 'serif']
+        sans: ['"Plus Jakarta Sans"', '"Outfit"', '"Mukta Malar"', 'system-ui', '-apple-system', 'sans-serif'],
+        heading: ['"Plus Jakarta Sans"', '"Outfit"', '"Mukta Malar"', 'sans-serif'],
+        display: ['"Plus Jakarta Sans"', '"Outfit"', '"Mukta Malar"', 'sans-serif'],
+        serif: ['"Mukta Malar"', '"Plus Jakarta Sans"', '"Outfit"', 'serif'],
+        num: ['"Plus Jakarta Sans"', '"Outfit"', 'sans-serif'],
+        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace']
       },
       colors: {
         page: '#ffffff',

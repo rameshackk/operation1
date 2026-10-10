@@ -72,7 +72,7 @@ async function runBuild() {
       background-color: var(--bg-page);
       color: #0F172A;
       margin: 0;
-      font-family: "Book Antiqua", Palatino, "Noto Serif Tamil", Georgia, serif;
+      font-family: "Plus Jakarta Sans", "Outfit", "Mukta Malar", system-ui, -apple-system, sans-serif;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }

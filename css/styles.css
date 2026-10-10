@@ -90,11 +90,11 @@ html {
   --grid-gap: clamp(1.25rem, 2.5vw, 2rem);
   --section-spacing-y: clamp(4.5rem, 6.5vw, 6rem);
 
-  /* Typography Metrics - Book Antiqua Palette */
-  --font-sans: 'Book Antiqua', Palatino, 'Palatino Linotype', 'URW Bookman L', 'Noto Serif Tamil', Georgia, serif;
-  --font-serif: 'Book Antiqua', Palatino, 'Palatino Linotype', 'URW Bookman L', 'Noto Serif Tamil', Georgia, serif;
-  --font-heading: 'Book Antiqua', Palatino, 'Palatino Linotype', 'URW Bookman L', 'Noto Serif Tamil', Georgia, serif;
-  --font-num: 'Book Antiqua', Palatino, 'Palatino Linotype', 'URW Bookman L', 'Noto Serif Tamil', Georgia, serif;
+  /* Typography Metrics - Mukta Malar (Tamil) & Plus Jakarta Sans / Outfit (English) */
+  --font-sans: 'Plus Jakarta Sans', 'Outfit', 'Mukta Malar', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Mukta Malar', 'Plus Jakarta Sans', 'Outfit', serif;
+  --font-heading: 'Plus Jakarta Sans', 'Outfit', 'Mukta Malar', sans-serif;
+  --font-num: 'Plus Jakarta Sans', 'Outfit', sans-serif;
   --line-height-body: 1.68;
   --line-height-heading: 1.48;
   --line-height-tight: 1.35;

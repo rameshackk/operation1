@@ -354,12 +354,15 @@ function RichTextEditor({ value, onChange, placeholder, language = 'ta', minHeig
           <span className="text-[11px] text-slate-500 dark:text-slate-400 font-bold hidden sm:inline">Font:</span>
           <select
             onChange={e => applyCustomFontFamily(e.target.value)}
-            defaultValue="'Book Antiqua', Palatino, serif"
-            className="bg-transparent text-xs font-bold text-slate-700 dark:text-slate-200 outline-none cursor-pointer max-w-[130px]"
+            defaultValue="'Plus Jakarta Sans', sans-serif"
+            className="bg-transparent text-xs font-bold text-slate-700 dark:text-slate-200 outline-none cursor-pointer max-w-[140px]"
             title={isTamil ? 'எழுத்து நடை (Font Family)' : 'Font Family'}
           >
-            <option value="'Book Antiqua', Palatino, 'Palatino Linotype', serif">Book Antiqua</option>
+            <option value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans</option>
+            <option value="'Outfit', sans-serif">Outfit</option>
+            <option value="'Mukta Malar', sans-serif">Mukta Malar (தமிழ்)</option>
             <option value="'Noto Serif Tamil', serif">Tamil Classical</option>
+            <option value="'Book Antiqua', Palatino, serif">Book Antiqua</option>
             <option value="'Inter', -apple-system, sans-serif">Inter (Sans)</option>
             <option value="'Georgia', serif">Georgia (Serif)</option>
             <option value="'Arial', sans-serif">Arial</option>
