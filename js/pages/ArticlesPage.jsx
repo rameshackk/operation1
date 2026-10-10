@@ -748,28 +748,26 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                       onClick={() => onNavigate(`#/articles/${article.slug}`)}
                       className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden group cursor-pointer"
                     >
-                      {/* 1. Top Image with Publisher & Category Badges */}
-                      <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-900 shrink-0">
+                      {/* 1. Clean Top Image */}
+                      <div className="relative aspect-[16/10] w-full overflow-hidden shrink-0">
                         <img
                           src={coverImg}
                           alt={title}
                           loading="lazy"
                           decoding="async"
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          className="w-full h-full object-cover"
                           onError={(e) => {
                             e.target.src = 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=600&q=75&auto=format&fit=crop';
                           }}
                         />
-                        {/* Top Gradient for Badge Legibility */}
-                        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-transparent pointer-events-none" />
 
-                        {/* Top-Left: Publisher Name Badge (Bold) */}
-                        <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-black/65 backdrop-blur-md text-emerald-400 text-[11px] font-black uppercase tracking-wider border border-white/10 shadow-sm truncate max-w-[55%]">
+                        {/* Top-Left: Publisher Name Badge */}
+                        <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-white/95 dark:bg-slate-900/95 text-slate-900 dark:text-white text-[11px] font-bold uppercase tracking-wider shadow-sm border border-slate-200 dark:border-slate-700 truncate max-w-[55%]">
                           {authorName}
                         </span>
 
                         {/* Top-Right: Category Badge */}
-                        <span className="absolute top-3 right-3 px-2.5 py-1 rounded-md bg-black/65 backdrop-blur-md text-sky-400 text-[11px] font-black uppercase tracking-wider border border-white/10 shadow-sm">
+                        <span className="absolute top-3 right-3 px-2.5 py-1 rounded-md bg-blue-600 text-white text-[11px] font-bold uppercase tracking-wider shadow-sm">
                           {categoryName}
                         </span>
                       </div>
