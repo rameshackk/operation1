@@ -168,7 +168,7 @@ function VideosPage({ onNavigate, onShowToast, initialVideoId }) {
 
   return (
     <div className="min-h-screen pb-24 bg-white dark:bg-slate-950 text-slate-900 dark:text-white animate-fadeIn">
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 space-y-8">
+      <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 pt-6 sm:pt-8 space-y-8">
         
         {/* ================= CONTROLS BAR (SEARCH + CATEGORY CHIPS) ================= */}
         <div className="space-y-4">

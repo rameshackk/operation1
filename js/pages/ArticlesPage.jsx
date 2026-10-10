@@ -356,7 +356,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
     <div className="w-full min-h-[calc(100vh-120px)] pb-16 pt-3 flex flex-col animate-fadeIn relative bg-gradient-to-b from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       
       {/* Top Search & Filter Bar */}
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 shrink-0">
+      <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 mb-6 shrink-0">
         <div className="p-3 sm:p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-4">
           
           {/* Main Row: Search Input + Filter Toggle Button */}
@@ -596,7 +596,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
       </div>
 
       {/* Main Results Container (Full Width) */}
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex-1">
+      <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 flex-1">
         <main className="space-y-4 scroll-smooth" ref={resultsTopRef}>
 
 
