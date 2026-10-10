@@ -55,7 +55,7 @@ export default function SipCalculator({ initialTab, isEmbedded = false }) {
 
   return (
     <section className="calc-light w-full py-6 sm:py-10">
-      <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 space-y-6 sm:space-y-8">
+      <div className="w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 space-y-6 sm:space-y-8">
         
         {/* ================= 1. PAGE HEADER ================= */}
         {!isEmbedded && (
@@ -67,21 +67,9 @@ export default function SipCalculator({ initialTab, isEmbedded = false }) {
                 </h1>
                 <p className="mt-1 text-xs sm:text-sm text-[#5B5875]">
                   {isTa
-                    ? 'SIP மற்றும் மொத்த முதலீட்டுக்கான உடனடி கணிப்புகள். பிரீமியம் உறுப்பினர்களுக்கு 30+ கூடுதல் கணக்கீட்டுக் கருவிகள் கிடைக்கின்றன.'
-                    : 'Quick estimates for SIPs and lumpsums. Members get 30+ more calculators in Premium Access.'}
+                    ? 'SIP மற்றும் மொத்த முதலீட்டுக்கான உடனடி கணிப்புகள்.'
+                    : 'Quick estimates for SIPs and lumpsums.'}
                 </p>
-              </div>
-
-              <div className="shrink-0">
-                <a
-                  href="#premium"
-                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-[#E6E3F0] text-xs font-bold text-[#17142E] hover:border-[#4F46E5] hover:text-[#4F46E5] transition-all shadow-xs"
-                >
-                  <span>{isTa ? 'அனைத்து 30+ கருவிகள்' : 'All 30+ calculators'}</span>
-                  <span className="bg-[#F5B700] text-[#3B2A00] font-extrabold text-[10px] px-1.5 py-0.5 rounded-[6px] tracking-wide">
-                    PRO
-                  </span>
-                </a>
               </div>
             </div>
 

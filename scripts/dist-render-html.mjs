@@ -33,7 +33,7 @@ var init_translations = __esm({
           stocks: "\u0BAA\u0B99\u0BCD\u0B95\u0BC1\u0B9A\u0BCD \u0B9A\u0BA8\u0BCD\u0BA4\u0BC8",
           personalFinance: "\u0BA4\u0BA9\u0BBF\u0BA8\u0BAA\u0BB0\u0BCD \u0BA8\u0BBF\u0BA4\u0BBF",
           education: "\u0BA8\u0BBF\u0BA4\u0BBF \u0B85\u0BB1\u0BBF\u0BB5\u0BC1",
-          calculator: "SIP \u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BBF\u0B9F\u0BC1\u0BB5\u0BBE\u0BA9\u0BCD",
+          calculator: "\u0B95\u0BBE\u0BB2\u0BCD\u0B95\u0BC1\u0BB2\u0BC7\u0B9F\u0BCD\u0B9F\u0BB0\u0BCD",
           quiz: "\u0BB5\u0BBF\u0BA9\u0BBE\u0B9F\u0BBF \u0BB5\u0BBF\u0BA9\u0BBE"
         },
         tickerLabel: "\u0BAE\u0BC1\u0B95\u0BCD\u0B95\u0BBF\u0BAF \u0B9A\u0BC6\u0BAF\u0BCD\u0BA4\u0BBF\u0B95\u0BB3\u0BCD",
@@ -106,7 +106,7 @@ var init_translations = __esm({
           stocks: "Stock Market",
           personalFinance: "Personal Finance",
           education: "Financial Education",
-          calculator: "SIP Calculator",
+          calculator: "Calculator",
           quiz: "Quiz"
         },
         tickerLabel: "BREAKING NEWS",
@@ -400,15 +400,7 @@ function SipCalculator({ initialTab, isEmbedded = false }) {
       setActiveTab(initialTab);
     }
   }, [initialTab]);
-  return /* @__PURE__ */ React16.createElement("section", { className: "calc-light w-full py-6 sm:py-10" }, /* @__PURE__ */ React16.createElement("div", { className: "w-full max-w-[1200px] mx-auto px-4 sm:px-6 space-y-6 sm:space-y-8" }, !isEmbedded && /* @__PURE__ */ React16.createElement("div", { className: "space-y-4 pb-2 border-b border-[#E6E3F0]" }, /* @__PURE__ */ React16.createElement("div", { className: "flex flex-col sm:flex-row sm:items-center justify-between gap-4" }, /* @__PURE__ */ React16.createElement("div", null, /* @__PURE__ */ React16.createElement("h1", { className: "text-2xl sm:text-[28px] font-bold text-[#17142E] tracking-tight" }, isTa ? "\u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BB0\u0BC1\u0BB5\u0BBF\u0B95\u0BB3\u0BCD" : "Calculators"), /* @__PURE__ */ React16.createElement("p", { className: "mt-1 text-xs sm:text-sm text-[#5B5875]" }, isTa ? "SIP \u0BAE\u0BB1\u0BCD\u0BB1\u0BC1\u0BAE\u0BCD \u0BAE\u0BCA\u0BA4\u0BCD\u0BA4 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD\u0B95\u0BBE\u0BA9 \u0B89\u0B9F\u0BA9\u0B9F\u0BBF \u0B95\u0BA3\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1\u0B95\u0BB3\u0BCD. \u0BAA\u0BBF\u0BB0\u0BC0\u0BAE\u0BBF\u0BAF\u0BAE\u0BCD \u0B89\u0BB1\u0BC1\u0BAA\u0BCD\u0BAA\u0BBF\u0BA9\u0BB0\u0BCD\u0B95\u0BB3\u0BC1\u0B95\u0BCD\u0B95\u0BC1 30+ \u0B95\u0BC2\u0B9F\u0BC1\u0BA4\u0BB2\u0BCD \u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BB0\u0BC1\u0BB5\u0BBF\u0B95\u0BB3\u0BCD \u0B95\u0BBF\u0B9F\u0BC8\u0B95\u0BCD\u0B95\u0BBF\u0BA9\u0BCD\u0BB1\u0BA9." : "Quick estimates for SIPs and lumpsums. Members get 30+ more calculators in Premium Access.")), /* @__PURE__ */ React16.createElement("div", { className: "shrink-0" }, /* @__PURE__ */ React16.createElement(
-    "a",
-    {
-      href: "#premium",
-      className: "inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-[#E6E3F0] text-xs font-bold text-[#17142E] hover:border-[#4F46E5] hover:text-[#4F46E5] transition-all shadow-xs"
-    },
-    /* @__PURE__ */ React16.createElement("span", null, isTa ? "\u0B85\u0BA9\u0BC8\u0BA4\u0BCD\u0BA4\u0BC1 30+ \u0B95\u0BB0\u0BC1\u0BB5\u0BBF\u0B95\u0BB3\u0BCD" : "All 30+ calculators"),
-    /* @__PURE__ */ React16.createElement("span", { className: "bg-[#F5B700] text-[#3B2A00] font-extrabold text-[10px] px-1.5 py-0.5 rounded-[6px] tracking-wide" }, "PRO")
-  ))), /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-6 overflow-x-auto no-scrollbar pt-2" }, /* @__PURE__ */ React16.createElement(
+  return /* @__PURE__ */ React16.createElement("section", { className: "calc-light w-full py-6 sm:py-10" }, /* @__PURE__ */ React16.createElement("div", { className: "w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 space-y-6 sm:space-y-8" }, !isEmbedded && /* @__PURE__ */ React16.createElement("div", { className: "space-y-4 pb-2 border-b border-[#E6E3F0]" }, /* @__PURE__ */ React16.createElement("div", { className: "flex flex-col sm:flex-row sm:items-center justify-between gap-4" }, /* @__PURE__ */ React16.createElement("div", null, /* @__PURE__ */ React16.createElement("h1", { className: "text-2xl sm:text-[28px] font-bold text-[#17142E] tracking-tight" }, isTa ? "\u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BB0\u0BC1\u0BB5\u0BBF\u0B95\u0BB3\u0BCD" : "Calculators"), /* @__PURE__ */ React16.createElement("p", { className: "mt-1 text-xs sm:text-sm text-[#5B5875]" }, isTa ? "SIP \u0BAE\u0BB1\u0BCD\u0BB1\u0BC1\u0BAE\u0BCD \u0BAE\u0BCA\u0BA4\u0BCD\u0BA4 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD\u0B95\u0BBE\u0BA9 \u0B89\u0B9F\u0BA9\u0B9F\u0BBF \u0B95\u0BA3\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1\u0B95\u0BB3\u0BCD." : "Quick estimates for SIPs and lumpsums."))), /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-6 overflow-x-auto no-scrollbar pt-2" }, /* @__PURE__ */ React16.createElement(
     "button",
     {
       type: "button",
@@ -2277,10 +2269,10 @@ function Navbar({ currentPath, onNavigate }) {
         onNavigate("/calculator");
       },
       className: `flex flex-col items-center justify-center min-w-0 py-1 min-h-[44px] rounded-lg transition-all active:scale-95 cursor-pointer ${cleanCurrent === "/calculator" ? "text-[#2563EB] dark:text-[#60a5fa] font-black" : "text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white"}`,
-      "aria-label": "SIP Calculator"
+      "aria-label": "Calculator"
     },
     /* @__PURE__ */ React8.createElement("svg", { className: "w-5 h-5 mb-0.5", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24" }, /* @__PURE__ */ React8.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2", d: "M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" })),
-    /* @__PURE__ */ React8.createElement("span", { className: "text-[11px] leading-none tracking-tight truncate max-w-full px-0.5" }, language === "ta" ? "SIP \u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BC0\u0B9F\u0BC1" : "Calculator")
+    /* @__PURE__ */ React8.createElement("span", { className: "text-[11px] leading-none tracking-tight truncate max-w-full px-0.5" }, language === "ta" ? "\u0B95\u0BBE\u0BB2\u0BCD\u0B95\u0BC1\u0BB2\u0BC7\u0B9F\u0BCD\u0B9F\u0BB0\u0BCD" : "Calculator")
   ), /* @__PURE__ */ React8.createElement(
     "button",
     {

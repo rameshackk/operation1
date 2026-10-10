@@ -1,0 +1,1 @@
+import{a as i}from"./chunk.J3IH4Q4P.js";import{a as o}from"./chunk.CH7QBMQ4.js";import{b as r}from"./chunk.WXDLP45E.js";var t=r(o(),1);function u(){return t.default.createElement(i,{initialTab:"quiz"})}export{u as RiskQuizWidget,u as default};

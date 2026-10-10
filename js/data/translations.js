@@ -19,7 +19,7 @@ const translations = {
       stocks: "பங்குச் சந்தை",
       personalFinance: "தனிநபர் நிதி",
       education: "நிதி அறிவு",
-      calculator: "SIP கணக்கிடுவான்",
+      calculator: "கால்குலேட்டர்",
       quiz: "வினாடி வினா"
     },
     tickerLabel: "முக்கிய செய்திகள்",
@@ -92,7 +92,7 @@ const translations = {
       stocks: "Stock Market",
       personalFinance: "Personal Finance",
       education: "Financial Education",
-      calculator: "SIP Calculator",
+      calculator: "Calculator",
       quiz: "Quiz"
     },
     tickerLabel: "BREAKING NEWS",
