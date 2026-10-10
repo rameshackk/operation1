@@ -86,6 +86,15 @@
       ]
     },
     {
+      "source": "/api/youtube/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, s-maxage=300, stale-while-revalidate=600"
+        }
+      ]
+    },
+    {
       "source": "/api/publishers(.*)",
       "headers": [
         {
@@ -130,8 +139,8 @@
   ],
   "crons": [
     {
-      "path": "/api/cron/fetch-videos",
-      "schedule": "0 6 * * *"
+      "path": "/api/youtube/sync?full=1&resubscribe=1",
+      "schedule": "30 21 * * *"
     },
     {
       "path": "/api/cron/fetch-news",
@@ -162,6 +171,22 @@
     {
       "source": "/api/translate",
       "destination": "/api/translate"
+    },
+    {
+      "source": "/api/youtube/videos",
+      "destination": "/api/youtube/videos"
+    },
+    {
+      "source": "/api/youtube/sync",
+      "destination": "/api/youtube/sync"
+    },
+    {
+      "source": "/api/youtube/websub",
+      "destination": "/api/youtube/websub"
+    },
+    {
+      "source": "/api/youtube/admin",
+      "destination": "/api/youtube/admin"
     },
     {
       "source": "/api/admin/metrics",

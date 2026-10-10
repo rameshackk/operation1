@@ -4,7 +4,7 @@ import { professionalsData, videosData } from '../data/translations.js';
 import { normalizeVideoRow, translateVideo } from '../services/api.js';
 import { normalizeSocialUrl, updateHeadTags, SITE_URL } from '../utils/formatters.js';
 import ProfessionalWidescreenVideoCard from './ProfessionalWidescreenVideoCard.jsx';
-import CinemaTheaterModal from './CinemaTheaterModal.jsx';
+import YouTubePlayerModal from '../components/youtube/YouTubePlayerModal.jsx';
 
 function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
   const { language } = useLanguage();
@@ -519,9 +519,9 @@ function ProfessionalProfilePage({ professionalId, onNavigate, onShowToast }) {
         </div>
       )}
 
-      {/* Video Cinema Modal */}
+      {/* Video Player Modal */}
       {selectedVideo && (
-        <CinemaTheaterModal
+        <YouTubePlayerModal
           video={selectedVideo}
           allVideos={publisherVideos}
           onClose={() => setSelectedVideo(null)}

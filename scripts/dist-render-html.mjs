@@ -354,15 +354,15 @@ __export(SipCalculator_exports, {
   SipCalculator: () => SipCalculator,
   default: () => SipCalculator_default
 });
-import React18, { useState as useState14, useMemo as useMemo5 } from "react";
+import React16, { useState as useState11, useMemo as useMemo3 } from "react";
 function SipCalculator() {
   const { t, language } = useLanguage();
-  const [calcMode, setCalcMode] = useState14("sip");
-  const [inputAmount, setInputAmount] = useState14("150");
-  const [lastValidAmount, setLastValidAmount] = useState14(150);
-  const [timeframe, setTimeframe] = useState14("1Y");
-  const [analysisTab, setAnalysisTab] = useState14("pie");
-  const [selectedFundName, setSelectedFundName] = useState14("SBI Arbitrage Opportunities Fund");
+  const [calcMode, setCalcMode] = useState11("sip");
+  const [inputAmount, setInputAmount] = useState11("150");
+  const [lastValidAmount, setLastValidAmount] = useState11(150);
+  const [timeframe, setTimeframe] = useState11("1Y");
+  const [analysisTab, setAnalysisTab] = useState11("pie");
+  const [selectedFundName, setSelectedFundName] = useState11("SBI Arbitrage Opportunities Fund");
   const isTamil = language === "ta";
   const RETURN_RATES = {
     sip: {
@@ -423,7 +423,7 @@ function SipCalculator() {
   const investedPct = fundAmount > 0 ? Math.min(100, Math.max(1, Math.round(totalInvested / fundAmount * 100))) : 100;
   const gainPct = Math.max(0, 100 - investedPct);
   const multiplier = totalInvested > 0 ? (fundAmount / totalInvested).toFixed(2) : "1.00";
-  const yearlySchedule = useMemo5(() => {
+  const yearlySchedule = useMemo3(() => {
     const list = [];
     const maxYears = Math.min(Math.max(Math.ceil(years), 1), 30);
     const rFund = currentRates.fund / 100;
@@ -455,7 +455,7 @@ function SipCalculator() {
     }
     return list;
   }, [calcMode, activeAmount, years, currentRates]);
-  return /* @__PURE__ */ React18.createElement("section", { id: "calculator", className: "w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 select-none min-w-0" }, /* @__PURE__ */ React18.createElement("div", { className: "bg-gradient-to-br from-[#0F172A] via-[#111C35] to-[#1E293B] rounded-2xl sm:rounded-3xl border border-slate-800 shadow-xl p-4 sm:p-6 lg:p-7 text-white transition-all" }, /* @__PURE__ */ React18.createElement("div", { className: "flex flex-col sm:flex-row items-center justify-between gap-3 pb-4 mb-5 border-b border-slate-800/90" }, /* @__PURE__ */ React18.createElement("div", { className: "flex items-center gap-2.5" }, /* @__PURE__ */ React18.createElement("div", { className: "w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center font-bold text-sm shrink-0" }, /* @__PURE__ */ React18.createElement("svg", { className: "w-4 h-4 text-emerald-400", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor" }, /* @__PURE__ */ React18.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M13 10V3L4 14h7v7l9-11h-7z" }))), /* @__PURE__ */ React18.createElement("div", null, /* @__PURE__ */ React18.createElement("h2", { className: "text-base sm:text-lg lg:text-xl font-extrabold text-white tracking-tight font-sans" }, isTamil ? "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BA3\u0BBF\u0BAA\u0BCD\u0BAA\u0BBE\u0BA9\u0BCD & \u0BAA\u0B95\u0BC1\u0BAA\u0BCD\u0BAA\u0BBE\u0BAF\u0BCD\u0BB5\u0BC1" : "Calculators & In-Depth Analysis"), /* @__PURE__ */ React18.createElement("p", { className: "text-xs sm:text-xs text-slate-300 font-medium font-sans" }, isTamil ? "\u0BAE\u0BBE\u0BA4\u0BBE\u0BA8\u0BCD\u0BA4\u0BBF\u0BB0 SIP / \u0BAE\u0BCA\u0BA4\u0BCD\u0BA4 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 \u0BA4\u0BBF\u0B9F\u0BCD\u0B9F\u0BAE\u0BBF\u0B9F\u0BB2\u0BCD & \u0BB5\u0BBF\u0BB0\u0BBF\u0BB5\u0BBE\u0BA9 \u0BA8\u0BBF\u0BA4\u0BBF \u0BB5\u0BB3\u0BB0\u0BCD\u0B9A\u0BCD\u0B9A\u0BBF \u0B85\u0BB1\u0BBF\u0B95\u0BCD\u0B95\u0BC8" : "Interactive SIP & Lumpsum wealth planner with visual asset chart & statement report"))), /* @__PURE__ */ React18.createElement("div", { className: "inline-flex p-1 bg-slate-900/90 rounded-full border border-slate-700/80 gap-1.5 shrink-0" }, /* @__PURE__ */ React18.createElement(
+  return /* @__PURE__ */ React16.createElement("section", { id: "calculator", className: "w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 select-none min-w-0" }, /* @__PURE__ */ React16.createElement("div", { className: "bg-gradient-to-br from-[#0F172A] via-[#111C35] to-[#1E293B] rounded-2xl sm:rounded-3xl border border-slate-800 shadow-xl p-4 sm:p-6 lg:p-7 text-white transition-all" }, /* @__PURE__ */ React16.createElement("div", { className: "flex flex-col sm:flex-row items-center justify-between gap-3 pb-4 mb-5 border-b border-slate-800/90" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-2.5" }, /* @__PURE__ */ React16.createElement("div", { className: "w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center font-bold text-sm shrink-0" }, /* @__PURE__ */ React16.createElement("svg", { className: "w-4 h-4 text-emerald-400", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor" }, /* @__PURE__ */ React16.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M13 10V3L4 14h7v7l9-11h-7z" }))), /* @__PURE__ */ React16.createElement("div", null, /* @__PURE__ */ React16.createElement("h2", { className: "text-base sm:text-lg lg:text-xl font-extrabold text-white tracking-tight font-sans" }, isTamil ? "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BA3\u0BBF\u0BAA\u0BCD\u0BAA\u0BBE\u0BA9\u0BCD & \u0BAA\u0B95\u0BC1\u0BAA\u0BCD\u0BAA\u0BBE\u0BAF\u0BCD\u0BB5\u0BC1" : "Calculators & In-Depth Analysis"), /* @__PURE__ */ React16.createElement("p", { className: "text-xs sm:text-xs text-slate-300 font-medium font-sans" }, isTamil ? "\u0BAE\u0BBE\u0BA4\u0BBE\u0BA8\u0BCD\u0BA4\u0BBF\u0BB0 SIP / \u0BAE\u0BCA\u0BA4\u0BCD\u0BA4 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 \u0BA4\u0BBF\u0B9F\u0BCD\u0B9F\u0BAE\u0BBF\u0B9F\u0BB2\u0BCD & \u0BB5\u0BBF\u0BB0\u0BBF\u0BB5\u0BBE\u0BA9 \u0BA8\u0BBF\u0BA4\u0BBF \u0BB5\u0BB3\u0BB0\u0BCD\u0B9A\u0BCD\u0B9A\u0BBF \u0B85\u0BB1\u0BBF\u0B95\u0BCD\u0B95\u0BC8" : "Interactive SIP & Lumpsum wealth planner with visual asset chart & statement report"))), /* @__PURE__ */ React16.createElement("div", { className: "inline-flex p-1 bg-slate-900/90 rounded-full border border-slate-700/80 gap-1.5 shrink-0" }, /* @__PURE__ */ React16.createElement(
     "button",
     {
       type: "button",
@@ -463,7 +463,7 @@ function SipCalculator() {
       className: "px-4 sm:px-5 py-1.5 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer " + (calcMode === "sip" ? "bg-[#16A34A] text-white shadow-md shadow-green-600/30" : "text-slate-300 hover:text-white")
     },
     "SIP"
-  ), /* @__PURE__ */ React18.createElement(
+  ), /* @__PURE__ */ React16.createElement(
     "button",
     {
       type: "button",
@@ -471,7 +471,7 @@ function SipCalculator() {
       className: "px-4 sm:px-5 py-1.5 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer " + (calcMode === "lumpsum" ? "bg-[#16A34A] text-white shadow-md shadow-green-600/30" : "text-slate-300 hover:text-white")
     },
     "Lumpsum"
-  ))), /* @__PURE__ */ React18.createElement("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-stretch" }, /* @__PURE__ */ React18.createElement("div", { className: "lg:col-span-6 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-2xl p-5 sm:p-6 shadow-xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between space-y-4" }, /* @__PURE__ */ React18.createElement("div", null, /* @__PURE__ */ React18.createElement("div", { className: "flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 mb-4" }, /* @__PURE__ */ React18.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React18.createElement("svg", { className: "w-4 h-4 text-emerald-600 dark:text-emerald-400", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor" }, /* @__PURE__ */ React18.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" })), /* @__PURE__ */ React18.createElement("h3", { className: "text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 dark:text-slate-200 font-sans" }, isTamil ? "1. \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BC0\u0B9F\u0BC1" : "1. Calculation Part")), /* @__PURE__ */ React18.createElement("span", { className: "text-xs font-bold px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-[#16A34A] dark:text-[#4ade80] font-sans" }, calcMode === "sip" ? "Monthly SIP" : "One-Time Lumpsum")), /* @__PURE__ */ React18.createElement("div", { className: "flex items-center justify-between gap-3 mb-2" }, /* @__PURE__ */ React18.createElement("label", { className: "text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 font-sans" }, calcMode === "sip" ? isTamil ? "\u0BAE\u0BBE\u0BA4\u0BBE\u0BA8\u0BCD\u0BA4\u0BBF\u0BB0 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1" : "Monthly Investment" : isTamil ? "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 \u0BA4\u0BCA\u0B95\u0BC8" : "Investment Amount"), /* @__PURE__ */ React18.createElement("div", { className: `flex items-center bg-slate-50 dark:bg-slate-800 border rounded-xl px-3 py-1 transition-all ${isInvalid ? "border-red-500 ring-1 ring-red-500" : "border-slate-300 dark:border-slate-700 focus-within:ring-2 focus-within:ring-[#16A34A]"}` }, /* @__PURE__ */ React18.createElement("span", { className: "text-slate-500 font-bold text-sm mr-1" }, "\u20B9"), /* @__PURE__ */ React18.createElement(
+  ))), /* @__PURE__ */ React16.createElement("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-stretch" }, /* @__PURE__ */ React16.createElement("div", { className: "lg:col-span-6 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-2xl p-5 sm:p-6 shadow-xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between space-y-4" }, /* @__PURE__ */ React16.createElement("div", null, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 mb-4" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React16.createElement("svg", { className: "w-4 h-4 text-emerald-600 dark:text-emerald-400", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor" }, /* @__PURE__ */ React16.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" })), /* @__PURE__ */ React16.createElement("h3", { className: "text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 dark:text-slate-200 font-sans" }, isTamil ? "1. \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BC0\u0B9F\u0BC1" : "1. Calculation Part")), /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-bold px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-[#16A34A] dark:text-[#4ade80] font-sans" }, calcMode === "sip" ? "Monthly SIP" : "One-Time Lumpsum")), /* @__PURE__ */ React16.createElement("div", { className: "flex items-center justify-between gap-3 mb-2" }, /* @__PURE__ */ React16.createElement("label", { className: "text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 font-sans" }, calcMode === "sip" ? isTamil ? "\u0BAE\u0BBE\u0BA4\u0BBE\u0BA8\u0BCD\u0BA4\u0BBF\u0BB0 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1" : "Monthly Investment" : isTamil ? "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 \u0BA4\u0BCA\u0B95\u0BC8" : "Investment Amount"), /* @__PURE__ */ React16.createElement("div", { className: `flex items-center bg-slate-50 dark:bg-slate-800 border rounded-xl px-3 py-1 transition-all ${isInvalid ? "border-red-500 ring-1 ring-red-500" : "border-slate-300 dark:border-slate-700 focus-within:ring-2 focus-within:ring-[#16A34A]"}` }, /* @__PURE__ */ React16.createElement("span", { className: "text-slate-500 font-bold text-sm mr-1" }, "\u20B9"), /* @__PURE__ */ React16.createElement(
     "input",
     {
       type: "number",
@@ -483,7 +483,7 @@ function SipCalculator() {
       onChange: (e) => handleAmountChange(e.target.value),
       className: "w-20 sm:w-24 bg-transparent text-right font-black text-slate-900 dark:text-white text-sm sm:text-base outline-none font-num"
     }
-  ))), isInvalid && /* @__PURE__ */ React18.createElement("p", { className: "text-xs text-red-500 font-medium mb-2 animate-fadeIn flex items-center gap-1.5" }, /* @__PURE__ */ React18.createElement("svg", { className: "w-3.5 h-3.5 text-red-500 shrink-0", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor" }, /* @__PURE__ */ React18.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" })), /* @__PURE__ */ React18.createElement("span", null, isTamil ? "\u0BA4\u0BCA\u0B95\u0BC8 \u20B9150 \u0BAE\u0BC1\u0BA4\u0BB2\u0BCD \u20B910,00,000 \u0BB5\u0BB0\u0BC8 \u0B87\u0BB0\u0BC1\u0B95\u0BCD\u0B95 \u0BB5\u0BC7\u0BA3\u0BCD\u0B9F\u0BC1\u0BAE\u0BCD (\u0B95\u0B9F\u0BC8\u0B9A\u0BBF \u0B9A\u0BB0\u0BBF\u0BAF\u0BBE\u0BA9 \u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1 \u0B95\u0BBE\u0B9F\u0BCD\u0B9F\u0BAA\u0BCD\u0BAA\u0B9F\u0BC1\u0B95\u0BBF\u0BB1\u0BA4\u0BC1)." : "Amount must be between \u20B9150 and \u20B910,00,000 (showing last valid calculation).")), /* @__PURE__ */ React18.createElement("div", { className: "mb-3" }, /* @__PURE__ */ React18.createElement(
+  ))), isInvalid && /* @__PURE__ */ React16.createElement("p", { className: "text-xs text-red-500 font-medium mb-2 animate-fadeIn flex items-center gap-1.5" }, /* @__PURE__ */ React16.createElement("svg", { className: "w-3.5 h-3.5 text-red-500 shrink-0", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor" }, /* @__PURE__ */ React16.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" })), /* @__PURE__ */ React16.createElement("span", null, isTamil ? "\u0BA4\u0BCA\u0B95\u0BC8 \u20B9150 \u0BAE\u0BC1\u0BA4\u0BB2\u0BCD \u20B910,00,000 \u0BB5\u0BB0\u0BC8 \u0B87\u0BB0\u0BC1\u0B95\u0BCD\u0B95 \u0BB5\u0BC7\u0BA3\u0BCD\u0B9F\u0BC1\u0BAE\u0BCD (\u0B95\u0B9F\u0BC8\u0B9A\u0BBF \u0B9A\u0BB0\u0BBF\u0BAF\u0BBE\u0BA9 \u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1 \u0B95\u0BBE\u0B9F\u0BCD\u0B9F\u0BAA\u0BCD\u0BAA\u0B9F\u0BC1\u0B95\u0BBF\u0BB1\u0BA4\u0BC1)." : "Amount must be between \u20B9150 and \u20B910,00,000 (showing last valid calculation).")), /* @__PURE__ */ React16.createElement("div", { className: "mb-3" }, /* @__PURE__ */ React16.createElement(
     "input",
     {
       type: "range",
@@ -495,7 +495,7 @@ function SipCalculator() {
       onChange: (e) => handleAmountChange(e.target.value),
       className: "w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-[#15803d]"
     }
-  ), /* @__PURE__ */ React18.createElement("div", { className: "flex justify-between items-center text-xs font-bold text-slate-600 dark:text-slate-400 mt-1 font-num" }, /* @__PURE__ */ React18.createElement("span", null, "\u20B9 150"), /* @__PURE__ */ React18.createElement("span", null, "\u20B9 10 Lakhs"))), /* @__PURE__ */ React18.createElement("div", { className: "flex flex-wrap gap-1.5 mb-4" }, presetAmounts.map((pVal) => /* @__PURE__ */ React18.createElement(
+  ), /* @__PURE__ */ React16.createElement("div", { className: "flex justify-between items-center text-xs font-bold text-slate-600 dark:text-slate-400 mt-1 font-num" }, /* @__PURE__ */ React16.createElement("span", null, "\u20B9 150"), /* @__PURE__ */ React16.createElement("span", null, "\u20B9 10 Lakhs"))), /* @__PURE__ */ React16.createElement("div", { className: "flex flex-wrap gap-1.5 mb-4" }, presetAmounts.map((pVal) => /* @__PURE__ */ React16.createElement(
     "button",
     {
       key: pVal,
@@ -504,12 +504,12 @@ function SipCalculator() {
       className: "px-2.5 py-1 rounded-lg text-xs font-bold font-num transition-all cursor-pointer " + (activeAmount === pVal ? "bg-[#0F172A] dark:bg-white text-white dark:text-slate-900 shadow-xs" : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700")
     },
     formatLakhs(pVal)
-  ))), /* @__PURE__ */ React18.createElement("div", { className: "mb-4" }, /* @__PURE__ */ React18.createElement("label", { className: "text-xs font-extrabold uppercase text-slate-600 dark:text-slate-400 tracking-wider block mb-1.5 font-sans" }, isTamil ? "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BBE\u0BB2\u0BAE\u0BCD (Time Horizon)" : "Time Horizon (Years)"), /* @__PURE__ */ React18.createElement("div", { className: "flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700 gap-1 overflow-x-auto" }, [
+  ))), /* @__PURE__ */ React16.createElement("div", { className: "mb-4" }, /* @__PURE__ */ React16.createElement("label", { className: "text-xs font-extrabold uppercase text-slate-600 dark:text-slate-400 tracking-wider block mb-1.5 font-sans" }, isTamil ? "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BBE\u0BB2\u0BAE\u0BCD (Time Horizon)" : "Time Horizon (Years)"), /* @__PURE__ */ React16.createElement("div", { className: "flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700 gap-1 overflow-x-auto" }, [
     { id: "1Y", label: "1 Year" },
     { id: "3Y", label: "3 Years" },
     { id: "5Y", label: "5 Years" },
     { id: "SI", label: "Since Inception" }
-  ].map((tItem) => /* @__PURE__ */ React18.createElement(
+  ].map((tItem) => /* @__PURE__ */ React16.createElement(
     "button",
     {
       key: tItem.id,
@@ -518,7 +518,7 @@ function SipCalculator() {
       className: "flex-1 py-1 px-2 rounded-lg text-xs font-bold font-sans whitespace-nowrap transition-all duration-200 text-center cursor-pointer " + (timeframe === tItem.id ? "bg-[#16A34A] text-white shadow-xs" : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white")
     },
     tItem.label
-  )))), /* @__PURE__ */ React18.createElement("div", { className: "bg-slate-50 dark:bg-slate-800/50 rounded-xl p-3 border border-slate-200/80 dark:border-slate-700/80 divide-y divide-slate-200/60 dark:divide-slate-700/60" }, /* @__PURE__ */ React18.createElement("div", { className: "pb-2 flex justify-between items-center" }, /* @__PURE__ */ React18.createElement("div", { className: "font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white flex items-center gap-1.5 font-sans truncate pr-2" }, /* @__PURE__ */ React18.createElement("span", { className: "w-2 h-2 rounded-full bg-[#16A34A] inline-block shrink-0" }), /* @__PURE__ */ React18.createElement("span", { className: "truncate" }, isTamil ? `${selectedFundName} (SBI \u0B86\u0BB0\u0BCD\u0BAA\u0BBF\u0B9F\u0BCD\u0BB0\u0BC7\u0B9C\u0BCD)` : selectedFundName)), /* @__PURE__ */ React18.createElement("div", { className: "text-right shrink-0" }, /* @__PURE__ */ React18.createElement("span", { className: "text-sm sm:text-base font-black text-slate-900 dark:text-white font-num" }, formatCurrency(fundAmount)), /* @__PURE__ */ React18.createElement("span", { className: "ml-1.5 text-xs font-bold text-[#16A34A] dark:text-[#4ade80] font-num" }, "+", currentRates.fund, "%"))), /* @__PURE__ */ React18.createElement("div", { className: "py-2 flex justify-between items-center" }, /* @__PURE__ */ React18.createElement("span", { className: "text-xs font-semibold text-slate-600 dark:text-slate-300 font-sans" }, "Nifty 50 Arbitrage Index"), /* @__PURE__ */ React18.createElement("div", { className: "text-right" }, /* @__PURE__ */ React18.createElement("span", { className: "text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 font-num" }, formatCurrency(benchAmount)), /* @__PURE__ */ React18.createElement("span", { className: "ml-1.5 text-xs font-bold text-slate-500 font-num" }, "+", currentRates.bench, "%"))), /* @__PURE__ */ React18.createElement("div", { className: "pt-2 flex justify-between items-center" }, /* @__PURE__ */ React18.createElement("span", { className: "text-xs font-semibold text-slate-600 dark:text-slate-300 font-sans" }, "CRISIL 1 Year T-Bill Index"), /* @__PURE__ */ React18.createElement("div", { className: "text-right" }, /* @__PURE__ */ React18.createElement("span", { className: "text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 font-num" }, formatCurrency(addBenchAmount)), /* @__PURE__ */ React18.createElement("span", { className: "ml-1.5 text-xs font-bold text-slate-500 font-num" }, "+", currentRates.addBench, "%"))))), /* @__PURE__ */ React18.createElement("div", { className: "bg-slate-100 dark:bg-slate-800 rounded-xl p-3 flex justify-between items-center text-xs font-sans" }, /* @__PURE__ */ React18.createElement("div", null, /* @__PURE__ */ React18.createElement("span", { className: "text-slate-500 dark:text-slate-400 block text-xs font-medium" }, isTamil ? "\u0BAE\u0BCA\u0BA4\u0BCD\u0BA4 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1" : "Total Capital Outlay"), /* @__PURE__ */ React18.createElement("span", { className: "font-black text-slate-900 dark:text-white font-num text-sm" }, formatCurrency(totalInvested))), /* @__PURE__ */ React18.createElement("div", { className: "text-right" }, /* @__PURE__ */ React18.createElement("span", { className: "text-slate-500 dark:text-slate-400 block text-xs font-medium" }, isTamil ? "\u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BBF\u0B9F\u0BAA\u0BCD\u0BAA\u0B9F\u0BCD\u0B9F \u0BB2\u0BBE\u0BAA\u0BAE\u0BCD" : "Estimated Growth"), /* @__PURE__ */ React18.createElement("span", { className: "font-black text-[#16A34A] dark:text-[#4ade80] font-num text-sm" }, "+", formatCurrency(estimatedGain))))), /* @__PURE__ */ React18.createElement("div", { className: "lg:col-span-6 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-2xl p-5 sm:p-6 shadow-xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between space-y-4" }, /* @__PURE__ */ React18.createElement("div", null, /* @__PURE__ */ React18.createElement("div", { className: "flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 mb-3" }, /* @__PURE__ */ React18.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React18.createElement("svg", { className: "w-4 h-4 text-emerald-600 dark:text-emerald-400", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor" }, /* @__PURE__ */ React18.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" })), /* @__PURE__ */ React18.createElement("h3", { className: "text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 dark:text-slate-200 font-sans" }, isTamil ? "2. \u0B9A\u0BBE\u0BB0\u0BCD\u0B9F\u0BCD & \u0BA8\u0BBF\u0BA4\u0BBF \u0B85\u0BB1\u0BBF\u0B95\u0BCD\u0B95\u0BC8" : "2. Chart & Statement Part")), /* @__PURE__ */ React18.createElement("div", { className: "flex bg-slate-100 dark:bg-slate-800 p-0.5 rounded-xl border border-slate-200 dark:border-slate-700" }, /* @__PURE__ */ React18.createElement(
+  )))), /* @__PURE__ */ React16.createElement("div", { className: "bg-slate-50 dark:bg-slate-800/50 rounded-xl p-3 border border-slate-200/80 dark:border-slate-700/80 divide-y divide-slate-200/60 dark:divide-slate-700/60" }, /* @__PURE__ */ React16.createElement("div", { className: "pb-2 flex justify-between items-center" }, /* @__PURE__ */ React16.createElement("div", { className: "font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white flex items-center gap-1.5 font-sans truncate pr-2" }, /* @__PURE__ */ React16.createElement("span", { className: "w-2 h-2 rounded-full bg-[#16A34A] inline-block shrink-0" }), /* @__PURE__ */ React16.createElement("span", { className: "truncate" }, isTamil ? `${selectedFundName} (SBI \u0B86\u0BB0\u0BCD\u0BAA\u0BBF\u0B9F\u0BCD\u0BB0\u0BC7\u0B9C\u0BCD)` : selectedFundName)), /* @__PURE__ */ React16.createElement("div", { className: "text-right shrink-0" }, /* @__PURE__ */ React16.createElement("span", { className: "text-sm sm:text-base font-black text-slate-900 dark:text-white font-num" }, formatCurrency(fundAmount)), /* @__PURE__ */ React16.createElement("span", { className: "ml-1.5 text-xs font-bold text-[#16A34A] dark:text-[#4ade80] font-num" }, "+", currentRates.fund, "%"))), /* @__PURE__ */ React16.createElement("div", { className: "py-2 flex justify-between items-center" }, /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-semibold text-slate-600 dark:text-slate-300 font-sans" }, "Nifty 50 Arbitrage Index"), /* @__PURE__ */ React16.createElement("div", { className: "text-right" }, /* @__PURE__ */ React16.createElement("span", { className: "text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 font-num" }, formatCurrency(benchAmount)), /* @__PURE__ */ React16.createElement("span", { className: "ml-1.5 text-xs font-bold text-slate-500 font-num" }, "+", currentRates.bench, "%"))), /* @__PURE__ */ React16.createElement("div", { className: "pt-2 flex justify-between items-center" }, /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-semibold text-slate-600 dark:text-slate-300 font-sans" }, "CRISIL 1 Year T-Bill Index"), /* @__PURE__ */ React16.createElement("div", { className: "text-right" }, /* @__PURE__ */ React16.createElement("span", { className: "text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 font-num" }, formatCurrency(addBenchAmount)), /* @__PURE__ */ React16.createElement("span", { className: "ml-1.5 text-xs font-bold text-slate-500 font-num" }, "+", currentRates.addBench, "%"))))), /* @__PURE__ */ React16.createElement("div", { className: "bg-slate-100 dark:bg-slate-800 rounded-xl p-3 flex justify-between items-center text-xs font-sans" }, /* @__PURE__ */ React16.createElement("div", null, /* @__PURE__ */ React16.createElement("span", { className: "text-slate-500 dark:text-slate-400 block text-xs font-medium" }, isTamil ? "\u0BAE\u0BCA\u0BA4\u0BCD\u0BA4 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1" : "Total Capital Outlay"), /* @__PURE__ */ React16.createElement("span", { className: "font-black text-slate-900 dark:text-white font-num text-sm" }, formatCurrency(totalInvested))), /* @__PURE__ */ React16.createElement("div", { className: "text-right" }, /* @__PURE__ */ React16.createElement("span", { className: "text-slate-500 dark:text-slate-400 block text-xs font-medium" }, isTamil ? "\u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BBF\u0B9F\u0BAA\u0BCD\u0BAA\u0B9F\u0BCD\u0B9F \u0BB2\u0BBE\u0BAA\u0BAE\u0BCD" : "Estimated Growth"), /* @__PURE__ */ React16.createElement("span", { className: "font-black text-[#16A34A] dark:text-[#4ade80] font-num text-sm" }, "+", formatCurrency(estimatedGain))))), /* @__PURE__ */ React16.createElement("div", { className: "lg:col-span-6 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-2xl p-5 sm:p-6 shadow-xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between space-y-4" }, /* @__PURE__ */ React16.createElement("div", null, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 mb-3" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React16.createElement("svg", { className: "w-4 h-4 text-emerald-600 dark:text-emerald-400", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor" }, /* @__PURE__ */ React16.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" })), /* @__PURE__ */ React16.createElement("h3", { className: "text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 dark:text-slate-200 font-sans" }, isTamil ? "2. \u0B9A\u0BBE\u0BB0\u0BCD\u0B9F\u0BCD & \u0BA8\u0BBF\u0BA4\u0BBF \u0B85\u0BB1\u0BBF\u0B95\u0BCD\u0B95\u0BC8" : "2. Chart & Statement Part")), /* @__PURE__ */ React16.createElement("div", { className: "flex bg-slate-100 dark:bg-slate-800 p-0.5 rounded-xl border border-slate-200 dark:border-slate-700" }, /* @__PURE__ */ React16.createElement(
     "button",
     {
       type: "button",
@@ -526,7 +526,7 @@ function SipCalculator() {
       className: "px-3 py-1 rounded-lg text-xs font-bold font-sans transition-all cursor-pointer " + (analysisTab === "pie" ? "bg-white dark:bg-slate-900 text-[#16A34A] dark:text-[#4ade80] shadow-xs" : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white")
     },
     isTamil ? "\u0BAA\u0BC8-\u0B9A\u0BBE\u0BB0\u0BCD\u0B9F\u0BCD" : "Pie Chart"
-  ), /* @__PURE__ */ React18.createElement(
+  ), /* @__PURE__ */ React16.createElement(
     "button",
     {
       type: "button",
@@ -534,7 +534,7 @@ function SipCalculator() {
       className: "px-3 py-1 rounded-lg text-xs font-bold font-sans transition-all cursor-pointer " + (analysisTab === "statement" ? "bg-white dark:bg-slate-900 text-[#16A34A] dark:text-[#4ade80] shadow-xs" : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white")
     },
     isTamil ? "\u0B85\u0BB1\u0BBF\u0B95\u0BCD\u0B95\u0BC8" : "Statement"
-  ))), analysisTab === "pie" ? /* @__PURE__ */ React18.createElement("div", { className: "space-y-3 animate-fadeIn" }, /* @__PURE__ */ React18.createElement("div", { className: "flex flex-col sm:flex-row items-center justify-around gap-4 bg-slate-50 dark:bg-slate-800/40 p-3 rounded-xl border border-slate-200/80 dark:border-slate-700/80" }, /* @__PURE__ */ React18.createElement("div", { className: "relative w-32 h-32 flex items-center justify-center shrink-0" }, /* @__PURE__ */ React18.createElement("svg", { className: "w-full h-full transform -rotate-90", viewBox: "0 0 36 36" }, /* @__PURE__ */ React18.createElement(
+  ))), analysisTab === "pie" ? /* @__PURE__ */ React16.createElement("div", { className: "space-y-3 animate-fadeIn" }, /* @__PURE__ */ React16.createElement("div", { className: "flex flex-col sm:flex-row items-center justify-around gap-4 bg-slate-50 dark:bg-slate-800/40 p-3 rounded-xl border border-slate-200/80 dark:border-slate-700/80" }, /* @__PURE__ */ React16.createElement("div", { className: "relative w-32 h-32 flex items-center justify-center shrink-0" }, /* @__PURE__ */ React16.createElement("svg", { className: "w-full h-full transform -rotate-90", viewBox: "0 0 36 36" }, /* @__PURE__ */ React16.createElement(
     "path",
     {
       className: "text-slate-200 dark:text-slate-700",
@@ -543,7 +543,7 @@ function SipCalculator() {
       fill: "none",
       d: "M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
     }
-  ), /* @__PURE__ */ React18.createElement(
+  ), /* @__PURE__ */ React16.createElement(
     "path",
     {
       className: "text-[#0F172A] dark:text-slate-400 transition-all duration-700",
@@ -553,7 +553,7 @@ function SipCalculator() {
       fill: "none",
       d: "M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
     }
-  ), /* @__PURE__ */ React18.createElement(
+  ), /* @__PURE__ */ React16.createElement(
     "path",
     {
       className: "text-[#16A34A] dark:text-[#4ade80] transition-all duration-700",
@@ -564,10 +564,10 @@ function SipCalculator() {
       fill: "none",
       d: "M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
     }
-  )), /* @__PURE__ */ React18.createElement("div", { className: "absolute flex flex-col items-center justify-center text-center p-1" }, /* @__PURE__ */ React18.createElement("span", { className: "text-xs font-extrabold text-slate-600 dark:text-slate-400 uppercase tracking-tight" }, isTamil ? "\u0BAE\u0BC1\u0BA4\u0BBF\u0BB0\u0BCD\u0BB5\u0BC1" : "Corpus"), /* @__PURE__ */ React18.createElement("span", { className: "text-xs sm:text-sm font-black text-slate-900 dark:text-white font-num leading-tight" }, formatCurrency(fundAmount)), /* @__PURE__ */ React18.createElement("span", { className: "text-xs font-bold text-[#16A34A] dark:text-[#4ade80] bg-emerald-100 dark:bg-emerald-950/60 px-1.5 py-0.2 rounded-full mt-0.5 font-num" }, multiplier, "x"))), /* @__PURE__ */ React18.createElement("div", { className: "space-y-1.5 text-xs font-bold font-sans" }, /* @__PURE__ */ React18.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React18.createElement("span", { className: "w-2.5 h-2.5 rounded-full bg-[#0F172A] dark:bg-slate-400" }), /* @__PURE__ */ React18.createElement("span", { className: "text-slate-700 dark:text-slate-300" }, isTamil ? "\u0B85\u0B9A\u0BB2\u0BCD \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1" : "Invested", ": ", investedPct, "%")), /* @__PURE__ */ React18.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React18.createElement("span", { className: "w-2.5 h-2.5 rounded-full bg-[#16A34A]" }), /* @__PURE__ */ React18.createElement("span", { className: "text-[#16A34A] dark:text-[#4ade80]" }, isTamil ? "\u0BB5\u0BB3\u0BB0\u0BCD\u0B9A\u0BCD\u0B9A\u0BBF \u0BB2\u0BBE\u0BAA\u0BAE\u0BCD" : "Gains", ": ", gainPct, "%")))), /* @__PURE__ */ React18.createElement("div", { className: "space-y-2" }, /* @__PURE__ */ React18.createElement("div", { className: "p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700/80 flex justify-between items-center text-xs" }, /* @__PURE__ */ React18.createElement("div", null, /* @__PURE__ */ React18.createElement("span", { className: "text-xs font-extrabold uppercase text-slate-600 dark:text-slate-400 tracking-wide block font-sans" }, isTamil ? "1. \u0B85\u0B9A\u0BB2\u0BCD \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 \u0BA4\u0BCA\u0B95\u0BC8" : "1. Principal Capital"), /* @__PURE__ */ React18.createElement("span", { className: "text-xs text-slate-500 font-medium" }, calcMode === "sip" ? `${years * 12} ${isTamil ? "\u0BA4\u0BB5\u0BA3\u0BC8\u0B95\u0BB3\u0BCD" : "installments"}` : isTamil ? "\u0B92\u0BB0\u0BC7 \u0BAE\u0BC1\u0BB1\u0BC8 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1" : "Lumpsum")), /* @__PURE__ */ React18.createElement("div", { className: "text-right" }, /* @__PURE__ */ React18.createElement("span", { className: "text-sm font-bold text-slate-900 dark:text-white font-num" }, formatCurrency(totalInvested)), /* @__PURE__ */ React18.createElement("span", { className: "block text-xs text-slate-600 dark:text-slate-400 font-num" }, "(", investedPct, "%)"))), /* @__PURE__ */ React18.createElement("div", { className: "p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700/80 flex justify-between items-center text-xs" }, /* @__PURE__ */ React18.createElement("div", null, /* @__PURE__ */ React18.createElement("span", { className: "text-xs font-extrabold uppercase text-slate-600 dark:text-slate-400 tracking-wide block font-sans" }, isTamil ? "2. \u0BB5\u0BB3\u0BB0\u0BCD\u0B9A\u0BCD\u0B9A\u0BBF \u0BB2\u0BBE\u0BAA\u0BAE\u0BCD" : "2. Compound Growth"), /* @__PURE__ */ React18.createElement("span", { className: "text-xs text-slate-500 font-medium" }, "@", currentRates.fund, "% CAGR")), /* @__PURE__ */ React18.createElement("div", { className: "text-right" }, /* @__PURE__ */ React18.createElement("span", { className: "text-sm font-bold text-[#16A34A] dark:text-[#4ade80] font-num" }, "+", formatCurrency(estimatedGain)), /* @__PURE__ */ React18.createElement("span", { className: "block text-xs text-[#16A34A] dark:text-[#4ade80] font-num" }, "(", gainPct, "%)"))), /* @__PURE__ */ React18.createElement("div", { className: "p-2.5 rounded-xl bg-gradient-to-r from-[#0F172A] to-[#1E293B] text-white border border-slate-800 flex justify-between items-center shadow-md" }, /* @__PURE__ */ React18.createElement("div", null, /* @__PURE__ */ React18.createElement("span", { className: "text-xs font-extrabold uppercase text-emerald-400 tracking-wide block font-sans" }, isTamil ? "3. \u0B8E\u0BA4\u0BBF\u0BB0\u0BCD\u0BAA\u0BBE\u0BB0\u0BCD\u0B95\u0BCD\u0B95\u0BC1\u0BAE\u0BCD \u0BAE\u0BC1\u0BA4\u0BBF\u0BB0\u0BCD\u0BB5\u0BC1 \u0BA8\u0BBF\u0BA4\u0BBF" : "3. Projected Total Corpus"), /* @__PURE__ */ React18.createElement("span", { className: "text-xs text-slate-300 font-medium" }, timeframe, " ", isTamil ? "\u0B95\u0BBE\u0BB2 \u0BAE\u0BC1\u0B9F\u0BBF\u0BB5\u0BBF\u0BB2\u0BCD" : "horizon value")), /* @__PURE__ */ React18.createElement("div", { className: "text-right" }, /* @__PURE__ */ React18.createElement("span", { className: "text-sm sm:text-base font-extrabold text-white font-num" }, formatCurrency(fundAmount)), /* @__PURE__ */ React18.createElement("span", { className: "block text-xs font-bold text-emerald-300 font-num" }, "+", (estimatedGain / (totalInvested || 1) * 100).toFixed(1), "% ", isTamil ? "\u0BB5\u0BB3\u0BB0\u0BCD\u0B9A\u0BCD\u0B9A\u0BBF" : "net return"))))) : (
+  )), /* @__PURE__ */ React16.createElement("div", { className: "absolute flex flex-col items-center justify-center text-center p-1" }, /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-extrabold text-slate-600 dark:text-slate-400 uppercase tracking-tight" }, isTamil ? "\u0BAE\u0BC1\u0BA4\u0BBF\u0BB0\u0BCD\u0BB5\u0BC1" : "Corpus"), /* @__PURE__ */ React16.createElement("span", { className: "text-xs sm:text-sm font-black text-slate-900 dark:text-white font-num leading-tight" }, formatCurrency(fundAmount)), /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-bold text-[#16A34A] dark:text-[#4ade80] bg-emerald-100 dark:bg-emerald-950/60 px-1.5 py-0.2 rounded-full mt-0.5 font-num" }, multiplier, "x"))), /* @__PURE__ */ React16.createElement("div", { className: "space-y-1.5 text-xs font-bold font-sans" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React16.createElement("span", { className: "w-2.5 h-2.5 rounded-full bg-[#0F172A] dark:bg-slate-400" }), /* @__PURE__ */ React16.createElement("span", { className: "text-slate-700 dark:text-slate-300" }, isTamil ? "\u0B85\u0B9A\u0BB2\u0BCD \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1" : "Invested", ": ", investedPct, "%")), /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React16.createElement("span", { className: "w-2.5 h-2.5 rounded-full bg-[#16A34A]" }), /* @__PURE__ */ React16.createElement("span", { className: "text-[#16A34A] dark:text-[#4ade80]" }, isTamil ? "\u0BB5\u0BB3\u0BB0\u0BCD\u0B9A\u0BCD\u0B9A\u0BBF \u0BB2\u0BBE\u0BAA\u0BAE\u0BCD" : "Gains", ": ", gainPct, "%")))), /* @__PURE__ */ React16.createElement("div", { className: "space-y-2" }, /* @__PURE__ */ React16.createElement("div", { className: "p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700/80 flex justify-between items-center text-xs" }, /* @__PURE__ */ React16.createElement("div", null, /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-extrabold uppercase text-slate-600 dark:text-slate-400 tracking-wide block font-sans" }, isTamil ? "1. \u0B85\u0B9A\u0BB2\u0BCD \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 \u0BA4\u0BCA\u0B95\u0BC8" : "1. Principal Capital"), /* @__PURE__ */ React16.createElement("span", { className: "text-xs text-slate-500 font-medium" }, calcMode === "sip" ? `${years * 12} ${isTamil ? "\u0BA4\u0BB5\u0BA3\u0BC8\u0B95\u0BB3\u0BCD" : "installments"}` : isTamil ? "\u0B92\u0BB0\u0BC7 \u0BAE\u0BC1\u0BB1\u0BC8 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1" : "Lumpsum")), /* @__PURE__ */ React16.createElement("div", { className: "text-right" }, /* @__PURE__ */ React16.createElement("span", { className: "text-sm font-bold text-slate-900 dark:text-white font-num" }, formatCurrency(totalInvested)), /* @__PURE__ */ React16.createElement("span", { className: "block text-xs text-slate-600 dark:text-slate-400 font-num" }, "(", investedPct, "%)"))), /* @__PURE__ */ React16.createElement("div", { className: "p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700/80 flex justify-between items-center text-xs" }, /* @__PURE__ */ React16.createElement("div", null, /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-extrabold uppercase text-slate-600 dark:text-slate-400 tracking-wide block font-sans" }, isTamil ? "2. \u0BB5\u0BB3\u0BB0\u0BCD\u0B9A\u0BCD\u0B9A\u0BBF \u0BB2\u0BBE\u0BAA\u0BAE\u0BCD" : "2. Compound Growth"), /* @__PURE__ */ React16.createElement("span", { className: "text-xs text-slate-500 font-medium" }, "@", currentRates.fund, "% CAGR")), /* @__PURE__ */ React16.createElement("div", { className: "text-right" }, /* @__PURE__ */ React16.createElement("span", { className: "text-sm font-bold text-[#16A34A] dark:text-[#4ade80] font-num" }, "+", formatCurrency(estimatedGain)), /* @__PURE__ */ React16.createElement("span", { className: "block text-xs text-[#16A34A] dark:text-[#4ade80] font-num" }, "(", gainPct, "%)"))), /* @__PURE__ */ React16.createElement("div", { className: "p-2.5 rounded-xl bg-gradient-to-r from-[#0F172A] to-[#1E293B] text-white border border-slate-800 flex justify-between items-center shadow-md" }, /* @__PURE__ */ React16.createElement("div", null, /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-extrabold uppercase text-emerald-400 tracking-wide block font-sans" }, isTamil ? "3. \u0B8E\u0BA4\u0BBF\u0BB0\u0BCD\u0BAA\u0BBE\u0BB0\u0BCD\u0B95\u0BCD\u0B95\u0BC1\u0BAE\u0BCD \u0BAE\u0BC1\u0BA4\u0BBF\u0BB0\u0BCD\u0BB5\u0BC1 \u0BA8\u0BBF\u0BA4\u0BBF" : "3. Projected Total Corpus"), /* @__PURE__ */ React16.createElement("span", { className: "text-xs text-slate-300 font-medium" }, timeframe, " ", isTamil ? "\u0B95\u0BBE\u0BB2 \u0BAE\u0BC1\u0B9F\u0BBF\u0BB5\u0BBF\u0BB2\u0BCD" : "horizon value")), /* @__PURE__ */ React16.createElement("div", { className: "text-right" }, /* @__PURE__ */ React16.createElement("span", { className: "text-sm sm:text-base font-extrabold text-white font-num" }, formatCurrency(fundAmount)), /* @__PURE__ */ React16.createElement("span", { className: "block text-xs font-bold text-emerald-300 font-num" }, "+", (estimatedGain / (totalInvested || 1) * 100).toFixed(1), "% ", isTamil ? "\u0BB5\u0BB3\u0BB0\u0BCD\u0B9A\u0BCD\u0B9A\u0BBF" : "net return"))))) : (
     /* VIEW 2: COMPACT YEARLY FINANCIAL STATEMENT TABLE */
-    /* @__PURE__ */ React18.createElement("div", { className: "overflow-x-auto max-h-[260px] overflow-y-auto rounded-xl border border-slate-200 dark:border-slate-800 shadow-inner animate-fadeIn" }, /* @__PURE__ */ React18.createElement("table", { className: "w-full text-left text-xs" }, /* @__PURE__ */ React18.createElement("thead", { className: "sticky top-0 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-extrabold border-b border-slate-200 dark:border-slate-700 font-sans" }, /* @__PURE__ */ React18.createElement("tr", null, /* @__PURE__ */ React18.createElement("th", { className: "p-2" }, isTamil ? "\u0B86\u0BA3\u0BCD\u0B9F\u0BC1" : "Period"), /* @__PURE__ */ React18.createElement("th", { className: "p-2" }, isTamil ? "\u0B85\u0B9A\u0BB2\u0BCD" : "Capital"), /* @__PURE__ */ React18.createElement("th", { className: "p-2" }, isTamil ? "\u0BB2\u0BBE\u0BAA\u0BAE\u0BCD" : "Growth"), /* @__PURE__ */ React18.createElement("th", { className: "p-2 truncate" }, selectedFundName), /* @__PURE__ */ React18.createElement("th", { className: "p-2" }, isTamil ? "\u0BAE\u0B9F\u0B99\u0BCD\u0B95\u0BC1" : "Multiple"))), /* @__PURE__ */ React18.createElement("tbody", { className: "divide-y divide-slate-100 dark:divide-slate-800 font-num" }, yearlySchedule.map((d) => /* @__PURE__ */ React18.createElement("tr", { key: d.year, className: "hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors" }, /* @__PURE__ */ React18.createElement("td", { className: "p-2 font-bold text-slate-900 dark:text-white font-sans" }, "Y", d.year), /* @__PURE__ */ React18.createElement("td", { className: "p-2 text-slate-600 dark:text-slate-400" }, formatCurrency(d.invested)), /* @__PURE__ */ React18.createElement("td", { className: "p-2 text-[#16A34A] dark:text-[#4ade80] font-semibold" }, "+", formatCurrency(d.gain)), /* @__PURE__ */ React18.createElement("td", { className: "p-2 font-bold text-slate-900 dark:text-white" }, formatCurrency(d.fundValue)), /* @__PURE__ */ React18.createElement("td", { className: "p-2" }, /* @__PURE__ */ React18.createElement("span", { className: "px-1.5 py-0.2 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400" }, d.multiplier, "x")))))))
-  )), /* @__PURE__ */ React18.createElement("p", { className: "text-xs text-slate-600 dark:text-slate-400 font-sans leading-tight pt-1" }, "**Past performance may or may not be sustained in future. For performance in SEBI format refer scheme returns.")))));
+    /* @__PURE__ */ React16.createElement("div", { className: "overflow-x-auto max-h-[260px] overflow-y-auto rounded-xl border border-slate-200 dark:border-slate-800 shadow-inner animate-fadeIn" }, /* @__PURE__ */ React16.createElement("table", { className: "w-full text-left text-xs" }, /* @__PURE__ */ React16.createElement("thead", { className: "sticky top-0 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-extrabold border-b border-slate-200 dark:border-slate-700 font-sans" }, /* @__PURE__ */ React16.createElement("tr", null, /* @__PURE__ */ React16.createElement("th", { className: "p-2" }, isTamil ? "\u0B86\u0BA3\u0BCD\u0B9F\u0BC1" : "Period"), /* @__PURE__ */ React16.createElement("th", { className: "p-2" }, isTamil ? "\u0B85\u0B9A\u0BB2\u0BCD" : "Capital"), /* @__PURE__ */ React16.createElement("th", { className: "p-2" }, isTamil ? "\u0BB2\u0BBE\u0BAA\u0BAE\u0BCD" : "Growth"), /* @__PURE__ */ React16.createElement("th", { className: "p-2 truncate" }, selectedFundName), /* @__PURE__ */ React16.createElement("th", { className: "p-2" }, isTamil ? "\u0BAE\u0B9F\u0B99\u0BCD\u0B95\u0BC1" : "Multiple"))), /* @__PURE__ */ React16.createElement("tbody", { className: "divide-y divide-slate-100 dark:divide-slate-800 font-num" }, yearlySchedule.map((d) => /* @__PURE__ */ React16.createElement("tr", { key: d.year, className: "hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors" }, /* @__PURE__ */ React16.createElement("td", { className: "p-2 font-bold text-slate-900 dark:text-white font-sans" }, "Y", d.year), /* @__PURE__ */ React16.createElement("td", { className: "p-2 text-slate-600 dark:text-slate-400" }, formatCurrency(d.invested)), /* @__PURE__ */ React16.createElement("td", { className: "p-2 text-[#16A34A] dark:text-[#4ade80] font-semibold" }, "+", formatCurrency(d.gain)), /* @__PURE__ */ React16.createElement("td", { className: "p-2 font-bold text-slate-900 dark:text-white" }, formatCurrency(d.fundValue)), /* @__PURE__ */ React16.createElement("td", { className: "p-2" }, /* @__PURE__ */ React16.createElement("span", { className: "px-1.5 py-0.2 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400" }, d.multiplier, "x")))))))
+  )), /* @__PURE__ */ React16.createElement("p", { className: "text-xs text-slate-600 dark:text-slate-400 font-sans leading-tight pt-1" }, "**Past performance may or may not be sustained in future. For performance in SEBI format refer scheme returns.")))));
 }
 var SipCalculator_default;
 var init_SipCalculator = __esm({
@@ -578,7 +578,7 @@ var init_SipCalculator = __esm({
 });
 
 // scripts/render-html.js
-import React20 from "react";
+import React18 from "react";
 import { renderToString } from "react-dom/server";
 
 // js/context/ThemeContext.jsx
@@ -1708,7 +1708,7 @@ var TrendingTicker_default = TrendingTicker;
 
 // js/components/home/Home.jsx
 init_LanguageContext();
-import React19, { Suspense, lazy } from "react";
+import React17, { Suspense, lazy } from "react";
 
 // js/components/home/HeroSection.jsx
 init_LanguageContext();
@@ -2138,523 +2138,342 @@ function TrendingArticlesSection({ onNavigate }) {
 }
 var TrendingArticlesSection_default = TrendingArticlesSection;
 
-// js/components/home/HomeCinemaShowcase.jsx
-init_LanguageContext();
-import React17, { useState as useState13, useEffect as useEffect9, useMemo as useMemo4 } from "react";
+// js/components/home/HomeLatestVideos.jsx
+import React15, { useState as useState10, useEffect as useEffect8 } from "react";
 
-// js/components/home/CinemaSpotlightHero.jsx
-init_LanguageContext();
-import React13, { useState as useState10 } from "react";
+// js/components/youtube/YouTubeVideoCard.jsx
+import React13 from "react";
 
-// js/components/home/CinemaVideoRail.jsx
-init_LanguageContext();
-import React15, { useRef as useRef2 } from "react";
+// js/utils/youtubeFormatters.js
+function formatCompactViews(count, isTamil = false) {
+  const num = typeof count === "number" ? count : parseInt(count || "0", 10);
+  if (isNaN(num) || num <= 0) return isTamil ? "0 \u0BAA\u0BBE\u0BB0\u0BCD\u0BB5\u0BC8\u0B95\u0BB3\u0BCD" : "0 views";
+  let formatted = "";
+  if (num >= 1e6) {
+    formatted = (num / 1e6).toFixed(1).replace(/\.0$/, "") + "M";
+  } else if (num >= 1e3) {
+    formatted = (num / 1e3).toFixed(num >= 1e4 ? 0 : 1).replace(/\.0$/, "") + "K";
+  } else {
+    formatted = num.toString();
+  }
+  return isTamil ? `${formatted} \u0BAA\u0BBE\u0BB0\u0BCD\u0BB5\u0BC8\u0B95\u0BB3\u0BCD` : `${formatted} views`;
+}
+function formatRelativeTime(dateStr, isTamil = false) {
+  if (!dateStr) return "";
+  const date = new Date(dateStr);
+  const now = /* @__PURE__ */ new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffSecs = Math.max(0, Math.floor(diffMs / 1e3));
+  const diffMins = Math.floor(diffSecs / 60);
+  const diffHours = Math.floor(diffMins / 60);
+  const diffDays = Math.floor(diffHours / 24);
+  const diffWeeks = Math.floor(diffDays / 7);
+  const diffMonths = Math.floor(diffDays / 30);
+  const diffYears = Math.floor(diffDays / 365);
+  if (diffHours < 1) {
+    return isTamil ? "\u0B9A\u0BB1\u0BCD\u0BB1\u0BC1 \u0BAE\u0BC1\u0BA9\u0BCD" : "Just now";
+  }
+  if (diffHours < 24) {
+    return isTamil ? `${diffHours} \u0BAE\u0BA3\u0BBF \u0BA8\u0BC7\u0BB0\u0BAE\u0BCD \u0BAE\u0BC1\u0BA9\u0BCD` : `${diffHours}h ago`;
+  }
+  if (diffDays < 7) {
+    return isTamil ? `${diffDays} \u0BA8\u0BBE\u0B9F\u0BCD\u0B95\u0BB3\u0BCD \u0BAE\u0BC1\u0BA9\u0BCD` : `${diffDays}d ago`;
+  }
+  if (diffWeeks < 4) {
+    return isTamil ? `${diffWeeks} \u0BB5\u0BBE\u0BB0\u0B99\u0BCD\u0B95\u0BB3\u0BCD \u0BAE\u0BC1\u0BA9\u0BCD` : `${diffWeeks}w ago`;
+  }
+  if (diffMonths < 12) {
+    return isTamil ? `${diffMonths} \u0BAE\u0BBE\u0BA4\u0BAE\u0BCD \u0BAE\u0BC1\u0BA9\u0BCD` : `${diffMonths} mo ago`;
+  }
+  return isTamil ? `${diffYears} \u0B86\u0BA3\u0BCD\u0B9F\u0BC1\u0B95\u0BB3\u0BCD \u0BAE\u0BC1\u0BA9\u0BCD` : `${diffYears} yr ago`;
+}
+function formatVideoDuration(seconds) {
+  const total = typeof seconds === "number" ? seconds : parseInt(seconds || "0", 10);
+  if (isNaN(total) || total <= 0) return "0:00";
+  const hrs = Math.floor(total / 3600);
+  const mins = Math.floor(total % 3600 / 60);
+  const secs = total % 60;
+  const secStr = secs < 10 ? `0${secs}` : `${secs}`;
+  if (hrs > 0) {
+    const minStr = mins < 10 ? `0${mins}` : `${mins}`;
+    return `${hrs}:${minStr}:${secStr}`;
+  }
+  return `${mins}:${secStr}`;
+}
 
-// js/components/home/CinemaVideoCard.jsx
-init_LanguageContext();
-import React14 from "react";
-function CinemaVideoCard({
-  video,
-  index = 0,
-  onSelect,
-  language = "ta",
-  onShowToast
-}) {
-  const isTamil = language === "ta";
+// js/components/youtube/YouTubeVideoCard.jsx
+function YouTubeVideoCard({ video, onSelect, isTamil = false }) {
   if (!video) return null;
-  const youtubeId = video?.youtubeId || video?.id || "";
-  const thumbnail = video?.thumbnail || (youtubeId ? `https://i.ytimg.com/vi_webp/${youtubeId}/mqdefault.webp` : "");
-  const title = isTamil ? video.titleTamil || video.title || "\u0BB5\u0BC0\u0B9F\u0BBF\u0BAF\u0BCB \u0BAA\u0BA4\u0BBF\u0BB5\u0BC1" : video.titleEnglish || video.title || "Featured Video";
-  const category = (video.category || "FINANCE").replace("-", " ").toUpperCase();
-  const duration = video.duration || (video.isShort ? "0:59" : "12:00");
-  return /* @__PURE__ */ React14.createElement(
+  const videoId = video.video_id || video.youtubeId || video.id;
+  const title = video.title || video.titleTamil || video.titleEnglish || "Budget Padmanaban Video";
+  const durationSeconds = video.duration_seconds || video.durationSeconds || 0;
+  const durationText = video.duration || formatVideoDuration(durationSeconds);
+  const views = video.view_count || video.views || 0;
+  const publishedAt = video.published_at || video.publishedAt;
+  const thumbnailUrl = video.thumbnail_url || video.thumbnail || (videoId ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg` : "/assets/logo.png");
+  const compactViews = formatCompactViews(views, isTamil);
+  const timeAgo = formatRelativeTime(publishedAt, isTamil);
+  const handleClick = () => {
+    if (onSelect) onSelect(video);
+  };
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      handleClick();
+    }
+  };
+  return /* @__PURE__ */ React13.createElement(
     "div",
     {
       role: "button",
       tabIndex: 0,
-      onClick: () => onSelect && onSelect(video),
-      onKeyDown: (e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          onSelect && onSelect(video);
-        }
-      },
-      className: "group relative select-none cursor-pointer rounded-2xl overflow-hidden\n        w-full aspect-[9/13]\n        bg-slate-900 border border-slate-800/80 hover:border-[#2563EB]/60\n        shadow-[0_4px_20px_rgba(15,23,42,0.05)] hover:shadow-[0_16px_32px_rgba(15,23,42,0.12)]\n        transition-all duration-300 shrink-0"
+      onClick: handleClick,
+      onKeyDown: handleKeyDown,
+      className: "group cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-xl transition-all duration-200 flex flex-col",
+      "aria-label": title
     },
-    /* @__PURE__ */ React14.createElement("div", { className: "absolute inset-0 w-full h-full overflow-hidden bg-slate-950" }, thumbnail && /* @__PURE__ */ React14.createElement(
+    /* @__PURE__ */ React13.createElement("div", { className: "relative aspect-video w-full rounded-xl overflow-hidden bg-slate-900 shrink-0" }, /* @__PURE__ */ React13.createElement(
       "img",
       {
-        src: thumbnail,
-        srcSet: youtubeId ? `https://i.ytimg.com/vi_webp/${youtubeId}/mqdefault.webp 320w, https://i.ytimg.com/vi_webp/${youtubeId}/hqdefault.webp 480w, https://i.ytimg.com/vi_webp/${youtubeId}/sddefault.webp 640w` : void 0,
-        sizes: "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px",
+        src: thumbnailUrl,
         alt: title,
         loading: "lazy",
         decoding: "async",
-        width: "320",
-        height: "180",
-        className: "w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+        onError: (e) => {
+          if (videoId && !e.target.src.includes("hqdefault.jpg")) {
+            e.target.src = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+          }
+        },
+        className: "w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-200 ease-out"
       }
-    ), /* @__PURE__ */ React14.createElement("div", { className: "absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent opacity-90" })),
-    /* @__PURE__ */ React14.createElement("div", { className: "absolute top-3 left-3 right-3 flex items-center justify-between z-20 pointer-events-none" }, /* @__PURE__ */ React14.createElement("span", { className: "px-2.5 py-1 text-xs font-extrabold uppercase tracking-wider rounded-full bg-slate-950/80 backdrop-blur-md text-white border border-white/10 font-sans" }, category), /* @__PURE__ */ React14.createElement("span", { className: "px-2 py-1 text-xs font-num font-bold rounded-full bg-slate-950/80 backdrop-blur-md text-slate-200 border border-white/10" }, duration)),
-    /* @__PURE__ */ React14.createElement("div", { className: "absolute inset-0 flex items-center justify-center pointer-events-none z-20" }, /* @__PURE__ */ React14.createElement("div", { className: "w-12 h-12 rounded-full bg-black/50 backdrop-blur-md border border-white/30 text-white flex items-center justify-center group-hover:bg-[#2563EB] group-hover:border-[#2563EB] group-hover:scale-110 transition-all duration-300 shadow-xl" }, /* @__PURE__ */ React14.createElement("svg", { className: "w-5 h-5 fill-current ml-0.5", viewBox: "0 0 24 24" }, /* @__PURE__ */ React14.createElement("polygon", { points: "5 3 19 12 5 21 5 3" })))),
-    /* @__PURE__ */ React14.createElement("div", { className: "absolute bottom-0 inset-x-0 p-4 pt-10 bg-gradient-to-t from-slate-950 via-slate-950/95 to-transparent z-20 flex flex-col justify-end gap-2" }, /* @__PURE__ */ React14.createElement("h3", { className: "text-xs sm:text-sm font-bold text-white font-sans line-clamp-2 leading-snug group-hover:text-blue-300 transition-colors" }, title), /* @__PURE__ */ React14.createElement("div", { className: "flex items-center justify-between pt-1 opacity-80 group-hover:opacity-100" }, /* @__PURE__ */ React14.createElement("span", { className: "text-xs text-slate-600 dark:text-slate-400 font-medium truncate max-w-[120px]" }, video.channelName || "Budget Padmanaban"), /* @__PURE__ */ React14.createElement("span", { className: "text-xs font-bold text-[#60a5fa] group-hover:underline shrink-0 flex items-center gap-1 font-sans" }, /* @__PURE__ */ React14.createElement("span", null, isTamil ? "\u0BAA\u0BBE\u0BB0\u0BCD\u0B95\u0BCD\u0B95" : "Watch"), /* @__PURE__ */ React14.createElement("span", null, "\u2192"))))
+    ), /* @__PURE__ */ React13.createElement("div", { className: "absolute inset-0 bg-transparent group-hover:bg-black/20 transition-colors duration-200 flex items-center justify-center" }, /* @__PURE__ */ React13.createElement("div", { className: "w-10 h-10 rounded-full bg-white/95 text-slate-950 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-lg transform group-hover:scale-100 scale-90" }, /* @__PURE__ */ React13.createElement("svg", { className: "w-4 h-4 fill-current ml-0.5", viewBox: "0 0 24 24" }, /* @__PURE__ */ React13.createElement("polygon", { points: "5 3 19 12 5 21 5 3" })))), video.is_live ? /* @__PURE__ */ React13.createElement("div", { className: "absolute top-2 left-2 px-2 py-0.5 rounded bg-red-600 text-white text-[11px] font-black uppercase tracking-wider flex items-center gap-1.5 shadow-md" }, /* @__PURE__ */ React13.createElement("span", { className: "w-2 h-2 rounded-full bg-white animate-ping" }), /* @__PURE__ */ React13.createElement("span", null, "LIVE")) : null, durationText && !video.is_live ? /* @__PURE__ */ React13.createElement("span", { className: "absolute bottom-1.5 right-1.5 px-1.5 py-0.5 rounded bg-black/80 text-white text-xs font-semibold leading-none shadow-sm" }, durationText) : null),
+    /* @__PURE__ */ React13.createElement(
+      "h3",
+      {
+        className: "mt-3 text-[15px] font-semibold text-slate-900 dark:text-white leading-[1.4] line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors",
+        title
+      },
+      title
+    ),
+    /* @__PURE__ */ React13.createElement("div", { className: "mt-1 text-[13px] text-slate-500 dark:text-slate-400 font-medium flex items-center flex-wrap gap-x-1.5" }, /* @__PURE__ */ React13.createElement("span", null, "Budget Padmanaban"), /* @__PURE__ */ React13.createElement("span", null, "\xB7"), /* @__PURE__ */ React13.createElement("span", null, compactViews), timeAgo ? /* @__PURE__ */ React13.createElement(React13.Fragment, null, /* @__PURE__ */ React13.createElement("span", null, "\xB7"), /* @__PURE__ */ React13.createElement("span", null, timeAgo)) : null)
   );
 }
-var CinemaVideoCard_default = CinemaVideoCard;
+var YouTubeVideoCard_default = YouTubeVideoCard;
 
-// js/pages/CinemaTheaterModal.jsx
-import React16, { useState as useState11, useEffect as useEffect7, useMemo as useMemo3 } from "react";
-import { createPortal } from "react-dom";
-
-// js/services/api.js
-init_translations();
-function translateVideo(video, language = "ta") {
+// js/components/youtube/YouTubePlayerModal.jsx
+import React14, { useEffect as useEffect7 } from "react";
+function YouTubePlayerModal({ video, allVideos = [], onClose, onSelectRelated, isTamil = false, onShowToast }) {
   if (!video) return null;
-  const isTamil = language === "ta";
-  const title = isTamil ? video.titleTamil || video.title : video.titleEnglish || video.title || video.titleTamil;
-  const description = isTamil ? video.descriptionTamil || video.description : video.descriptionEnglish || video.description || video.descriptionTamil;
-  return {
-    ...video,
-    title: title || "Budget Padmanaban Video",
-    description: description || "Financial Insights by Budget Padmanaban",
-    duration: video.duration || (video.isShort ? "Short" : "10:00"),
-    views: video.views || 18500,
-    activeLang: language
-  };
-}
-function normalizeVideoRow(v) {
-  const youtubeId = v.youtubeId || v.youtube_id || v.id;
-  return {
-    ...v,
-    youtubeId,
-    titleTamil: v.title_ta || v.titleTamil || v.title,
-    titleEnglish: v.title_en || v.titleEnglish || v.title,
-    descriptionTamil: v.description_ta || v.descriptionTamil || v.description,
-    descriptionEnglish: v.description_en || v.descriptionEnglish || v.description,
-    thumbnail: v.thumbnail_url || v.thumbnail || (youtubeId ? `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg` : ""),
-    views: v.view_count || v.views || 0,
-    publishedAt: v.published_at || v.publishedAt,
-    tags: v.tags || []
-  };
-}
-
-// js/pages/CinemaTheaterModal.jsx
-init_translations();
-function extractYoutubeId(val) {
-  if (!val || typeof val !== "string") return "";
-  const trimmed = val.trim();
-  if (/^[a-zA-Z0-9_-]{11}$/.test(trimmed)) return trimmed;
-  const match = trimmed.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/i);
-  return match ? match[1] : trimmed.length === 11 ? trimmed : "";
-}
-function CinemaTheaterModal({
-  video,
-  allVideos = [],
-  onClose,
-  onSelectRelated,
-  language = "ta",
-  onShowToast
-}) {
-  const { session } = useAuth();
-  const isTamil = language === "ta";
-  const [copied, setCopied] = useState11(false);
-  const [activeTab, setActiveTab] = useState11("overview");
-  const [sidebarFilter, setSidebarFilter] = useState11("all");
-  const [sidebarSearch, setSidebarSearch] = useState11("");
+  const videoId = video.video_id || video.youtubeId || video.id;
+  const title = video.title || video.titleTamil || video.titleEnglish || "Budget Padmanaban Video";
+  const views = video.view_count || video.views || 0;
+  const publishedAt = video.published_at || video.publishedAt;
+  const summary = (isTamil ? video.ai_summary_ta || video.summaryTamil : video.ai_summary_en || video.summaryEnglish) || video.description || video.descriptionTamil || video.descriptionEnglish || "";
+  const compactViews = formatCompactViews(views, isTamil);
+  const timeAgo = formatRelativeTime(publishedAt, isTamil);
   useEffect7(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        if (onClose) onClose();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    const handleKey = (e) => {
-      if (e.key === "Escape") onClose && onClose();
-    };
-    window.addEventListener("keydown", handleKey);
     return () => {
+      window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = originalOverflow;
-      window.removeEventListener("keydown", handleKey);
     };
   }, [onClose]);
-  if (!video) return null;
-  const youtubeId = extractYoutubeId(video.youtubeId || video.youtube_id || video.id || video.youtubeUrl || video.youtube_url) || "GizYMQfl9CY";
-  const embedUrl = youtubeId ? `https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=1&rel=0&modestbranding=1` : "";
-  const youtubeWatchUrl = video.youtubeUrl || video.youtube_url || (youtubeId ? `https://www.youtube.com/watch?v=${youtubeId}` : "");
-  const title = isTamil ? video.titleTamil || video.title : video.titleEnglish || video.title;
-  const description = isTamil ? video.descriptionTamil || video.description : video.descriptionEnglish || video.description;
-  const rawVideos = allVideos && allVideos.length > 0 ? allVideos : typeof videosData !== "undefined" ? videosData : [];
-  const filteredPlaylist = useMemo3(() => {
-    let list = rawVideos.filter((v) => v.id !== video.id);
-    if (sidebarFilter === "category" && video.category) {
-      list = list.filter((v) => v.category === video.category);
-    } else if (sidebarFilter === "shorts") {
-      list = list.filter((v) => v.isShort || v.tags && v.tags.includes("shorts"));
-    }
-    if (sidebarSearch.trim()) {
-      const q = sidebarSearch.toLowerCase();
-      list = list.filter(
-        (v) => v.titleTamil && v.titleTamil.toLowerCase().includes(q) || v.titleEnglish && v.titleEnglish.toLowerCase().includes(q) || v.title && v.title.toLowerCase().includes(q) || v.category && v.category.toLowerCase().includes(q)
-      );
-    }
-    return list.slice(0, 25).map((v) => typeof translateVideo === "function" ? translateVideo(v, language) : v);
-  }, [rawVideos, video.id, video.category, sidebarFilter, sidebarSearch, language]);
-  const handleShare = async () => {
-    const shareUrl = youtubeWatchUrl || window.location.href;
-    try {
-      if (navigator.clipboard) {
-        await navigator.clipboard.writeText(shareUrl);
-        setCopied(true);
-        if (onShowToast) onShowToast(isTamil ? "\u0B87\u0BA3\u0BC8\u0BAA\u0BCD\u0BAA\u0BC1 \u0BA8\u0B95\u0BB2\u0BC6\u0B9F\u0BC1\u0B95\u0BCD\u0B95\u0BAA\u0BCD\u0BAA\u0B9F\u0BCD\u0B9F\u0BA4\u0BC1!" : "Link copied to clipboard!");
-        setTimeout(() => setCopied(false), 2e3);
-      }
-    } catch (e) {
-      console.error("Failed to copy", e);
+  const relatedVideos = (allVideos || []).filter((v) => (v.video_id || v.youtubeId || v.id) !== videoId && !v.is_short && !v.isShort).sort((a, b) => {
+    const aCat = a.category === video.category ? 1 : 0;
+    const bCat = b.category === video.category ? 1 : 0;
+    return bCat - aCat;
+  }).slice(0, 8);
+  const handleShareWhatsApp = () => {
+    const shareUrl = `https://www.muthaleetuthisai.com/#/videos/watch/${videoId}`;
+    const text = encodeURIComponent(`Watch "${title}" on Muthaleetu Thisai: ${shareUrl}`);
+    window.open(`https://api.whatsapp.com/send?text=${text}`, "_blank");
+  };
+  const handleCopyLink = () => {
+    const shareUrl = `https://www.muthaleetuthisai.com/#/videos/watch/${videoId}`;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(shareUrl);
+      if (onShowToast) onShowToast(isTamil ? "\u0B87\u0BA3\u0BC8\u0BAA\u0BCD\u0BAA\u0BC1 \u0BA8\u0B95\u0BB2\u0BC6\u0B9F\u0BC1\u0B95\u0BCD\u0B95\u0BAA\u0BCD\u0BAA\u0B9F\u0BCD\u0B9F\u0BA4\u0BC1!" : "Link copied to clipboard!");
     }
   };
-  const modalNode = /* @__PURE__ */ React16.createElement(
+  return /* @__PURE__ */ React14.createElement(
     "div",
     {
-      role: "dialog",
-      "aria-modal": "true",
-      className: "fixed inset-0 z-[999999] w-screen h-screen bg-[#070b14] flex flex-col overflow-hidden text-white animate-fadeIn",
-      style: { position: "fixed", top: 0, left: 0, right: 0, bottom: 0, width: "100vw", height: "100vh", zIndex: 999999 }
+      className: "fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-slate-950/85 backdrop-blur-md animate-fadeIn",
+      onClick: onClose
     },
-    /* @__PURE__ */ React16.createElement("div", { className: "h-12 sm:h-14 bg-[#090e1a] border-b border-slate-800/90 flex items-center justify-between px-3 sm:px-6 shrink-0 z-20 shadow-md" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-2 sm:gap-3 min-w-0" }, /* @__PURE__ */ React16.createElement(
-      "button",
+    /* @__PURE__ */ React14.createElement(
+      "div",
       {
-        onClick: onClose,
-        className: "flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-amber-500 hover:text-slate-950 text-slate-200 transition-all text-xs font-black border border-slate-700 shrink-0"
+        className: "relative w-full max-w-6xl max-h-[92vh] bg-slate-900 border border-slate-800 rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col lg:flex-row",
+        onClick: (e) => e.stopPropagation()
       },
-      /* @__PURE__ */ React16.createElement("span", null, "\u2190"),
-      /* @__PURE__ */ React16.createElement("span", { className: "hidden sm:inline" }, isTamil ? "\u0B85\u0BA9\u0BC8\u0BA4\u0BCD\u0BA4\u0BC1 \u0BB5\u0BC0\u0B9F\u0BBF\u0BAF\u0BCB\u0B95\u0BCD\u0B95\u0BB3\u0BCD" : "Back to Videos")
-    ), /* @__PURE__ */ React16.createElement("div", { className: "h-4 w-[1px] bg-slate-800 hidden sm:block" }), /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-2 truncate min-w-0" }, /* @__PURE__ */ React16.createElement("span", { className: "px-2 py-0.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-400 text-xs font-black uppercase tracking-wider shrink-0" }, (video.category || "FINANCE").replace("-", " ")), /* @__PURE__ */ React16.createElement("span", { className: "text-xs text-slate-300 font-bold truncate hidden md:inline" }, title))), /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-1.5 sm:gap-2 shrink-0" }, /* @__PURE__ */ React16.createElement(
-      "button",
-      {
-        onClick: handleShare,
-        className: "px-2.5 sm:px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-slate-200 hover:text-white flex items-center gap-1.5 transition-colors"
-      },
-      copied ? /* @__PURE__ */ React16.createElement(React16.Fragment, null, /* @__PURE__ */ React16.createElement("svg", { className: "w-3.5 h-3.5 text-emerald-400", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor" }, /* @__PURE__ */ React16.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2.5, d: "M5 13l4 4L19 7" })), /* @__PURE__ */ React16.createElement("span", null, isTamil ? "\u0BA8\u0B95\u0BB2\u0BC6\u0B9F\u0BC1\u0B95\u0BCD\u0B95\u0BAA\u0BCD\u0BAA\u0B9F\u0BCD\u0B9F\u0BA4\u0BC1" : "Copied")) : /* @__PURE__ */ React16.createElement("span", null, isTamil ? "\u0BAA\u0B95\u0BBF\u0BB0\u0BCD" : "Share")
-    ), /* @__PURE__ */ React16.createElement(
-      "button",
-      {
-        onClick: onClose,
-        "aria-label": "Exit Fullscreen",
-        className: "w-8 h-8 rounded-xl bg-slate-800 hover:bg-red-600 text-slate-300 hover:text-white flex items-center justify-center transition-colors text-sm font-bold border border-slate-700"
-      },
-      /* @__PURE__ */ React16.createElement("svg", { className: "w-4 h-4", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor" }, /* @__PURE__ */ React16.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M6 18L18 6M6 6l12 12" }))
-    ))),
-    /* @__PURE__ */ React16.createElement("div", { className: "grid grid-cols-1 lg:grid-cols-12 flex-1 min-h-0 overflow-hidden divide-y lg:divide-y-0 lg:divide-x divide-slate-800/80" }, /* @__PURE__ */ React16.createElement("main", { className: "lg:col-span-8 xl:col-span-9 flex flex-col min-h-0 bg-[#040711] overflow-y-auto" }, /* @__PURE__ */ React16.createElement("div", { className: "w-full bg-black flex items-center justify-center p-0 sm:p-2 lg:p-4 shrink-0 shadow-2xl" }, /* @__PURE__ */ React16.createElement("div", { className: "w-full max-w-5xl aspect-video max-h-[55vh] sm:max-h-[62vh] rounded-none sm:rounded-2xl overflow-hidden bg-black shadow-2xl border border-slate-900" }, embedUrl ? /* @__PURE__ */ React16.createElement(
-      "iframe",
-      {
-        src: embedUrl,
-        title,
-        allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share",
-        allowFullScreen: true,
-        className: "w-full h-full border-0"
-      }
-    ) : /* @__PURE__ */ React16.createElement("div", { className: "w-full h-full flex items-center justify-center text-slate-600 dark:text-slate-400" }, /* @__PURE__ */ React16.createElement("span", null, "Video player unavailable")))), /* @__PURE__ */ React16.createElement("div", { className: "p-5 sm:p-8 space-y-6 max-w-5xl" }, /* @__PURE__ */ React16.createElement("div", { className: "space-y-3 border-b border-slate-800/80 pb-5" }, /* @__PURE__ */ React16.createElement("h1", { className: "text-xl sm:text-2xl lg:text-3xl font-black font-serif text-white leading-snug tracking-tight" }, title), /* @__PURE__ */ React16.createElement("div", { className: "flex flex-wrap items-center justify-between gap-4 pt-1" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-3" }, /* @__PURE__ */ React16.createElement("div", { className: "w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-600 to-amber-400 flex items-center justify-center font-black text-slate-950 text-sm shadow-md" }, "BP"), /* @__PURE__ */ React16.createElement("div", null, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-1.5" }, /* @__PURE__ */ React16.createElement("span", { className: "text-sm font-bold text-white" }, video.channelName || "Budget Padmanaban"), /* @__PURE__ */ React16.createElement("span", { className: "text-emerald-400 text-xs font-bold", title: "CFP Certified" }, "CFP\xAE")), /* @__PURE__ */ React16.createElement("p", { className: "text-xs text-slate-600 dark:text-slate-400 font-medium" }, "Certified Financial Planner \u2022 Video Masterclasses"))), /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-3 text-xs font-mono text-slate-300 bg-slate-900 px-3.5 py-1.5 rounded-xl border border-slate-800" }, /* @__PURE__ */ React16.createElement("span", { className: "text-amber-400 font-bold" }, video.views ? `${video.views.toLocaleString()} views` : "Masterclass"), /* @__PURE__ */ React16.createElement("span", null, "\u2022"), /* @__PURE__ */ React16.createElement("span", null, video.duration || "12:00"), video.publishedAt && /* @__PURE__ */ React16.createElement(React16.Fragment, null, /* @__PURE__ */ React16.createElement("span", null, "\u2022"), /* @__PURE__ */ React16.createElement("span", { className: "text-slate-600 dark:text-slate-400" }, new Date(video.publishedAt).toLocaleDateString()))))), /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-2 border-b border-slate-800 pb-2" }, /* @__PURE__ */ React16.createElement(
-      "button",
-      {
-        onClick: () => setActiveTab("overview"),
-        className: `px-4 py-2 rounded-xl text-xs font-extrabold transition-all ${activeTab === "overview" ? "bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20" : "bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-white border border-slate-800"}`
-      },
-      isTamil ? "\u0BB5\u0BBF\u0BB3\u0B95\u0BCD\u0B95\u0BAE\u0BCD & \u0BB5\u0BBF\u0BB5\u0BB0\u0B99\u0BCD\u0B95\u0BB3\u0BCD" : "Overview & Details"
-    ), /* @__PURE__ */ React16.createElement(
-      "button",
-      {
-        onClick: () => setActiveTab("takeaways"),
-        className: `px-4 py-2 rounded-xl text-xs font-extrabold transition-all ${activeTab === "takeaways" ? "bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20" : "bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-white border border-slate-800"}`
-      },
-      isTamil ? "\u0BAE\u0BC1\u0B95\u0BCD\u0B95\u0BBF\u0BAF \u0B86\u0BB2\u0BCB\u0B9A\u0BA9\u0BC8\u0B95\u0BB3\u0BCD" : "Key Takeaways"
-    ), /* @__PURE__ */ React16.createElement(
-      "button",
-      {
-        onClick: () => setActiveTab("tools"),
-        className: `px-4 py-2 rounded-xl text-xs font-extrabold transition-all ${activeTab === "tools" ? "bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20" : "bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-white border border-slate-800"}`
-      },
-      isTamil ? "SIP \u0B95\u0BBE\u0BB2\u0BCD\u0B95\u0BC1\u0BB2\u0BC7\u0B9F\u0BCD\u0B9F\u0BB0\u0BCD" : "SIP Calculator"
-    )), activeTab === "overview" && /* @__PURE__ */ React16.createElement("div", { className: "p-5 sm:p-6 rounded-2xl bg-slate-900/90 border border-slate-800 text-xs sm:text-sm text-slate-300 font-sans leading-relaxed whitespace-pre-line space-y-4" }, /* @__PURE__ */ React16.createElement("p", null, description || (isTamil ? "\u0B87\u0BA8\u0BCD\u0BA4 \u0BB5\u0BC0\u0B9F\u0BBF\u0BAF\u0BCB\u0BB5\u0BBF\u0BB1\u0BCD\u0B95\u0BBE\u0BA9 \u0BB5\u0BBF\u0BB3\u0B95\u0BCD\u0B95\u0BAE\u0BCD \u0BB5\u0BBF\u0BB0\u0BC8\u0BB5\u0BBF\u0BB2\u0BCD \u0BAA\u0BC1\u0BA4\u0BC1\u0BAA\u0BCD\u0BAA\u0BBF\u0B95\u0BCD\u0B95\u0BAA\u0BCD\u0BAA\u0B9F\u0BC1\u0BAE\u0BCD." : "No detailed description available.")), /* @__PURE__ */ React16.createElement("div", { className: "pt-4 border-t border-slate-800/80 flex flex-wrap gap-2" }, /* @__PURE__ */ React16.createElement("span", { className: "px-3 py-1 rounded-lg bg-slate-950 text-xs font-mono text-amber-400 border border-slate-800" }, "#", (video.category || "finance").toUpperCase()), /* @__PURE__ */ React16.createElement("span", { className: "px-3 py-1 rounded-lg bg-slate-950 text-xs font-mono text-slate-600 dark:text-slate-400 border border-slate-800" }, "#BudgetPadmanaban"), /* @__PURE__ */ React16.createElement("span", { className: "px-3 py-1 rounded-lg bg-slate-950 text-xs font-mono text-slate-600 dark:text-slate-400 border border-slate-800" }, "#MutualFunds"), /* @__PURE__ */ React16.createElement("span", { className: "px-3 py-1 rounded-lg bg-slate-950 text-xs font-mono text-slate-600 dark:text-slate-400 border border-slate-800" }, "#SIPCompounding"))), activeTab === "takeaways" && /* @__PURE__ */ React16.createElement("div", { className: "p-5 sm:p-6 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-3.5" }, /* @__PURE__ */ React16.createElement("h3", { className: "text-sm font-bold text-amber-400" }, isTamil ? "\u0BAA\u0B9F\u0BCD\u0B9C\u0BC6\u0B9F\u0BCD \u0BAA\u0BA4\u0BCD\u0BAE\u0BA8\u0BBE\u0BAA\u0BA9\u0BCD CFP\xAE \u0BAE\u0BC1\u0B95\u0BCD\u0B95\u0BBF\u0BAF \u0B86\u0BB2\u0BCB\u0B9A\u0BA9\u0BC8\u0B95\u0BB3\u0BCD:" : "Core Principles & Financial Takeaways:"), /* @__PURE__ */ React16.createElement("ul", { className: "space-y-2.5 text-xs sm:text-sm text-slate-300 font-medium" }, /* @__PURE__ */ React16.createElement("li", { className: "flex items-start gap-2.5" }, /* @__PURE__ */ React16.createElement("span", { className: "text-amber-400 font-bold mt-0.5" }, "\u2022"), /* @__PURE__ */ React16.createElement("span", null, isTamil ? "\u0BA8\u0BC0\u0BA3\u0BCD\u0B9F \u0B95\u0BBE\u0BB2 \u0B95\u0BC2\u0B9F\u0BCD\u0B9F\u0BC1 \u0BB5\u0B9F\u0BCD\u0B9F\u0BBF (Compounding) \u0BAA\u0BAF\u0BA9\u0BC8 \u0BAE\u0BC1\u0BB4\u0BC1\u0BAE\u0BC8\u0BAF\u0BBE\u0B95\u0BAA\u0BCD \u0BAA\u0BAF\u0BA9\u0BCD\u0BAA\u0B9F\u0BC1\u0BA4\u0BCD\u0BA4 \u0B92\u0BB4\u0BC1\u0B99\u0BCD\u0B95\u0BBE\u0BA9 SIP \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC8 \u0BA4\u0BCA\u0B9F\u0BB0\u0BB5\u0BC1\u0BAE\u0BCD." : "Maintain disciplined SIP investments to harness long-term compounding benefits.")), /* @__PURE__ */ React16.createElement("li", { className: "flex items-start gap-2.5" }, /* @__PURE__ */ React16.createElement("span", { className: "text-amber-400 font-bold mt-0.5" }, "\u2022"), /* @__PURE__ */ React16.createElement("span", null, isTamil ? "\u0B9A\u0BA8\u0BCD\u0BA4\u0BC8\u0BAF\u0BBF\u0BA9\u0BCD \u0B95\u0BC1\u0BB1\u0BC1\u0B95\u0BBF\u0BAF \u0B95\u0BBE\u0BB2 \u0B8F\u0BB1\u0BCD\u0BB1 \u0B87\u0BB1\u0B95\u0BCD\u0B95\u0B99\u0BCD\u0B95\u0BB3\u0BC8\u0BAA\u0BCD \u0BAA\u0BBE\u0BB0\u0BCD\u0BA4\u0BCD\u0BA4\u0BC1 \u0B85\u0BB5\u0B9A\u0BB0\u0BAA\u0BCD\u0BAA\u0B9F\u0BCD\u0B9F\u0BC1 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC8 \u0BA4\u0BBF\u0BB0\u0BC1\u0BAE\u0BCD\u0BAA\u0BAA\u0BCD \u0BAA\u0BC6\u0BB1\u0BBE\u0BA4\u0BC0\u0BB0\u0BCD\u0B95\u0BB3\u0BCD." : "Avoid emotional exits during market corrections; stay focused on your financial goals.")), /* @__PURE__ */ React16.createElement("li", { className: "flex items-start gap-2.5" }, /* @__PURE__ */ React16.createElement("span", { className: "text-amber-400 font-bold mt-0.5" }, "\u2022"), /* @__PURE__ */ React16.createElement("span", null, isTamil ? "\u0B89\u0B99\u0BCD\u0B95\u0BB3\u0BCD \u0B95\u0BC1\u0B9F\u0BC1\u0BAE\u0BCD\u0BAA\u0BA4\u0BCD\u0BA4\u0BBF\u0BA9\u0BCD \u0BAE\u0BB0\u0BC1\u0BA4\u0BCD\u0BA4\u0BC1\u0BB5 \u0B95\u0BBE\u0BAA\u0BCD\u0BAA\u0BC0\u0B9F\u0BC1 \u0BAE\u0BB1\u0BCD\u0BB1\u0BC1\u0BAE\u0BCD \u0B85\u0BB5\u0B9A\u0BB0 \u0B95\u0BBE\u0BB2 \u0BA8\u0BBF\u0BA4\u0BBF\u0BAF\u0BC8 \u0B8E\u0BAA\u0BCD\u0BAA\u0BCB\u0BA4\u0BC1\u0BAE\u0BCD \u0B89\u0BB1\u0BC1\u0BA4\u0BBF \u0B9A\u0BC6\u0BAF\u0BCD\u0BAF\u0BC1\u0B99\u0BCD\u0B95\u0BB3\u0BCD." : "Ensure adequate health insurance and 6-month emergency reserve before investing.")))), activeTab === "tools" && /* @__PURE__ */ React16.createElement("div", { className: "p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-slate-900 to-amber-950/40 border border-amber-500/30 space-y-3 flex flex-col sm:flex-row items-center justify-between gap-4" }, /* @__PURE__ */ React16.createElement("div", { className: "space-y-1" }, /* @__PURE__ */ React16.createElement("h3", { className: "text-sm font-bold text-white" }, isTamil ? "\u0B89\u0B99\u0BCD\u0B95\u0BB3\u0BCD SIP \u0B87\u0BB2\u0B95\u0BCD\u0B95\u0BC8 \u0B89\u0B9F\u0BA9\u0B9F\u0BBF\u0BAF\u0BBE\u0B95\u0B95\u0BCD \u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BBF\u0B9F\u0BC1\u0B99\u0BCD\u0B95\u0BB3\u0BCD" : "Calculate Your SIP Wealth Growth"), /* @__PURE__ */ React16.createElement("p", { className: "text-xs text-slate-600 dark:text-slate-400" }, isTamil ? "\u20B95,000 \u0BAE\u0BBE\u0BA4 SIP \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BBF\u0BA9\u0BCD 10-15 \u0BB5\u0BB0\u0BC1\u0B9F \u0B95\u0BC2\u0B9F\u0BCD\u0B9F\u0BC1 \u0BB5\u0B9F\u0BCD\u0B9F\u0BBF \u0BB5\u0BB3\u0BB0\u0BCD\u0B9A\u0BCD\u0B9A\u0BBF \u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BC8 \u0B85\u0BB1\u0BBF\u0BAF\u0BC1\u0B99\u0BCD\u0B95\u0BB3\u0BCD." : "Simulate your future portfolio returns with our interactive compounding tool.")), /* @__PURE__ */ React16.createElement(
-      "button",
-      {
-        onClick: () => {
-          onClose && onClose();
-          window.location.hash = "#/calculator";
-        },
-        className: "px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs shadow-lg shadow-amber-500/20 whitespace-nowrap transition-transform hover:scale-105 shrink-0"
-      },
-      isTamil ? "\u0B95\u0BBE\u0BB2\u0BCD\u0B95\u0BC1\u0BB2\u0BC7\u0B9F\u0BCD\u0B9F\u0BB0\u0BC8\u0BA4\u0BCD \u0BA4\u0BBF\u0BB1\u0B95\u0BCD\u0B95 \u2192" : "Launch SIP Calculator \u2192"
-    )))), /* @__PURE__ */ React16.createElement("aside", { className: "lg:col-span-4 xl:col-span-3 flex flex-col min-h-0 bg-[#090e1a] overflow-hidden" }, /* @__PURE__ */ React16.createElement("div", { className: "p-3.5 border-b border-slate-800 bg-[#070b14] space-y-2.5 shrink-0" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center justify-between" }, /* @__PURE__ */ React16.createElement("h2", { className: "text-xs font-black uppercase tracking-wider text-slate-200 flex items-center gap-2" }, /* @__PURE__ */ React16.createElement("span", { className: "w-2 h-2 rounded-full bg-amber-500 animate-pulse" }), /* @__PURE__ */ React16.createElement("span", null, isTamil ? "\u0B85\u0B9F\u0BC1\u0BA4\u0BCD\u0BA4 \u0BB5\u0BC0\u0B9F\u0BBF\u0BAF\u0BCB\u0B95\u0BCD\u0B95\u0BB3\u0BCD" : "Up Next & Playlist")), /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-mono font-bold text-slate-600 dark:text-slate-400 px-2 py-0.5 rounded-full bg-slate-800 border border-slate-700" }, filteredPlaylist.length, " ", isTamil ? "\u0BAA\u0BA4\u0BBF\u0BB5\u0BC1\u0B95\u0BB3\u0BCD" : "items")), /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-1.5 overflow-x-auto no-scrollbar" }, /* @__PURE__ */ React16.createElement(
-      "button",
-      {
-        onClick: () => setSidebarFilter("all"),
-        className: `px-2.5 py-1 rounded-lg text-xs font-extrabold whitespace-nowrap transition-all ${sidebarFilter === "all" ? "bg-amber-500 text-slate-950 shadow" : "bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-white border border-slate-800"}`
-      },
-      isTamil ? "\u0B85\u0BA9\u0BC8\u0BA4\u0BCD\u0BA4\u0BC1\u0BAE\u0BCD" : "All"
-    ), /* @__PURE__ */ React16.createElement(
-      "button",
-      {
-        onClick: () => setSidebarFilter("category"),
-        className: `px-2.5 py-1 rounded-lg text-xs font-extrabold whitespace-nowrap transition-all ${sidebarFilter === "category" ? "bg-amber-500 text-slate-950 shadow" : "bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-white border border-slate-800"}`
-      },
-      isTamil ? "\u0B87\u0BA4\u0BC7 \u0BAA\u0BBF\u0BB0\u0BBF\u0BB5\u0BC1" : "Same Category"
-    ), /* @__PURE__ */ React16.createElement(
-      "button",
-      {
-        onClick: () => setSidebarFilter("shorts"),
-        className: `px-2.5 py-1 rounded-lg text-xs font-extrabold whitespace-nowrap transition-all ${sidebarFilter === "shorts" ? "bg-amber-500 text-slate-950 shadow" : "bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-white border border-slate-800"}`
-      },
-      "Shorts"
-    )), /* @__PURE__ */ React16.createElement("div", { className: "relative" }, /* @__PURE__ */ React16.createElement("svg", { className: "w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor" }, /* @__PURE__ */ React16.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" })), /* @__PURE__ */ React16.createElement(
-      "input",
-      {
-        type: "text",
-        value: sidebarSearch,
-        onChange: (e) => setSidebarSearch(e.target.value),
-        placeholder: isTamil ? "\u0BB5\u0BC0\u0B9F\u0BBF\u0BAF\u0BCB\u0B95\u0BCD\u0B95\u0BB3\u0BC8\u0BA4\u0BCD \u0BA4\u0BC7\u0B9F\u0BC1\u0B99\u0BCD\u0B95\u0BB3\u0BCD..." : "Filter playlist...",
-        className: "w-full pl-8 pr-7 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
-      }
-    ), sidebarSearch && /* @__PURE__ */ React16.createElement(
-      "button",
-      {
-        onClick: () => setSidebarSearch(""),
-        className: "absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white text-xs"
-      },
-      /* @__PURE__ */ React16.createElement("svg", { className: "w-3.5 h-3.5", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor" }, /* @__PURE__ */ React16.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M6 18L18 6M6 6l12 12" }))
-    ))), /* @__PURE__ */ React16.createElement("div", { className: "p-3 space-y-2 overflow-y-auto flex-1 divide-y divide-slate-800/40" }, filteredPlaylist.length === 0 ? /* @__PURE__ */ React16.createElement("div", { className: "py-12 text-center text-slate-500 text-xs" }, isTamil ? "\u0BB5\u0BC0\u0B9F\u0BBF\u0BAF\u0BCB\u0B95\u0BCD\u0B95\u0BB3\u0BCD \u0B8E\u0BA4\u0BC1\u0BB5\u0BC1\u0BAE\u0BCD \u0B95\u0BBF\u0B9F\u0BC8\u0B95\u0BCD\u0B95\u0BB5\u0BBF\u0BB2\u0BCD\u0BB2\u0BC8" : "No matching videos found") : filteredPlaylist.map((rel) => {
-      const relTitle = isTamil ? rel.titleTamil || rel.title : rel.titleEnglish || rel.title;
-      return /* @__PURE__ */ React16.createElement(
-        "div",
+      /* @__PURE__ */ React14.createElement(
+        "button",
         {
-          key: `theater-related-${rel.id}`,
-          role: "button",
-          tabIndex: 0,
-          onClick: () => onSelectRelated && onSelectRelated(rel),
-          className: "group flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-800/90 border border-transparent hover:border-amber-500/40 transition-all cursor-pointer pt-3 first:pt-1"
+          type: "button",
+          onClick: onClose,
+          className: "absolute top-3 right-3 z-30 w-9 h-9 rounded-full bg-slate-800/90 hover:bg-slate-700 text-white flex items-center justify-center transition-colors shadow-md",
+          title: "Close (Esc)",
+          "aria-label": "Close"
         },
-        /* @__PURE__ */ React16.createElement("div", { className: "relative w-28 sm:w-32 aspect-video rounded-lg overflow-hidden shrink-0 bg-slate-950 shadow" }, /* @__PURE__ */ React16.createElement(
-          "img",
+        /* @__PURE__ */ React14.createElement("svg", { className: "w-5 h-5", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor" }, /* @__PURE__ */ React14.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M6 18L18 6M6 6l12 12" }))
+      ),
+      /* @__PURE__ */ React14.createElement("div", { className: "flex-1 overflow-y-auto no-scrollbar p-4 sm:p-6 space-y-4" }, /* @__PURE__ */ React14.createElement("div", { className: "relative aspect-video w-full rounded-xl sm:rounded-2xl overflow-hidden bg-black shadow-lg" }, /* @__PURE__ */ React14.createElement(
+        "iframe",
+        {
+          src: `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`,
+          title,
+          allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share",
+          allowFullScreen: true,
+          className: "absolute inset-0 w-full h-full border-0"
+        }
+      )), /* @__PURE__ */ React14.createElement("div", { className: "space-y-3" }, /* @__PURE__ */ React14.createElement("div", { className: "flex items-center justify-between flex-wrap gap-2" }, /* @__PURE__ */ React14.createElement("span", { className: "px-3 py-0.5 rounded-full bg-blue-600/20 text-blue-400 border border-blue-500/30 text-xs font-bold uppercase tracking-wider" }, video.category || "Mutual Funds"), /* @__PURE__ */ React14.createElement("span", { className: "text-xs text-slate-400 font-medium" }, compactViews, " ", timeAgo ? `\xB7 ${timeAgo}` : "")), /* @__PURE__ */ React14.createElement("h2", { className: "text-base sm:text-xl font-bold font-serif text-white leading-snug" }, title), summary ? /* @__PURE__ */ React14.createElement("div", { className: "p-3.5 sm:p-4 rounded-xl bg-slate-800/80 border border-slate-700/80 space-y-1 text-xs sm:text-sm text-slate-200" }, /* @__PURE__ */ React14.createElement("div", { className: "text-[11px] font-bold text-blue-400 uppercase tracking-wider" }, isTamil ? "\u0B9A\u0BC1\u0BB0\u0BC1\u0B95\u0BCD\u0B95\u0BAE\u0BBE\u0BA9 \u0BAA\u0BBE\u0BB0\u0BCD\u0BB5\u0BC8 (Key Takeaway)" : "AI Key Takeaway"), /* @__PURE__ */ React14.createElement("p", { className: "leading-relaxed" }, summary)) : null, /* @__PURE__ */ React14.createElement("div", { className: "flex flex-wrap items-center gap-2 pt-2 border-t border-slate-800" }, /* @__PURE__ */ React14.createElement(
+        "a",
+        {
+          href: "https://www.youtube.com/@budgetpadmanaban_?sub_confirmation=1",
+          target: "_blank",
+          rel: "noreferrer",
+          className: "px-3.5 py-1.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs shadow transition-colors flex items-center gap-1.5"
+        },
+        /* @__PURE__ */ React14.createElement("svg", { className: "w-4 h-4 fill-current", viewBox: "0 0 24 24" }, /* @__PURE__ */ React14.createElement("path", { d: "M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" })),
+        /* @__PURE__ */ React14.createElement("span", null, isTamil ? "\u0B9A\u0BAA\u0BCD\u0BB8\u0BCD\u0B95\u0BBF\u0BB0\u0BC8\u0BAA\u0BCD" : "Subscribe")
+      ), /* @__PURE__ */ React14.createElement(
+        "a",
+        {
+          href: `https://www.youtube.com/watch?v=${videoId}`,
+          target: "_blank",
+          rel: "noreferrer",
+          className: "px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition-colors flex items-center gap-1.5"
+        },
+        /* @__PURE__ */ React14.createElement("span", null, isTamil ? "YouTube-\u0BB2\u0BCD \u0BA4\u0BBF\u0BB1\u0B95\u0BCD\u0B95" : "Open on YouTube"),
+        /* @__PURE__ */ React14.createElement("span", null, "\u2197")
+      ), /* @__PURE__ */ React14.createElement(
+        "button",
+        {
+          type: "button",
+          onClick: handleShareWhatsApp,
+          className: "px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow transition-colors flex items-center gap-1.5"
+        },
+        /* @__PURE__ */ React14.createElement("span", null, "WhatsApp")
+      ), /* @__PURE__ */ React14.createElement(
+        "button",
+        {
+          type: "button",
+          onClick: handleCopyLink,
+          className: "px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition-colors"
+        },
+        isTamil ? "\u0B87\u0BA3\u0BC8\u0BAA\u0BCD\u0BAA\u0BC8 \u0BA8\u0B95\u0BB2\u0BC6\u0B9F\u0BC1" : "Copy Link"
+      ), /* @__PURE__ */ React14.createElement(
+        "a",
+        {
+          href: "#/tools",
+          onClick: () => onClose && onClose(),
+          className: "ml-auto px-3 py-1.5 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 border border-blue-500/30 text-xs font-semibold transition-colors flex items-center gap-1"
+        },
+        /* @__PURE__ */ React14.createElement("span", null, isTamil ? "SIP \u0B95\u0BBE\u0BB2\u0BCD\u0B95\u0BC1\u0BB2\u0BC7\u0B9F\u0BCD\u0B9F\u0BB0\u0BCD" : "SIP Calculator"),
+        /* @__PURE__ */ React14.createElement("span", null, "\u2192")
+      )))),
+      relatedVideos.length > 0 ? /* @__PURE__ */ React14.createElement("div", { className: "w-full lg:w-80 lg:max-w-xs border-t lg:border-t-0 lg:border-l border-slate-800 p-4 sm:p-5 overflow-y-auto no-scrollbar bg-slate-900/90 shrink-0" }, /* @__PURE__ */ React14.createElement("h3", { className: "text-xs font-bold text-slate-400 uppercase tracking-wider mb-3" }, isTamil ? "\u0B85\u0B9F\u0BC1\u0BA4\u0BCD\u0BA4\u0BC1 \u0BAA\u0BBE\u0BB0\u0BCD\u0B95\u0BCD\u0B95 (Up Next)" : "Up Next"), /* @__PURE__ */ React14.createElement("div", { className: "space-y-3" }, relatedVideos.map((item) => {
+        const relId = item.video_id || item.youtubeId || item.id;
+        const relTitle = item.title || item.titleTamil || item.titleEnglish;
+        const relDuration = item.duration || formatVideoDuration(item.duration_seconds || item.durationSeconds);
+        const relThumb = item.thumbnail_url || item.thumbnail || (relId ? `https://i.ytimg.com/vi/${relId}/hqdefault.jpg` : "/assets/logo.png");
+        return /* @__PURE__ */ React14.createElement(
+          "div",
           {
-            src: rel.thumbnail || `https://img.youtube.com/vi/${rel.youtubeId}/hqdefault.jpg`,
-            alt: relTitle,
-            className: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-          }
-        ), /* @__PURE__ */ React16.createElement("span", { className: "absolute bottom-1 right-1 px-1.5 py-0.5 rounded bg-black/85 text-xs font-mono font-bold text-slate-200" }, rel.duration || "12:00")),
-        /* @__PURE__ */ React16.createElement("div", { className: "flex-1 min-w-0 space-y-1" }, /* @__PURE__ */ React16.createElement("h3", { className: "text-xs font-bold text-slate-200 group-hover:text-amber-400 line-clamp-2 leading-tight transition-colors" }, relTitle), /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400" }, /* @__PURE__ */ React16.createElement("span", { className: "text-amber-500 font-semibold uppercase text-xs" }, (rel.category || "FINANCE").replace("-", " "))))
-      );
-    }))))
+            key: relId,
+            role: "button",
+            tabIndex: 0,
+            onClick: () => onSelectRelated && onSelectRelated(item),
+            onKeyDown: (e) => (e.key === "Enter" || e.key === " ") && onSelectRelated && onSelectRelated(item),
+            className: "group flex items-start gap-2.5 cursor-pointer rounded-lg p-1.5 hover:bg-slate-800 transition-colors select-none"
+          },
+          /* @__PURE__ */ React14.createElement("div", { className: "relative aspect-video w-24 rounded-lg overflow-hidden bg-slate-950 shrink-0" }, /* @__PURE__ */ React14.createElement(
+            "img",
+            {
+              src: relThumb,
+              alt: relTitle,
+              loading: "lazy",
+              className: "w-full h-full object-cover group-hover:scale-105 transition-transform"
+            }
+          ), relDuration ? /* @__PURE__ */ React14.createElement("span", { className: "absolute bottom-1 right-1 px-1 py-0.2 rounded bg-black/80 text-[10px] text-white font-mono" }, relDuration) : null),
+          /* @__PURE__ */ React14.createElement("div", { className: "flex-1 min-w-0" }, /* @__PURE__ */ React14.createElement("h4", { className: "text-xs font-semibold text-slate-200 line-clamp-2 leading-snug group-hover:text-blue-400 transition-colors" }, relTitle), /* @__PURE__ */ React14.createElement("p", { className: "text-[11px] text-slate-500 mt-1" }, formatCompactViews(item.view_count || item.views, isTamil)))
+        );
+      }))) : null
+    )
   );
-  return typeof document !== "undefined" ? createPortal(modalNode, document.body) : modalNode;
 }
-var CinemaTheaterModal_default = CinemaTheaterModal;
+var YouTubePlayerModal_default = YouTubePlayerModal;
 
-// js/services/videos.js
-init_translations();
-import { useState as useState12, useEffect as useEffect8 } from "react";
-var memoryCache = /* @__PURE__ */ new Map();
-var inflightPromises = /* @__PURE__ */ new Map();
-function getCachedVideos(key, language) {
-  if (memoryCache.has(key)) {
-    return memoryCache.get(key);
-  }
-  if (typeof window !== "undefined") {
-    try {
-      const raw = localStorage.getItem(`mt_vids_swr_${key}`);
-      if (raw) {
-        const parsed = JSON.parse(raw);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          const list = parsed.map((v) => translateVideo(normalizeVideoRow(v), language));
-          memoryCache.set(key, list);
-          return list;
-        }
-      }
-    } catch (e) {
-    }
-  }
-  return null;
-}
-function setCachedVideos(key, list) {
-  memoryCache.set(key, list);
-  if (typeof window !== "undefined") {
-    try {
-      localStorage.setItem(`mt_vids_swr_${key}`, JSON.stringify(list.slice(0, 100)));
-    } catch (e) {
-    }
-  }
-}
-async function fetchVideos(category = "all", sort = "newest", limit = 48, language = "ta") {
-  const cacheKey = `${category}-${sort}-${limit}-${language}`;
-  if (inflightPromises.has(cacheKey)) {
-    return inflightPromises.get(cacheKey);
-  }
-  const promise = (async () => {
-    try {
-      if (category === "all" && sort === "newest" && typeof window !== "undefined" && window.__HOME__) {
-        try {
-          const homeResult = await window.__HOME__;
-          const homeVids = homeResult?.data?.videos || homeResult?.videos;
-          if (Array.isArray(homeVids) && homeVids.length > 0) {
-            const list2 = homeVids.slice(0, limit).map((v) => translateVideo(normalizeVideoRow(v), language));
-            setCachedVideos(cacheKey, list2);
-            return list2;
-          }
-        } catch (_) {
-        }
-      }
-      const url = `/api/videos?fields=list&limit=${limit}&category=${encodeURIComponent(category)}&sort=${encodeURIComponent(sort)}`;
-      const res = await fetch(url);
-      if (res.ok) {
-        const json = await res.json();
-        if (json.status === "success" && Array.isArray(json.data) && json.data.length > 0) {
-          const list2 = json.data.map((v) => translateVideo(normalizeVideoRow(v), language));
-          setCachedVideos(cacheKey, list2);
-          return list2;
-        }
-      }
-    } catch (e) {
-      console.warn("[Videos SWR] Silent fetch fallback:", e.message);
-    } finally {
-      inflightPromises.delete(cacheKey);
-    }
-    const cached = getCachedVideos(cacheKey, language);
-    if (cached && cached.length > 0) return cached;
-    let list = [...videosData];
-    if (category && category !== "all") {
-      list = list.filter((v) => v.category === category);
-    }
-    const result = list.slice(0, limit).map((v) => translateVideo(v, language));
-    setCachedVideos(cacheKey, result);
-    return result;
-  })();
-  inflightPromises.set(cacheKey, promise);
-  return promise;
-}
-function useVideos(category = "all", sort = "newest", limit = 48, language = "ta") {
-  const cacheKey = `${category}-${sort}-${limit}-${language}`;
-  const [videos, setVideos] = useState12(() => {
-    const cached = getCachedVideos(cacheKey, language);
-    if (cached && cached.length > 0) {
-      return cached;
-    }
-    if (typeof window !== "undefined" && window.__INITIAL_DATA__?.videos && category === "all") {
-      const initial = window.__INITIAL_DATA__.videos.map((v) => translateVideo(normalizeVideoRow(v), language));
-      if (initial.length > 0) return initial;
-    }
-    let list = [...videosData];
-    if (category && category !== "all") {
-      list = list.filter((v) => v.category === category);
-    }
-    return list.slice(0, limit).map((v) => translateVideo(v, language));
-  });
-  const [isLoading, setIsLoading] = useState12(false);
+// js/components/home/HomeLatestVideos.jsx
+function HomeLatestVideos({ initialVideos = [], language = "ta", onShowToast }) {
+  const isTamil = language === "ta";
+  const [videos, setVideos] = useState10(initialVideos);
+  const [selectedVideo, setSelectedVideo] = useState10(null);
+  const [isLoading, setIsLoading] = useState10(initialVideos.length === 0);
   useEffect8(() => {
     let isMounted = true;
-    const revalidate = async () => {
-      const data = await fetchVideos(category, sort, limit, language);
-      if (isMounted && data && data.length > 0) {
-        setVideos(data);
+    if (initialVideos && initialVideos.length >= 4) {
+      setVideos(initialVideos.slice(0, 8));
+      setIsLoading(false);
+      return;
+    }
+    fetch("/api/youtube/videos?type=videos&limit=8").then((res) => res.ok ? res.json() : null).then((data) => {
+      if (isMounted && data?.data && Array.isArray(data.data)) {
+        setVideos(data.data.slice(0, 8));
         setIsLoading(false);
       }
-    };
-    revalidate();
+    }).catch((err) => {
+      console.warn("Home latest videos fetch warning:", err);
+      if (isMounted) setIsLoading(false);
+    });
     return () => {
       isMounted = false;
     };
-  }, [category, sort, limit, language]);
-  return { videos, isLoading, total: videos.length };
-}
-
-// js/components/home/HomeCinemaShowcase.jsx
-function HomeCinemaShowcase({ onNavigate, onShowToast, language = "ta" }) {
-  const isTamil = language === "ta";
-  const [activeCategory, setActiveCategory] = useState13("featured");
-  const [selectedVideo, setSelectedVideo] = useState13(null);
-  const { videos: allVideos = [], isLoading } = useVideos("all", "newest");
-  const categories = [
-    { id: "featured", labelTa: "\u0B9A\u0BAE\u0BC0\u0BAA\u0BA4\u0BCD\u0BA4\u0BBF\u0BAF & \u0BAE\u0BC1\u0B95\u0BCD\u0B95\u0BBF\u0BAF \u0BB5\u0BC0\u0B9F\u0BBF\u0BAF\u0BCB\u0B95\u0BCD\u0B95\u0BB3\u0BCD", labelEn: "Latest & Featured" },
-    { id: "personal-finance", labelTa: "\u0BA4\u0BA9\u0BBF\u0BA8\u0BAA\u0BB0\u0BCD \u0BA8\u0BBF\u0BA4\u0BBF & \u0B9A\u0BC7\u0BAE\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1", labelEn: "Personal Finance" },
-    { id: "mutual-funds", labelTa: "\u0BAE\u0BBF\u0BAF\u0BC2\u0B9A\u0BCD\u0B9A\u0BC1\u0BB5\u0BB2\u0BCD \u0B83\u0BAA\u0BA3\u0BCD\u0B9F\u0BCD & SIP", labelEn: "Mutual Funds & SIP" },
-    { id: "stocks", labelTa: "\u0BAA\u0B99\u0BCD\u0B95\u0BC1\u0B9A\u0BCD \u0B9A\u0BA8\u0BCD\u0BA4\u0BC8 & IPO", labelEn: "Stocks & Markets" },
-    { id: "tax-saving", labelTa: "\u0BB5\u0BB0\u0BBF \u0B9A\u0BC7\u0BAE\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1 & \u0B93\u0BAF\u0BCD\u0BB5\u0BC2\u0BA4\u0BBF\u0BAF\u0BAE\u0BCD", labelEn: "Tax & Retirement" },
-    { id: "education", labelTa: "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BB2\u0BCD\u0BB5\u0BBF", labelEn: "Financial Education" },
-    { id: "shorts", labelTa: "\u0B95\u0BC1\u0BB1\u0BC1\u0B95\u0BBF\u0BAF \u0BB5\u0BC0\u0B9F\u0BBF\u0BAF\u0BCB\u0B95\u0BCD\u0B95\u0BB3\u0BCD (Shorts)", labelEn: "Quick Takes (Shorts)" }
-  ];
-  const showcaseVideos = useMemo4(() => {
-    let list = [...allVideos];
-    if (activeCategory === "featured") {
-      return list.slice(0, 12);
-    } else if (activeCategory === "shorts") {
-      return list.filter((v) => v.isShort || v.tags && v.tags.includes("shorts")).slice(0, 12);
-    } else if (activeCategory === "personal-finance") {
-      return list.filter((v) => v.category === "personal-finance").slice(0, 12);
-    } else if (activeCategory === "mutual-funds") {
-      return list.filter((v) => v.category === "mutual-funds").slice(0, 12);
-    } else if (activeCategory === "stocks") {
-      return list.filter((v) => v.category === "stocks" || v.category === "ipo").slice(0, 12);
-    } else if (activeCategory === "tax-saving") {
-      return list.filter((v) => v.category === "tax-saving" || v.category === "retirement").slice(0, 12);
-    } else if (activeCategory === "education") {
-      return list.filter((v) => v.category === "education").slice(0, 12);
-    }
-    return list.slice(0, 12);
-  }, [allVideos, activeCategory]);
-  return /* @__PURE__ */ React17.createElement("div", { className: "w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 select-none min-w-0" }, /* @__PURE__ */ React17.createElement("div", { className: "space-y-4" }, /* @__PURE__ */ React17.createElement("div", { className: "flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-200/80 dark:border-slate-800" }, /* @__PURE__ */ React17.createElement("div", { className: "flex items-center gap-2 overflow-x-auto no-scrollbar py-1 touch-pan-x" }, categories.map((cat) => {
-    const isActive = activeCategory === cat.id;
-    return /* @__PURE__ */ React17.createElement(
-      "button",
-      {
-        key: cat.id,
-        onClick: () => setActiveCategory(cat.id),
-        className: `px-4 sm:px-5 py-2.5 min-h-[44px] rounded-full text-xs sm:text-[12.5px] whitespace-nowrap transition-all duration-200 shrink-0 active:scale-95 shadow-sm ${isActive ? "bg-emerald-700 text-white font-black ring-2 ring-emerald-500 shadow-md shadow-emerald-700/20" : "bg-white/80 dark:bg-slate-900/80 backdrop-blur-md text-slate-800 dark:text-slate-200 hover:bg-white hover:text-slate-950 font-bold border border-slate-200/80 dark:border-slate-800"}`
-      },
-      isTamil ? cat.labelTa : cat.labelEn
-    );
-  })), /* @__PURE__ */ React17.createElement(
-    "button",
+  }, [initialVideos]);
+  return /* @__PURE__ */ React15.createElement("section", { className: "w-full py-10 sm:py-12 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950" }, /* @__PURE__ */ React15.createElement("div", { className: "w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6" }, /* @__PURE__ */ React15.createElement("div", { className: "flex flex-col sm:flex-row sm:items-end justify-between gap-3" }, /* @__PURE__ */ React15.createElement("div", null, /* @__PURE__ */ React15.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React15.createElement("span", { className: "w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse" }), /* @__PURE__ */ React15.createElement("span", { className: "text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400" }, isTamil ? "\u0BAF\u0BC2\u0B9F\u0BBF\u0BAF\u0BC2\u0BAA\u0BCD \u0BB5\u0BC0\u0B9F\u0BBF\u0BAF\u0BCB\u0B95\u0BCD\u0B95\u0BB3\u0BCD" : "YouTube Channel")), /* @__PURE__ */ React15.createElement("h2", { className: "mt-1 text-2xl sm:text-3xl font-black text-slate-900 dark:text-white font-serif" }, isTamil ? "\u0BAA\u0B9F\u0BCD\u0B9C\u0BC6\u0B9F\u0BCD \u0BAA\u0BA4\u0BCD\u0BAE\u0BA8\u0BBE\u0BAA\u0BA9\u0BCD \u0BB5\u0BC0\u0B9F\u0BBF\u0BAF\u0BCB\u0B95\u0BCD\u0B95\u0BB3\u0BCD" : "Latest from Budget Padmanaban")), /* @__PURE__ */ React15.createElement(
+    "a",
     {
-      onClick: () => {
-        if (onNavigate) onNavigate("#/videos");
-        else if (typeof window !== "undefined") window.location.hash = "#/videos";
-      },
-      className: "inline-flex items-center gap-1.5 text-xs sm:text-[13px] font-extrabold text-emerald-700 dark:text-amber-400 hover:text-emerald-900 dark:hover:text-amber-300 transition-colors shrink-0 self-end sm:self-center min-h-[44px] py-1"
+      href: "#/videos",
+      className: "inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-blue-600 dark:text-blue-400 hover:text-blue-700 transition-colors group"
     },
-    /* @__PURE__ */ React17.createElement("span", null, isTamil ? "\u0B85\u0BA9\u0BC8\u0BA4\u0BCD\u0BA4\u0BC1 \u0BB5\u0BC0\u0B9F\u0BBF\u0BAF\u0BCB\u0B95\u0BCD\u0B95\u0BB3\u0BCD (800+)" : "View All Videos (800+)"),
-    /* @__PURE__ */ React17.createElement("span", { className: "font-bold" }, "\u2192")
-  )), /* @__PURE__ */ React17.createElement("div", { className: "hidden md:grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 sm:gap-6" }, isLoading && showcaseVideos.length === 0 ? Array.from({ length: 5 }).map((_, idx) => /* @__PURE__ */ React17.createElement("div", { key: idx, className: "rounded-2xl bg-slate-200 dark:bg-slate-800/60 aspect-[9/13] p-4 space-y-3 animate-pulse" }, /* @__PURE__ */ React17.createElement("div", { className: "aspect-video bg-slate-300 dark:bg-slate-700/60 rounded-xl" }), /* @__PURE__ */ React17.createElement("div", { className: "h-4 bg-slate-300 dark:bg-slate-700/60 rounded w-3/4" }), /* @__PURE__ */ React17.createElement("div", { className: "h-3 bg-slate-300 dark:bg-slate-700/60 rounded w-1/2" }))) : showcaseVideos.slice(0, 5).map((video, idx) => /* @__PURE__ */ React17.createElement(
-    CinemaVideoCard_default,
+    /* @__PURE__ */ React15.createElement("span", null, isTamil ? "\u0B85\u0BA9\u0BC8\u0BA4\u0BCD\u0BA4\u0BC1 \u0BB5\u0BC0\u0B9F\u0BBF\u0BAF\u0BCB\u0B95\u0BCD\u0B95\u0BB3\u0BC8\u0BAF\u0BC1\u0BAE\u0BCD \u0B95\u0BBE\u0BA3\u0BCD\u0B95" : "View all videos"),
+    /* @__PURE__ */ React15.createElement("span", { className: "group-hover:translate-x-1 transition-transform" }, "\u2192")
+  )), isLoading ? /* @__PURE__ */ React15.createElement("div", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-8" }, [...Array(8)].map((_, i) => /* @__PURE__ */ React15.createElement("div", { key: i, className: "animate-pulse space-y-3" }, /* @__PURE__ */ React15.createElement("div", { className: "aspect-video bg-slate-200 dark:bg-slate-800 rounded-xl" }), /* @__PURE__ */ React15.createElement("div", { className: "h-4 bg-slate-200 dark:bg-slate-800 rounded w-3/4" }), /* @__PURE__ */ React15.createElement("div", { className: "h-3 bg-slate-200 dark:bg-slate-800 rounded w-1/2" })))) : videos.length > 0 ? /* @__PURE__ */ React15.createElement("div", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-8" }, videos.map((vid) => /* @__PURE__ */ React15.createElement(
+    YouTubeVideoCard_default,
     {
-      key: `home-cinema-desk-${video.id || idx}`,
-      video,
-      index: idx,
+      key: vid.video_id || vid.youtubeId || vid.id,
+      video: vid,
       onSelect: (v) => setSelectedVideo(v),
-      language,
-      onShowToast
+      isTamil
     }
-  ))), /* @__PURE__ */ React17.createElement("div", { className: "md:hidden flex overflow-x-auto snap-x snap-mandatory gap-3.5 py-1.5 no-scrollbar touch-pan-x -mx-1 px-1" }, isLoading && showcaseVideos.length === 0 ? Array.from({ length: 4 }).map((_, idx) => /* @__PURE__ */ React17.createElement("div", { key: idx, className: "w-[72vw] max-w-[280px] shrink-0 snap-center rounded-2xl bg-slate-200 dark:bg-slate-800/60 aspect-[9/13] p-4 space-y-3 animate-pulse" }, /* @__PURE__ */ React17.createElement("div", { className: "aspect-video bg-slate-300 dark:bg-slate-700/60 rounded-xl" }), /* @__PURE__ */ React17.createElement("div", { className: "h-4 bg-slate-300 dark:bg-slate-700/60 rounded w-3/4" }))) : showcaseVideos.slice(0, 8).map((video, idx) => /* @__PURE__ */ React17.createElement("div", { key: `home-cinema-mob-${video.id || idx}`, className: "w-[72vw] max-w-[280px] shrink-0 snap-center" }, /* @__PURE__ */ React17.createElement(
-    CinemaVideoCard_default,
-    {
-      video,
-      index: idx,
-      onSelect: (v) => setSelectedVideo(v),
-      language,
-      onShowToast
-    }
-  ))))), selectedVideo && /* @__PURE__ */ React17.createElement(
-    CinemaTheaterModal_default,
+  ))) : null), selectedVideo ? /* @__PURE__ */ React15.createElement(
+    YouTubePlayerModal_default,
     {
       video: selectedVideo,
-      allVideos,
+      allVideos: videos,
       onClose: () => setSelectedVideo(null),
-      onSelectRelated: (rel) => setSelectedVideo(rel),
-      language,
+      onSelectRelated: (v) => setSelectedVideo(v),
+      isTamil,
       onShowToast
     }
-  ));
+  ) : null);
 }
-var HomeCinemaShowcase_default = HomeCinemaShowcase;
+var HomeLatestVideos_default = HomeLatestVideos;
 
 // js/components/home/Home.jsx
 var SipCalculator2 = lazy(() => Promise.resolve().then(() => (init_SipCalculator(), SipCalculator_exports)));
 function LazyMount({ children, fallback }) {
-  const [isVisible, setIsVisible] = React19.useState(false);
-  const ref = React19.useRef(null);
-  React19.useEffect(() => {
+  const [isVisible, setIsVisible] = React17.useState(false);
+  const ref = React17.useRef(null);
+  React17.useEffect(() => {
     if (!ref.current || isVisible) return;
     if (typeof IntersectionObserver === "undefined") {
       setIsVisible(true);
@@ -2669,18 +2488,17 @@ function LazyMount({ children, fallback }) {
     observer.observe(ref.current);
     return () => observer.disconnect();
   }, [isVisible]);
-  return /* @__PURE__ */ React19.createElement("div", { ref }, isVisible ? children : fallback || null);
+  return /* @__PURE__ */ React17.createElement("div", { ref }, isVisible ? children : fallback || null);
 }
 function Home({ onNavigate, onShowToast }) {
   const { language } = useLanguage();
-  return /* @__PURE__ */ React19.createElement("div", { className: "w-full animate-fadeIn flex flex-col" }, /* @__PURE__ */ React19.createElement("section", { className: "w-full bg-[#FFFFFF] dark:bg-slate-900/60 py-8 sm:py-12 border-b border-slate-100 dark:border-slate-800" }, /* @__PURE__ */ React19.createElement(HeroSection_default, { onNavigate })), /* @__PURE__ */ React19.createElement("section", { className: "w-full bg-gradient-to-b from-slate-50/80 via-white to-slate-50/90 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 py-10 sm:py-14 border-b border-slate-200/80 dark:border-slate-800" }, /* @__PURE__ */ React19.createElement(
-    HomeCinemaShowcase_default,
+  return /* @__PURE__ */ React17.createElement("div", { className: "w-full animate-fadeIn flex flex-col" }, /* @__PURE__ */ React17.createElement("section", { className: "w-full bg-[#FFFFFF] dark:bg-slate-900/60 py-8 sm:py-12 border-b border-slate-100 dark:border-slate-800" }, /* @__PURE__ */ React17.createElement(HeroSection_default, { onNavigate })), /* @__PURE__ */ React17.createElement(
+    HomeLatestVideos_default,
     {
-      onNavigate,
       onShowToast,
       language
     }
-  )), /* @__PURE__ */ React19.createElement("section", { className: "w-full bg-[#FFFFFF] dark:bg-slate-900/60 py-10 sm:py-14 border-b border-slate-100 dark:border-slate-800" }, /* @__PURE__ */ React19.createElement(TrendingArticlesSection_default, { onNavigate })), /* @__PURE__ */ React19.createElement("section", { className: "w-full bg-gradient-to-b from-slate-50/80 via-white to-slate-50/90 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 py-10 sm:py-14 pb-16 sm:pb-20" }, /* @__PURE__ */ React19.createElement(LazyMount, { fallback: /* @__PURE__ */ React19.createElement("div", { className: "w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 py-8 text-center text-sm font-medium text-emerald-200 min-h-[120px]" }, "\u0BA8\u0BBF\u0BA4\u0BBF \u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BB0\u0BC1\u0BB5\u0BBF \u0B8F\u0BB1\u0BCD\u0BB1\u0BAA\u0BCD\u0BAA\u0B9F\u0BC1\u0B95\u0BBF\u0BB1\u0BA4\u0BC1...") }, /* @__PURE__ */ React19.createElement(Suspense, { fallback: /* @__PURE__ */ React19.createElement("div", { className: "w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 py-8 text-center text-sm font-medium text-emerald-200 min-h-[120px]" }, "\u0BA8\u0BBF\u0BA4\u0BBF \u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BB0\u0BC1\u0BB5\u0BBF \u0B8F\u0BB1\u0BCD\u0BB1\u0BAA\u0BCD\u0BAA\u0B9F\u0BC1\u0B95\u0BBF\u0BB1\u0BA4\u0BC1...") }, /* @__PURE__ */ React19.createElement(SipCalculator2, null)))));
+  ), /* @__PURE__ */ React17.createElement("section", { className: "w-full bg-[#FFFFFF] dark:bg-slate-900/60 py-10 sm:py-14 border-b border-slate-100 dark:border-slate-800" }, /* @__PURE__ */ React17.createElement(TrendingArticlesSection_default, { onNavigate })), /* @__PURE__ */ React17.createElement("section", { className: "w-full bg-gradient-to-b from-slate-50/80 via-white to-slate-50/90 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 py-10 sm:py-14 pb-16 sm:pb-20" }, /* @__PURE__ */ React17.createElement(LazyMount, { fallback: /* @__PURE__ */ React17.createElement("div", { className: "w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 py-8 text-center text-sm font-medium text-emerald-200 min-h-[120px]" }, "\u0BA8\u0BBF\u0BA4\u0BBF \u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BB0\u0BC1\u0BB5\u0BBF \u0B8F\u0BB1\u0BCD\u0BB1\u0BAA\u0BCD\u0BAA\u0B9F\u0BC1\u0B95\u0BBF\u0BB1\u0BA4\u0BC1...") }, /* @__PURE__ */ React17.createElement(Suspense, { fallback: /* @__PURE__ */ React17.createElement("div", { className: "w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 py-8 text-center text-sm font-medium text-emerald-200 min-h-[120px]" }, "\u0BA8\u0BBF\u0BA4\u0BBF \u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BB0\u0BC1\u0BB5\u0BBF \u0B8F\u0BB1\u0BCD\u0BB1\u0BAA\u0BCD\u0BAA\u0B9F\u0BC1\u0B95\u0BBF\u0BB1\u0BA4\u0BC1...") }, /* @__PURE__ */ React17.createElement(SipCalculator2, null)))));
 }
 var Home_default = Home;
 
@@ -2722,13 +2540,13 @@ function getPrerenderedHomepage() {
     videos: videosData.slice(0, 12)
   };
   const html2 = renderToString(
-    /* @__PURE__ */ React20.createElement(ThemeProvider, null, /* @__PURE__ */ React20.createElement(LanguageProvider, null, /* @__PURE__ */ React20.createElement(AuthProvider, null, /* @__PURE__ */ React20.createElement("div", { className: "min-h-screen flex flex-col bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans" }, /* @__PURE__ */ React20.createElement("div", { className: "sticky-header-container sticky top-0 z-40 w-full shadow-md bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800" }, /* @__PURE__ */ React20.createElement(Header_default, { onOpenSearch: () => {
+    /* @__PURE__ */ React18.createElement(ThemeProvider, null, /* @__PURE__ */ React18.createElement(LanguageProvider, null, /* @__PURE__ */ React18.createElement(AuthProvider, null, /* @__PURE__ */ React18.createElement("div", { className: "min-h-screen flex flex-col bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans" }, /* @__PURE__ */ React18.createElement("div", { className: "sticky-header-container sticky top-0 z-40 w-full shadow-md bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800" }, /* @__PURE__ */ React18.createElement(Header_default, { onOpenSearch: () => {
     }, onNavigate: () => {
-    } }), /* @__PURE__ */ React20.createElement(Navbar_default, { currentPath: "/", onNavigate: () => {
-    } })), /* @__PURE__ */ React20.createElement(TrendingTicker_default, { onNavigate: () => {
-    } }), /* @__PURE__ */ React20.createElement("main", { className: "flex-1" }, /* @__PURE__ */ React20.createElement(Home_default, { onNavigate: () => {
+    } }), /* @__PURE__ */ React18.createElement(Navbar_default, { currentPath: "/", onNavigate: () => {
+    } })), /* @__PURE__ */ React18.createElement(TrendingTicker_default, { onNavigate: () => {
+    } }), /* @__PURE__ */ React18.createElement("main", { className: "flex-1" }, /* @__PURE__ */ React18.createElement(Home_default, { onNavigate: () => {
     }, onShowToast: () => {
-    } })), /* @__PURE__ */ React20.createElement(Footer_default, { onNavigate: () => {
+    } })), /* @__PURE__ */ React18.createElement(Footer_default, { onNavigate: () => {
     }, onShowToast: () => {
     } })))))
   );

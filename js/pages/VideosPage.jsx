@@ -1,12 +1,23 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { useLanguage } from '../context/LanguageContext.jsx';
-import CinemaSpotlightHero from '../components/home/CinemaSpotlightHero.jsx';
-import CinemaVideoRail from '../components/home/CinemaVideoRail.jsx';
-import CinemaVideoCard from '../components/home/CinemaVideoCard.jsx';
-import CinemaTheaterModal from './CinemaTheaterModal.jsx';
-import { useVideos } from '../services/videos.js';
-import { videosData } from '../data/translations.js';
 import { updateHeadTags } from '../utils/formatters.js';
+import YouTubeHero from '../components/youtube/YouTubeHero.jsx';
+import YouTubeVideoCard from '../components/youtube/YouTubeVideoCard.jsx';
+import YouTubeShortCard from '../components/youtube/YouTubeShortCard.jsx';
+import YouTubePlayerModal from '../components/youtube/YouTubePlayerModal.jsx';
+
+const CATEGORIES = [
+  { id: 'all', labelTa: 'அனைத்தும்', labelEn: 'All' },
+  { id: 'Mutual Funds', labelTa: 'மியூச்சுவல் ஃபண்ட்', labelEn: 'Mutual Funds' },
+  { id: 'SIP & Planning', labelTa: 'SIP & திட்டமிடல்', labelEn: 'SIP & Planning' },
+  { id: 'Stock Market', labelTa: 'பங்குச் சந்தை', labelEn: 'Stock Market' },
+  { id: 'Insurance', labelTa: 'இன்சூரன்ஸ்', labelEn: 'Insurance' },
+  { id: 'Retirement', labelTa: 'ஓய்வூதியம் (NPS)', labelEn: 'Retirement' },
+  { id: 'Children & Education', labelTa: 'குழந்தைகள் கல்வி & எதிர்காலம்', labelEn: 'Children & Education' },
+  { id: 'Gold & Bonds', labelTa: 'தங்கம் & பத்திரங்கள்', labelEn: 'Gold & Bonds' },
+  { id: 'Tax', labelTa: 'வரி சேமிப்பு', labelEn: 'Tax Planning' },
+  { id: 'Others', labelTa: 'இதர தலைப்புகள்', labelEn: 'Others' }
+];
 
 function VideosPage({ onNavigate, onShowToast, initialVideoId }) {
   const { language } = useLanguage();
@@ -14,399 +25,343 @@ function VideosPage({ onNavigate, onShowToast, initialVideoId }) {
 
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
-  const [sortBy, setSortBy] = useState('newest');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
+  const [heroVideo, setHeroVideo] = useState(null);
+  const [liveVideos, setLiveVideos] = useState([]);
+  const [shorts, setShorts] = useState([]);
+  const [videos, setVideos] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
-  const [visibleGridCount, setVisibleGridCount] = useState(48);
-  const [viewMode, setViewMode] = useState('rails');
+  const [cursor, setCursor] = useState(null);
+  const [hasMore, setHasMore] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+
   const sentinelRef = useRef(null);
+  const debounceTimerRef = useRef(null);
 
-  // Live video hook — pulls directly from Supabase /api/videos with built-in fallback
-  const { videos: allLiveVideos = [], isLoading: isVideosLoading, total: totalVideosCount } = useVideos('all', sortBy, 48, language);
-
+  // SEO metadata
   useEffect(() => {
     updateHeadTags({
       title: isTamil ? 'வீடியோக்கள் & Masterclasses | முதலீட்டு திசை' : 'Videos & Masterclasses | Muthaleetu Thisai',
       description: isTamil
-        ? 'மியூச்சுவல் ஃபண்ட், SIP, பங்குச் சந்தை மற்றும் முதலீட்டு வழிகாட்டல் வீடியோக்கள்.'
-        : 'Watch top mutual funds, SIP, stock market and personal finance masterclasses in Tamil.',
+        ? 'மியூச்சுவல் ஃபண்ட், SIP, பங்குச் சந்தை மற்றும் தனிநபர் நிதி வழிகாட்டல் வீடியோக்கள் - பட்ஜெட் பத்மநாபன்.'
+        : 'Watch top mutual funds, SIP, stock market, and personal finance masterclasses by Budget Padmanaban.',
       pathname: '/videos'
     });
   }, [isTamil]);
 
+  // Handle URL direct deep link (#/videos/watch/<id> or initialVideoId)
   useEffect(() => {
-    if (initialVideoId && allLiveVideos && allLiveVideos.length > 0) {
-      const found = allLiveVideos.find(v => v.id === initialVideoId || v.youtubeId === initialVideoId || v.youtube_id === initialVideoId || v.slug === initialVideoId);
-      if (found) {
-        setSelectedVideo(found);
-        updateHeadTags({
-          title: `${found.titleTamil || found.title} | முதலீட்டு திசை`,
-          description: found.descriptionTamil || found.titleEnglish || found.title,
-          image: found.thumbnail,
-          pathname: `/videos/${found.id || found.slug}`
-        });
-      }
+    if (initialVideoId) {
+      fetch(`/api/youtube/videos?id=${encodeURIComponent(initialVideoId)}`)
+        .then(res => res.ok ? res.json() : null)
+        .then(data => {
+          if (data?.data) {
+            setSelectedVideo(data.data);
+            updateHeadTags({
+              title: `${data.data.title} | முதலீட்டு திசை`,
+              description: data.data.description?.slice(0, 160) || data.data.title,
+              image: data.data.thumbnail_url,
+              pathname: `/videos/watch/${initialVideoId}`
+            });
+          }
+        })
+        .catch(() => {});
     }
-  }, [initialVideoId, allLiveVideos]);
+  }, [initialVideoId]);
 
-  const categoriesList = [
-    { id: 'all', labelTa: `அனைத்து வீடியோக்கள்${allLiveVideos.length ? ` (${allLiveVideos.length})` : ''}`, labelEn: `All Videos${allLiveVideos.length ? ` (${allLiveVideos.length})` : ''}` },
-    { id: 'trending', labelTa: 'முக்கிய பதிவுகள்', labelEn: 'Featured & Trending' },
-    { id: 'mutual-funds', labelTa: 'மியூச்சுவல் ஃபண்ட் & SIP', labelEn: 'Mutual Funds & SIP' },
-    { id: 'stocks', labelTa: 'பங்குச் சந்தை', labelEn: 'Stock Market' },
-    { id: 'ipo', labelTa: 'IPO அலசல்', labelEn: 'IPO Analysis' },
-    { id: 'gold-bonds', labelTa: 'தங்கம் & SGB பத்திரங்கள்', labelEn: 'Gold & SGB Bonds' },
-    { id: 'tax-saving', labelTa: 'வரி சேமிப்பு திட்டமிடல்', labelEn: 'Tax Planning' },
-    { id: 'retirement', labelTa: 'ஓய்வூதியம் (NPS & EPF)', labelEn: 'Retirement & NPS' },
-    { id: 'personal-finance', labelTa: 'தனிநபர் நிதி & சேமிப்பு', labelEn: 'Personal Finance' },
-    { id: 'shorts', labelTa: 'குறுகிய வீடியோக்கள்', labelEn: 'Shorts' }
-  ];
+  // Debounce search query
+  useEffect(() => {
+    if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
+    debounceTimerRef.current = setTimeout(() => {
+      setDebouncedSearch(searchQuery.trim());
+    }, 300);
 
-  const spotlightVideos = useMemo(() => {
-    const list = (allLiveVideos && allLiveVideos.length > 0) ? allLiveVideos : (videosData || []);
-    const trending = list.filter(v => v.trending || v.category === 'mutual-funds');
-    return (trending.length >= 3 ? trending : list).slice(0, 5);
-  }, [allLiveVideos]);
-
-  const railsData = useMemo(() => {
-    const list = (allLiveVideos && allLiveVideos.length > 0) ? allLiveVideos : (videosData || []);
-    const trendingList = list.filter(v => v.trending || (v.views && v.views > 15000));
-    const shortsList = list.filter(v => v.isShort || (v.tags && v.tags.includes('shorts')) || (v.duration && (v.duration.startsWith('0:') || v.duration === 'Short')));
-    const mfList = list.filter(v => v.category === 'mutual-funds' || (v.title && (v.title.toLowerCase().includes('mutual') || v.title.toLowerCase().includes('sip'))));
-    const stocksList = list.filter(v => v.category === 'stocks' || v.category === 'ipo' || (v.title && (v.title.toLowerCase().includes('stock') || v.title.toLowerCase().includes('ipo'))));
-    const taxList = list.filter(v => v.category === 'tax-saving' || v.category === 'retirement' || (v.title && (v.title.toLowerCase().includes('tax') || v.title.toLowerCase().includes('nps'))));
-    const pfList = list.filter(v => v.category === 'personal-finance' || v.category === 'gold-bonds' || (v.title && (v.title.toLowerCase().includes('gold') || v.title.toLowerCase().includes('saving'))));
-
-    return {
-      masterclasses: trendingList.length >= 2 ? trendingList.slice(0, 12) : list.slice(0, 12),
-      shorts: shortsList.length >= 2 ? shortsList.slice(0, 14) : list.slice(2, 14),
-      mutualFunds: mfList.length >= 2 ? mfList.slice(0, 12) : list.slice(0, 12),
-      stocks: stocksList.length >= 2 ? stocksList.slice(0, 12) : list.slice(3, 15),
-      taxRetirement: taxList.length >= 2 ? taxList.slice(0, 12) : list.slice(4, 16),
-      personalFinance: pfList.length >= 2 ? pfList.slice(0, 12) : list.slice(5, 17)
+    return () => {
+      if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
     };
-  }, [allLiveVideos]);
+  }, [searchQuery]);
 
-  const filteredVideos = useMemo(() => {
-    let list = [...allLiveVideos];
+  // Fetch initial data (Hero, Live, Shorts, and First 24 Videos)
+  const fetchInitialData = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      // Parallel requests for optimal LCP performance
+      const [videosRes, shortsRes, liveRes] = await Promise.all([
+        fetch(
+          `/api/youtube/videos?type=videos&category=${encodeURIComponent(activeCategory)}&q=${encodeURIComponent(debouncedSearch)}&limit=24&include_hero=1`
+        ).then(r => (r.ok ? r.json() : { data: [], hero: null })),
+        fetch('/api/youtube/videos?type=shorts&limit=16').then(r => (r.ok ? r.json() : { data: [] })),
+        fetch('/api/youtube/videos?type=live&limit=4').then(r => (r.ok ? r.json() : { data: [] }))
+      ]);
 
-    if (activeCategory === 'trending') {
-      list = list.filter(v => v.trending);
-    } else if (activeCategory === 'shorts') {
-      list = list.filter(v => v.isShort || (v.tags && v.tags.includes('shorts')));
-    } else if (activeCategory !== 'all') {
-      list = list.filter(v => v.category === activeCategory);
+      setVideos(videosRes.data || []);
+      setHeroVideo(videosRes.hero || (videosRes.data?.[0] || null));
+      setCursor(videosRes.nextCursor || null);
+      setHasMore(!!videosRes.hasMore);
+
+      setShorts(shortsRes.data || []);
+      setLiveVideos(liveRes.data || []);
+    } catch (err) {
+      console.warn('Failed to load initial YouTube videos:', err);
+    } finally {
+      setIsLoading(false);
     }
+  }, [activeCategory, debouncedSearch]);
 
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase().trim();
-      list = list.filter(v => {
-        const titleT = (v.titleTamil || v.title || "").toLowerCase();
-        const titleE = (v.titleEnglish || v.title || "").toLowerCase();
-        const descT = (v.descriptionTamil || v.description || "").toLowerCase();
-        const descE = (v.descriptionEnglish || v.description || "").toLowerCase();
-        const cat = (v.category || "").toLowerCase();
-        return titleT.includes(q) || titleE.includes(q) || descT.includes(q) || descE.includes(q) || cat.includes(q);
-      });
+  useEffect(() => {
+    fetchInitialData();
+  }, [fetchInitialData]);
+
+  // Infinite Scroll: Load Next 24 Videos via Cursor
+  const loadMoreVideos = useCallback(async () => {
+    if (isLoadingMore || !hasMore || !cursor) return;
+    setIsLoadingMore(true);
+
+    try {
+      const res = await fetch(
+        `/api/youtube/videos?type=videos&category=${encodeURIComponent(activeCategory)}&q=${encodeURIComponent(debouncedSearch)}&limit=24&cursor=${encodeURIComponent(cursor)}`
+      );
+      if (res.ok) {
+        const data = await res.json();
+        const newItems = data.data || [];
+        setVideos(prev => [...prev, ...newItems]);
+        setCursor(data.nextCursor || null);
+        setHasMore(!!data.hasMore);
+      }
+    } catch (err) {
+      console.warn('Error loading more videos:', err);
+    } finally {
+      setIsLoadingMore(false);
     }
+  }, [isLoadingMore, hasMore, cursor, activeCategory, debouncedSearch]);
 
-    if (sortBy === 'views') {
-      list.sort((a, b) => (b.views || 0) - (a.views || 0));
-    } else if (sortBy === 'oldest') {
-      list.sort((a, b) => new Date(a.publishedAt) - new Date(b.publishedAt));
-    } else if (sortBy === 'duration') {
-      list.sort((a, b) => (b.duration || '').localeCompare(a.duration || ''));
-    } else {
-      list.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-    }
-
-    return list;
-  }, [allLiveVideos, activeCategory, searchQuery, sortBy]);
-
-  // Seamless auto-load on scroll with generous threshold
+  // IntersectionObserver for Infinite Scroll
   useEffect(() => {
     if (!sentinelRef.current) return;
-    const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        setVisibleGridCount(prev => {
-          if (prev < filteredVideos.length) {
-            return Math.min(prev + 48, filteredVideos.length);
-          }
-          return prev;
-        });
-      }
-    }, { rootMargin: '600px' });
+
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries[0].isIntersecting && hasMore && !isLoadingMore && !isLoading) {
+          loadMoreVideos();
+        }
+      },
+      { rootMargin: '400px' }
+    );
 
     observer.observe(sentinelRef.current);
     return () => observer.disconnect();
-  }, [filteredVideos.length]);
+  }, [hasMore, isLoadingMore, isLoading, loadMoreVideos]);
 
-  const handleLoadMore = () => {
-    setVisibleGridCount(prev => Math.min(prev + 48, filteredVideos.length));
+  const handleSelectVideo = (vid) => {
+    setSelectedVideo(vid);
+    const vidId = vid.video_id || vid.youtubeId || vid.id;
+    if (vidId) {
+      window.location.hash = `#/videos/watch/${vidId}`;
+    }
   };
 
-  const handleLoadAll = () => {
-    setVisibleGridCount(filteredVideos.length);
+  const handleCloseModal = () => {
+    setSelectedVideo(null);
+    window.location.hash = '#/videos';
   };
-
-  const isFiltering = activeCategory !== 'all' || searchQuery.trim().length > 0;
 
   return (
-    <div className="min-h-screen pb-24 space-y-6 text-slate-900 dark:text-white animate-fadeIn">
-      {/* 1. CINEMA SPOTLIGHT HERO */}
-      <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-        <CinemaSpotlightHero
-          spotlightVideos={spotlightVideos}
-          onWatchVideo={(v) => setSelectedVideo(v)}
-          language={language}
-        />
-      </div>
+    <div className="min-h-screen pb-24 bg-white dark:bg-slate-950 text-slate-900 dark:text-white animate-fadeIn">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 space-y-8">
+        
+        {/* ================= 1. LIVE / PREMIERE STRIP (If Active) ================= */}
+        {liveVideos.length > 0 ? (
+          <div className="p-4 rounded-2xl bg-red-600/10 border border-red-500/30 flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-600 text-white text-xs font-black uppercase tracking-wider shadow-sm">
+                <span className="w-2 h-2 rounded-full bg-white animate-ping" />
+                <span>LIVE STREAM</span>
+              </span>
+              <span className="text-xs sm:text-sm font-bold text-red-600 dark:text-red-400 line-clamp-1">
+                {liveVideos[0].title}
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={() => handleSelectVideo(liveVideos[0])}
+              className="btn-magnetic px-4 py-1.5 rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs font-black uppercase tracking-wider shrink-0 shadow transition-colors"
+            >
+              {isTamil ? 'நேரலையில் இணை' : 'Join Live'}
+            </button>
+          </div>
+        ) : null}
 
-      {/* 2. CATEGORY & SEARCH CONTROLS BAR */}
-      <div className="bg-white/95 dark:bg-slate-950/95 border-y border-slate-200 dark:border-slate-800/80 shadow-sm py-3">
-        <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-2.5">
-          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1">
-            {categoriesList.map(cat => {
+        {/* ================= 2. HERO FEATURED LATEST VIDEO ================= */}
+        {!searchQuery && activeCategory === 'all' && heroVideo ? (
+          <YouTubeHero
+            video={heroVideo}
+            onWatch={handleSelectVideo}
+            isTamil={isTamil}
+          />
+        ) : null}
+
+        {/* ================= 3. CONTROLS BAR (SEARCH + CATEGORY CHIPS) ================= */}
+        <div className="space-y-4">
+          {/* Search Input */}
+          <div className="relative max-w-xl">
+            <svg
+              className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder={
+                isTamil
+                  ? 'வீடியோக்களைத் தேடுங்கள் (எ.கா: SIP, Nifty, Tax, Mutual Fund)...'
+                  : 'Search videos (e.g. SIP, Nifty, Tax, Mutual Fund)...'
+              }
+              className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs sm:text-sm font-medium text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-blue-600 dark:focus:border-blue-500 transition-colors"
+            />
+            {searchQuery ? (
+              <button
+                type="button"
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 hover:text-slate-200"
+                aria-label="Clear search"
+              >
+                ✕
+              </button>
+            ) : null}
+          </div>
+
+          {/* Horizontally Scrollable Category Chips */}
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+            {CATEGORIES.map((cat) => {
               const isActive = activeCategory === cat.id;
               return (
                 <button
                   key={cat.id}
-                  onClick={() => {
-                    setActiveCategory(cat.id);
-                    setVisibleGridCount(48);
-                  }}
-                  className={`btn-magnetic px-3.5 py-1.5 rounded-full text-xs font-black whitespace-nowrap transition-all duration-200 shrink-0 cursor-pointer ${isActive
-                      ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20 scale-105'
+                  type="button"
+                  onClick={() => setActiveCategory(cat.id)}
+                  className={`btn-magnetic px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all duration-200 shrink-0 cursor-pointer ${
+                    isActive
+                      ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20'
                       : 'bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800'
-                    }`}
+                  }`}
                 >
                   {isTamil ? cat.labelTa : cat.labelEn}
                 </button>
               );
             })}
           </div>
+        </div>
 
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-0.5">
-            <div className="relative flex-1">
-              <svg className="w-4 h-4 text-slate-600 dark:text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={e => {
-                  setSearchQuery(e.target.value);
-                  setVisibleGridCount(48);
-                }}
-                placeholder={isTamil ? "வீடியோக்களில் தேடுங்கள் (எ.கா: SIP, Nifty, Tax)..." : "Search masterclasses (e.g. SIP, Nifty, Tax)..."}
-                className="w-full pl-10 pr-10 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white placeholder-slate-400 text-xs sm:text-sm font-medium focus:outline-none focus:border-amber-500 transition-colors"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-slate-200 cursor-pointer"
-                  aria-label="Clear search"
-                >
-                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              )}
+        {/* ================= 4. SHORTS RAIL (9:16 Horizontal Rail) ================= */}
+        {shorts.length > 0 && !searchQuery && activeCategory === 'all' ? (
+          <div className="space-y-3 pt-2">
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-red-600" />
+              <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white uppercase tracking-wider">
+                {isTamil ? 'குறுகிய வீடியோக்கள் (Shorts)' : 'YouTube Shorts'}
+              </h3>
             </div>
 
-            <div className="flex items-center justify-between sm:justify-end gap-3 shrink-0">
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-slate-500 font-bold hidden sm:inline">{isTamil ? 'வரிசை:' : 'Sort:'}</span>
-                <select
-                  value={sortBy}
-                  onChange={e => setSortBy(e.target.value)}
-                  className="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold focus:outline-none focus:border-amber-500"
-                >
-                  <option value="newest">{isTamil ? 'சமீபத்தியவை' : 'Latest Uploads'}</option>
-                  <option value="views">{isTamil ? 'அதிக பார்வை' : 'Most Popular'}</option>
-                  <option value="oldest">{isTamil ? 'பழையவை' : 'Oldest First'}</option>
-                </select>
-              </div>
-
-              <div className="inline-flex p-0.5 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-                <button
-                  onClick={() => setViewMode('rails')}
-                  className={`btn-magnetic px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${viewMode === 'rails' && !isFiltering
-                      ? 'bg-amber-500 text-slate-950 font-black shadow'
-                      : 'text-slate-500 dark:text-slate-400 hover:text-white'
-                    }`}
-                >
-                  {isTamil ? 'தனித்தனி வரிசைகள்' : 'Cinematic Rails'}
-                </button>
-                <button
-                  onClick={() => setViewMode('grid')}
-                  className={`btn-magnetic px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${viewMode === 'grid' || isFiltering
-                      ? 'bg-amber-500 text-slate-950 font-black shadow'
-                      : 'text-slate-500 dark:text-slate-400 hover:text-white'
-                    }`}
-                >
-                  {isTamil ? 'முழு கட்டம்' : 'Full Grid'}
-                </button>
-              </div>
+            <div className="flex gap-4 overflow-x-auto no-scrollbar pb-3 pt-1">
+              {shorts.map((shortVid) => (
+                <YouTubeShortCard
+                  key={shortVid.video_id || shortVid.youtubeId || shortVid.id}
+                  video={shortVid}
+                  onSelect={handleSelectVideo}
+                  isTamil={isTamil}
+                />
+              ))}
             </div>
+          </div>
+        ) : null}
+
+        {/* ================= 5. MAIN LONG VIDEOS GRID (4 cols xl, 3 lg, 2 sm, 1 below) ================= */}
+        <div className="space-y-6 pt-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white font-serif">
+              {isTamil ? 'அனைத்து வீடியோ பதிவுகள்' : 'All Masterclasses & Videos'}
+            </h3>
+            {videos.length > 0 ? (
+              <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                {isTamil ? `${videos.length} வீடியோக்கள் ஏற்றப்பட்டுள்ளன` : `${videos.length} videos loaded`}
+              </span>
+            ) : null}
+          </div>
+
+          {isLoading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-8">
+              {[...Array(12)].map((_, i) => (
+                <div key={i} className="animate-pulse space-y-3">
+                  <div className="aspect-video bg-slate-200 dark:bg-slate-800 rounded-xl" />
+                  <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded w-3/4" />
+                  <div className="h-3 bg-slate-200 dark:bg-slate-800 rounded w-1/2" />
+                </div>
+              ))}
+            </div>
+          ) : videos.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-8">
+              {videos.map((vid) => (
+                <YouTubeVideoCard
+                  key={vid.video_id || vid.youtubeId || vid.id}
+                  video={vid}
+                  onSelect={handleSelectVideo}
+                  isTamil={isTamil}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-16 px-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-3">
+              <div className="w-12 h-12 mx-auto rounded-full bg-blue-600/10 text-blue-600 flex items-center justify-center">
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <h4 className="text-sm font-bold text-slate-900 dark:text-white">
+                {isTamil ? 'வீடியோக்கள் எதுவும் கிடைக்கவில்லை' : 'No videos found'}
+              </h4>
+              <p className="text-xs text-slate-500 max-w-sm mx-auto">
+                {isTamil
+                  ? 'தேடல் சொல் அல்லது வகையை மாற்றி முயற்சிக்கவும்.'
+                  : 'Try adjusting your search terms or selecting another category.'}
+              </p>
+            </div>
+          )}
+
+          {/* Infinite Scroll Sentinel & Loading Indicator */}
+          <div ref={sentinelRef} className="py-6 text-center">
+            {isLoadingMore ? (
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-900 text-xs font-bold text-slate-600 dark:text-slate-400">
+                <div className="w-3.5 h-3.5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
+                <span>{isTamil ? 'மேலும் வீடியோக்கள் ஏற்றப்படுகின்றன...' : 'Loading more videos...'}</span>
+              </div>
+            ) : !hasMore && videos.length > 0 ? (
+              <div className="text-xs text-slate-400 font-medium">
+                {isTamil ? 'அனைத்து வீடியோக்களும் ஏற்றப்பட்டுவிட்டன' : 'All available videos loaded'}
+              </div>
+            ) : null}
           </div>
         </div>
       </div>
 
-      {/* 3. MAIN CONTENT: CINEMATIC RAILS OR FULL GRID */}
-      <div className="w-full max-w-[96vw] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
-        {isFiltering || viewMode === 'grid' ? (
-          <div className="space-y-6">
-            <div className="flex items-center justify-between">
-              <p className="text-xs text-slate-500 dark:text-slate-400 font-bold">
-                {isTamil
-                  ? `${filteredVideos.length} வீடியோக்கள் கண்டறியப்பட்டன (காண்பிக்கப்படுவது ${Math.min(visibleGridCount, filteredVideos.length)})`
-                  : `Showing ${Math.min(visibleGridCount, filteredVideos.length)} of ${filteredVideos.length} masterclasses`}
-              </p>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-3 sm:gap-4">
-              {filteredVideos.slice(0, visibleGridCount).map((video, idx) => (
-                <CinemaVideoCard
-                  key={`grid-cinema-${video.id || idx}`}
-                  video={video}
-                  index={idx}
-                  onSelect={(v) => setSelectedVideo(v)}
-                  language={language}
-                  onShowToast={onShowToast}
-                />
-              ))}
-            </div>
-
-            {/* Load More & Infinite Scroll Container */}
-            <div ref={sentinelRef} className="pt-8 pb-10 text-center">
-              {visibleGridCount < filteredVideos.length ? (
-                <div className="flex flex-wrap items-center justify-center gap-3">
-                  <button
-                    onClick={handleLoadMore}
-                    className="btn-magnetic px-6 py-2.5 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider shadow-lg shadow-amber-500/20 flex items-center gap-2 transition-transform hover:scale-105 cursor-pointer"
-                  >
-                    <span>▶</span>
-                    <span>
-                      {isTamil
-                        ? `மேலும் 48 வீடியோக்களைக் காட்டு (${Math.min(visibleGridCount, filteredVideos.length)} / ${filteredVideos.length})`
-                        : `Load Next 48 Videos (${Math.min(visibleGridCount, filteredVideos.length)} / ${filteredVideos.length})`}
-                    </span>
-                  </button>
-
-                  <button
-                    onClick={handleLoadAll}
-                    className="btn-magnetic px-5 py-2.5 rounded-2xl bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-xs border border-slate-200 dark:border-slate-800 transition-colors shadow-sm cursor-pointer"
-                  >
-                    <span>{isTamil ? `அனைத்து ${filteredVideos.length} வீடியோக்களையும் ஏற்று` : `Show All ${filteredVideos.length} Videos`}</span>
-                  </button>
-                </div>
-              ) : (
-                <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-bold text-slate-600 dark:text-slate-400">
-                  <svg className="w-3.5 h-3.5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span>
-                    {isTamil
-                      ? `அனைத்து ${filteredVideos.length} வீடியோக்களும் ஏற்றப்பட்டன`
-                      : `All ${filteredVideos.length} masterclasses loaded`}
-                  </span>
-                </div>
-              )}
-            </div>
-          </div>
-        ) : (
-          <div className="space-y-6">
-            <CinemaVideoRail
-              titleTamil="பிரபலமான வீடியோக்கள் & Masterclasses"
-              titleEnglish="Trending & Highly Watched Masterclasses"
-              subtitleTamil="அதிக முதலீட்டாளர்களால் பார்க்கப்பட்ட முதன்மையான மியூச்சுவல் ஃபண்ட் மற்றும் பங்குச் சந்தை வழிகாட்டிகள்"
-              subtitleEnglish="Top-rated investor masterclasses with over 25,000+ views"
-              badgeText="FEATURED"
-              videos={railsData.masterclasses}
-              onSelectVideo={(v) => setSelectedVideo(v)}
-              language={language}
-              onShowToast={onShowToast}
-            />
-
-            <CinemaVideoRail
-              titleTamil="குறுகிய வீடியோக்கள் & Quick Takes"
-              titleEnglish="Quick Takes & YouTube Shorts"
-              subtitleTamil="1 நிமிடத்தில் புரியும் முக்கியமான முதலீட்டு தகவல்கள் மற்றும் விளக்கங்கள்"
-              subtitleEnglish="Bite-sized high-impact financial lessons in under 60 seconds"
-              badgeText="SHORTS"
-              videos={railsData.shorts}
-              onSelectVideo={(v) => setSelectedVideo(v)}
-              language={language}
-              onShowToast={onShowToast}
-            />
-
-            <CinemaVideoRail
-              titleTamil="மியூச்சுவல் ஃபண்ட் & SIP திட்டங்கள்"
-              titleEnglish="Mutual Funds & SIP Strategies"
-              subtitleTamil="Small Cap, Mid Cap, Flexi Cap மற்றும் Index ஃபண்டுகளின் முழுமையான ஒப்பீடு"
-              subtitleEnglish="Comprehensive fund reviews, CAGR calculations, and portfolio allocation"
-              badgeText="MUTUAL FUNDS"
-              videos={railsData.mutualFunds}
-              onSelectVideo={(v) => setSelectedVideo(v)}
-              language={language}
-              onShowToast={onShowToast}
-            />
-
-            <CinemaVideoRail
-              titleTamil="பங்குச் சந்தை & IPO அலசல்"
-              titleEnglish="Stock Market & IPO Breakdowns"
-              subtitleTamil="நேரடி பங்கு முதலீடு, தொழில்நுட்ப பகுப்பாய்வு மற்றும் புதிய IPO மதிப்பீடுகள்"
-              subtitleEnglish="Direct equity fundamentals, risk management, and live IPO reviews"
-              badgeText="STOCKS"
-              videos={railsData.stocks}
-              onSelectVideo={(v) => setSelectedVideo(v)}
-              language={language}
-              onShowToast={onShowToast}
-            />
-
-            <CinemaVideoRail
-              titleTamil="வரி சேமிப்பு & ஓய்வூதியத் திட்டமிடல்"
-              titleEnglish="Tax Optimization & Retirement Planning"
-              subtitleTamil="NPS, EPF, Section 80C வரி சேமிப்பு மற்றும் ஓய்வூதிய நிதி கணக்கீடுகள்"
-              subtitleEnglish="NPS, EPF, Section 80C optimization, and retirement corpus calculators"
-              badgeText="RETIREMENT"
-              videos={railsData.taxRetirement}
-              onSelectVideo={(v) => setSelectedVideo(v)}
-              language={language}
-              onShowToast={onShowToast}
-            />
-
-            <CinemaVideoRail
-              titleTamil="தனிநபர் நிதி & தங்க முதலீடுகள்"
-              titleEnglish="Personal Finance & Sovereign Gold"
-              subtitleTamil="குடும்ப பட்ஜெட், அவசர கால நிதி மற்றும் தங்க பத்திரங்கள்"
-              subtitleEnglish="Budgeting frameworks, emergency reserves, and Sovereign Gold Bonds"
-              badgeText="WEALTH"
-              videos={railsData.personalFinance}
-              onSelectVideo={(v) => setSelectedVideo(v)}
-              language={language}
-              onShowToast={onShowToast}
-            />
-          </div>
-        )}
-      </div>
-
-
-      {selectedVideo && (
-        <CinemaTheaterModal
+      {/* ================= 6. VIDEO PLAYER MODAL ================= */}
+      {selectedVideo ? (
+        <YouTubePlayerModal
           video={selectedVideo}
-          allVideos={allLiveVideos}
-          onClose={() => setSelectedVideo(null)}
-          onSelectRelated={(relVideo) => setSelectedVideo(relVideo)}
-          language={language}
+          allVideos={videos}
+          onClose={handleCloseModal}
+          onSelectRelated={handleSelectVideo}
+          isTamil={isTamil}
           onShowToast={onShowToast}
         />
-      )}
+      ) : null}
     </div>
   );
 }
 
-
-
 export default VideosPage;
-export { VideosPage };

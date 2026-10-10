@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useLanguage } from '../context/LanguageContext.jsx';
 import { useVideos } from '../services/videos.js';
-import { videosData } from '../data/translations.js';
-import { translateVideo } from '../services/api.js';
-import CinemaVideoCard from '../components/home/CinemaVideoCard.jsx';
-import CinemaTheaterModal from './CinemaTheaterModal.jsx';
+import YouTubeVideoCard from '../components/youtube/YouTubeVideoCard.jsx';
+import YouTubePlayerModal from '../components/youtube/YouTubePlayerModal.jsx';
 
 function CategoryPage({ categoryId, onNavigate, onShowToast }) {
   const { language } = useLanguage();
@@ -12,17 +10,12 @@ function CategoryPage({ categoryId, onNavigate, onShowToast }) {
 
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('newest');
-  const [visibleCount, setVisibleCount] = useState(20);
+  const [visibleCount, setVisibleCount] = useState(24);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const sentinelRef = useRef(null);
 
-  // Live category feed from the database; falls back to the bundled catalog.
-  const { videos: liveVideos } = useVideos(categoryId, 'newest');
-  const categoryVideos = useMemo(() => (
-    liveVideos && liveVideos.length > 0
-      ? liveVideos
-      : (videosData || []).filter(v => v.category === categoryId)
-  ), [liveVideos, categoryId]);
+  // Live category feed from the database
+  const { videos: categoryVideos = [] } = useVideos(categoryId, sortBy, 100, language);
 
   const categoryTitles = {
     'mutual-funds': isTamil ? 'மியூச்சுவல் ஃபண்ட் & SIP' : 'Mutual Funds & SIP',
@@ -50,24 +43,24 @@ function CategoryPage({ categoryId, onNavigate, onShowToast }) {
     }
 
     if (sortBy === 'views') {
-      list.sort((a, b) => (b.views || 0) - (a.views || 0));
+      list.sort((a, b) => (b.views || b.view_count || 0) - (a.views || a.view_count || 0));
     } else if (sortBy === 'oldest') {
-      list.sort((a, b) => new Date(a.publishedAt) - new Date(b.publishedAt));
+      list.sort((a, b) => new Date(a.publishedAt || a.published_at) - new Date(b.publishedAt || b.published_at));
     } else {
-      list.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+      list.sort((a, b) => new Date(b.publishedAt || b.published_at) - new Date(a.publishedAt || a.published_at));
     }
 
-    return list.map(v => translateVideo(v, language));
-  }, [categoryVideos, searchQuery, sortBy, language]);
+    return list;
+  }, [categoryVideos, searchQuery, sortBy]);
 
-  // Auto-load next 20 videos on scroll
+  // Auto-load next videos on scroll
   useEffect(() => {
     if (!sentinelRef.current) return;
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
         setVisibleCount(prev => {
           if (prev < filtered.length) {
-            return Math.min(prev + 20, filtered.length);
+            return Math.min(prev + 24, filtered.length);
           }
           return prev;
         });
@@ -95,10 +88,10 @@ function CategoryPage({ categoryId, onNavigate, onShowToast }) {
             value={searchQuery}
             onChange={(e) => {
               setSearchQuery(e.target.value);
-              setVisibleCount(20);
+              setVisibleCount(24);
             }}
             placeholder={isTamil ? `${title} வீடியோக்களில் தேடுங்கள்...` : `Search within ${title}...`}
-            className="w-full pl-9 pr-8 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs sm:text-sm font-medium focus:outline-none focus:border-amber-500 transition-colors"
+            className="w-full pl-9 pr-8 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs sm:text-sm font-medium focus:outline-none focus:border-blue-500 transition-colors"
           />
           {searchQuery && (
             <button
@@ -117,9 +110,9 @@ function CategoryPage({ categoryId, onNavigate, onShowToast }) {
             value={sortBy}
             onChange={(e) => {
               setSortBy(e.target.value);
-              setVisibleCount(20);
+              setVisibleCount(24);
             }}
-            className="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-bold focus:outline-none focus:border-amber-500"
+            className="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-bold focus:outline-none focus:border-blue-500"
           >
             <option value="newest">{isTamil ? 'சமீபத்தியவை' : 'Latest Uploads'}</option>
             <option value="views">{isTamil ? 'அதிக பார்வை' : 'Most Popular'}</option>
@@ -128,14 +121,13 @@ function CategoryPage({ categoryId, onNavigate, onShowToast }) {
         </div>
       </div>
 
-      {/* Paginated Video Grid */}
+      {/* Paginated Video Grid: 4 cols (>=1280px), 3 cols (>=1024px), 2 cols (>=640px), 1 col below */}
       {displayedVideos.length > 0 ? (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5 sm:gap-4">
-          {displayedVideos.map((video, idx) => (
-            <CinemaVideoCard
-              key={`cat-${video.id || idx}`}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-8">
+          {displayedVideos.map((video) => (
+            <YouTubeVideoCard
+              key={video.id || video.video_id}
               video={video}
-              index={idx}
               onSelect={(v) => setSelectedVideo(v)}
               language={language}
               onShowToast={onShowToast}
@@ -154,11 +146,11 @@ function CategoryPage({ categoryId, onNavigate, onShowToast }) {
       <div ref={sentinelRef} className="pt-6 pb-4 text-center">
         {visibleCount < filtered.length ? (
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-bold text-slate-500">
-            <div className="w-3 h-3 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
+            <div className="w-3 h-3 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
             <span>
               {isTamil
-                ? `${Math.min(visibleCount, filtered.length)} / ${filtered.length} வீடியோக்கள் (கீழே உருட்டவும்...)`
-                : `Showing ${Math.min(visibleCount, filtered.length)} of ${filtered.length} (scroll for more...)`}
+                ? `${Math.min(visibleCount, filtered.length)} / ${filtered.length} வீடியோக்கள்`
+                : `Showing ${Math.min(visibleCount, filtered.length)} of ${filtered.length}`}
             </span>
           </div>
         ) : (
@@ -175,7 +167,7 @@ function CategoryPage({ categoryId, onNavigate, onShowToast }) {
 
       {/* Video Player Modal */}
       {selectedVideo && (
-        <CinemaTheaterModal
+        <YouTubePlayerModal
           video={selectedVideo}
           allVideos={categoryVideos}
           onClose={() => setSelectedVideo(null)}

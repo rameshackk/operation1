@@ -2,7 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import { useLanguage } from '../../context/LanguageContext.jsx';
 import HeroSection from './HeroSection.jsx';
 import TrendingArticlesSection from './TrendingArticlesSection.jsx';
-import HomeCinemaShowcase from './HomeCinemaShowcase.jsx';
+import HomeLatestVideos from './HomeLatestVideos.jsx';
 
 const SipCalculator = lazy(() => import('../../pages/SipCalculator.jsx'));
 
@@ -34,19 +34,16 @@ function Home({ onNavigate, onShowToast }) {
 
   return (
     <div className="w-full animate-fadeIn flex flex-col">
-      {/* 1. SECTION 1: HERO & FEATURED NEWS (Pure White #FFFFFF) */}
+      {/* 1. SECTION 1: HERO & FEATURED NEWS */}
       <section className="w-full bg-[#FFFFFF] dark:bg-slate-900/60 py-8 sm:py-12 border-b border-slate-100 dark:border-slate-800">
         <HeroSection onNavigate={onNavigate} />
       </section>
 
-      {/* 2. SECTION 2: CINEMA VIDEO SHOWCASE (Frosted Glass White Aesthetic) */}
-      <section className="w-full bg-gradient-to-b from-slate-50/80 via-white to-slate-50/90 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 py-10 sm:py-14 border-b border-slate-200/80 dark:border-slate-800">
-        <HomeCinemaShowcase
-          onNavigate={onNavigate}
-          onShowToast={onShowToast}
-          language={language}
-        />
-      </section>
+      {/* 2. SECTION 2: LATEST YOUTUBE VIDEOS */}
+      <HomeLatestVideos
+        onShowToast={onShowToast}
+        language={language}
+      />
 
       {/* 3. SECTION 3: TRENDING ARTICLES (Pure White #FFFFFF) */}
       <section className="w-full bg-[#FFFFFF] dark:bg-slate-900/60 py-10 sm:py-14 border-b border-slate-100 dark:border-slate-800">

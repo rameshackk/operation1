@@ -39,6 +39,14 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
   const [videoStatusFilter, setVideoStatusFilter] = useState('pending');
   const [processingVideoId, setProcessingVideoId] = useState(null);
 
+  // YouTube Auto-Sync Management state
+  const [ytVideos, setYtVideos] = useState([]);
+  const [ytLogs, setYtLogs] = useState([]);
+  const [isLoadingYt, setIsLoadingYt] = useState(false);
+  const [isSyncingYt, setIsSyncingYt] = useState(false);
+  const [ytSearch, setYtSearch] = useState('');
+  const [ytFilter, setYtFilter] = useState('all'); // all | hidden | pinned | shorts
+
   // Create Publisher Form State
   const [newPubName, setNewPubName] = useState('');
   const [newPubEmail, setNewPubEmail] = useState('');
@@ -144,6 +152,106 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
       fetchAdminVideos();
     }
   }, [session, role, activeTab, videoStatusFilter]);
+
+  const fetchYtData = async () => {
+    setIsLoadingYt(true);
+    try {
+      const token = session?.access_token || '';
+      const res = await fetch(`/api/youtube/admin?type=${ytFilter}&search=${encodeURIComponent(ytSearch)}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const data = await res.json();
+      if (data.status === 'success') {
+        setYtVideos(data.data?.videos || []);
+        setYtLogs(data.data?.logs || []);
+      }
+    } catch (err) {
+      console.error('Failed to load YouTube admin data:', err);
+      if (onShowToast) onShowToast(err.message);
+    } finally {
+      setIsLoadingYt(false);
+    }
+  };
+
+  useEffect(() => {
+    if (role === 'admin' && activeTab === 'youtube') {
+      fetchYtData();
+    }
+  }, [session, role, activeTab, ytFilter, ytSearch]);
+
+  const handleToggleYtHide = async (video) => {
+    try {
+      const token = session?.access_token || '';
+      const res = await fetch('/api/youtube/admin', {
+        method: 'PATCH',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ video_id: video.video_id, is_hidden: !video.is_hidden })
+      });
+      if (res.ok) {
+        setYtVideos(prev => prev.map(v => v.video_id === video.video_id ? { ...v, is_hidden: !v.is_hidden } : v));
+        if (onShowToast) onShowToast(video.is_hidden ? (isTamil ? 'வீடியோ காட்டப்படுகிறது' : 'Video unhidden') : (isTamil ? 'வீடியோ மறைக்கப்பட்டது' : 'Video hidden'));
+      }
+    } catch (err) {
+      if (onShowToast) onShowToast(err.message);
+    }
+  };
+
+  const handleToggleYtPin = async (video) => {
+    try {
+      const token = session?.access_token || '';
+      const res = await fetch('/api/youtube/admin', {
+        method: 'PATCH',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ video_id: video.video_id, is_pinned: !video.is_pinned })
+      });
+      if (res.ok) {
+        setYtVideos(prev => prev.map(v => v.video_id === video.video_id ? { ...v, is_pinned: !v.is_pinned } : v));
+        if (onShowToast) onShowToast(video.is_pinned ? (isTamil ? 'பின் நீக்கப்பட்டது' : 'Video unpinned') : (isTamil ? 'மேலே பின் செய்யப்பட்டது' : 'Video pinned to top'));
+      }
+    } catch (err) {
+      if (onShowToast) onShowToast(err.message);
+    }
+  };
+
+  const handleChangeYtCategory = async (video, newCategory) => {
+    try {
+      const token = session?.access_token || '';
+      const res = await fetch('/api/youtube/admin', {
+        method: 'PATCH',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ video_id: video.video_id, category: newCategory, category_locked: true })
+      });
+      if (res.ok) {
+        setYtVideos(prev => prev.map(v => v.video_id === video.video_id ? { ...v, category: newCategory, category_locked: true } : v));
+        if (onShowToast) onShowToast(isTamil ? 'பிரிவு மாற்றப்பட்டது' : 'Category updated & locked');
+      }
+    } catch (err) {
+      if (onShowToast) onShowToast(err.message);
+    }
+  };
+
+  const handleTriggerYtSync = async (full = false) => {
+    setIsSyncingYt(true);
+    try {
+      const token = session?.access_token || '';
+      const res = await fetch('/api/youtube/admin', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'sync', full })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        if (onShowToast) onShowToast(data.message || (isTamil ? 'யூடியூப் ஒத்திசைவு முடிந்தது!' : 'YouTube Sync complete!'));
+        fetchYtData();
+      } else {
+        throw new Error(data.error || 'Sync failed');
+      }
+    } catch (err) {
+      if (onShowToast) onShowToast(`Sync Error: ${err.message}`);
+    } finally {
+      setIsSyncingYt(false);
+    }
+  };
 
   const handleVerifyChannelAction = async (publisherId, isApprove) => {
     setProcessingChannelId(publisherId);
@@ -494,7 +602,7 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
           <button
             onClick={() => setActiveTab('videos')}
             className={`px-5 py-2.5 rounded-2xl text-xs font-black transition-all flex items-center gap-2 shrink-0 ${activeTab === 'videos'
-                ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
+                ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20'
                 : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
               }`}
           >
@@ -502,6 +610,19 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
             </svg>
             <span>{isTamil ? 'வீடியோக்கள் மதிப்பாய்வு' : 'Video Moderation'} ({adminVideos.filter(v => v.status === 'pending').length})</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('youtube')}
+            className={`px-5 py-2.5 rounded-2xl text-xs font-black transition-all flex items-center gap-2 shrink-0 ${activeTab === 'youtube'
+                ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20'
+                : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
+              }`}
+          >
+            <svg className="w-3.5 h-3.5 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+            </svg>
+            <span>YouTube (@budgetpadmanaban_)</span>
           </button>
         </div>
       )}
@@ -1617,6 +1738,287 @@ function AdminArticlesPage({ onNavigate, onShowToast }) {
                               </button>
                             )}
                           </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* ================= TAB 5: YOUTUBE AUTO-SYNC STUDIO ================= */}
+      {activeTab === 'youtube' && (
+        <div className="space-y-6">
+          {/* Header & Sync Actions */}
+          <div className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-red-500 animate-pulse" />
+                <h2 className="text-xl font-black text-slate-900 dark:text-white font-serif">
+                  Auto-Synced YouTube Studio
+                </h2>
+                <span className="px-2.5 py-0.5 rounded-full bg-red-500/10 text-red-500 text-xs font-mono font-bold">
+                  @budgetpadmanaban_
+                </span>
+              </div>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                Manage channel videos, lock AI-assigned categories, hide/pin videos, and monitor automatic WebSub & pg_cron sync logs.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2.5 flex-wrap">
+              <button
+                onClick={() => handleTriggerYtSync(false)}
+                disabled={isSyncingYt}
+                className="btn-magnetic px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-black text-xs shadow-md flex items-center gap-2 disabled:opacity-50 cursor-pointer"
+              >
+                {isSyncingYt ? (
+                  <>
+                    <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    <span>Syncing...</span>
+                  </>
+                ) : (
+                  <>
+                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    <span>Sync Now</span>
+                  </>
+                )}
+              </button>
+
+              <button
+                onClick={() => handleTriggerYtSync(true)}
+                disabled={isSyncingYt}
+                className="btn-magnetic px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs border border-slate-200 dark:border-slate-700 disabled:opacity-50 cursor-pointer"
+                title="Full refresh of all historical videos and view counts"
+              >
+                Full Refresh
+              </button>
+            </div>
+          </div>
+
+          {/* Search & Filter Bar */}
+          <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
+              <button
+                onClick={() => setYtFilter('all')}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${ytFilter === 'all' ? 'bg-blue-600 text-white font-black' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`}
+              >
+                All Videos ({ytVideos.length})
+              </button>
+              <button
+                onClick={() => setYtFilter('pinned')}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${ytFilter === 'pinned' ? 'bg-blue-600 text-white font-black' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`}
+              >
+                Pinned
+              </button>
+              <button
+                onClick={() => setYtFilter('hidden')}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${ytFilter === 'hidden' ? 'bg-blue-600 text-white font-black' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`}
+              >
+                Hidden
+              </button>
+              <button
+                onClick={() => setYtFilter('shorts')}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${ytFilter === 'shorts' ? 'bg-blue-600 text-white font-black' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`}
+              >
+                Shorts Only
+              </button>
+            </div>
+
+            <div className="relative flex-1 max-w-sm">
+              <input
+                type="text"
+                value={ytSearch}
+                onChange={e => setYtSearch(e.target.value)}
+                placeholder="Search videos by title..."
+                className="w-full pl-4 pr-10 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:border-blue-500"
+              />
+              {ytSearch && (
+                <button onClick={() => setYtSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-600 dark:text-slate-400">
+                  ✕
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* YouTube Videos Table */}
+          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden">
+            {isLoadingYt ? (
+              <div className="py-20 text-center space-y-3">
+                <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto" />
+                <p className="text-xs font-bold text-slate-500">Loading YouTube videos...</p>
+              </div>
+            ) : ytVideos.length === 0 ? (
+              <div className="py-16 text-center space-y-3">
+                <p className="text-sm font-bold text-slate-500">No YouTube videos found.</p>
+                <button
+                  onClick={() => handleTriggerYtSync(false)}
+                  className="px-4 py-2 rounded-xl bg-blue-600 text-white text-xs font-bold"
+                >
+                  Run Sync Now
+                </button>
+              </div>
+            ) : (
+              <div className="overflow-x-auto max-h-[600px]">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-slate-50 dark:bg-slate-950 text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider text-xs border-b border-slate-200 dark:border-slate-800 sticky top-0 z-10">
+                    <tr>
+                      <th className="px-5 py-3.5">Video</th>
+                      <th className="px-5 py-3.5">Category</th>
+                      <th className="px-5 py-3.5">Views / Duration</th>
+                      <th className="px-5 py-3.5">Published</th>
+                      <th className="px-5 py-3.5 text-center">Pin</th>
+                      <th className="px-5 py-3.5 text-center">Visibility</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-medium">
+                    {ytVideos.map(video => (
+                      <tr key={video.video_id} className={`hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors ${video.is_hidden ? 'opacity-60 bg-slate-50/30 dark:bg-slate-900/40' : ''}`}>
+                        <td className="px-5 py-3 max-w-md">
+                          <div className="flex items-center gap-3">
+                            <img
+                              src={video.thumbnail_url}
+                              alt=""
+                              className="w-16 aspect-video rounded-lg object-cover shrink-0 bg-slate-950"
+                              loading="lazy"
+                            />
+                            <div className="min-w-0">
+                              <div className="font-bold text-slate-900 dark:text-white line-clamp-2 leading-snug">
+                                {video.title}
+                              </div>
+                              <div className="flex items-center gap-2 mt-1">
+                                {video.is_short && (
+                                  <span className="px-1.5 py-0.5 rounded bg-red-500/10 text-red-500 text-[10px] font-black uppercase">
+                                    Short
+                                  </span>
+                                )}
+                                {video.is_pinned && (
+                                  <span className="px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-500 text-[10px] font-black uppercase">
+                                    PINNED
+                                  </span>
+                                )}
+                                <a
+                                  href={`https://www.youtube.com/watch?v=${video.video_id}`}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="text-[11px] font-mono text-blue-500 hover:underline inline-flex items-center gap-0.5"
+                                >
+                                  {video.video_id} ↗
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+
+                        <td className="px-5 py-3">
+                          <select
+                            value={video.category || 'Others'}
+                            onChange={(e) => handleChangeYtCategory(video, e.target.value)}
+                            className="px-2.5 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-bold text-slate-800 dark:text-slate-200 focus:outline-none focus:border-blue-500"
+                          >
+                            <option value="Mutual Funds">Mutual Funds</option>
+                            <option value="SIP & Planning">SIP & Planning</option>
+                            <option value="Stock Market">Stock Market</option>
+                            <option value="Insurance">Insurance</option>
+                            <option value="Retirement">Retirement</option>
+                            <option value="Children & Education">Children & Education</option>
+                            <option value="Gold & Bonds">Gold & Bonds</option>
+                            <option value="Tax">Tax</option>
+                            <option value="Others">Others</option>
+                          </select>
+                          {video.category_locked && (
+                            <div className="text-[10px] text-amber-800 dark:text-amber-400 font-bold mt-0.5">
+                              Manual Lock
+                            </div>
+                          )}
+                        </td>
+
+                        <td className="px-5 py-3 font-mono">
+                          <div className="text-slate-900 dark:text-white font-bold">
+                            {(video.view_count || 0).toLocaleString()} views
+                          </div>
+                          <div className="text-xs text-slate-500">
+                            {video.duration_seconds ? `${Math.floor(video.duration_seconds / 60)}m ${video.duration_seconds % 60}s` : '—'}
+                          </div>
+                        </td>
+
+                        <td className="px-5 py-3 text-slate-600 dark:text-slate-400 whitespace-nowrap">
+                          {video.published_at ? new Date(video.published_at).toLocaleDateString([], { year: 'numeric', month: 'short', day: 'numeric' }) : '—'}
+                        </td>
+
+                        <td className="px-5 py-3 text-center">
+                          <button
+                            onClick={() => handleToggleYtPin(video)}
+                            className={`p-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${video.is_pinned ? 'bg-blue-600 text-white shadow-sm' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white'}`}
+                            title={video.is_pinned ? 'Unpin video' : 'Pin video to top'}
+                          >
+                            {video.is_pinned ? 'Pinned' : 'Pin'}
+                          </button>
+                        </td>
+
+                        <td className="px-5 py-3 text-center">
+                          <button
+                            onClick={() => handleToggleYtHide(video)}
+                            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${video.is_hidden ? 'bg-red-500/10 text-red-500 border border-red-500/20' : 'bg-emerald-500/10 text-emerald-600 border border-emerald-500/20'}`}
+                          >
+                            {video.is_hidden ? 'Hidden' : 'Visible'}
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+
+          {/* Sync History Logs Table */}
+          <div className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+            <h3 className="text-base font-black text-slate-900 dark:text-white font-serif">
+              Recent Sync Activity (Last 20 Runs)
+            </h3>
+            {ytLogs.length === 0 ? (
+              <p className="text-xs text-slate-500">No sync logs recorded yet.</p>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs font-mono">
+                  <thead className="text-slate-500 uppercase tracking-wider text-[11px] border-b border-slate-200 dark:border-slate-800">
+                    <tr>
+                      <th className="pb-2">Time (UTC)</th>
+                      <th className="pb-2">Trigger Source</th>
+                      <th className="pb-2">New Videos</th>
+                      <th className="pb-2">Updated</th>
+                      <th className="pb-2">Status / Error</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                    {ytLogs.map(log => (
+                      <tr key={log.id}>
+                        <td className="py-2.5 text-slate-700 dark:text-slate-300">
+                          {new Date(log.ran_at).toLocaleString()}
+                        </td>
+                        <td className="py-2.5">
+                          <span className="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 font-bold text-slate-700 dark:text-slate-300">
+                            {log.source}
+                          </span>
+                        </td>
+                        <td className="py-2.5 font-bold text-emerald-600 dark:text-emerald-400">
+                          +{log.new_count || 0}
+                        </td>
+                        <td className="py-2.5 text-blue-600 dark:text-blue-400">
+                          {log.updated_count || 0}
+                        </td>
+                        <td className="py-2.5">
+                          {log.error ? (
+                            <span className="text-red-500 font-sans font-bold">{log.error}</span>
+                          ) : (
+                            <span className="text-emerald-500 font-bold font-sans">Success</span>
+                          )}
                         </td>
                       </tr>
                     ))}
