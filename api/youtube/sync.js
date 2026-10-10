@@ -14,8 +14,24 @@ export const config = {
 };
 
 export default async function handler(req, res) {
-  if (req.method !== 'GET' && req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+  // 0. Handle WebSub Hub Verification Challenge (GET)
+  if (req.method === 'GET' && req.query['hub.challenge']) {
+    res.setHeader('Content-Type', 'text/plain');
+    return res.status(200).send(req.query['hub.challenge']);
+  }
+
+  // 0.1 Handle WebSub Push Notification (POST XML)
+  let rawBody = req.body;
+  if (typeof rawBody !== 'string') {
+    rawBody = JSON.stringify(rawBody);
+  }
+  const videoIdMatch = (rawBody || '').match(/<yt:videoId>([^<]+)<\/yt:videoId>/i) ||
+                       (rawBody || '').match(/<id>yt:video:([^<]+)<\/id>/i);
+  let isWebSubPush = false;
+  if (videoIdMatch) {
+    req.query.video_id = videoIdMatch[1].trim();
+    req.query.source = 'websub';
+    isWebSubPush = true;
   }
 
   const syncSecret = process.env.SYNC_SECRET || 'muthaleetu_sync_secure_key_2026';
@@ -27,7 +43,7 @@ export default async function handler(req, res) {
   const isVercelCron = req.headers['x-vercel-cron'] || (process.env.CRON_SECRET && req.headers['authorization'] === `Bearer ${process.env.CRON_SECRET}`);
 
   let isAuthorized = false;
-  if (isVercelCron || (providedSecret && providedSecret === syncSecret)) {
+  if (isWebSubPush || isVercelCron || (providedSecret && providedSecret === syncSecret)) {
     isAuthorized = true;
   } else {
     // Check if called by authenticated admin user

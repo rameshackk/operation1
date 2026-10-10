@@ -182,7 +182,7 @@
     },
     {
       "source": "/api/youtube/websub",
-      "destination": "/api/youtube/websub"
+      "destination": "/api/youtube/sync"
     },
     {
       "source": "/api/youtube/admin",
