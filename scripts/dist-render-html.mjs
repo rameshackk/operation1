@@ -2566,6 +2566,7 @@ function normalizeArticleItem(item, language = "ta") {
   const authorAvatar = item.authorAvatar || item.author_avatar || (item.author_profile ? item.author_profile.avatar_url : null) || null;
   const authorArn = item.authorArn || item.author_arn || (item.author_profile ? item.author_profile.arn_number : "") || "";
   const isLive = Boolean(item.created_at || item.published_at || item.body_ta || item.body);
+  const views = Number(item.views_count ?? item.views ?? item.view_count ?? item.read_count ?? 0);
   return {
     id,
     slug,
@@ -2583,7 +2584,9 @@ function normalizeArticleItem(item, language = "ta") {
     authorRole,
     authorAvatar,
     authorArn,
-    isLive
+    isLive,
+    views,
+    views_count: views
   };
 }
 async function fetchCardArticles(limit = 24, sort = "newest", forceRefresh = false) {
@@ -2905,6 +2908,9 @@ function TrendingArticlesSection({ onNavigate }) {
       }
     }
     merged.sort((a, b) => {
+      const viewsA = Number(a.views_count ?? a.views ?? 0);
+      const viewsB = Number(b.views_count ?? b.views ?? 0);
+      if (viewsB !== viewsA) return viewsB - viewsA;
       const dateA = new Date(a.publishedAt || a.published_at || a.created_at || 0).getTime();
       const dateB = new Date(b.publishedAt || b.published_at || b.created_at || 0).getTime();
       return dateB - dateA;
@@ -2912,7 +2918,10 @@ function TrendingArticlesSection({ onNavigate }) {
     return merged.slice(0, 6);
   }, [liveArticles, language]);
   return /* @__PURE__ */ React12.createElement("div", { className: "w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 select-none min-w-0" }, /* @__PURE__ */ React12.createElement("div", { className: "space-y-4" }, /* @__PURE__ */ React12.createElement("div", { className: "flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800" }, /* @__PURE__ */ React12.createElement("div", { className: "flex items-center gap-2 min-w-0 truncate" }, /* @__PURE__ */ React12.createElement("span", { className: "w-2.5 h-2.5 rounded-full bg-[#4A9E2C] shrink-0 shadow-xs" }), /* @__PURE__ */ React12.createElement("h2", { className: "text-base sm:text-lg md:text-xl font-black font-sans truncate drop-shadow-xs" }, isTamil ? /* @__PURE__ */ React12.createElement(React12.Fragment, null, /* @__PURE__ */ React12.createElement("span", { className: "text-slate-950 dark:text-white" }, "\u0B9F\u0BBF\u0BB0\u0BC6\u0BA3\u0BCD\u0B9F\u0BBF\u0B99\u0BCD "), /* @__PURE__ */ React12.createElement("span", { className: "text-[#4A9E2C]" }, "\u0B9A\u0BC6\u0BAF\u0BCD\u0BA4\u0BBF\u0B95\u0BB3\u0BCD & \u0B95\u0B9F\u0BCD\u0B9F\u0BC1\u0BB0\u0BC8\u0B95\u0BB3\u0BCD")) : /* @__PURE__ */ React12.createElement(React12.Fragment, null, /* @__PURE__ */ React12.createElement("span", { className: "text-slate-950 dark:text-white" }, "TRENDING "), /* @__PURE__ */ React12.createElement("span", { className: "text-[#4A9E2C]" }, "ARTICLES")))), /* @__PURE__ */ React12.createElement("span", { className: "text-xs sm:text-xs font-bold text-[#4A9E2C] dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/80 border border-emerald-200 dark:border-emerald-800/60 px-2.5 py-0.5 rounded-full font-num shrink-0 shadow-xs" }, "Top 6 Trending")), /* @__PURE__ */ React12.createElement("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-5" }, allArticles.map((article, idx) => {
-    const rankStr = `0${idx + 1}`;
+    const formattedDate = new Date(article.publishedAt).toLocaleDateString(
+      isTamil ? "ta-IN" : "en-IN",
+      { month: "short", day: "numeric" }
+    );
     return /* @__PURE__ */ React12.createElement(
       "div",
       {
@@ -2920,10 +2929,19 @@ function TrendingArticlesSection({ onNavigate }) {
         role: "button",
         tabIndex: 0,
         onClick: () => onNavigate && onNavigate(`#/articles/${article.slug}`),
-        className: "group flex items-start gap-3.5 sm:gap-4 p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-[#ded7c8] dark:border-slate-800 hover:border-[#23645C]/60 shadow-sm hover:shadow-lg transition-all cursor-pointer select-none min-h-[56px] active:scale-[0.99]"
+        className: "group flex items-center gap-3.5 sm:gap-4 p-3.5 sm:p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-emerald-500/60 shadow-xs hover:shadow-md transition-all cursor-pointer select-none active:scale-[0.99]"
       },
-      /* @__PURE__ */ React12.createElement("span", { className: "text-2xl sm:text-[36px] font-extrabold text-[#23645C] dark:text-[#60a5fa] font-num shrink-0 leading-none pt-0.5 select-none" }, rankStr),
-      /* @__PURE__ */ React12.createElement("div", { className: "flex-1 min-w-0 flex flex-col justify-between h-full" }, /* @__PURE__ */ React12.createElement("div", null, /* @__PURE__ */ React12.createElement("div", { className: "flex items-center gap-2 mb-1.5" }, /* @__PURE__ */ React12.createElement("span", { className: "text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-[#23645C] dark:text-[#60a5fa] font-sans" }, article.category.replace("-", " ")), /* @__PURE__ */ React12.createElement("span", { className: "text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-num" }, "\u2022 ", new Date(article.publishedAt).toLocaleDateString(isTamil ? "ta-IN" : "en-IN", { month: "short", day: "numeric" }))), /* @__PURE__ */ React12.createElement("h3", { className: "text-sm sm:text-sm font-bold text-slate-900 dark:text-white line-clamp-2 group-hover:text-[#23645C] dark:group-hover:text-[#60a5fa] transition-colors leading-snug font-sans" }, article.title)), /* @__PURE__ */ React12.createElement("div", { className: "mt-2.5 pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-600 dark:text-slate-400" }, /* @__PURE__ */ React12.createElement("span", { className: "truncate max-w-[150px] font-medium text-slate-700 dark:text-slate-300" }, article.authorName || "Budget Padmanaban"), /* @__PURE__ */ React12.createElement("span", { className: "text-[#23645C] dark:text-[#60a5fa] font-bold group-hover:translate-x-1 transition-transform text-sm" }, "\u2192")))
+      /* @__PURE__ */ React12.createElement("div", { className: "w-20 sm:w-24 h-20 sm:h-24 shrink-0 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200/70 dark:border-slate-800" }, /* @__PURE__ */ React12.createElement(
+        "img",
+        {
+          src: article.thumbnail || article.coverImage,
+          alt: article.title,
+          loading: "lazy",
+          decoding: "async",
+          className: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+        }
+      )),
+      /* @__PURE__ */ React12.createElement("div", { className: "flex-1 min-w-0 flex flex-col justify-between h-full py-0.5" }, /* @__PURE__ */ React12.createElement("div", null, /* @__PURE__ */ React12.createElement("div", { className: "flex items-center gap-2 mb-1" }, /* @__PURE__ */ React12.createElement("span", { className: "text-[10.5px] sm:text-[11px] font-extrabold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-sans" }, (article.category || "FINANCE").replace("-", " ")), /* @__PURE__ */ React12.createElement("span", { className: "text-[10.5px] sm:text-[11px] text-slate-400 font-num" }, "\u2022 ", formattedDate)), /* @__PURE__ */ React12.createElement("h3", { className: "text-xs sm:text-[13.5px] font-bold text-slate-900 dark:text-white line-clamp-2 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors leading-snug font-sans" }, article.title)), /* @__PURE__ */ React12.createElement("div", { className: "mt-2 pt-1.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400" }, /* @__PURE__ */ React12.createElement("span", { className: "truncate max-w-[140px] font-medium text-slate-700 dark:text-slate-300 text-[11px] sm:text-xs" }, article.authorName || "Budget Padmanaban"), /* @__PURE__ */ React12.createElement("span", { className: "text-emerald-600 dark:text-emerald-400 font-bold group-hover:translate-x-1 transition-transform text-xs sm:text-sm" }, "\u2192")))
     );
   }))));
 }

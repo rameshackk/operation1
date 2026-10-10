@@ -29,8 +29,11 @@ function TrendingArticlesSection({ onNavigate }) {
       }
     }
 
-    // Sort descending by date
+    // Sort descending by highest views first, then by date
     merged.sort((a, b) => {
+      const viewsA = Number(a.views_count ?? a.views ?? 0);
+      const viewsB = Number(b.views_count ?? b.views ?? 0);
+      if (viewsB !== viewsA) return viewsB - viewsA;
       const dateA = new Date(a.publishedAt || a.published_at || a.created_at || 0).getTime();
       const dateB = new Date(b.publishedAt || b.published_at || b.created_at || 0).getTime();
       return dateB - dateA;
@@ -42,6 +45,7 @@ function TrendingArticlesSection({ onNavigate }) {
   return (
     <div className="w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 select-none min-w-0">
       <div className="space-y-4">
+        {/* Section Header */}
         <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
           <div className="flex items-center gap-2 min-w-0 truncate">
             <span className="w-2.5 h-2.5 rounded-full bg-[#4A9E2C] shrink-0 shadow-xs" />
@@ -64,10 +68,13 @@ function TrendingArticlesSection({ onNavigate }) {
           </span>
         </div>
 
-        {/* 3 Columns x 2 Rows Grid with 20-24px gap on desktop, clean single column with generous vertical spacing on mobile */}
+        {/* 3 Columns x 2 Rows Grid with clean article thumbnail images */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-5">
           {allArticles.map((article, idx) => {
-            const rankStr = `0${idx + 1}`;
+            const formattedDate = new Date(article.publishedAt).toLocaleDateString(
+              isTamil ? 'ta-IN' : 'en-IN',
+              { month: 'short', day: 'numeric' }
+            );
 
             return (
               <div
@@ -75,36 +82,42 @@ function TrendingArticlesSection({ onNavigate }) {
                 role="button"
                 tabIndex={0}
                 onClick={() => onNavigate && onNavigate(`#/articles/${article.slug}`)}
-                className="group flex items-start gap-3.5 sm:gap-4 p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-[#ded7c8] dark:border-slate-800 hover:border-[#23645C]/60 shadow-sm hover:shadow-lg transition-all cursor-pointer select-none min-h-[56px] active:scale-[0.99]"
+                className="group flex items-center gap-3.5 sm:gap-4 p-3.5 sm:p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-emerald-500/60 shadow-xs hover:shadow-md transition-all cursor-pointer select-none active:scale-[0.99]"
               >
-                {/* Large Article Number in Rich Accent */}
-                <span className="text-2xl sm:text-[36px] font-extrabold text-[#23645C] dark:text-[#60a5fa] font-num shrink-0 leading-none pt-0.5 select-none">
-                  {rankStr}
-                </span>
+                {/* Article Thumbnail Image */}
+                <div className="w-20 sm:w-24 h-20 sm:h-24 shrink-0 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200/70 dark:border-slate-800">
+                  <img
+                    src={article.thumbnail || article.coverImage}
+                    alt={article.title}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
 
-                <div className="flex-1 min-w-0 flex flex-col justify-between h-full">
+                {/* Article Details */}
+                <div className="flex-1 min-w-0 flex flex-col justify-between h-full py-0.5">
                   <div>
-                    <div className="flex items-center gap-2 mb-1.5">
-                      <span className="text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-[#23645C] dark:text-[#60a5fa] font-sans">
-                        {article.category.replace('-', ' ')}
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-[10.5px] sm:text-[11px] font-extrabold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-sans">
+                        {(article.category || 'FINANCE').replace('-', ' ')}
                       </span>
-                      <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-num">
-                        • {new Date(article.publishedAt).toLocaleDateString(isTamil ? 'ta-IN' : 'en-IN', { month: 'short', day: 'numeric' })}
+                      <span className="text-[10.5px] sm:text-[11px] text-slate-400 font-num">
+                        • {formattedDate}
                       </span>
                     </div>
-                    
-                    {/* Proper H3 heading for accessible hierarchy (14px+ on mobile) */}
-                    <h3 className="text-sm sm:text-sm font-bold text-slate-900 dark:text-white line-clamp-2 group-hover:text-[#23645C] dark:group-hover:text-[#60a5fa] transition-colors leading-snug font-sans">
+
+                    <h3 className="text-xs sm:text-[13.5px] font-bold text-slate-900 dark:text-white line-clamp-2 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors leading-snug font-sans">
                       {article.title}
                     </h3>
                   </div>
 
-                  {/* Byline in slate-600 */}
-                  <div className="mt-2.5 pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-600 dark:text-slate-400">
-                    <span className="truncate max-w-[150px] font-medium text-slate-700 dark:text-slate-300">
+                  {/* Byline / Publisher */}
+                  <div className="mt-2 pt-1.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+                    <span className="truncate max-w-[140px] font-medium text-slate-700 dark:text-slate-300 text-[11px] sm:text-xs">
                       {article.authorName || 'Budget Padmanaban'}
                     </span>
-                    <span className="text-[#23645C] dark:text-[#60a5fa] font-bold group-hover:translate-x-1 transition-transform text-sm">
+                    <span className="text-emerald-600 dark:text-emerald-400 font-bold group-hover:translate-x-1 transition-transform text-xs sm:text-sm">
                       →
                     </span>
                   </div>
@@ -120,3 +133,4 @@ function TrendingArticlesSection({ onNavigate }) {
 
 export default TrendingArticlesSection;
 export { TrendingArticlesSection };
+

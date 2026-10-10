@@ -69,6 +69,7 @@ export function normalizeArticleItem(item, language = 'ta') {
   const authorAvatar = item.authorAvatar || item.author_avatar || (item.author_profile ? item.author_profile.avatar_url : null) || null;
   const authorArn = item.authorArn || item.author_arn || (item.author_profile ? item.author_profile.arn_number : '') || '';
   const isLive = Boolean(item.created_at || item.published_at || item.body_ta || item.body);
+  const views = Number(item.views_count ?? item.views ?? item.view_count ?? item.read_count ?? 0);
 
   return {
     id,
@@ -87,7 +88,9 @@ export function normalizeArticleItem(item, language = 'ta') {
     authorRole,
     authorAvatar,
     authorArn,
-    isLive
+    isLive,
+    views,
+    views_count: views
   };
 }
 
