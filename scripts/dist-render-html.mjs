@@ -2420,14 +2420,14 @@ function HomeLatestVideos({ initialVideos = [], language = "ta", onShowToast }) 
   const [isLoading, setIsLoading] = useState10(initialVideos.length === 0);
   useEffect8(() => {
     let isMounted = true;
-    if (initialVideos && initialVideos.length >= 4) {
-      setVideos(initialVideos.slice(0, 8));
+    if (initialVideos && initialVideos.length >= 3) {
+      setVideos(initialVideos.slice(0, 6));
       setIsLoading(false);
       return;
     }
-    fetch("/api/youtube/videos?type=videos&limit=8").then((res) => res.ok ? res.json() : null).then((data) => {
+    fetch("/api/youtube/videos?type=videos&limit=6").then((res) => res.ok ? res.json() : null).then((data) => {
       if (isMounted && data?.data && Array.isArray(data.data)) {
-        setVideos(data.data.slice(0, 8));
+        setVideos(data.data.slice(0, 6));
         setIsLoading(false);
       }
     }).catch((err) => {
@@ -2438,7 +2438,7 @@ function HomeLatestVideos({ initialVideos = [], language = "ta", onShowToast }) 
       isMounted = false;
     };
   }, [initialVideos]);
-  return /* @__PURE__ */ React15.createElement("section", { className: "w-full py-10 sm:py-12 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950" }, /* @__PURE__ */ React15.createElement("div", { className: "w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6" }, /* @__PURE__ */ React15.createElement("div", { className: "flex flex-col sm:flex-row sm:items-end justify-between gap-3" }, /* @__PURE__ */ React15.createElement("div", null, /* @__PURE__ */ React15.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React15.createElement("span", { className: "w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse" }), /* @__PURE__ */ React15.createElement("span", { className: "text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400" }, isTamil ? "\u0BAF\u0BC2\u0B9F\u0BBF\u0BAF\u0BC2\u0BAA\u0BCD \u0BB5\u0BC0\u0B9F\u0BBF\u0BAF\u0BCB\u0B95\u0BCD\u0B95\u0BB3\u0BCD" : "YouTube Channel")), /* @__PURE__ */ React15.createElement("h2", { className: "mt-1 text-2xl sm:text-3xl font-black text-slate-900 dark:text-white font-serif" }, isTamil ? "\u0BAA\u0B9F\u0BCD\u0B9C\u0BC6\u0B9F\u0BCD \u0BAA\u0BA4\u0BCD\u0BAE\u0BA8\u0BBE\u0BAA\u0BA9\u0BCD \u0BB5\u0BC0\u0B9F\u0BBF\u0BAF\u0BCB\u0B95\u0BCD\u0B95\u0BB3\u0BCD" : "Latest from Budget Padmanaban")), /* @__PURE__ */ React15.createElement(
+  return /* @__PURE__ */ React15.createElement("section", { className: "w-full py-10 sm:py-12 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950" }, /* @__PURE__ */ React15.createElement("div", { className: "w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 space-y-6" }, /* @__PURE__ */ React15.createElement("div", { className: "flex flex-col sm:flex-row sm:items-end justify-between gap-3" }, /* @__PURE__ */ React15.createElement("div", null, /* @__PURE__ */ React15.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React15.createElement("span", { className: "w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse" }), /* @__PURE__ */ React15.createElement("span", { className: "text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400" }, isTamil ? "\u0BAF\u0BC2\u0B9F\u0BBF\u0BAF\u0BC2\u0BAA\u0BCD \u0BB5\u0BC0\u0B9F\u0BBF\u0BAF\u0BCB\u0B95\u0BCD\u0B95\u0BB3\u0BCD" : "YouTube Channel")), /* @__PURE__ */ React15.createElement("h2", { className: "mt-1 text-2xl sm:text-3xl font-black text-slate-900 dark:text-white font-serif" }, isTamil ? "\u0BAA\u0B9F\u0BCD\u0B9C\u0BC6\u0B9F\u0BCD \u0BAA\u0BA4\u0BCD\u0BAE\u0BA8\u0BBE\u0BAA\u0BA9\u0BCD \u0BB5\u0BC0\u0B9F\u0BBF\u0BAF\u0BCB\u0B95\u0BCD\u0B95\u0BB3\u0BCD" : "Latest from Budget Padmanaban")), /* @__PURE__ */ React15.createElement(
     "a",
     {
       href: "#/videos",
@@ -2446,7 +2446,7 @@ function HomeLatestVideos({ initialVideos = [], language = "ta", onShowToast }) 
     },
     /* @__PURE__ */ React15.createElement("span", null, isTamil ? "\u0B85\u0BA9\u0BC8\u0BA4\u0BCD\u0BA4\u0BC1 \u0BB5\u0BC0\u0B9F\u0BBF\u0BAF\u0BCB\u0B95\u0BCD\u0B95\u0BB3\u0BC8\u0BAF\u0BC1\u0BAE\u0BCD \u0B95\u0BBE\u0BA3\u0BCD\u0B95" : "View all videos"),
     /* @__PURE__ */ React15.createElement("span", { className: "group-hover:translate-x-1 transition-transform" }, "\u2192")
-  )), isLoading ? /* @__PURE__ */ React15.createElement("div", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-8" }, [...Array(8)].map((_, i) => /* @__PURE__ */ React15.createElement("div", { key: i, className: "animate-pulse space-y-3" }, /* @__PURE__ */ React15.createElement("div", { className: "aspect-video bg-slate-200 dark:bg-slate-800 rounded-xl" }), /* @__PURE__ */ React15.createElement("div", { className: "h-4 bg-slate-200 dark:bg-slate-800 rounded w-3/4" }), /* @__PURE__ */ React15.createElement("div", { className: "h-3 bg-slate-200 dark:bg-slate-800 rounded w-1/2" })))) : videos.length > 0 ? /* @__PURE__ */ React15.createElement("div", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-8" }, videos.map((vid) => /* @__PURE__ */ React15.createElement(
+  )), isLoading ? /* @__PURE__ */ React15.createElement("div", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8" }, [...Array(6)].map((_, i) => /* @__PURE__ */ React15.createElement("div", { key: i, className: "animate-pulse space-y-3" }, /* @__PURE__ */ React15.createElement("div", { className: "aspect-video bg-slate-200 dark:bg-slate-800 rounded-xl" }), /* @__PURE__ */ React15.createElement("div", { className: "h-4 bg-slate-200 dark:bg-slate-800 rounded w-3/4" }), /* @__PURE__ */ React15.createElement("div", { className: "h-3 bg-slate-200 dark:bg-slate-800 rounded w-1/2" })))) : videos.length > 0 ? /* @__PURE__ */ React15.createElement("div", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8" }, videos.map((vid) => /* @__PURE__ */ React15.createElement(
     YouTubeVideoCard_default,
     {
       key: vid.video_id || vid.youtubeId || vid.id,

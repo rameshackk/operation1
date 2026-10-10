@@ -10,17 +10,17 @@ function HomeLatestVideos({ initialVideos = [], language = 'ta', onShowToast }) 
 
   useEffect(() => {
     let isMounted = true;
-    if (initialVideos && initialVideos.length >= 4) {
-      setVideos(initialVideos.slice(0, 8));
+    if (initialVideos && initialVideos.length >= 3) {
+      setVideos(initialVideos.slice(0, 6));
       setIsLoading(false);
       return;
     }
 
-    fetch('/api/youtube/videos?type=videos&limit=8')
+    fetch('/api/youtube/videos?type=videos&limit=6')
       .then(res => (res.ok ? res.json() : null))
       .then(data => {
         if (isMounted && data?.data && Array.isArray(data.data)) {
-          setVideos(data.data.slice(0, 8));
+          setVideos(data.data.slice(0, 6));
           setIsLoading(false);
         }
       })
@@ -36,7 +36,7 @@ function HomeLatestVideos({ initialVideos = [], language = 'ta', onShowToast }) 
 
   return (
     <section className="w-full py-10 sm:py-12 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950">
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 space-y-6">
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
           <div>
@@ -60,10 +60,10 @@ function HomeLatestVideos({ initialVideos = [], language = 'ta', onShowToast }) 
           </a>
         </div>
 
-        {/* 4-column Grid matching spec */}
+        {/* 3-column Grid matching full-screen specification */}
         {isLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-8">
-            {[...Array(8)].map((_, i) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {[...Array(6)].map((_, i) => (
               <div key={i} className="animate-pulse space-y-3">
                 <div className="aspect-video bg-slate-200 dark:bg-slate-800 rounded-xl" />
                 <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded w-3/4" />
@@ -72,7 +72,7 @@ function HomeLatestVideos({ initialVideos = [], language = 'ta', onShowToast }) 
             ))}
           </div>
         ) : videos.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {videos.map((vid) => (
               <YouTubeVideoCard
                 key={vid.video_id || vid.youtubeId || vid.id}
