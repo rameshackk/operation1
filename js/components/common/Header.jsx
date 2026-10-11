@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useLanguage } from '../../context/LanguageContext.jsx';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { LanguageSwitcher } from './LanguageSwitcher.jsx';
@@ -8,16 +8,9 @@ import { ProfileMenu } from './ProfileMenu.jsx';
 function Header({ onOpenSearch, onNavigate }) {
   const { t, language } = useLanguage();
   const { user, profile, signOut } = useAuth();
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const displayName = profile?.display_name || user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'User';
-
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 30);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const handleLogout = async () => {
     if (isLoggingOut) return;
@@ -34,8 +27,7 @@ function Header({ onOpenSearch, onNavigate }) {
   };
 
   return (
-    <header className={`relative z-40 w-full max-w-full overflow-visible transition-all duration-200 border-b border-[#D5EBD9] dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-900 dark:text-white pt-[env(safe-area-inset-top,0px)] ${isScrolled ? 'py-1.5 shadow-sm' : 'py-2 sm:py-2.5 shadow-sm'
-      }`}>
+    <header className="relative z-40 w-full max-w-full overflow-visible transition-all duration-200 border-b border-[#D5EBD9] dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-900 dark:text-white pt-[env(safe-area-inset-top,0px)] py-2 sm:py-2.5 shadow-sm">
       {/* 1. DESKTOP VIEW (hidden md:flex) */}
       <div className="hidden md:flex w-full max-w-[98vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 items-center justify-between gap-4">
         {/* Left Side: Search Trigger + Language Switcher */}
@@ -67,12 +59,12 @@ function Header({ onOpenSearch, onNavigate }) {
                 alt="Muthaleetu Thisai"
                 width="48"
                 height="48"
-                className={`${isScrolled ? 'w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10' : 'w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12'} object-contain drop-shadow-md group-hover:scale-105 transition-all duration-300 shrink-0`}
+                className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 object-contain drop-shadow-md group-hover:scale-105 transition-all duration-300 shrink-0"
               />
             </picture>
             <div className="text-left shrink-0">
               <div className="flex items-center gap-1 sm:gap-1.5 whitespace-nowrap">
-                <h1 className={`${isScrolled ? 'text-sm sm:text-base md:text-lg' : 'text-base sm:text-lg md:text-[1.35rem]'} font-extrabold tracking-tight whitespace-nowrap leading-none font-sans transition-all duration-300`}>
+                <h1 className="text-base sm:text-lg md:text-[1.35rem] font-extrabold tracking-tight whitespace-nowrap leading-none font-sans">
                   {language === 'ta' ? (
                     <>
                       <span className="text-[#03529A] dark:text-[#38bdf8]">முதலீட்டு </span>

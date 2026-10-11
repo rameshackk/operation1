@@ -354,7 +354,7 @@ __export(SipCalculator_exports, {
   SipCalculator: () => SipCalculator,
   default: () => SipCalculator
 });
-import React16, { useState as useState11, useEffect as useEffect9, useMemo as useMemo3 } from "react";
+import React16, { useState as useState11, useEffect as useEffect8, useMemo as useMemo3 } from "react";
 function formatINR(val, isLakhCr = false) {
   if (val === null || val === void 0 || isNaN(val)) return "\u20B90";
   const num = Math.round(val);
@@ -395,7 +395,7 @@ function SipCalculator({ initialTab, isEmbedded = false }) {
     } catch (e) {
     }
   };
-  useEffect9(() => {
+  useEffect8(() => {
     if (initialTab && ["quick", "stepup", "quiz"].includes(initialTab)) {
       setActiveTab(initialTab);
     }
@@ -1834,7 +1834,7 @@ var useAuth = () => useContext3(AuthContext);
 
 // js/components/common/Header.jsx
 init_LanguageContext();
-import React7, { useState as useState5, useEffect as useEffect5 } from "react";
+import React7, { useState as useState5 } from "react";
 
 // js/components/common/LanguageSwitcher.jsx
 init_LanguageContext();
@@ -1987,14 +1987,8 @@ function ProfileMenu({ onNavigate }) {
 function Header({ onOpenSearch, onNavigate }) {
   const { t, language } = useLanguage();
   const { user, profile, signOut } = useAuth();
-  const [isScrolled, setIsScrolled] = useState5(false);
   const [isLoggingOut, setIsLoggingOut] = useState5(false);
   const displayName = profile?.display_name || user?.user_metadata?.full_name || user?.email?.split("@")[0] || "User";
-  useEffect5(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 30);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
   const handleLogout = async () => {
     if (isLoggingOut) return;
     setIsLoggingOut(true);
@@ -2008,7 +2002,7 @@ function Header({ onOpenSearch, onNavigate }) {
       setIsLoggingOut(false);
     }
   };
-  return /* @__PURE__ */ React7.createElement("header", { className: `relative z-40 w-full max-w-full overflow-visible transition-all duration-200 border-b border-[#D5EBD9] dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-900 dark:text-white pt-[env(safe-area-inset-top,0px)] ${isScrolled ? "py-1.5 shadow-sm" : "py-2 sm:py-2.5 shadow-sm"}` }, /* @__PURE__ */ React7.createElement("div", { className: "hidden md:flex w-full max-w-[98vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 items-center justify-between gap-4" }, /* @__PURE__ */ React7.createElement("div", { className: "flex items-center gap-3 justify-start shrink-0" }, /* @__PURE__ */ React7.createElement(
+  return /* @__PURE__ */ React7.createElement("header", { className: "relative z-40 w-full max-w-full overflow-visible transition-all duration-200 border-b border-[#D5EBD9] dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-900 dark:text-white pt-[env(safe-area-inset-top,0px)] py-2 sm:py-2.5 shadow-sm" }, /* @__PURE__ */ React7.createElement("div", { className: "hidden md:flex w-full max-w-[98vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 items-center justify-between gap-4" }, /* @__PURE__ */ React7.createElement("div", { className: "flex items-center gap-3 justify-start shrink-0" }, /* @__PURE__ */ React7.createElement(
     "button",
     {
       onClick: onOpenSearch,
@@ -2026,9 +2020,9 @@ function Header({ onOpenSearch, onNavigate }) {
       alt: "Muthaleetu Thisai",
       width: "48",
       height: "48",
-      className: `${isScrolled ? "w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10" : "w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12"} object-contain drop-shadow-md group-hover:scale-105 transition-all duration-300 shrink-0`
+      className: "w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 object-contain drop-shadow-md group-hover:scale-105 transition-all duration-300 shrink-0"
     }
-  )), /* @__PURE__ */ React7.createElement("div", { className: "text-left shrink-0" }, /* @__PURE__ */ React7.createElement("div", { className: "flex items-center gap-1 sm:gap-1.5 whitespace-nowrap" }, /* @__PURE__ */ React7.createElement("h1", { className: `${isScrolled ? "text-sm sm:text-base md:text-lg" : "text-base sm:text-lg md:text-[1.35rem]"} font-extrabold tracking-tight whitespace-nowrap leading-none font-sans transition-all duration-300` }, language === "ta" ? /* @__PURE__ */ React7.createElement(React7.Fragment, null, /* @__PURE__ */ React7.createElement("span", { className: "text-[#03529A] dark:text-[#38bdf8]" }, "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 "), /* @__PURE__ */ React7.createElement("span", { className: "text-[#4A9E2C] dark:text-[#4ade80]" }, "\u0BA4\u0BBF\u0B9A\u0BC8")) : /* @__PURE__ */ React7.createElement(React7.Fragment, null, /* @__PURE__ */ React7.createElement("span", { className: "text-[#03529A] dark:text-[#38bdf8]" }, "Muthaleetu "), /* @__PURE__ */ React7.createElement("span", { className: "text-[#4A9E2C] dark:text-[#4ade80]" }, "Thisai")))), /* @__PURE__ */ React7.createElement("p", { className: "text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium pt-0.5 whitespace-nowrap leading-none" }, t("tagline"))))), /* @__PURE__ */ React7.createElement("div", { className: "flex items-center justify-end gap-2.5 shrink-0" }, /* @__PURE__ */ React7.createElement(ThemeToggle, null), user ? /* @__PURE__ */ React7.createElement("div", { className: "flex items-center gap-2 shrink-0" }, /* @__PURE__ */ React7.createElement(ProfileMenu, { onNavigate: onNavigate || ((route) => {
+  )), /* @__PURE__ */ React7.createElement("div", { className: "text-left shrink-0" }, /* @__PURE__ */ React7.createElement("div", { className: "flex items-center gap-1 sm:gap-1.5 whitespace-nowrap" }, /* @__PURE__ */ React7.createElement("h1", { className: "text-base sm:text-lg md:text-[1.35rem] font-extrabold tracking-tight whitespace-nowrap leading-none font-sans" }, language === "ta" ? /* @__PURE__ */ React7.createElement(React7.Fragment, null, /* @__PURE__ */ React7.createElement("span", { className: "text-[#03529A] dark:text-[#38bdf8]" }, "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 "), /* @__PURE__ */ React7.createElement("span", { className: "text-[#4A9E2C] dark:text-[#4ade80]" }, "\u0BA4\u0BBF\u0B9A\u0BC8")) : /* @__PURE__ */ React7.createElement(React7.Fragment, null, /* @__PURE__ */ React7.createElement("span", { className: "text-[#03529A] dark:text-[#38bdf8]" }, "Muthaleetu "), /* @__PURE__ */ React7.createElement("span", { className: "text-[#4A9E2C] dark:text-[#4ade80]" }, "Thisai")))), /* @__PURE__ */ React7.createElement("p", { className: "text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium pt-0.5 whitespace-nowrap leading-none" }, t("tagline"))))), /* @__PURE__ */ React7.createElement("div", { className: "flex items-center justify-end gap-2.5 shrink-0" }, /* @__PURE__ */ React7.createElement(ThemeToggle, null), user ? /* @__PURE__ */ React7.createElement("div", { className: "flex items-center gap-2 shrink-0" }, /* @__PURE__ */ React7.createElement(ProfileMenu, { onNavigate: onNavigate || ((route) => {
     if (typeof window !== "undefined") window.location.hash = route;
   }) }), /* @__PURE__ */ React7.createElement(
     "button",
@@ -2500,7 +2494,7 @@ import React11, { useMemo } from "react";
 
 // js/services/articles.js
 init_translations();
-import { useState as useState9, useEffect as useEffect6 } from "react";
+import { useState as useState9, useEffect as useEffect5 } from "react";
 var liveArticlesCache = null;
 var liveArticlesPromise = null;
 function cleanImageUrl(url, category = "mutual-fund", fallbackUrl = null) {
@@ -2675,7 +2669,7 @@ function useLiveArticles() {
     return [];
   });
   const [isLoading, setIsLoading] = useState9(liveArticles.length === 0);
-  useEffect6(() => {
+  useEffect5(() => {
     let isMounted = true;
     const load = async (force = false) => {
       const list = await fetchCardArticles(24, "newest", force);
@@ -2940,7 +2934,7 @@ function TrendingArticlesSection({ onNavigate }) {
 var TrendingArticlesSection_default = TrendingArticlesSection;
 
 // js/components/home/HomeLatestVideos.jsx
-import React15, { useState as useState10, useEffect as useEffect8 } from "react";
+import React15, { useState as useState10, useEffect as useEffect7 } from "react";
 
 // js/components/youtube/YouTubeVideoCard.jsx
 import React13 from "react";
@@ -3062,7 +3056,7 @@ function YouTubeVideoCard({ video, onSelect, isTamil = false }) {
 var YouTubeVideoCard_default = YouTubeVideoCard;
 
 // js/components/youtube/YouTubePlayerModal.jsx
-import React14, { useEffect as useEffect7 } from "react";
+import React14, { useEffect as useEffect6 } from "react";
 function YouTubePlayerModal({ video, allVideos = [], onClose, onSelectRelated, isTamil = false, onShowToast }) {
   if (!video) return null;
   const videoId = video.video_id || video.youtubeId || video.id;
@@ -3072,7 +3066,7 @@ function YouTubePlayerModal({ video, allVideos = [], onClose, onSelectRelated, i
   const summary = (isTamil ? video.ai_summary_ta || video.summaryTamil : video.ai_summary_en || video.summaryEnglish) || video.description || video.descriptionTamil || video.descriptionEnglish || "";
   const compactViews = formatCompactViews(views, isTamil);
   const timeAgo = formatRelativeTime(publishedAt, isTamil);
-  useEffect7(() => {
+  useEffect6(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Escape") {
         if (onClose) onClose();
@@ -3219,7 +3213,7 @@ function HomeLatestVideos({ initialVideos = [], language = "ta", onShowToast }) 
   const [videos, setVideos] = useState10(initialVideos);
   const [selectedVideo, setSelectedVideo] = useState10(null);
   const [isLoading, setIsLoading] = useState10(initialVideos.length === 0);
-  useEffect8(() => {
+  useEffect7(() => {
     let isMounted = true;
     if (initialVideos && initialVideos.length >= 3) {
       setVideos(initialVideos.slice(0, 6));
