@@ -49,10 +49,10 @@ function Header({ onOpenSearch, onNavigate }) {
 
   return (
     <header className="relative z-40 w-full max-w-full overflow-visible transition-all duration-200 border-b border-[#D5EBD9] dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-900 dark:text-white pt-[env(safe-area-inset-top,0px)] py-2 sm:py-2.5 shadow-sm">
-      {/* 1. DESKTOP VIEW (hidden md:flex) */}
-      <div className="hidden md:flex w-full max-w-[98vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 items-center justify-between gap-4">
+      {/* 1. DESKTOP VIEW (hidden md:grid) - Symmetric 3-column grid for dead-center logo */}
+      <div className="hidden md:grid md:grid-cols-[1fr_auto_1fr] w-full max-w-[98vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 items-center gap-4">
         {/* Left Side: Search Trigger + Language Switcher */}
-        <div className="flex items-center gap-3 justify-start shrink-0">
+        <div className="flex items-center gap-3 justify-start shrink-0 min-w-0">
           <button
             onClick={onOpenSearch}
             className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-800 transition-all text-xs font-bold border border-slate-200 dark:border-slate-700 shadow-xs shrink-0 cursor-pointer min-h-[44px]"
@@ -70,8 +70,8 @@ function Header({ onOpenSearch, onNavigate }) {
           </div>
         </div>
 
-        {/* Center: Centered Brand Logo & Title (Never overlapped) */}
-        <div className="flex items-center justify-center shrink-0 px-2">
+        {/* Center: Mathematically Centered Brand Logo & Title */}
+        <div className="flex items-center justify-center justify-self-center shrink-0 px-2">
           <a href="#/" className="flex items-center gap-2.5 sm:gap-3 group shrink-0">
             <picture className="shrink-0">
               <source srcSet="/assets/logo-96.webp 2x, /assets/logo-48.webp 1x" type="image/webp" />
@@ -107,7 +107,7 @@ function Header({ onOpenSearch, onNavigate }) {
         </div>
 
         {/* Right Side Controls: Theme Toggle + Login / User Card */}
-        <div className="flex items-center justify-end gap-2.5 shrink-0">
+        <div className="flex items-center justify-end justify-self-end gap-2.5 shrink-0 min-w-0">
           <ThemeToggle />
 
           {user ? (
@@ -142,12 +142,26 @@ function Header({ onOpenSearch, onNavigate }) {
         </div>
       </div>
 
-      {/* 2. MOBILE SINGLE-ROW COMPACT HEADER (md:hidden - collapsing on scroll) */}
-      <div className={`flex md:hidden w-full items-center justify-between px-3 gap-2 transition-all duration-300 ${
+      {/* 2. MOBILE SINGLE-ROW COMPACT HEADER (md:hidden - collapsing on scroll, centered logo) */}
+      <div className={`grid md:hidden grid-cols-[1fr_auto_1fr] items-center w-full px-3 gap-2 transition-all duration-300 ${
         mobileScrolled ? 'min-h-[40px] py-0.5' : 'min-h-[48px] py-1'
       }`}>
-        {/* Left: Brand Logo & Title */}
-        <a href="#/" className="flex items-center gap-2 min-w-0 shrink truncate group py-0.5 tap-feedback">
+        {/* Left: Compact Search Trigger */}
+        <div className="flex items-center justify-start shrink-0 min-w-0">
+          <button
+            onClick={onOpenSearch}
+            className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-800 flex items-center justify-center border border-slate-200 dark:border-slate-700 shadow-xs cursor-pointer active:scale-95 transition-all"
+            aria-label="Search"
+            title="Search"
+          >
+            <svg className="w-4 h-4 text-[#2563EB] dark:text-[#38bdf8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Center: Brand Logo & Title */}
+        <a href="#/" className="flex items-center justify-center justify-self-center gap-1.5 sm:gap-2 min-w-0 shrink-0 group py-0.5 tap-feedback">
           <picture className="shrink-0">
             <source srcSet="/assets/logo-96.webp 2x, /assets/logo-48.webp 1x" type="image/webp" />
             <img
@@ -155,7 +169,7 @@ function Header({ onOpenSearch, onNavigate }) {
               alt="Muthaleetu Thisai"
               width="36"
               height="36"
-              className={`${mobileScrolled ? 'w-7 h-7' : 'w-9 h-9'} object-contain drop-shadow-sm shrink-0 transition-all duration-300`}
+              className={`${mobileScrolled ? 'w-7 h-7' : 'w-8 h-8'} object-contain drop-shadow-sm shrink-0 transition-all duration-300`}
             />
           </picture>
           <div className="min-w-0 truncate">
@@ -175,19 +189,8 @@ function Header({ onOpenSearch, onNavigate }) {
           </div>
         </a>
 
-        {/* Right: Compact Search Trigger + Menu Trigger (44x44px touch targets with 8px spacing) */}
-        <div className="flex items-center gap-2 shrink-0">
-          <button
-            onClick={onOpenSearch}
-            className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-800 flex items-center justify-center border border-slate-200 dark:border-slate-700 shadow-xs cursor-pointer active:scale-95 transition-all"
-            aria-label="Search"
-            title="Search"
-          >
-            <svg className="w-5 h-5 text-[#2563EB] dark:text-[#38bdf8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-          </button>
-
+        {/* Right: User Menu / Sign In */}
+        <div className="flex items-center justify-end justify-self-end gap-2 shrink-0 min-w-0">
           {user ? (
             <ProfileMenu onNavigate={onNavigate || ((route) => { if (typeof window !== 'undefined') window.location.hash = route; })} />
           ) : (
@@ -196,7 +199,7 @@ function Header({ onOpenSearch, onNavigate }) {
                 if (onNavigate) onNavigate('#/login');
                 else if (typeof window !== 'undefined') window.location.hash = '#/login';
               }}
-              className="h-11 min-h-[44px] px-3.5 rounded-full bg-[#2563EB] hover:bg-blue-700 text-white font-bold text-xs shadow-xs transition-all shrink-0 flex items-center justify-center active:scale-95"
+              className="h-9 min-h-[36px] px-3.5 rounded-full bg-[#2563EB] hover:bg-blue-700 text-white font-bold text-xs shadow-xs transition-all shrink-0 flex items-center justify-center active:scale-95"
             >
               <span>{language === 'ta' ? 'உள்நுழைக' : 'Sign In'}</span>
             </button>

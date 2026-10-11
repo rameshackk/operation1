@@ -2021,7 +2021,7 @@ function Header({ onOpenSearch, onNavigate }) {
       setIsLoggingOut(false);
     }
   };
-  return /* @__PURE__ */ React7.createElement("header", { className: "relative z-40 w-full max-w-full overflow-visible transition-all duration-200 border-b border-[#D5EBD9] dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-900 dark:text-white pt-[env(safe-area-inset-top,0px)] py-2 sm:py-2.5 shadow-sm" }, /* @__PURE__ */ React7.createElement("div", { className: "hidden md:flex w-full max-w-[98vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 items-center justify-between gap-4" }, /* @__PURE__ */ React7.createElement("div", { className: "flex items-center gap-3 justify-start shrink-0" }, /* @__PURE__ */ React7.createElement(
+  return /* @__PURE__ */ React7.createElement("header", { className: "relative z-40 w-full max-w-full overflow-visible transition-all duration-200 border-b border-[#D5EBD9] dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-900 dark:text-white pt-[env(safe-area-inset-top,0px)] py-2 sm:py-2.5 shadow-sm" }, /* @__PURE__ */ React7.createElement("div", { className: "hidden md:grid md:grid-cols-[1fr_auto_1fr] w-full max-w-[98vw] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 items-center gap-4" }, /* @__PURE__ */ React7.createElement("div", { className: "flex items-center gap-3 justify-start shrink-0 min-w-0" }, /* @__PURE__ */ React7.createElement(
     "button",
     {
       onClick: onOpenSearch,
@@ -2032,7 +2032,7 @@ function Header({ onOpenSearch, onNavigate }) {
     /* @__PURE__ */ React7.createElement("svg", { className: "w-3.5 h-3.5 text-[#2563EB] dark:text-[#38bdf8]", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24" }, /* @__PURE__ */ React7.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2.5", d: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" })),
     /* @__PURE__ */ React7.createElement("span", { className: "font-bold" }, t("searchTitle")),
     /* @__PURE__ */ React7.createElement("span", { className: "text-xs px-1 py-0.2 rounded bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-num font-bold" }, "Ctrl+K")
-  ), /* @__PURE__ */ React7.createElement("div", { className: "shrink-0" }, /* @__PURE__ */ React7.createElement(LanguageSwitcher, null))), /* @__PURE__ */ React7.createElement("div", { className: "flex items-center justify-center shrink-0 px-2" }, /* @__PURE__ */ React7.createElement("a", { href: "#/", className: "flex items-center gap-2.5 sm:gap-3 group shrink-0" }, /* @__PURE__ */ React7.createElement("picture", { className: "shrink-0" }, /* @__PURE__ */ React7.createElement("source", { srcSet: "/assets/logo-96.webp 2x, /assets/logo-48.webp 1x", type: "image/webp" }), /* @__PURE__ */ React7.createElement(
+  ), /* @__PURE__ */ React7.createElement("div", { className: "shrink-0" }, /* @__PURE__ */ React7.createElement(LanguageSwitcher, null))), /* @__PURE__ */ React7.createElement("div", { className: "flex items-center justify-center justify-self-center shrink-0 px-2" }, /* @__PURE__ */ React7.createElement("a", { href: "#/", className: "flex items-center gap-2.5 sm:gap-3 group shrink-0" }, /* @__PURE__ */ React7.createElement("picture", { className: "shrink-0" }, /* @__PURE__ */ React7.createElement("source", { srcSet: "/assets/logo-96.webp 2x, /assets/logo-48.webp 1x", type: "image/webp" }), /* @__PURE__ */ React7.createElement(
     "img",
     {
       src: "/assets/logo-48.webp",
@@ -2041,7 +2041,7 @@ function Header({ onOpenSearch, onNavigate }) {
       height: "48",
       className: "w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 object-contain drop-shadow-md group-hover:scale-105 transition-all duration-300 shrink-0"
     }
-  )), /* @__PURE__ */ React7.createElement("div", { className: "text-left shrink-0" }, /* @__PURE__ */ React7.createElement("div", { className: "flex items-center gap-1 sm:gap-1.5 whitespace-nowrap" }, /* @__PURE__ */ React7.createElement("h1", { className: "text-base sm:text-lg md:text-[1.35rem] font-extrabold tracking-tight whitespace-nowrap leading-none font-sans" }, language === "ta" ? /* @__PURE__ */ React7.createElement(React7.Fragment, null, /* @__PURE__ */ React7.createElement("span", { className: "text-[#03529A] dark:text-[#38bdf8]" }, "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 "), /* @__PURE__ */ React7.createElement("span", { className: "text-[#4A9E2C] dark:text-[#4ade80]" }, "\u0BA4\u0BBF\u0B9A\u0BC8")) : /* @__PURE__ */ React7.createElement(React7.Fragment, null, /* @__PURE__ */ React7.createElement("span", { className: "text-[#03529A] dark:text-[#38bdf8]" }, "Muthaleetu "), /* @__PURE__ */ React7.createElement("span", { className: "text-[#4A9E2C] dark:text-[#4ade80]" }, "Thisai")))), /* @__PURE__ */ React7.createElement("p", { className: "text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium pt-0.5 whitespace-nowrap leading-none" }, t("tagline"))))), /* @__PURE__ */ React7.createElement("div", { className: "flex items-center justify-end gap-2.5 shrink-0" }, /* @__PURE__ */ React7.createElement(ThemeToggle, null), user ? /* @__PURE__ */ React7.createElement("div", { className: "flex items-center gap-2 shrink-0" }, /* @__PURE__ */ React7.createElement(ProfileMenu, { onNavigate: onNavigate || ((route) => {
+  )), /* @__PURE__ */ React7.createElement("div", { className: "text-left shrink-0" }, /* @__PURE__ */ React7.createElement("div", { className: "flex items-center gap-1 sm:gap-1.5 whitespace-nowrap" }, /* @__PURE__ */ React7.createElement("h1", { className: "text-base sm:text-lg md:text-[1.35rem] font-extrabold tracking-tight whitespace-nowrap leading-none font-sans" }, language === "ta" ? /* @__PURE__ */ React7.createElement(React7.Fragment, null, /* @__PURE__ */ React7.createElement("span", { className: "text-[#03529A] dark:text-[#38bdf8]" }, "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 "), /* @__PURE__ */ React7.createElement("span", { className: "text-[#4A9E2C] dark:text-[#4ade80]" }, "\u0BA4\u0BBF\u0B9A\u0BC8")) : /* @__PURE__ */ React7.createElement(React7.Fragment, null, /* @__PURE__ */ React7.createElement("span", { className: "text-[#03529A] dark:text-[#38bdf8]" }, "Muthaleetu "), /* @__PURE__ */ React7.createElement("span", { className: "text-[#4A9E2C] dark:text-[#4ade80]" }, "Thisai")))), /* @__PURE__ */ React7.createElement("p", { className: "text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium pt-0.5 whitespace-nowrap leading-none" }, t("tagline"))))), /* @__PURE__ */ React7.createElement("div", { className: "flex items-center justify-end justify-self-end gap-2.5 shrink-0 min-w-0" }, /* @__PURE__ */ React7.createElement(ThemeToggle, null), user ? /* @__PURE__ */ React7.createElement("div", { className: "flex items-center gap-2 shrink-0" }, /* @__PURE__ */ React7.createElement(ProfileMenu, { onNavigate: onNavigate || ((route) => {
     if (typeof window !== "undefined") window.location.hash = route;
   }) }), /* @__PURE__ */ React7.createElement(
     "button",
@@ -2063,25 +2063,25 @@ function Header({ onOpenSearch, onNavigate }) {
       className: "inline-flex items-center gap-1 px-4 py-1.5 rounded-full bg-[#2563EB] hover:bg-blue-700 text-white font-bold text-xs shadow-xs shadow-blue-600/20 transition-all shrink-0 active:scale-95 cursor-pointer min-h-[44px]"
     },
     /* @__PURE__ */ React7.createElement("span", null, language === "ta" ? "\u0B89\u0BB3\u0BCD\u0BA8\u0BC1\u0BB4\u0BC8\u0B95" : "Sign In")
-  ))), /* @__PURE__ */ React7.createElement("div", { className: `flex md:hidden w-full items-center justify-between px-3 gap-2 transition-all duration-300 ${mobileScrolled ? "min-h-[40px] py-0.5" : "min-h-[48px] py-1"}` }, /* @__PURE__ */ React7.createElement("a", { href: "#/", className: "flex items-center gap-2 min-w-0 shrink truncate group py-0.5 tap-feedback" }, /* @__PURE__ */ React7.createElement("picture", { className: "shrink-0" }, /* @__PURE__ */ React7.createElement("source", { srcSet: "/assets/logo-96.webp 2x, /assets/logo-48.webp 1x", type: "image/webp" }), /* @__PURE__ */ React7.createElement(
+  ))), /* @__PURE__ */ React7.createElement("div", { className: `grid md:hidden grid-cols-[1fr_auto_1fr] items-center w-full px-3 gap-2 transition-all duration-300 ${mobileScrolled ? "min-h-[40px] py-0.5" : "min-h-[48px] py-1"}` }, /* @__PURE__ */ React7.createElement("div", { className: "flex items-center justify-start shrink-0 min-w-0" }, /* @__PURE__ */ React7.createElement(
+    "button",
+    {
+      onClick: onOpenSearch,
+      className: "w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-800 flex items-center justify-center border border-slate-200 dark:border-slate-700 shadow-xs cursor-pointer active:scale-95 transition-all",
+      "aria-label": "Search",
+      title: "Search"
+    },
+    /* @__PURE__ */ React7.createElement("svg", { className: "w-4 h-4 text-[#2563EB] dark:text-[#38bdf8]", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24" }, /* @__PURE__ */ React7.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2.5", d: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" }))
+  )), /* @__PURE__ */ React7.createElement("a", { href: "#/", className: "flex items-center justify-center justify-self-center gap-1.5 sm:gap-2 min-w-0 shrink-0 group py-0.5 tap-feedback" }, /* @__PURE__ */ React7.createElement("picture", { className: "shrink-0" }, /* @__PURE__ */ React7.createElement("source", { srcSet: "/assets/logo-96.webp 2x, /assets/logo-48.webp 1x", type: "image/webp" }), /* @__PURE__ */ React7.createElement(
     "img",
     {
       src: "/assets/logo-48.webp",
       alt: "Muthaleetu Thisai",
       width: "36",
       height: "36",
-      className: `${mobileScrolled ? "w-7 h-7" : "w-9 h-9"} object-contain drop-shadow-sm shrink-0 transition-all duration-300`
+      className: `${mobileScrolled ? "w-7 h-7" : "w-8 h-8"} object-contain drop-shadow-sm shrink-0 transition-all duration-300`
     }
-  )), /* @__PURE__ */ React7.createElement("div", { className: "min-w-0 truncate" }, /* @__PURE__ */ React7.createElement("h1", { className: `${mobileScrolled ? "text-xs" : "text-sm"} font-extrabold tracking-tight whitespace-nowrap leading-none font-sans transition-all duration-300` }, language === "ta" ? /* @__PURE__ */ React7.createElement(React7.Fragment, null, /* @__PURE__ */ React7.createElement("span", { className: "text-[#03529A] dark:text-[#38bdf8]" }, "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 "), /* @__PURE__ */ React7.createElement("span", { className: "text-[#4A9E2C] dark:text-[#4ade80]" }, "\u0BA4\u0BBF\u0B9A\u0BC8")) : /* @__PURE__ */ React7.createElement(React7.Fragment, null, /* @__PURE__ */ React7.createElement("span", { className: "text-[#03529A] dark:text-[#38bdf8]" }, "Muthaleetu "), /* @__PURE__ */ React7.createElement("span", { className: "text-[#4A9E2C] dark:text-[#4ade80]" }, "Thisai"))))), /* @__PURE__ */ React7.createElement("div", { className: "flex items-center gap-2 shrink-0" }, /* @__PURE__ */ React7.createElement(
-    "button",
-    {
-      onClick: onOpenSearch,
-      className: "w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-800 flex items-center justify-center border border-slate-200 dark:border-slate-700 shadow-xs cursor-pointer active:scale-95 transition-all",
-      "aria-label": "Search",
-      title: "Search"
-    },
-    /* @__PURE__ */ React7.createElement("svg", { className: "w-5 h-5 text-[#2563EB] dark:text-[#38bdf8]", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24" }, /* @__PURE__ */ React7.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2.5", d: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" }))
-  ), user ? /* @__PURE__ */ React7.createElement(ProfileMenu, { onNavigate: onNavigate || ((route) => {
+  )), /* @__PURE__ */ React7.createElement("div", { className: "min-w-0 truncate" }, /* @__PURE__ */ React7.createElement("h1", { className: `${mobileScrolled ? "text-xs" : "text-sm"} font-extrabold tracking-tight whitespace-nowrap leading-none font-sans transition-all duration-300` }, language === "ta" ? /* @__PURE__ */ React7.createElement(React7.Fragment, null, /* @__PURE__ */ React7.createElement("span", { className: "text-[#03529A] dark:text-[#38bdf8]" }, "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 "), /* @__PURE__ */ React7.createElement("span", { className: "text-[#4A9E2C] dark:text-[#4ade80]" }, "\u0BA4\u0BBF\u0B9A\u0BC8")) : /* @__PURE__ */ React7.createElement(React7.Fragment, null, /* @__PURE__ */ React7.createElement("span", { className: "text-[#03529A] dark:text-[#38bdf8]" }, "Muthaleetu "), /* @__PURE__ */ React7.createElement("span", { className: "text-[#4A9E2C] dark:text-[#4ade80]" }, "Thisai"))))), /* @__PURE__ */ React7.createElement("div", { className: "flex items-center justify-end justify-self-end gap-2 shrink-0 min-w-0" }, user ? /* @__PURE__ */ React7.createElement(ProfileMenu, { onNavigate: onNavigate || ((route) => {
     if (typeof window !== "undefined") window.location.hash = route;
   }) }) : /* @__PURE__ */ React7.createElement(
     "button",
@@ -2090,7 +2090,7 @@ function Header({ onOpenSearch, onNavigate }) {
         if (onNavigate) onNavigate("#/login");
         else if (typeof window !== "undefined") window.location.hash = "#/login";
       },
-      className: "h-11 min-h-[44px] px-3.5 rounded-full bg-[#2563EB] hover:bg-blue-700 text-white font-bold text-xs shadow-xs transition-all shrink-0 flex items-center justify-center active:scale-95"
+      className: "h-9 min-h-[36px] px-3.5 rounded-full bg-[#2563EB] hover:bg-blue-700 text-white font-bold text-xs shadow-xs transition-all shrink-0 flex items-center justify-center active:scale-95"
     },
     /* @__PURE__ */ React7.createElement("span", null, language === "ta" ? "\u0B89\u0BB3\u0BCD\u0BA8\u0BC1\u0BB4\u0BC8\u0B95" : "Sign In")
   ))));
