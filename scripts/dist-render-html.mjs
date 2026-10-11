@@ -405,7 +405,7 @@ function SipCalculator({ initialTab, isEmbedded = false }) {
     {
       type: "button",
       onClick: () => handleTabChange("quick"),
-      className: `pb-3 text-xs sm:text-sm font-bold whitespace-nowrap border-b-2 transition-all cursor-pointer ${activeTab === "quick" ? "text-[#17142E] border-[#4F46E5]" : "text-[#5B5875] border-transparent hover:text-[#17142E]"}`
+      className: `pb-3 text-xs sm:text-sm font-bold whitespace-nowrap border-b-2 transition-all cursor-pointer ${activeTab === "quick" ? "text-[#17142E] border-[#2563EB]" : "text-[#5B5875] border-transparent hover:text-[#17142E]"}`
     },
     isTa ? "\u0BB5\u0BBF\u0BB0\u0BC8\u0BB5\u0BC1 \u0B95\u0BBE\u0BB2\u0BCD\u0B95\u0BC1\u0BB2\u0BC7\u0B9F\u0BCD\u0B9F\u0BB0\u0BCD" : "Quick Calculator"
   ), /* @__PURE__ */ React16.createElement(
@@ -413,7 +413,7 @@ function SipCalculator({ initialTab, isEmbedded = false }) {
     {
       type: "button",
       onClick: () => handleTabChange("stepup"),
-      className: `pb-3 text-xs sm:text-sm font-bold whitespace-nowrap border-b-2 transition-all cursor-pointer ${activeTab === "stepup" ? "text-[#17142E] border-[#4F46E5]" : "text-[#5B5875] border-transparent hover:text-[#17142E]"}`
+      className: `pb-3 text-xs sm:text-sm font-bold whitespace-nowrap border-b-2 transition-all cursor-pointer ${activeTab === "stepup" ? "text-[#17142E] border-[#2563EB]" : "text-[#5B5875] border-transparent hover:text-[#17142E]"}`
     },
     isTa ? "SIP \u0BB8\u0BCD\u0B9F\u0BC6\u0BAA\u0BCD-\u0B85\u0BAA\u0BCD \u0B95\u0BBE\u0BB2\u0BCD\u0B95\u0BC1\u0BB2\u0BC7\u0B9F\u0BCD\u0B9F\u0BB0\u0BCD" : "SIP Step-up Calculator"
   ), /* @__PURE__ */ React16.createElement(
@@ -421,7 +421,7 @@ function SipCalculator({ initialTab, isEmbedded = false }) {
     {
       type: "button",
       onClick: () => handleTabChange("quiz"),
-      className: `pb-3 text-xs sm:text-sm font-bold whitespace-nowrap border-b-2 transition-all cursor-pointer ${activeTab === "quiz" ? "text-[#17142E] border-[#4F46E5]" : "text-[#5B5875] border-transparent hover:text-[#17142E]"}`
+      className: `pb-3 text-xs sm:text-sm font-bold whitespace-nowrap border-b-2 transition-all cursor-pointer ${activeTab === "quiz" ? "text-[#17142E] border-[#2563EB]" : "text-[#5B5875] border-transparent hover:text-[#17142E]"}`
     },
     isTa ? "\u0BB0\u0BBF\u0BB8\u0BCD\u0B95\u0BCD \u0B9A\u0BC1\u0BAF\u0BB5\u0BBF\u0BB5\u0BB0 \u0BB5\u0BBF\u0BA9\u0BBE\u0B9F\u0BBF\u0BB5\u0BBF\u0BA9\u0BBE" : "Risk Profile Quiz"
   ))), activeTab === "quick" && /* @__PURE__ */ React16.createElement(QuickCalculatorTab, { isTa, isEmbedded }), activeTab === "stepup" && /* @__PURE__ */ React16.createElement(StepUpCalculatorTab, { isTa }), activeTab === "quiz" && /* @__PURE__ */ React16.createElement(RiskProfileQuizTab, { isTa })));
@@ -615,7 +615,7 @@ function QuickCalculatorTab({ isTa, isEmbedded }) {
     {
       type: "button",
       onClick: () => setMode("sip"),
-      className: `px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${mode === "sip" ? "bg-[#4F46E5] text-white shadow-xs" : "text-[#5B5875] hover:bg-[#E9E6F5]"}`
+      className: `px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${mode === "sip" ? "bg-[#2563EB] text-white shadow-xs" : "text-[#5B5875] hover:bg-[#E9E6F5]"}`
     },
     "SIP"
   ), /* @__PURE__ */ React16.createElement(
@@ -623,7 +623,7 @@ function QuickCalculatorTab({ isTa, isEmbedded }) {
     {
       type: "button",
       onClick: () => setMode("lumpsum"),
-      className: `px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${mode === "lumpsum" ? "bg-[#4F46E5] text-white shadow-xs" : "text-[#5B5875] hover:bg-[#E9E6F5]"}`
+      className: `px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${mode === "lumpsum" ? "bg-[#2563EB] text-white shadow-xs" : "text-[#5B5875] hover:bg-[#E9E6F5]"}`
     },
     isTa ? "\u0BAE\u0BCA\u0BA4\u0BCD\u0BA4 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1 (Lumpsum)" : "Lumpsum"
   ))), /* @__PURE__ */ React16.createElement("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-8 items-start" }, /* @__PURE__ */ React16.createElement("div", { className: "lg:col-span-5 space-y-5" }, mode === "sip" && /* @__PURE__ */ React16.createElement("div", { className: "space-y-2" }, /* @__PURE__ */ React16.createElement("label", { className: "text-[13px] font-semibold text-[#5B5875]" }, isTa ? "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 \u0B87\u0B9F\u0BC8\u0BB5\u0BC6\u0BB3\u0BBF" : "Investment frequency"), /* @__PURE__ */ React16.createElement("div", { className: "flex flex-wrap gap-1.5 p-1 bg-[#F3F1FA] rounded-xl border border-[#E6E3F0]" }, [
@@ -639,7 +639,7 @@ function QuickCalculatorTab({ isTa, isEmbedded }) {
       key: item.id,
       type: "button",
       onClick: () => setFreq(item.id),
-      className: `px-2.5 py-1 text-xs font-bold rounded-lg transition-all cursor-pointer ${freq === item.id ? "bg-[#4F46E5] text-white shadow-xs" : "text-[#5B5875] hover:bg-[#E9E6F5]"}`
+      className: `px-2.5 py-1 text-xs font-bold rounded-lg transition-all cursor-pointer ${freq === item.id ? "bg-[#2563EB] text-white shadow-xs" : "text-[#5B5875] hover:bg-[#E9E6F5]"}`
     },
     isTa ? item.ta : item.en
   )))), /* @__PURE__ */ React16.createElement("div", { className: "space-y-1.5" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center justify-between" }, /* @__PURE__ */ React16.createElement("label", { className: "text-[13px] font-semibold text-[#5B5875]" }, frequencyLabel), /* @__PURE__ */ React16.createElement("div", { className: "relative" }, /* @__PURE__ */ React16.createElement(
@@ -737,7 +737,7 @@ function QuickCalculatorTab({ isTa, isEmbedded }) {
     {
       type: "button",
       onClick: () => setIsStepUp(false),
-      className: `px-3 py-1 rounded-full text-xs font-bold transition-all cursor-pointer ${!isStepUp ? "bg-[#4F46E5] text-white shadow-xs" : "text-[#5B5875] hover:bg-[#F3F1FA]"}`
+      className: `px-3 py-1 rounded-full text-xs font-bold transition-all cursor-pointer ${!isStepUp ? "bg-[#2563EB] text-white shadow-xs" : "text-[#5B5875] hover:bg-[#F3F1FA]"}`
     },
     isTa ? "\u0B87\u0BB2\u0BCD\u0BB2\u0BC8" : "No"
   ), /* @__PURE__ */ React16.createElement(
@@ -745,7 +745,7 @@ function QuickCalculatorTab({ isTa, isEmbedded }) {
     {
       type: "button",
       onClick: () => setIsStepUp(true),
-      className: `px-3 py-1 rounded-full text-xs font-bold transition-all cursor-pointer ${isStepUp ? "bg-[#4F46E5] text-white shadow-xs" : "text-[#5B5875] hover:bg-[#F3F1FA]"}`
+      className: `px-3 py-1 rounded-full text-xs font-bold transition-all cursor-pointer ${isStepUp ? "bg-[#2563EB] text-white shadow-xs" : "text-[#5B5875] hover:bg-[#F3F1FA]"}`
     },
     isTa ? "\u0B86\u0BAE\u0BCD" : "Yes"
   ))), isStepUp && /* @__PURE__ */ React16.createElement("div", { className: "space-y-3 pt-2 border-t border-[#E6E3F0]" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center justify-between gap-2" }, /* @__PURE__ */ React16.createElement("span", { className: "text-[11px] font-semibold text-[#5B5875]" }, isTa ? "\u0B85\u0BA4\u0BBF\u0B95\u0BB0\u0BBF\u0B95\u0BCD\u0B95\u0BC1\u0BAE\u0BCD \u0BAE\u0BC1\u0BB1\u0BC8:" : "Step-up by:"), /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-1" }, /* @__PURE__ */ React16.createElement(
@@ -753,7 +753,7 @@ function QuickCalculatorTab({ isTa, isEmbedded }) {
     {
       type: "button",
       onClick: () => setStepUpBy("percent"),
-      className: `px-2 py-0.5 rounded text-[11px] font-bold cursor-pointer ${stepUpBy === "percent" ? "bg-[#4F46E5] text-white" : "bg-white text-[#5B5875] border border-[#E6E3F0]"}`
+      className: `px-2 py-0.5 rounded text-[11px] font-bold cursor-pointer ${stepUpBy === "percent" ? "bg-[#2563EB] text-white" : "bg-white text-[#5B5875] border border-[#E6E3F0]"}`
     },
     isTa ? "\u0B9A\u0BA4\u0BB5\u0BC0\u0BA4\u0BAE\u0BCD (%)" : "Percentage"
   ), /* @__PURE__ */ React16.createElement(
@@ -761,7 +761,7 @@ function QuickCalculatorTab({ isTa, isEmbedded }) {
     {
       type: "button",
       onClick: () => setStepUpBy("amount"),
-      className: `px-2 py-0.5 rounded text-[11px] font-bold cursor-pointer ${stepUpBy === "amount" ? "bg-[#4F46E5] text-white" : "bg-white text-[#5B5875] border border-[#E6E3F0]"}`
+      className: `px-2 py-0.5 rounded text-[11px] font-bold cursor-pointer ${stepUpBy === "amount" ? "bg-[#2563EB] text-white" : "bg-white text-[#5B5875] border border-[#E6E3F0]"}`
     },
     isTa ? "\u0BA4\u0BCA\u0B95\u0BC8 (\u20B9)" : "Amount (\u20B9)"
   ))), /* @__PURE__ */ React16.createElement("div", { className: "flex items-center justify-between gap-2" }, /* @__PURE__ */ React16.createElement("span", { className: "text-[11px] font-semibold text-[#5B5875]" }, isTa ? "\u0B85\u0BA4\u0BBF\u0B95\u0BB0\u0BBF\u0B95\u0BCD\u0B95\u0BC1\u0BAE\u0BCD \u0B95\u0BBE\u0BB2\u0BAE\u0BCD:" : "Step-up every:"), /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-1" }, /* @__PURE__ */ React16.createElement(
@@ -769,7 +769,7 @@ function QuickCalculatorTab({ isTa, isEmbedded }) {
     {
       type: "button",
       onClick: () => setStepUpFreq("yearly"),
-      className: `px-2 py-0.5 rounded text-[11px] font-bold cursor-pointer ${stepUpFreq === "yearly" ? "bg-[#4F46E5] text-white" : "bg-white text-[#5B5875] border border-[#E6E3F0]"}`
+      className: `px-2 py-0.5 rounded text-[11px] font-bold cursor-pointer ${stepUpFreq === "yearly" ? "bg-[#2563EB] text-white" : "bg-white text-[#5B5875] border border-[#E6E3F0]"}`
     },
     isTa ? "\u0B86\u0BA3\u0BCD\u0B9F\u0BC1\u0BA4\u0BCB\u0BB1\u0BC1\u0BAE\u0BCD" : "Yearly"
   ), /* @__PURE__ */ React16.createElement(
@@ -777,7 +777,7 @@ function QuickCalculatorTab({ isTa, isEmbedded }) {
     {
       type: "button",
       onClick: () => setStepUpFreq("half_yearly"),
-      className: `px-2 py-0.5 rounded text-[11px] font-bold cursor-pointer ${stepUpFreq === "half_yearly" ? "bg-[#4F46E5] text-white" : "bg-white text-[#5B5875] border border-[#E6E3F0]"}`
+      className: `px-2 py-0.5 rounded text-[11px] font-bold cursor-pointer ${stepUpFreq === "half_yearly" ? "bg-[#2563EB] text-white" : "bg-white text-[#5B5875] border border-[#E6E3F0]"}`
     },
     isTa ? "\u0B85\u0BB0\u0BC8\u0BAF\u0BBE\u0BA3\u0BCD\u0B9F\u0BC1" : "Half yearly"
   ))), /* @__PURE__ */ React16.createElement("div", { className: "space-y-1" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center justify-between text-xs font-semibold text-[#5B5875]" }, /* @__PURE__ */ React16.createElement("span", null, isTa ? "\u0B85\u0BA4\u0BBF\u0B95\u0BB0\u0BBF\u0B95\u0BCD\u0B95\u0BC1\u0BAE\u0BCD \u0B85\u0BB3\u0BB5\u0BC1:" : "Yearly increase:"), /* @__PURE__ */ React16.createElement("span", { className: "font-bold text-[#17142E]" }, stepUpBy === "percent" ? `${stepUpPercent}%` : formatINR(stepUpAmount))), stepUpBy === "percent" ? /* @__PURE__ */ React16.createElement(
@@ -807,10 +807,10 @@ function QuickCalculatorTab({ isTa, isEmbedded }) {
     {
       type: "button",
       onClick: handleReset,
-      className: "px-4 py-2 rounded-xl bg-white border border-[#E6E3F0] text-xs font-bold text-[#5B5875] hover:text-[#17142E] hover:border-[#4F46E5] transition-all cursor-pointer shadow-2xs"
+      className: "px-4 py-2 rounded-xl bg-white border border-[#E6E3F0] text-xs font-bold text-[#5B5875] hover:text-[#17142E] hover:border-[#2563EB] transition-all cursor-pointer shadow-2xs"
     },
     isTa ? "\u0BAE\u0BC0\u0B9F\u0BCD\u0B9F\u0BAE\u0BC8\u0B95\u0BCD\u0B95 (Clear)" : "Clear / Reset"
-  ))), /* @__PURE__ */ React16.createElement("div", { className: "lg:col-span-7 space-y-6" }, /* @__PURE__ */ React16.createElement("div", { className: "grid grid-cols-1 sm:grid-cols-3 gap-3" }, /* @__PURE__ */ React16.createElement("div", { className: "p-4 bg-[#F3F1FA] rounded-xl border border-[#E6E3F0] space-y-1" }, /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-semibold text-[#5B5875] uppercase tracking-wider block" }, isTa ? "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1 \u0B9A\u0BC6\u0BAF\u0BCD\u0BA4 \u0BA4\u0BCA\u0B95\u0BC8" : "Invested amount"), /* @__PURE__ */ React16.createElement("span", { className: "text-xl sm:text-2xl font-extrabold text-[#17142E] tabular-nums block" }, formatINR(calcResult.totalInvested))), /* @__PURE__ */ React16.createElement("div", { className: "p-4 bg-[#F3F1FA] rounded-xl border border-[#E6E3F0] space-y-1" }, /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-semibold text-[#5B5875] uppercase tracking-wider block" }, isTa ? "\u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BBF\u0B9F\u0BAA\u0BCD\u0BAA\u0B9F\u0BCD\u0B9F \u0BB5\u0BB0\u0BC1\u0BAE\u0BBE\u0BA9\u0BAE\u0BCD" : "Est. returns"), /* @__PURE__ */ React16.createElement("span", { className: "text-xl sm:text-2xl font-extrabold text-[#0F9D58] tabular-nums block" }, formatINR(calcResult.estReturns))), /* @__PURE__ */ React16.createElement("div", { className: "p-4 bg-[#F3F1FA] rounded-xl border border-[#E6E3F0] space-y-1" }, /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-semibold text-[#5B5875] uppercase tracking-wider block" }, isTa ? "\u0BAE\u0BCA\u0BA4\u0BCD\u0BA4 \u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1" : "Total value"), /* @__PURE__ */ React16.createElement("span", { className: "text-xl sm:text-2xl font-extrabold text-[#4F46E5] tabular-nums block" }, formatINR(calcResult.totalValue)))), /* @__PURE__ */ React16.createElement("div", { className: "p-4 sm:p-5 bg-white rounded-xl border border-[#E6E3F0] flex flex-col sm:flex-row items-center justify-around gap-6 shadow-xs" }, /* @__PURE__ */ React16.createElement("div", { className: "relative w-36 h-36 shrink-0 flex items-center justify-center" }, /* @__PURE__ */ React16.createElement("svg", { className: "w-full h-full -rotate-90", viewBox: "0 0 36 36" }, /* @__PURE__ */ React16.createElement(
+  ))), /* @__PURE__ */ React16.createElement("div", { className: "lg:col-span-7 space-y-6" }, /* @__PURE__ */ React16.createElement("div", { className: "grid grid-cols-1 sm:grid-cols-3 gap-3" }, /* @__PURE__ */ React16.createElement("div", { className: "p-4 bg-[#F3F1FA] rounded-xl border border-[#E6E3F0] space-y-1" }, /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-semibold text-[#5B5875] uppercase tracking-wider block" }, isTa ? "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1 \u0B9A\u0BC6\u0BAF\u0BCD\u0BA4 \u0BA4\u0BCA\u0B95\u0BC8" : "Invested amount"), /* @__PURE__ */ React16.createElement("span", { className: "text-xl sm:text-2xl font-extrabold text-[#17142E] tabular-nums block" }, formatINR(calcResult.totalInvested))), /* @__PURE__ */ React16.createElement("div", { className: "p-4 bg-[#F3F1FA] rounded-xl border border-[#E6E3F0] space-y-1" }, /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-semibold text-[#5B5875] uppercase tracking-wider block" }, isTa ? "\u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BBF\u0B9F\u0BAA\u0BCD\u0BAA\u0B9F\u0BCD\u0B9F \u0BB5\u0BB0\u0BC1\u0BAE\u0BBE\u0BA9\u0BAE\u0BCD" : "Est. returns"), /* @__PURE__ */ React16.createElement("span", { className: "text-xl sm:text-2xl font-extrabold text-[#0F9D58] tabular-nums block" }, formatINR(calcResult.estReturns))), /* @__PURE__ */ React16.createElement("div", { className: "p-4 bg-[#F3F1FA] rounded-xl border border-[#E6E3F0] space-y-1" }, /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-semibold text-[#5B5875] uppercase tracking-wider block" }, isTa ? "\u0BAE\u0BCA\u0BA4\u0BCD\u0BA4 \u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1" : "Total value"), /* @__PURE__ */ React16.createElement("span", { className: "text-xl sm:text-2xl font-extrabold text-[#2563EB] tabular-nums block" }, formatINR(calcResult.totalValue)))), /* @__PURE__ */ React16.createElement("div", { className: "p-4 sm:p-5 bg-white rounded-xl border border-[#E6E3F0] flex flex-col sm:flex-row items-center justify-around gap-6 shadow-xs" }, /* @__PURE__ */ React16.createElement("div", { className: "relative w-36 h-36 shrink-0 flex items-center justify-center" }, /* @__PURE__ */ React16.createElement("svg", { className: "w-full h-full -rotate-90", viewBox: "0 0 36 36" }, /* @__PURE__ */ React16.createElement(
     "circle",
     {
       cx: "18",
@@ -827,18 +827,18 @@ function QuickCalculatorTab({ isTa, isEmbedded }) {
       cy: "18",
       r: "14",
       fill: "none",
-      stroke: "#4F46E5",
+      stroke: "#2563EB",
       strokeWidth: "4.5",
       strokeDasharray: `${Math.min(100, Math.max(0, calcResult.donutReturnsPercent * 0.88))} 100`,
       strokeLinecap: "round",
       className: "transition-all duration-500"
     }
-  )), /* @__PURE__ */ React16.createElement("div", { className: "absolute inset-0 flex flex-col items-center justify-center text-center select-none" }, /* @__PURE__ */ React16.createElement("span", { className: "text-[11px] font-semibold text-[#5B5875]" }, isTa ? "\u0BB5\u0BB0\u0BC1\u0BAE\u0BBE\u0BA9\u0BAE\u0BCD" : "Returns"), /* @__PURE__ */ React16.createElement("span", { className: "text-lg font-black text-[#17142E] tabular-nums" }, calcResult.donutReturnsPercent, "%"))), /* @__PURE__ */ React16.createElement("div", { className: "space-y-3 w-full sm:w-auto" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-3" }, /* @__PURE__ */ React16.createElement("span", { className: "w-3.5 h-3.5 rounded bg-[#C7C4F5] shrink-0" }), /* @__PURE__ */ React16.createElement("div", { className: "text-xs" }, /* @__PURE__ */ React16.createElement("span", { className: "font-semibold text-[#5B5875]" }, isTa ? "\u0B85\u0B9A\u0BB2\u0BCD \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1:" : "Invested:"), " ", /* @__PURE__ */ React16.createElement("span", { className: "font-bold text-[#17142E]" }, formatINR(calcResult.totalInvested)))), /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-3" }, /* @__PURE__ */ React16.createElement("span", { className: "w-3.5 h-3.5 rounded bg-[#4F46E5] shrink-0" }), /* @__PURE__ */ React16.createElement("div", { className: "text-xs" }, /* @__PURE__ */ React16.createElement("span", { className: "font-semibold text-[#5B5875]" }, isTa ? "\u0B88\u0B9F\u0BCD\u0B9F\u0BBF\u0BAF \u0BB2\u0BBE\u0BAA\u0BAE\u0BCD:" : "Returns:"), " ", /* @__PURE__ */ React16.createElement("span", { className: "font-bold text-[#0F9D58]" }, formatINR(calcResult.estReturns)))))), /* @__PURE__ */ React16.createElement("div", { className: "space-y-4" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-4 border-b border-[#E6E3F0]" }, /* @__PURE__ */ React16.createElement(
+  )), /* @__PURE__ */ React16.createElement("div", { className: "absolute inset-0 flex flex-col items-center justify-center text-center select-none" }, /* @__PURE__ */ React16.createElement("span", { className: "text-[11px] font-semibold text-[#5B5875]" }, isTa ? "\u0BB5\u0BB0\u0BC1\u0BAE\u0BBE\u0BA9\u0BAE\u0BCD" : "Returns"), /* @__PURE__ */ React16.createElement("span", { className: "text-lg font-black text-[#17142E] tabular-nums" }, calcResult.donutReturnsPercent, "%"))), /* @__PURE__ */ React16.createElement("div", { className: "space-y-3 w-full sm:w-auto" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-3" }, /* @__PURE__ */ React16.createElement("span", { className: "w-3.5 h-3.5 rounded bg-[#C7C4F5] shrink-0" }), /* @__PURE__ */ React16.createElement("div", { className: "text-xs" }, /* @__PURE__ */ React16.createElement("span", { className: "font-semibold text-[#5B5875]" }, isTa ? "\u0B85\u0B9A\u0BB2\u0BCD \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1:" : "Invested:"), " ", /* @__PURE__ */ React16.createElement("span", { className: "font-bold text-[#17142E]" }, formatINR(calcResult.totalInvested)))), /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-3" }, /* @__PURE__ */ React16.createElement("span", { className: "w-3.5 h-3.5 rounded bg-[#2563EB] shrink-0" }), /* @__PURE__ */ React16.createElement("div", { className: "text-xs" }, /* @__PURE__ */ React16.createElement("span", { className: "font-semibold text-[#5B5875]" }, isTa ? "\u0B88\u0B9F\u0BCD\u0B9F\u0BBF\u0BAF \u0BB2\u0BBE\u0BAA\u0BAE\u0BCD:" : "Returns:"), " ", /* @__PURE__ */ React16.createElement("span", { className: "font-bold text-[#0F9D58]" }, formatINR(calcResult.estReturns)))))), /* @__PURE__ */ React16.createElement("div", { className: "space-y-4" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-4 border-b border-[#E6E3F0]" }, /* @__PURE__ */ React16.createElement(
     "button",
     {
       type: "button",
       onClick: () => setSubTab("summary"),
-      className: `pb-2 text-xs font-bold border-b-2 transition-all cursor-pointer ${subTab === "summary" ? "text-[#17142E] border-[#4F46E5]" : "text-[#5B5875] border-transparent hover:text-[#17142E]"}`
+      className: `pb-2 text-xs font-bold border-b-2 transition-all cursor-pointer ${subTab === "summary" ? "text-[#17142E] border-[#2563EB]" : "text-[#5B5875] border-transparent hover:text-[#17142E]"}`
     },
     isTa ? "\u0B9A\u0BC1\u0BB0\u0BC1\u0B95\u0BCD\u0B95\u0BAE\u0BCD (Summary Chart)" : "Summary"
   ), /* @__PURE__ */ React16.createElement(
@@ -846,7 +846,7 @@ function QuickCalculatorTab({ isTa, isEmbedded }) {
     {
       type: "button",
       onClick: () => setSubTab("breakdown"),
-      className: `pb-2 text-xs font-bold border-b-2 transition-all cursor-pointer ${subTab === "breakdown" ? "text-[#17142E] border-[#4F46E5]" : "text-[#5B5875] border-transparent hover:text-[#17142E]"}`
+      className: `pb-2 text-xs font-bold border-b-2 transition-all cursor-pointer ${subTab === "breakdown" ? "text-[#17142E] border-[#2563EB]" : "text-[#5B5875] border-transparent hover:text-[#17142E]"}`
     },
     isTa ? "\u0B86\u0BA3\u0BCD\u0B9F\u0BC1 \u0BB5\u0BBE\u0BB0\u0BBF\u0BAF\u0BBE\u0BA9 \u0BB5\u0BBF\u0BB5\u0BB0\u0BAE\u0BCD" : "Return breakdown, year on year"
   )), subTab === "summary" && /* @__PURE__ */ React16.createElement(
@@ -855,7 +855,7 @@ function QuickCalculatorTab({ isTa, isEmbedded }) {
       data: calcResult.yearlyBreakdown,
       isTa
     }
-  ), subTab === "breakdown" && /* @__PURE__ */ React16.createElement("div", { className: "overflow-x-auto rounded-xl border border-[#E6E3F0]" }, /* @__PURE__ */ React16.createElement("table", { className: "w-full text-left text-xs" }, /* @__PURE__ */ React16.createElement("thead", { className: "bg-[#F3F1FA] text-[11px] uppercase font-bold text-[#5B5875] border-b border-[#E6E3F0]" }, /* @__PURE__ */ React16.createElement("tr", null, /* @__PURE__ */ React16.createElement("th", { className: "px-3 py-2.5 whitespace-nowrap" }, isTa ? "\u0B86\u0BA3\u0BCD\u0B9F\u0BC1" : "YEAR"), /* @__PURE__ */ React16.createElement("th", { className: "px-3 py-2.5 whitespace-nowrap text-right" }, mode === "lumpsum" ? isTa ? "\u0BB5\u0B95\u0BC8" : "TYPE" : isTa ? "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0BA4\u0BCD \u0BA4\u0BCA\u0B95\u0BC8" : "PERIODIC AMOUNT"), /* @__PURE__ */ React16.createElement("th", { className: "px-3 py-2.5 whitespace-nowrap text-right" }, isTa ? "\u0B87\u0BA8\u0BCD\u0BA4 \u0B86\u0BA3\u0BCD\u0B9F\u0BC1 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1" : "INVESTED THIS YEAR"), /* @__PURE__ */ React16.createElement("th", { className: "px-3 py-2.5 whitespace-nowrap text-right" }, isTa ? "\u0BB5\u0BB0\u0BC1\u0BAE\u0BBE\u0BA9\u0BAE\u0BCD" : "RETURN EARNED"), /* @__PURE__ */ React16.createElement("th", { className: "px-3 py-2.5 whitespace-nowrap text-right" }, isTa ? "\u0BAE\u0BCA\u0BA4\u0BCD\u0BA4 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1" : "CUMULATIVE INVESTED"), /* @__PURE__ */ React16.createElement("th", { className: "px-3 py-2.5 whitespace-nowrap text-right" }, isTa ? "\u0B86\u0BA3\u0BCD\u0B9F\u0BC1 \u0B87\u0BB1\u0BC1\u0BA4\u0BBF \u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1" : "BALANCE AT YEAR END"))), /* @__PURE__ */ React16.createElement("tbody", { className: "divide-y divide-[#E6E3F0]" }, calcResult.yearlyBreakdown.map((row, idx) => /* @__PURE__ */ React16.createElement("tr", { key: row.year, className: idx % 2 === 1 ? "bg-[#FBFAFE]" : "bg-white" }, /* @__PURE__ */ React16.createElement("td", { className: "px-3 py-2.5 font-bold text-[#17142E] whitespace-nowrap" }, isTa ? `${row.year}-\u0BAE\u0BCD \u0B86\u0BA3\u0BCD\u0B9F\u0BC1` : `Year ${row.year}`), /* @__PURE__ */ React16.createElement("td", { className: "px-3 py-2.5 text-right font-medium text-[#5B5875] whitespace-nowrap" }, mode === "lumpsum" ? isTa ? "\u0BAE\u0BCA\u0BA4\u0BCD\u0BA4 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1" : "Lumpsum" : formatINR(row.periodicAmount)), /* @__PURE__ */ React16.createElement("td", { className: "px-3 py-2.5 text-right font-medium text-[#17142E] whitespace-nowrap" }, formatINR(row.investedThisYear)), /* @__PURE__ */ React16.createElement("td", { className: "px-3 py-2.5 text-right font-bold text-[#0F9D58] whitespace-nowrap" }, "+", formatINR(row.returnEarned)), /* @__PURE__ */ React16.createElement("td", { className: "px-3 py-2.5 text-right font-medium text-[#5B5875] whitespace-nowrap" }, formatINR(row.cumulativeInvested)), /* @__PURE__ */ React16.createElement("td", { className: "px-3 py-2.5 text-right font-bold text-[#4F46E5] whitespace-nowrap" }, formatINR(row.balanceEnd)))))))), /* @__PURE__ */ React16.createElement("p", { className: "text-[12px] text-[#8E8BA6] leading-relaxed pt-2" }, isTa ? "\u0BB5\u0BBF\u0BB3\u0B95\u0BCD\u0B95\u0B95\u0BCD \u0B95\u0BBE\u0B9F\u0BCD\u0B9A\u0BBF \u0BAE\u0B9F\u0BCD\u0B9F\u0BC1\u0BAE\u0BC7. \u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BC0\u0B9F\u0BC1 \u0BA8\u0BBF\u0BB2\u0BC8\u0BAF\u0BBE\u0BA9 \u0BB5\u0BB0\u0BC1\u0BAE\u0BBE\u0BA9 \u0BB5\u0BBF\u0B95\u0BBF\u0BA4\u0BA4\u0BCD\u0BA4\u0BBF\u0BB2\u0BCD \u0B9A\u0BC6\u0BAF\u0BCD\u0BAF\u0BAA\u0BCD\u0BAA\u0B9F\u0BCD\u0B9F\u0BC1\u0BB3\u0BCD\u0BB3\u0BA4\u0BC1. \u0BAE\u0BBF\u0BAF\u0BC2\u0B9A\u0BCD\u0B9A\u0BC1\u0BB5\u0BB2\u0BCD \u0B83\u0BAA\u0BA3\u0BCD\u0B9F\u0BCD \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1\u0B95\u0BB3\u0BCD \u0B9A\u0BA8\u0BCD\u0BA4\u0BC8 \u0B85\u0BAA\u0BBE\u0BAF\u0B99\u0BCD\u0B95\u0BB3\u0BC1\u0B95\u0BCD\u0B95\u0BC1 \u0B89\u0B9F\u0BCD\u0BAA\u0B9F\u0BCD\u0B9F\u0BB5\u0BC8, \u0BA4\u0BBF\u0B9F\u0BCD\u0B9F\u0BAE\u0BCD \u0BA4\u0BCA\u0B9F\u0BB0\u0BCD\u0BAA\u0BBE\u0BA9 \u0B85\u0BA9\u0BC8\u0BA4\u0BCD\u0BA4\u0BC1 \u0B86\u0BB5\u0BA3\u0B99\u0BCD\u0B95\u0BB3\u0BC8\u0BAF\u0BC1\u0BAE\u0BCD \u0B95\u0BB5\u0BA9\u0BAE\u0BBE\u0B95\u0BAA\u0BCD \u0BAA\u0B9F\u0BBF\u0B95\u0BCD\u0B95\u0BB5\u0BC1\u0BAE\u0BCD." : "Illustration only, at an assumed constant rate of return. Mutual fund investments are subject to market risks, read all scheme related documents carefully."))));
+  ), subTab === "breakdown" && /* @__PURE__ */ React16.createElement("div", { className: "overflow-x-auto rounded-xl border border-[#E6E3F0]" }, /* @__PURE__ */ React16.createElement("table", { className: "w-full text-left text-xs" }, /* @__PURE__ */ React16.createElement("thead", { className: "bg-[#F3F1FA] text-[11px] uppercase font-bold text-[#5B5875] border-b border-[#E6E3F0]" }, /* @__PURE__ */ React16.createElement("tr", null, /* @__PURE__ */ React16.createElement("th", { className: "px-3 py-2.5 whitespace-nowrap" }, isTa ? "\u0B86\u0BA3\u0BCD\u0B9F\u0BC1" : "YEAR"), /* @__PURE__ */ React16.createElement("th", { className: "px-3 py-2.5 whitespace-nowrap text-right" }, mode === "lumpsum" ? isTa ? "\u0BB5\u0B95\u0BC8" : "TYPE" : isTa ? "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0BA4\u0BCD \u0BA4\u0BCA\u0B95\u0BC8" : "PERIODIC AMOUNT"), /* @__PURE__ */ React16.createElement("th", { className: "px-3 py-2.5 whitespace-nowrap text-right" }, isTa ? "\u0B87\u0BA8\u0BCD\u0BA4 \u0B86\u0BA3\u0BCD\u0B9F\u0BC1 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1" : "INVESTED THIS YEAR"), /* @__PURE__ */ React16.createElement("th", { className: "px-3 py-2.5 whitespace-nowrap text-right" }, isTa ? "\u0BB5\u0BB0\u0BC1\u0BAE\u0BBE\u0BA9\u0BAE\u0BCD" : "RETURN EARNED"), /* @__PURE__ */ React16.createElement("th", { className: "px-3 py-2.5 whitespace-nowrap text-right" }, isTa ? "\u0BAE\u0BCA\u0BA4\u0BCD\u0BA4 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1" : "CUMULATIVE INVESTED"), /* @__PURE__ */ React16.createElement("th", { className: "px-3 py-2.5 whitespace-nowrap text-right" }, isTa ? "\u0B86\u0BA3\u0BCD\u0B9F\u0BC1 \u0B87\u0BB1\u0BC1\u0BA4\u0BBF \u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1" : "BALANCE AT YEAR END"))), /* @__PURE__ */ React16.createElement("tbody", { className: "divide-y divide-[#E6E3F0]" }, calcResult.yearlyBreakdown.map((row, idx) => /* @__PURE__ */ React16.createElement("tr", { key: row.year, className: idx % 2 === 1 ? "bg-[#FBFAFE]" : "bg-white" }, /* @__PURE__ */ React16.createElement("td", { className: "px-3 py-2.5 font-bold text-[#17142E] whitespace-nowrap" }, isTa ? `${row.year}-\u0BAE\u0BCD \u0B86\u0BA3\u0BCD\u0B9F\u0BC1` : `Year ${row.year}`), /* @__PURE__ */ React16.createElement("td", { className: "px-3 py-2.5 text-right font-medium text-[#5B5875] whitespace-nowrap" }, mode === "lumpsum" ? isTa ? "\u0BAE\u0BCA\u0BA4\u0BCD\u0BA4 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1" : "Lumpsum" : formatINR(row.periodicAmount)), /* @__PURE__ */ React16.createElement("td", { className: "px-3 py-2.5 text-right font-medium text-[#17142E] whitespace-nowrap" }, formatINR(row.investedThisYear)), /* @__PURE__ */ React16.createElement("td", { className: "px-3 py-2.5 text-right font-bold text-[#0F9D58] whitespace-nowrap" }, "+", formatINR(row.returnEarned)), /* @__PURE__ */ React16.createElement("td", { className: "px-3 py-2.5 text-right font-medium text-[#5B5875] whitespace-nowrap" }, formatINR(row.cumulativeInvested)), /* @__PURE__ */ React16.createElement("td", { className: "px-3 py-2.5 text-right font-bold text-[#2563EB] whitespace-nowrap" }, formatINR(row.balanceEnd)))))))), /* @__PURE__ */ React16.createElement("p", { className: "text-[12px] text-[#8E8BA6] leading-relaxed pt-2" }, isTa ? "\u0BB5\u0BBF\u0BB3\u0B95\u0BCD\u0B95\u0B95\u0BCD \u0B95\u0BBE\u0B9F\u0BCD\u0B9A\u0BBF \u0BAE\u0B9F\u0BCD\u0B9F\u0BC1\u0BAE\u0BC7. \u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BC0\u0B9F\u0BC1 \u0BA8\u0BBF\u0BB2\u0BC8\u0BAF\u0BBE\u0BA9 \u0BB5\u0BB0\u0BC1\u0BAE\u0BBE\u0BA9 \u0BB5\u0BBF\u0B95\u0BBF\u0BA4\u0BA4\u0BCD\u0BA4\u0BBF\u0BB2\u0BCD \u0B9A\u0BC6\u0BAF\u0BCD\u0BAF\u0BAA\u0BCD\u0BAA\u0B9F\u0BCD\u0B9F\u0BC1\u0BB3\u0BCD\u0BB3\u0BA4\u0BC1. \u0BAE\u0BBF\u0BAF\u0BC2\u0B9A\u0BCD\u0B9A\u0BC1\u0BB5\u0BB2\u0BCD \u0B83\u0BAA\u0BA3\u0BCD\u0B9F\u0BCD \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1\u0B95\u0BB3\u0BCD \u0B9A\u0BA8\u0BCD\u0BA4\u0BC8 \u0B85\u0BAA\u0BBE\u0BAF\u0B99\u0BCD\u0B95\u0BB3\u0BC1\u0B95\u0BCD\u0B95\u0BC1 \u0B89\u0B9F\u0BCD\u0BAA\u0B9F\u0BCD\u0B9F\u0BB5\u0BC8, \u0BA4\u0BBF\u0B9F\u0BCD\u0B9F\u0BAE\u0BCD \u0BA4\u0BCA\u0B9F\u0BB0\u0BCD\u0BAA\u0BBE\u0BA9 \u0B85\u0BA9\u0BC8\u0BA4\u0BCD\u0BA4\u0BC1 \u0B86\u0BB5\u0BA3\u0B99\u0BCD\u0B95\u0BB3\u0BC8\u0BAF\u0BC1\u0BAE\u0BCD \u0B95\u0BB5\u0BA9\u0BAE\u0BBE\u0B95\u0BAA\u0BCD \u0BAA\u0B9F\u0BBF\u0B95\u0BCD\u0B95\u0BB5\u0BC1\u0BAE\u0BCD." : "Illustration only, at an assumed constant rate of return. Mutual fund investments are subject to market risks, read all scheme related documents carefully."))));
 }
 function QuickStackedAreaChart({ data, isTa }) {
   if (!data || data.length === 0) {
@@ -921,13 +921,13 @@ function QuickStackedAreaChart({ data, isTa }) {
         formatINR(val, true)
       ));
     }),
-    /* @__PURE__ */ React16.createElement("path", { d: totalAreaPath, fill: "#4F46E5", fillOpacity: "0.85" }),
+    /* @__PURE__ */ React16.createElement("path", { d: totalAreaPath, fill: "#2563EB", fillOpacity: "0.85" }),
     /* @__PURE__ */ React16.createElement("path", { d: investedAreaPath, fill: "#C7C4F5", fillOpacity: "0.9" }),
     /* @__PURE__ */ React16.createElement(
       "polyline",
       {
         fill: "none",
-        stroke: "#4F46E5",
+        stroke: "#2563EB",
         strokeWidth: "2",
         points: points.map((p) => `${p.x},${p.yTotal}`).join(" ")
       }
@@ -983,7 +983,7 @@ function QuickStackedAreaChart({ data, isTa }) {
         strokeWidth: "1",
         strokeDasharray: "2 2"
       }
-    ), /* @__PURE__ */ React16.createElement("circle", { cx: hoveredItem.x, cy: hoveredItem.yTotal, r: "4", fill: "#4F46E5", stroke: "#FFFFFF", strokeWidth: "2" }), /* @__PURE__ */ React16.createElement("circle", { cx: hoveredItem.x, cy: hoveredItem.yInvested, r: "4", fill: "#C7C4F5", stroke: "#FFFFFF", strokeWidth: "2" }))
+    ), /* @__PURE__ */ React16.createElement("circle", { cx: hoveredItem.x, cy: hoveredItem.yTotal, r: "4", fill: "#2563EB", stroke: "#FFFFFF", strokeWidth: "2" }), /* @__PURE__ */ React16.createElement("circle", { cx: hoveredItem.x, cy: hoveredItem.yInvested, r: "4", fill: "#C7C4F5", stroke: "#FFFFFF", strokeWidth: "2" }))
   ), hoveredItem && /* @__PURE__ */ React16.createElement(
     "div",
     {
@@ -991,7 +991,7 @@ function QuickStackedAreaChart({ data, isTa }) {
     },
     /* @__PURE__ */ React16.createElement("span", { className: "font-bold text-[#17142E]" }, isTa ? `${hoveredItem.year}-\u0BAE\u0BCD \u0B86\u0BA3\u0BCD\u0B9F\u0BC1` : `Year ${hoveredItem.year}`),
     /* @__PURE__ */ React16.createElement("div", null, /* @__PURE__ */ React16.createElement("span", { className: "text-[#5B5875] text-[11px] block" }, isTa ? "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1" : "Invested", ":"), /* @__PURE__ */ React16.createElement("span", { className: "font-bold text-[#17142E]" }, formatINR(hoveredItem.cumulativeInvested))),
-    /* @__PURE__ */ React16.createElement("div", null, /* @__PURE__ */ React16.createElement("span", { className: "text-[#5B5875] text-[11px] block" }, isTa ? "\u0BAE\u0BCA\u0BA4\u0BCD\u0BA4 \u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1" : "Total", ":"), /* @__PURE__ */ React16.createElement("span", { className: "font-extrabold text-[#4F46E5]" }, formatINR(hoveredItem.balanceEnd)))
+    /* @__PURE__ */ React16.createElement("div", null, /* @__PURE__ */ React16.createElement("span", { className: "text-[#5B5875] text-[11px] block" }, isTa ? "\u0BAE\u0BCA\u0BA4\u0BCD\u0BA4 \u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1" : "Total", ":"), /* @__PURE__ */ React16.createElement("span", { className: "font-extrabold text-[#2563EB]" }, formatINR(hoveredItem.balanceEnd)))
   ));
 }
 function StepUpCalculatorTab({ isTa }) {
@@ -1098,7 +1098,7 @@ function StepUpCalculatorTab({ isTa }) {
       onChange: (e) => setLumpsum(Number(e.target.value)),
       className: "calc-range"
     }
-  ), /* @__PURE__ */ React16.createElement("div", { className: "flex justify-between text-[11px] text-[#8E8BA6]" }, /* @__PURE__ */ React16.createElement("span", null, "\u20B90"), /* @__PURE__ */ React16.createElement("span", null, "\u20B950,00,000")))), /* @__PURE__ */ React16.createElement("div", { className: "lg:col-span-6 space-y-6" }, /* @__PURE__ */ React16.createElement("div", { className: "space-y-3" }, /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-bold uppercase tracking-wider text-[#5B5875] block" }, isTa ? "\u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BBF\u0B9F\u0BAA\u0BCD\u0BAA\u0B9F\u0BCD\u0B9F \u0BB5\u0BB3\u0BB0\u0BCD\u0B9A\u0BCD\u0B9A\u0BBF \u0BAE\u0BC1\u0B9F\u0BBF\u0BB5\u0BC1" : "Projected outcome"), /* @__PURE__ */ React16.createElement("div", { className: "grid grid-cols-1 sm:grid-cols-3 gap-3" }, /* @__PURE__ */ React16.createElement("div", { className: "p-3.5 bg-[#F3F1FA] rounded-xl border border-[#E6E3F0] space-y-1" }, /* @__PURE__ */ React16.createElement("span", { className: "text-[11px] font-semibold text-[#5B5875] block" }, isTa ? "\u0BAE\u0BCA\u0BA4\u0BCD\u0BA4 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1" : "Total invested"), /* @__PURE__ */ React16.createElement("span", { className: "text-lg sm:text-xl font-extrabold text-[#17142E] tabular-nums block" }, formatINR(outcome.totalInvested, true))), /* @__PURE__ */ React16.createElement("div", { className: "p-3.5 bg-[#F3F1FA] rounded-xl border border-[#E6E3F0] space-y-1" }, /* @__PURE__ */ React16.createElement("span", { className: "text-[11px] font-semibold text-[#5B5875] block" }, isTa ? "\u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BBF\u0B9F\u0BAA\u0BCD\u0BAA\u0B9F\u0BCD\u0B9F \u0BB2\u0BBE\u0BAA\u0BAE\u0BCD" : "Estimated gains"), /* @__PURE__ */ React16.createElement("span", { className: "text-lg sm:text-xl font-extrabold text-[#0F9D58] tabular-nums block" }, formatINR(outcome.estimatedGains, true))), /* @__PURE__ */ React16.createElement("div", { className: "p-3.5 bg-[#F3F1FA] rounded-xl border border-[#E6E3F0] space-y-1" }, /* @__PURE__ */ React16.createElement("span", { className: "text-[11px] font-semibold text-[#5B5875] block" }, isTa ? "\u0B8E\u0BA4\u0BBF\u0BB0\u0BCD\u0BAA\u0BBE\u0BB0\u0BCD\u0B95\u0BCD\u0B95\u0BAA\u0BCD\u0BAA\u0B9F\u0BC1\u0BAE\u0BCD \u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1" : "Projected value"), /* @__PURE__ */ React16.createElement("span", { className: "text-lg sm:text-xl font-extrabold text-[#4F46E5] tabular-nums block" }, formatINR(outcome.projectedValue, true))))), /* @__PURE__ */ React16.createElement(StepUpLineChart, { data: outcome.yearlyData, isTa }), /* @__PURE__ */ React16.createElement("p", { className: "text-[12px] text-[#8E8BA6] leading-relaxed" }, isTa ? "\u0BB5\u0BBF\u0BB3\u0B95\u0BCD\u0B95\u0B95\u0BCD \u0B95\u0BBE\u0B9F\u0BCD\u0B9A\u0BBF \u0BAE\u0B9F\u0BCD\u0B9F\u0BC1\u0BAE\u0BC7. \u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BC0\u0B9F\u0BC1 \u0BA8\u0BBF\u0BB2\u0BC8\u0BAF\u0BBE\u0BA9 \u0BB5\u0BB0\u0BC1\u0BAE\u0BBE\u0BA9 \u0BB5\u0BBF\u0B95\u0BBF\u0BA4\u0BA4\u0BCD\u0BA4\u0BBF\u0BB2\u0BCD \u0B9A\u0BC6\u0BAF\u0BCD\u0BAF\u0BAA\u0BCD\u0BAA\u0B9F\u0BCD\u0B9F\u0BC1\u0BB3\u0BCD\u0BB3\u0BA4\u0BC1. \u0BAE\u0BBF\u0BAF\u0BC2\u0B9A\u0BCD\u0B9A\u0BC1\u0BB5\u0BB2\u0BCD \u0B83\u0BAA\u0BA3\u0BCD\u0B9F\u0BCD \u0BB5\u0BB0\u0BC1\u0BAE\u0BBE\u0BA9\u0BAE\u0BCD \u0B9A\u0BA8\u0BCD\u0BA4\u0BC8 \u0B9A\u0BBE\u0BB0\u0BCD\u0BA8\u0BCD\u0BA4\u0BA4\u0BC1 \u0BAE\u0BB1\u0BCD\u0BB1\u0BC1\u0BAE\u0BCD \u0B86\u0BA3\u0BCD\u0B9F\u0BC1\u0BA4\u0BCB\u0BB1\u0BC1\u0BAE\u0BCD \u0BAE\u0BBE\u0BB1\u0BC1\u0BAA\u0B9F\u0BC1\u0BAE\u0BCD." : "Illustration only, at an assumed constant return. Mutual fund returns are market-linked and will vary year to year."))));
+  ), /* @__PURE__ */ React16.createElement("div", { className: "flex justify-between text-[11px] text-[#8E8BA6]" }, /* @__PURE__ */ React16.createElement("span", null, "\u20B90"), /* @__PURE__ */ React16.createElement("span", null, "\u20B950,00,000")))), /* @__PURE__ */ React16.createElement("div", { className: "lg:col-span-6 space-y-6" }, /* @__PURE__ */ React16.createElement("div", { className: "space-y-3" }, /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-bold uppercase tracking-wider text-[#5B5875] block" }, isTa ? "\u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BBF\u0B9F\u0BAA\u0BCD\u0BAA\u0B9F\u0BCD\u0B9F \u0BB5\u0BB3\u0BB0\u0BCD\u0B9A\u0BCD\u0B9A\u0BBF \u0BAE\u0BC1\u0B9F\u0BBF\u0BB5\u0BC1" : "Projected outcome"), /* @__PURE__ */ React16.createElement("div", { className: "grid grid-cols-1 sm:grid-cols-3 gap-3" }, /* @__PURE__ */ React16.createElement("div", { className: "p-3.5 bg-[#F3F1FA] rounded-xl border border-[#E6E3F0] space-y-1" }, /* @__PURE__ */ React16.createElement("span", { className: "text-[11px] font-semibold text-[#5B5875] block" }, isTa ? "\u0BAE\u0BCA\u0BA4\u0BCD\u0BA4 \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1" : "Total invested"), /* @__PURE__ */ React16.createElement("span", { className: "text-lg sm:text-xl font-extrabold text-[#17142E] tabular-nums block" }, formatINR(outcome.totalInvested, true))), /* @__PURE__ */ React16.createElement("div", { className: "p-3.5 bg-[#F3F1FA] rounded-xl border border-[#E6E3F0] space-y-1" }, /* @__PURE__ */ React16.createElement("span", { className: "text-[11px] font-semibold text-[#5B5875] block" }, isTa ? "\u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BBF\u0B9F\u0BAA\u0BCD\u0BAA\u0B9F\u0BCD\u0B9F \u0BB2\u0BBE\u0BAA\u0BAE\u0BCD" : "Estimated gains"), /* @__PURE__ */ React16.createElement("span", { className: "text-lg sm:text-xl font-extrabold text-[#0F9D58] tabular-nums block" }, formatINR(outcome.estimatedGains, true))), /* @__PURE__ */ React16.createElement("div", { className: "p-3.5 bg-[#F3F1FA] rounded-xl border border-[#E6E3F0] space-y-1" }, /* @__PURE__ */ React16.createElement("span", { className: "text-[11px] font-semibold text-[#5B5875] block" }, isTa ? "\u0B8E\u0BA4\u0BBF\u0BB0\u0BCD\u0BAA\u0BBE\u0BB0\u0BCD\u0B95\u0BCD\u0B95\u0BAA\u0BCD\u0BAA\u0B9F\u0BC1\u0BAE\u0BCD \u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1" : "Projected value"), /* @__PURE__ */ React16.createElement("span", { className: "text-lg sm:text-xl font-extrabold text-[#2563EB] tabular-nums block" }, formatINR(outcome.projectedValue, true))))), /* @__PURE__ */ React16.createElement(StepUpLineChart, { data: outcome.yearlyData, isTa }), /* @__PURE__ */ React16.createElement("p", { className: "text-[12px] text-[#8E8BA6] leading-relaxed" }, isTa ? "\u0BB5\u0BBF\u0BB3\u0B95\u0BCD\u0B95\u0B95\u0BCD \u0B95\u0BBE\u0B9F\u0BCD\u0B9A\u0BBF \u0BAE\u0B9F\u0BCD\u0B9F\u0BC1\u0BAE\u0BC7. \u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BC0\u0B9F\u0BC1 \u0BA8\u0BBF\u0BB2\u0BC8\u0BAF\u0BBE\u0BA9 \u0BB5\u0BB0\u0BC1\u0BAE\u0BBE\u0BA9 \u0BB5\u0BBF\u0B95\u0BBF\u0BA4\u0BA4\u0BCD\u0BA4\u0BBF\u0BB2\u0BCD \u0B9A\u0BC6\u0BAF\u0BCD\u0BAF\u0BAA\u0BCD\u0BAA\u0B9F\u0BCD\u0B9F\u0BC1\u0BB3\u0BCD\u0BB3\u0BA4\u0BC1. \u0BAE\u0BBF\u0BAF\u0BC2\u0B9A\u0BCD\u0B9A\u0BC1\u0BB5\u0BB2\u0BCD \u0B83\u0BAA\u0BA3\u0BCD\u0B9F\u0BCD \u0BB5\u0BB0\u0BC1\u0BAE\u0BBE\u0BA9\u0BAE\u0BCD \u0B9A\u0BA8\u0BCD\u0BA4\u0BC8 \u0B9A\u0BBE\u0BB0\u0BCD\u0BA8\u0BCD\u0BA4\u0BA4\u0BC1 \u0BAE\u0BB1\u0BCD\u0BB1\u0BC1\u0BAE\u0BCD \u0B86\u0BA3\u0BCD\u0B9F\u0BC1\u0BA4\u0BCB\u0BB1\u0BC1\u0BAE\u0BCD \u0BAE\u0BBE\u0BB1\u0BC1\u0BAA\u0B9F\u0BC1\u0BAE\u0BCD." : "Illustration only, at an assumed constant return. Mutual fund returns are market-linked and will vary year to year."))));
 }
 function StepUpLineChart({ data, isTa }) {
   if (!data || data.length === 0) return null;
@@ -1117,14 +1117,14 @@ function StepUpLineChart({ data, isTa }) {
     const yInv = padTop + plotH - d.invested / maxVal * plotH;
     return { x, yVal, yInv, ...d };
   });
-  return /* @__PURE__ */ React16.createElement("div", { className: "bg-white rounded-xl border border-[#E6E3F0] p-3 sm:p-4 shadow-xs" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center justify-between pb-2 text-[11px]" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-4" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-1.5" }, /* @__PURE__ */ React16.createElement("span", { className: "w-2.5 h-2.5 rounded-full bg-[#4F46E5]" }), /* @__PURE__ */ React16.createElement("span", { className: "font-bold text-[#17142E]" }, isTa ? "\u0B8E\u0BA4\u0BBF\u0BB0\u0BCD\u0BAA\u0BBE\u0BB0\u0BCD\u0B95\u0BCD\u0B95\u0BAA\u0BCD\u0BAA\u0B9F\u0BC1\u0BAE\u0BCD \u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1" : "Projected value")), /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-1.5" }, /* @__PURE__ */ React16.createElement("span", { className: "w-2.5 h-2.5 rounded-full bg-[#C7C4F5]" }), /* @__PURE__ */ React16.createElement("span", { className: "font-medium text-[#5B5875]" }, isTa ? "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1 \u0B9A\u0BC6\u0BAF\u0BCD\u0BA4 \u0BA4\u0BCA\u0B95\u0BC8" : "Amount invested")))), /* @__PURE__ */ React16.createElement("svg", { className: "w-full h-auto overflow-visible select-none", viewBox: `0 0 ${width} ${height}` }, [0, 0.33, 0.66, 1].map((frac, idx) => {
+  return /* @__PURE__ */ React16.createElement("div", { className: "bg-white rounded-xl border border-[#E6E3F0] p-3 sm:p-4 shadow-xs" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center justify-between pb-2 text-[11px]" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-4" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-1.5" }, /* @__PURE__ */ React16.createElement("span", { className: "w-2.5 h-2.5 rounded-full bg-[#2563EB]" }), /* @__PURE__ */ React16.createElement("span", { className: "font-bold text-[#17142E]" }, isTa ? "\u0B8E\u0BA4\u0BBF\u0BB0\u0BCD\u0BAA\u0BBE\u0BB0\u0BCD\u0B95\u0BCD\u0B95\u0BAA\u0BCD\u0BAA\u0B9F\u0BC1\u0BAE\u0BCD \u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1" : "Projected value")), /* @__PURE__ */ React16.createElement("div", { className: "flex items-center gap-1.5" }, /* @__PURE__ */ React16.createElement("span", { className: "w-2.5 h-2.5 rounded-full bg-[#C7C4F5]" }), /* @__PURE__ */ React16.createElement("span", { className: "font-medium text-[#5B5875]" }, isTa ? "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1 \u0B9A\u0BC6\u0BAF\u0BCD\u0BA4 \u0BA4\u0BCA\u0B95\u0BC8" : "Amount invested")))), /* @__PURE__ */ React16.createElement("svg", { className: "w-full h-auto overflow-visible select-none", viewBox: `0 0 ${width} ${height}` }, [0, 0.33, 0.66, 1].map((frac, idx) => {
     const y = padTop + plotH - frac * plotH;
     return /* @__PURE__ */ React16.createElement("g", { key: idx }, /* @__PURE__ */ React16.createElement("line", { x1: padLeft, y1: y, x2: width - padRight, y2: y, stroke: "#EEEDF4", strokeWidth: "1" }), /* @__PURE__ */ React16.createElement("text", { x: padLeft - 6, y: y + 3, textAnchor: "end", className: "text-[9px] fill-[#8E8BA6]" }, formatINR(maxVal * frac, true)));
   }), /* @__PURE__ */ React16.createElement(
     "polyline",
     {
       fill: "none",
-      stroke: "#4F46E5",
+      stroke: "#2563EB",
       strokeWidth: "2.5",
       strokeLinecap: "round",
       points: points.map((p) => `${p.x},${p.yVal}`).join(" ")
@@ -1192,7 +1192,7 @@ function RiskProfileQuizTab({ isTa }) {
         allocations: [
           { labelEn: "Debt / Short Duration", labelTa: "\u0B95\u0B9F\u0BA9\u0BCD / \u0B95\u0BC1\u0BB1\u0BC1\u0B95\u0BBF\u0BAF \u0B95\u0BBE\u0BB2 \u0B83\u0BAA\u0BA3\u0BCD\u0B9F\u0BC1\u0B95\u0BB3\u0BCD", percent: 45, color: "#3B82F6" },
           { labelEn: "Hybrid / Balanced Advantage", labelTa: "\u0BB9\u0BC8\u0BAA\u0BBF\u0BB0\u0BBF\u0B9F\u0BCD / \u0BAA\u0BC7\u0BB2\u0BA9\u0BCD\u0BB8\u0BCD\u0B9F\u0BC1 \u0B85\u0B9F\u0BCD\u0BB5\u0BBE\u0BA9\u0BCD\u0B9F\u0BC7\u0B9C\u0BCD", percent: 25, color: "#10B981" },
-          { labelEn: "Large Cap / Index", labelTa: "\u0BB2\u0BBE\u0BB0\u0BCD\u0B9C\u0BCD \u0B95\u0BC7\u0BAA\u0BCD / \u0B87\u0BA9\u0BCD\u0B9F\u0BC6\u0B95\u0BCD\u0BB8\u0BCD", percent: 15, color: "#4F46E5" },
+          { labelEn: "Large Cap / Index", labelTa: "\u0BB2\u0BBE\u0BB0\u0BCD\u0B9C\u0BCD \u0B95\u0BC7\u0BAA\u0BCD / \u0B87\u0BA9\u0BCD\u0B9F\u0BC6\u0B95\u0BCD\u0BB8\u0BCD", percent: 15, color: "#2563EB" },
           { labelEn: "Gold", labelTa: "\u0BA4\u0B99\u0BCD\u0B95\u0BAE\u0BCD (Gold)", percent: 15, color: "#F5B700" }
         ]
       };
@@ -1205,7 +1205,7 @@ function RiskProfileQuizTab({ isTa }) {
         descEn: "You can sit through normal market swings for steady growth. A blend of large cap, flexi cap and hybrid funds suits you.",
         descTa: "\u0BA8\u0BBF\u0BB2\u0BC8\u0BAF\u0BBE\u0BA9 \u0BB5\u0BB3\u0BB0\u0BCD\u0B9A\u0BCD\u0B9A\u0BBF\u0B95\u0BCD\u0B95\u0BBE\u0B95 \u0B9A\u0BBE\u0BA4\u0BBE\u0BB0\u0BA3 \u0B9A\u0BA8\u0BCD\u0BA4\u0BC8 \u0BAE\u0BBE\u0BB1\u0BCD\u0BB1\u0B99\u0BCD\u0B95\u0BB3\u0BC8 \u0BA8\u0BC0\u0B99\u0BCD\u0B95\u0BB3\u0BCD \u0B9A\u0BAE\u0BBE\u0BB3\u0BBF\u0B95\u0BCD\u0B95 \u0BAE\u0BC1\u0B9F\u0BBF\u0BAF\u0BC1\u0BAE\u0BCD. \u0BB2\u0BBE\u0BB0\u0BCD\u0B9C\u0BCD \u0B95\u0BC7\u0BAA\u0BCD, \u0B83\u0BAA\u0BBF\u0BB3\u0BC6\u0B95\u0BCD\u0B9A\u0BBF \u0B95\u0BC7\u0BAA\u0BCD \u0BAE\u0BB1\u0BCD\u0BB1\u0BC1\u0BAE\u0BCD \u0BB9\u0BC8\u0BAA\u0BBF\u0BB0\u0BBF\u0B9F\u0BCD \u0B83\u0BAA\u0BA3\u0BCD\u0B9F\u0BC1\u0B95\u0BB3\u0BBF\u0BA9\u0BCD \u0B95\u0BB2\u0BB5\u0BC8 \u0B89\u0B99\u0BCD\u0B95\u0BB3\u0BC1\u0B95\u0BCD\u0B95\u0BC1 \u0B8F\u0BB1\u0BCD\u0BB1\u0BA4\u0BC1.",
         allocations: [
-          { labelEn: "Large Cap / Index", labelTa: "\u0BB2\u0BBE\u0BB0\u0BCD\u0B9C\u0BCD \u0B95\u0BC7\u0BAA\u0BCD / \u0B87\u0BA9\u0BCD\u0B9F\u0BC6\u0B95\u0BCD\u0BB8\u0BCD", percent: 30, color: "#4F46E5" },
+          { labelEn: "Large Cap / Index", labelTa: "\u0BB2\u0BBE\u0BB0\u0BCD\u0B9C\u0BCD \u0B95\u0BC7\u0BAA\u0BCD / \u0B87\u0BA9\u0BCD\u0B9F\u0BC6\u0B95\u0BCD\u0BB8\u0BCD", percent: 30, color: "#2563EB" },
           { labelEn: "Flexi Cap", labelTa: "\u0B83\u0BAA\u0BBF\u0BB3\u0BC6\u0B95\u0BCD\u0B9A\u0BBF \u0B95\u0BC7\u0BAA\u0BCD (Flexi Cap)", percent: 30, color: "#06B6D4" },
           { labelEn: "Hybrid / Balanced Advantage", labelTa: "\u0BB9\u0BC8\u0BAA\u0BBF\u0BB0\u0BBF\u0B9F\u0BCD / \u0BAA\u0BC7\u0BB2\u0BA9\u0BCD\u0BB8\u0BCD\u0B9F\u0BC1 \u0B85\u0B9F\u0BCD\u0BB5\u0BBE\u0BA9\u0BCD\u0B9F\u0BC7\u0B9C\u0BCD", percent: 20, color: "#10B981" },
           { labelEn: "Debt / Short Duration", labelTa: "\u0B95\u0B9F\u0BA9\u0BCD / \u0B95\u0BC1\u0BB1\u0BC1\u0B95\u0BBF\u0BAF \u0B95\u0BBE\u0BB2\u0BAE\u0BCD", percent: 10, color: "#3B82F6" },
@@ -1222,7 +1222,7 @@ function RiskProfileQuizTab({ isTa }) {
       allocations: [
         { labelEn: "Flexi Cap", labelTa: "\u0B83\u0BAA\u0BBF\u0BB3\u0BC6\u0B95\u0BCD\u0B9A\u0BBF \u0B95\u0BC7\u0BAA\u0BCD (Flexi Cap)", percent: 30, color: "#06B6D4" },
         { labelEn: "Mid / Small Cap", labelTa: "\u0BAE\u0BBF\u0B9F\u0BCD & \u0BB8\u0BCD\u0BAE\u0BBE\u0BB2\u0BCD \u0B95\u0BC7\u0BAA\u0BCD (Mid/Small Cap)", percent: 30, color: "#8B5CF6" },
-        { labelEn: "Large Cap / Index", labelTa: "\u0BB2\u0BBE\u0BB0\u0BCD\u0B9C\u0BCD \u0B95\u0BC7\u0BAA\u0BCD / \u0B87\u0BA9\u0BCD\u0B9F\u0BC6\u0B95\u0BCD\u0BB8\u0BCD", percent: 25, color: "#4F46E5" },
+        { labelEn: "Large Cap / Index", labelTa: "\u0BB2\u0BBE\u0BB0\u0BCD\u0B9C\u0BCD \u0B95\u0BC7\u0BAA\u0BCD / \u0B87\u0BA9\u0BCD\u0B9F\u0BC6\u0B95\u0BCD\u0BB8\u0BCD", percent: 25, color: "#2563EB" },
         { labelEn: "Hybrid", labelTa: "\u0BB9\u0BC8\u0BAA\u0BBF\u0BB0\u0BBF\u0B9F\u0BCD", percent: 5, color: "#10B981" },
         { labelEn: "Gold", labelTa: "\u0BA4\u0B99\u0BCD\u0B95\u0BAE\u0BCD (Gold)", percent: 10, color: "#F5B700" }
       ]
@@ -1234,7 +1234,7 @@ function RiskProfileQuizTab({ isTa }) {
     /* @__PURE__ */ React16.createElement("div", { className: "space-y-6" }, /* @__PURE__ */ React16.createElement("div", { className: "space-y-3" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center justify-between text-xs font-bold text-[#5B5875] uppercase tracking-wider" }, /* @__PURE__ */ React16.createElement("span", null, isTa ? "\u0BB0\u0BBF\u0BB8\u0BCD\u0B95\u0BCD \u0B9A\u0BC1\u0BAF\u0BB5\u0BBF\u0BB5\u0BB0 \u0BB5\u0BBF\u0BA9\u0BBE\u0B9F\u0BBF\u0BB5\u0BBF\u0BA9\u0BBE" : "RISK PROFILE QUIZ"), /* @__PURE__ */ React16.createElement("span", null, isTa ? `\u0B95\u0BC7\u0BB3\u0BCD\u0BB5\u0BBF ${currentQuestionIdx + 1} / 6` : `Question ${currentQuestionIdx + 1} of 6`)), /* @__PURE__ */ React16.createElement("div", { className: "w-full h-2 rounded-full bg-[#F3F1FA] overflow-hidden border border-[#E6E3F0]" }, /* @__PURE__ */ React16.createElement(
       "div",
       {
-        className: "h-full bg-[#4F46E5] transition-all duration-300",
+        className: "h-full bg-[#2563EB] transition-all duration-300",
         style: { width: `${(currentQuestionIdx + 1) / 6 * 100}%` }
       }
     ))), /* @__PURE__ */ React16.createElement("div", { className: "py-2" }, /* @__PURE__ */ React16.createElement("h3", { className: "text-base sm:text-lg font-bold text-[#17142E] leading-relaxed" }, isTa ? currentQ.qTa : currentQ.qEn)), /* @__PURE__ */ React16.createElement("div", { className: "space-y-3" }, currentQ.options.map((opt, idx) => {
@@ -1245,13 +1245,13 @@ function RiskProfileQuizTab({ isTa }) {
           key: idx,
           type: "button",
           onClick: () => handleSelectOption(opt.score),
-          className: `w-full p-4 rounded-[14px] text-left text-xs sm:text-sm font-semibold transition-all border cursor-pointer flex items-center justify-between ${isSelected ? "bg-[#EEF0FF] border-[#4F46E5] text-[#17142E] shadow-xs" : "bg-white border-[#E6E3F0] text-[#17142E] hover:border-[#4F46E5] hover:bg-[#F8F7FC]"}`
+          className: `w-full p-4 rounded-[14px] text-left text-xs sm:text-sm font-semibold transition-all border cursor-pointer flex items-center justify-between ${isSelected ? "bg-[#EFF6FF] border-[#2563EB] text-[#17142E] shadow-xs" : "bg-white border-[#E6E3F0] text-[#17142E] hover:border-[#2563EB] hover:bg-[#F8F7FC]"}`
         },
         /* @__PURE__ */ React16.createElement("span", null, isTa ? opt.textTa : opt.textEn),
         /* @__PURE__ */ React16.createElement(
           "span",
           {
-            className: `w-5 h-5 rounded-full border flex items-center justify-center text-[10px] shrink-0 ml-3 ${isSelected ? "border-[#4F46E5] bg-[#4F46E5] text-white" : "border-[#E6E3F0] text-transparent"}`
+            className: `w-5 h-5 rounded-full border flex items-center justify-center text-[10px] shrink-0 ml-3 ${isSelected ? "border-[#2563EB] bg-[#2563EB] text-white" : "border-[#E6E3F0] text-transparent"}`
           },
           "\u2713"
         )
@@ -1267,7 +1267,7 @@ function RiskProfileQuizTab({ isTa }) {
     )))
   ) : (
     /* QUIZ RESULTS CARD */
-    /* @__PURE__ */ React16.createElement("div", { className: "space-y-6 animate-fadeIn" }, /* @__PURE__ */ React16.createElement("div", { className: "text-center space-y-2 pb-4 border-b border-[#E6E3F0]" }, /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-bold uppercase tracking-wider text-[#4F46E5]" }, isTa ? "\u0B89\u0B99\u0BCD\u0B95\u0BB3\u0BCD \u0BB0\u0BBF\u0BB8\u0BCD\u0B95\u0BCD \u0B9A\u0BC1\u0BAF\u0BB5\u0BBF\u0BB5\u0BB0\u0BAE\u0BCD" : "YOUR RISK PROFILE"), /* @__PURE__ */ React16.createElement("h3", { className: "text-2xl sm:text-3xl font-black text-[#17142E]" }, isTa ? profile.nameTa : profile.nameEn), /* @__PURE__ */ React16.createElement("p", { className: "text-xs sm:text-sm text-[#5B5875] max-w-lg mx-auto leading-relaxed pt-1" }, isTa ? profile.descTa : profile.descEn)), /* @__PURE__ */ React16.createElement("div", { className: "space-y-3" }, /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-bold uppercase tracking-wider text-[#5B5875] block" }, isTa ? "\u0BAA\u0BB0\u0BBF\u0BA8\u0BCD\u0BA4\u0BC1\u0BB0\u0BC8\u0B95\u0BCD\u0B95\u0BAA\u0BCD\u0BAA\u0B9F\u0BC1\u0BAE\u0BCD \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BB2\u0BB5\u0BC8 (Asset Allocation)" : "Recommended Asset Allocation"), /* @__PURE__ */ React16.createElement("div", { className: "space-y-2.5" }, profile.allocations.map((item, idx) => /* @__PURE__ */ React16.createElement("div", { key: idx, className: "space-y-1" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center justify-between text-xs font-semibold text-[#17142E]" }, /* @__PURE__ */ React16.createElement("span", null, isTa ? item.labelTa : item.labelEn), /* @__PURE__ */ React16.createElement("span", { className: "font-bold" }, item.percent, "%")), /* @__PURE__ */ React16.createElement("div", { className: "w-full h-2.5 rounded-full bg-[#F3F1FA] overflow-hidden border border-[#E6E3F0]" }, /* @__PURE__ */ React16.createElement(
+    /* @__PURE__ */ React16.createElement("div", { className: "space-y-6 animate-fadeIn" }, /* @__PURE__ */ React16.createElement("div", { className: "text-center space-y-2 pb-4 border-b border-[#E6E3F0]" }, /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-bold uppercase tracking-wider text-[#2563EB]" }, isTa ? "\u0B89\u0B99\u0BCD\u0B95\u0BB3\u0BCD \u0BB0\u0BBF\u0BB8\u0BCD\u0B95\u0BCD \u0B9A\u0BC1\u0BAF\u0BB5\u0BBF\u0BB5\u0BB0\u0BAE\u0BCD" : "YOUR RISK PROFILE"), /* @__PURE__ */ React16.createElement("h3", { className: "text-2xl sm:text-3xl font-black text-[#17142E]" }, isTa ? profile.nameTa : profile.nameEn), /* @__PURE__ */ React16.createElement("p", { className: "text-xs sm:text-sm text-[#5B5875] max-w-lg mx-auto leading-relaxed pt-1" }, isTa ? profile.descTa : profile.descEn)), /* @__PURE__ */ React16.createElement("div", { className: "space-y-3" }, /* @__PURE__ */ React16.createElement("span", { className: "text-xs font-bold uppercase tracking-wider text-[#5B5875] block" }, isTa ? "\u0BAA\u0BB0\u0BBF\u0BA8\u0BCD\u0BA4\u0BC1\u0BB0\u0BC8\u0B95\u0BCD\u0B95\u0BAA\u0BCD\u0BAA\u0B9F\u0BC1\u0BAE\u0BCD \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BB2\u0BB5\u0BC8 (Asset Allocation)" : "Recommended Asset Allocation"), /* @__PURE__ */ React16.createElement("div", { className: "space-y-2.5" }, profile.allocations.map((item, idx) => /* @__PURE__ */ React16.createElement("div", { key: idx, className: "space-y-1" }, /* @__PURE__ */ React16.createElement("div", { className: "flex items-center justify-between text-xs font-semibold text-[#17142E]" }, /* @__PURE__ */ React16.createElement("span", null, isTa ? item.labelTa : item.labelEn), /* @__PURE__ */ React16.createElement("span", { className: "font-bold" }, item.percent, "%")), /* @__PURE__ */ React16.createElement("div", { className: "w-full h-2.5 rounded-full bg-[#F3F1FA] overflow-hidden border border-[#E6E3F0]" }, /* @__PURE__ */ React16.createElement(
       "div",
       {
         className: "h-full rounded-full transition-all duration-500",
@@ -1278,14 +1278,14 @@ function RiskProfileQuizTab({ isTa }) {
       {
         type: "button",
         onClick: handleRetake,
-        className: "w-full sm:w-auto px-5 py-2.5 rounded-[10px] bg-[#4F46E5] text-white text-xs font-bold hover:bg-[#4338CA] transition-colors shadow-xs cursor-pointer"
+        className: "w-full sm:w-auto px-5 py-2.5 rounded-[10px] bg-[#2563EB] text-white text-xs font-bold hover:bg-[#1D4ED8] transition-colors shadow-xs cursor-pointer"
       },
       isTa ? "\u0BAE\u0BC0\u0BA3\u0BCD\u0B9F\u0BC1\u0BAE\u0BCD \u0BB5\u0BBF\u0BA9\u0BBE\u0B9F\u0BBF\u0BB5\u0BBF\u0BA9\u0BBE \u0B9A\u0BC6\u0BAF\u0BCD\u0BAF" : "Retake quiz"
     ), /* @__PURE__ */ React16.createElement(
       "a",
       {
         href: "#/articles",
-        className: "w-full sm:w-auto px-5 py-2.5 rounded-[10px] bg-white border border-[#E6E3F0] text-xs font-bold text-[#17142E] hover:border-[#4F46E5] transition-colors text-center cursor-pointer"
+        className: "w-full sm:w-auto px-5 py-2.5 rounded-[10px] bg-white border border-[#E6E3F0] text-xs font-bold text-[#17142E] hover:border-[#2563EB] transition-colors text-center cursor-pointer"
       },
       isTa ? "\u0BAA\u0BCA\u0BB0\u0BC1\u0BA4\u0BCD\u0BA4\u0BAE\u0BBE\u0BA9 \u0B95\u0B9F\u0BCD\u0B9F\u0BC1\u0BB0\u0BC8\u0B95\u0BB3\u0BC8\u0BAA\u0BCD \u0BAA\u0B9F\u0BBF\u0B95\u0BCD\u0B95" : "Read relevant guides"
     )), /* @__PURE__ */ React16.createElement("p", { className: "text-[12px] text-[#8E8BA6] leading-relaxed pt-2 border-t border-[#E6E3F0]" }, isTa ? "\u0B87\u0BA8\u0BCD\u0BA4 \u0BB5\u0BBF\u0BA9\u0BBE\u0B9F\u0BBF\u0BB5\u0BBF\u0BA9\u0BBE \u0B95\u0BB2\u0BCD\u0BB5\u0BBF \u0BA8\u0BCB\u0B95\u0BCD\u0B95\u0BA4\u0BCD\u0BA4\u0BBF\u0BB1\u0BCD\u0B95\u0BBE\u0BA9 \u0B92\u0BB0\u0BC1 \u0B8E\u0BB3\u0BBF\u0BAF \u0B9A\u0BC1\u0BAF \u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BC0\u0B9F\u0BC1 \u0BAE\u0B9F\u0BCD\u0B9F\u0BC1\u0BAE\u0BC7. \u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BC1 \u0B9A\u0BC6\u0BAF\u0BCD\u0BB5\u0BA4\u0BB1\u0BCD\u0B95\u0BC1 \u0BAE\u0BC1\u0BA9\u0BCD \u0B89\u0B99\u0BCD\u0B95\u0BB3\u0BCD \u0BB5\u0BBF\u0BA8\u0BBF\u0BAF\u0BCB\u0B95\u0BB8\u0BCD\u0BA4\u0BB0\u0BC1\u0B9F\u0BA9\u0BCD \u0BAE\u0BC1\u0BB4\u0BC1\u0BAE\u0BC8\u0BAF\u0BBE\u0BA9 \u0B9A\u0BC1\u0BAF\u0BB5\u0BBF\u0BB5\u0BB0\u0BA4\u0BCD\u0BA4\u0BC8 \u0BAA\u0BC2\u0BB0\u0BCD\u0BA4\u0BCD\u0BA4\u0BBF \u0B9A\u0BC6\u0BAF\u0BCD\u0BAF\u0BC1\u0B99\u0BCD\u0B95\u0BB3\u0BCD." : "This quiz is a simple self-assessment for education. A full risk profile is completed with your distributor before investing."))

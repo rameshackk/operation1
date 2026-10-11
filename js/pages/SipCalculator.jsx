@@ -80,7 +80,7 @@ export default function SipCalculator({ initialTab, isEmbedded = false }) {
                 onClick={() => handleTabChange('quick')}
                 className={`pb-3 text-xs sm:text-sm font-bold whitespace-nowrap border-b-2 transition-all cursor-pointer ${
                   activeTab === 'quick'
-                    ? 'text-[#17142E] border-[#4F46E5]'
+                    ? 'text-[#17142E] border-[#2563EB]'
                     : 'text-[#5B5875] border-transparent hover:text-[#17142E]'
                 }`}
               >
@@ -92,7 +92,7 @@ export default function SipCalculator({ initialTab, isEmbedded = false }) {
                 onClick={() => handleTabChange('stepup')}
                 className={`pb-3 text-xs sm:text-sm font-bold whitespace-nowrap border-b-2 transition-all cursor-pointer ${
                   activeTab === 'stepup'
-                    ? 'text-[#17142E] border-[#4F46E5]'
+                    ? 'text-[#17142E] border-[#2563EB]'
                     : 'text-[#5B5875] border-transparent hover:text-[#17142E]'
                 }`}
               >
@@ -104,7 +104,7 @@ export default function SipCalculator({ initialTab, isEmbedded = false }) {
                 onClick={() => handleTabChange('quiz')}
                 className={`pb-3 text-xs sm:text-sm font-bold whitespace-nowrap border-b-2 transition-all cursor-pointer ${
                   activeTab === 'quiz'
-                    ? 'text-[#17142E] border-[#4F46E5]'
+                    ? 'text-[#17142E] border-[#2563EB]'
                     : 'text-[#5B5875] border-transparent hover:text-[#17142E]'
                 }`}
               >
@@ -367,7 +367,7 @@ function QuickCalculatorTab({ isTa, isEmbedded }) {
             onClick={() => setMode('sip')}
             className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
               mode === 'sip'
-                ? 'bg-[#4F46E5] text-white shadow-xs'
+                ? 'bg-[#2563EB] text-white shadow-xs'
                 : 'text-[#5B5875] hover:bg-[#E9E6F5]'
             }`}
           >
@@ -378,7 +378,7 @@ function QuickCalculatorTab({ isTa, isEmbedded }) {
             onClick={() => setMode('lumpsum')}
             className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
               mode === 'lumpsum'
-                ? 'bg-[#4F46E5] text-white shadow-xs'
+                ? 'bg-[#2563EB] text-white shadow-xs'
                 : 'text-[#5B5875] hover:bg-[#E9E6F5]'
             }`}
           >
@@ -414,7 +414,7 @@ function QuickCalculatorTab({ isTa, isEmbedded }) {
                     onClick={() => setFreq(item.id)}
                     className={`px-2.5 py-1 text-xs font-bold rounded-lg transition-all cursor-pointer ${
                       freq === item.id
-                        ? 'bg-[#4F46E5] text-white shadow-xs'
+                        ? 'bg-[#2563EB] text-white shadow-xs'
                         : 'text-[#5B5875] hover:bg-[#E9E6F5]'
                     }`}
                   >
@@ -579,7 +579,7 @@ function QuickCalculatorTab({ isTa, isEmbedded }) {
                     onClick={() => setIsStepUp(false)}
                     className={`px-3 py-1 rounded-full text-xs font-bold transition-all cursor-pointer ${
                       !isStepUp
-                        ? 'bg-[#4F46E5] text-white shadow-xs'
+                        ? 'bg-[#2563EB] text-white shadow-xs'
                         : 'text-[#5B5875] hover:bg-[#F3F1FA]'
                     }`}
                   >
@@ -590,7 +590,7 @@ function QuickCalculatorTab({ isTa, isEmbedded }) {
                     onClick={() => setIsStepUp(true)}
                     className={`px-3 py-1 rounded-full text-xs font-bold transition-all cursor-pointer ${
                       isStepUp
-                        ? 'bg-[#4F46E5] text-white shadow-xs'
+                        ? 'bg-[#2563EB] text-white shadow-xs'
                         : 'text-[#5B5875] hover:bg-[#F3F1FA]'
                     }`}
                   >
@@ -612,7 +612,7 @@ function QuickCalculatorTab({ isTa, isEmbedded }) {
                         onClick={() => setStepUpBy('percent')}
                         className={`px-2 py-0.5 rounded text-[11px] font-bold cursor-pointer ${
                           stepUpBy === 'percent'
-                            ? 'bg-[#4F46E5] text-white'
+                            ? 'bg-[#2563EB] text-white'
                             : 'bg-white text-[#5B5875] border border-[#E6E3F0]'
                         }`}
                       >
@@ -623,7 +623,7 @@ function QuickCalculatorTab({ isTa, isEmbedded }) {
                         onClick={() => setStepUpBy('amount')}
                         className={`px-2 py-0.5 rounded text-[11px] font-bold cursor-pointer ${
                           stepUpBy === 'amount'
-                            ? 'bg-[#4F46E5] text-white'
+                            ? 'bg-[#2563EB] text-white'
                             : 'bg-white text-[#5B5875] border border-[#E6E3F0]'
                         }`}
                       >
@@ -643,7 +643,7 @@ function QuickCalculatorTab({ isTa, isEmbedded }) {
                         onClick={() => setStepUpFreq('yearly')}
                         className={`px-2 py-0.5 rounded text-[11px] font-bold cursor-pointer ${
                           stepUpFreq === 'yearly'
-                            ? 'bg-[#4F46E5] text-white'
+                            ? 'bg-[#2563EB] text-white'
                             : 'bg-white text-[#5B5875] border border-[#E6E3F0]'
                         }`}
                       >
@@ -654,7 +654,7 @@ function QuickCalculatorTab({ isTa, isEmbedded }) {
                         onClick={() => setStepUpFreq('half_yearly')}
                         className={`px-2 py-0.5 rounded text-[11px] font-bold cursor-pointer ${
                           stepUpFreq === 'half_yearly'
-                            ? 'bg-[#4F46E5] text-white'
+                            ? 'bg-[#2563EB] text-white'
                             : 'bg-white text-[#5B5875] border border-[#E6E3F0]'
                         }`}
                       >
@@ -703,7 +703,7 @@ function QuickCalculatorTab({ isTa, isEmbedded }) {
             <button
               type="button"
               onClick={handleReset}
-              className="px-4 py-2 rounded-xl bg-white border border-[#E6E3F0] text-xs font-bold text-[#5B5875] hover:text-[#17142E] hover:border-[#4F46E5] transition-all cursor-pointer shadow-2xs"
+              className="px-4 py-2 rounded-xl bg-white border border-[#E6E3F0] text-xs font-bold text-[#5B5875] hover:text-[#17142E] hover:border-[#2563EB] transition-all cursor-pointer shadow-2xs"
             >
               {isTa ? 'மீட்டமைக்க (Clear)' : 'Clear / Reset'}
             </button>
@@ -737,7 +737,7 @@ function QuickCalculatorTab({ isTa, isEmbedded }) {
               <span className="text-xs font-semibold text-[#5B5875] uppercase tracking-wider block">
                 {isTa ? 'மொத்த மதிப்பு' : 'Total value'}
               </span>
-              <span className="text-xl sm:text-2xl font-extrabold text-[#4F46E5] tabular-nums block">
+              <span className="text-xl sm:text-2xl font-extrabold text-[#2563EB] tabular-nums block">
                 {formatINR(calcResult.totalValue)}
               </span>
             </div>
@@ -756,13 +756,13 @@ function QuickCalculatorTab({ isTa, isEmbedded }) {
                   stroke="#C7C4F5"
                   strokeWidth="4.5"
                 />
-                {/* Returns Arc: #4F46E5 */}
+                {/* Returns Arc: #2563EB */}
                 <circle
                   cx="18"
                   cy="18"
                   r="14"
                   fill="none"
-                  stroke="#4F46E5"
+                  stroke="#2563EB"
                   strokeWidth="4.5"
                   strokeDasharray={`${Math.min(100, Math.max(0, calcResult.donutReturnsPercent * 0.88))} 100`}
                   strokeLinecap="round"
@@ -795,7 +795,7 @@ function QuickCalculatorTab({ isTa, isEmbedded }) {
               </div>
 
               <div className="flex items-center gap-3">
-                <span className="w-3.5 h-3.5 rounded bg-[#4F46E5] shrink-0" />
+                <span className="w-3.5 h-3.5 rounded bg-[#2563EB] shrink-0" />
                 <div className="text-xs">
                   <span className="font-semibold text-[#5B5875]">
                     {isTa ? 'ஈட்டிய லாபம்:' : 'Returns:'}
@@ -816,7 +816,7 @@ function QuickCalculatorTab({ isTa, isEmbedded }) {
                 onClick={() => setSubTab('summary')}
                 className={`pb-2 text-xs font-bold border-b-2 transition-all cursor-pointer ${
                   subTab === 'summary'
-                    ? 'text-[#17142E] border-[#4F46E5]'
+                    ? 'text-[#17142E] border-[#2563EB]'
                     : 'text-[#5B5875] border-transparent hover:text-[#17142E]'
                 }`}
               >
@@ -827,7 +827,7 @@ function QuickCalculatorTab({ isTa, isEmbedded }) {
                 onClick={() => setSubTab('breakdown')}
                 className={`pb-2 text-xs font-bold border-b-2 transition-all cursor-pointer ${
                   subTab === 'breakdown'
-                    ? 'text-[#17142E] border-[#4F46E5]'
+                    ? 'text-[#17142E] border-[#2563EB]'
                     : 'text-[#5B5875] border-transparent hover:text-[#17142E]'
                 }`}
               >
@@ -875,7 +875,7 @@ function QuickCalculatorTab({ isTa, isEmbedded }) {
                         <td className="px-3 py-2.5 text-right font-medium text-[#5B5875] whitespace-nowrap">
                           {formatINR(row.cumulativeInvested)}
                         </td>
-                        <td className="px-3 py-2.5 text-right font-bold text-[#4F46E5] whitespace-nowrap">
+                        <td className="px-3 py-2.5 text-right font-bold text-[#2563EB] whitespace-nowrap">
                           {formatINR(row.balanceEnd)}
                         </td>
                       </tr>
@@ -931,7 +931,7 @@ function QuickStackedAreaChart({ data, isTa }) {
     return { x, yTotal, yInvested, ...d };
   });
 
-  // Area path for Total Balance (Returns on top: #4F46E5 with opacity)
+  // Area path for Total Balance (Returns on top: #2563EB with opacity)
   const totalAreaPath = `
     M ${points[0].x} ${padTop + plotH}
     ${points.map(p => `L ${p.x} ${p.yTotal}`).join(' ')}
@@ -983,13 +983,13 @@ function QuickStackedAreaChart({ data, isTa }) {
         })}
 
         {/* Stacked Area Fills */}
-        <path d={totalAreaPath} fill="#4F46E5" fillOpacity="0.85" />
+        <path d={totalAreaPath} fill="#2563EB" fillOpacity="0.85" />
         <path d={investedAreaPath} fill="#C7C4F5" fillOpacity="0.9" />
 
         {/* Boundary Lines */}
         <polyline
           fill="none"
-          stroke="#4F46E5"
+          stroke="#2563EB"
           strokeWidth="2"
           points={points.map(p => `${p.x},${p.yTotal}`).join(' ')}
         />
@@ -1045,7 +1045,7 @@ function QuickStackedAreaChart({ data, isTa }) {
               strokeWidth="1"
               strokeDasharray="2 2"
             />
-            <circle cx={hoveredItem.x} cy={hoveredItem.yTotal} r="4" fill="#4F46E5" stroke="#FFFFFF" strokeWidth="2" />
+            <circle cx={hoveredItem.x} cy={hoveredItem.yTotal} r="4" fill="#2563EB" stroke="#FFFFFF" strokeWidth="2" />
             <circle cx={hoveredItem.x} cy={hoveredItem.yInvested} r="4" fill="#C7C4F5" stroke="#FFFFFF" strokeWidth="2" />
           </g>
         )}
@@ -1065,7 +1065,7 @@ function QuickStackedAreaChart({ data, isTa }) {
           </div>
           <div>
             <span className="text-[#5B5875] text-[11px] block">{isTa ? 'மொத்த மதிப்பு' : 'Total'}:</span>
-            <span className="font-extrabold text-[#4F46E5]">{formatINR(hoveredItem.balanceEnd)}</span>
+            <span className="font-extrabold text-[#2563EB]">{formatINR(hoveredItem.balanceEnd)}</span>
           </div>
         </div>
       )}
@@ -1299,7 +1299,7 @@ function StepUpCalculatorTab({ isTa }) {
                 <span className="text-[11px] font-semibold text-[#5B5875] block">
                   {isTa ? 'எதிர்பார்க்கப்படும் மதிப்பு' : 'Projected value'}
                 </span>
-                <span className="text-lg sm:text-xl font-extrabold text-[#4F46E5] tabular-nums block">
+                <span className="text-lg sm:text-xl font-extrabold text-[#2563EB] tabular-nums block">
                   {formatINR(outcome.projectedValue, true)}
                 </span>
               </div>
@@ -1352,7 +1352,7 @@ function StepUpLineChart({ data, isTa }) {
       <div className="flex items-center justify-between pb-2 text-[11px]">
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#4F46E5]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#2563EB]" />
             <span className="font-bold text-[#17142E]">{isTa ? 'எதிர்பார்க்கப்படும் மதிப்பு' : 'Projected value'}</span>
           </div>
           <div className="flex items-center gap-1.5">
@@ -1379,7 +1379,7 @@ function StepUpLineChart({ data, isTa }) {
         {/* Projected Value Line */}
         <polyline
           fill="none"
-          stroke="#4F46E5"
+          stroke="#2563EB"
           strokeWidth="2.5"
           strokeLinecap="round"
           points={points.map(p => `${p.x},${p.yVal}`).join(' ')}
@@ -1526,7 +1526,7 @@ function RiskProfileQuizTab({ isTa }) {
         allocations: [
           { labelEn: 'Debt / Short Duration', labelTa: 'கடன் / குறுகிய கால ஃபண்டுகள்', percent: 45, color: '#3B82F6' },
           { labelEn: 'Hybrid / Balanced Advantage', labelTa: 'ஹைபிரிட் / பேலன்ஸ்டு அட்வான்டேஜ்', percent: 25, color: '#10B981' },
-          { labelEn: 'Large Cap / Index', labelTa: 'லார்ஜ் கேப் / இன்டெக்ஸ்', percent: 15, color: '#4F46E5' },
+          { labelEn: 'Large Cap / Index', labelTa: 'லார்ஜ் கேப் / இன்டெக்ஸ்', percent: 15, color: '#2563EB' },
           { labelEn: 'Gold', labelTa: 'தங்கம் (Gold)', percent: 15, color: '#F5B700' }
         ]
       };
@@ -1539,7 +1539,7 @@ function RiskProfileQuizTab({ isTa }) {
         descEn: 'You can sit through normal market swings for steady growth. A blend of large cap, flexi cap and hybrid funds suits you.',
         descTa: 'நிலையான வளர்ச்சிக்காக சாதாரண சந்தை மாற்றங்களை நீங்கள் சமாளிக்க முடியும். லார்ஜ் கேப், ஃபிளெக்சி கேப் மற்றும் ஹைபிரிட் ஃபண்டுகளின் கலவை உங்களுக்கு ஏற்றது.',
         allocations: [
-          { labelEn: 'Large Cap / Index', labelTa: 'லார்ஜ் கேப் / இன்டெக்ஸ்', percent: 30, color: '#4F46E5' },
+          { labelEn: 'Large Cap / Index', labelTa: 'லார்ஜ் கேப் / இன்டெக்ஸ்', percent: 30, color: '#2563EB' },
           { labelEn: 'Flexi Cap', labelTa: 'ஃபிளெக்சி கேப் (Flexi Cap)', percent: 30, color: '#06B6D4' },
           { labelEn: 'Hybrid / Balanced Advantage', labelTa: 'ஹைபிரிட் / பேலன்ஸ்டு அட்வான்டேஜ்', percent: 20, color: '#10B981' },
           { labelEn: 'Debt / Short Duration', labelTa: 'கடன் / குறுகிய காலம்', percent: 10, color: '#3B82F6' },
@@ -1556,7 +1556,7 @@ function RiskProfileQuizTab({ isTa }) {
       allocations: [
         { labelEn: 'Flexi Cap', labelTa: 'ஃபிளெக்சி கேப் (Flexi Cap)', percent: 30, color: '#06B6D4' },
         { labelEn: 'Mid / Small Cap', labelTa: 'மிட் & ஸ்மால் கேப் (Mid/Small Cap)', percent: 30, color: '#8B5CF6' },
-        { labelEn: 'Large Cap / Index', labelTa: 'லார்ஜ் கேப் / இன்டெக்ஸ்', percent: 25, color: '#4F46E5' },
+        { labelEn: 'Large Cap / Index', labelTa: 'லார்ஜ் கேப் / இன்டெக்ஸ்', percent: 25, color: '#2563EB' },
         { labelEn: 'Hybrid', labelTa: 'ஹைபிரிட்', percent: 5, color: '#10B981' },
         { labelEn: 'Gold', labelTa: 'தங்கம் (Gold)', percent: 10, color: '#F5B700' }
       ]
@@ -1585,7 +1585,7 @@ function RiskProfileQuizTab({ isTa }) {
             {/* Progress Bar */}
             <div className="w-full h-2 rounded-full bg-[#F3F1FA] overflow-hidden border border-[#E6E3F0]">
               <div
-                className="h-full bg-[#4F46E5] transition-all duration-300"
+                className="h-full bg-[#2563EB] transition-all duration-300"
                 style={{ width: `${((currentQuestionIdx + 1) / 6) * 100}%` }}
               />
             </div>
@@ -1609,15 +1609,15 @@ function RiskProfileQuizTab({ isTa }) {
                   onClick={() => handleSelectOption(opt.score)}
                   className={`w-full p-4 rounded-[14px] text-left text-xs sm:text-sm font-semibold transition-all border cursor-pointer flex items-center justify-between ${
                     isSelected
-                      ? 'bg-[#EEF0FF] border-[#4F46E5] text-[#17142E] shadow-xs'
-                      : 'bg-white border-[#E6E3F0] text-[#17142E] hover:border-[#4F46E5] hover:bg-[#F8F7FC]'
+                      ? 'bg-[#EFF6FF] border-[#2563EB] text-[#17142E] shadow-xs'
+                      : 'bg-white border-[#E6E3F0] text-[#17142E] hover:border-[#2563EB] hover:bg-[#F8F7FC]'
                   }`}
                 >
                   <span>{isTa ? opt.textTa : opt.textEn}</span>
                   <span
                     className={`w-5 h-5 rounded-full border flex items-center justify-center text-[10px] shrink-0 ml-3 ${
                       isSelected
-                        ? 'border-[#4F46E5] bg-[#4F46E5] text-white'
+                        ? 'border-[#2563EB] bg-[#2563EB] text-white'
                         : 'border-[#E6E3F0] text-transparent'
                     }`}
                   >
@@ -1645,7 +1645,7 @@ function RiskProfileQuizTab({ isTa }) {
         /* QUIZ RESULTS CARD */
         <div className="space-y-6 animate-fadeIn">
           <div className="text-center space-y-2 pb-4 border-b border-[#E6E3F0]">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#4F46E5]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#2563EB]">
               {isTa ? 'உங்கள் ரிஸ்க் சுயவிவரம்' : 'YOUR RISK PROFILE'}
             </span>
             <h3 className="text-2xl sm:text-3xl font-black text-[#17142E]">
@@ -1685,14 +1685,14 @@ function RiskProfileQuizTab({ isTa }) {
             <button
               type="button"
               onClick={handleRetake}
-              className="w-full sm:w-auto px-5 py-2.5 rounded-[10px] bg-[#4F46E5] text-white text-xs font-bold hover:bg-[#4338CA] transition-colors shadow-xs cursor-pointer"
+              className="w-full sm:w-auto px-5 py-2.5 rounded-[10px] bg-[#2563EB] text-white text-xs font-bold hover:bg-[#1D4ED8] transition-colors shadow-xs cursor-pointer"
             >
               {isTa ? 'மீண்டும் வினாடிவினா செய்ய' : 'Retake quiz'}
             </button>
 
             <a
               href="#/articles"
-              className="w-full sm:w-auto px-5 py-2.5 rounded-[10px] bg-white border border-[#E6E3F0] text-xs font-bold text-[#17142E] hover:border-[#4F46E5] transition-colors text-center cursor-pointer"
+              className="w-full sm:w-auto px-5 py-2.5 rounded-[10px] bg-white border border-[#E6E3F0] text-xs font-bold text-[#17142E] hover:border-[#2563EB] transition-colors text-center cursor-pointer"
             >
               {isTa ? 'பொருத்தமான கட்டுரைகளைப் படிக்க' : 'Read relevant guides'}
             </a>

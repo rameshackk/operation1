@@ -1743,10 +1743,10 @@ body, #root, main, header, nav, footer, section {
   --calc-text: #17142E;
   --calc-text-2: #5B5875;
   --calc-text-3: #8E8BA6;
-  --calc-accent: #4F46E5;
-  --calc-accent-soft: #EEF0FF;
+  --calc-accent: #2563EB;
+  --calc-accent-soft: #EFF6FF;
   --calc-invested: #C7C4F5;
-  --calc-returns: #4F46E5;
+  --calc-returns: #2563EB;
   --calc-gain: #0F9D58;
   --calc-gold: #F5B700;
   
@@ -1804,7 +1804,7 @@ body, #root, main, header, nav, footer, section {
   border-radius: 50%;
   background: #FFFFFF;
   border: 2px solid var(--calc-accent);
-  box-shadow: 0 1px 4px rgba(79, 70, 229, 0.3);
+  box-shadow: 0 1px 4px rgba(37, 99, 235, 0.3);
   cursor: pointer;
   transition: transform 0.1s ease;
 }
@@ -1819,7 +1819,7 @@ body, #root, main, header, nav, footer, section {
   border-radius: 50%;
   background: #FFFFFF;
   border: 2px solid var(--calc-accent);
-  box-shadow: 0 1px 4px rgba(79, 70, 229, 0.3);
+  box-shadow: 0 1px 4px rgba(37, 99, 235, 0.3);
   cursor: pointer;
 }
 
