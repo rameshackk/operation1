@@ -126,6 +126,24 @@ function TrendingArticlesSection({ onNavigate }) {
             );
           })}
         </div>
+
+        {/* Read More Button (Aligned to the bottom-right under the 6th article) */}
+        <div className="flex justify-end pt-1 sm:pt-2">
+          <button
+            type="button"
+            onClick={() => {
+              if (onNavigate) {
+                onNavigate('/articles');
+              } else {
+                window.location.href = '#/articles';
+              }
+            }}
+            className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#4A9E2C] hover:bg-[#3d8224] text-white text-xs sm:text-sm font-bold shadow-xs hover:shadow-md transition-all active:scale-95 cursor-pointer font-sans"
+          >
+            <span>{t('readArticle') || (isTamil ? 'மேலும் படிக்க' : 'Read More')}</span>
+            <span className="group-hover:translate-x-1 transition-transform font-bold text-sm">→</span>
+          </button>
+        </div>
       </div>
     </div>
   );

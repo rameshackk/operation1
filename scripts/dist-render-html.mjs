@@ -2947,7 +2947,22 @@ function TrendingArticlesSection({ onNavigate }) {
       )),
       /* @__PURE__ */ React12.createElement("div", { className: "flex-1 min-w-0 flex flex-col justify-between h-full py-0.5" }, /* @__PURE__ */ React12.createElement("div", null, /* @__PURE__ */ React12.createElement("div", { className: "flex items-center gap-2 mb-1" }, /* @__PURE__ */ React12.createElement("span", { className: "text-[10.5px] sm:text-[11px] font-extrabold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-sans" }, (article.category || "FINANCE").replace("-", " ")), /* @__PURE__ */ React12.createElement("span", { className: "text-[10.5px] sm:text-[11px] text-slate-400 font-num" }, "\u2022 ", formattedDate)), /* @__PURE__ */ React12.createElement("h3", { className: "text-xs sm:text-[13.5px] font-bold text-slate-900 dark:text-white line-clamp-2 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors leading-snug font-sans" }, article.title)), /* @__PURE__ */ React12.createElement("div", { className: "mt-2 pt-1.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400" }, /* @__PURE__ */ React12.createElement("span", { className: "truncate max-w-[140px] font-medium text-slate-700 dark:text-slate-300 text-[11px] sm:text-xs" }, article.authorName || "Budget Padmanaban"), /* @__PURE__ */ React12.createElement("span", { className: "text-emerald-600 dark:text-emerald-400 font-bold group-hover:translate-x-1 transition-transform text-xs sm:text-sm" }, "\u2192")))
     );
-  }))));
+  })), /* @__PURE__ */ React12.createElement("div", { className: "flex justify-end pt-1 sm:pt-2" }, /* @__PURE__ */ React12.createElement(
+    "button",
+    {
+      type: "button",
+      onClick: () => {
+        if (onNavigate) {
+          onNavigate("/articles");
+        } else {
+          window.location.href = "#/articles";
+        }
+      },
+      className: "group inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#4A9E2C] hover:bg-[#3d8224] text-white text-xs sm:text-sm font-bold shadow-xs hover:shadow-md transition-all active:scale-95 cursor-pointer font-sans"
+    },
+    /* @__PURE__ */ React12.createElement("span", null, t("readArticle") || (isTamil ? "\u0BAE\u0BC7\u0BB2\u0BC1\u0BAE\u0BCD \u0BAA\u0B9F\u0BBF\u0B95\u0BCD\u0B95" : "Read More")),
+    /* @__PURE__ */ React12.createElement("span", { className: "group-hover:translate-x-1 transition-transform font-bold text-sm" }, "\u2192")
+  ))));
 }
 var TrendingArticlesSection_default = TrendingArticlesSection;
 
