@@ -458,10 +458,18 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
     setShowAudioPlayer(false);
   };
 
+  const [showShareSheet, setShowShareSheet] = useState(false);
+  const [sheetTouchStartY, setSheetTouchStartY] = useState(0);
+
   // Share handler
   const handleShare = async (platform = 'copy') => {
     const titleText = article ? (isTamil ? article.titleTamil : article.titleEnglish) : 'Muthaleetu Thisai';
     const url = window.location.href;
+
+    if (platform === 'sheet' || (platform === 'native' && window.innerWidth < 768 && !navigator.share)) {
+      setShowShareSheet(true);
+      return;
+    }
 
     if (platform === 'whatsapp') {
       window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(`${titleText} - ${url}`)}`, '_blank');
@@ -479,12 +487,7 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
       } catch { }
     }
 
-    try {
-      await navigator.clipboard.writeText(url);
-      if (onShowToast) onShowToast(isTamil ? 'லிங்க் நகலெடுக்கப்பட்டது!' : 'Article link copied to clipboard!');
-    } catch {
-      if (onShowToast) onShowToast(isTamil ? 'பகிர்வு தயார்!' : 'Share link ready!');
-    }
+    setShowShareSheet(true);
   };
 
   const scrollToTop = () => {
@@ -545,6 +548,13 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
     <div 
       className={`min-h-screen pb-20 animate-fadeIn relative transition-colors duration-300 bg-gradient-to-b from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 ${isReadingMode ? 'bg-[#fbfbf9] dark:bg-[#0a0f18]' : ''}`}
     >
+      {/* ================= 0. READING PROGRESS BAR (Top-Fixed) ================= */}
+      <div className="fixed top-0 left-0 right-0 h-1 z-50 bg-slate-200/50 dark:bg-slate-800/50 pointer-events-none">
+        <div
+          className="h-full bg-gradient-to-r from-blue-600 via-[#4A9E2C] to-emerald-400 transition-all duration-75 ease-out"
+          style={{ width: `${scrollProgress}%` }}
+        />
+      </div>
 
       {/* ================= 1. STICKY "NOW READING" BAR ================= */}
       <div
@@ -1477,6 +1487,129 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
         >
           ↑
         </button>
+      )}
+
+      {/* ================= 12. MOBILE PERSISTENT STICKY CTA BAR (above tab bar) ================= */}
+      <div
+        className={`fixed bottom-[calc(4.25rem+env(safe-area-inset-bottom,0px))] left-0 right-0 z-30 md:hidden px-3.5 py-2 transition-all duration-300 pointer-events-auto ${
+          showStickyBar ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0 pointer-events-none'
+        }`}
+      >
+        <div className="flex items-center justify-between gap-3 px-3.5 py-2 rounded-2xl bg-slate-950/95 text-white backdrop-blur-md shadow-xl border border-slate-800/90">
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+            <span className="text-xs font-bold truncate">
+              {isTamil ? 'உங்கள் வருமானத்தைத் திட்டமிடுங்கள்' : 'Plan Your Wealth & Returns'}
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={() => onNavigate('#/calculator')}
+            className="px-3 py-1 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black shrink-0 tap-feedback active:scale-95 transition-transform flex items-center gap-1 shadow-md shadow-emerald-600/30"
+          >
+            <span>{isTamil ? 'SIP கால்குலேட்டர்' : 'Try SIP Calculator'}</span>
+            <span>→</span>
+          </button>
+        </div>
+      </div>
+
+      {/* ================= 13. MOBILE BOTTOM SHEET: SHARE MODAL ================= */}
+      {showShareSheet && (
+        <div className="fixed inset-0 z-50 md:hidden flex flex-col justify-end">
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-black/60 backdrop-blur-xs transition-opacity"
+            onClick={() => setShowShareSheet(false)}
+          />
+
+          {/* Bottom Sheet Modal Container with Drag Handle */}
+          <div
+            onTouchStart={(e) => setSheetTouchStartY(e.touches[0].clientY)}
+            onTouchMove={(e) => {
+              const diffY = e.touches[0].clientY - sheetTouchStartY;
+              if (diffY > 40) {
+                setShowShareSheet(false);
+              }
+            }}
+            className="relative z-10 w-full bg-white dark:bg-slate-900 rounded-t-3xl border-t border-slate-200 dark:border-slate-800 p-5 pb-[calc(1.25rem+env(safe-area-inset-bottom,0px))] shadow-2xl animate-bottom-sheet space-y-4"
+          >
+            {/* Drag Handle Indicator */}
+            <div className="w-12 h-1.5 bg-slate-300 dark:bg-slate-700 rounded-full mx-auto" />
+
+            <div className="text-center space-y-1">
+              <h3 className="text-sm font-extrabold text-slate-900 dark:text-white">
+                {isTamil ? 'கட்டுரையைப் பகிரவும்' : 'Share this Article'}
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 truncate max-w-xs mx-auto">
+                {title}
+              </p>
+            </div>
+
+            {/* Quick Share Action Grid */}
+            <div className="grid grid-cols-3 gap-3 pt-1">
+              {/* WhatsApp */}
+              <button
+                type="button"
+                onClick={() => {
+                  setShowShareSheet(false);
+                  window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(`${title} - ${window.location.href}`)}`, '_blank');
+                }}
+                className="flex flex-col items-center gap-2 p-3 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 tap-feedback active:scale-95"
+              >
+                <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold text-lg shadow-sm">
+                  W
+                </div>
+                <span className="text-xs font-bold text-slate-700 dark:text-slate-200">WhatsApp</span>
+              </button>
+
+              {/* Twitter / X */}
+              <button
+                type="button"
+                onClick={() => {
+                  setShowShareSheet(false);
+                  window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(window.location.href)}`, '_blank');
+                }}
+                className="flex flex-col items-center gap-2 p-3 rounded-2xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/60 tap-feedback active:scale-95"
+              >
+                <div className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center font-bold text-base shadow-sm">
+                  𝕏
+                </div>
+                <span className="text-xs font-bold text-slate-700 dark:text-slate-200">Twitter / X</span>
+              </button>
+
+              {/* Copy Link */}
+              <button
+                type="button"
+                onClick={async () => {
+                  setShowShareSheet(false);
+                  try {
+                    await navigator.clipboard.writeText(window.location.href);
+                    if (onShowToast) onShowToast(isTamil ? 'லிங்க் நகலெடுக்கப்பட்டது! ✓' : 'Link copied to clipboard! ✓');
+                  } catch {
+                    if (onShowToast) onShowToast(isTamil ? 'பகிர்வு தயார்!' : 'Share link ready!');
+                  }
+                }}
+                className="flex flex-col items-center gap-2 p-3 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 tap-feedback active:scale-95"
+              >
+                <div className="w-10 h-10 rounded-full bg-slate-700 text-white flex items-center justify-center text-lg shadow-sm">
+                  🔗
+                </div>
+                <span className="text-xs font-bold text-slate-700 dark:text-slate-200">
+                  {isTamil ? 'நகல் செய்' : 'Copy Link'}
+                </span>
+              </button>
+            </div>
+
+            {/* Cancel Dismiss Button */}
+            <button
+              type="button"
+              onClick={() => setShowShareSheet(false)}
+              className="w-full py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 tap-feedback active:scale-98 transition-colors"
+            >
+              {isTamil ? 'ரத்து செய்க' : 'Cancel'}
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );

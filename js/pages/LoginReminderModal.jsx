@@ -62,15 +62,33 @@ function LoginReminderModal({ currentHash, onNavigate }) {
     onNavigate('#/login');
   };
 
+  const [touchStartY, setTouchStartY] = useState(0);
+
+  const handleTouchStart = (e) => {
+    setTouchStartY(e.touches[0].clientY);
+  };
+
+  const handleTouchMove = (e) => {
+    const currentY = e.touches[0].clientY;
+    if (currentY - touchStartY > 45) {
+      handleDismiss();
+    }
+  };
+
   if (!isOpen || user) return null;
 
   const isTa = language === 'ta';
 
   return (
     <div
-      className="notification-banner-right w-[calc(100vw-2rem)] sm:w-auto max-w-[340px] bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200/90 dark:border-slate-800/90 rounded-2xl p-2.5 sm:p-3 shadow-2xl shadow-slate-900/15 dark:shadow-black/60 text-slate-900 dark:text-slate-100 overflow-hidden"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      className="notification-banner-right w-[calc(100vw-2rem)] sm:w-auto max-w-[340px] bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200/90 dark:border-slate-800/90 rounded-2xl p-2.5 sm:p-3 shadow-2xl shadow-slate-900/15 dark:shadow-black/60 text-slate-900 dark:text-slate-100 overflow-hidden animate-bottom-sheet sm:animate-none"
       role="alert"
     >
+      {/* Mobile drag handle pill for bottom sheet */}
+      <div className="w-10 h-1 bg-slate-300 dark:bg-slate-700 rounded-full mx-auto mb-2 md:hidden" />
+
       <div className="flex items-center gap-2.5">
         {/* Minimal Icon */}
         <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-brandBlue-500 to-blue-700 flex items-center justify-center text-white shrink-0 shadow-md shadow-brandBlue-500/25">
@@ -98,7 +116,7 @@ function LoginReminderModal({ currentHash, onNavigate }) {
         <div className="flex items-center gap-1 shrink-0">
           <button
             onClick={handleGoToLogin}
-            className="py-1 px-2.5 rounded-lg bg-brandBlue-500 hover:bg-brandBlue-600 active:scale-95 text-white font-bold text-xs shadow-sm transition-all"
+            className="py-1 px-2.5 rounded-lg bg-brandBlue-500 hover:bg-brandBlue-600 active:scale-95 tap-feedback text-white font-bold text-xs shadow-sm transition-all"
           >
             {isTa ? 'உள்நுழைக' : 'Sign In'}
           </button>

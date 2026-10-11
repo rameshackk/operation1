@@ -231,7 +231,7 @@ function Navbar({ currentPath, onNavigate }) {
               e.preventDefault();
               onNavigate('/');
             }}
-            className={`flex flex-col items-center justify-center min-w-0 py-1 min-h-[44px] rounded-lg transition-all active:scale-95 cursor-pointer ${
+            className={`flex flex-col items-center justify-center min-w-0 py-1 min-h-[44px] rounded-lg transition-all active:scale-90 tap-feedback cursor-pointer ${
               cleanCurrent === '/' || cleanCurrent === '' || cleanCurrent === '/home'
                 ? 'text-[#2563EB] dark:text-[#60a5fa] font-black'
                 : 'text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white'
@@ -251,34 +251,42 @@ function Navbar({ currentPath, onNavigate }) {
               e.preventDefault();
               onNavigate('/articles');
             }}
-            className={`flex flex-col items-center justify-center min-w-0 py-1 min-h-[44px] rounded-lg transition-all active:scale-95 cursor-pointer ${
+            className={`flex flex-col items-center justify-center min-w-0 py-1 min-h-[44px] rounded-lg transition-all active:scale-90 tap-feedback cursor-pointer ${
               cleanCurrent === '/articles' || cleanCurrent.startsWith('/articles/')
                 ? 'text-[#2563EB] dark:text-[#60a5fa] font-black'
                 : 'text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white'
             }`}
             aria-label="Articles"
           >
-            <svg className="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+            <div className="relative inline-flex items-center justify-center">
+              <svg className="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+              {/* Badge indicator for newly published articles */}
+              <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 animate-pulse ring-2 ring-white dark:ring-slate-950" />
+            </div>
             <span className="text-[11px] leading-none tracking-tight truncate max-w-full px-0.5">
               {language === 'ta' ? 'கட்டுரை' : 'Articles'}
             </span>
           </a>
 
-          {/* Tab 3: Videos */}
+          {/* Tab 3: Videos (with Live Content Notification Badge) */}
           <a
             href="/videos"
             onClick={(e) => {
               e.preventDefault();
               onNavigate('/videos');
             }}
-            className={`flex flex-col items-center justify-center min-w-0 py-1 min-h-[44px] rounded-lg transition-all active:scale-95 cursor-pointer ${
+            className={`flex flex-col items-center justify-center min-w-0 py-1 min-h-[44px] rounded-lg transition-all active:scale-90 tap-feedback cursor-pointer ${
               cleanCurrent === '/videos' || cleanCurrent.startsWith('/videos/')
                 ? 'text-[#2563EB] dark:text-[#60a5fa] font-black'
                 : 'text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white'
             }`}
             aria-label="Videos"
           >
-            <svg className="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <div className="relative inline-flex items-center justify-center">
+              <svg className="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              {/* Badge indicator for new video content */}
+              <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-red-500 animate-pulse ring-2 ring-white dark:ring-slate-950" />
+            </div>
             <span className="text-[11px] leading-none tracking-tight truncate max-w-full px-0.5">
               {language === 'ta' ? 'வீடியோ' : 'Videos'}
             </span>
@@ -291,7 +299,7 @@ function Navbar({ currentPath, onNavigate }) {
               e.preventDefault();
               onNavigate('/calculator');
             }}
-            className={`flex flex-col items-center justify-center min-w-0 py-1 min-h-[44px] rounded-lg transition-all active:scale-95 cursor-pointer ${
+            className={`flex flex-col items-center justify-center min-w-0 py-1 min-h-[44px] rounded-lg transition-all active:scale-90 tap-feedback cursor-pointer ${
               cleanCurrent === '/calculator'
                 ? 'text-[#2563EB] dark:text-[#60a5fa] font-black'
                 : 'text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white'
@@ -307,7 +315,7 @@ function Navbar({ currentPath, onNavigate }) {
           {/* Tab 5: Menu Drawer Trigger */}
           <button
             onClick={() => setMobileOpen(true)}
-            className={`flex flex-col items-center justify-center min-w-0 py-1 min-h-[44px] rounded-lg transition-all active:scale-95 cursor-pointer ${
+            className={`flex flex-col items-center justify-center min-w-0 py-1 min-h-[44px] rounded-lg transition-all active:scale-90 tap-feedback cursor-pointer ${
               mobileOpen
                 ? 'text-[#2563EB] dark:text-[#60a5fa] font-black'
                 : 'text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white'

@@ -35,11 +35,11 @@ function YouTubeVideoCard({ video, onSelect, isTamil = false }) {
       tabIndex={0}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
-      className="group cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-xl transition-all duration-200 flex flex-col"
+      className="group cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-xl transition-all duration-200 flex flex-col tap-feedback-card active:scale-[0.98]"
       aria-label={title}
     >
       {/* 1. 16:9 Thumbnail Container */}
-      <div className="relative aspect-video w-full rounded-xl overflow-hidden bg-slate-900 shrink-0">
+      <div className="relative aspect-video w-full rounded-xl overflow-hidden bg-slate-900 shrink-0 skeleton-shimmer">
         <img
           src={thumbnailUrl}
           alt={title}

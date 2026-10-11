@@ -354,7 +354,7 @@ __export(SipCalculator_exports, {
   SipCalculator: () => SipCalculator,
   default: () => SipCalculator
 });
-import React16, { useState as useState11, useEffect as useEffect8, useMemo as useMemo3 } from "react";
+import React16, { useState as useState11, useEffect as useEffect9, useMemo as useMemo3 } from "react";
 function formatINR(val, isLakhCr = false) {
   if (val === null || val === void 0 || isNaN(val)) return "\u20B90";
   const num = Math.round(val);
@@ -395,7 +395,7 @@ function SipCalculator({ initialTab, isEmbedded = false }) {
     } catch (e) {
     }
   };
-  useEffect8(() => {
+  useEffect9(() => {
     if (initialTab && ["quick", "stepup", "quiz"].includes(initialTab)) {
       setActiveTab(initialTab);
     }
@@ -1834,7 +1834,7 @@ var useAuth = () => useContext3(AuthContext);
 
 // js/components/common/Header.jsx
 init_LanguageContext();
-import React7, { useState as useState5 } from "react";
+import React7, { useState as useState5, useEffect as useEffect5 } from "react";
 
 // js/components/common/LanguageSwitcher.jsx
 init_LanguageContext();
@@ -1988,6 +1988,25 @@ function Header({ onOpenSearch, onNavigate }) {
   const { t, language } = useLanguage();
   const { user, profile, signOut } = useAuth();
   const [isLoggingOut, setIsLoggingOut] = useState5(false);
+  const [mobileScrolled, setMobileScrolled] = useState5(false);
+  useEffect5(() => {
+    let lastScrollY = window.scrollY;
+    const handleMobileScroll = () => {
+      if (window.innerWidth >= 768) {
+        if (mobileScrolled) setMobileScrolled(false);
+        return;
+      }
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > 45 && currentScrollY > lastScrollY) {
+        setMobileScrolled(true);
+      } else if (currentScrollY < lastScrollY || currentScrollY <= 20) {
+        setMobileScrolled(false);
+      }
+      lastScrollY = currentScrollY;
+    };
+    window.addEventListener("scroll", handleMobileScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleMobileScroll);
+  }, [mobileScrolled]);
   const displayName = profile?.display_name || user?.user_metadata?.full_name || user?.email?.split("@")[0] || "User";
   const handleLogout = async () => {
     if (isLoggingOut) return;
@@ -2044,16 +2063,16 @@ function Header({ onOpenSearch, onNavigate }) {
       className: "inline-flex items-center gap-1 px-4 py-1.5 rounded-full bg-[#2563EB] hover:bg-blue-700 text-white font-bold text-xs shadow-xs shadow-blue-600/20 transition-all shrink-0 active:scale-95 cursor-pointer min-h-[44px]"
     },
     /* @__PURE__ */ React7.createElement("span", null, language === "ta" ? "\u0B89\u0BB3\u0BCD\u0BA8\u0BC1\u0BB4\u0BC8\u0B95" : "Sign In")
-  ))), /* @__PURE__ */ React7.createElement("div", { className: "flex md:hidden w-full items-center justify-between px-3 min-h-[48px] gap-2" }, /* @__PURE__ */ React7.createElement("a", { href: "#/", className: "flex items-center gap-2 min-w-0 shrink truncate group py-1" }, /* @__PURE__ */ React7.createElement("picture", { className: "shrink-0" }, /* @__PURE__ */ React7.createElement("source", { srcSet: "/assets/logo-96.webp 2x, /assets/logo-48.webp 1x", type: "image/webp" }), /* @__PURE__ */ React7.createElement(
+  ))), /* @__PURE__ */ React7.createElement("div", { className: `flex md:hidden w-full items-center justify-between px-3 gap-2 transition-all duration-300 ${mobileScrolled ? "min-h-[40px] py-0.5" : "min-h-[48px] py-1"}` }, /* @__PURE__ */ React7.createElement("a", { href: "#/", className: "flex items-center gap-2 min-w-0 shrink truncate group py-0.5 tap-feedback" }, /* @__PURE__ */ React7.createElement("picture", { className: "shrink-0" }, /* @__PURE__ */ React7.createElement("source", { srcSet: "/assets/logo-96.webp 2x, /assets/logo-48.webp 1x", type: "image/webp" }), /* @__PURE__ */ React7.createElement(
     "img",
     {
       src: "/assets/logo-48.webp",
       alt: "Muthaleetu Thisai",
       width: "36",
       height: "36",
-      className: "w-9 h-9 object-contain drop-shadow-sm shrink-0"
+      className: `${mobileScrolled ? "w-7 h-7" : "w-9 h-9"} object-contain drop-shadow-sm shrink-0 transition-all duration-300`
     }
-  )), /* @__PURE__ */ React7.createElement("div", { className: "min-w-0 truncate" }, /* @__PURE__ */ React7.createElement("h1", { className: "text-sm font-extrabold tracking-tight whitespace-nowrap leading-none font-sans" }, language === "ta" ? /* @__PURE__ */ React7.createElement(React7.Fragment, null, /* @__PURE__ */ React7.createElement("span", { className: "text-[#03529A] dark:text-[#38bdf8]" }, "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 "), /* @__PURE__ */ React7.createElement("span", { className: "text-[#4A9E2C] dark:text-[#4ade80]" }, "\u0BA4\u0BBF\u0B9A\u0BC8")) : /* @__PURE__ */ React7.createElement(React7.Fragment, null, /* @__PURE__ */ React7.createElement("span", { className: "text-[#03529A] dark:text-[#38bdf8]" }, "Muthaleetu "), /* @__PURE__ */ React7.createElement("span", { className: "text-[#4A9E2C] dark:text-[#4ade80]" }, "Thisai"))))), /* @__PURE__ */ React7.createElement("div", { className: "flex items-center gap-2 shrink-0" }, /* @__PURE__ */ React7.createElement(
+  )), /* @__PURE__ */ React7.createElement("div", { className: "min-w-0 truncate" }, /* @__PURE__ */ React7.createElement("h1", { className: `${mobileScrolled ? "text-xs" : "text-sm"} font-extrabold tracking-tight whitespace-nowrap leading-none font-sans transition-all duration-300` }, language === "ta" ? /* @__PURE__ */ React7.createElement(React7.Fragment, null, /* @__PURE__ */ React7.createElement("span", { className: "text-[#03529A] dark:text-[#38bdf8]" }, "\u0BAE\u0BC1\u0BA4\u0BB2\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1 "), /* @__PURE__ */ React7.createElement("span", { className: "text-[#4A9E2C] dark:text-[#4ade80]" }, "\u0BA4\u0BBF\u0B9A\u0BC8")) : /* @__PURE__ */ React7.createElement(React7.Fragment, null, /* @__PURE__ */ React7.createElement("span", { className: "text-[#03529A] dark:text-[#38bdf8]" }, "Muthaleetu "), /* @__PURE__ */ React7.createElement("span", { className: "text-[#4A9E2C] dark:text-[#4ade80]" }, "Thisai"))))), /* @__PURE__ */ React7.createElement("div", { className: "flex items-center gap-2 shrink-0" }, /* @__PURE__ */ React7.createElement(
     "button",
     {
       onClick: onOpenSearch,
@@ -2222,7 +2241,7 @@ function Navbar({ currentPath, onNavigate }) {
         e.preventDefault();
         onNavigate("/");
       },
-      className: `flex flex-col items-center justify-center min-w-0 py-1 min-h-[44px] rounded-lg transition-all active:scale-95 cursor-pointer ${cleanCurrent === "/" || cleanCurrent === "" || cleanCurrent === "/home" ? "text-[#2563EB] dark:text-[#60a5fa] font-black" : "text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white"}`,
+      className: `flex flex-col items-center justify-center min-w-0 py-1 min-h-[44px] rounded-lg transition-all active:scale-90 tap-feedback cursor-pointer ${cleanCurrent === "/" || cleanCurrent === "" || cleanCurrent === "/home" ? "text-[#2563EB] dark:text-[#60a5fa] font-black" : "text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white"}`,
       "aria-label": "Home"
     },
     /* @__PURE__ */ React8.createElement("svg", { className: "w-5 h-5 mb-0.5", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24" }, /* @__PURE__ */ React8.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2", d: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" })),
@@ -2235,10 +2254,10 @@ function Navbar({ currentPath, onNavigate }) {
         e.preventDefault();
         onNavigate("/articles");
       },
-      className: `flex flex-col items-center justify-center min-w-0 py-1 min-h-[44px] rounded-lg transition-all active:scale-95 cursor-pointer ${cleanCurrent === "/articles" || cleanCurrent.startsWith("/articles/") ? "text-[#2563EB] dark:text-[#60a5fa] font-black" : "text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white"}`,
+      className: `flex flex-col items-center justify-center min-w-0 py-1 min-h-[44px] rounded-lg transition-all active:scale-90 tap-feedback cursor-pointer ${cleanCurrent === "/articles" || cleanCurrent.startsWith("/articles/") ? "text-[#2563EB] dark:text-[#60a5fa] font-black" : "text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white"}`,
       "aria-label": "Articles"
     },
-    /* @__PURE__ */ React8.createElement("svg", { className: "w-5 h-5 mb-0.5", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24" }, /* @__PURE__ */ React8.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2", d: "M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" })),
+    /* @__PURE__ */ React8.createElement("div", { className: "relative inline-flex items-center justify-center" }, /* @__PURE__ */ React8.createElement("svg", { className: "w-5 h-5 mb-0.5", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24" }, /* @__PURE__ */ React8.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2", d: "M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" })), /* @__PURE__ */ React8.createElement("span", { className: "absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 animate-pulse ring-2 ring-white dark:ring-slate-950" })),
     /* @__PURE__ */ React8.createElement("span", { className: "text-[11px] leading-none tracking-tight truncate max-w-full px-0.5" }, language === "ta" ? "\u0B95\u0B9F\u0BCD\u0B9F\u0BC1\u0BB0\u0BC8" : "Articles")
   ), /* @__PURE__ */ React8.createElement(
     "a",
@@ -2248,10 +2267,10 @@ function Navbar({ currentPath, onNavigate }) {
         e.preventDefault();
         onNavigate("/videos");
       },
-      className: `flex flex-col items-center justify-center min-w-0 py-1 min-h-[44px] rounded-lg transition-all active:scale-95 cursor-pointer ${cleanCurrent === "/videos" || cleanCurrent.startsWith("/videos/") ? "text-[#2563EB] dark:text-[#60a5fa] font-black" : "text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white"}`,
+      className: `flex flex-col items-center justify-center min-w-0 py-1 min-h-[44px] rounded-lg transition-all active:scale-90 tap-feedback cursor-pointer ${cleanCurrent === "/videos" || cleanCurrent.startsWith("/videos/") ? "text-[#2563EB] dark:text-[#60a5fa] font-black" : "text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white"}`,
       "aria-label": "Videos"
     },
-    /* @__PURE__ */ React8.createElement("svg", { className: "w-5 h-5 mb-0.5", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24" }, /* @__PURE__ */ React8.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2", d: "M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" }), /* @__PURE__ */ React8.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2", d: "M21 12a9 9 0 11-18 0 9 9 0 0118 0z" })),
+    /* @__PURE__ */ React8.createElement("div", { className: "relative inline-flex items-center justify-center" }, /* @__PURE__ */ React8.createElement("svg", { className: "w-5 h-5 mb-0.5", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24" }, /* @__PURE__ */ React8.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2", d: "M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" }), /* @__PURE__ */ React8.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2", d: "M21 12a9 9 0 11-18 0 9 9 0 0118 0z" })), /* @__PURE__ */ React8.createElement("span", { className: "absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-red-500 animate-pulse ring-2 ring-white dark:ring-slate-950" })),
     /* @__PURE__ */ React8.createElement("span", { className: "text-[11px] leading-none tracking-tight truncate max-w-full px-0.5" }, language === "ta" ? "\u0BB5\u0BC0\u0B9F\u0BBF\u0BAF\u0BCB" : "Videos")
   ), /* @__PURE__ */ React8.createElement(
     "a",
@@ -2261,7 +2280,7 @@ function Navbar({ currentPath, onNavigate }) {
         e.preventDefault();
         onNavigate("/calculator");
       },
-      className: `flex flex-col items-center justify-center min-w-0 py-1 min-h-[44px] rounded-lg transition-all active:scale-95 cursor-pointer ${cleanCurrent === "/calculator" ? "text-[#2563EB] dark:text-[#60a5fa] font-black" : "text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white"}`,
+      className: `flex flex-col items-center justify-center min-w-0 py-1 min-h-[44px] rounded-lg transition-all active:scale-90 tap-feedback cursor-pointer ${cleanCurrent === "/calculator" ? "text-[#2563EB] dark:text-[#60a5fa] font-black" : "text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white"}`,
       "aria-label": "Calculator"
     },
     /* @__PURE__ */ React8.createElement("svg", { className: "w-5 h-5 mb-0.5", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24" }, /* @__PURE__ */ React8.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2", d: "M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" })),
@@ -2270,7 +2289,7 @@ function Navbar({ currentPath, onNavigate }) {
     "button",
     {
       onClick: () => setMobileOpen(true),
-      className: `flex flex-col items-center justify-center min-w-0 py-1 min-h-[44px] rounded-lg transition-all active:scale-95 cursor-pointer ${mobileOpen ? "text-[#2563EB] dark:text-[#60a5fa] font-black" : "text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white"}`,
+      className: `flex flex-col items-center justify-center min-w-0 py-1 min-h-[44px] rounded-lg transition-all active:scale-90 tap-feedback cursor-pointer ${mobileOpen ? "text-[#2563EB] dark:text-[#60a5fa] font-black" : "text-slate-600 dark:text-slate-400 font-bold hover:text-slate-900 dark:hover:text-white"}`,
       "aria-label": "Open full menu"
     },
     /* @__PURE__ */ React8.createElement("svg", { className: "w-5 h-5 mb-0.5", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24" }, /* @__PURE__ */ React8.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2.5", d: "M4 6h16M4 12h16M4 18h16" })),
@@ -2493,7 +2512,7 @@ import React11, { useMemo } from "react";
 
 // js/services/articles.js
 init_translations();
-import { useState as useState9, useEffect as useEffect5 } from "react";
+import { useState as useState9, useEffect as useEffect6 } from "react";
 var liveArticlesCache = null;
 var liveArticlesPromise = null;
 function cleanImageUrl(url, category = "mutual-fund", fallbackUrl = null) {
@@ -2668,7 +2687,7 @@ function useLiveArticles() {
     return [];
   });
   const [isLoading, setIsLoading] = useState9(liveArticles.length === 0);
-  useEffect5(() => {
+  useEffect6(() => {
     let isMounted = true;
     const load = async (force = false) => {
       const list = await fetchCardArticles(24, "newest", force);
@@ -2933,7 +2952,7 @@ function TrendingArticlesSection({ onNavigate }) {
 var TrendingArticlesSection_default = TrendingArticlesSection;
 
 // js/components/home/HomeLatestVideos.jsx
-import React15, { useState as useState10, useEffect as useEffect7 } from "react";
+import React15, { useState as useState10, useEffect as useEffect8 } from "react";
 
 // js/components/youtube/YouTubeVideoCard.jsx
 import React13 from "react";
@@ -3023,10 +3042,10 @@ function YouTubeVideoCard({ video, onSelect, isTamil = false }) {
       tabIndex: 0,
       onClick: handleClick,
       onKeyDown: handleKeyDown,
-      className: "group cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-xl transition-all duration-200 flex flex-col",
+      className: "group cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-xl transition-all duration-200 flex flex-col tap-feedback-card active:scale-[0.98]",
       "aria-label": title
     },
-    /* @__PURE__ */ React13.createElement("div", { className: "relative aspect-video w-full rounded-xl overflow-hidden bg-slate-900 shrink-0" }, /* @__PURE__ */ React13.createElement(
+    /* @__PURE__ */ React13.createElement("div", { className: "relative aspect-video w-full rounded-xl overflow-hidden bg-slate-900 shrink-0 skeleton-shimmer" }, /* @__PURE__ */ React13.createElement(
       "img",
       {
         src: thumbnailUrl,
@@ -3055,7 +3074,7 @@ function YouTubeVideoCard({ video, onSelect, isTamil = false }) {
 var YouTubeVideoCard_default = YouTubeVideoCard;
 
 // js/components/youtube/YouTubePlayerModal.jsx
-import React14, { useEffect as useEffect6 } from "react";
+import React14, { useEffect as useEffect7 } from "react";
 function YouTubePlayerModal({ video, allVideos = [], onClose, onSelectRelated, isTamil = false, onShowToast }) {
   if (!video) return null;
   const videoId = video.video_id || video.youtubeId || video.id;
@@ -3065,7 +3084,7 @@ function YouTubePlayerModal({ video, allVideos = [], onClose, onSelectRelated, i
   const summary = (isTamil ? video.ai_summary_ta || video.summaryTamil : video.ai_summary_en || video.summaryEnglish) || video.description || video.descriptionTamil || video.descriptionEnglish || "";
   const compactViews = formatCompactViews(views, isTamil);
   const timeAgo = formatRelativeTime(publishedAt, isTamil);
-  useEffect6(() => {
+  useEffect7(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Escape") {
         if (onClose) onClose();
@@ -3212,7 +3231,7 @@ function HomeLatestVideos({ initialVideos = [], language = "ta", onShowToast }) 
   const [videos, setVideos] = useState10(initialVideos);
   const [selectedVideo, setSelectedVideo] = useState10(null);
   const [isLoading, setIsLoading] = useState10(initialVideos.length === 0);
-  useEffect7(() => {
+  useEffect8(() => {
     let isMounted = true;
     if (initialVideos && initialVideos.length >= 3) {
       setVideos(initialVideos.slice(0, 6));
@@ -3286,13 +3305,84 @@ function LazyMount({ children, fallback }) {
 }
 function Home({ onNavigate, onShowToast }) {
   const { language } = useLanguage();
-  return /* @__PURE__ */ React17.createElement("div", { className: "w-full animate-fadeIn flex flex-col" }, /* @__PURE__ */ React17.createElement("section", { className: "w-full bg-[#FFFFFF] dark:bg-slate-900/60 py-8 sm:py-12 border-b border-slate-100 dark:border-slate-800" }, /* @__PURE__ */ React17.createElement(HeroSection_default, { onNavigate })), /* @__PURE__ */ React17.createElement(
-    HomeLatestVideos_default,
-    {
-      onShowToast,
-      language
+  const [refreshKey, setRefreshKey] = React17.useState(0);
+  const [pullY, setPullY] = React17.useState(0);
+  const [isRefreshing, setIsRefreshing] = React17.useState(false);
+  const [refreshSuccess, setRefreshSuccess] = React17.useState(false);
+  const touchStartY = React17.useRef(0);
+  const isPullingRef = React17.useRef(false);
+  const isTamil = language === "ta";
+  const handleTouchStart = (e) => {
+    if (window.innerWidth >= 768) return;
+    if (window.scrollY <= 5 && !isRefreshing) {
+      touchStartY.current = e.touches[0].clientY;
+      isPullingRef.current = true;
     }
-  ), /* @__PURE__ */ React17.createElement("section", { className: "w-full bg-[#FFFFFF] dark:bg-slate-900/60 py-10 sm:py-14 border-b border-slate-100 dark:border-slate-800" }, /* @__PURE__ */ React17.createElement(TrendingArticlesSection_default, { onNavigate })), /* @__PURE__ */ React17.createElement("section", { className: "w-full bg-gradient-to-b from-slate-50/80 via-white to-slate-50/90 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 py-10 sm:py-14 pb-16 sm:pb-20" }, /* @__PURE__ */ React17.createElement(LazyMount, { fallback: /* @__PURE__ */ React17.createElement("div", { className: "w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 py-8 text-center text-sm font-medium text-emerald-200 min-h-[120px]" }, "\u0BA8\u0BBF\u0BA4\u0BBF \u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BB0\u0BC1\u0BB5\u0BBF \u0B8F\u0BB1\u0BCD\u0BB1\u0BAA\u0BCD\u0BAA\u0B9F\u0BC1\u0B95\u0BBF\u0BB1\u0BA4\u0BC1...") }, /* @__PURE__ */ React17.createElement(Suspense, { fallback: /* @__PURE__ */ React17.createElement("div", { className: "w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 py-8 text-center text-sm font-medium text-emerald-200 min-h-[120px]" }, "\u0BA8\u0BBF\u0BA4\u0BBF \u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BB0\u0BC1\u0BB5\u0BBF \u0B8F\u0BB1\u0BCD\u0BB1\u0BAA\u0BCD\u0BAA\u0B9F\u0BC1\u0B95\u0BBF\u0BB1\u0BA4\u0BC1...") }, /* @__PURE__ */ React17.createElement(SipCalculator2, null)))));
+  };
+  const handleTouchMove = (e) => {
+    if (!isPullingRef.current || isRefreshing || window.innerWidth >= 768) return;
+    const currentY = e.touches[0].clientY;
+    const diff = currentY - touchStartY.current;
+    if (diff > 0 && window.scrollY <= 5) {
+      const distance = Math.min(diff * 0.45, 80);
+      setPullY(distance);
+    } else {
+      setPullY(0);
+    }
+  };
+  const handleTouchEnd = () => {
+    if (!isPullingRef.current || isRefreshing) return;
+    isPullingRef.current = false;
+    if (pullY >= 50) {
+      setIsRefreshing(true);
+      setPullY(58);
+      setTimeout(() => {
+        setRefreshKey((prev) => prev + 1);
+        setIsRefreshing(false);
+        setRefreshSuccess(true);
+        if (onShowToast) {
+          onShowToast(isTamil ? "\u0B9A\u0BC6\u0BAF\u0BCD\u0BA4\u0BBF\u0B95\u0BB3\u0BCD \u0BAA\u0BC1\u0BA4\u0BC1\u0BAA\u0BCD\u0BAA\u0BBF\u0B95\u0BCD\u0B95\u0BAA\u0BCD\u0BAA\u0B9F\u0BCD\u0B9F\u0BA9 \u2713" : "Feed updated successfully \u2713");
+        }
+        setTimeout(() => {
+          setRefreshSuccess(false);
+          setPullY(0);
+        }, 600);
+      }, 900);
+    } else {
+      setPullY(0);
+    }
+  };
+  return /* @__PURE__ */ React17.createElement(
+    "div",
+    {
+      className: "w-full animate-fadeIn flex flex-col relative",
+      onTouchStart: handleTouchStart,
+      onTouchMove: handleTouchMove,
+      onTouchEnd: handleTouchEnd
+    },
+    /* @__PURE__ */ React17.createElement(
+      "div",
+      {
+        className: "md:hidden overflow-hidden transition-all duration-200 flex items-center justify-center pointer-events-none",
+        style: {
+          height: `${pullY}px`,
+          opacity: pullY > 10 ? 1 : 0
+        }
+      },
+      /* @__PURE__ */ React17.createElement("div", { className: "flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white dark:bg-slate-900 shadow-md border border-slate-200 dark:border-slate-800 text-xs font-bold text-slate-700 dark:text-slate-200" }, isRefreshing ? /* @__PURE__ */ React17.createElement(React17.Fragment, null, /* @__PURE__ */ React17.createElement("div", { className: "w-4 h-4 rounded-full border-2 border-emerald-500 border-t-transparent animate-spin" }), /* @__PURE__ */ React17.createElement("span", { className: "text-emerald-600 dark:text-emerald-400 font-sans" }, isTamil ? "\u0B9A\u0BC6\u0BAF\u0BCD\u0BA4\u0BBF\u0B95\u0BB3\u0BCD \u0BAA\u0BC1\u0BA4\u0BC1\u0BAA\u0BCD\u0BAA\u0BBF\u0B95\u0BCD\u0B95\u0BAA\u0BCD\u0BAA\u0B9F\u0BC1\u0B95\u0BBF\u0BB1\u0BA4\u0BC1..." : "Refreshing news feed...")) : refreshSuccess ? /* @__PURE__ */ React17.createElement(React17.Fragment, null, /* @__PURE__ */ React17.createElement("span", { className: "text-emerald-600 dark:text-emerald-400 font-bold" }, "\u2713"), /* @__PURE__ */ React17.createElement("span", { className: "text-emerald-600 dark:text-emerald-400 font-sans" }, isTamil ? "\u0BAA\u0BC1\u0BA4\u0BC1\u0BAA\u0BCD\u0BAA\u0BBF\u0B95\u0BCD\u0B95\u0BAA\u0BCD\u0BAA\u0B9F\u0BCD\u0B9F\u0BA4\u0BC1!" : "Feed Updated!")) : pullY >= 50 ? /* @__PURE__ */ React17.createElement(React17.Fragment, null, /* @__PURE__ */ React17.createElement("svg", { className: "w-4 h-4 text-emerald-600 dark:text-emerald-400 animate-bounce", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor" }, /* @__PURE__ */ React17.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2.5, d: "M19 14l-7 7m0 0l-7-7m7 7V3" })), /* @__PURE__ */ React17.createElement("span", null, isTamil ? "\u0BAA\u0BC1\u0BA4\u0BC1\u0BAA\u0BCD\u0BAA\u0BBF\u0B95\u0BCD\u0B95 \u0BB5\u0BBF\u0B9F\u0BC1\u0BB5\u0BBF\u0B95\u0BCD\u0B95\u0BB5\u0BC1\u0BAE\u0BCD" : "Release to refresh")) : /* @__PURE__ */ React17.createElement(React17.Fragment, null, /* @__PURE__ */ React17.createElement("svg", { className: "w-4 h-4 text-slate-400", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor" }, /* @__PURE__ */ React17.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M19 9l-7 7-7-7" })), /* @__PURE__ */ React17.createElement("span", null, isTamil ? "\u0B95\u0BC0\u0BB4\u0BC7 \u0B87\u0BB4\u0BC1\u0B95\u0BCD\u0B95\u0BB5\u0BC1\u0BAE\u0BCD" : "Pull down to refresh")))
+    ),
+    /* @__PURE__ */ React17.createElement("section", { className: "w-full bg-[#FFFFFF] dark:bg-slate-900/60 py-8 sm:py-12 border-b border-slate-100 dark:border-slate-800" }, /* @__PURE__ */ React17.createElement(HeroSection_default, { key: `hero-${refreshKey}`, onNavigate })),
+    /* @__PURE__ */ React17.createElement(
+      HomeLatestVideos_default,
+      {
+        key: `videos-${refreshKey}`,
+        onShowToast,
+        language
+      }
+    ),
+    /* @__PURE__ */ React17.createElement("section", { className: "w-full bg-[#FFFFFF] dark:bg-slate-900/60 py-10 sm:py-14 border-b border-slate-100 dark:border-slate-800" }, /* @__PURE__ */ React17.createElement(TrendingArticlesSection_default, { key: `trending-${refreshKey}`, onNavigate })),
+    /* @__PURE__ */ React17.createElement("section", { className: "w-full bg-gradient-to-b from-slate-50/80 via-white to-slate-50/90 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 py-10 sm:py-14 pb-16 sm:pb-20" }, /* @__PURE__ */ React17.createElement(LazyMount, { fallback: /* @__PURE__ */ React17.createElement("div", { className: "w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 py-8 text-center text-sm font-medium text-emerald-200 min-h-[120px]" }, "\u0BA8\u0BBF\u0BA4\u0BBF \u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BB0\u0BC1\u0BB5\u0BBF \u0B8F\u0BB1\u0BCD\u0BB1\u0BAA\u0BCD\u0BAA\u0B9F\u0BC1\u0B95\u0BBF\u0BB1\u0BA4\u0BC1...") }, /* @__PURE__ */ React17.createElement(Suspense, { fallback: /* @__PURE__ */ React17.createElement("div", { className: "w-full max-w-[96vw] 2xl:max-w-[1800px] mx-auto px-4 py-8 text-center text-sm font-medium text-emerald-200 min-h-[120px]" }, "\u0BA8\u0BBF\u0BA4\u0BBF \u0B95\u0BA3\u0B95\u0BCD\u0B95\u0BC0\u0B9F\u0BCD\u0B9F\u0BC1\u0B95\u0BCD \u0B95\u0BB0\u0BC1\u0BB5\u0BBF \u0B8F\u0BB1\u0BCD\u0BB1\u0BAA\u0BCD\u0BAA\u0B9F\u0BC1\u0B95\u0BBF\u0BB1\u0BA4\u0BC1...") }, /* @__PURE__ */ React17.createElement(SipCalculator2, null))))
+  );
 }
 var Home_default = Home;
 

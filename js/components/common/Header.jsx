@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../context/LanguageContext.jsx';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { LanguageSwitcher } from './LanguageSwitcher.jsx';
@@ -9,6 +9,27 @@ function Header({ onOpenSearch, onNavigate }) {
   const { t, language } = useLanguage();
   const { user, profile, signOut } = useAuth();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [mobileScrolled, setMobileScrolled] = useState(false);
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    const handleMobileScroll = () => {
+      if (window.innerWidth >= 768) {
+        if (mobileScrolled) setMobileScrolled(false);
+        return;
+      }
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > 45 && currentScrollY > lastScrollY) {
+        setMobileScrolled(true);
+      } else if (currentScrollY < lastScrollY || currentScrollY <= 20) {
+        setMobileScrolled(false);
+      }
+      lastScrollY = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleMobileScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleMobileScroll);
+  }, [mobileScrolled]);
 
   const displayName = profile?.display_name || user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'User';
 
@@ -121,10 +142,12 @@ function Header({ onOpenSearch, onNavigate }) {
         </div>
       </div>
 
-      {/* 2. MOBILE SINGLE-ROW COMPACT HEADER (md:hidden) */}
-      <div className="flex md:hidden w-full items-center justify-between px-3 min-h-[48px] gap-2">
+      {/* 2. MOBILE SINGLE-ROW COMPACT HEADER (md:hidden - collapsing on scroll) */}
+      <div className={`flex md:hidden w-full items-center justify-between px-3 gap-2 transition-all duration-300 ${
+        mobileScrolled ? 'min-h-[40px] py-0.5' : 'min-h-[48px] py-1'
+      }`}>
         {/* Left: Brand Logo & Title */}
-        <a href="#/" className="flex items-center gap-2 min-w-0 shrink truncate group py-1">
+        <a href="#/" className="flex items-center gap-2 min-w-0 shrink truncate group py-0.5 tap-feedback">
           <picture className="shrink-0">
             <source srcSet="/assets/logo-96.webp 2x, /assets/logo-48.webp 1x" type="image/webp" />
             <img
@@ -132,11 +155,11 @@ function Header({ onOpenSearch, onNavigate }) {
               alt="Muthaleetu Thisai"
               width="36"
               height="36"
-              className="w-9 h-9 object-contain drop-shadow-sm shrink-0"
+              className={`${mobileScrolled ? 'w-7 h-7' : 'w-9 h-9'} object-contain drop-shadow-sm shrink-0 transition-all duration-300`}
             />
           </picture>
           <div className="min-w-0 truncate">
-            <h1 className="text-sm font-extrabold tracking-tight whitespace-nowrap leading-none font-sans">
+            <h1 className={`${mobileScrolled ? 'text-xs' : 'text-sm'} font-extrabold tracking-tight whitespace-nowrap leading-none font-sans transition-all duration-300`}>
               {language === 'ta' ? (
                 <>
                   <span className="text-[#03529A] dark:text-[#38bdf8]">முதலீட்டு </span>

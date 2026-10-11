@@ -309,6 +309,31 @@ function ArticlesPage({ onNavigate, onShowToast }) {
     }
   };
 
+  // Mobile Infinite Scroll State & Observer
+  const [mobileVisibleCount, setMobileVisibleCount] = useState(12);
+  const [isLoadingMoreMobile, setIsLoadingMoreMobile] = useState(false);
+  const mobileSentinelRef = useRef(null);
+
+  useEffect(() => {
+    setMobileVisibleCount(12);
+  }, [selectedCategories, selectedPublishers, dateRange, selectedLanguage, searchQuery, sortBy]);
+
+  useEffect(() => {
+    if (!mobileSentinelRef.current) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !isLoadingMoreMobile && mobileVisibleCount < filteredArticles.length) {
+        setIsLoadingMoreMobile(true);
+        setTimeout(() => {
+          setMobileVisibleCount(prev => prev + 12);
+          setIsLoadingMoreMobile(false);
+        }, 350);
+      }
+    }, { rootMargin: '300px' });
+
+    observer.observe(mobileSentinelRef.current);
+    return () => observer.disconnect();
+  }, [mobileVisibleCount, filteredArticles.length, isLoadingMoreMobile]);
+
   // Share Article Handler
   const handleShareArticle = async (e, article) => {
     e.stopPropagation();
@@ -415,6 +440,45 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
               </svg>
             </button>
+          </div>
+
+          {/* Mobile-Only Snap-Scroll Category Filter Pills with Fade Edge (md:hidden) */}
+          <div className="md:hidden relative pt-1">
+            <div className="flex items-center gap-2 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-1 scroll-smooth">
+              <button
+                type="button"
+                onClick={() => { setSelectedCategories([]); setCurrentPage(1); }}
+                className={`snap-start px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all shrink-0 cursor-pointer tap-feedback active:scale-95 ${
+                  selectedCategories.length === 0
+                    ? 'bg-blue-600 text-white shadow-sm shadow-blue-600/30'
+                    : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700'
+                }`}
+              >
+                {isTamil ? 'அனைத்தும்' : 'All Topics'}
+              </button>
+              {filterCategories.map(cat => {
+                const isSelected = selectedCategories.includes(cat.id);
+                return (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    onClick={() => {
+                      toggleCategoryFilter(cat.id);
+                      setCurrentPage(1);
+                    }}
+                    className={`snap-start px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all shrink-0 cursor-pointer tap-feedback active:scale-95 ${
+                      isSelected
+                        ? 'bg-blue-600 text-white shadow-sm shadow-blue-600/30'
+                        : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700'
+                    }`}
+                  >
+                    {isTamil ? cat.labelTa : cat.labelEn}
+                  </button>
+                );
+              })}
+            </div>
+            {/* Subtle Gradient Fade Edge */}
+            <div className="absolute right-0 top-1 bottom-1 w-8 bg-gradient-to-l from-white dark:from-slate-900 pointer-events-none" />
           </div>
 
           {/* Collapsible Filter Panel (Integrated) */}
@@ -686,12 +750,12 @@ function ArticlesPage({ onNavigate, onShowToast }) {
             {isLoading ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                 {[...Array(6)].map((_, i) => (
-                  <div key={i} className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 overflow-hidden animate-pulse">
-                    <div className="aspect-[16/10] bg-slate-200 dark:bg-slate-800" />
+                  <div key={i} className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 overflow-hidden">
+                    <div className="aspect-[16/10] skeleton-shimmer" />
                     <div className="p-5 space-y-3">
-                      <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded w-3/4" />
-                      <div className="h-3 bg-slate-200 dark:bg-slate-800 rounded w-full" />
-                      <div className="h-3 bg-slate-200 dark:bg-slate-800 rounded w-1/2" />
+                      <div className="h-4 skeleton-shimmer rounded w-3/4" />
+                      <div className="h-3 skeleton-shimmer rounded w-full" />
+                      <div className="h-3 skeleton-shimmer rounded w-1/2" />
                     </div>
                   </div>
                 ))}
@@ -707,7 +771,7 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                   {isTamil ? 'மீண்டும் முயற்சிக்கவும்' : 'Retry'}
                 </button>
               </div>
-            ) : paginatedArticles.length === 0 ? (
+            ) : filteredArticles.length === 0 ? (
               <div className="py-20 text-center space-y-4 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-8 shadow-sm">
                 <div className="w-16 h-16 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 flex items-center justify-center mx-auto text-2xl font-bold">
                   <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
@@ -731,103 +795,191 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                 )}
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-                {paginatedArticles.map((article) => {
-                  const title = isTamil ? article.titleTamil : (article.titleEnglish || article.titleTamil);
-                  const excerpt = isTamil ? article.excerptTamil : (article.excerptEnglish || article.excerptTamil || article.summaryTamil || article.summaryEnglish || '');
-                  const timeAgo = formatRelativeTime(article.publishedAt, isTamil);
-                  const categoryName = (article.category || 'FINANCE').replace('-', ' ').toUpperCase();
-                  const authorName = article.authorName || article.author_name || 'Budget Padmanaban';
-                  const isArticleSaved = isSaved(article.id);
-                  const coverImg = cleanImageUrl(article.thumbnail || article.thumbnail_url || article.coverImage || article.cover_image_url, article.category);
-                  const viewsCount = (article.views || article.viewCount || 0).toLocaleString();
+              <>
+                {/* 1. MOBILE ARTICLES LIST (md:hidden) with Infinite Scroll */}
+                <div className="grid md:hidden grid-cols-1 gap-4">
+                  {filteredArticles.slice(0, mobileVisibleCount).map((article) => {
+                    const title = isTamil ? article.titleTamil : (article.titleEnglish || article.titleTamil);
+                    const excerpt = isTamil ? article.excerptTamil : (article.excerptEnglish || article.excerptTamil || article.summaryTamil || article.summaryEnglish || '');
+                    const timeAgo = formatRelativeTime(article.publishedAt, isTamil);
+                    const categoryName = (article.category || 'FINANCE').replace('-', ' ').toUpperCase();
+                    const authorName = article.authorName || article.author_name || 'Budget Padmanaban';
+                    const coverImg = cleanImageUrl(article.thumbnail || article.thumbnail_url || article.coverImage || article.cover_image_url, article.category);
+                    const viewsCount = (article.views || article.viewCount || 0).toLocaleString();
 
-                  return (
-                    <article
-                      key={article.id}
-                      onClick={() => onNavigate(`#/articles/${article.slug}`)}
-                      className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden group cursor-pointer"
-                    >
-                      {/* 1. Clean Top Image */}
-                      <div className="relative aspect-[16/10] w-full overflow-hidden shrink-0">
-                        <img
-                          src={coverImg}
-                          alt={title}
-                          loading="lazy"
-                          decoding="async"
-                          className="w-full h-full object-cover"
-                          onError={(e) => {
-                            e.target.src = 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=600&q=75&auto=format&fit=crop';
-                          }}
-                        />
-
-                        {/* Top-Left: Publisher Name Badge */}
-                        <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-white/95 dark:bg-slate-900/95 text-slate-900 dark:text-white text-[11px] font-bold uppercase tracking-wider shadow-sm border border-slate-200 dark:border-slate-700 truncate max-w-[55%]">
-                          {authorName}
-                        </span>
-
-                        {/* Top-Right: Category Badge */}
-                        <span className="absolute top-3 right-3 px-2.5 py-1 rounded-md bg-blue-600 text-white text-[11px] font-bold uppercase tracking-wider shadow-sm">
-                          {categoryName}
-                        </span>
-                      </div>
-
-                      {/* 2. Middle Body */}
-                      <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
-                        <div className="space-y-2">
-                          {/* Article Headline */}
-                          <h2 className="text-base sm:text-[17px] font-bold text-slate-900 dark:text-white leading-[1.4] line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                            {title}
-                          </h2>
-
-                          {/* Excerpt / Summary */}
-                          {excerpt && (
-                            <p className="text-xs sm:text-[13px] text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed font-normal">
-                              {excerpt}
-                            </p>
-                          )}
+                    return (
+                      <article
+                        key={`mob-${article.id}`}
+                        onClick={() => onNavigate(`#/articles/${article.slug}`)}
+                        className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm transition-all duration-200 flex flex-col overflow-hidden group cursor-pointer tap-feedback-card active:scale-[0.98]"
+                      >
+                        <div className="relative aspect-[16/10] w-full overflow-hidden shrink-0 skeleton-shimmer">
+                          <img
+                            src={coverImg}
+                            alt={title}
+                            loading="lazy"
+                            decoding="async"
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              e.target.src = 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=600&q=75&auto=format&fit=crop';
+                            }}
+                          />
+                          <span className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-md bg-white/95 dark:bg-slate-900/95 text-slate-900 dark:text-white text-[10.5px] font-bold uppercase tracking-wider shadow-sm border border-slate-200 dark:border-slate-700 truncate max-w-[55%]">
+                            {authorName}
+                          </span>
+                          <span className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-md bg-blue-600 text-white text-[10.5px] font-bold uppercase tracking-wider shadow-sm">
+                            {categoryName}
+                          </span>
                         </div>
-
-                        {/* 3. Bottom Meta Footer: Time, Views in Bold, Publisher Link */}
-                        <div className="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs">
-                          <div className="flex items-center gap-3 text-slate-500 dark:text-slate-400">
-                            {/* Time Ago */}
-                            <span className="flex items-center gap-1">
-                              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                              </svg>
-                              <span>{timeAgo || 'Recently'}</span>
-                            </span>
-
-                            {/* Views in Bold */}
-                            <span className="flex items-center gap-1 text-slate-800 dark:text-slate-200">
-                              <svg className="w-3.5 h-3.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                              </svg>
-                              <strong className="font-extrabold text-slate-900 dark:text-white">
-                                {viewsCount}
-                              </strong>
-                            </span>
+                        <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
+                          <div className="space-y-1.5">
+                            <h2 className="text-base font-bold text-slate-900 dark:text-white leading-[1.35] line-clamp-2">
+                              {title}
+                            </h2>
+                            {excerpt && (
+                              <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed">
+                                {excerpt}
+                              </p>
+                            )}
                           </div>
-
-                          {/* Publisher Link / Read CTA */}
-                          <div className="flex items-center gap-1 font-bold text-blue-600 dark:text-blue-400 group-hover:text-blue-700 transition-colors">
-                            <span className="truncate max-w-[130px]">
-                              {isTamil ? `படிக்க →` : `Read on ${authorName} →`}
+                          <div className="pt-2 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+                            <span className="flex items-center gap-1 font-num">
+                              {timeAgo || 'Recently'}
+                            </span>
+                            <span className="text-blue-600 dark:text-blue-400 font-bold">
+                              {isTamil ? 'படிக்க →' : 'Read →'}
                             </span>
                           </div>
                         </div>
+                      </article>
+                    );
+                  })}
+                </div>
+
+                {/* Mobile Infinite Scroll Sentinel & Skeleton Indicator */}
+                <div ref={mobileSentinelRef} className="md:hidden py-4 text-center">
+                  {isLoadingMoreMobile ? (
+                    <div className="space-y-3">
+                      <div className="grid grid-cols-1 gap-3.5 text-left">
+                        {[...Array(2)].map((_, i) => (
+                          <div key={`mob-skel-card-${i}`} className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-4 space-y-3">
+                            <div className="aspect-[16/10] skeleton-shimmer rounded-xl" />
+                            <div className="h-4 skeleton-shimmer rounded w-3/4" />
+                            <div className="h-3 skeleton-shimmer rounded w-1/2" />
+                          </div>
+                        ))}
                       </div>
-                    </article>
-                  );
-                })}
-              </div>
+                      <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-900 text-xs font-bold text-slate-600 dark:text-slate-400">
+                        <div className="w-3.5 h-3.5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
+                        <span>{isTamil ? 'மேலும் கட்டுரைகள் ஏற்றப்படுகின்றன...' : 'Loading more articles...'}</span>
+                      </div>
+                    </div>
+                  ) : mobileVisibleCount >= filteredArticles.length && filteredArticles.length > 0 ? (
+                    <div className="text-xs text-slate-400 font-medium py-2">
+                      {isTamil ? 'அனைத்து கட்டுரைகளும் ஏற்றப்பட்டுவிட்டன' : 'All articles loaded'}
+                    </div>
+                  ) : null}
+                </div>
+
+                {/* 2. DESKTOP ARTICLES LIST (hidden md:grid) - 100% Preserved Desktop Layout */}
+                <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                  {paginatedArticles.map((article) => {
+                    const title = isTamil ? article.titleTamil : (article.titleEnglish || article.titleTamil);
+                    const excerpt = isTamil ? article.excerptTamil : (article.excerptEnglish || article.excerptTamil || article.summaryTamil || article.summaryEnglish || '');
+                    const timeAgo = formatRelativeTime(article.publishedAt, isTamil);
+                    const categoryName = (article.category || 'FINANCE').replace('-', ' ').toUpperCase();
+                    const authorName = article.authorName || article.author_name || 'Budget Padmanaban';
+                    const isArticleSaved = isSaved(article.id);
+                    const coverImg = cleanImageUrl(article.thumbnail || article.thumbnail_url || article.coverImage || article.cover_image_url, article.category);
+                    const viewsCount = (article.views || article.viewCount || 0).toLocaleString();
+
+                    return (
+                      <article
+                        key={article.id}
+                        onClick={() => onNavigate(`#/articles/${article.slug}`)}
+                        className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden group cursor-pointer"
+                      >
+                        {/* 1. Clean Top Image */}
+                        <div className="relative aspect-[16/10] w-full overflow-hidden shrink-0 skeleton-shimmer">
+                          <img
+                            src={coverImg}
+                            alt={title}
+                            loading="lazy"
+                            decoding="async"
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              e.target.src = 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=600&q=75&auto=format&fit=crop';
+                            }}
+                          />
+
+                          {/* Top-Left: Publisher Name Badge */}
+                          <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-white/95 dark:bg-slate-900/95 text-slate-900 dark:text-white text-[11px] font-bold uppercase tracking-wider shadow-sm border border-slate-200 dark:border-slate-700 truncate max-w-[55%]">
+                            {authorName}
+                          </span>
+
+                          {/* Top-Right: Category Badge */}
+                          <span className="absolute top-3 right-3 px-2.5 py-1 rounded-md bg-blue-600 text-white text-[11px] font-bold uppercase tracking-wider shadow-sm">
+                            {categoryName}
+                          </span>
+                        </div>
+
+                        {/* 2. Middle Body */}
+                        <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+                          <div className="space-y-2">
+                            {/* Article Headline */}
+                            <h2 className="text-base sm:text-[17px] font-bold text-slate-900 dark:text-white leading-[1.4] line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                              {title}
+                            </h2>
+
+                            {/* Excerpt / Summary */}
+                            {excerpt && (
+                              <p className="text-xs sm:text-[13px] text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed font-normal">
+                                {excerpt}
+                              </p>
+                            )}
+                          </div>
+
+                          {/* 3. Bottom Meta Footer: Time, Views in Bold, Publisher Link */}
+                          <div className="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs">
+                            <div className="flex items-center gap-3 text-slate-500 dark:text-slate-400">
+                              {/* Time Ago */}
+                              <span className="flex items-center gap-1">
+                                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span>{timeAgo || 'Recently'}</span>
+                              </span>
+
+                              {/* Views in Bold */}
+                              <span className="flex items-center gap-1 text-slate-800 dark:text-slate-200">
+                                <svg className="w-3.5 h-3.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                                <strong className="font-extrabold text-slate-900 dark:text-white">
+                                  {viewsCount}
+                                </strong>
+                              </span>
+                            </div>
+
+                            {/* Publisher Link / Read CTA */}
+                            <div className="flex items-center gap-1 font-bold text-blue-600 dark:text-blue-400 group-hover:text-blue-700 transition-colors">
+                              <span className="truncate max-w-[130px]">
+                                {isTamil ? `படிக்க →` : `Read on ${authorName} →`}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </article>
+                    );
+                  })}
+                </div>
+              </>
             )}
 
-            {/* ================= PAGINATION ================= */}
+            {/* ================= DESKTOP PAGINATION (hidden md:flex) ================= */}
             {totalPages > 1 && (
-              <div className="pt-6 pb-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-200/80 dark:border-slate-800">
+              <div className="hidden md:flex pt-6 pb-4 flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-200/80 dark:border-slate-800">
                 <div className="text-xs text-slate-500 dark:text-slate-400 font-bold">
                   {isTamil
                     ? `பக்கம் ${currentPage} / ${totalPages} (${totalArticles} கட்டுரைகள்)`

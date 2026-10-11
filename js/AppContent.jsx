@@ -31,6 +31,7 @@ const LoginReminderModal = lazy(() => import('./pages/LoginReminderModal.jsx'));
 
 export default function AppContent({ currentPath, navigate, isSearchOpen, setIsSearchOpen, toastMessage, setToastMessage }) {
   const { user, role, profile, setProfile } = useAuth();
+  const [fabOpen, setFabOpen] = React.useState(false);
   const cleanPath = (currentPath || '/').toLowerCase().replace(/\/+$/, '') || '/';
   const isHome = cleanPath === '/' || cleanPath === '/home' || cleanPath === '#/' || cleanPath === '#';
 
@@ -179,6 +180,62 @@ export default function AppContent({ currentPath, navigate, isSearchOpen, setIsS
       )}
 
       <Toast message={toastMessage} onClose={() => setToastMessage('')} />
+
+      {/* Mobile Floating Action Button (FAB) above Bottom Tab Bar (md:hidden) */}
+      <div className="fixed right-4 bottom-[calc(4.85rem+env(safe-area-inset-bottom,0px))] z-30 md:hidden flex flex-col items-end gap-2">
+        {fabOpen && (
+          <div className="flex flex-col items-end gap-2 animate-fadeIn">
+            {/* Quick Action 1: Search */}
+            <button
+              type="button"
+              onClick={() => {
+                setFabOpen(false);
+                setIsSearchOpen(true);
+              }}
+              className="flex items-center gap-2 px-3 py-2 rounded-full bg-white dark:bg-slate-900 text-slate-800 dark:text-white shadow-lg border border-slate-200 dark:border-slate-800 text-xs font-bold tap-feedback active:scale-95"
+            >
+              <span>{currentPath.includes('ta') ? 'தேடுக' : 'Search'}</span>
+              <div className="w-7 h-7 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300">
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              </div>
+            </button>
+
+            {/* Quick Action 2: Calculator */}
+            <button
+              type="button"
+              onClick={() => {
+                setFabOpen(false);
+                navigate('#/calculator');
+              }}
+              className="flex items-center gap-2 px-3 py-2 rounded-full bg-white dark:bg-slate-900 text-slate-800 dark:text-white shadow-lg border border-slate-200 dark:border-slate-800 text-xs font-bold tap-feedback active:scale-95"
+            >
+              <span>{currentPath.includes('ta') ? 'கால்குலேட்டர்' : 'Calculator'}</span>
+              <div className="w-7 h-7 rounded-full bg-blue-100 dark:bg-blue-950/60 flex items-center justify-center text-blue-600 dark:text-blue-400">
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+              </div>
+            </button>
+          </div>
+        )}
+
+        {/* Main Floating Trigger Button */}
+        <button
+          type="button"
+          onClick={() => setFabOpen(prev => !prev)}
+          className={`w-12 h-12 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shadow-xl shadow-blue-600/30 flex items-center justify-center transition-all duration-200 tap-feedback active:scale-90 cursor-pointer ${
+            fabOpen ? 'rotate-45 bg-slate-900' : ''
+          }`}
+          aria-label="Quick action menu"
+          title="Quick actions"
+        >
+          {fabOpen ? (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+          ) : (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" d="M12 4v16m8-8H4" />
+            </svg>
+          )}
+        </button>
+      </div>
 
       {/* 15-Second Visitor Login Reminder Popup */}
       <Suspense fallback={null}>
