@@ -339,8 +339,8 @@ async function runBuild() {
   <!-- Global Scroll Progress Indicator -->
   <div id="scroll-progress-indicator"></div>
 
-  <!-- Prerendered Semantic React Root -->
-  <div id="root" class="relative z-10">${prerenderedHtml}</div>
+  <!-- Semantic React Root -->
+  <div id="root" class="relative z-10"></div>
 
   <!-- Embedded Initial Data -->
   <script id="__DATA__" type="application/json">${JSON.stringify(serverData)}</script>
