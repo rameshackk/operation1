@@ -18,7 +18,6 @@ const NewsPage = lazy(() => import('./pages/NewsPage.jsx'));
 const NewsDetailsPage = lazy(() => import('./pages/NewsDetailsPage.jsx'));
 const CategoryPage = lazy(() => import('./pages/CategoryPage.jsx'));
 const SipCalculator = lazy(() => import('./pages/SipCalculator.jsx'));
-const RiskQuizWidget = lazy(() => import('./pages/RiskQuizWidget.jsx'));
 const ProfessionalsDirectoryPage = lazy(() => import('./pages/ProfessionalsDirectoryPage.jsx'));
 const ProfessionalProfilePage = lazy(() => import('./pages/ProfessionalProfilePage.jsx'));
 const ProfilePage = lazy(() => import('./pages/ProfilePage.jsx'));
@@ -135,7 +134,7 @@ export default function AppContent({ currentPath, navigate, isSearchOpen, setIsS
     }
 
     if (p === '/quiz' || p === '#/quiz') {
-      return <div className="py-8"><RiskQuizWidget /></div>;
+      return <div className="py-8"><SipCalculator initialTab="quiz" /></div>;
     }
 
     // 3.8 Public Professionals Directory & Publisher Profiles

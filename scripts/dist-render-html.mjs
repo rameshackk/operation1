@@ -2092,8 +2092,7 @@ function Navbar({ currentPath, onNavigate }) {
     { id: "videos", path: "/videos", hash: "/videos", label: t("nav.videos") },
     { id: "news", path: "/news", hash: "/news", label: t("nav.news") },
     { id: "professionals", path: "/professionals", hash: "/professionals", label: t("nav.professionals") || (language === "ta" ? "\u0BA8\u0BBF\u0BAA\u0BC1\u0BA3\u0BB0\u0BCD\u0B95\u0BB3\u0BCD" : "Professionals") },
-    { id: "calculator", path: "/calculator", hash: "/calculator", label: t("nav.calculator") },
-    { id: "quiz", path: "/quiz", hash: "/quiz", label: t("nav.quiz") || "Quiz" }
+    { id: "calculator", path: "/calculator", hash: "/calculator", label: t("nav.calculator") }
   ];
   const authNavItems = user ? [
     { id: "profile", path: "/profile", hash: "/profile", label: language === "ta" ? "\u0B9A\u0BC1\u0BAF\u0BB5\u0BBF\u0BB5\u0BB0\u0BAE\u0BCD" : "Profile" },

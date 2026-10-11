@@ -17,8 +17,7 @@ function Navbar({ currentPath, onNavigate }) {
     { id: 'videos', path: '/videos', hash: '/videos', label: t('nav.videos') },
     { id: 'news', path: '/news', hash: '/news', label: t('nav.news') },
     { id: 'professionals', path: '/professionals', hash: '/professionals', label: t('nav.professionals') || (language === 'ta' ? 'நிபுணர்கள்' : 'Professionals') },
-    { id: 'calculator', path: '/calculator', hash: '/calculator', label: t('nav.calculator') },
-    { id: 'quiz', path: '/quiz', hash: '/quiz', label: t('nav.quiz') || 'Quiz' }
+    { id: 'calculator', path: '/calculator', hash: '/calculator', label: t('nav.calculator') }
   ];
 
   const authNavItems = user ? [
