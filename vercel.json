@@ -179,7 +179,7 @@
     },
     {
       "source": "/api/translate",
-      "destination": "/api/translate"
+      "destination": "/api/admin/articles?action=translate"
     },
     {
       "source": "/api/article-submissions",
