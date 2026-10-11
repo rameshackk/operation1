@@ -89,7 +89,7 @@ function HeroSection({ news, onNavigate }) {
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-transparent pointer-events-none" />
 
             <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10">
-              <span className="px-2.5 py-0.5 text-xs font-black uppercase tracking-wider rounded-md bg-amber-500 text-slate-950 shadow-sm">
+              <span className="px-2.5 py-0.5 text-xs font-black uppercase tracking-wider rounded-md bg-[#2563EB] text-white shadow-sm">
                 {(item.category || 'FINANCE').replace('-', ' ')}
               </span>
               <span className="px-2 py-0.5 rounded-md bg-slate-950/85 text-slate-200 text-xs font-num font-bold border border-white/15">
@@ -290,7 +290,7 @@ function HeroSection({ news, onNavigate }) {
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/75 to-transparent pointer-events-none" />
 
                       <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10">
-                        <span className="px-2 py-0.5 text-[11px] font-black uppercase tracking-wider rounded-md bg-amber-500 text-slate-950 shadow-sm">
+                        <span className="px-2 py-0.5 text-[11px] font-black uppercase tracking-wider rounded-md bg-[#2563EB] text-white shadow-sm">
                           {(item.category || 'FINANCE').replace('-', ' ')}
                         </span>
                         <span className="px-2 py-0.5 rounded-md bg-slate-950/90 text-slate-200 text-[11px] font-num font-bold border border-white/20">
