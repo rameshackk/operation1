@@ -354,7 +354,7 @@ __export(SipCalculator_exports, {
   SipCalculator: () => SipCalculator,
   default: () => SipCalculator
 });
-import React16, { useState as useState11, useEffect as useEffect9, useMemo as useMemo3 } from "react";
+import React16, { useState as useState11, useEffect as useEffect10, useMemo as useMemo3 } from "react";
 function formatINR(val, isLakhCr = false) {
   if (val === null || val === void 0 || isNaN(val)) return "\u20B90";
   const num = Math.round(val);
@@ -395,7 +395,7 @@ function SipCalculator({ initialTab, isEmbedded = false }) {
     } catch (e) {
     }
   };
-  useEffect9(() => {
+  useEffect10(() => {
     if (initialTab && ["quick", "stepup", "quiz"].includes(initialTab)) {
       setActiveTab(initialTab);
     }
@@ -2099,11 +2099,36 @@ var Header_default = Header;
 
 // js/components/common/Navbar.jsx
 init_LanguageContext();
-import React8, { useState as useState6 } from "react";
+import React8, { useState as useState6, useEffect as useEffect6 } from "react";
 function Navbar({ currentPath, onNavigate }) {
   const { t, language } = useLanguage();
-  const { user, role, signOut } = useAuth();
+  const { user, role, session, signOut } = useAuth();
   const [mobileOpen, setMobileOpen] = useState6(false);
+  const [pendingRequestsCount, setPendingRequestsCount] = useState6(0);
+  useEffect6(() => {
+    if (role !== "admin" || !session?.access_token) return;
+    let isMounted = true;
+    const fetchPendingCount = async () => {
+      try {
+        const res = await fetch("/api/article-submissions?stats=1", {
+          headers: { "Authorization": `Bearer ${session.access_token}` }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (isMounted && typeof data.pendingCount === "number") {
+            setPendingRequestsCount(data.pendingCount);
+          }
+        }
+      } catch (e) {
+      }
+    };
+    fetchPendingCount();
+    const interval = setInterval(fetchPendingCount, 6e4);
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
+  }, [role, session]);
   const cleanCurrent = (currentPath || "/").toLowerCase().replace(/\/+$/, "") || "/";
   const baseNavItems = [
     { id: "home", path: "/", hash: "/", label: t("nav.home") },
@@ -2117,6 +2142,15 @@ function Navbar({ currentPath, onNavigate }) {
     { id: "profile", path: "/profile", hash: "/profile", label: language === "ta" ? "\u0B9A\u0BC1\u0BAF\u0BB5\u0BBF\u0BB5\u0BB0\u0BAE\u0BCD" : "Profile" },
     ...role === "admin" || role === "publisher" ? [
       { id: "admin-articles", path: "/admin/articles", hash: "/admin/articles", label: language === "ta" ? "\u0B95\u0B9F\u0BCD\u0B9F\u0BC1\u0BB0\u0BC8\u0B95\u0BB3\u0BCD \u0BB8\u0BCD\u0B9F\u0BC1\u0B9F\u0BBF\u0BAF\u0BCB" : "Article Studio" }
+    ] : [],
+    ...role === "admin" ? [
+      {
+        id: "admin-requests",
+        path: "/admin/article-requests",
+        hash: "/admin/article-requests",
+        label: language === "ta" ? "\u0B95\u0BCB\u0BB0\u0BBF\u0B95\u0BCD\u0B95\u0BC8\u0B95\u0BB3\u0BCD" : "Requests",
+        badge: pendingRequestsCount
+      }
     ] : []
   ] : [
     { id: "login", path: "/login", hash: "/login", label: language === "ta" ? "\u0B89\u0BB3\u0BCD\u0BA8\u0BC1\u0BB4\u0BC8\u0B95" : "Sign In" }
@@ -2153,7 +2187,8 @@ function Navbar({ currentPath, onNavigate }) {
         },
         className: `relative px-3.5 py-2 text-[13px] xl:text-[14px] transition-all rounded-[10px] whitespace-nowrap inline-flex items-center justify-center cursor-pointer ${isActive ? activeClass : inactiveClass}`
       },
-      item.label
+      /* @__PURE__ */ React8.createElement("span", null, item.label),
+      item.badge > 0 && /* @__PURE__ */ React8.createElement("span", { className: "ml-1.5 px-1.5 py-0.2 rounded-full bg-red-600 text-white text-[10px] font-black shadow-sm animate-pulse" }, item.badge)
     );
   }))), /* @__PURE__ */ React8.createElement("div", { className: "md:hidden flex items-center justify-between h-11 sm:h-12 min-w-0" }, /* @__PURE__ */ React8.createElement("div", { className: "flex items-center gap-2 min-w-0 truncate" }, /* @__PURE__ */ React8.createElement("span", { className: "w-2 h-2 rounded-full bg-blue-600 animate-pulse shrink-0" }), /* @__PURE__ */ React8.createElement("span", { className: "text-xs font-black text-[#2563EB] dark:text-[#60a5fa] uppercase tracking-wider truncate" }, activeItem?.label || t("nav.home"))), /* @__PURE__ */ React8.createElement("div", { className: "flex items-center gap-2 shrink-0" }, /* @__PURE__ */ React8.createElement(
     "button",
@@ -2208,7 +2243,7 @@ function Navbar({ currentPath, onNavigate }) {
         className: `w-full text-left px-4 py-3.5 min-h-[48px] rounded-2xl text-sm font-black transition-all flex items-center justify-between cursor-pointer ${isActive ? "bg-[#2563EB] text-white shadow-md border border-blue-500" : "text-slate-700 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-900 border border-transparent"}`
       },
       /* @__PURE__ */ React8.createElement("span", { className: "flex items-center gap-3" }, /* @__PURE__ */ React8.createElement("span", { className: `w-2 h-2 rounded-full ${isActive ? "bg-white" : "bg-slate-400 dark:bg-slate-600"}` }), /* @__PURE__ */ React8.createElement("span", { className: "text-[14px]" }, item.label)),
-      isActive && /* @__PURE__ */ React8.createElement("span", { className: "w-2.5 h-2.5 rounded-full bg-white animate-pulse" })
+      /* @__PURE__ */ React8.createElement("div", { className: "flex items-center gap-2" }, item.badge > 0 && /* @__PURE__ */ React8.createElement("span", { className: "px-2 py-0.5 rounded-full bg-red-600 text-white text-xs font-black shadow-sm" }, item.badge), isActive && /* @__PURE__ */ React8.createElement("span", { className: "w-2.5 h-2.5 rounded-full bg-white animate-pulse" }))
     );
   })), /* @__PURE__ */ React8.createElement("div", { className: "p-4 border-t border-slate-200 dark:border-slate-800 space-y-3.5 bg-slate-50 dark:bg-slate-900/60 pb-[max(1.5rem,env(safe-area-inset-bottom,1.5rem))]" }, /* @__PURE__ */ React8.createElement("div", { className: "flex items-center justify-between" }, /* @__PURE__ */ React8.createElement("span", { className: "text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider" }, language === "ta" ? "\u0B85\u0BAE\u0BC8\u0BAA\u0BCD\u0BAA\u0BC1\u0B95\u0BB3\u0BCD" : "Settings"), /* @__PURE__ */ React8.createElement("div", { className: "flex items-center gap-2" }, /* @__PURE__ */ React8.createElement(LanguageSwitcher, null), /* @__PURE__ */ React8.createElement(ThemeToggle, null))), user ? /* @__PURE__ */ React8.createElement(
     "button",
@@ -2512,7 +2547,7 @@ import React11, { useMemo } from "react";
 
 // js/services/articles.js
 init_translations();
-import { useState as useState9, useEffect as useEffect6 } from "react";
+import { useState as useState9, useEffect as useEffect7 } from "react";
 var liveArticlesCache = null;
 var liveArticlesPromise = null;
 function cleanImageUrl(url, category = "mutual-fund", fallbackUrl = null) {
@@ -2687,7 +2722,7 @@ function useLiveArticles() {
     return [];
   });
   const [isLoading, setIsLoading] = useState9(liveArticles.length === 0);
-  useEffect6(() => {
+  useEffect7(() => {
     let isMounted = true;
     const load = async (force = false) => {
       const list = await fetchCardArticles(24, "newest", force);
@@ -2967,7 +3002,7 @@ function TrendingArticlesSection({ onNavigate }) {
 var TrendingArticlesSection_default = TrendingArticlesSection;
 
 // js/components/home/HomeLatestVideos.jsx
-import React15, { useState as useState10, useEffect as useEffect8 } from "react";
+import React15, { useState as useState10, useEffect as useEffect9 } from "react";
 
 // js/components/youtube/YouTubeVideoCard.jsx
 import React13 from "react";
@@ -3089,7 +3124,7 @@ function YouTubeVideoCard({ video, onSelect, isTamil = false }) {
 var YouTubeVideoCard_default = YouTubeVideoCard;
 
 // js/components/youtube/YouTubePlayerModal.jsx
-import React14, { useEffect as useEffect7 } from "react";
+import React14, { useEffect as useEffect8 } from "react";
 function YouTubePlayerModal({ video, allVideos = [], onClose, onSelectRelated, isTamil = false, onShowToast }) {
   if (!video) return null;
   const videoId = video.video_id || video.youtubeId || video.id;
@@ -3099,7 +3134,7 @@ function YouTubePlayerModal({ video, allVideos = [], onClose, onSelectRelated, i
   const summary = (isTamil ? video.ai_summary_ta || video.summaryTamil : video.ai_summary_en || video.summaryEnglish) || video.description || video.descriptionTamil || video.descriptionEnglish || "";
   const compactViews = formatCompactViews(views, isTamil);
   const timeAgo = formatRelativeTime(publishedAt, isTamil);
-  useEffect7(() => {
+  useEffect8(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Escape") {
         if (onClose) onClose();
@@ -3246,7 +3281,7 @@ function HomeLatestVideos({ initialVideos = [], language = "ta", onShowToast }) 
   const [videos, setVideos] = useState10(initialVideos);
   const [selectedVideo, setSelectedVideo] = useState10(null);
   const [isLoading, setIsLoading] = useState10(initialVideos.length === 0);
-  useEffect8(() => {
+  useEffect9(() => {
     let isMounted = true;
     if (initialVideos && initialVideos.length >= 3) {
       setVideos(initialVideos.slice(0, 6));

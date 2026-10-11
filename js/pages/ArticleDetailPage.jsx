@@ -1004,8 +1004,15 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
                 <h3 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white truncate">
                   {authorName}
                 </h3>
-                <svg className="w-4 h-4 text-blue-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" title="Verified Publisher"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"/></svg>
-                {authorArn && (
+                {(article.isCommunity || article.is_community) ? (
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 font-bold text-xs border border-emerald-500/30">
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    <span>{isTamil ? 'வாசகர் பங்களிப்பு (Community Contribution)' : 'Community Contribution'}</span>
+                  </span>
+                ) : (
+                  <svg className="w-4 h-4 text-blue-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" title="Verified Publisher"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"/></svg>
+                )}
+                {authorArn && !(article.isCommunity || article.is_community) && (
                   <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-800 dark:text-amber-300 font-mono text-xs font-bold border border-amber-500/30">
                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                     <span>{authorArn}</span>
@@ -1013,9 +1020,11 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
                 )}
               </div>
               <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">
-                {authorTitle}
+                {(article.isCommunity || article.is_community)
+                  ? (isTamil ? 'முதலீட்டு திசை வாசகர் சமர்ப்பித்த கட்டுரை • ஆசிரியர் குழுவால் சரிபார்க்கப்பட்டது' : 'Reader-submitted article approved and published by the editorial team')
+                  : authorTitle}
               </p>
-              {article.authorSpecialties && Array.isArray(article.authorSpecialties) && article.authorSpecialties.length > 0 && (
+              {!(article.isCommunity || article.is_community) && article.authorSpecialties && Array.isArray(article.authorSpecialties) && article.authorSpecialties.length > 0 && (
                 <div className="flex flex-wrap gap-1.5 pt-1">
                   {article.authorSpecialties.map((s, idx) => (
                     <span key={idx} className="px-2 py-0.5 rounded bg-slate-200/80 dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-300">
@@ -1027,15 +1036,17 @@ function ArticleDetailPage({ slug, onNavigate, onShowToast }) {
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5 shrink-0 w-full sm:w-auto">
-            <button
-              type="button"
-              onClick={() => onNavigate(`#/professionals/${article.authorId || 'budget-padmanaban'}`)}
-              className="flex-1 sm:flex-initial px-4 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-amber-500 hover:text-slate-950 text-slate-800 dark:text-slate-200 font-bold text-xs border border-slate-200 dark:border-slate-800 transition-all text-center"
-            >
-              {isTamil ? 'சுயவிவரம்' : 'View Profile'} →
-            </button>
-          </div>
+          {!(article.isCommunity || article.is_community) && (
+            <div className="flex items-center gap-2.5 shrink-0 w-full sm:w-auto">
+              <button
+                type="button"
+                onClick={() => onNavigate(`#/professionals/${article.authorId || 'budget-padmanaban'}`)}
+                className="flex-1 sm:flex-initial px-4 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-amber-500 hover:text-slate-950 text-slate-800 dark:text-slate-200 font-bold text-xs border border-slate-200 dark:border-slate-800 transition-all text-center"
+              >
+                {isTamil ? 'சுயவிவரம்' : 'View Profile'} →
+              </button>
+            </div>
+          )}
         </div>
 
         {/* 2-Column Grid on Desktop: Main Body (Left/Center) + Right Sidebar */}

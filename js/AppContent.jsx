@@ -28,11 +28,12 @@ const ArticleEditorPage = lazy(() => import('./pages/ArticleEditorPage.jsx'));
 const PublisherOnboardingModal = lazy(() => import('./pages/PublisherOnboardingModal.jsx'));
 const CommandPalette = lazy(() => import('./pages/CommandPalette.jsx'));
 const LoginReminderModal = lazy(() => import('./pages/LoginReminderModal.jsx'));
+const AdminArticleRequestsPage = lazy(() => import('./pages/AdminArticleRequestsPage.jsx'));
 
 export default function AppContent({ currentPath, navigate, isSearchOpen, setIsSearchOpen, toastMessage, setToastMessage }) {
   const { user, role, profile, setProfile } = useAuth();
   const [fabOpen, setFabOpen] = React.useState(false);
-  const cleanPath = (currentPath || '/').toLowerCase().replace(/\/+$/, '') || '/';
+  const cleanPath = (currentPath || '/').split('?')[0].toLowerCase().replace(/\/+$/, '') || '/';
   const isHome = cleanPath === '/' || cleanPath === '/home' || cleanPath === '#/' || cleanPath === '#';
 
   const renderRoute = () => {
@@ -68,6 +69,14 @@ export default function AppContent({ currentPath, navigate, isSearchOpen, setIsS
     }
 
     // 3.2 Admin & Publisher Studio Routes
+    if (p === '/admin/article-requests' || p === '#/admin/article-requests') {
+      return (
+        <AdminRoute onNavigate={navigate}>
+          <AdminArticleRequestsPage onNavigate={navigate} onShowToast={setToastMessage} />
+        </AdminRoute>
+      );
+    }
+
     if (p.startsWith('/admin/articles/edit/') || p.startsWith('#/admin/articles/edit/')) {
       const articleId = p.replace('/admin/articles/edit/', '').replace('#/admin/articles/edit/', '');
       return (
@@ -94,6 +103,10 @@ export default function AppContent({ currentPath, navigate, isSearchOpen, setIsS
     }
 
     // 3.3 Articles Routes (Public for user)
+    if (p === '/articles/write' || p === '#/articles/write') {
+      return <ArticlesPage initialWriteOpen={true} onNavigate={navigate} onShowToast={setToastMessage} />;
+    }
+
     if (p.startsWith('/articles/') || p.startsWith('#/articles/')) {
       const slug = p.replace('/articles/', '').replace('#/articles/', '');
       return <ArticleDetailPage slug={slug} onNavigate={navigate} onShowToast={setToastMessage} />;

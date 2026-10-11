@@ -89,6 +89,17 @@ function updateDocumentSEO(path) {
       title: 'Sign In | முதலீட்டு திசை',
       canonical: `${SITE_URL}/login`
     });
+  } else if (clean === '/admin/article-requests') {
+    updateHeadTags({
+      title: 'கட்டுரைகள் ஒப்புதல் வரிசை | Article Requests Admin',
+      canonical: `${SITE_URL}/admin/article-requests`
+    });
+  } else if (clean === '/articles/write') {
+    updateHeadTags({
+      title: 'கட்டுரை எழுதுக | Write an Article - முதலீட்டு திசை',
+      description: 'முதலீட்டு திசை தளத்தில் வாசகர்கள் நிதி மற்றும் முதலீட்டு கட்டுரைகளை சமர்ப்பிக்கலாம்.',
+      canonical: `${SITE_URL}/articles/write`
+    });
   } else if (clean === '/signup') {
     updateHeadTags({
       title: 'Register | முதலீட்டு திசை',
@@ -125,12 +136,13 @@ export default function App({ initialData }) {
     else if (clean === '#') clean = '/';
     else if (!clean.startsWith('/')) clean = '/' + clean;
 
-    if (window.location.pathname !== clean) {
+    const currentUrl = window.location.pathname + window.location.search;
+    if (currentUrl !== clean) {
       window.history.pushState(null, '', clean);
     }
     setCurrentPath(clean);
     window.scrollTo(0, 0);
-    updateDocumentSEO(clean);
+    updateDocumentSEO(clean.split('?')[0]);
   };
 
   return (

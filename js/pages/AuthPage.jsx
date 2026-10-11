@@ -25,14 +25,38 @@ function AuthPage({ initialMode = 'login', onNavigate }) {
     });
   }, [isTamil]);
 
-  // If already logged in, navigate away immediately
+  const getRedirectTarget = () => {
+    try {
+      if (typeof window !== 'undefined') {
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirectParam = urlParams.get('redirect') || urlParams.get('return-to') || urlParams.get('return_to');
+        if (redirectParam) return redirectParam;
+
+        if (window.location.hash.includes('?')) {
+          const hashQuery = window.location.hash.split('?')[1];
+          const hashParams = new URLSearchParams(hashQuery);
+          const fromHash = hashParams.get('redirect') || hashParams.get('return-to') || hashParams.get('return_to');
+          if (fromHash) return fromHash;
+        }
+      }
+    } catch (e) {}
+    const stored = sessionStorage.getItem('auth_redirect_from');
+    if (stored) return stored;
+    return '#/';
+  };
+
+  // If already logged in, navigate away immediately to destination
   useEffect(() => {
+    const targetUrl = getRedirectTarget();
+    if (targetUrl && targetUrl !== '#/' && targetUrl !== '/') {
+      sessionStorage.setItem('auth_redirect_from', targetUrl);
+    }
+
     if (user || session) {
-      const redirect = sessionStorage.getItem('auth_redirect_from') || '#/';
       sessionStorage.removeItem('auth_redirect_from');
-      const target = (redirect === '#/login' || redirect === '#/signup' || redirect === '#/register') ? '#/' : redirect;
+      const target = (targetUrl === '#/login' || targetUrl === '#/signup' || targetUrl === '#/register' || targetUrl === '/login') ? '#/' : targetUrl;
       if (onNavigate) onNavigate(target);
-      else if (typeof window !== 'undefined') window.location.hash = target;
+      else if (typeof window !== 'undefined') window.location.hash = target.startsWith('/') && !target.startsWith('/#') ? `#${target}` : target;
     }
   }, [user, session]);
 
@@ -102,19 +126,19 @@ function AuthPage({ initialMode = 'login', onNavigate }) {
         if (!password) throw new Error(isTamil ? 'கடவுச்சொல்லை உள்ளிடவும்.' : 'Please enter your password.');
         await signInWithPassword(email, password);
         setSuccessMessage(isTamil ? 'வெற்றிகரமாக உள்நுழைந்துள்ளீர்கள்!' : 'Logged in successfully!');
-        const redirect = sessionStorage.getItem('auth_redirect_from') || '#/';
+        const redirect = getRedirectTarget();
         sessionStorage.removeItem('auth_redirect_from');
         if (onNavigate) onNavigate(redirect);
-        else window.location.hash = redirect;
+        else window.location.hash = redirect.startsWith('/') && !redirect.startsWith('/#') ? `#${redirect}` : redirect;
       } else if (mode === 'signup') {
         if (!password || password.length < 6) throw new Error(isTamil ? 'கடவுச்சொல் குறைந்தது 6 எழுத்துகள் இருக்க வேண்டும்.' : 'Password must be at least 6 characters.');
         await signUp(email, password, fullName);
         setSuccessMessage(isTamil ? 'கணக்கு வெற்றிகரமாக உருவாக்கப்பட்டு உள்நுழைந்துள்ளீர்கள்!' : 'Account created and logged in successfully!');
-        const redirect = sessionStorage.getItem('auth_redirect_from') || '#/';
+        const redirect = getRedirectTarget();
         sessionStorage.removeItem('auth_redirect_from');
         setTimeout(() => {
           if (onNavigate) onNavigate(redirect);
-          else window.location.hash = redirect;
+          else window.location.hash = redirect.startsWith('/') && !redirect.startsWith('/#') ? `#${redirect}` : redirect;
         }, 500);
       } else if (mode === 'forgot') {
         await sendPasswordReset(email);

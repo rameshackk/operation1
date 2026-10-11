@@ -119,6 +119,12 @@ const server = http.createServer(async (req, res) => {
         return mod.default(req, res);
       }
 
+      // 1.25 Article Submissions API (Submission Pipeline & Admin Requests)
+      if (reqPath.startsWith('/api/article-submissions')) {
+        const mod = await import(`./api/article-submissions/index.js?t=${Date.now()}`);
+        return mod.default(req, res);
+      }
+
       // 1.3 Admin Articles API
       if (reqPath === '/api/admin/articles' || reqPath === '/api/admin/articles/index.js') {
         const mod = await import(`./api/admin/articles/index.js?t=${Date.now()}`);

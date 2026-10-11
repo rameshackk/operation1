@@ -4,8 +4,10 @@ import { useAuth, useBookmarks } from '../context/AuthContext.jsx';
 import { cleanImageUrl } from '../services/articles.js';
 import { updateHeadTags, formatRelativeTime } from '../utils/formatters.js';
 import { getCachedPublishers } from '../services/api.js';
+import WriteArticleModal from '../components/articles/WriteArticleModal.jsx';
+import MySubmissionsModal from '../components/articles/MySubmissionsModal.jsx';
 
-function ArticlesPage({ onNavigate, onShowToast }) {
+function ArticlesPage({ onNavigate, onShowToast, initialWriteOpen = false }) {
   const { language } = useLanguage();
   const { session } = useAuth();
   const { bookmarks, toggleBookmark, isSaved } = useBookmarks();
@@ -15,6 +17,10 @@ function ArticlesPage({ onNavigate, onShowToast }) {
   const [publishersList, setPublishersList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // Community Submissions Modal States
+  const [isWriteModalOpen, setIsWriteModalOpen] = useState(false);
+  const [isMySubmissionsOpen, setIsMySubmissionsOpen] = useState(false);
 
   // Filters State
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -35,6 +41,39 @@ function ArticlesPage({ onNavigate, onShowToast }) {
       pathname: '/articles'
     });
   }, [isTamil]);
+
+  // Handle login-gated Write Article route / trigger
+  useEffect(() => {
+    const isWriteRequested = initialWriteOpen ||
+      (typeof window !== 'undefined' && (
+        window.location.pathname.includes('/articles/write') ||
+        window.location.hash.includes('/articles/write')
+      ));
+
+    if (isWriteRequested) {
+      if (!session) {
+        if (onNavigate) {
+          onNavigate('/login?redirect=/articles/write');
+        } else if (typeof window !== 'undefined') {
+          window.location.href = '/login?redirect=/articles/write';
+        }
+      } else {
+        setIsWriteModalOpen(true);
+      }
+    }
+  }, [initialWriteOpen, session, onNavigate]);
+
+  const handleWriteArticleClick = () => {
+    if (!session) {
+      if (onNavigate) {
+        onNavigate('/login?redirect=/articles/write');
+      } else if (typeof window !== 'undefined') {
+        window.location.href = '/login?redirect=/articles/write';
+      }
+    } else {
+      setIsWriteModalOpen(true);
+    }
+  };
 
   // Filter Panel Toggle State
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
@@ -440,6 +479,33 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
               </svg>
             </button>
+
+            {/* My Submissions Button (Logged-in user) */}
+            {session && (
+              <button
+                type="button"
+                onClick={() => setIsMySubmissionsOpen(true)}
+                className="inline-flex items-center gap-1.5 px-3 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-slate-50 dark:bg-slate-950 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all cursor-pointer shrink-0"
+                title={isTamil ? 'என் கட்டுரைகள் சமர்ப்பிப்புகள்' : 'My Article Submissions'}
+              >
+                <svg className="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                <span className="hidden sm:inline">{isTamil ? 'என் கட்டுரைகள்' : 'My Submissions'}</span>
+              </button>
+            )}
+
+            {/* Write an Article Button (Login-gated) */}
+            <button
+              type="button"
+              onClick={handleWriteArticleClick}
+              className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2.5 rounded-xl text-xs sm:text-sm font-black bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-md shadow-blue-600/25 transition-all cursor-pointer shrink-0 active:scale-95"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 4v16m8-8H4" />
+              </svg>
+              <span>{isTamil ? 'கட்டுரை எழுதுக' : 'Write an Article'}</span>
+            </button>
           </div>
 
           {/* Mobile-Only Snap-Scroll Category Filter Pills with Fade Edge (md:hidden) */}
@@ -827,6 +893,12 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                           <span className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-md bg-white/95 dark:bg-slate-900/95 text-slate-900 dark:text-white text-[10.5px] font-bold uppercase tracking-wider shadow-sm border border-slate-200 dark:border-slate-700 truncate max-w-[55%]">
                             {authorName}
                           </span>
+                          {(article.isCommunity || article.is_community) && (
+                            <span className="absolute bottom-2.5 left-2.5 px-2 py-0.5 rounded-md bg-emerald-600/95 text-white text-[9.5px] font-black uppercase tracking-wider shadow-sm flex items-center gap-1">
+                              <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                              <span>{isTamil ? 'வாசகர் பங்களிப்பு' : 'Community'}</span>
+                            </span>
+                          )}
                           <span className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-md bg-blue-600 text-white text-[10.5px] font-bold uppercase tracking-wider shadow-sm">
                             {categoryName}
                           </span>
@@ -913,9 +985,17 @@ function ArticlesPage({ onNavigate, onShowToast }) {
                           />
 
                           {/* Top-Left: Publisher Name Badge */}
-                          <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-white/95 dark:bg-slate-900/95 text-slate-900 dark:text-white text-[11px] font-bold uppercase tracking-wider shadow-sm border border-slate-200 dark:border-slate-700 truncate max-w-[55%]">
-                            {authorName}
-                          </span>
+                          <div className="absolute top-3 left-3 flex flex-col gap-1 items-start max-w-[65%]">
+                            <span className="px-2.5 py-1 rounded-md bg-white/95 dark:bg-slate-900/95 text-slate-900 dark:text-white text-[11px] font-bold uppercase tracking-wider shadow-sm border border-slate-200 dark:border-slate-700 truncate max-w-full">
+                              {authorName}
+                            </span>
+                            {(article.isCommunity || article.is_community) && (
+                              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-600/95 text-white text-[10px] font-black uppercase tracking-wide shadow-sm">
+                                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                                <span>{isTamil ? 'வாசகர் பங்களிப்பு' : 'Community Contribution'}</span>
+                              </span>
+                            )}
+                          </div>
 
                           {/* Top-Right: Category Badge */}
                           <span className="absolute top-3 right-3 px-2.5 py-1 rounded-md bg-blue-600 text-white text-[11px] font-bold uppercase tracking-wider shadow-sm">
@@ -1048,6 +1128,30 @@ function ArticlesPage({ onNavigate, onShowToast }) {
             )}
           </main>
         </div>
+
+        {/* Write Article Modal */}
+        <WriteArticleModal
+          isOpen={isWriteModalOpen}
+          onClose={() => setIsWriteModalOpen(false)}
+          onNavigate={onNavigate}
+          onShowToast={onShowToast}
+          onSuccess={() => {
+            setIsWriteModalOpen(false);
+            setIsMySubmissionsOpen(true);
+          }}
+        />
+
+        {/* Submitter My Submissions Modal */}
+        <MySubmissionsModal
+          isOpen={isMySubmissionsOpen}
+          onClose={() => setIsMySubmissionsOpen(false)}
+          onNavigate={onNavigate}
+          onShowToast={onShowToast}
+          onOpenWrite={() => {
+            setIsMySubmissionsOpen(false);
+            setIsWriteModalOpen(true);
+          }}
+        />
       </div>
     );
   }

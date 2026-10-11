@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../context/LanguageContext.jsx';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { LanguageSwitcher } from './LanguageSwitcher.jsx';
@@ -6,8 +6,31 @@ import { ThemeToggle } from './ThemeToggle.jsx';
 
 function Navbar({ currentPath, onNavigate }) {
   const { t, language } = useLanguage();
-  const { user, role, signOut } = useAuth();
+  const { user, role, session, signOut } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [pendingRequestsCount, setPendingRequestsCount] = useState(0);
+
+  // Poll pending submissions count for admin badge
+  useEffect(() => {
+    if (role !== 'admin' || !session?.access_token) return;
+    let isMounted = true;
+    const fetchPendingCount = async () => {
+      try {
+        const res = await fetch('/api/article-submissions?stats=1', {
+          headers: { 'Authorization': `Bearer ${session.access_token}` }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (isMounted && typeof data.pendingCount === 'number') {
+            setPendingRequestsCount(data.pendingCount);
+          }
+        }
+      } catch (e) {}
+    };
+    fetchPendingCount();
+    const interval = setInterval(fetchPendingCount, 60000);
+    return () => { isMounted = false; clearInterval(interval); };
+  }, [role, session]);
 
   const cleanCurrent = (currentPath || '/').toLowerCase().replace(/\/+$/, '') || '/';
 
@@ -24,6 +47,15 @@ function Navbar({ currentPath, onNavigate }) {
     { id: 'profile', path: '/profile', hash: '/profile', label: language === 'ta' ? 'சுயவிவரம்' : 'Profile' },
     ...(role === 'admin' || role === 'publisher' ? [
       { id: 'admin-articles', path: '/admin/articles', hash: '/admin/articles', label: language === 'ta' ? 'கட்டுரைகள் ஸ்டுடியோ' : 'Article Studio' }
+    ] : []),
+    ...(role === 'admin' ? [
+      {
+        id: 'admin-requests',
+        path: '/admin/article-requests',
+        hash: '/admin/article-requests',
+        label: language === 'ta' ? 'கோரிக்கைகள்' : 'Requests',
+        badge: pendingRequestsCount
+      }
     ] : [])
   ] : [
     { id: 'login', path: '/login', hash: '/login', label: language === 'ta' ? 'உள்நுழைக' : 'Sign In' }
@@ -71,7 +103,12 @@ function Navbar({ currentPath, onNavigate }) {
                     }}
                     className={`relative px-3.5 py-2 text-[13px] xl:text-[14px] transition-all rounded-[10px] whitespace-nowrap inline-flex items-center justify-center cursor-pointer ${isActive ? activeClass : inactiveClass}`}
                   >
-                    {item.label}
+                    <span>{item.label}</span>
+                    {item.badge > 0 && (
+                      <span className="ml-1.5 px-1.5 py-0.2 rounded-full bg-red-600 text-white text-[10px] font-black shadow-sm animate-pulse">
+                        {item.badge}
+                      </span>
+                    )}
                   </a>
                 );
               })}
@@ -173,7 +210,14 @@ function Navbar({ currentPath, onNavigate }) {
                         <span className={`w-2 h-2 rounded-full ${isActive ? 'bg-white' : 'bg-slate-400 dark:bg-slate-600'}`} />
                         <span className="text-[14px]">{item.label}</span>
                       </span>
-                      {isActive && <span className="w-2.5 h-2.5 rounded-full bg-white animate-pulse" />}
+                      <div className="flex items-center gap-2">
+                        {item.badge > 0 && (
+                          <span className="px-2 py-0.5 rounded-full bg-red-600 text-white text-xs font-black shadow-sm">
+                            {item.badge}
+                          </span>
+                        )}
+                        {isActive && <span className="w-2.5 h-2.5 rounded-full bg-white animate-pulse" />}
+                      </div>
                     </a>
                   );
                 })}
