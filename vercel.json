@@ -104,6 +104,15 @@
       ]
     },
     {
+      "source": "/api/article-submissions(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, no-cache, must-revalidate"
+        }
+      ]
+    },
+    {
       "source": "/(.*)",
       "headers": [
         {
@@ -171,6 +180,14 @@
     {
       "source": "/api/translate",
       "destination": "/api/translate"
+    },
+    {
+      "source": "/api/article-submissions",
+      "destination": "/api/article-submissions"
+    },
+    {
+      "source": "/api/article-submissions/(.*)",
+      "destination": "/api/article-submissions"
     },
     {
       "source": "/api/youtube/videos",
